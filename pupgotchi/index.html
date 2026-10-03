@@ -164,6 +164,7 @@ html,body{margin:0;padding:0}
 .pg-fcard h3{margin:0 0 6px;font-size:15px}
 .pg-fcard .row{display:flex;justify-content:space-between;font-size:13px;color:var(--hatch-widget-muted);margin:4px 0}
 .pg-fcard .row b{color:var(--hatch-widget-text)}
+.pg-fcard .pg-redesc{font-size:13px;color:var(--hatch-widget-muted);margin:6px 0 2px;text-align:center}
 .pg-res{display:flex;align-items:center;gap:10px;background:var(--hatch-widget-surface);border:2px solid var(--hatch-widget-border);border-radius:18px;padding:12px;margin-bottom:8px;box-shadow:0 3px 0 rgba(0,0,0,.04)}
 .pg-dot{width:28px;height:28px;border-radius:50%;flex:none;border:2px solid var(--hatch-widget-border)}
 .pg-res .nm{font-weight:800;font-size:13px}
@@ -1276,7 +1277,7 @@ function newFoster(avoidName){
   while(name===avoidName&&guard++<10) name=pick(NAMES);
   return {
     name:name, breed:pick(BREED_KEYS),
-    fur:coat[0], belly:coat[1], mark:coat[2], coatFx:null,
+    fur:coat[0], belly:coat[1], mark:coat[2], coatFx:null, coatName:'',
     level:1, xp:0, arrivedAt:Date.now(),
     hunger:80, fun:80, energy:80, health:90, bond:10,
     poop:0, sick:false, sleeping:false, critical:false, neglectHrs:0
@@ -1301,6 +1302,8 @@ function fosterStats(f){
   if(typeof f.sleeping!=='boolean')f.sleeping=false;
   if(typeof f.critical!=='boolean')f.critical=false;
   if(typeof f.neglectHrs!=='number')f.neglectHrs=0;
+  if(!('coatFx' in f))f.coatFx=null;
+  if(typeof f.coatName!=='string')f.coatName='';
   return f;
 }
 
@@ -1310,6 +1313,19 @@ function starterFoster(){
   f.name='Luna'; f.breed='pitbull';
   f.fur='#f4f1e8'; f.belly='#faf8f0'; f.mark='#9a7a4e';
   f.coatFx={spot:'rump', ears:'fur', tail:'fur'};
+  return f;
+}
+/* Per-dog appearance structure: apply a breed/coat choice from the foster
+ * screen onto a foster object (starter or any later dog). Keeps every choice
+ * the player made: breed, fur/belly/mark colors, pattern name, coat flags. */
+function applyCoat(f,c){
+  if(!f||!c) return f;
+  if(c.breed) f.breed=c.breed;
+  if(c.fur) f.fur=c.fur;
+  if(c.belly) f.belly=c.belly;
+  if(c.mark) f.mark=c.mark;
+  f.coatFx=c.coatFx||null;
+  if(c.pattern||c.coatName) f.coatName=c.pattern||c.coatName;
   return f;
 }
 function defaults(){
@@ -1746,7 +1762,8 @@ function parseSave(str){
 return {
   XP_LEVELS:XP_LEVELS, MAX_LEVEL:MAX_LEVEL, PRODUCTS:PRODUCTS, UPGRADES:UPGRADES, NAMES:NAMES, COATS:COATS,
   SAVE_VERSION:SAVE_VERSION, exportSave:exportSave, parseSave:parseSave,
-  defaults:defaults, normalize:normalize, newFoster:newFoster, levelOf:levelOf, sel:sel,
+  defaults:defaults, normalize:normalize, newFoster:newFoster, starterFoster:starterFoster,
+  applyCoat:applyCoat, levelOf:levelOf, sel:sel,
   tick:tick, doAction:doAction, buyProduct:buyProduct, buyUpgrade:buyUpgrade,
   vetCost:vetCost, streakBonus:streakBonus,
   checkAdoption:checkAdoption, doAdopt:doAdopt, keepFoster:keepFoster,
@@ -4356,8 +4373,8 @@ function injectCss() {
     '.pg-md-sub{margin:0 0 4px;color:var(--hatch-widget-muted);font-size:13px;line-height:1.4}' +
     '.pg-md-label{display:block;font-size:12px;font-weight:700;margin:12px 0 6px;letter-spacing:.4px}' +
     '.pg-md-name{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);font-size:15px}' +
-    '.pg-md-breeds{display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px}' +
-    '.pg-md-breed{padding:10px 6px;border-radius:16px;border:2px solid var(--hatch-widget-border);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);font-size:13px;font-weight:600;cursor:pointer;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
+    '.pg-md-breeds{display:grid;grid-template-columns:repeat(auto-fill,minmax(105px,1fr));gap:8px}' +
+    '.pg-md-breed{padding:10px 6px;border-radius:16px;border:2px solid var(--hatch-widget-border);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);font-size:13px;font-weight:600;cursor:pointer;min-width:0;line-height:1.25}' +
     '.pg-md-breed.sel{border-color:var(--hatch-widget-accent);background:var(--hatch-widget-accent);color:#fff}' +
     '.pg-md-breed.sel::after{content:" ✓"}' +
     '.pg-md-breed:active{transform:scale(.95)}' +
@@ -5536,11 +5553,12 @@ function renderFosterTab(){
     var wrap=document.createElement('div');
     lk.addEventListener('click',function(){
       wrap.innerHTML='';
-      PG.MyDog.renderPanel(wrap,{breed:F.breed,fur:F.fur,belly:F.belly,mark:F.mark},function(p){
-        F.breed=p.breed; F.fur=p.fur; F.belly=p.belly; F.mark=p.mark; F.coatFx=p.coatFx||null; S.lastCare=Date.now();
-        PG.Care.setMsg(S,'Meet '+F.name+(p.pattern?' ('+p.pattern+')':'')+'!');
+      var ff=F(); // the foster object (F is the selector function)
+      PG.MyDog.renderPanel(wrap,{breed:ff.breed,fur:ff.fur,belly:ff.belly,mark:ff.mark},function(p){
+        PG.Care.applyCoat(ff,p); S.lastCare=Date.now();
+        PG.Care.setMsg(S,'Meet '+ff.name+(p.pattern?' ('+p.pattern+')':'')+'!');
         rebuildDogs(); save(); renderAll(); renderFosterTab();
-      },{title:'Change breed & coat',sub:'Switch '+F.name+'\u2019s breed or pick a new coat pattern.',cta:'Apply changes'});
+      },{title:'Change breed & coat',sub:'Switch '+ff.name+'\u2019s breed or pick a new coat pattern.',cta:'Apply changes'});
     });
     el.appendChild(lk); el.appendChild(wrap);
   }
@@ -5656,7 +5674,7 @@ function renderRealEstateTab(){
       '<div class="row"><span>Sign reads</span><b>'+nm+'</b></div>'+
       '<div class="row"><span>Fosters</span><b>'+d.fosters+'</b></div>'+
       '<div class="row"><span>Trainers</span><b>'+d.trainers+'</b></div>'+
-      '<div class="row"><span></span><b style="font-weight:400">'+d.desc+'</b></div>';
+      '<div class="pg-redesc">'+d.desc+'</div>';
     var row=document.createElement('div'); row.className='pg-rnrow';
     if(isCur){
       var cur2=document.createElement('span');
@@ -5738,7 +5756,7 @@ function showWelcome(){
   PG.MyDog.renderWizard(card,
     {breed:F.breed,fur:F.fur,belly:F.belly,mark:F.mark},
     function(p){
-      F.breed=p.breed; F.fur=p.fur; F.belly=p.belly; F.mark=p.mark; F.coatFx=p.coatFx||null;
+      PG.Care.applyCoat(F,p);
       F.level=1; F.xp=0; F.arrivedAt=Date.now();
       S.setupDone=true; S.lastCare=Date.now();
       PG.Care.setMsg(S,'Welcome home, '+F.name+'! \u2764\ufe0f');
