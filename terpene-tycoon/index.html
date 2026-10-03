@@ -856,7 +856,7 @@ var HEAT_TIERS=["CALM","SUSPICIOUS","WATCHED","HUNTED"];
 function mkDealer(name){function m(){return 0.8+Math.random()*0.4;}var d={name:name,buy:{},sell:{}};PKEYS.forEach(function(k){d.buy[k]=m();d.sell[k]=m();});return d;}
 function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
-var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,lastVer:"",
+var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,lastVer:"",
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
  msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
@@ -876,6 +876,8 @@ function normalize(s){
  delete s.growSpeeds;delete s.setStrain;
  if(SPEED_OPTS.indexOf(s.growSpeed)<0)s.growSpeed=30;
  if(typeof s.papers!=="number"||s.papers<0)s.papers=0;
+ if(typeof s.lastDealer!=="number")s.lastDealer=-1;
+ if(typeof s.dealerStreak!=="number"||s.dealerStreak<0)s.dealerStreak=0;
  if(RKEYS.indexOf(s.setdrug)<0)s.setdrug="hash";
  s.stats=Object.assign({earned:0,harvested:0,deals:0,busted:0,cooked:0},s.stats);
  if(s.seeds.moonrock>0){s.cash+=s.seeds.moonrock*150;s.seeds.moonrock=0;}
@@ -1311,6 +1313,16 @@ function doBust(){
  S.heat=45;S.lockedUntil=Date.now()+5*60000;S.stats.busted++;
  S.msg="BUSTED! Cops seized your whole stash. Lay low for 5 minutes.";
 }
+function dealerStreakHeat(di){
+ // Punish hitting the same dealer repeatedly: streak 4+ adds escalating heat
+ if(di===S.lastDealer){S.dealerStreak=(S.dealerStreak||0)+1;}else{S.lastDealer=di;S.dealerStreak=1;}
+ if(S.dealerStreak>=4){
+  var extra=(S.dealerStreak-3)*5;
+  S.heat=Math.min(100,S.heat+extra);
+  return extra;
+ }
+ return 0;
+}
 function doDeal(di,k,isBuy,isJoint){
  var now=Date.now();
  if(now<S.lockedUntil)return;
@@ -1320,7 +1332,8 @@ function doDeal(di,k,isBuy,isJoint){
   if(S.cash<cost){S.msg="Not enough cash for that.";save();render();return;}
   if(stashTotal()+g>S.stashCap){S.msg="Duffel is full — sell some or upgrade it.";save();render();return;}
   S.cash-=cost;S.stash[k]+=g;S.heat=Math.min(100,S.heat+2+g);
-  if(!addXP(5))S.msg="Bought "+g+"g of "+st.name+" for "+money(cost)+".";
+  var dh=dealerStreakHeat(di);
+  if(!addXP(5))S.msg="Bought "+g+"g of "+st.name+" for "+money(cost)+"."+(dh>0?" Same spot too many times — heat +"+dh+".":"");
  }else{
   var have=isJoint?(S.joints[k]||0):S.stash[k];
   if(have<g){S.msg="You don't have "+g+(isJoint?" joints":"g")+" of "+st.name+".";save();render();return;}
@@ -1331,7 +1344,8 @@ function doDeal(di,k,isBuy,isJoint){
   if(isJoint)S.joints[k]-=g;else S.stash[k]-=g;
   S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
   S.heat=Math.min(100,S.heat+2+g);
-  if(!addXP(5))S.msg="Sold "+g+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+".";
+  var dh2=dealerStreakHeat(di);
+  if(!addXP(5))S.msg="Sold "+g+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+"."+(dh2>0?" Same spot too many times — heat +"+dh2+".":"");
  }
  battleRoll();
  save();render();
@@ -1356,7 +1370,8 @@ function doStashSellAll(k,isJoint){
  if(isJoint)S.joints[k]=0;else S.stash[k]=0;
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
  S.heat=Math.min(100,S.heat+2+have);
- if(!addXP(5))S.msg="Sold "+have+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+".";
+ var dh3=dealerStreakHeat(sd.di);
+ if(!addXP(5))S.msg="Sold "+have+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+"."+(dh3>0?" Same spot too many times — heat +"+dh3+".":"");
  battleRoll();
  save();render();
 }
