@@ -50,9 +50,8 @@ window.hatchWidget={
  </div>
  <div class="pg-heat"><div class="heat-bar"><i class="v-heat"></i></div><span class="v-heattier">CALM</span><button type="button" class="heat-bribe" data-act="bribe" hidden></button></div>
  <div class="pg-msg v-msg">Welcome to the grow op.</div>
- <div class="ticker-help">Tap a chapter number to jump straight to that tip</div>
- <div class="pg-ticker"><span class="ticker-badge"><i></i><span class="tb-text"><span class="tb-main">Trap Hotline</span><span class="tb-sub">All the Hood news!</span></span></span><div class="ticker-view"><div class="ticker-track"></div></div></div>
- <div class="ticker-chapters"></div>
+ <div class="ticker-help">Tap the scrolling tips to jump to the next one</div>
+ <div class="pg-ticker"><span class="ticker-badge"><i></i><span class="tb-text"><span class="tb-main">Trap Hotline</span><span class="tb-sub">All the Hood news!</span></span></span><div class="ticker-view" data-act="ticknext"><div class="ticker-track"></div></div></div>
  <div class="pg-tabs">
   <button type="button" data-act="tab" data-tab="store" class="store-tab"><span class="tab-tx">Store</span></button>
   <button type="button" data-act="tab" data-tab="grow" class="on"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 13c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg></span><span class="tab-tx">Grow</span></button>
@@ -624,21 +623,20 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .pg-ticker{display:flex;align-items:stretch;background:#0c0c0f;border:1px solid var(--hatch-widget-border);border-radius:10px;margin-bottom:8px;overflow:hidden}
 .pg-ticker[hidden]{display:none}
 .ticker-badge{display:flex;align-items:center;flex:none;background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;padding:6px 9px}
-.ticker-badge i{width:7px;height:7px;flex:none;border-radius:50%;background:#fff;margin-right:7px;animation:tblink 1.4s infinite}
+.ticker-badge i{width:12px;height:12px;flex:none;border-radius:50%;margin-right:7px;background:conic-gradient(#ff5e8a,#ffb35e,#b45eff,#5ee8ff,#ff5e8a);animation:tspin 1.8s linear infinite;box-shadow:0 0 10px rgba(255,94,138,.7)}
+@keyframes tspin{to{transform:rotate(360deg)}}
 .tb-text{display:flex;flex-direction:column;line-height:1.25}
 .tb-main{font-size:9px;font-weight:900;letter-spacing:1px;white-space:nowrap}
 .tb-sub{font-size:7px;font-weight:700;letter-spacing:.4px;opacity:.88;white-space:nowrap}
-@keyframes tblink{0%,100%{opacity:1}50%{opacity:.2}}
-.ticker-view{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.ticker-view{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center;cursor:pointer;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
 .ticker-track{display:flex;width:max-content;white-space:nowrap;will-change:transform}
 .ticker-chunk{padding:7px 0;font-size:12px;color:var(--hatch-widget-text);letter-spacing:.3px}
 .tick-sep{color:#e5484d;padding:0 22px;font-weight:900}
 .ticker-help{font-size:10.5px;color:var(--hatch-widget-muted);letter-spacing:.3px;margin-bottom:4px}
-.ticker-chapters{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:2px 0 8px}
-.ticker-chapters[hidden]{display:none}
-.tick-ch{min-width:34px;min-height:34px;padding:6px 8px;border-radius:9px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-muted);font-weight:800;font-size:11px;cursor:pointer}
-.tick-ch.on{border-color:#e5484d;color:#e5484d;background:rgba(229,72,77,.12);box-shadow:0 0 8px rgba(229,72,77,.25)}
-@media(pointer:coarse){.tick-ch{min-width:40px;min-height:40px}}
+/* changelog */
+.clog{padding:10px 8px;border-top:1px solid var(--hatch-widget-border)}
+.clog-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.clog-head b{font-size:13px;color:#e5484d;letter-spacing:.5px}
 /* bribe button by the heat bar */
 .heat-bribe{margin-left:auto;flex:none;padding:10px 20px;min-height:46px;border-radius:10px;border:1px solid #e5484d;background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;font-weight:900;font-size:13px;letter-spacing:1.5px;cursor:pointer;box-shadow:0 2px 10px rgba(229,72,77,.45),inset 0 1px 0 rgba(255,255,255,.25)}
 .heat-bribe:disabled{opacity:.45;box-shadow:none}
@@ -735,6 +733,26 @@ var RECIPES={
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon"];
 var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
+var GAME_VER="BETA-0.008";
+var CHANGELOG=[
+ {v:"BETA-0.008",t:"Tap-to-skip ticker",d:"Tap the scrolling tips to jump to the next one. Chapters are invisible now, money tips run first and status updates last. The badge light spins like the Hotline Bling video."},
+ {v:"BETA-0.007",t:"Level tips + Changelog tab",d:"Trap Hotline now teaches per level as you progress. Patch notes live in Settings under a new Changelog tab."},
+ {v:"BETA-0.006",t:"Trap Hotline ticker",d:"Newscast tips bar with level-aware hints, tappable chapter numbers, and a slow readable scroll."},
+ {v:"BETA-0.005",t:"Tab icons + Store tab",d:"Every tab got its own icon. Store moved to the first tab with a red leaf imprint. Smoking cools heat a touch faster while high."},
+ {v:"BETA-0.004",t:"Stash tab",d:"Every bag and joint in one place with Roll, Smoke and Sell quick actions. Chill opens on Smoke. Bribe moved up to the heat bar."},
+ {v:"BETA-0.003",t:"Breathing room",d:"Roomier spacing, taller cards and more padding across the whole game."},
+ {v:"BETA-0.002",t:"Full-screen responsive",d:"The game fills the browser up to 1280px with multi-column layouts and finger-sized touch targets."},
+ {v:"BETA-0.001",t:"Noir theme + auto-save",d:"Dark noir redesign. Your progress now saves automatically every 20 seconds and when you leave."}
+];
+var LEVEL_TIPS={
+ 1:["Water often — dry plants stall completely","Harvest at 100% for the full yield","Sell Sour D to Corner Carl and build your cash","The Stash tab holds every bag you own"],
+ 2:["Roll 1g of bud into 2 joints in the Stash tab","Rooftop Rita pays more — always compare dealers","Buy the Knife before heat gets you ambushed","Trap House doubles your grow slots to 6"],
+ 3:["Moonrocks cook up big — try the lab","Warehouse: 10 grow slots","Keep lab kits stocked for every cook job"],
+ 4:["Acid is high value, high heat — plan the cook","Check Alley Al's prices before every sale","Mansion Lab: 16 grow slots","The Pistol outclasses the Knife in a fight"],
+ 5:["DMT sells premium — guard that stash","Bunker: 20 grow slots","Bribe early when the heat starts climbing"],
+ 6:["White Widow is top-shelf bud","Island Compound: 24 grow slots","The SMG handles the worst ambushes","Deli Dave's prices are worth comparing"],
+ 7:["Dragon's Breath: the final cook","Cartel Empire: 28 slots of endgame growing","Gorilla Glue is the highest bud tier"]
+};
 var DEF_SPEEDS={hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300};
 function speedOf(k){var v=S.speeds&&S.speeds[k];return SPEED_OPTS.indexOf(v)>=0?v:DEF_SPEEDS[k];}
 function fmtT(s){s=Math.max(0,Math.round(s));var m=Math.floor(s/60),r=s%60;return m+":"+(r<10?"0":"")+r;}
@@ -1036,7 +1054,6 @@ function render(){
  q(".pg-heat").hidden=inStore;
  q(".pg-msg").hidden=inStore;
  q(".pg-ticker").hidden=inStore;
- q(".ticker-chapters").hidden=inStore;
  q(".ticker-help").hidden=inStore;
  q(".pg-tabs").hidden=inStore;
  q(".pane-grow").hidden=battling||S.tab!=="grow";
@@ -1352,32 +1369,39 @@ function stashHTML(){
 }
 /* ===== TERPENE TYCOON v21: newscast tips ticker ===== */
 function tickerHints(){
- var L=pLevel(),out=[];
+ var L=pLevel(),econ=[],info=[],status=[];
  var di=DUFFEL.indexOf(S.stashCap);
- if(di<DUFFEL.length-1)out.push("Duffel cramped? Upgrade at the Supply Depot — carry up to "+DUFFEL[DUFFEL.length-1]+"g");
+ // ECONOMIC — most money-relevant first
+ for(var _lt=Math.max(1,L-1);_lt<=L;_lt++){
+  (LEVEL_TIPS[_lt]||[]).forEach(function(t){econ.push(t);});
+ }
+ var jtot=GROWKEYS.reduce(function(a,k){return a+(S.joints[k]||0);},0);
+ if(jtot>0)econ.push("Smoke a joint: -4 heat and better sell prices for 5 min");
+ econ.push("Deal prices drift — buy low, sell high");
+ if(di<DUFFEL.length-1)econ.push("Duffel cramped? Upgrade at the Supply Depot — carry up to "+DUFFEL[DUFFEL.length-1]+"g");
  var hasW=S.weapons&&Object.keys(S.weapons).some(function(w){return S.weapons[w];});
- if(!hasW&&L>=2)out.push("No weapon yet — hit the Gun Store before the cops jump you");
- if(S.props.length<2&&L>=2)out.push("Trap House: 6 grow slots — see Green Realty");
+ if(!hasW&&L>=2)econ.push("No weapon yet — hit the Gun Store before the cops jump you");
+ if(S.props.length<2&&L>=2)econ.push("Trap House: 6 grow slots — see Green Realty");
  if(L>=3){
   var hasKit=S.kits&&Object.keys(S.kits).some(function(k){return (S.kits[k]||0)>0;});
-  if(!hasKit)out.push("No lab kits — stock up at Lab Supply to start cooking");
+  if(!hasKit)econ.push("No lab kits — stock up at Lab Supply to start cooking");
  }
- if((S.fert||0)<=0)out.push("Out of fertilizer — Supply Depot sells instant +30 growth");
+ if((S.fert||0)<=0)econ.push("Out of fertilizer — Supply Depot sells instant +30 growth");
+ // INFO
+ if(L<7&&UNLOCKS[L+1])info.push("Level "+(L+1)+" unlocks: "+UNLOCKS[L+1].join(", "));
+ info.push("Stash tab: roll, smoke or sell every bag in one place");
+ // STATUS — last
  var thirsty=false;
  S.props.forEach(function(pr){pr.slots.forEach(function(p){if(p&&p.water<20)thirsty=true;});});
- if(thirsty)out.push("Plants are thirsty — hit Water All");
- if(stashTotal()>=S.stashCap*0.9)out.push("Duffel almost full — sell or upgrade before your next harvest");
- if(S.heat>=70)out.push("Heat critical — bribe the cops or smoke to cool down");
- else if(S.heat>=40)out.push("Heat rising — keep it cool");
- var jtot=GROWKEYS.reduce(function(a,k){return a+(S.joints[k]||0);},0);
- if(jtot>0)out.push("Smoke a joint: -4 heat and better sell prices for 5 min");
- if(L<7&&UNLOCKS[L+1])out.push("Level "+(L+1)+" unlocks: "+UNLOCKS[L+1].join(", "));
- out.push("Stash tab: roll, smoke or sell every bag in one place");
- out.push("Deal prices drift — buy low, sell high");
- if(S.job)out.push("Lab job cooking — check the Cook tab");
- return out;
+ if(thirsty)status.push("Plants are thirsty — hit Water All");
+ if(stashTotal()>=S.stashCap*0.9)status.push("Duffel almost full — sell or upgrade before your next harvest");
+ if(S.heat>=70)status.push("Heat critical — bribe the cops or smoke to cool down");
+ else if(S.heat>=40)status.push("Heat rising — keep it cool");
+ if(S.job)status.push("Lab job cooking — check the Cook tab");
+ return econ.concat(info,status);
 }
-var tickerState={x:0,last:0,pausedUntil:0};
+var tickerState={x:0,last:0,pausedUntil:0,count:0};
+var tickIdx=0;
 function tickerTick(){
  var track=q(".ticker-track");
  if(!track||!track.children.length)return;
@@ -1399,27 +1423,27 @@ function renderTicker(){
  var key=hints.join("");
  if(track.dataset.h===key)return;
  track.dataset.h=key;
- tickerState.x=0;tickerState.last=0;
+ tickerState.x=0;tickerState.last=0;tickerState.count=hints.length;
+ tickIdx=0;
  function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
  var half=hints.map(function(h,i){return '<span class="ticker-chunk" data-i="'+i+'">'+esc(h)+'<span class="tick-sep">\u2022\u2022\u2022</span></span>';}).join("");
  track.innerHTML=half+half;
  track.style.transform="translateX(0)";
- var ch=q(".ticker-chapters");
- if(ch){
-  ch.innerHTML=hints.map(function(h,i){return '<button type="button" class="tick-ch" data-act="tickgo" data-i="'+i+'">'+(i+1)+'</button>';}).join("");
-  ch.hidden=false;
- }
 }
-function tickGo(i){
+function tickGo(i,pauseMs){
  var track=q(".ticker-track");
  if(!track)return;
  var el=track.querySelector('.ticker-chunk[data-i="'+i+'"]');
  if(!el)return;
  tickerState.x=el.offsetLeft;
  tickerState.last=0;
- tickerState.pausedUntil=Date.now()+10000;
+ tickerState.pausedUntil=Date.now()+(pauseMs==null?10000:pauseMs);
  track.style.transform="translateX("+(-tickerState.x)+"px)";
- qa(".tick-ch").forEach(function(b){b.classList.toggle("on",+b.dataset.i===i);});
+}
+function tickNext(){
+ var n=tickerState.count||1;
+ tickIdx=(tickIdx+1)%n;
+ tickGo(tickIdx,0);
 }
 function chillStrain(){
  var ck=S.chillStrain;
@@ -1856,7 +1880,20 @@ function chillHTML(){
  return h;
 }
 function settingsHTML(){
- var h='<div class="shopsec">APPEARANCE</div>';
+ var st=S.settingstab||"options";
+ var h='<div class="dchips">'
+  +'<button type="button" class="dchip center'+(st==="options"?" on":"")+'" data-act="settingstab" data-t="options"><span class="dc-name">Options</span></button>'
+  +'<button type="button" class="dchip center'+(st==="changelog"?" on":"")+'" data-act="settingstab" data-t="changelog"><span class="dc-name">Changelog</span></button>'
+  +'</div>';
+ if(st==="changelog"){
+  h+='<div class="shopsec">PATCH NOTES</div>';
+  h+='<div class="sdesc" style="margin:0 2px 8px">Running list of every update. Current version: <b style="color:var(--hatch-widget-text)">'+GAME_VER+'</b></div>';
+  CHANGELOG.forEach(function(c){
+   h+='<div class="clog"><div class="clog-head"><b>'+c.v+'</b><span class="lvtag">'+c.t+'</span></div><div class="sdesc">'+c.d+'</div></div>';
+  });
+  return h;
+ }
+ h+='<div class="shopsec">APPEARANCE</div>';
  h+='<div class="dchips"><button type="button" class="dchip center'+(S.theme==="light"?"":" on")+'" data-act="settheme" data-theme="dark"><span class="dc-name">Dark</span></button><button type="button" class="dchip center'+(S.theme==="light"?" on":"")+'" data-act="settheme" data-theme="light"><span class="dc-name">Light</span></button></div>';
  h+='<div class="shopsec">LAB COOK SPEEDS</div>';
  var cur=S.setdrug||"hash";
@@ -1975,7 +2012,8 @@ root.addEventListener("click",function(e){
  if(a==="roll"){doRoll(b.dataset.strain,+b.dataset.n||1);return;}
  if(a==="smoke"){doSmoke(b.dataset.strain);return;}
  if(a==="dsellj"){doDeal(+b.dataset.d,b.dataset.strain,false,true);return;}
- if(a==="tickgo"){tickGo(+b.dataset.i||0);return;}
+ if(a==="ticknext"){tickNext();return;}
+ if(a==="settingstab"){S.settingstab=b.dataset.t;save();render();return;}
  if(a==="stashsell"){var _sd=stashDealer();doDeal(_sd.di,b.dataset.strain,false,false);return;}
  if(a==="stashsellj"){var _sd2=stashDealer();doDeal(_sd2.di,b.dataset.strain,false,true);return;}
  if(a==="stashsellall"){doStashSellAll(b.dataset.strain,false);return;}
@@ -2039,7 +2077,7 @@ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
   if(document.visibilityState==="hidden")saveOnHide();});
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,startCook:startCook};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook};
 })();
 </script>
 
