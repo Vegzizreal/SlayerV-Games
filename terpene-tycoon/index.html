@@ -70,7 +70,7 @@ window.hatchWidget={
  <div class="pg-hint v-hint"></div>
 </div>
 <style>
-.pg{box-sizing:border-box;width:100%;max-width:880px;margin:0 auto;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--hatch-widget-text)}
+.pg{box-sizing:border-box;width:100%;max-width:1280px;margin:0 auto;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--hatch-widget-text)}
 .pg *{box-sizing:border-box}
 /* ===== TERPENE TYCOON v16: noir dark theme (self-contained) =====
    The game owns its theme variables on .pg, so dark mode renders correctly
@@ -120,6 +120,36 @@ window.hatchWidget={
  .pane-store>.store-screen-head,.pane-store>.store-tabs,.pane-store>.store-banner{grid-column:1/-1}
  .pane-deal{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;align-items:start}
  .pane-deal>.dchips{grid-column:1/-1}
+}
+/* ===== TERPENE TYCOON v17: fill each device's screen, finger-friendly ===== */
+@media(min-width:700px){
+ .pg{padding:16px 18px 12px}
+ .pots{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
+ .plant{height:120px}
+ .pg-msg{font-size:14px}
+ .pill{font-size:13px}
+}
+@media(min-width:1100px){
+ .pane-store{grid-template-columns:1fr 1fr 1fr}
+ .pane-deal{grid-template-columns:1fr 1fr 1fr}
+ .pots{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
+ .pg-tabs button{font-size:14px;padding:10px 0}
+ .pg-title{font-size:23px}
+}
+/* finger-sized touch targets on touch devices */
+@media(pointer:coarse){
+ .pg-tabs button{padding:12px 0;font-size:13px;min-height:48px;overflow:hidden;text-overflow:ellipsis}
+ .growbar button{padding:13px 14px;font-size:14px;min-height:50px}
+ .btns button{padding:12px 8px;font-size:13.5px;min-height:46px}
+ .dchip{padding:10px 8px;min-height:46px;font-size:12.5px}
+ .store-tabs button{padding:11px 0;min-height:46px;font-size:12px}
+ .pc-btns button{min-height:42px}
+ .srow button{padding:12px 16px;min-height:46px}
+ .spd{padding:10px 6px;min-height:46px}
+ .acc-h{padding:12px 10px !important;min-height:48px}
+ .tapbtn{padding:18px;min-height:58px}
+ .store-btn{padding:9px 16px;min-height:44px}
+ .amtrow button{min-height:44px;min-width:44px}
 }
 .store-banner span{font-size:11.5px;color:var(--hatch-widget-muted)}
 .store-btn{display:flex;align-items:center;gap:6px;background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-accent);color:var(--hatch-widget-accent);border-radius:999px;padding:5px 12px;font-weight:800;font-size:12px;letter-spacing:1.5px;cursor:pointer}
