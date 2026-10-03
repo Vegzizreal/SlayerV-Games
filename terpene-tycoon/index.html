@@ -121,7 +121,7 @@ window.hatchWidget={
 .pg-tabs{display:flex;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:3px;gap:4px;margin-bottom:8px}
 .pg-tabs button{flex:1;min-width:0;padding:7px 0;border:0;border-radius:8px;background:transparent;color:var(--hatch-widget-muted);font-weight:800;font-size:16px;cursor:pointer}
 .pg-tabs button.on{background:var(--hatch-widget-surface);box-shadow:0 1px 4px var(--hatch-widget-shadow)}
-.store-tabs{display:flex;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:3px;gap:2px;margin-bottom:8px}
+.store-tabs{display:flex;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:3px;gap:2px;margin-bottom:8px;position:sticky;top:0;z-index:10}
 .store-tabs button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;gap:4px;padding:7px 0;border:0;border-radius:8px;background:transparent;color:var(--hatch-widget-muted);font-weight:800;font-size:13px;letter-spacing:.5px;cursor:pointer;white-space:nowrap}
 .store-tabs button svg{display:block;flex:0 0 auto;width:11px;height:11px}
 .store-tabs button.on{background:var(--hatch-widget-surface);color:var(--hatch-widget-text);box-shadow:0 1px 4px var(--hatch-widget-shadow)}
@@ -648,7 +648,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .pg-tabs button .tab-ic{display:flex}
 .pg-tabs button .tab-ic svg{display:block}
 .pg-tabs button .tab-tx{font-size:11px;letter-spacing:.5px;line-height:1.2;display:block}
-.pg-tabs button.store-tab{position:relative;overflow:hidden;color:#f2efe8;font-weight:900;letter-spacing:1px}
+.pg-tabs button.store-tab{position:relative;overflow:hidden;color:#fbbf24;font-weight:900;letter-spacing:1px}
 .pg-tabs button[data-tab="grow"]{color:#4ade80}
 .pg-tabs button[data-tab="stash"]{color:#d4a574}
 .pg-tabs button[data-tab="cook"]{color:#fb923c}
