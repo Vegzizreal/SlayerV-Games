@@ -841,6 +841,8 @@ var XP_TH=[0,200,500,900,1400,2000,2700,3500];
 function lvl(xp){xp=xp||0;var L=1;for(var i=0;i<XP_TH.length;i++)if(xp>=XP_TH[i])L=i+1;return L;}
 function pLevel(){return lvl(S.xp);}
 function heatGain(base){var L=pLevel();if(L<=2)return Math.ceil(base*0.4);if(L<=4)return Math.ceil(base*0.7);return base;}
+function bribeCost(){var L=pLevel();if(L<=2)return 50;if(L<=4)return 100;return 200;}
+function clinicRate(){var L=pLevel();if(L<=2)return 1;if(L<=4)return 1.5;return 2;}
 function tierVis(t){var L=pLevel();return t<=L?2:(t===L+1?1:0);}
 var UNLOCKS={
  1:["Sour D","Hash","Grow Tent"],
@@ -1129,8 +1131,8 @@ function render(){
  var _bb=q(".heat-bribe");
  if(_bb){
   _bb.hidden=!(S.heat>0&&now>=S.lockedUntil&&!S.battle);
-  _bb.disabled=S.cash<BRIBE_COST;
-  _bb.textContent="BRIBE "+money(BRIBE_COST);
+  _bb.disabled=S.cash<bribeCost();
+  _bb.textContent="BRIBE "+money(bribeCost());
  }
  q(".v-msg").textContent=S.msg;
  renderTicker();
@@ -2043,11 +2045,12 @@ function battleHTML(){
 function clinicHTML(){
  var _th=tabHeader("clinic");
  var missing=Math.max(0,100-S.hp);
- var a25=Math.min(25,missing),c25=Math.ceil(a25*2),cf=Math.ceil(missing*2);
+ var _cr=clinicRate();
+ var a25=Math.min(25,missing),c25=Math.ceil(a25*_cr),cf=Math.ceil(missing*_cr);
  var full=missing<=0;
  var h=_th+'<div class="shopsec">CLINIC</div>'
   +'<div class="brow"><span>Health</span><div class="bar"><i class="b-you" style="width:'+Math.round(Math.max(0,Math.min(100,S.hp)))+'%"></i></div><b>'+Math.round(Math.max(0,S.hp))+'/100</b></div>'
-  +'<div class="sdesc" style="margin:4px 2px 8px">$2 per HP. Fights hurt — patch up before the next ambush.</div>'
+  +'<div class="sdesc" style="margin:4px 2px 8px">$'+_cr+' per HP. Fights hurt — patch up before the next ambush.</div>'
   +'<div class="btns col">'
   +'<button type="button" data-act="heal" data-amt="25"'+(full||S.cash<c25?" disabled":"")+'>Heal +'+Math.round(a25)+' ('+money(c25)+')</button>'
   +'<button type="button" class="go" data-act="heal" data-amt="full"'+(full||S.cash<cf?" disabled":"")+'>Full heal ('+money(cf)+')</button>'
@@ -2214,7 +2217,7 @@ root.addEventListener("click",function(e){
  if(a==="buypapers"){if(S.cash>=PAPER_COST){S.cash-=PAPER_COST;S.papers+=PAPER_PACK;S.msg="Bought "+PAPER_PACK+" rolling papers.";save();render();}return;}
  if(a==="buyduffel"){var ti=DUFFEL.indexOf(S.stashCap);if(ti<DUFFEL.length-1){var nc=DUFFEL[ti+1];if(S.cash>=DUFFEL_COST[nc]){S.cash-=DUFFEL_COST[nc];S.stashCap=nc;S.msg="Duffel upgraded — carry "+nc+"g now.";save();render();}}return;}
  if(a==="buyprop"){var pr2=PROPS.filter(function(x){return x.id===b.dataset.prop;})[0];var owned=S.props.some(function(x){return x.id===pr2.id;});if(pr2&&!owned&&pr2.tier<=pLevel()&&S.cash>=pr2.cost){S.cash-=pr2.cost;S.props.push(mkProp(pr2.id));S.msg="New property: "+pr2.name+"! "+pr2.desc;save();render();}return;}
- if(a==="bribe"){if(S.cash>=BRIBE_COST&&S.heat>0&&Date.now()>=S.lockedUntil){S.cash-=BRIBE_COST;S.heat=Math.max(0,S.heat-50);S.msg="Cops paid off. Heat dropped.";save();render();}return;}
+ if(a==="bribe"){var _bc=bribeCost();if(S.cash>=_bc&&S.heat>0&&Date.now()>=S.lockedUntil){S.cash-=_bc;S.heat=Math.max(0,S.heat-50);S.msg="Cops paid off. Heat dropped.";save();render();}return;}
  if(a==="dbuy"){doDeal(+b.dataset.d,b.dataset.strain,true);return;}
  if(a==="dsell"){doDeal(+b.dataset.d,b.dataset.strain,false);return;}
  if(a==="cookstart"){startCook(b.dataset.key);return;}
