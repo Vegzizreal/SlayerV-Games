@@ -320,6 +320,13 @@ window.hatchWidget={
 }
 .sale-detail{color:#8f8f99;font-size:13px;margin-bottom:16px}
 .sale-card button{background:linear-gradient(180deg,#4ade80,#22a355);color:#052e14;font-weight:900;border:0;border-radius:10px;padding:12px 32px;font-size:15px;cursor:pointer}
+/* Roach warning pop-up */
+.roach-pop{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.72);animation:spFade .25s ease-out}
+.roach-card{background:linear-gradient(180deg,#1c1216,#161016);border:1px solid #e5484d;border-radius:18px;padding:24px 28px;text-align:center;max-width:300px;box-shadow:0 8px 40px rgba(229,72,77,.25);animation:spPop .35s cubic-bezier(.2,1.4,.4,1)}
+.roach-card img{width:72px;height:72px;border-radius:50%;object-fit:cover;border:2px solid #e5484d;margin-bottom:12px}
+.roach-msg{font-size:16px;font-weight:700;color:#ece9e2;line-height:1.5;margin-bottom:16px;font-style:italic}
+.roach-msg b{color:#e5484d}
+.roach-card button{background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;font-weight:900;border:0;border-radius:10px;padding:12px 32px;font-size:15px;cursor:pointer}
 </style>
 <style>
 /* ===== POTAGOTCHI v3: Cook lab + product art ===== */
@@ -1372,12 +1379,32 @@ function showSalePop(strainName,qtyLabel,revenue,profit){
   setTimeout(function(){var p=root.querySelector(".sale-pop");if(p)p.remove();},6000);
  }catch(e){}
 }
+function showRoachWarn(){
+ try{
+  if(typeof document==="undefined"||!document.createElement||!root)return;
+  var old=root.querySelector(".roach-pop");if(old)old.remove();
+  var rimg=q(".roach-topbar img");
+  var src=rimg?rimg.src:"";
+  var pop=document.createElement("div");
+  pop.className="roach-pop";
+  pop.innerHTML='<div class="roach-card">'
+   +(src?'<img src="'+src+'" alt="Roach">':'')
+   +'<div class="roach-msg">yo I wouldn\'t keep doing that yo<br><b>— Roach</b></div>'
+   +'<button type="button" data-act="roachpop-ok">HEARD YOU</button></div>';
+  pop.addEventListener("click",function(e){
+   if(e.target===pop||e.target.dataset.act==="roachpop-ok"){pop.remove();}
+  });
+  root.appendChild(pop);
+  setTimeout(function(){var p=root.querySelector(".roach-pop");if(p)p.remove();},5000);
+ }catch(e){}
+}
 function dealerStreakHeat(di){
  // Punish hitting the same dealer repeatedly: streak 4+ adds escalating heat
  if(di===S.lastDealer){S.dealerStreak=(S.dealerStreak||0)+1;}else{S.lastDealer=di;S.dealerStreak=1;}
  if(S.dealerStreak>=4){
   var extra=(S.dealerStreak-3)*5;
   S.heat=Math.min(100,S.heat+extra);
+  if(S.dealerStreak===4)showRoachWarn();
   return extra;
  }
  return 0;
