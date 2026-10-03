@@ -143,7 +143,7 @@ window.hatchWidget={
 }
 /* finger-sized touch targets on touch devices */
 @media(pointer:coarse){
- .pg-tabs button{padding:12px 0;font-size:13px;min-height:48px;overflow:hidden;text-overflow:ellipsis}
+ .pg-tabs button{padding:14px 0;font-size:13px;min-height:54px;overflow:hidden;text-overflow:ellipsis}
  .growbar button{padding:13px 14px;font-size:14px;min-height:50px}
  .btns button{padding:12px 8px;font-size:13.5px;min-height:46px}
  .dchip{padding:10px 8px;min-height:46px;font-size:12.5px}
@@ -205,7 +205,7 @@ window.hatchWidget={
 .d-strain{font-weight:800;min-width:64px}
 .d-prices{flex:1;color:var(--hatch-widget-muted);font-size:10.5px}
 .d-have{font-weight:800;min-width:30px;text-align:right}
-.drow button{padding:6px 9px;border-radius:9px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:11.5px;cursor:pointer}
+.drow button{padding:10px 16px;border-radius:9px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:12.5px;cursor:pointer;min-height:44px}
 .drow button:disabled{opacity:.35}
 .amtrow{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:13px;font-weight:700;color:var(--hatch-widget-muted);flex-wrap:wrap}
 .amtrow button{padding:7px 16px;border-radius:999px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);font-weight:800;font-size:12.5px;cursor:pointer}
@@ -480,11 +480,11 @@ window.hatchWidget={
 .drow2 button:disabled{opacity:.35}
 .picon.xs{width:22px;height:22px;border-radius:6px;flex:none}
 .lock.sm{padding:6px 10px;font-size:11.5px;margin-bottom:6px}
-.rc2{display:flex;align-items:center;gap:8px;padding:4px 8px;background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-radius:10px;margin-bottom:4px;box-shadow:0 1px 4px var(--hatch-widget-shadow)}
-.rc2-mid{flex:1;min-width:0}
-.rc2-name{font-size:12.5px;font-weight:900}
-.rc2-sub{font-size:10px;color:var(--hatch-widget-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.rc2 button{padding:6px 12px;border-radius:9px;border:0;background:linear-gradient(180deg,#6b5a7a,#4a3f57);color:#fff;font-weight:800;font-size:12px;cursor:pointer;white-space:nowrap;flex:none}
+.rc2{display:flex;align-items:center;gap:10px;padding:8px 8px 8px 10px;background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-radius:10px;margin-bottom:6px;box-shadow:0 1px 4px var(--hatch-widget-shadow)}
+.rc2-mid{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
+.rc2-name{font-size:12px;font-weight:900}
+.rc2-sub{font-size:9px;color:var(--hatch-widget-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc2 button{padding:14px 24px;border-radius:9px;border:0;background:linear-gradient(180deg,#6b5a7a,#4a3f57);color:#fff;font-weight:800;font-size:13.5px;cursor:pointer;white-space:nowrap;flex:none}
 .rc2 button:disabled{opacity:.4}
 .rc2.locked{opacity:.6}
 .has-job .rc2-sub{display:none}
@@ -601,11 +601,11 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .stashrow .d2-name{font-weight:800;font-size:13px;color:var(--hatch-widget-text)}
 .stashrow .d2-sub{font-size:11px;color:var(--hatch-widget-muted)}
 .stashbtns{display:flex;gap:6px;flex:none;flex-wrap:wrap;justify-content:flex-end;max-width:60%}
-.stashbtns button{padding:8px 10px;border-radius:8px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:11px;cursor:pointer;min-height:40px}
+.stashbtns button{padding:10px 14px;border-radius:8px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:12px;cursor:pointer;min-height:44px;flex:1}
 .stashbtns button.go{background:linear-gradient(180deg,#e5484d,#a92e33);border-color:transparent;color:#fff;box-shadow:0 2px 8px rgba(229,72,77,.4)}
 .stashbtns button.sell{background:linear-gradient(180deg,#3f7a4e,#2a5535);border-color:transparent;color:#fff}
 .stashbtns button:disabled{opacity:.35}
-@media(pointer:coarse){.stashbtns button{min-height:46px;padding:10px 12px;font-size:11.5px}}
+@media(pointer:coarse){.stashbtns button{min-height:50px;padding:12px 14px;font-size:12.5px}}
 /* ===== TERPENE TYCOON v20: tab icons + store leaf imprint ===== */
 .pg-tabs button .tab-ic{display:inline-flex;vertical-align:-2px;margin-right:5px}
 .pg-tabs button .tab-ic svg{display:block}
@@ -625,7 +625,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 @media(max-width:560px){
  .pg-tabs button .tab-tx{display:none}
  .pg-tabs button .tab-ic{margin-right:0}
- .pg-tabs button .tab-ic svg{width:17px;height:17px}
+ .pg-tabs button .tab-ic svg{width:20px;height:20px}
  .pg-tabs button.store-tab::before{opacity:.8;inset:-4px}
  .pg-tabs button.store-tab.on::before{opacity:1}
 }
