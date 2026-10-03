@@ -103,7 +103,7 @@ html,body{margin:0;padding:0}
 .pg-tabs button:active{transform:translateY(2px);box-shadow:none}
 .pg-pane[hidden]{display:none}
 .pg-stage{position:relative;border-radius:20px;overflow:hidden;border:2px solid var(--hatch-widget-border);background:#000;box-shadow:0 6px 16px var(--hatch-widget-shadow)}
-.pg-stage canvas{width:100%;display:block;aspect-ratio:8/5;transform:translateZ(0);will-change:transform}
+.pg-stage canvas{width:100%;display:block;aspect-ratio:8/5}
 .pg-gstage.g-m3 canvas{aspect-ratio:4/5}
 .pg-gstage.g-dk canvas{aspect-ratio:3/4}
 .pg-gstage.g-ver canvas{aspect-ratio:3/4}
@@ -2410,10 +2410,16 @@ Game.prototype.update = function (dt) {
 /* ---------------- rendering ---------------- */
 Game.prototype.draw = function () {
   var cv = this.cv, ctx = this.ctx;
-  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   var w = cv.clientWidth || 320, h = cv.clientHeight || 420;
-  var W = Math.max(1, Math.round(w * dpr)), H = Math.max(1, Math.round(h * dpr));
-  if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+  /* Cache backing-store size: resizing the canvas clears it mid-frame (flash).
+   * Only resize when CSS size actually changes, not on 1px viewport wobble. */
+  if (this._cw !== w || this._ch !== h) {
+    this._cw = w; this._ch = h;
+    var dpr0 = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+    cv.width = Math.max(1, Math.round(w * dpr0));
+    cv.height = Math.max(1, Math.round(h * dpr0));
+  }
+  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   ctx.clearRect(0, 0, w, h);
 
@@ -2810,10 +2816,16 @@ function rr(g, x, y, w, h, r) {
 }
 Game.prototype.draw = function () {
   var cv = this.cv, ctx = this.ctx;
-  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   var w = cv.clientWidth || 360, h = cv.clientHeight || 480;
-  var Wd = Math.max(1, Math.round(w * dpr)), Hd = Math.max(1, Math.round(h * dpr));
-  if (cv.width !== Wd || cv.height !== Hd) { cv.width = Wd; cv.height = Hd; }
+  /* Cache backing-store size: resizing the canvas clears it mid-frame (flash).
+   * Only resize when CSS size actually changes, not on 1px viewport wobble. */
+  if (this._cw !== w || this._ch !== h) {
+    this._cw = w; this._ch = h;
+    var dpr0 = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+    cv.width = Math.max(1, Math.round(w * dpr0));
+    cv.height = Math.max(1, Math.round(h * dpr0));
+  }
+  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   ctx.setTransform(dpr * w / W, 0, 0, dpr * h / H, 0, 0);
   ctx.clearRect(0, 0, W, H);
 
@@ -3132,10 +3144,16 @@ function rr(g, x, y, w, h, r) {
 }
 Game.prototype.draw = function () {
   var cv = this.cv, ctx = this.ctx;
-  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   var w = cv.clientWidth || 360, h = cv.clientHeight || 480;
-  var Wd = Math.max(1, Math.round(w * dpr)), Hd = Math.max(1, Math.round(h * dpr));
-  if (cv.width !== Wd || cv.height !== Hd) { cv.width = Wd; cv.height = Hd; }
+  /* Cache backing-store size: resizing the canvas clears it mid-frame (flash).
+   * Only resize when CSS size actually changes, not on 1px viewport wobble. */
+  if (this._cw !== w || this._ch !== h) {
+    this._cw = w; this._ch = h;
+    var dpr0 = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+    cv.width = Math.max(1, Math.round(w * dpr0));
+    cv.height = Math.max(1, Math.round(h * dpr0));
+  }
+  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   ctx.setTransform(dpr * w / W, 0, 0, dpr * h / H, 0, 0);
 
   /* meadow */
@@ -3412,10 +3430,16 @@ Game.prototype.update = function (dt) {
 
 Game.prototype.draw = function () {
   var cv = this.cv, ctx = this.ctx;
-  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   var w = cv.clientWidth || 360, h = cv.clientHeight || 480;
-  var Wd = Math.max(1, Math.round(w * dpr)), Hd = Math.max(1, Math.round(h * dpr));
-  if (cv.width !== Wd || cv.height !== Hd) { cv.width = Wd; cv.height = Hd; }
+  /* Cache backing-store size: resizing the canvas clears it mid-frame (flash).
+   * Only resize when CSS size actually changes, not on 1px viewport wobble. */
+  if (this._cw !== w || this._ch !== h) {
+    this._cw = w; this._ch = h;
+    var dpr0 = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+    cv.width = Math.max(1, Math.round(w * dpr0));
+    cv.height = Math.max(1, Math.round(h * dpr0));
+  }
+  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   ctx.setTransform(dpr * w / W, 0, 0, dpr * h / H, 0, 0);
 
   /* kitchen dusk */
@@ -3684,10 +3708,16 @@ Game.prototype.update = function (dt) {
 
 Game.prototype.draw = function () {
   var cv = this.cv, ctx = this.ctx;
-  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   var w = cv.clientWidth || 480, h = cv.clientHeight || 320;
-  var Wd = Math.max(1, Math.round(w * dpr)), Hd = Math.max(1, Math.round(h * dpr));
-  if (cv.width !== Wd || cv.height !== Hd) { cv.width = Wd; cv.height = Hd; }
+  /* Cache backing-store size: resizing the canvas clears it mid-frame (flash).
+   * Only resize when CSS size actually changes, not on 1px viewport wobble. */
+  if (this._cw !== w || this._ch !== h) {
+    this._cw = w; this._ch = h;
+    var dpr0 = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+    cv.width = Math.max(1, Math.round(w * dpr0));
+    cv.height = Math.max(1, Math.round(h * dpr0));
+  }
+  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   ctx.setTransform(dpr * w / W, 0, 0, dpr * h / H, 0, 0);
 
   /* park sky */
@@ -3967,10 +3997,16 @@ Game.prototype.update = function (dt) {
 
 Game.prototype.draw = function () {
   var cv = this.cv, ctx = this.ctx;
-  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   var w = cv.clientWidth || 360, h = cv.clientHeight || 480;
-  var Wd = Math.max(1, Math.round(w * dpr)), Hd = Math.max(1, Math.round(h * dpr));
-  if (cv.width !== Wd || cv.height !== Hd) { cv.width = Wd; cv.height = Hd; }
+  /* Cache backing-store size: resizing the canvas clears it mid-frame (flash).
+   * Only resize when CSS size actually changes, not on 1px viewport wobble. */
+  if (this._cw !== w || this._ch !== h) {
+    this._cw = w; this._ch = h;
+    var dpr0 = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
+    cv.width = Math.max(1, Math.round(w * dpr0));
+    cv.height = Math.max(1, Math.round(h * dpr0));
+  }
+  var dpr = (typeof window !== 'undefined' && window.devicePixelRatio) || 1;
   ctx.setTransform(dpr * w / W, 0, 0, dpr * h / H, 0, 0);
 
   /* training room */
@@ -4901,9 +4937,12 @@ function drawSky(t){
     g.addColorStop(0,dn.top); g.addColorStop(0.55,dn.mid); g.addColorStop(1,dn.bot);
     ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
     if(dn.stars>0.01){
+      /* Static stars (no twinkle): twinkling read as flicker on mobile GPUs.
+       * fillRect is cheaper than arc; globalAlpha avoids string concat. */
+      ctx.fillStyle='#fff'; ctx.globalAlpha=dn.stars;
       for(i=0;i<starSeed.length;i++){ s=starSeed[i];
-        ctx.fillStyle='rgba(255,255,255,'+((0.72+0.28*Math.sin(t*0.9+s.tw))*dn.stars).toFixed(3)+')';
-        ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,7); ctx.fill(); }
+        ctx.fillRect(s.x*W,s.y*H,s.r*2,s.r*2); }
+      ctx.globalAlpha=1;
     }
     if(dn.sun>0.01){
       ctx.globalAlpha=dn.sun;
@@ -4940,9 +4979,9 @@ function drawSky(t){
     g=ctx.createLinearGradient(0,0,0,H);
     g.addColorStop(0,'#0b1026'); g.addColorStop(1,'#23365e');
     ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+    ctx.fillStyle='#fff';
     for(var i=0;i<starSeed.length;i++){ var s=starSeed[i];
-      ctx.fillStyle='rgba(255,255,255,'+(0.72+0.28*Math.sin(t*0.9+s.tw))+')';
-      ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,7); ctx.fill(); }
+      ctx.fillRect(s.x*W,s.y*H,s.r*2,s.r*2); }
     ctx.fillStyle='#f4f1de'; ctx.beginPath(); ctx.arc(W*0.8,H*0.2,26,0,7); ctx.fill();
     ctx.fillStyle='#d8d4c0'; ctx.beginPath(); ctx.arc(W*0.8-9,H*0.2-5,6,0,7); ctx.fill();
   } else {
