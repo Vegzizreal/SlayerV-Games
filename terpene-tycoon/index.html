@@ -299,6 +299,27 @@ window.hatchWidget={
 .dot{width:10px;height:10px;flex:none;border-radius:50%;display:inline-block;box-shadow:inset 0 1px 1px rgba(255,255,255,.5)}
 .srow button{background:linear-gradient(180deg,#e5484d,#a92e33);box-shadow:0 1px 6px rgba(229,72,77,.4),inset 0 1px 0 rgba(255,255,255,.28);transition:transform .08s}
 .srow button:active{transform:scale(.96)}
+/* Sale pop-up: cash into duffle bag */
+.sale-pop{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.72);animation:spFade .25s ease-out}
+@keyframes spFade{from{opacity:0}to{opacity:1}}
+.sale-card{background:linear-gradient(180deg,#1a1a1e,#141417);border:1px solid #2b2b32;border-radius:18px;padding:28px 32px;text-align:center;max-width:320px;box-shadow:0 8px 40px rgba(0,0,0,.6);animation:spPop .35s cubic-bezier(.2,1.4,.4,1)}
+@keyframes spPop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.sale-bag{position:relative;width:140px;height:110px;margin:0 auto 12px}
+.sale-bill{position:absolute;left:50%;top:-10px;width:56px;height:28px;margin-left:-28px;background:linear-gradient(180deg,#4ade80,#22a355);border:1px solid #15803d;border-radius:4px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#052e14;animation:spDrop 1s ease-in forwards;z-index:2}
+.sale-bill:nth-child(2){animation-delay:.25s}
+.sale-bill:nth-child(3){animation-delay:.5s}
+@keyframes spDrop{0%{transform:translateY(-40px) rotate(-8deg);opacity:0}20%{opacity:1}80%{transform:translateY(50px) rotate(6deg);opacity:1}100%{transform:translateY(65px) rotate(0deg);opacity:0}}
+.sale-profit{font-size:28px;font-weight:900;color:#4ade80;margin:8px 0 4px;transform-origin:center;animation:spTuck 2.8s ease-in-out forwards}
+@keyframes spTuck{
+ 0%{transform:scale(.6);opacity:0}
+ 12%{transform:scale(1.05);opacity:1}
+ 18%{transform:scale(1);opacity:1}
+ 45%{transform:scale(1) translateY(0);opacity:1}
+ 75%{transform:scale(.35) translateY(-55px);opacity:.85}
+ 100%{transform:scale(.18) translateY(-75px);opacity:0}
+}
+.sale-detail{color:#8f8f99;font-size:13px;margin-bottom:16px}
+.sale-card button{background:linear-gradient(180deg,#4ade80,#22a355);color:#052e14;font-weight:900;border:0;border-radius:10px;padding:12px 32px;font-size:15px;cursor:pointer}
 </style>
 <style>
 /* ===== POTAGOTCHI v3: Cook lab + product art ===== */
@@ -856,7 +877,7 @@ var HEAT_TIERS=["CALM","SUSPICIOUS","WATCHED","HUNTED"];
 function mkDealer(name){function m(){return 0.8+Math.random()*0.4;}var d={name:name,buy:{},sell:{}};PKEYS.forEach(function(k){d.buy[k]=m();d.sell[k]=m();});return d;}
 function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
-var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,lastVer:"",
+var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,lastVer:"",
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
  msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
@@ -878,6 +899,7 @@ function normalize(s){
  if(typeof s.papers!=="number"||s.papers<0)s.papers=0;
  if(typeof s.lastDealer!=="number")s.lastDealer=-1;
  if(typeof s.dealerStreak!=="number"||s.dealerStreak<0)s.dealerStreak=0;
+ if(typeof s.invested!=="object"||!s.invested)s.invested={};
  if(RKEYS.indexOf(s.setdrug)<0)s.setdrug="hash";
  s.stats=Object.assign({earned:0,harvested:0,deals:0,busted:0,cooked:0},s.stats);
  if(s.seeds.moonrock>0){s.cash+=s.seeds.moonrock*150;s.seeds.moonrock=0;}
@@ -1257,6 +1279,7 @@ function doPlant(pi,si,k){
  if(!pr||pr.slots[si]||S.seeds[k]<=0)return;
  if(PRODUCTS[k].tier>pLevel())return;
  S.seeds[k]--;
+ trackCost(k,PRODUCTS[k].seed);
  pr.slots[si]={strain:k,growth:0,water:70};
  S.msg="Planted "+PRODUCTS[k].name+" at the "+pr.name+". Keep it watered.";
  save();render();
@@ -1269,6 +1292,7 @@ function doAutoPlant(k){
   for(var si=0;si<pr.slots.length;si++){
    if(!pr.slots[si]&&S.seeds[k]>0){
     S.seeds[k]--;
+    trackCost(k,PRODUCTS[k].seed);
     pr.slots[si]={strain:k,growth:0,water:70};
     planted++;
    }
@@ -1313,6 +1337,41 @@ function doBust(){
  S.heat=45;S.lockedUntil=Date.now()+5*60000;S.stats.busted++;
  S.msg="BUSTED! Cops seized your whole stash. Lay low for 5 minutes.";
 }
+function trackCost(k,amount){S.invested[k]=Math.round(((S.invested[k]||0)+amount)*100)/100;}
+function calcProfit(k,soldQty,heldBefore,revenue){
+ var inv=S.invested[k]||0;
+ var costPortion=heldBefore>0?inv*(soldQty/heldBefore):0;
+ var profit=Math.round(revenue-costPortion);
+ // Reduce invested by the portion sold
+ S.invested[k]=Math.max(0,Math.round((inv-costPortion)*100)/100);
+ return profit;
+}
+function showSalePop(strainName,qtyLabel,revenue,profit){
+ try{
+  if(typeof document==="undefined"||!document.createElement||!root)return;
+  var old=root.querySelector(".sale-pop");if(old)old.remove();
+  var pop=document.createElement("div");
+  pop.className="sale-pop";
+  var ptxt=profit>=0?"+":"-";
+  pop.innerHTML='<div class="sale-card">'
+   +'<div class="sale-bag">'
+   +'<div class="sale-bill">$</div><div class="sale-bill">$</div><div class="sale-bill">$</div>'
+   +'<svg viewBox="0 0 140 80" style="position:absolute;bottom:0;left:0;width:140px;height:80px;z-index:1">'
+   +'<ellipse cx="70" cy="58" rx="52" ry="20" fill="#2b2b32" stroke="#1a1a1e" stroke-width="2"/>'
+   +'<path d="M18,58 Q70,30 122,58 L122,52 Q70,24 18,52 Z" fill="#3a3a42"/>'
+   +'<rect x="55" y="18" width="30" height="14" rx="4" fill="#1a1a1e" stroke="#3a3a42" stroke-width="2"/>'
+   +'<path d="M60,32 Q70,42 80,32" stroke="#3a3a42" stroke-width="4" fill="none"/>'
+   +'</svg></div>'
+   +'<div class="sale-profit" style="color:'+(profit>=0?"#4ade80":"#ef4444")+'">'+ptxt+money(Math.abs(profit))+'</div>'
+   +'<div class="sale-detail">profit on '+qtyLabel+' '+strainName+'<br>'+money(revenue)+' in the bag</div>'
+   +'<button type="button" data-act="salepop-ok">COLLECT</button></div>';
+  pop.addEventListener("click",function(e){
+   if(e.target===pop||e.target.dataset.act==="salepop-ok"){pop.remove();}
+  });
+  root.appendChild(pop);
+  setTimeout(function(){var p=root.querySelector(".sale-pop");if(p)p.remove();},6000);
+ }catch(e){}
+}
 function dealerStreakHeat(di){
  // Punish hitting the same dealer repeatedly: streak 4+ adds escalating heat
  if(di===S.lastDealer){S.dealerStreak=(S.dealerStreak||0)+1;}else{S.lastDealer=di;S.dealerStreak=1;}
@@ -1331,7 +1390,7 @@ function doDeal(di,k,isBuy,isJoint){
   var unit=ppu(st.price,d.sell[k]),cost=Math.ceil(unit*g);
   if(S.cash<cost){S.msg="Not enough cash for that.";save();render();return;}
   if(stashTotal()+g>S.stashCap){S.msg="Duffel is full — sell some or upgrade it.";save();render();return;}
-  S.cash-=cost;S.stash[k]+=g;S.heat=Math.min(100,S.heat+2+g);
+  S.cash-=cost;S.stash[k]+=g;trackCost(k,cost);S.heat=Math.min(100,S.heat+2+g);
   var dh=dealerStreakHeat(di);
   if(!addXP(5))S.msg="Bought "+g+"g of "+st.name+" for "+money(cost)+"."+(dh>0?" Same spot too many times — heat +"+dh+".":"");
  }else{
@@ -1341,11 +1400,14 @@ function doDeal(di,k,isBuy,isJoint){
   if(isJoint)unit2=Math.round(unit2*0.9);
   if(buffActive())unit2=Math.round(unit2*S.buffMult);
   var rev=Math.floor(unit2*g);
+  var heldBefore=isJoint?(S.joints[k]||0):(S.stash[k]||0);
   if(isJoint)S.joints[k]-=g;else S.stash[k]-=g;
   S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
   S.heat=Math.min(100,S.heat+2+g);
   var dh2=dealerStreakHeat(di);
+  var prof=calcProfit(k+(isJoint?"_j":""),g,heldBefore,rev);
   if(!addXP(5))S.msg="Sold "+g+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+"."+(dh2>0?" Same spot too many times — heat +"+dh2+".":"");
+  showSalePop(st.name,g+(isJoint?" joints":"g"),rev,prof);
  }
  battleRoll();
  save();render();
@@ -1371,7 +1433,9 @@ function doStashSellAll(k,isJoint){
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
  S.heat=Math.min(100,S.heat+2+have);
  var dh3=dealerStreakHeat(sd.di);
+ var prof2=calcProfit(k+(isJoint?"_j":""),have,have,rev);
  if(!addXP(5))S.msg="Sold "+have+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+"."+(dh3>0?" Same spot too many times — heat +"+dh3+".":"");
+ showSalePop(st.name,have+(isJoint?" joints":"g"),rev,prof2);
  battleRoll();
  save();render();
 }
@@ -1535,6 +1599,14 @@ function doRoll(k,n){
  if(stashTotal()+n>S.stashCap){S.msg="Duffel is full — sell some first.";save();render();return;}
  S.stash[k]-=n;
  S.papers-=n*2;
+ // Transfer cost basis: bud cost moves to joints
+ (function(){
+  var budHeld=(S.stash[k]||0)+n;
+  var budInv=S.invested[k]||0;
+  var moved=budHeld>0?budInv*(n/budHeld):0;
+  S.invested[k]=Math.max(0,Math.round((budInv-moved)*100)/100);
+  S.invested[k+"_j"]=Math.round(((S.invested[k+"_j"]||0)+moved+(n*2*(PAPER_COST/PAPER_PACK)))*100)/100;
+ })();
  S.joints[k]=(S.joints[k]||0)+n*2;
  S.msg="Rolled "+(n*2)+" "+PRODUCTS[k].name+" joints.";
  save();render();
