@@ -1197,7 +1197,8 @@ function render(){
     if(v===0)return;
     if(v===1){sh+='<div class="srow c tight locked"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></div></div>';return;}
     sh+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+'</span></div>'
-     +'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+' (&times;'+S.seeds[k]+')</button></div>';
+     +'<div style="display:flex;gap:6px"><button type="button" data-act="autoplant" data-strain="'+k+'"'+((S.seeds[k]||0)>0?"":" disabled")+'>AUTO PLANT</button>'
+     +'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+' (&times;'+S.seeds[k]+')</button></div></div>';
    });
   }else if(st==="lab"){
    KITKEYS.forEach(function(k){
@@ -1256,6 +1257,22 @@ function doPlant(pi,si,k){
  S.seeds[k]--;
  pr.slots[si]={strain:k,growth:0,water:70};
  S.msg="Planted "+PRODUCTS[k].name+" at the "+pr.name+". Keep it watered.";
+ save();render();
+}
+function doAutoPlant(k){
+ if(!k||PRODUCTS[k].tier>pLevel())return;
+ var planted=0;
+ for(var pi=0;pi<S.props.length;pi++){
+  var pr=S.props[pi];
+  for(var si=0;si<pr.slots.length;si++){
+   if(!pr.slots[si]&&S.seeds[k]>0){
+    S.seeds[k]--;
+    pr.slots[si]={strain:k,growth:0,water:70};
+    planted++;
+   }
+  }
+ }
+ S.msg=planted>0?("Auto-planted "+planted+" "+PRODUCTS[k].name+"."):(S.seeds[k]<=0?"No "+PRODUCTS[k].name+" seeds left.":"No empty pots.");
  save();render();
 }
 function doHarvest(pi,si){
@@ -2033,6 +2050,7 @@ root.addEventListener("click",function(e){
  if(a==="fert"){var p2=getPot(+b.dataset.pi,+b.dataset.si);if(p2&&S.fert>0&&p2.growth<100){S.fert--;p2.growth=Math.min(100,p2.growth+30);S.msg="Fertilized — growth boosted.";save();render();}return;}
  if(a==="harvest"){doHarvest(+b.dataset.pi,+b.dataset.si);return;}
  if(a==="buyseed"){var k=b.dataset.strain;if(PRODUCTS[k].tier<=pLevel()&&S.cash>=PRODUCTS[k].seed){S.cash-=PRODUCTS[k].seed;S.seeds[k]++;S.msg="Bought "+PRODUCTS[k].name+" seeds.";save();render();}return;}
+ if(a==="autoplant"){doAutoPlant(b.dataset.strain);return;}
  if(a==="buyfert"){if(S.cash>=FERT_COST){S.cash-=FERT_COST;S.fert++;S.msg="Fertilizer stocked.";save();render();}return;}
  if(a==="buypapers"){if(S.cash>=PAPER_COST){S.cash-=PAPER_COST;S.papers+=PAPER_PACK;S.msg="Bought "+PAPER_PACK+" rolling papers.";save();render();}return;}
  if(a==="buyduffel"){var ti=DUFFEL.indexOf(S.stashCap);if(ti<DUFFEL.length-1){var nc=DUFFEL[ti+1];if(S.cash>=DUFFEL_COST[nc]){S.cash-=DUFFEL_COST[nc];S.stashCap=nc;S.msg="Duffel upgraded — carry "+nc+"g now.";save();render();}}return;}
