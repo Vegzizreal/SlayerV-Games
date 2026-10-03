@@ -1092,6 +1092,20 @@ var HINTS={
  settings:"Cook speeds for every drug, plus one grow speed for all weed. Everything saves instantly.",
  clinic:"Patch up after fights — $2 per HP. High heat brings cop ambushes; go in armed and healthy."
 };
+var TAB_COLORS={grow:"#4ade80",stash:"#d4a574",cook:"#fb923c",deal:"#22c55e",chill:"#a78bfa",clinic:"#5eead4",settings:"#9a97a3"};
+var TAB_ICONS={
+ grow:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 13c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg>',
+ stash:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2.5"/><path d="M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8"/><path d="M3 13h18"/></svg>',
+ cook:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10 3v5.5L4.8 17a2.3 2.3 0 0 0 2 3.5h10.4a2.3 2.3 0 0 0 2-3.5L14 8.5V3"/><path d="M7.5 15h9"/></svg>',
+ deal:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="19" height="11" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/></svg>',
+ chill:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20c-1.6-2.2 1.6-3.2 0-5.4s1.6-3.2 0-5.4"/><path d="M13.5 20c-1.6-2.2 1.6-3.2 0-5.4s1.6-3.2 0-5.4"/></svg>',
+ clinic:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 8.5v7M8.5 12h7"/></svg>',
+ settings:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v2.8M12 18.7v2.8M2.5 12h2.8M18.7 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2"/></svg>'
+};
+function tabHeader(tab){
+ var c=TAB_COLORS[tab]||"#e5484d",ic=TAB_ICONS[tab]||"";
+ return '<div class="store-screen-head"><span class="store-title" style="color:'+c+'">'+ic+tab.toUpperCase()+'</span><div class="pill"><b>'+money(S.cash)+'</b></div></div>';
+}
 function render(){
  if(root&&root.dataset)root.dataset.theme=(S.theme==="light")?"light":"dark";
  var now=Date.now();
@@ -1133,7 +1147,7 @@ function render(){
  q(".pane-battle").hidden=!battling;
  if(battling)q(".pane-battle").innerHTML=battleHTML();
  q(".v-hint").textContent=battling?"Win the fight or run — nothing else until it's over.":HINTS[S.tab];
- var gh='<div class="growbar"><button type="button" data-act="waterall">Water all</button><button type="button" data-act="harvestall">Harvest all</button></div>';
+ var gh=tabHeader("grow")+'<div class="growbar"><button type="button" data-act="waterall">Water all</button><button type="button" data-act="harvestall">Harvest all</button></div>';
  var gi=S.gprop||0;if(gi>=S.props.length)gi=0;
  var gguard=0;while(S.props[gi]&&S.props[gi].tier>pLevel()&&gguard<S.props.length){gi=(gi+1)%S.props.length;gguard++;}
  var pr=S.props[gi];
@@ -1148,7 +1162,7 @@ function render(){
  q(".pane-stash").innerHTML=stashHTML();
  q(".pane-cook").innerHTML=cookHTML();q(".pane-cook").classList.toggle("has-job",!!S.job);
  var locked=now<S.lockedUntil;
- var dh='<div class="amtrow c"><span>Deal:</span>'
+ var dh=tabHeader("deal")+'<div class="amtrow c"><span>Deal:</span>'
   +'<button type="button" data-act="amt" data-amt="1"'+(S.amt===1?' class="on"':'')+'>1g</button>'
   +'<button type="button" data-act="amt" data-amt="5"'+(S.amt===5?' class="on"':'')+'>5g</button></div>';
  if(locked)dh+='<div class="lock sm">Laying low — heat dies down in '+Math.ceil((S.lockedUntil-now)/60000)+' min.</div>';
@@ -1470,10 +1484,11 @@ function doStashSellAll(k,isJoint){
  save();render();
 }
 function stashHTML(){
+ var _th=tabHeader("stash");
  var sd=stashDealer(),d=sd.d;
  var bActive=buffActive(),bpct=buffPct();
  function su(k,base){var u=base;if(bActive)u=Math.round(u*S.buffMult);return u;}
- var h='<div class="shopsec">STASH</div>';
+ var h=_th+'<div class="shopsec">STASH</div>';
  var tot=stashTotal(),val=0;
  PKEYS.forEach(function(k){
   var g=S.stash[k]||0;
@@ -1963,7 +1978,8 @@ function gameHTML(j){
  return "";
 }
 function cookHTML(){
- var j=S.job,h="";
+ var _th=tabHeader("cook");
+ var j=S.job,h=_th;
  if(j){
   var r=RECIPES[j.key],pr=PRODUCTS[j.key];
   if(j.phase==="cooking"){
@@ -2002,10 +2018,11 @@ function battleHTML(){
  return h;
 }
 function clinicHTML(){
+ var _th=tabHeader("clinic");
  var missing=Math.max(0,100-S.hp);
  var a25=Math.min(25,missing),c25=Math.ceil(a25*2),cf=Math.ceil(missing*2);
  var full=missing<=0;
- var h='<div class="shopsec">CLINIC</div>'
+ var h=_th+'<div class="shopsec">CLINIC</div>'
   +'<div class="brow"><span>Health</span><div class="bar"><i class="b-you" style="width:'+Math.round(Math.max(0,Math.min(100,S.hp)))+'%"></i></div><b>'+Math.round(Math.max(0,S.hp))+'/100</b></div>'
   +'<div class="sdesc" style="margin:4px 2px 8px">$2 per HP. Fights hurt — patch up before the next ambush.</div>'
   +'<div class="btns col">'
@@ -2015,8 +2032,9 @@ function clinicHTML(){
  return h;
 }
 function chillHTML(){
+ var _th=tabHeader("chill");
  var cv=S.chillview||"roll";
- var h='<div class="shopsec">CHILL</div>';
+ var h=_th+'<div class="shopsec">CHILL</div>';
  h+='<div class="dchips">'
   +'<button type="button" class="dchip'+(cv==="roll"?" on":"")+'" data-act="chillview" data-v="roll"><span class="dc-name">ROLL</span></button>'
   +'<button type="button" class="dchip'+(cv==="smoke"?" on":"")+'" data-act="chillview" data-v="smoke"><span class="dc-name">SMOKE</span></button>'
@@ -2057,8 +2075,9 @@ function chillHTML(){
  return h;
 }
 function settingsHTML(){
+ var _th=tabHeader("settings");
  var st=S.settingstab||"options";
- var h='<div class="dchips">'
+ var h=_th+'<div class="dchips">'
   +'<button type="button" class="dchip center'+(st==="options"?" on":"")+'" data-act="settingstab" data-t="options"><span class="dc-name">Options</span></button>'
   +'<button type="button" class="dchip center'+(st==="changelog"?" on":"")+'" data-act="settingstab" data-t="changelog"><span class="dc-name">Changelog</span></button>'
   +'</div>';
