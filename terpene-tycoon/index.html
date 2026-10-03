@@ -110,7 +110,7 @@ window.hatchWidget={
 .pg-msg{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:10px;padding:6px 10px;font-size:12.5px;margin-bottom:8px;min-height:1.4em}
 .pg-tabs{display:flex;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:3px;gap:4px;margin-bottom:8px}
 .pg-tabs button{flex:1;min-width:0;padding:7px 0;border:0;border-radius:8px;background:transparent;color:var(--hatch-widget-muted);font-weight:800;font-size:13px;cursor:pointer}
-.pg-tabs button.on{background:var(--hatch-widget-surface);color:var(--hatch-widget-text);box-shadow:0 1px 4px var(--hatch-widget-shadow)}
+.pg-tabs button.on{background:var(--hatch-widget-surface);box-shadow:0 1px 4px var(--hatch-widget-shadow)}
 .store-tabs{display:flex;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:3px;gap:2px;margin-bottom:8px}
 .store-tabs button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;gap:4px;padding:7px 0;border:0;border-radius:8px;background:transparent;color:var(--hatch-widget-muted);font-weight:800;font-size:10.5px;letter-spacing:.5px;cursor:pointer;white-space:nowrap}
 .store-tabs button svg{display:block;flex:0 0 auto;width:11px;height:11px}
@@ -610,6 +610,15 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .pg-tabs button .tab-ic{display:inline-flex;vertical-align:-2px;margin-right:5px}
 .pg-tabs button .tab-ic svg{display:block}
 .pg-tabs button.store-tab{position:relative;overflow:hidden;color:#e5484d;font-weight:900;letter-spacing:1px}
+.pg-tabs button[data-tab="grow"]{color:#4ade80}
+.pg-tabs button[data-tab="stash"]{color:#d4a574}
+.pg-tabs button[data-tab="cook"]{color:#fb923c}
+.pg-tabs button[data-tab="deal"]{color:#22c55e}
+.pg-tabs button[data-tab="chill"]{color:#a78bfa}
+.pg-tabs button[data-tab="clinic"]{color:#5eead4}
+.pg-tabs button[data-tab="settings"]{color:#9a97a3}
+.pg-tabs button:not(.on){opacity:.62}
+.pg-tabs button.on{opacity:1}
 .pg-tabs button.store-tab::before{content:"";position:absolute;inset:-8px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23e5484d%22%3E%3Cpath%20d%3D%22M12%201C12.8%205.5%2012.8%209.5%2012%2013C11.2%209.5%2011.2%205.5%2012%201Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C9.5%2010.5%206.8%208%203.5%206.5C6.8%208.5%209.8%2011%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C14.5%2010.5%2017.2%208%2020.5%206.5C17.2%208.5%2014.2%2011%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C8.8%2012.2%205.5%2011.8%202.2%2012.2C5.5%2013.5%208.8%2013.8%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C15.2%2012.2%2018.5%2011.8%2021.8%2012.2C18.5%2013.5%2015.2%2013.8%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C10.2%2014.3%208.5%2015.8%206.8%2018C8.8%2016.3%2010.6%2014.8%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C13.8%2014.3%2015.5%2015.8%2017.2%2018C15.2%2016.3%2013.4%2014.8%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M11.5%2013L11.5%2022C11.5%2022.3%2012.5%2022.3%2012.5%2022L12.5%2013Z%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;opacity:.32;pointer-events:none}
 .pg-tabs button.store-tab.on::before{opacity:.55}
 .pg-tabs button.store-tab .tab-tx{position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.7)}
