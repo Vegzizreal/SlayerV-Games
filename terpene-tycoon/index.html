@@ -840,6 +840,7 @@ var DEALER_TIER=[1,2,4,6];
 var XP_TH=[0,200,500,900,1400,2000,2700,3500];
 function lvl(xp){xp=xp||0;var L=1;for(var i=0;i<XP_TH.length;i++)if(xp>=XP_TH[i])L=i+1;return L;}
 function pLevel(){return lvl(S.xp);}
+function heatGain(base){var L=pLevel();if(L<=2)return Math.ceil(base*0.4);if(L<=4)return Math.ceil(base*0.7);return base;}
 function tierVis(t){var L=pLevel();return t<=L?2:(t===L+1?1:0);}
 var UNLOCKS={
  1:["Sour D","Hash","Grow Tent"],
@@ -1442,7 +1443,7 @@ function doDeal(di,k,isBuy,isJoint){
   var unit=ppu(st.price,d.sell[k]),cost=Math.ceil(unit*g);
   if(S.cash<cost){S.msg="Not enough cash for that.";save();render();return;}
   if(stashTotal()+g>S.stashCap){S.msg="Duffel is full — sell some or upgrade it.";save();render();return;}
-  S.cash-=cost;S.stash[k]+=g;trackCost(k,cost);S.heat=Math.min(100,S.heat+2+g);
+  S.cash-=cost;S.stash[k]+=g;trackCost(k,cost);S.heat=Math.min(100,S.heat+heatGain(2+g));
   var dh=dealerStreakHeat(di);
   if(!addXP(5))S.msg="Bought "+g+"g of "+st.name+" for "+money(cost)+"."+(dh>0?" Same spot too many times — heat +"+dh+".":"");
  }else{
@@ -1455,7 +1456,7 @@ function doDeal(di,k,isBuy,isJoint){
   var heldBefore=isJoint?(S.joints[k]||0):(S.stash[k]||0);
   if(isJoint)S.joints[k]-=g;else S.stash[k]-=g;
   S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
-  S.heat=Math.min(100,S.heat+2+g);
+  S.heat=Math.min(100,S.heat+heatGain(2+g));
   var dh2=dealerStreakHeat(di);
   var prof=calcProfit(k+(isJoint?"_j":""),g,heldBefore,rev);
   if(!addXP(5))S.msg="Sold "+g+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+"."+(dh2>0?" Same spot too many times — heat +"+dh2+".":"");
