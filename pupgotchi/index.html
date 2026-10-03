@@ -506,7 +506,7 @@ function create(app){
   return {
     app: { name: app.name||'Buddy', breed: app.breed||'lab',
            fur: app.fur||'#c8955c', belly: app.belly||'#e8d3ae', mark: app.mark||'#8a5a2e',
-           level: app.level||1 },
+           level: app.level||1, coatFx: app.coatFx||null },
     P: P,
     pos: [rnd(-1,1), 0, rnd(-1,1)],
     yaw: rnd(0,Math.PI*2),
@@ -522,6 +522,15 @@ function create(app){
 }
 
 function pickBehavior(d, yard){
+  if(d.caged){ // kenneled: stay put, idle/sit/look/sniff only
+    var cr=Math.random();
+    d.target=null; d.speed=0;
+    if(cr<0.35){ d.mode='sit'; d.modeT=rnd(2.5,5); }
+    else if(cr<0.60){ d.mode='idle'; d.modeT=rnd(2,4); }
+    else if(cr<0.80){ d.mode='look'; d.modeT=rnd(1.5,3); d.headYaw=rnd(-0.9,0.9); }
+    else { d.mode='sniff'; d.modeT=rnd(2,3); }
+    return;
+  }
   var r=Math.random(), R=yard.radius-0.9;
   if(r<0.45){ // wander to a new spot
     var a=rnd(0,Math.PI*2), rr=rnd(0.5,R);
@@ -654,6 +663,8 @@ function update(d, dt, yard, mood){
 function parts(d){
   var P=d.P, app=d.app;
   var fur=app.fur, bellyC=app.belly, mark=app.mark;
+  var fx=app.coatFx||{};
+  var earC=fx.ears==='fur'?fur:mark, tailC=fx.tail==='fur'?fur:mark;
   if(d.sick){ fur=mix(fur,'#5da24a',0.35); bellyC=mix(bellyC,'#5da24a',0.3); }
   var legLen=0.55*P.legL, bodyH=0.55*P.bodyH, bodyL=1.35*P.bodyL, bodyW=0.55*(P.bodyW||1);
   var bodyY=legLen+bodyH/2 + d.bodyY;
@@ -671,6 +682,12 @@ function parts(d){
   // body
   box({w:bodyW,h:bodyH,d:bodyL, at:[0,bodyY,0], pitch:bPitch, segs:9, e:0.5,
        color:fur, colors:{bottom:bellyC}});
+  // rump spot: big marking over the hip (photo-matched coats like Luna's)
+  if(fx.spot==='rump'){
+    box({w:bodyW*0.62,h:bodyH*0.42,d:bodyL*0.34,
+         at:[bodyW*0.14,bodyY+bodyH*0.38,-bodyL*0.30],
+         pitch:bPitch, segs:7, e:0.85, color:mark});
+  }
   // neck: bridges body top-front into the head
   box({w:0.36*(P.bodyW||1),h:0.46,d:0.44, at:[0,bodyY+0.30,bodyL/2-0.14], pitch:bPitch*0.7-0.18,
        segs:6, e:0.55, color:fur});
@@ -694,10 +711,10 @@ function parts(d){
   [-1,1].forEach(function(s){
     if(P.ear==='pointy'){
       box({w:0.16,h:0.38,d:0.07, at:[s*0.20,headY+0.28,headZ-0.02],
-           yaw:d.headYaw, pitch:d.headPitch+bPitch*0.5, pivot:[-s*0.20,-0.28,0.02], segs:5, e:0.55, color:mark, roll:s*-0.12+earTwitch*s});
+           yaw:d.headYaw, pitch:d.headPitch+bPitch*0.5, pivot:[-s*0.20,-0.28,0.02], segs:5, e:0.55, color:earC, roll:s*-0.12+earTwitch*s});
     } else {
       box({w:0.15,h:0.42,d:0.09, at:[s*0.28,headY+0.10,headZ-0.05],
-           yaw:d.headYaw, pitch:d.headPitch+bPitch*0.5, pivot:[-s*0.28,-0.10,0.05], segs:5, e:0.55, color:mark, roll:s*0.18+earTwitch*s});
+           yaw:d.headYaw, pitch:d.headPitch+bPitch*0.5, pivot:[-s*0.28,-0.10,0.05], segs:5, e:0.55, color:earC, roll:s*0.18+earTwitch*s});
     }
   });
   // legs (tops embedded in the body, pivot at hip)
@@ -726,21 +743,21 @@ function parts(d){
   var wag=Math.sin(d.tailPhase)*(0.45);
   if(P.tail==='stub'){
     box({w:0.14,h:0.14,d:0.24, at:[tailBase[0],tailBase[1],tailBase[2]-0.06],
-         yaw:wag, pivot:[0,0,0.18], segs:5, e:0.6, color:mark});
+         yaw:wag, pivot:[0,0,0.18], segs:5, e:0.6, color:tailC});
   } else if(P.tail==='curl'){
     var t1=box({w:0.13,h:0.13,d:0.42, at:[tailBase[0],tailBase[1]+0.12,tailBase[2]-0.14],
          yaw:wag, pitch:-0.7, pivot:[0,-0.12,0.35], segs:5, e:0.6, color:fur});
     box({w:0.11,h:0.11,d:0.3, at:[tailBase[0],tailBase[1]+0.3,tailBase[2]-0.26],
-         yaw:wag*1.4, pitch:-0.5, pivot:[0,-0.3,0.26], segs:5, e:0.6, color:mark});
+         yaw:wag*1.4, pitch:-0.5, pivot:[0,-0.3,0.26], segs:5, e:0.6, color:tailC});
   } else {
     box({w:0.13,h:0.13,d:0.55, at:[tailBase[0],tailBase[1]+0.05,tailBase[2]-0.2],
          yaw:wag, pitch:-0.25, pivot:[0,-0.05,0.47], segs:5, e:0.6, color:fur});
     box({w:0.11,h:0.11,d:0.2, at:[tailBase[0],tailBase[1]+0.12,tailBase[2]-0.5],
-         yaw:wag*1.5, pitch:-0.25, pivot:[0,-0.12,0.18], segs:5, e:0.6, color:mark});
+         yaw:wag*1.5, pitch:-0.25, pivot:[0,-0.12,0.18], segs:5, e:0.6, color:tailC});
   }
 
   var parent={pos:[d.pos[0], d.yOff, d.pos[2]], yaw:d.yaw,
-    scale:0.7+Math.min(d.app.level||1,10)*0.035};
+    scale:0.95+Math.min(d.app.level||1,10)*0.04};
   list.forEach(function(p){ p._parent=parent; });
   return list;
 }
@@ -753,23 +770,65 @@ function canSocialize(d){
 return { create:create, update:update, setAction:setAction, parts:parts, pickBehavior:pickBehavior, mix:mix, canSocialize:canSocialize };
 })();
 
-/* Vegas Forever Homes - property grounds: lawn, fence, barn, kennel, doghouse, patio.
- * Layout is defined in fractions of the half-extent H so bigger properties
- * (real-estate progression) get roomier grounds. Base H=6.5. */
+/* Vegas Forever Homes - property grounds: lawn, fence, barn, kennel block, agility
+ * course, foster-yard props. Layout in fractions of half-extent H so bigger
+ * properties (real-estate progression) get roomier grounds. Base H=8.5.
+ * Pick layout via ?yard=X (or window.__YARD_OPTION); 'live' is the shipping one. */
 var PG = window.PG || (window.PG = {});
 PG.Yard = (function(){
 "use strict";
 
-/* Barn anchor (fractions of H). Sign registry: future buildings add entries here. */
-var BARN = { fx:-0.72, fz:-0.60, yaw:-0.30, signY:2.02, signZ:1.32, signW:1.3 };
-function barnWorld(H){
-  var bx=BARN.fx*H, bz=BARN.fz*H, c=Math.cos(BARN.yaw), s=Math.sin(BARN.yaw);
-  function L(lx,lz){ return [bx+lx*c-lz*s, bz+lx*s+lz*c]; }
-  var w=L(0,BARN.signZ);
-  return { x:bx, z:bz, yaw:BARN.yaw, L:L, sign:{ id:'barn', label:'Barn sign',
-    at:[w[0],BARN.signY,w[1]], w:BARN.signW } };
+var LAYOUTS = {
+  /* shipping layout: homestead with kennel block + agility course */
+  live: {
+    barn:{fx:-0.55,fz:-0.55,yaw:-0.30,hay:{mode:'abs',pts:[[-0.40,-0.38],[-0.46,-0.30]]}},
+    kennel:{cols:[0.34,0.55,0.76], rows:[-0.66,-0.34], w:0.20, d:0.26},
+    agility:{weave:[-0.30,-0.58], aframe:[-0.06,-0.60], tunnel:[0.16,-0.60], jump:[-0.02,-0.42]},
+    pool:[0.36,0.18], digpit:[0.05,0.30], hydrant:[0.52,-0.02], bench:[-0.48,0.72],
+    patio:{fx:-0.48,fz:0.48,n:3},
+    trees:[{fx:0.62,fz:0.32},{fx:-0.64,fz:-0.12}],
+    bushes:[[-0.15,-0.78],[0.15,-0.78],[-0.80,0.80],[0.80,0.80],[0.72,-0.28]],
+    flowerMode:'back', beds:[[-0.15,-0.80,0.5,0.08]],
+    toys:{ball:[-0.32,0.34],frisbee:[-0.60,0.56],bone:[-0.36,0.62]},
+    dirtAt:[-0.48,0.48],
+    paths:[['patio','barn',0.3],['patio','kennel',-0.3],['patio','agility',0.5]],
+    stripes:false
+  }
+};
+
+function optName(){
+  try{
+    if(typeof window!=='undefined'){
+      if(window.__YARD_OPTION && LAYOUTS[window.__YARD_OPTION]) return window.__YARD_OPTION;
+      var m=/[?&]yard=([A-Za-z]+)/.exec(window.location.search||'');
+      if(m && LAYOUTS[m[1]]) return m[1];
+    }
+  }catch(e){}
+  return 'live';
 }
-function signDefs(H){ return [barnWorld(H||6.5).sign]; }
+function layout(){ return LAYOUTS[optName()] || LAYOUTS.live; }
+
+/* Barn anchor (fractions of H). Sign registry: future buildings add entries here. */
+var BARN_SIGN = { signY:2.02, signZ:1.32, signW:1.3 };
+function barnWorld(H, spec){
+  spec = spec || LAYOUTS.live.barn;
+  var bx=spec.fx*H, bz=spec.fz*H, yaw=spec.yaw;
+  var c=Math.cos(yaw), s=Math.sin(yaw);
+  function L(lx,lz){ return [bx+lx*c-lz*s, bz+lx*s+lz*c]; }
+  var w=L(0,BARN_SIGN.signZ);
+  return { x:bx, z:bz, yaw:yaw, L:L, sign:{ id:'barn', label:'Barn sign',
+    at:[w[0],BARN_SIGN.signY,w[1]], w:BARN_SIGN.signW } };
+}
+function signDefs(H){ return [barnWorld(H||8.5, layout().barn).sign]; }
+
+/* cage run centers (world coords) for the kennel block — used to house dogs */
+function cageSpots(H){
+  var L=layout().kennel, out=[];
+  L.rows.forEach(function(r){
+    L.cols.forEach(function(c){ out.push([c*H, r*H]); });
+  });
+  return out;
+}
 
 function mulberry(seed){
   var a=seed>>>0;
@@ -782,19 +841,21 @@ function mulberry(seed){
 }
 
 function create(half){
-  var H=half||6.5;
+  var H=half||8.5;
+  var L=layout();
   var y = {
     H:H,
+    L:L,
     radius: H*0.78,
     bowl: null,
     poops: [],
     flowers: [],
     dabs: [],
     dirt: [],
-    path: [],       // dirt path dabs
-    ballPos: [0.34*H, 0.28*H],
-    frisbeePos: [-0.37*H, 0.34*H],
-    bonePos: [-0.17*H, -0.45*H]
+    path: [],
+    ballPos: [L.toys.ball[0]*H, L.toys.ball[1]*H],
+    frisbeePos: [L.toys.frisbee[0]*H, L.toys.frisbee[1]*H],
+    bonePos: [L.toys.bone[0]*H, L.toys.bone[1]*H]
   };
   var rng=mulberry(7);
   var greens=['#66ad52','#6dbb57','#71bd59','#5f9e4b','#74c45e','#69b255'];
@@ -809,38 +870,58 @@ function create(half){
       y:-0.035+rng()*0.02
     });
   }
-  // worn dirt patch at the central play area
+  // worn dirt patch at the play area
   var browns=['#9a7b4f','#8a6a42','#a5855a','#93744a'];
+  var dcx=L.dirtAt[0]*H, dcz=L.dirtAt[1]*H;
   for(var di=0;di<26;di++){
     var dr=Math.sqrt(rng())*1.25, da=rng()*Math.PI*2;
     y.dirt.push({
-      x:0.9+Math.cos(da)*dr, z:0.9+Math.sin(da)*dr,
+      x:dcx+Math.cos(da)*dr, z:dcz+Math.sin(da)*dr,
       s:0.5+rng()*0.7, yaw:rng()*Math.PI,
       c:browns[(rng()*browns.length)|0],
       e:0.3+rng()*0.25,
       y:-0.03+rng()*0.02
     });
   }
-  // dirt paths: patio -> barn, patio -> kennel
-  function pathTo(x1,z1,x2,z2){
-    var steps=14;
+  // anchor points for paths
+  var patioC=[L.patio.fx*H, L.patio.fz*H];
+  var bw=barnWorld(H, L.barn);
+  var barnDoor=bw.L(0,1.45);
+  var kennelFront=[0.55*H, -0.34*H+1.6];
+  var agilityC=[0.0*H, -0.50*H];
+  var anchors={ patio:patioC, barn:barnDoor, kennel:kennelFront, agility:agilityC };
+  // dirt paths between anchors (bend = sideways curve of the midpoint)
+  function pathTo(x1,z1,x2,z2,bend){
+    var steps=16, mx=(x1+x2)/2, mz=(z1+z2)/2;
+    var dx=x2-x1, dz=z2-z1, dl=Math.sqrt(dx*dx+dz*dz)||1;
+    var bx=mx+(-dz/dl)*(bend||0), bz=mz+(dx/dl)*(bend||0);
     for(var s2=0;s2<=steps;s2++){
-      var t=s2/steps, mx=x1+(x2-x1)*t, mz=z1+(z2-z1)*t;
+      var t=s2/steps;
+      var px=(1-t)*(1-t)*x1+2*(1-t)*t*bx+t*t*x2;
+      var pz=(1-t)*(1-t)*z1+2*(1-t)*t*bz+t*t*z2;
       y.path.push({
-        x:mx+(rng()-0.5)*0.5, z:mz+(rng()-0.5)*0.5,
+        x:px+(rng()-0.5)*0.5, z:pz+(rng()-0.5)*0.5,
         s:0.7+rng()*0.4, yaw:rng()*Math.PI,
         c:browns[(rng()*browns.length)|0], e:0.35+rng()*0.2, y:-0.028+rng()*0.015
       });
     }
   }
-  var bw=barnWorld(H);
-  pathTo(0.46*H,0.46*H, bw.x,bw.z+1.6);
-  pathTo(0.46*H,0.46*H, 0.72*H,-0.60*H+1.8);
-  // flower beds along the side fences
+  L.paths.forEach(function(pr){
+    var a=anchors[pr[0]], b=anchors[pr[1]];
+    if(a&&b) pathTo(a[0],a[1],b[0],b[1],pr[2]*H*0.2);
+  });
+  // flowers
   var fcols=['#ff6b81','#ffd93d','#c084fc','#ff9f43','#4dd0e1'];
-  for(var f=0;f<10;f++){
-    y.flowers.push({x:-0.88*H+(rng()-0.5)*0.3, z:-0.25*H+f*0.09*H*0.55, c:fcols[f%5], ph:rng()*6.28});
-    y.flowers.push({x:0.88*H+(rng()-0.5)*0.3, z:-0.25*H+f*0.09*H*0.55, c:fcols[(f+2)%5], ph:rng()*6.28});
+  function addFlower(x,z,i){ y.flowers.push({x:x,z:z,c:fcols[i%5],ph:rng()*6.28}); }
+  var fi;
+  if(L.flowerMode==='back'){
+    for(fi=0;fi<14;fi++) addFlower(-0.6*H+fi*(1.2*H/13)+(rng()-0.5)*0.2, -0.80*H+(rng()-0.5)*0.2, fi);
+  }else if(L.flowerMode==='ring'){
+    var tx=L.trees[0].fx*H, tz=L.trees[0].fz*H;
+    for(fi=0;fi<12;fi++){
+      var fa=fi/12*Math.PI*2;
+      addFlower(tx+Math.cos(fa)*1.7, tz+Math.sin(fa)*1.7, fi);
+    }
   }
   return y;
 }
@@ -851,7 +932,7 @@ function addPoop(y,x,z){ if(y.poops.length<5) y.poops.push({x:x,z:z}); }
 function clearPoop(y){ y.poops=[]; }
 
 function parts(y, t){
-  var H=y.H, F=H-0.2;
+  var H=y.H, F=H-0.2, L=y.L;
   var p=[];
   function box(o){ o.kind='box'; p.push(o); }
   function sph(o){ o.kind='sphere'; o.segs=o.segs||8; p.push(o); }
@@ -861,11 +942,15 @@ function parts(y, t){
   // ground
   box({w:2*H,h:0.3,d:2*H, at:[0,-0.15,0], ground:true, color:'#62a84f',
        colors:{top:'#6dbb57',bottom:'#3d6b32',front:'#4c8a3e',back:'#4c8a3e',left:'#4c8a3e',right:'#4c8a3e'}});
-  // mowed stripes (alternating light/dark) — realistic lawn
-  var nStrip=8, sw2=(2*H)/nStrip;
-  for(var si=0;si<nStrip;si++){
-    if(si%2) continue;
-    box({w:sw2,h:0.02,d:2*H, at:[-H+sw2*(si+0.5),0.005,0], ground:true, color:'#74c45e'});
+  // natural lawn: large soft patches (no mow stripes)
+  var rngP=mulberry(21);
+  var patchC=['#6dbb57','#67b354','#71bd59','#63a94e'];
+  var nP=Math.round(30*(H/6.5));
+  for(var pi2=0;pi2<nP;pi2++){
+    var pr=Math.sqrt(rngP())*(H-1.2), pa=rngP()*Math.PI*2;
+    p.push({kind:'roundbox', w:1.6+rngP()*2.2, h:0.10, d:1.2+rngP()*1.6, segs:4, e:0.5,
+            at:[Math.cos(pa)*pr,-0.045,Math.sin(pa)*pr], yaw:rngP()*Math.PI,
+            ground:true, color:patchC[(rngP()*patchC.length)|0]});
   }
   // oil-paint grass dabs
   var di2, db;
@@ -893,7 +978,7 @@ function parts(y, t){
     box({w:len,h:1.85,d:0.1, at:[mx,0.92,mz], yaw:yaw, color:wood});
     box({w:len,h:0.09,d:0.16, at:[mx,1.88,mz], yaw:yaw, color:woodD});
     var ml=Math.sqrt(mx*mx+mz*mz)||1, ox=-mx/ml*0.09, oz=-mz/ml*0.09;
-    box({w:len,h:0.14,d:0.05, at:[mx+ox,0.55,mz+oz], yaw:yaw, color:woodD});
+    box({w:len,h:0.16,d:0.05, at:[mx+ox,0.55,mz+oz], yaw:yaw, color:woodD});
   }
   fenceRun(-F,-F, F,-F); fenceRun(-F,F, F,F);
   fenceRun(-F,-F, -F,F); fenceRun(F,-F, F,F);
@@ -904,17 +989,17 @@ function parts(y, t){
     box({w:0.22,h:2.05,d:0.22, at:[pp[0],1.02,pp[1]], color:postC});
   });
 
-  // patio: stone slabs, front-right, with water bowl
-  var pp2=P2(0.46,0.46), slabC=['#b8b2a6','#aca69a','#c0bab0'];
-  for(var sxi=0;sxi<3;sxi++) for(var szi=0;szi<3;szi++){
-    box({w:0.92,h:0.14,d:0.92, at:[pp2[0]+sxi*0.98,0.02,pp2[1]+szi*0.98],
+  // patio: stone slabs + water bowl
+  var pp2=P2(L.patio.fx,L.patio.fz), slabC=['#b8b2a6','#aca69a','#c0bab0'], pn=L.patio.n;
+  for(var sxi=0;sxi<pn;sxi++) for(var szi=0;szi<pn;szi++){
+    box({w:0.92,h:0.14,d:0.92, at:[pp2[0]+(sxi-(pn-1)/2)*0.98,0.02,pp2[1]+(szi-(pn-1)/2)*0.98],
          color:slabC[(sxi*3+szi)%3], yaw:0.02*((sxi+szi)%2?1:-1)});
   }
   rbox({w:0.5,h:0.22,d:0.5, e:0.6, at:[pp2[0]+1.0,0.2,pp2[1]+1.0], color:'#3f6fb5'});
   box({w:0.38,h:0.06,d:0.38, at:[pp2[0]+1.0,0.3,pp2[1]+1.0], color:'#7cc4f7'});
 
-  // barn: back-left, clear of everything else
-  var bw=barnWorld(H), bx=bw.x, bz=bw.z, byaw=bw.yaw;
+  // barn
+  var bw=barnWorld(H, L.barn), bx=bw.x, bz=bw.z, byaw=bw.yaw;
   function bpart(o,lx,ly,lz){ var w=bw.L(lx,lz); o.at=[w[0],ly,w[1]]; o.yaw=byaw; return o; }
   var barnRed='#b03a2e', barnDark='#8e2b22', trimW='#f2e6c8', roofG='#7d6f60';
   box(bpart({w:2.6,h:1.7,d:2.2, color:barnRed},0,0.85,0));
@@ -938,91 +1023,109 @@ function parts(y, t){
   box({w:1.58,h:0.08,d:0.07, at:[sb[0],2.26,sb[1]], yaw:byaw, color:'#6e5233'});
   box({w:1.58,h:0.08,d:0.07, at:[sb[0],1.78,sb[1]], yaw:byaw, color:'#6e5233'});
   // hay bales beside the barn
-  var hb1=bw.L(-2.2,0.6), hb2=bw.L(-2.6,-0.6);
-  sph({r:0.55, segs:9, at:[hb1[0],0.45,hb1[1]], color:'#d9b64a'});
-  sph({r:0.45, segs:9, at:[hb2[0],0.38,hb2[1]], color:'#c9a53e'});
-
-  // kennel: back-right — fenced run + shelter, well clear of the barn
-  var kp=P2(0.72,-0.60), kx=kp[0], kz=kp[1], kyaw=0.30;
-  function klocal(lx,lz){
-    var c=Math.cos(kyaw), s=Math.sin(kyaw);
-    return [kx+lx*c-lz*s, kz+lx*s+lz*c];
-  }
-  box({w:3.4,h:0.12,d:2.8, at:[kx,0.06,kz], yaw:kyaw, color:'#b8b2a6'});   // concrete pad
-  var postM='#5a5a5a';
-  [[-1.6,-1.3],[1.6,-1.3],[-1.6,1.3],[1.6,1.3],[-1.6,0],[1.6,0]].forEach(function(cn){
-    var w=klocal(cn[0],cn[1]);
-    box({w:0.12,h:1.5,d:0.12, at:[w[0],0.75,w[1]], color:postM});
+  L.barn.hay.pts.forEach(function(hp,i){
+    var hw = L.barn.hay.mode==='local' ? bw.L(hp[0],hp[1]) : [hp[0]*H, hp[1]*H];
+    sph({r:i?0.45:0.55, segs:9, at:[hw[0],i?0.38:0.45,hw[1]], color:i?'#c9a53e':'#d9b64a'});
   });
-  // slatted run sides (back + left + right; front has a gate gap)
-  function slatRun(x1,z1,x2,z2){
-    var w1=klocal(x1,z1), w2=klocal(x2,z2);
-    var len=Math.sqrt((w2[0]-w1[0])*(w2[0]-w1[0])+(w2[1]-w1[1])*(w2[1]-w1[1]));
-    var yaw=Math.atan2(-(w2[0]-w1[0]), w2[1]-w1[1])+Math.PI/2;
-    var mx=(w1[0]+w2[0])/2, mz=(w1[1]+w2[1])/2;
-    for(var s3=0;s3<5;s3++){
-      box({w:len,h:0.16,d:0.05, at:[mx,0.35+s3*0.26,mz], yaw:yaw, color:'#8a8f96'});
-    }
+
+  // kennel block: open-air cage runs (no sheds) along the back-right
+  var kc=L.kennel, cw=kc.w*H, cd=kc.d*H;
+  var meshC='#9aa0a8', postM='#5a5a5a';
+  kc.rows.forEach(function(rf){
+    kc.cols.forEach(function(cf){
+      var cx=cf*H, cz=rf*H;
+      box({w:cw,h:0.12,d:cd, at:[cx,0.06,cz], color:'#b8b2a6'});   // concrete pad
+      [[-1,-1],[1,-1],[-1,1],[1,1]].forEach(function(cn){
+        box({w:0.12,h:1.35,d:0.12, at:[cx+cn[0]*cw/2,0.67,cz+cn[1]*cd/2], color:postM});
+      });
+      function slatSide(x1,z1,x2,z2){
+        var len=Math.sqrt((x2-x1)*(x2-x1)+(z2-z1)*(z2-z1));
+        var yaw=Math.atan2(-(x2-x1), z2-z1)+Math.PI/2;
+        var mx=(x1+x2)/2, mz=(z1+z2)/2;
+        for(var s3=0;s3<4;s3++){
+          box({w:len,h:0.14,d:0.05, at:[mx,0.32+s3*0.27,mz], yaw:yaw, color:meshC});
+        }
+      }
+      var x0=cx-cw/2, x1=cx+cw/2, z0=cz-cd/2, z1=cz+cd/2;
+      slatSide(x0,z0, x1,z0);            // back
+      slatSide(x0,z0, x0,z1);            // left
+      slatSide(x1,z0, x1,z1);            // right
+      slatSide(x0,z1, cx-0.35,z1);       // front-left of gate
+      slatSide(cx+0.35,z1, x1,z1);       // front-right of gate
+      // water bowl inside each run
+      rbox({w:0.34,h:0.16,d:0.34, e:0.6, at:[x1-0.3,0.16,z1-0.3], color:'#3f6fb5'});
+      box({w:0.26,h:0.05,d:0.26, at:[x1-0.3,0.24,z1-0.3], color:'#7cc4f7'});
+    });
+  });
+
+  // agility course (back-center)
+  var ag=L.agility;
+  // weave poles: 6 poles in a line along z
+  var wp=P2(ag.weave[0],ag.weave[1]);
+  for(var wi=0;wi<6;wi++){
+    box({w:0.09,h:1.15,d:0.09, at:[wp[0],0.57,wp[1]+(wi-2.5)*0.5], color:wi%2?'#e14b4b':'#f2e6c8'});
   }
-  slatRun(-1.6,-1.3, 1.6,-1.3);
-  slatRun(-1.6,-1.3, -1.6,1.3);
-  slatRun(1.6,-1.3, 1.6,1.3);
-  slatRun(-1.6,1.3, -0.4,1.3); slatRun(0.4,1.3, 1.6,1.3);   // front with gate gap
-  // shelter inside the run
-  var sh=klocal(0,-0.7);
-  box({w:1.3,h:0.9,d:1.1, at:[sh[0],0.55,sh[1]], yaw:kyaw, color:'#a9805a'});
-  p.push({kind:'prism', w:1.5,h:0.4,d:1.3, at:[sh[0],0.9+0.2,sh[1]], yaw:kyaw, color:'#6e5233'});
-  var kd=klocal(0,0.06);
-  box({w:0.5,h:0.6,d:0.06, at:[kd[0],0.4,kd[1]], yaw:kyaw, color:'#241a12'});
-  // water trough by the kennel
-  var tr=klocal(2.4,0.6);
-  rbox({w:0.9,h:0.4,d:0.5, e:0.5, at:[tr[0],0.2,tr[1]], yaw:kyaw, color:'#7a5a3a'});
-  box({w:0.76,h:0.08,d:0.36, at:[tr[0],0.36,tr[1]], yaw:kyaw, color:'#7cc4f7'});
+  // A-frame: two ramps meeting at an apex
+  var af=P2(ag.aframe[0],ag.aframe[1]);
+  box({w:1.1,h:0.1,d:1.15, at:[af[0]-0.48,0.52,af[1]], roll:0.62, color:'#c8955c'});
+  box({w:1.1,h:0.1,d:1.15, at:[af[0]+0.48,0.52,af[1]], roll:-0.62, color:'#b8834e'});
+  box({w:0.12,h:0.12,d:1.15, at:[af[0],1.0,af[1]], color:'#8a6a45'});
+  // tunnel: tube along z with dark openings
+  var tu=P2(ag.tunnel[0],ag.tunnel[1]);
+  rbox({w:1.0,h:1.0,d:2.4, e:0.85, at:[tu[0],0.5,tu[1]], color:'#3f6fb5'});
+  rbox({w:0.8,h:0.8,d:0.1, e:0.9, at:[tu[0],0.5,tu[1]-1.2], color:'#23232e'});
+  rbox({w:0.8,h:0.8,d:0.1, e:0.9, at:[tu[0],0.5,tu[1]+1.2], color:'#23232e'});
+  // jump hurdle
+  var ju=P2(ag.jump[0],ag.jump[1]);
+  box({w:0.09,h:1.1,d:0.09, at:[ju[0]-0.7,0.55,ju[1]], color:'#f2e6c8'});
+  box({w:0.09,h:1.1,d:0.09, at:[ju[0]+0.7,0.55,ju[1]], color:'#f2e6c8'});
+  box({w:1.5,h:0.1,d:0.1, at:[ju[0],0.62,ju[1]], color:'#e14b4b'});
 
-  // doghouse: back-center, facing the yard
-  var hp2=P2(0,-0.75), hx=hp2[0], hz=hp2[1], hy=-0.15;
-  function hlocal(lx,lz){
-    var c=Math.cos(hy), s=Math.sin(hy);
-    return [hx+lx*c-lz*s, hz+lx*s+lz*c];
-  }
-  var wallC='#b5764a', trimC='#8a4f2b', roofC='#8f5233', gableC='#b5764a';
-  box({w:1.9,h:0.14,d:1.7, at:[hx,0.07,hz], yaw:hy, color:trimC});
-  box({w:1.8,h:1.15,d:1.6, at:[hx,0.65,hz], yaw:hy, color:wallC});
-  box({w:1.84,h:0.05,d:1.64, at:[hx,0.95,hz], yaw:hy, color:trimC});
-  box({w:1.84,h:0.05,d:1.64, at:[hx,0.45,hz], yaw:hy, color:trimC});
-  p.push({kind:'prism', w:2.0,h:0.62,d:1.85, at:[hx,1.22+0.29,hz], yaw:hy,
-          color:roofC, colors:{front:gableC,back:gableC,left:roofC,right:roofC,bottom:roofC}});
-  box({w:0.18,h:0.09,d:1.9, at:[hx,1.22+0.62,hz], yaw:hy, color:'#6e3b22'});
-  var dp=hlocal(0,0.84);
-  p.push({kind:'roundbox', w:0.82,h:1.04,d:0.1, segs:6, e:0.7,
-          at:[dp[0],0.56,dp[1]], yaw:hy, color:trimC});
-  p.push({kind:'roundbox', w:0.64,h:0.9,d:0.14, segs:6, e:0.72,
-          at:[dp[0],0.5,dp[1]], yaw:hy, color:'#241a12'});
-  var bp=hlocal(0,0.86);
-  var bcol='#f2e6c8';
-  box({w:0.22,h:0.07,d:0.05, at:[bp[0],1.18,bp[1]], yaw:hy, color:bcol});
-  var bl=hlocal(-0.11,0.86), br=hlocal(0.11,0.86);
-  sph({r:0.06, segs:6, at:[bl[0],1.18,bl[1]], color:bcol});
-  sph({r:0.06, segs:6, at:[br[0],1.18,br[1]], color:bcol});
+  // splash pool
+  var po=P2(L.pool[0],L.pool[1]);
+  rbox({w:2.4,h:0.55,d:2.4, e:0.8, at:[po[0],0.27,po[1]], color:'#3f6fb5'});
+  rbox({w:2.0,h:0.12,d:2.0, e:0.9, at:[po[0],0.5,po[1]], color:'#7cc4f7'});
+  // dig pit: sand box
+  var dg=P2(L.digpit[0],L.digpit[1]);
+  box({w:2.3,h:0.22,d:0.18, at:[dg[0],0.11,dg[1]-1.06], color:'#8a6a45'});
+  box({w:2.3,h:0.22,d:0.18, at:[dg[0],0.11,dg[1]+1.06], color:'#8a6a45'});
+  box({w:0.18,h:0.22,d:2.3, at:[dg[0]-1.06,0.11,dg[1]], color:'#8a6a45'});
+  box({w:0.18,h:0.22,d:2.3, at:[dg[0]+1.06,0.11,dg[1]], color:'#8a6a45'});
+  box({w:2.0,h:0.16,d:2.0, at:[dg[0],0.08,dg[1]], color:'#e0c078'});
+  // fire hydrant
+  var hy=P2(L.hydrant[0],L.hydrant[1]);
+  box({w:0.34,h:0.14,d:0.34, at:[hy[0],0.07,hy[1]], color:'#a02c22'});
+  rbox({w:0.3,h:0.62,d:0.3, e:0.7, at:[hy[0],0.45,hy[1]], color:'#c0392b'});
+  sph({r:0.13, segs:7, at:[hy[0],0.82,hy[1]], color:'#a02c22'});
+  box({w:0.44,h:0.12,d:0.12, at:[hy[0],0.55,hy[1]], color:'#a02c22'});
+  // bench by the patio
+  var be=P2(L.bench[0],L.bench[1]);
+  box({w:1.6,h:0.09,d:0.5, at:[be[0],0.55,be[1]], color:'#a9805a'});
+  box({w:0.12,h:0.55,d:0.44, at:[be[0]-0.65,0.27,be[1]], color:'#77572f'});
+  box({w:0.12,h:0.55,d:0.44, at:[be[0]+0.65,0.27,be[1]], color:'#77572f'});
+  box({w:1.6,h:0.5,d:0.08, at:[be[0],0.95,be[1]-0.24], pitch:-0.12, color:'#a9805a'});
 
-  // shade tree, front-left (moved clear of the kennel)
-  var tp=P2(-0.72,0.62), tx=tp[0], tz=tp[1];
-  box({w:0.36,h:2.1,d:0.36, at:[tx,1.05,tz], color:'#7a5a3a'});
-  var sway=Math.sin(t*0.8)*0.05;
-  sph({r:1.15, at:[tx+sway,2.9,tz], color:'#3f8f3a'});
-  sph({r:0.8, segs:7, at:[tx-0.65+sway,2.35,tz+0.3], color:'#4da144'});
-  sph({r:0.75, segs:7, at:[tx+0.65+sway,2.4,tz-0.25], color:'#357a30'});
+  // shade trees
+  L.trees.forEach(function(tr2,ti){
+    var tp=P2(tr2.fx,tr2.fz), tx=tp[0], tz=tp[1];
+    box({w:0.36,h:2.1,d:0.36, at:[tx,1.05,tz], color:'#7a5a3a'});
+    var sway=Math.sin(t*0.8+ti*2)*0.05;
+    sph({r:1.15, at:[tx+sway,2.9,tz], color:'#3f8f3a'});
+    sph({r:0.8, segs:7, at:[tx-0.65+sway,2.35,tz+0.3], color:'#4da144'});
+    sph({r:0.75, segs:7, at:[tx+0.65+sway,2.4,tz-0.25], color:'#357a30'});
+  });
 
-  // bushes: back fence gaps + corners
-  [[-0.36,-0.84],[0.36,-0.84],[-0.86,0.86],[0.86,0.86]].forEach(function(bi){
+  // bushes
+  L.bushes.forEach(function(bi){
     var w=P2(bi[0],bi[1]);
     sph({r:0.72, segs:7, at:[w[0],0.55,w[1]], color:'#3f8f3a'});
     sph({r:0.5, segs:6, at:[w[0]+0.5,0.4,w[1]+0.2], color:'#4da144'});
   });
 
-  // flower beds: dark soil strips along the side fences
-  box({w:0.9,h:0.14,d:0.5*H, at:[-0.88*H,0.0,0], color:'#5d4028'});
-  box({w:0.9,h:0.14,d:0.5*H, at:[0.88*H,0.0,0], color:'#5d4028'});
+  // flower beds: dark soil strips + flowers
+  L.beds.forEach(function(bd){
+    box({w:bd[2]*H, h:0.14, d:bd[3]*H, at:[bd[0]*H,0.0,bd[1]*H], color:'#5d4028'});
+  });
   y.flowers.forEach(function(f){
     var w=Math.sin(t*1.2+f.ph)*0.06;
     box({w:0.05,h:0.3,d:0.05, at:[f.x,0.2,f.z], color:'#3f8f3a', roll:w});
@@ -1050,7 +1153,8 @@ function parts(y, t){
   return p;
 }
 
-return { create:create, parts:parts, signDefs:signDefs, showBowl:showBowl, hideBowl:hideBowl, addPoop:addPoop, clearPoop:clearPoop };
+return { create:create, parts:parts, signDefs:signDefs, cageSpots:cageSpots,
+         showBowl:showBowl, hideBowl:hideBowl, addPoop:addPoop, clearPoop:clearPoop };
 })();
 
 /* Vegas Forever Homes - device-time day/night cycle for the backyard sky. Pure logic, DOM-free. */
@@ -1156,7 +1260,7 @@ function newFoster(avoidName){
   while(name===avoidName&&guard++<10) name=pick(NAMES);
   return {
     name:name, breed:pick(BREED_KEYS),
-    fur:coat[0], belly:coat[1], mark:coat[2],
+    fur:coat[0], belly:coat[1], mark:coat[2], coatFx:null,
     level:1, xp:0, arrivedAt:Date.now(),
     hunger:80, fun:80, energy:80, health:90, bond:10,
     poop:0, sick:false, sleeping:false, critical:false, neglectHrs:0
@@ -1184,11 +1288,19 @@ function fosterStats(f){
   return f;
 }
 
+/* the starter puppy: Luna, a white & tan pitbull with the big rump spot */
+function starterFoster(){
+  var f=newFoster();
+  f.name='Luna'; f.breed='pitbull';
+  f.fur='#f4f1e8'; f.belly='#faf8f0'; f.mark='#9a7a4e';
+  f.coatFx={spot:'rump', ears:'fur', tail:'fur'};
+  return f;
+}
 function defaults(){
   var now=Date.now();
   return {
     v:3, setupDone:false, tab:'yard',
-    fosters:[newFoster()], fosterIdx:0,
+    fosters:[starterFoster()], fosterIdx:0,
     props:{owned:['backyard'], current:'backyard', names:{backyard:'Vegas Forever Homes'}},
     bones:40,
     products:{kibble:0,chew:0},
@@ -1198,6 +1310,7 @@ function defaults(){
     adoptCooldownUntil:0,
     lifetime:{adopted:0,bonesEarned:0},
     residents:[], // permanently kept dogs: {name,breed,fur,belly,mark,level,xp} — act as Trainers
+    freeRoam:false, // false = only the selected foster trains free; others kennel. true = whole pack out.
     bg:'auto', // 'auto' = device-time day/night cycle; 'day'/'sunset'/'night' = fixed shop backdrops
     theme:'dark', // UI theme: 'dark' (default) or 'light'
     bornAt:now, lastTick:now, lastCare:now,
@@ -1542,7 +1655,7 @@ function keepFoster(S,now){
   var cap=PG.Props?PG.Props.cur(S).trainers:3;
   if(S.residents.length>=cap) return {ok:false,msg:'Your property is full! ('+cap+' Trainers max)'};
   var f=sel(S);
-  S.residents.push({name:f.name,breed:f.breed,fur:f.fur,belly:f.belly,mark:f.mark,level:f.level,xp:f.xp});
+  S.residents.push({name:f.name,breed:f.breed,fur:f.fur,belly:f.belly,mark:f.mark,level:f.level,xp:f.xp,coatFx:f.coatFx||null});
   var msg=f.name+' is home forever! They are now a Trainer (+15% XP for future fosters).';
   var pup=_replaceFoster(S,f.name);
   S.adoptCooldownUntil=0;S.lastCare=now;
@@ -1634,17 +1747,17 @@ PG.Props = (function(){
 "use strict";
 
 var DEFS=[
-  {id:'backyard', name:'Backyard',            cost:0,     fosters:1, trainers:3,  half:6.5,
+  {id:'backyard', name:'Backyard',            cost:0,     fosters:1, trainers:3,  half:8.5,
    desc:'Where it all started. Cozy and fenced.'},
-  {id:'lot',     name:'Country Lot',         cost:1200,  fosters:2, trainers:4,  half:7.5,
+  {id:'lot',     name:'Country Lot',         cost:1200,  fosters:2, trainers:4,  half:9.5,
    desc:'An open country lot with room to roam.'},
-  {id:'ranch',   name:'Sunset Ranch',        cost:3000,  fosters:2, trainers:6,  half:8.5,
+  {id:'ranch',   name:'Sunset Ranch',        cost:3000,  fosters:2, trainers:6,  half:10.5,
    desc:'A proper ranch. Bigger grounds, bigger pack.'},
-  {id:'acres',   name:'Green Acres',         cost:6500,  fosters:3, trainers:8,  half:9.5,
+  {id:'acres',   name:'Green Acres',         cost:6500,  fosters:3, trainers:8,  half:11.5,
    desc:'Rolling acres for three fosters at once.'},
-  {id:'farm',    name:'Happy Tails Farm',    cost:13000, fosters:4, trainers:10, half:10.5,
+  {id:'farm',    name:'Happy Tails Farm',    cost:13000, fosters:4, trainers:10, half:12.5,
    desc:'A working farm for a full house of happy tails.'},
-  {id:'estate',  name:'Forever Homes Estate',cost:25000, fosters:5, trainers:12, half:11.5,
+  {id:'estate',  name:'Forever Homes Estate',cost:25000, fosters:5, trainers:12, half:13.5,
    desc:'The dream property. Five fosters, twelve trainers.'}
 ];
 
@@ -1666,7 +1779,7 @@ function ensure(S){
     S.props.names.backyard=S.signs.barn;
   DEFS.forEach(function(d){
     if(typeof S.props.names[d.id]!=='string'||!S.props.names[d.id])
-      S.props.names[d.id]=(d.id==='backyard'?'Vegas Forever Homes':d.name);
+      S.props.names[d.id]='Vegas Forever Homes';
   });
   return S.props;
 }
@@ -4185,7 +4298,7 @@ var COATS = {
     ['White', '#ece6da', '#f6f2e8', '#cfc4b2']
   ],
   pitbull: [
-    ['White & Tan', '#f4f1e8', '#faf8f0', '#9a7a4e'],
+    ['White & Tan', '#f4f1e8', '#faf8f0', '#9a7a4e', {spot:'rump', ears:'fur', tail:'fur'}],
     ['Blue & White', '#6a6f7a', '#e8e8ec', '#4e525c'],
     ['Brindle', '#7a5a3e', '#a08055', '#543e28']
   ],
@@ -4292,13 +4405,13 @@ function renderWizard(container, current, onDone, opts) {
   var selBreed = (current.breed && breeds[current.breed]) ? current.breed : keys[0];
   var selPat = 0;
   var fur = current.fur || '#a9805a', belly = current.belly || '#d9bd93',
-      mark = current.mark || '#6b4e33', patName = '';
+      mark = current.mark || '#6b4e33', patName = '', patFx = null;
 
   function patterns() { return COATS[selBreed] || []; }
   function applyPat() {
     var list = patterns();
     var p = list[selPat] || list[0] || ['Custom', fur, belly, mark];
-    patName = p[0]; fur = p[1]; belly = p[2]; mark = p[3];
+    patName = p[0]; fur = p[1]; belly = p[2]; mark = p[3]; patFx = p[4]||null;
   }
 
   var wrap = el('div', 'pg-md');
@@ -4380,7 +4493,7 @@ function renderWizard(container, current, onDone, opts) {
     go.type = 'button';
     onTap(go, function () {
       applyPat();
-      onDone({ breed: selBreed, fur: fur, belly: belly, mark: mark, pattern: patName });
+      onDone({ breed: selBreed, fur: fur, belly: belly, mark: mark, pattern: patName, coatFx: patFx });
     });
     row.appendChild(back); row.appendChild(go);
     parent.appendChild(row);
@@ -4408,7 +4521,7 @@ function renderPanel(container, current, onDone, opts) {
   function applyPattern() {
     var list = COATS[prof.breed] || [];
     var p = list[prof.pat] || list[0] || ['Custom', prof.fur, prof.belly, prof.mark];
-    prof.patName = p[0]; prof.fur = p[1]; prof.belly = p[2]; prof.mark = p[3];
+    prof.patName = p[0]; prof.fur = p[1]; prof.belly = p[2]; prof.mark = p[3]; prof.patFx = p[4]||null;
   }
   // keep the foster\u2019s current colors selected when reopening the panel
   (function matchCurrent() {
@@ -4499,7 +4612,7 @@ function renderPanel(container, current, onDone, opts) {
   var confirm = el('button', 'pg-md-confirm', opts.cta || 'Start caring!');
   confirm.type = 'button';
   onTap(confirm, function () {
-    onDone({ breed: prof.breed, fur: prof.fur, belly: prof.belly, mark: prof.mark, pattern: prof.patName });
+    onDone({ breed: prof.breed, fur: prof.fur, belly: prof.belly, mark: prof.mark, pattern: prof.patName, coatFx: prof.patFx });
   });
   wrap.appendChild(confirm);
 
@@ -4582,9 +4695,16 @@ var _webSave=(!bridge&&PG.WebSave)?PG.WebSave.load():null;
 var S=PG.Care.normalize(Object.assign({},DEF,bridge?bridge.getState(DEF):{},_webSave||{}));
 PG.Props.ensure(S); // real-estate state
 if(!bridge && /demo/.test(window.location.search||'')){
-  PG.Care.sel(S).name='Biscuit'; S.bones=120;
+  var _dfs=PG.Care.sel(S);
+  _dfs.name='Luna'; S.bones=120;
   var _bm=/breed=([a-z]+)/.exec(window.location.search||'');
-  if(_bm&&PG.BREEDS[_bm[1]]) PG.Care.sel(S).breed=_bm[1];
+  if(_bm&&PG.BREEDS[_bm[1]]) _dfs.breed=_bm[1];
+  else { _dfs.breed='pitbull'; _dfs.fur='#f4f1e8'; _dfs.belly='#faf8f0'; _dfs.mark='#9a7a4e';
+         _dfs.coatFx={spot:'rump', ears:'fur', tail:'fur'}; }
+  if(/pack/.test(window.location.search||'')){ // demo: full pack to show kennel housing
+    S.fosters.push(PG.Care.newFoster());
+    S.residents.push({name:'Rex',breed:'lab',fur:'#c8955c',belly:'#e8d3ae',mark:'#8a5a2e',level:3,xp:0,coatFx:null});
+  }
 }
 /* selected foster shorthand */
 function F(){ return PG.Care.sel(S); }
@@ -4612,13 +4732,13 @@ var dogs=[]; // dogs[0..n-1] = fosters (in S.fosters order), rest = resident tra
 function rebuildDogs(){
   dogs=[];
   S.fosters.forEach(function(f){
-    var d=PG.Dog.create({name:f.name,breed:f.breed,fur:f.fur,belly:f.belly,mark:f.mark,level:f.level});
+    var d=PG.Dog.create({name:f.name,breed:f.breed,fur:f.fur,belly:f.belly,mark:f.mark,level:f.level,coatFx:f.coatFx});
     d._foster=f;
     d.pos=[rnd(-3,3),0,rnd(-3,3)];
     dogs.push(d);
   });
   S.residents.forEach(function(r){
-    var d=PG.Dog.create({name:r.name,breed:r.breed,fur:r.fur,belly:r.belly,mark:r.mark,level:r.level});
+    var d=PG.Dog.create({name:r.name,breed:r.breed,fur:r.fur,belly:r.belly,mark:r.mark,level:r.level,coatFx:r.coatFx});
     d.pos=[rnd(-3,3),0,rnd(-3,3)];
     dogs.push(d);
   });
@@ -4637,8 +4757,30 @@ function rebuildDogs(){
       d0.modeT=99999; d0.hopT=_am[1]==='play'?0.5:-1;
     }
   }
+  applyHousing();
 }
 rebuildDogs();
+
+/* housing: the selected foster trains free in the yard; every other dog
+ * kennels in the kennel block unless the pack was let out to play. */
+function applyHousing(){
+  if(typeof PG.Yard.cageSpots!=='function') return;
+  var spots=PG.Yard.cageSpots(yard.H), qi=0, self=F();
+  for(var i=0;i<dogs.length;i++){
+    var d=dogs[i];
+    if(d.sleeping||d.sick||d.mode==='eat'||d.mode==='sleep') continue;
+    var isSel=d._foster&&d._foster===self;
+    if(!S.freeRoam && !isSel && qi<spots.length){
+      d.caged=true;
+      d.pos=[spots[qi][0],0,spots[qi][1]];
+      d.yaw=0; d.target=null; d.speed=0;
+      d.mode='sit'; d.modeT=2.5; d.headYaw=0; d.headPitch=0;
+      qi++;
+    }else if(d.caged){
+      d.caged=false; d.mode='idle'; d.modeT=1; d.target=null;
+    }
+  }
+}
 
 var cv=q('.pg-yard3d'), ctx=cv.getContext('2d'), W=cv.width, H=cv.height;
 function makeCam(){
@@ -4949,7 +5091,7 @@ function renderFosterChip(){
       b.type='button'; b.className='pg-fselb'+(idx===S.fosterIdx?' on':'');
       b.textContent=ff.name;
       b.setAttribute('aria-label','Select '+ff.name);
-      b.addEventListener('click',function(){ S.fosterIdx=idx; save(); renderAll(); });
+      b.addEventListener('click',function(){ S.fosterIdx=idx; save(); applyHousing(); renderAll(); });
       sel.appendChild(b);
     });
     el.appendChild(sel);
@@ -5253,6 +5395,17 @@ qa('.pg-gagain').forEach(function(b){
 function renderFosterTab(){
   var el=q('.pg-fosterwrap'); el.innerHTML='';
   var cap=PG.Props.cur(S).fosters;
+  /* pack housing toggle: only the selected foster trains free unless released */
+  var tgl=document.createElement('button');
+  tgl.type='button'; tgl.className='pg-rnbtn';
+  tgl.style.cssText='width:100%;margin-bottom:10px;padding:10px;';
+  tgl.textContent=S.freeRoam?'Kennel the pack (only '+F().name+' stays out)':'Let all out to play!';
+  tgl.setAttribute('aria-label',tgl.textContent);
+  tgl.addEventListener('click',function(){
+    S.freeRoam=!S.freeRoam; save(); applyHousing(); renderFosterTab(); renderMsg();
+    PG.Care.setMsg(S, S.freeRoam?'The whole pack is out playing!':'Pack kenneled. '+F().name+' is training.');
+  });
+  el.appendChild(tgl);
   /* one card per foster; tap to select */
   S.fosters.forEach(function(ff,idx){
     var bl=(PG.BREEDS[ff.breed]||{}).label||ff.breed;
@@ -5268,7 +5421,7 @@ function renderFosterTab(){
       var selB=document.createElement('button');
       selB.type='button'; selB.className='pg-rnbtn'; selB.textContent='Select';
       selB.setAttribute('aria-label','Select '+ff.name);
-      selB.addEventListener('click',function(){ S.fosterIdx=idx; save(); renderAll(); renderFosterTab(); });
+      selB.addEventListener('click',function(){ S.fosterIdx=idx; save(); applyHousing(); renderAll(); renderFosterTab(); });
       h3.appendChild(selB);
     }
     var rnBtn=document.createElement('button');
@@ -5368,7 +5521,7 @@ function renderFosterTab(){
     lk.addEventListener('click',function(){
       wrap.innerHTML='';
       PG.MyDog.renderPanel(wrap,{breed:F.breed,fur:F.fur,belly:F.belly,mark:F.mark},function(p){
-        F.breed=p.breed; F.fur=p.fur; F.belly=p.belly; F.mark=p.mark; S.lastCare=Date.now();
+        F.breed=p.breed; F.fur=p.fur; F.belly=p.belly; F.mark=p.mark; F.coatFx=p.coatFx||null; S.lastCare=Date.now();
         PG.Care.setMsg(S,'Meet '+F.name+(p.pattern?' ('+p.pattern+')':'')+'!');
         rebuildDogs(); save(); renderAll(); renderFosterTab();
       },{title:'Change breed & coat',sub:'Switch '+F.name+'\u2019s breed or pick a new coat pattern.',cta:'Apply changes'});
@@ -5482,8 +5635,9 @@ function renderRealEstateTab(){
   PG.Props.DEFS.forEach(function(d){
     var owned=S.props.owned.indexOf(d.id)>=0, isCur=S.props.current===d.id;
     var card=document.createElement('div'); card.className='pg-fcard';
-    var nm=S.props.names[d.id]||d.name;
-    card.innerHTML='<h3>'+nm+'</h3>'+
+    var nm=S.props.names[d.id]||'Vegas Forever Homes';
+    card.innerHTML='<h3>'+d.name+'</h3>'+
+      '<div class="row"><span>Sign reads</span><b>'+nm+'</b></div>'+
       '<div class="row"><span>Fosters</span><b>'+d.fosters+'</b></div>'+
       '<div class="row"><span>Trainers</span><b>'+d.trainers+'</b></div>'+
       '<div class="row"><span></span><b style="font-weight:400">'+d.desc+'</b></div>';
@@ -5498,7 +5652,7 @@ function renderRealEstateTab(){
       mv.type='button'; mv.className='pg-btn acc'; mv.textContent='Move here';
       mv.addEventListener('click',function(){
         var r=setProperty(d.id);
-        if(r.ok){ PG.Care.setMsg(S,'Welcome home! Moved to '+nm+'.'); }
+        if(r.ok){ PG.Care.setMsg(S,'Welcome home! Moved to '+d.name+'.'); }
         else PG.Care.setMsg(S,r.error);
         renderRealEstateTab(); renderAll();
       });
@@ -5568,7 +5722,7 @@ function showWelcome(){
   PG.MyDog.renderWizard(card,
     {breed:F.breed,fur:F.fur,belly:F.belly,mark:F.mark},
     function(p){
-      F.breed=p.breed; F.fur=p.fur; F.belly=p.belly; F.mark=p.mark;
+      F.breed=p.breed; F.fur=p.fur; F.belly=p.belly; F.mark=p.mark; F.coatFx=p.coatFx||null;
       F.level=1; F.xp=0; F.arrivedAt=Date.now();
       S.setupDone=true; S.lastCare=Date.now();
       PG.Care.setMsg(S,'Welcome home, '+F.name+'! \u2764\ufe0f');
