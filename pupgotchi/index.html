@@ -385,6 +385,21 @@ function shade(hex, f){
 function cross(a,b){ return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
 function sub(a,b){ return [a[0]-b[0],a[1]-b[1],a[2]-b[2]]; }
 
+/* world normal -> part-local normal (undo parent yaw + part roll/pitch/yaw).
+ * Used for per-face color keys so a pitching part doesn't flip its colors. */
+function localNormal(n, part, parent){
+  var x=n[0], y=n[1], z=n[2], t, c, s;
+  var py=-((parent&&parent.yaw)||0);
+  if(py){ c=Math.cos(py); s=Math.sin(py); t=x*c - z*s; z=x*s + z*c; x=t; }
+  var rl=-(part.roll||0);
+  if(rl){ c=Math.cos(rl); s=Math.sin(rl); t=x*c - y*s; y=x*s + y*c; x=t; }
+  var pi=-(part.pitch||0);
+  if(pi){ c=Math.cos(pi); s=Math.sin(pi); t=y*c - z*s; z=y*s + z*c; y=t; }
+  var ya=-(part.yaw||0);
+  if(ya){ c=Math.cos(ya); s=Math.sin(ya); t=x*c - z*s; z=x*s + z*c; x=t; }
+  return [x,y,z];
+}
+
 function collectFaces(parts, cam, parent){
   var out=[];
   for(var pi=0; pi<parts.length; pi++){
@@ -418,10 +433,11 @@ function collectFaces(parts, cam, parent){
       // world-normal axis so per-face colors (e.g. a belly) still land right
       var fk=f.k;
       if(perFace&&part.kind==='roundbox'){
-        var ax=Math.abs(n[0]), ay=Math.abs(n[1]), az=Math.abs(n[2]);
-        if(ay>=ax&&ay>=az) fk=n[1]>0?'top':'bottom';
-        else if(ax>=az) fk=n[0]>0?'right':'left';
-        else fk=n[2]>0?'front':'back';
+        var ln=localNormal(n,part,parent);
+        var ax=Math.abs(ln[0]), ay=Math.abs(ln[1]), az=Math.abs(ln[2]);
+        if(ay>=ax&&ay>=az) fk=ln[1]>0?'top':'bottom';
+        else if(ax>=az) fk=ln[0]>0?'right':'left';
+        else fk=ln[2]>0?'front':'back';
       }
       var col = perFace ? (perFace[fk]||base) : base;
       var depth=0;
@@ -4869,7 +4885,7 @@ function drawSky(t){
     ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
     if(dn.stars>0.01){
       for(i=0;i<starSeed.length;i++){ s=starSeed[i];
-        ctx.fillStyle='rgba(255,255,255,'+((0.4+0.6*Math.abs(Math.sin(t*1.5+s.tw)))*dn.stars).toFixed(3)+')';
+        ctx.fillStyle='rgba(255,255,255,'+((0.72+0.28*Math.sin(t*0.9+s.tw))*dn.stars).toFixed(3)+')';
         ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,7); ctx.fill(); }
     }
     if(dn.sun>0.01){
@@ -4908,7 +4924,7 @@ function drawSky(t){
     g.addColorStop(0,'#0b1026'); g.addColorStop(1,'#23365e');
     ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
     for(var i=0;i<starSeed.length;i++){ var s=starSeed[i];
-      ctx.fillStyle='rgba(255,255,255,'+(0.4+0.6*Math.abs(Math.sin(t*1.5+s.tw)))+')';
+      ctx.fillStyle='rgba(255,255,255,'+(0.72+0.28*Math.sin(t*0.9+s.tw))+')';
       ctx.beginPath(); ctx.arc(s.x*W,s.y*H,s.r,0,7); ctx.fill(); }
     ctx.fillStyle='#f4f1de'; ctx.beginPath(); ctx.arc(W*0.8,H*0.2,26,0,7); ctx.fill();
     ctx.fillStyle='#d8d4c0'; ctx.beginPath(); ctx.arc(W*0.8-9,H*0.2-5,6,0,7); ctx.fill();
