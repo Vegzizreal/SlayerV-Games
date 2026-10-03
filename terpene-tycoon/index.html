@@ -1164,6 +1164,17 @@ function render(){
  for(var si2=pgm*perPage;si2<Math.min(pr.slots.length,(pgm+1)*perPage);si2++)gh+=plantHTML(pr.slots[si2],gi,si2);
  gh+='</div>';
  if(pages>1)gh+='<div class="ppager sm"><button type="button" data-act="gpage" data-p="'+(pgm-1)+'">\u25C0</button><span>'+(pgm*perPage+1)+'\u2013'+Math.min(pr.slots.length,(pgm+1)*perPage)+' of '+pr.slots.length+'</span><button type="button" data-act="gpage" data-p="'+(pgm+1)+'">\u25B6</button></div>';
+ // seeds quick-buy + auto-plant in Grow tab
+ gh+='<div class="shopsec">SEEDS</div>';
+ GROWKEYS.forEach(function(k){
+  if(tierVis(PRODUCTS[k].tier)!==2)return;
+  var sc=S.seeds[k]||0;
+  gh+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">&times;'+sc+'</span></div>'
+   +'<div style="display:flex;gap:6px">'
+   +'<button type="button" data-act="autoplant" data-strain="'+k+'"'+(sc>0?"":" disabled")+'>AUTO PLANT</button>'
+   +'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+'</button>'
+   +'</div></div>';
+ });
  q(".pane-grow").innerHTML=gh;
  q(".pane-stash").innerHTML=stashHTML();
  q(".pane-cook").innerHTML=cookHTML();q(".pane-cook").classList.toggle("has-job",!!S.job);
