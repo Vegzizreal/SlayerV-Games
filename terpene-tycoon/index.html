@@ -795,7 +795,7 @@ function growMinOf(k){return growSec()/60;}
 var DEALER_NAMES=["Corner Carl","Rooftop Rita","Alley Al","Deli Dave"];
 var DUFFEL=[40,100,200,400];
 var DUFFEL_COST={100:150,200:400,400:1000};
-var FERT_COST=25,BRIBE_COST=200;
+var FERT_COST=25,BRIBE_COST=200,PAPER_COST=10,PAPER_PACK=20;
 var WEAPONS={
  fists:{name:"Fists",cost:0,tier:1,dmg:[5,9]},
  knife:{name:"Knife",cost:150,tier:2,dmg:[11,16]},
@@ -856,7 +856,7 @@ var HEAT_TIERS=["CALM","SUSPICIOUS","WATCHED","HUNTED"];
 function mkDealer(name){function m(){return 0.8+Math.random()*0.4;}var d={name:name,buy:{},sell:{}};PKEYS.forEach(function(k){d.buy[k]=m();d.sell[k]=m();});return d;}
 function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
-var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,lastVer:"",
+var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,lastVer:"",
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
  msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
@@ -875,6 +875,7 @@ function normalize(s){
  }
  delete s.growSpeeds;delete s.setStrain;
  if(SPEED_OPTS.indexOf(s.growSpeed)<0)s.growSpeed=30;
+ if(typeof s.papers!=="number"||s.papers<0)s.papers=0;
  if(RKEYS.indexOf(s.setdrug)<0)s.setdrug="hash";
  s.stats=Object.assign({earned:0,harvested:0,deals:0,busted:0,cooked:0},s.stats);
  if(s.seeds.moonrock>0){s.cash+=s.seeds.moonrock*150;s.seeds.moonrock=0;}
@@ -1209,6 +1210,8 @@ function render(){
   }else if(st==="gear"){
    sh+='<div class="srow c"><div><b>Fertilizer</b><div class="sdesc">+30 growth, instant</div></div>'
     +'<button type="button" data-act="buyfert"'+(S.cash>=FERT_COST?"":" disabled")+'>'+money(FERT_COST)+' (&times;'+S.fert+')</button></div>';
+   sh+='<div class="srow c"><div><b>Rolling papers</b><div class="sdesc">Pack of '+PAPER_PACK+' — needed to roll joints</div></div>'
+    +'<button type="button" data-act="buypapers"'+(S.cash>=PAPER_COST?"":" disabled")+'>'+money(PAPER_COST)+' (&times;'+S.papers+')</button></div>';
    var ti=DUFFEL.indexOf(S.stashCap);
    if(ti<DUFFEL.length-1){
     var nc=DUFFEL[ti+1];
@@ -1496,8 +1499,10 @@ function chillStrain(){
 function doRoll(k,n){
  if(!k||tierVis(PRODUCTS[k].tier)!==2)return;
  if((S.stash[k]||0)<n){S.msg="Not enough bud to roll.";save();render();return;}
+ if((S.papers||0)<n*2){S.msg="Need rolling papers — buy some at the Store.";save();render();return;}
  if(stashTotal()+n>S.stashCap){S.msg="Duffel is full — sell some first.";save();render();return;}
  S.stash[k]-=n;
+ S.papers-=n*2;
  S.joints[k]=(S.joints[k]||0)+n*2;
  S.msg="Rolled "+(n*2)+" "+PRODUCTS[k].name+" joints.";
  save();render();
@@ -1892,10 +1897,11 @@ function chillHTML(){
    h+='<button type="button" class="dchip'+(k===ck?" on":"")+'" data-act="chillsel" data-strain="'+k+'"><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+' &times;'+(S.stash[k]||0)+'</span></button>';
   });
   h+='</div>';
-  var bud=S.stash[ck]||0;
-  h+='<div class="btns"><button type="button" data-act="roll" data-strain="'+ck+'" data-n="1"'+(bud>=1?"":" disabled")+'>ROLL 1 &rarr; 2 joints</button>'
-   +'<button type="button" data-act="roll" data-strain="'+ck+'" data-n="5"'+(bud>=5?"":" disabled")+'>ROLL 5 &rarr; 10 joints</button></div>'
-   +'<div class="sdesc">1 bud &rarr; 2 joints. Joints sell to dealers for ~0.9&times; bud price each.</div>';
+  var bud=S.stash[ck]||0,pap=S.papers||0;
+  h+='<div class="sdesc" style="margin-bottom:6px">Rolling papers: <b>'+pap+'</b>'+(pap<2?' — <a href="#" data-act="tab" data-tab="store" style="color:var(--hatch-widget-accent)">buy at Store</a>':'')+'</div>'
+   +'<div class="btns"><button type="button" data-act="roll" data-strain="'+ck+'" data-n="1"'+(bud>=1&&pap>=2?"":" disabled")+'>ROLL 1 &rarr; 2 joints</button>'
+   +'<button type="button" data-act="roll" data-strain="'+ck+'" data-n="5"'+(bud>=5&&pap>=10?"":" disabled")+'>ROLL 5 &rarr; 10 joints</button></div>'
+   +'<div class="sdesc">1 bud &rarr; 2 joints (2 papers). Joints sell to dealers for ~0.9&times; bud price each.</div>';
  }else{
   var sk=chillStrain(),hasJ=false;
   h+='<div class="dchips">';
@@ -2028,6 +2034,7 @@ root.addEventListener("click",function(e){
  if(a==="harvest"){doHarvest(+b.dataset.pi,+b.dataset.si);return;}
  if(a==="buyseed"){var k=b.dataset.strain;if(PRODUCTS[k].tier<=pLevel()&&S.cash>=PRODUCTS[k].seed){S.cash-=PRODUCTS[k].seed;S.seeds[k]++;S.msg="Bought "+PRODUCTS[k].name+" seeds.";save();render();}return;}
  if(a==="buyfert"){if(S.cash>=FERT_COST){S.cash-=FERT_COST;S.fert++;S.msg="Fertilizer stocked.";save();render();}return;}
+ if(a==="buypapers"){if(S.cash>=PAPER_COST){S.cash-=PAPER_COST;S.papers+=PAPER_PACK;S.msg="Bought "+PAPER_PACK+" rolling papers.";save();render();}return;}
  if(a==="buyduffel"){var ti=DUFFEL.indexOf(S.stashCap);if(ti<DUFFEL.length-1){var nc=DUFFEL[ti+1];if(S.cash>=DUFFEL_COST[nc]){S.cash-=DUFFEL_COST[nc];S.stashCap=nc;S.msg="Duffel upgraded — carry "+nc+"g now.";save();render();}}return;}
  if(a==="buyprop"){var pr2=PROPS.filter(function(x){return x.id===b.dataset.prop;})[0];var owned=S.props.some(function(x){return x.id===pr2.id;});if(pr2&&!owned&&pr2.tier<=pLevel()&&S.cash>=pr2.cost){S.cash-=pr2.cost;S.props.push(mkProp(pr2.id));S.msg="New property: "+pr2.name+"! "+pr2.desc;save();render();}return;}
  if(a==="bribe"){if(S.cash>=BRIBE_COST&&S.heat>0&&Date.now()>=S.lockedUntil){S.cash-=BRIBE_COST;S.heat=Math.max(0,S.heat-50);S.msg="Cops paid off. Heat dropped.";save();render();}return;}
