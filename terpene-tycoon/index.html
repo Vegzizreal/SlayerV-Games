@@ -722,9 +722,12 @@ var PRODUCTS={
  moonrock:{name:"Moonrocks",price:140,tier:3,c1:"#e9d5ff"},
  acid:{name:"Acid",price:110,tier:4,c1:"#ff2fb3"},
  dmt:{name:"DMT",price:200,tier:5,c1:"#bfe6ff"},
- dragon:{name:"Dragon's Breath",price:600,tier:7,c1:"#ff6a00"}
+ dragon:{name:"Dragon's Breath",price:600,tier:7,c1:"#ff6a00"},
+ estack:{name:"E Single Stack",price:180,tier:8,c1:"#ff7ad9"},
+ edouble:{name:"E Double Stack",price:320,tier:8,c1:"#ff4dc8"},
+ etriple:{name:"E Triple Stack",price:500,tier:8,c1:"#ff1fb0"}
 };
-var PKEYS=["sour","og","haze","bluedream","gsc","widow","glue","hash","edibles","moonrock","acid","dmt","dragon"];
+var PKEYS=["sour","og","haze","bluedream","gsc","widow","glue","hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var GROWKEYS=["sour","og","haze","bluedream","gsc","widow","glue"];
 var PROPS=[
  {id:"tent",name:"Grow Tent",cost:0,slots:3,tier:1,desc:"Your closet setup. 3 grow slots."},
@@ -733,28 +736,34 @@ var PROPS=[
  {id:"mansion",name:"Mansion Lab",cost:15000,slots:16,tier:4,desc:"16 grow slots. Requires Level 4."},
  {id:"bunker",name:"Bunker",cost:40000,slots:20,tier:5,desc:"20 grow slots. Requires Level 5."},
  {id:"island",name:"Island Compound",cost:100000,slots:24,tier:6,desc:"24 grow slots. Requires Level 6."},
- {id:"cartel",name:"Cartel Empire",cost:250000,slots:28,tier:7,desc:"28 grow slots. Requires Level 7."}
+ {id:"cartel",name:"Cartel Empire",cost:250000,slots:28,tier:7,desc:"28 grow slots. Requires Level 7."},
+ {id:"palace",name:"Emerald Palace",cost:500000,slots:34,tier:8,desc:"34 grow slots. Requires Level 8."}
 ];
 var KITS={
  butter:{name:"Butter Kit",cost:40,tier:2,desc:"For baking Edibles"},
  oil:{name:"Hash Oil Kit",cost:80,tier:3,desc:"For infusing Moonrocks"},
  chem:{name:"Chem Kit",cost:150,tier:4,desc:"For cooking Acid & DMT"},
- royal:{name:"Royal Kit",cost:500,tier:7,desc:"For Dragon's Breath"}
+ royal:{name:"Royal Kit",cost:500,tier:7,desc:"For Dragon's Breath"},
+ press:{name:"Pill Press Kit",cost:300,tier:8,desc:"For pressing Ecstasy stacks"}
 };
-var KITKEYS=["butter","oil","chem","royal"];
+var KITKEYS=["butter","oil","chem","royal","press"];
 var RECIPES={
  hash:{game:"tap",taps:25,secs:12,bud:5,yield:3,heat:6,hint:"Tap the press 25 times before time runs out!"},
  edibles:{game:"timing",bud:4,kits:{butter:1},yield:5,heat:6,hint:"Hit PULL when the marker is in the green zone."},
  moonrock:{game:"target",bud:3,stash:{hash:2},kits:{oil:1},yield:4,heat:8,hint:"Tap the lit pad — 5 rounds, be quick."},
  acid:{game:"memory",kits:{chem:2},yield:5,heat:10,hint:"Watch the sequence, then repeat it. 2 rounds."},
  dmt:{game:"freezethaw",kits:{chem:3},yield:4,heat:12,hint:"FREEZE in the blue zone, then THAW in the orange zone."},
- dragon:{game:"finale",stash:{moonrock:5,dmt:3,acid:2},kits:{royal:1},yield:6,heat:20,hint:"The full gauntlet: press, pull, then the sequence."}
+ dragon:{game:"finale",stash:{moonrock:5,dmt:3,acid:2},kits:{royal:1},yield:6,heat:20,hint:"The full gauntlet: press, pull, then the sequence."},
+ estack:{game:"tap",taps:30,secs:14,kits:{press:1},yield:8,heat:10,hint:"Tap the press 30 times before time runs out!"},
+ edouble:{game:"timing",kits:{press:2},yield:10,heat:14,hint:"Hit PULL when the marker is in the green zone."},
+ etriple:{game:"target",kits:{press:3},yield:12,heat:18,hint:"Tap the lit pad — 6 rounds, be quick."}
 };
-var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon"];
+var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
-var GAME_VER="BETA-0.009";
-var GAME_UPDATED="Oct 2, 2026 · 10:55 PM";
+var GAME_VER="BETA-0.010";
+var GAME_UPDATED="Oct 2, 2026 · 11:30 PM";
 var CHANGELOG=[
+ {v:"BETA-0.010",t:"Level 8",d:"New level with Ecstasy in Single, Double and Triple Stacks, the Emerald Palace with 34 grow slots, and Pill Press Kits."},
  {v:"BETA-0.009",t:"Roach update banner",d:"Roach the hooded stranger now drops by with a package whenever the game updates."},
  {v:"BETA-0.008",t:"Tips bar upgrades",d:"Tap the scrolling tips to skip ahead to the next one. The most useful money-making tips now show first. The little light on the badge spins."},
  {v:"BETA-0.007",t:"Smarter tips + update notes",d:"The tips bar now gives advice based on your level. You can read about every update in Settings under Changelog."},
@@ -772,9 +781,10 @@ var LEVEL_TIPS={
  4:["Acid is high value, high heat — plan the cook","Check Alley Al's prices before every sale","Mansion Lab: 16 grow slots","The Pistol outclasses the Knife in a fight"],
  5:["DMT sells premium — guard that stash","Bunker: 20 grow slots","Bribe early when the heat starts climbing"],
  6:["White Widow is top-shelf bud","Island Compound: 24 grow slots","The SMG handles the worst ambushes","Deli Dave's prices are worth comparing"],
- 7:["Dragon's Breath: the final cook","Cartel Empire: 28 slots of endgame growing","Gorilla Glue is the highest bud tier"]
+ 7:["Dragon's Breath: the final cook","Cartel Empire: 28 slots of endgame growing","Gorilla Glue is the highest bud tier"],
+ 8:["Triple Stack E is the best money in the game","Emerald Palace: 34 grow slots","Stock Pill Press Kits for every Ecstasy cook"]
 };
-var DEF_SPEEDS={hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300};
+var DEF_SPEEDS={hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300,estack:120,edouble:150,etriple:180};
 function speedOf(k){var v=S.speeds&&S.speeds[k];return SPEED_OPTS.indexOf(v)>=0?v:DEF_SPEEDS[k];}
 function fmtT(s){s=Math.max(0,Math.round(s));var m=Math.floor(s/60),r=s%60;return m+":"+(r<10?"0":"")+r;}
 function growSec(){return SPEED_OPTS.indexOf(S.growSpeed)>=0?S.growSpeed:120;}
@@ -791,7 +801,7 @@ var WEAPONS={
 };
 var WKEYS=["fists","knife","pistol","smg"];
 var DEALER_TIER=[1,2,4,6];
-var XP_TH=[0,200,500,900,1400,2000,2700];
+var XP_TH=[0,200,500,900,1400,2000,2700,3500];
 function lvl(xp){xp=xp||0;var L=1;for(var i=0;i<XP_TH.length;i++)if(xp>=XP_TH[i])L=i+1;return L;}
 function pLevel(){return lvl(S.xp);}
 function tierVis(t){var L=pLevel();return t<=L?2:(t===L+1?1:0);}
@@ -802,7 +812,8 @@ var UNLOCKS={
  4:["Blue Dream","Acid","Mansion Lab","Pistol","Alley Al"],
  5:["Girl Scout Cookies","DMT","Bunker"],
  6:["White Widow","Island Compound","SMG","Deli Dave"],
- 7:["Gorilla Glue","Dragon's Breath","Cartel Empire"]
+ 7:["Gorilla Glue","Dragon's Breath","Cartel Empire"],
+ 8:["Ecstasy Stacks","Emerald Palace","Pill Press Kit"]
 };
 function addXP(n){
  if(!n||n<=0)return false;
@@ -1412,7 +1423,7 @@ function tickerHints(){
  }
  if((S.fert||0)<=0)econ.push("Out of fertilizer — Supply Depot sells instant +30 growth");
  // INFO
- if(L<7&&UNLOCKS[L+1])info.push("Level "+(L+1)+" unlocks: "+UNLOCKS[L+1].join(", "));
+ if(L<8&&UNLOCKS[L+1])info.push("Level "+(L+1)+" unlocks: "+UNLOCKS[L+1].join(", "));
  info.push("Stash tab: roll, smoke or sell every bag in one place");
  // STATUS — last
  var thirsty=false;
