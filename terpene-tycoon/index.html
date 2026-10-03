@@ -40,7 +40,6 @@ window.hatchWidget={
 <div class="pg">
  <div class="pg-head">
   <div class="pg-title">TERPENE TYCOON<span class="pg-sub">grow op</span></div>
-  <button type="button" class="store-btn" data-act="tab" data-tab="store"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l1.2-4.5h13.6L20 9"/><path d="M4 9v10.5h16V9"/><path d="M4 9.2h16"/><path d="M9.5 19.5v-4.5h5v4.5"/></svg>STORE</button>
  </div>
  <div class="pg-pills">
   <div class="pill"><b class="v-cash">$200</b></div>
@@ -51,14 +50,16 @@ window.hatchWidget={
  </div>
  <div class="pg-heat"><div class="heat-bar"><i class="v-heat"></i></div><span class="v-heattier">CALM</span><button type="button" class="heat-bribe" data-act="bribe" hidden></button></div>
  <div class="pg-msg v-msg">Welcome to the grow op.</div>
+ <div class="pg-ticker"><span class="ticker-badge"><i></i>LIVE</span><div class="ticker-view"><div class="ticker-track"></div></div></div>
  <div class="pg-tabs">
-  <button type="button" data-act="tab" data-tab="grow" class="on">Grow</button>
-  <button type="button" data-act="tab" data-tab="stash">Stash</button>
-  <button type="button" data-act="tab" data-tab="cook">Cook</button>
-  <button type="button" data-act="tab" data-tab="deal">Deal</button>
-  <button type="button" data-act="tab" data-tab="chill">Chill</button>
-  <button type="button" data-act="tab" data-tab="clinic">Clinic</button>
-  <button type="button" data-act="tab" data-tab="settings">Settings</button>
+  <button type="button" data-act="tab" data-tab="store" class="store-tab"><span class="tab-tx">Store</span></button>
+  <button type="button" data-act="tab" data-tab="grow" class="on"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 13c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg></span><span class="tab-tx">Grow</span></button>
+  <button type="button" data-act="tab" data-tab="stash"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2.5"/><path d="M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8"/><path d="M3 13h18"/></svg></span><span class="tab-tx">Stash</span></button>
+  <button type="button" data-act="tab" data-tab="cook"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10 3v5.5L4.8 17a2.3 2.3 0 0 0 2 3.5h10.4a2.3 2.3 0 0 0 2-3.5L14 8.5V3"/><path d="M7.5 15h9"/></svg></span><span class="tab-tx">Cook</span></button>
+  <button type="button" data-act="tab" data-tab="deal"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="19" height="11" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/></svg></span><span class="tab-tx">Deal</span></button>
+  <button type="button" data-act="tab" data-tab="chill"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20c-1.6-2.2 1.6-3.2 0-5.4s1.6-3.2 0-5.4"/><path d="M13.5 20c-1.6-2.2 1.6-3.2 0-5.4s1.6-3.2 0-5.4"/></svg></span><span class="tab-tx">Chill</span></button>
+  <button type="button" data-act="tab" data-tab="clinic"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 8.5v7M8.5 12h7"/></svg></span><span class="tab-tx">Clinic</span></button>
+  <button type="button" data-act="tab" data-tab="settings"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v2.8M12 18.7v2.8M2.5 12h2.8M18.7 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2"/></svg></span><span class="tab-tx">Settings</span></button>
  </div>
  <div class="pg-pane pane-grow"></div>
  <div class="pg-pane pane-stash" hidden></div>
@@ -150,13 +151,9 @@ window.hatchWidget={
  .spd{padding:10px 6px;min-height:46px}
  .acc-h{padding:12px 10px !important;min-height:48px}
  .tapbtn{padding:18px;min-height:58px}
- .store-btn{padding:9px 16px;min-height:44px}
  .amtrow button{min-height:44px;min-width:44px}
 }
 .store-banner span{font-size:11.5px;color:var(--hatch-widget-muted)}
-.store-btn{display:flex;align-items:center;gap:6px;background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-accent);color:var(--hatch-widget-accent);border-radius:999px;padding:5px 12px;font-weight:800;font-size:12px;letter-spacing:1.5px;cursor:pointer}
-.store-btn svg{display:block}
-.store-btn.on{background:var(--hatch-widget-accent);color:var(--hatch-widget-on-accent)}
 .store-screen-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
 .store-screen-head .store-back{display:flex;align-items:center;gap:4px;background:transparent;border:1px solid var(--hatch-widget-border);color:var(--hatch-widget-accent);border-radius:8px;padding:6px 10px;font-weight:800;font-size:11px;letter-spacing:1px;cursor:pointer}
 .store-title{display:flex;align-items:center;gap:8px;font-weight:900;font-size:19px;letter-spacing:2px;color:var(--hatch-widget-accent)}
@@ -607,7 +604,31 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .stashbtns button.sell{background:linear-gradient(180deg,#3f7a4e,#2a5535);border-color:transparent;color:#fff}
 .stashbtns button:disabled{opacity:.35}
 @media(pointer:coarse){.stashbtns button{min-height:46px;padding:10px 12px;font-size:11.5px}}
-/* bribe button by the heat bar — big, always in reach */
+/* ===== TERPENE TYCOON v20: tab icons + store leaf imprint ===== */
+.pg-tabs button .tab-ic{display:inline-flex;vertical-align:-2px;margin-right:5px}
+.pg-tabs button .tab-ic svg{display:block}
+.pg-tabs button.store-tab{position:relative;overflow:hidden;color:#e5484d;font-weight:900;letter-spacing:1px}
+.pg-tabs button.store-tab::before{content:"";position:absolute;inset:-8px;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22%23e5484d%22%3E%3Cpath%20d%3D%22M12%201C12.8%205.5%2012.8%209.5%2012%2013C11.2%209.5%2011.2%205.5%2012%201Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C9.5%2010.5%206.8%208%203.5%206.5C6.8%208.5%209.8%2011%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C14.5%2010.5%2017.2%208%2020.5%206.5C17.2%208.5%2014.2%2011%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C8.8%2012.2%205.5%2011.8%202.2%2012.2C5.5%2013.5%208.8%2013.8%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C15.2%2012.2%2018.5%2011.8%2021.8%2012.2C18.5%2013.5%2015.2%2013.8%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C10.2%2014.3%208.5%2015.8%206.8%2018C8.8%2016.3%2010.6%2014.8%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M12%2013C13.8%2014.3%2015.5%2015.8%2017.2%2018C15.2%2016.3%2013.4%2014.8%2012%2013Z%22%2F%3E%3Cpath%20d%3D%22M11.5%2013L11.5%2022C11.5%2022.3%2012.5%2022.3%2012.5%2022L12.5%2013Z%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;opacity:.32;pointer-events:none}
+.pg-tabs button.store-tab.on::before{opacity:.55}
+.pg-tabs button.store-tab .tab-tx{position:relative;z-index:1;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+@media(max-width:560px){
+ .pg-tabs button .tab-tx{display:none}
+ .pg-tabs button .tab-ic{margin-right:0}
+ .pg-tabs button .tab-ic svg{width:17px;height:17px}
+ .pg-tabs button.store-tab::before{opacity:.8;inset:-4px}
+ .pg-tabs button.store-tab.on::before{opacity:1}
+}
+/* ===== TERPENE TYCOON v21: newscast ticker ===== */
+.pg-ticker{display:flex;align-items:stretch;background:#0c0c0f;border:1px solid var(--hatch-widget-border);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.pg-ticker[hidden]{display:none}
+.ticker-badge{display:flex;align-items:center;flex:none;background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;font-weight:900;font-size:10px;letter-spacing:2px;padding:8px 10px}
+.ticker-badge i{width:7px;height:7px;border-radius:50%;background:#fff;margin-right:6px;animation:tblink 1.4s infinite}
+@keyframes tblink{0%,100%{opacity:1}50%{opacity:.2}}
+.ticker-view{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+.ticker-track{display:flex;width:max-content;white-space:nowrap;animation:tickscroll 50s linear infinite}
+.ticker-chunk{padding:7px 0;padding-right:70px;font-size:12px;color:var(--hatch-widget-text);letter-spacing:.3px}
+@keyframes tickscroll{to{transform:translateX(-50%)}}
+/* bribe button by the heat bar */
 .heat-bribe{margin-left:auto;flex:none;padding:10px 20px;min-height:46px;border-radius:10px;border:1px solid #e5484d;background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;font-weight:900;font-size:13px;letter-spacing:1.5px;cursor:pointer;box-shadow:0 2px 10px rgba(229,72,77,.45),inset 0 1px 0 rgba(255,255,255,.25)}
 .heat-bribe:disabled{opacity:.45;box-shadow:none}
 .heat-bribe[hidden]{display:none}
@@ -995,14 +1016,15 @@ function render(){
   _bb.textContent="BRIBE "+money(BRIBE_COST);
  }
  q(".v-msg").textContent=S.msg;
+ renderTicker();
  qa(".pg-tabs button").forEach(function(b){b.classList.toggle("on",b.dataset.tab===S.tab);});
- var _sb=q(".store-btn");if(_sb)_sb.classList.toggle("on",S.tab==="store");
  var battling=!!S.battle;
  var inStore=S.tab==="store"&&!battling;
  q(".pg-head").hidden=inStore;
  q(".pg-pills").hidden=inStore;
  q(".pg-heat").hidden=inStore;
  q(".pg-msg").hidden=inStore;
+ q(".pg-ticker").hidden=inStore;
  q(".pg-tabs").hidden=inStore;
  q(".pane-grow").hidden=battling||S.tab!=="grow";
  q(".pane-stash").hidden=battling||S.tab!=="stash";
@@ -1315,7 +1337,43 @@ function stashHTML(){
  h+='<div class="sdesc">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
  return h;
 }
-/* ===== CHILL (v9): roll & smoke ===== */
+/* ===== TERPENE TYCOON v21: newscast tips ticker ===== */
+function tickerHints(){
+ var L=pLevel(),out=[];
+ var di=DUFFEL.indexOf(S.stashCap);
+ if(di<DUFFEL.length-1)out.push("Duffel cramped? Upgrade at the Supply Depot — carry up to "+DUFFEL[DUFFEL.length-1]+"g");
+ var hasW=S.weapons&&Object.keys(S.weapons).some(function(w){return S.weapons[w];});
+ if(!hasW&&L>=2)out.push("No weapon yet — hit the Gun Store before the cops jump you");
+ if(S.props.length<2&&L>=2)out.push("Trap House: 6 grow slots — see Green Realty");
+ if(L>=3){
+  var hasKit=S.kits&&Object.keys(S.kits).some(function(k){return (S.kits[k]||0)>0;});
+  if(!hasKit)out.push("No lab kits — stock up at Lab Supply to start cooking");
+ }
+ if((S.fert||0)<=0)out.push("Out of fertilizer — Supply Depot sells instant +30 growth");
+ var thirsty=false;
+ S.props.forEach(function(pr){pr.slots.forEach(function(p){if(p&&p.water<20)thirsty=true;});});
+ if(thirsty)out.push("Plants are thirsty — hit Water All");
+ if(stashTotal()>=S.stashCap*0.9)out.push("Duffel almost full — sell or upgrade before your next harvest");
+ if(S.heat>=70)out.push("Heat critical — bribe the cops or smoke to cool down");
+ else if(S.heat>=40)out.push("Heat rising — keep it cool");
+ var jtot=GROWKEYS.reduce(function(a,k){return a+(S.joints[k]||0);},0);
+ if(jtot>0)out.push("Smoke a joint: -4 heat and better sell prices for 5 min");
+ if(L<7&&UNLOCKS[L+1])out.push("Level "+(L+1)+" unlocks: "+UNLOCKS[L+1].join(", "));
+ out.push("Stash tab: roll, smoke or sell every bag in one place");
+ out.push("Deal prices drift — buy low, sell high");
+ if(S.job)out.push("Lab job cooking — check the Cook tab");
+ return out;
+}
+function renderTicker(){
+ var track=q(".ticker-track");
+ if(!track)return;
+ var chunk=tickerHints().join(" \u2022\u2022\u2022 ");
+ if(track.dataset.h===chunk)return;
+ track.dataset.h=chunk;
+ var esc=chunk.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+ track.innerHTML='<span class="ticker-chunk">'+esc+'</span><span class="ticker-chunk" aria-hidden="true">'+esc+'</span>';
+ track.style.animationDuration=Math.max(25,Math.min(90,Math.round(chunk.length*0.09)))+"s";
+}
 function chillStrain(){
  var ck=S.chillStrain;
  if(ck&&tierVis(PRODUCTS[ck].tier)===2)return ck;
@@ -1398,7 +1456,7 @@ function tick(){
    });
   });
   if(now>=S.driftAt){var _nd=0;while(now>=S.driftAt&&_nd<24){driftDealers();S.driftAt+=4*60000;_nd++;}if(now>=S.driftAt)S.driftAt=now+4*60000;}
-  if(S.heat>0)S.heat=Math.max(0,S.heat-dtm*2.5);
+  if(S.heat>0){var _hd=dtm*2.5;if(S.buffUntil&&now<S.buffUntil)_hd+=dtm*0.5;S.heat=Math.max(0,S.heat-_hd);}
   if(S.hp<100)S.hp=Math.min(100,S.hp+dtm/2);
  }
  if(S.job){
@@ -1745,7 +1803,7 @@ function chillHTML(){
   h+='</div>';
   var sj=(S.joints[sk]||0);
   h+='<div class="btns"><button type="button" class="go" data-act="smoke" data-strain="'+sk+'"'+(sj>=1?"":" disabled")+'>SMOKE 1 JOINT'+(sj>0?" ("+PRODUCTS[sk].name+")":"")+'</button></div>'
-   +'<div class="sdesc">&minus;4 heat, +'+(4*PRODUCTS[sk].tier)+' XP, and +'+Math.round((0.10+0.02*PRODUCTS[sk].tier)*100)+'% sell prices for 5 min.</div>';
+   +'<div class="sdesc">&minus;4 heat, +'+(4*PRODUCTS[sk].tier)+' XP, and +'+Math.round((0.10+0.02*PRODUCTS[sk].tier)*100)+'% sell prices for 5 min. Heat also cools a touch faster while high.</div>';
   if(!hasJ)h+='<div class="sdesc">No joints yet — roll some first.</div>';
  }
  return h;
@@ -1932,7 +1990,7 @@ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
   if(document.visibilityState==="hidden")saveOnHide();});
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,startCook:startCook};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,tickerHints:tickerHints,renderTicker:renderTicker,startCook:startCook};
 })();
 </script>
 
