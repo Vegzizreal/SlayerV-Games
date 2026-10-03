@@ -157,6 +157,8 @@ window.hatchWidget={
 }
 .store-banner span{font-size:11.5px;color:var(--hatch-widget-muted)}
 .store-screen-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.store-screen-head.sec{margin-top:2px}
+.store-screen-head .sec-desc{font-size:11.5px;color:var(--hatch-widget-muted);text-align:right;max-width:55%}
 .store-screen-head .store-back{display:flex;align-items:center;gap:4px;background:transparent;border:1px solid var(--hatch-widget-border);color:var(--hatch-widget-accent);border-radius:8px;padding:6px 10px;font-weight:800;font-size:11px;letter-spacing:1px;cursor:pointer}
 .store-title{display:flex;align-items:center;gap:8px;font-weight:900;font-size:19px;letter-spacing:2px;color:var(--hatch-widget-accent)}
 .pg-pane[hidden]{display:none}
@@ -1221,7 +1223,7 @@ function render(){
  sh+='</div>';
  var _cur=stores[0];
  stores.forEach(function(sc){if(sc[0]===st)_cur=sc;});
- sh+='<div class="store-banner" style="--sc:'+_cur[4]+'"><b>'+SICON[_cur[0]]+_cur[2]+'</b><span>'+_cur[3]+'</span></div>';
+ sh+='<div class="store-screen-head sec"><span class="store-title" style="color:'+_cur[4]+'">'+SICON[_cur[0]].replace('width="12" height="12"','width="17" height="17"')+_cur[2].toUpperCase()+'</span><span class="sec-desc">'+_cur[3]+'</span></div>';
  if(st==="seeds"){
    sh+='<div class="sdesc" style="margin:0 2px 6px">All strains: '+fmtT(growSec())+' grow (Settings tab).</div>';
    GROWKEYS.forEach(function(k){
