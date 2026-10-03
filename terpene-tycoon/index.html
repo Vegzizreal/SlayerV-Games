@@ -911,6 +911,7 @@ function normalize(s){
  }
  delete s.growSpeeds;delete s.setStrain;
  if(SPEED_OPTS.indexOf(s.growSpeed)<0)s.growSpeed=30;
+ if(!s._growReset013){s.growSpeed=30;s._growReset013=1;}
  if(typeof s.papers!=="number"||s.papers<0)s.papers=0;
  if(typeof s.lastDealer!=="number")s.lastDealer=-1;
  if(typeof s.dealerStreak!=="number"||s.dealerStreak<0)s.dealerStreak=0;
