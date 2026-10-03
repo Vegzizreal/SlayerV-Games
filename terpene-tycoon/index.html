@@ -84,8 +84,14 @@ window.hatchWidget={
 /* Fixed app shell: header stays put, only panes scroll */
 .pg{height:100dvh;max-height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 .roach-topbar,.pg-head,.pg-pills,.pg-heat,.pg-msg,.ticker-help,.pg-ticker,.pg-tabs,.pg-hint{flex:none}
-.pg-head{order:1}.pg-tabs{order:2}.pg-pane{order:3}.pg-pills{order:4}.pg-heat{order:5}.pg-msg{order:6}.pg-ticker{order:7}.pg-hint{order:8}.roach-topbar{order:0}
+.pg-head{order:1}.pg-tabs{order:2}.pg-pane{order:3}.pg-pills{display:none}.pg-heat{display:none}.pg-msg{display:none}.pg-ticker{display:none}.pg-hint{order:8}.roach-topbar{order:0}
 .pg-pane{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.tab-status{background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:10px;padding:8px 10px;margin-bottom:8px}
+.ts-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.ts-heat{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.ts-heat .heat-bar{flex:1}
+.ts-heattier{font-size:11px;font-weight:800;letter-spacing:1px;color:var(--hatch-widget-muted);white-space:nowrap}
+.ts-msg{font-size:12px;color:var(--hatch-widget-muted);line-height:1.4}
 .pg-pane::-webkit-scrollbar{display:none}
 .pg-pane[hidden]{display:none}
 /* ===== TERPENE TYCOON v16: noir dark theme (self-contained) =====
@@ -1117,9 +1123,21 @@ var TAB_ICONS={
  clinic:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 8.5v7M8.5 12h7"/></svg>',
  settings:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v2.8M12 18.7v2.8M2.5 12h2.8M18.7 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2"/></svg>'
 };
+function statusHTML(){
+ var hb='<div class="heat-bar"><i style="width:'+Math.min(100,S.heat)+'%"></i></div>';
+ var ht=heatStars(S.heat)+" "+HEAT_TIERS[heatTier(S.heat)];
+ return '<div class="tab-status">'
+  +'<div class="ts-pills"><div class="pill"><b>'+money(S.cash)+'</b></div>'
+  +'<div class="pill"><b>'+stashTotal()+"/"+S.stashCap+'g</b></div>'
+  +'<div class="pill"><b style="color:'+(S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444")+'">HP '+Math.max(0,Math.round(S.hp))+'</b></div>'
+  +'<div class="pill dim">Day '+(1+Math.floor((Date.now()-S.bornAt)/86400000))+'</div></div>'
+  +'<div class="ts-heat">'+hb+'<span class="ts-heattier">'+ht+'</span></div>'
+  +'<div class="ts-msg">'+q(".v-msg").textContent+'</div>'
+  +'</div>';
+}
 function tabHeader(tab){
  var c=TAB_COLORS[tab]||"#e5484d",ic=TAB_ICONS[tab]||"";
- return '<div class="store-screen-head"><span class="store-title" style="color:'+c+'">'+ic+tab.toUpperCase()+'</span><div class="pill"><b>'+money(S.cash)+'</b></div></div>';
+ return '<div class="store-screen-head"><span class="store-title" style="color:'+c+'">'+ic+tab.toUpperCase()+'</span><div class="pill"><b>'+money(S.cash)+'</b></div></div>'+statusHTML();
 }
 function render(){
  if(root&&root.dataset)root.dataset.theme=(S.theme==="light")?"light":"dark";
