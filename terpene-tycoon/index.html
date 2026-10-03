@@ -1372,7 +1372,7 @@ function renderTicker(){
  track.dataset.h=chunk;
  var esc=chunk.replace(/&/g,"&amp;").replace(/</g,"&lt;");
  track.innerHTML='<span class="ticker-chunk">'+esc+'</span><span class="ticker-chunk" aria-hidden="true">'+esc+'</span>';
- track.style.animationDuration=Math.max(25,Math.min(90,Math.round(chunk.length*0.09)))+"s";
+ track.style.animationDuration=Math.max(40,Math.min(150,Math.round(chunk.length*0.16)))+"s";
 }
 function chillStrain(){
  var ck=S.chillStrain;
