@@ -50,7 +50,9 @@ window.hatchWidget={
  </div>
  <div class="pg-heat"><div class="heat-bar"><i class="v-heat"></i></div><span class="v-heattier">CALM</span><button type="button" class="heat-bribe" data-act="bribe" hidden></button></div>
  <div class="pg-msg v-msg">Welcome to the grow op.</div>
- <div class="pg-ticker"><span class="ticker-badge"><i></i>LIVE</span><div class="ticker-view"><div class="ticker-track"></div></div></div>
+ <div class="ticker-help">Tap a chapter number to jump straight to that tip</div>
+ <div class="pg-ticker"><span class="ticker-badge"><i></i><span class="tb-text"><span class="tb-main">Trap Hotline</span><span class="tb-sub">All the Hood news!</span></span></span><div class="ticker-view"><div class="ticker-track"></div></div></div>
+ <div class="ticker-chapters"></div>
  <div class="pg-tabs">
   <button type="button" data-act="tab" data-tab="store" class="store-tab"><span class="tab-tx">Store</span></button>
   <button type="button" data-act="tab" data-tab="grow" class="on"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 13c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg></span><span class="tab-tx">Grow</span></button>
@@ -621,13 +623,22 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 /* ===== TERPENE TYCOON v21: newscast ticker ===== */
 .pg-ticker{display:flex;align-items:stretch;background:#0c0c0f;border:1px solid var(--hatch-widget-border);border-radius:10px;margin-bottom:8px;overflow:hidden}
 .pg-ticker[hidden]{display:none}
-.ticker-badge{display:flex;align-items:center;flex:none;background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;font-weight:900;font-size:10px;letter-spacing:2px;padding:8px 10px}
-.ticker-badge i{width:7px;height:7px;border-radius:50%;background:#fff;margin-right:6px;animation:tblink 1.4s infinite}
+.ticker-badge{display:flex;align-items:center;flex:none;background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;padding:6px 9px}
+.ticker-badge i{width:7px;height:7px;flex:none;border-radius:50%;background:#fff;margin-right:7px;animation:tblink 1.4s infinite}
+.tb-text{display:flex;flex-direction:column;line-height:1.25}
+.tb-main{font-size:9px;font-weight:900;letter-spacing:1px;white-space:nowrap}
+.tb-sub{font-size:7px;font-weight:700;letter-spacing:.4px;opacity:.88;white-space:nowrap}
 @keyframes tblink{0%,100%{opacity:1}50%{opacity:.2}}
 .ticker-view{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
-.ticker-track{display:flex;width:max-content;white-space:nowrap;animation:tickscroll 50s linear infinite}
-.ticker-chunk{padding:7px 0;padding-right:70px;font-size:12px;color:var(--hatch-widget-text);letter-spacing:.3px}
-@keyframes tickscroll{to{transform:translateX(-50%)}}
+.ticker-track{display:flex;width:max-content;white-space:nowrap;will-change:transform}
+.ticker-chunk{padding:7px 0;font-size:12px;color:var(--hatch-widget-text);letter-spacing:.3px}
+.tick-sep{color:#e5484d;padding:0 22px;font-weight:900}
+.ticker-help{font-size:10.5px;color:var(--hatch-widget-muted);letter-spacing:.3px;margin-bottom:4px}
+.ticker-chapters{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin:2px 0 8px}
+.ticker-chapters[hidden]{display:none}
+.tick-ch{min-width:34px;min-height:34px;padding:6px 8px;border-radius:9px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-muted);font-weight:800;font-size:11px;cursor:pointer}
+.tick-ch.on{border-color:#e5484d;color:#e5484d;background:rgba(229,72,77,.12);box-shadow:0 0 8px rgba(229,72,77,.25)}
+@media(pointer:coarse){.tick-ch{min-width:40px;min-height:40px}}
 /* bribe button by the heat bar */
 .heat-bribe{margin-left:auto;flex:none;padding:10px 20px;min-height:46px;border-radius:10px;border:1px solid #e5484d;background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;font-weight:900;font-size:13px;letter-spacing:1.5px;cursor:pointer;box-shadow:0 2px 10px rgba(229,72,77,.45),inset 0 1px 0 rgba(255,255,255,.25)}
 .heat-bribe:disabled{opacity:.45;box-shadow:none}
@@ -1025,6 +1036,8 @@ function render(){
  q(".pg-heat").hidden=inStore;
  q(".pg-msg").hidden=inStore;
  q(".pg-ticker").hidden=inStore;
+ q(".ticker-chapters").hidden=inStore;
+ q(".ticker-help").hidden=inStore;
  q(".pg-tabs").hidden=inStore;
  q(".pane-grow").hidden=battling||S.tab!=="grow";
  q(".pane-stash").hidden=battling||S.tab!=="stash";
@@ -1364,15 +1377,49 @@ function tickerHints(){
  if(S.job)out.push("Lab job cooking — check the Cook tab");
  return out;
 }
+var tickerState={x:0,last:0,pausedUntil:0};
+function tickerTick(){
+ var track=q(".ticker-track");
+ if(!track||!track.children.length)return;
+ var now=Date.now();
+ if(!tickerState.last)tickerState.last=now;
+ var dt=Math.min(0.5,(now-tickerState.last)/1000);
+ tickerState.last=now;
+ if(now<tickerState.pausedUntil)return;
+ var half=track.scrollWidth/2;
+ if(half<=0)return;
+ tickerState.x+=dt*18;
+ if(tickerState.x>=half)tickerState.x-=half;
+ track.style.transform="translateX("+(-tickerState.x)+"px)";
+}
 function renderTicker(){
  var track=q(".ticker-track");
  if(!track)return;
- var chunk=tickerHints().join(" \u2022\u2022\u2022 ");
- if(track.dataset.h===chunk)return;
- track.dataset.h=chunk;
- var esc=chunk.replace(/&/g,"&amp;").replace(/</g,"&lt;");
- track.innerHTML='<span class="ticker-chunk">'+esc+'</span><span class="ticker-chunk" aria-hidden="true">'+esc+'</span>';
- track.style.animationDuration=Math.max(60,Math.min(200,Math.round(chunk.length*0.25)))+"s";
+ var hints=tickerHints();
+ var key=hints.join("");
+ if(track.dataset.h===key)return;
+ track.dataset.h=key;
+ tickerState.x=0;tickerState.last=0;
+ function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
+ var half=hints.map(function(h,i){return '<span class="ticker-chunk" data-i="'+i+'">'+esc(h)+'<span class="tick-sep">\u2022\u2022\u2022</span></span>';}).join("");
+ track.innerHTML=half+half;
+ track.style.transform="translateX(0)";
+ var ch=q(".ticker-chapters");
+ if(ch){
+  ch.innerHTML=hints.map(function(h,i){return '<button type="button" class="tick-ch" data-act="tickgo" data-i="'+i+'">'+(i+1)+'</button>';}).join("");
+  ch.hidden=false;
+ }
+}
+function tickGo(i){
+ var track=q(".ticker-track");
+ if(!track)return;
+ var el=track.querySelector('.ticker-chunk[data-i="'+i+'"]');
+ if(!el)return;
+ tickerState.x=el.offsetLeft;
+ tickerState.last=0;
+ tickerState.pausedUntil=Date.now()+10000;
+ track.style.transform="translateX("+(-tickerState.x)+"px)";
+ qa(".tick-ch").forEach(function(b){b.classList.toggle("on",+b.dataset.i===i);});
 }
 function chillStrain(){
  var ck=S.chillStrain;
@@ -1928,6 +1975,7 @@ root.addEventListener("click",function(e){
  if(a==="roll"){doRoll(b.dataset.strain,+b.dataset.n||1);return;}
  if(a==="smoke"){doSmoke(b.dataset.strain);return;}
  if(a==="dsellj"){doDeal(+b.dataset.d,b.dataset.strain,false,true);return;}
+ if(a==="tickgo"){tickGo(+b.dataset.i||0);return;}
  if(a==="stashsell"){var _sd=stashDealer();doDeal(_sd.di,b.dataset.strain,false,false);return;}
  if(a==="stashsellj"){var _sd2=stashDealer();doDeal(_sd2.di,b.dataset.strain,false,true);return;}
  if(a==="stashsellall"){doStashSellAll(b.dataset.strain,false);return;}
@@ -1978,6 +2026,7 @@ root.addEventListener("change",function(e){
 render();
 tick();
 setInterval(tick,15000);
+setInterval(tickerTick,50);
 setInterval(pump,150);
 /* ---------- auto-save (same system as Vegas Forever Homes): every 20s, and whenever
    the page/widget is hidden/closed. Widget persists through the hatch bridge;
@@ -1990,7 +2039,7 @@ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
   if(document.visibilityState==="hidden")saveOnHide();});
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,tickerHints:tickerHints,renderTicker:renderTicker,startCook:startCook};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,startCook:startCook};
 })();
 </script>
 
