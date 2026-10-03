@@ -637,8 +637,10 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .stashbtns button:disabled{opacity:.35}
 @media(pointer:coarse){.stashbtns button{min-height:50px;padding:12px 14px;font-size:12.5px}}
 /* ===== TERPENE TYCOON v20: tab icons + store leaf imprint ===== */
-.pg-tabs button .tab-ic{display:inline-flex;vertical-align:-2px;margin-right:5px}
+.pg-tabs button{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 0 6px}
+.pg-tabs button .tab-ic{display:flex}
 .pg-tabs button .tab-ic svg{display:block}
+.pg-tabs button .tab-tx{font-size:9px;letter-spacing:.5px;line-height:1}
 .pg-tabs button.store-tab{position:relative;overflow:hidden;color:#e5484d;font-weight:900;letter-spacing:1px}
 .pg-tabs button[data-tab="grow"]{color:#4ade80}
 .pg-tabs button[data-tab="stash"]{color:#d4a574}
