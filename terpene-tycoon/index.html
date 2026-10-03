@@ -49,10 +49,11 @@ window.hatchWidget={
   <div class="pill buff v-buff" hidden>HIGH</div>
   <div class="pill dim v-day">Day 1</div>
  </div>
- <div class="pg-heat"><div class="heat-bar"><i class="v-heat"></i></div><span class="v-heattier">CALM</span></div>
+ <div class="pg-heat"><div class="heat-bar"><i class="v-heat"></i></div><span class="v-heattier">CALM</span><button type="button" class="heat-bribe" data-act="bribe" hidden></button></div>
  <div class="pg-msg v-msg">Welcome to the grow op.</div>
  <div class="pg-tabs">
   <button type="button" data-act="tab" data-tab="grow" class="on">Grow</button>
+  <button type="button" data-act="tab" data-tab="stash">Stash</button>
   <button type="button" data-act="tab" data-tab="cook">Cook</button>
   <button type="button" data-act="tab" data-tab="deal">Deal</button>
   <button type="button" data-act="tab" data-tab="chill">Chill</button>
@@ -60,6 +61,7 @@ window.hatchWidget={
   <button type="button" data-act="tab" data-tab="settings">Settings</button>
  </div>
  <div class="pg-pane pane-grow"></div>
+ <div class="pg-pane pane-stash" hidden></div>
  <div class="pg-pane pane-cook" hidden></div>
  <div class="pg-pane pane-deal" hidden></div>
  <div class="pg-pane pane-store" hidden></div>
@@ -593,6 +595,23 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
  .prop{margin-bottom:20px}
  .pg-hint{margin-top:16px;font-size:12.5px}
 }
+/* ===== TERPENE TYCOON v19: stash tab ===== */
+.stash-sum{margin-bottom:10px}
+.stashrow{display:flex;align-items:center;gap:8px;padding:9px 6px;border-top:1px solid var(--hatch-widget-border)}
+.stashrow .d2-mid{flex:1;min-width:0}
+.stashrow .d2-name{font-weight:800;font-size:13px;color:var(--hatch-widget-text)}
+.stashrow .d2-sub{font-size:11px;color:var(--hatch-widget-muted)}
+.stashbtns{display:flex;gap:6px;flex:none;flex-wrap:wrap;justify-content:flex-end;max-width:60%}
+.stashbtns button{padding:8px 10px;border-radius:8px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:11px;cursor:pointer;min-height:40px}
+.stashbtns button.go{background:linear-gradient(180deg,#e5484d,#a92e33);border-color:transparent;color:#fff;box-shadow:0 2px 8px rgba(229,72,77,.4)}
+.stashbtns button.sell{background:linear-gradient(180deg,#3f7a4e,#2a5535);border-color:transparent;color:#fff}
+.stashbtns button:disabled{opacity:.35}
+@media(pointer:coarse){.stashbtns button{min-height:46px;padding:10px 12px;font-size:11.5px}}
+/* bribe button by the heat bar — big, always in reach */
+.heat-bribe{margin-left:auto;flex:none;padding:10px 20px;min-height:46px;border-radius:10px;border:1px solid #e5484d;background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;font-weight:900;font-size:13px;letter-spacing:1.5px;cursor:pointer;box-shadow:0 2px 10px rgba(229,72,77,.45),inset 0 1px 0 rgba(255,255,255,.25)}
+.heat-bribe:disabled{opacity:.45;box-shadow:none}
+.heat-bribe[hidden]{display:none}
+@media(pointer:coarse){.heat-bribe{min-height:52px;padding:13px 24px;font-size:14px}}
 </style>
 <style>
 /* ===== TERPENE TYCOON v15: light/dark theme (dark is default; light overrides) ===== */
@@ -752,7 +771,7 @@ var HEAT_TIERS=["CALM","SUSPICIOUS","WATCHED","HUNTED"];
 function mkDealer(name){function m(){return 0.8+Math.random()*0.4;}var d={name:name,buy:{},sell:{}};PKEYS.forEach(function(k){d.buy[k]=m();d.sell[k]=m();});return d;}
 function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
-var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:120,setdrug:"hash",xp:0,chillview:"roll",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,
+var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:120,setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
  msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
@@ -803,7 +822,7 @@ function normalize(s){
  if(s.tab==="shop")s.tab="store";
  if(["grow","cook","deal","store","chill","clinic","settings"].indexOf(s.tab)<0)s.tab="grow";
  if(["grow","cook","deal","chill","clinic","settings"].indexOf(s.backtab)<0)s.backtab="grow";
- if(["roll","smoke"].indexOf(s.chillview)<0)s.chillview="roll";
+ if(["roll","smoke"].indexOf(s.chillview)<0)s.chillview="smoke";
  if(GROWKEYS.indexOf(s.chillStrain)<0)s.chillStrain="sour";
  if(["bud","joints","lab"].indexOf(s.dealcat)<0)s.dealcat="bud";
  if(typeof s.hp!=="number"||isNaN(s.hp))s.hp=100;s.hp=Math.max(0,Math.min(100,s.hp));
@@ -945,6 +964,7 @@ function plantHTML(p,pi,si){
 }
 var HINTS={
  grow:"Water keeps them growing — harvest at 100%. Dry plants stall. Buy properties for more slots and new products.",
+ stash:"Every bag you own, one screen. Roll joints, smoke, or sell — quick.",
  cook:"Turn bud into product — every recipe is a hands-on job. One job at a time; cancelling refunds your inputs.",
  deal:"Buy low, sell high — prices drift every few minutes. At 70+ heat the cops may ambush you — win the fight or lose your stash. Bribe to cool off.",
  store:"Hit the strip — seed bank, gun store, lab supply, depot, realty.",
@@ -968,6 +988,12 @@ function render(){
  hb.className="v-heat"+(S.heat>70?" hot":"");
  q(".v-heattier").textContent=heatStars(S.heat)+" "+HEAT_TIERS[heatTier(S.heat)];
  q(".v-heattier").className="v-heattier ht"+heatTier(S.heat);
+ var _bb=q(".heat-bribe");
+ if(_bb){
+  _bb.hidden=!(S.heat>0&&now>=S.lockedUntil&&!S.battle);
+  _bb.disabled=S.cash<BRIBE_COST;
+  _bb.textContent="BRIBE "+money(BRIBE_COST);
+ }
  q(".v-msg").textContent=S.msg;
  qa(".pg-tabs button").forEach(function(b){b.classList.toggle("on",b.dataset.tab===S.tab);});
  var _sb=q(".store-btn");if(_sb)_sb.classList.toggle("on",S.tab==="store");
@@ -979,6 +1005,7 @@ function render(){
  q(".pg-msg").hidden=inStore;
  q(".pg-tabs").hidden=inStore;
  q(".pane-grow").hidden=battling||S.tab!=="grow";
+ q(".pane-stash").hidden=battling||S.tab!=="stash";
  q(".pane-cook").hidden=battling||S.tab!=="cook";
  q(".pane-deal").hidden=battling||S.tab!=="deal";
  q(".pane-store").hidden=!inStore;
@@ -1000,12 +1027,12 @@ function render(){
  gh+='</div>';
  if(pages>1)gh+='<div class="ppager sm"><button type="button" data-act="gpage" data-p="'+(pgm-1)+'">\u25C0</button><span>'+(pgm*perPage+1)+'\u2013'+Math.min(pr.slots.length,(pgm+1)*perPage)+' of '+pr.slots.length+'</span><button type="button" data-act="gpage" data-p="'+(pgm+1)+'">\u25B6</button></div>';
  q(".pane-grow").innerHTML=gh;
+ q(".pane-stash").innerHTML=stashHTML();
  q(".pane-cook").innerHTML=cookHTML();q(".pane-cook").classList.toggle("has-job",!!S.job);
  var locked=now<S.lockedUntil;
  var dh='<div class="amtrow c"><span>Deal:</span>'
   +'<button type="button" data-act="amt" data-amt="1"'+(S.amt===1?' class="on"':'')+'>1g</button>'
-  +'<button type="button" data-act="amt" data-amt="5"'+(S.amt===5?' class="on"':'')+'>5g</button>'
-  +'<button type="button" class="bribe" data-act="bribe"'+(locked||S.heat<=0||S.cash<BRIBE_COST?" disabled":"")+'>Bribe '+money(BRIBE_COST)+'</button></div>';
+  +'<button type="button" data-act="amt" data-amt="5"'+(S.amt===5?' class="on"':'')+'>5g</button></div>';
  if(locked)dh+='<div class="lock sm">Laying low — heat dies down in '+Math.ceil((S.lockedUntil-now)/60000)+' min.</div>';
  var un=unlocked();
  var di=S.dealer||0;if(di>=S.dealers.length)di=0;
@@ -1205,6 +1232,88 @@ function doDeal(di,k,isBuy,isJoint){
  }
  battleRoll();
  save();render();
+}
+/* ===== STASH (v19): bag inventory + quick actions ===== */
+function stashDealer(){
+ var di=S.dealer||0;if(di>=S.dealers.length)di=0;
+ while(di>0&&DEALER_TIER[di]>pLevel())di--;
+ return {d:S.dealers[di],di:di};
+}
+function doStashSellAll(k,isJoint){
+ var now=Date.now();
+ if(now<S.lockedUntil)return;
+ var sd=stashDealer(),d=sd.d;
+ var have=isJoint?(S.joints[k]||0):(S.stash[k]||0);
+ if(have<1){S.msg="Nothing to sell.";save();render();return;}
+ var st=PRODUCTS[k];
+ var unit=ppu(st.price,d.buy[k]);
+ if(isJoint)unit=Math.round(unit*0.9);
+ if(buffActive())unit=Math.round(unit*S.buffMult);
+ var rev=Math.floor(unit*have);
+ if(isJoint)S.joints[k]=0;else S.stash[k]=0;
+ S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
+ S.heat=Math.min(100,S.heat+2+have);
+ if(!addXP(5))S.msg="Sold "+have+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+".";
+ battleRoll();
+ save();render();
+}
+function stashHTML(){
+ var sd=stashDealer(),d=sd.d;
+ var bActive=buffActive(),bpct=buffPct();
+ function su(k,base){var u=base;if(bActive)u=Math.round(u*S.buffMult);return u;}
+ var h='<div class="shopsec">STASH</div>';
+ var tot=stashTotal(),val=0;
+ PKEYS.forEach(function(k){
+  var g=S.stash[k]||0;
+  if(g>0)val+=Math.floor(su(k,ppu(PRODUCTS[k].price,d.buy[k]))*g);
+ });
+ GROWKEYS.forEach(function(k){
+  var j=S.joints[k]||0;
+  if(j>0)val+=Math.floor(su(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9))*j);
+ });
+ var pct=Math.min(100,Math.round(tot/Math.max(1,S.stashCap)*100));
+ h+='<div class="stash-sum"><div class="sdesc" style="font-size:12.5px"><b style="color:var(--hatch-widget-text)">'+tot+'g</b> / '+S.stashCap+'g &middot; worth <b style="color:#4ade80">'+money(val)+'</b> at '+d.name+'\'s prices'+(bActive?' <span class="bufftag">+'+bpct+'%</span>':"")+'</div>'
+  +'<div class="heat-bar" style="margin-top:6px"><i style="width:'+pct+'%"></i></div></div>';
+ var any=false;
+ function pic(k){
+  return GROWKEYS.indexOf(k)>=0
+   ?'<span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span>'
+   :'<span class="picon xs picon-'+k+'"></span>';
+ }
+ // bags
+ PKEYS.forEach(function(k){
+  var g=S.stash[k]||0;
+  if(g<=0)return;
+  if(tierVis(PRODUCTS[k].tier)===0)return;
+  any=true;
+  var isBud=GROWKEYS.indexOf(k)>=0;
+  var unit=su(k,ppu(PRODUCTS[k].price,d.buy[k]));
+  h+='<div class="stashrow">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' <b>'+g+'g</b></div>'
+   +'<div class="d2-sub">'+money(unit)+'/g &middot; '+money(Math.floor(unit*g))+' total</div></div>'
+   +'<div class="stashbtns">';
+  if(isBud)h+='<button type="button" data-act="roll" data-strain="'+k+'" data-n="1">Roll</button>';
+  h+='<button type="button" data-act="stashsell" data-strain="'+k+'" class="sell">Sell</button>'
+   +'<button type="button" class="all" data-act="stashsellall" data-strain="'+k+'" class="sell">All</button>'
+   +'</div></div>';
+ });
+ // joints
+ GROWKEYS.forEach(function(k){
+  var j=S.joints[k]||0;
+  if(j<=0)return;
+  if(tierVis(PRODUCTS[k].tier)===0)return;
+  any=true;
+  var ju=su(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9));
+  h+='<div class="stashrow">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' joints <b>'+j+'</b></div>'
+   +'<div class="d2-sub">'+money(ju)+'/joint &middot; '+money(Math.floor(ju*j))+' total</div></div>'
+   +'<div class="stashbtns">'
+   +'<button type="button" class="go" data-act="smoke" data-strain="'+k+'">Smoke</button>'
+   +'<button type="button" data-act="stashsellj" data-strain="'+k+'" class="sell">Sell</button>'
+   +'<button type="button" class="all" data-act="stashsellallj" data-strain="'+k+'" class="sell">All</button>'
+   +'</div></div>';
+ });
+ if(!any)h+='<div class="sdesc">Nothing stashed yet — harvest some bud first.</div>';
+ h+='<div class="sdesc">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
+ return h;
 }
 /* ===== CHILL (v9): roll & smoke ===== */
 function chillStrain(){
@@ -1761,6 +1870,10 @@ root.addEventListener("click",function(e){
  if(a==="roll"){doRoll(b.dataset.strain,+b.dataset.n||1);return;}
  if(a==="smoke"){doSmoke(b.dataset.strain);return;}
  if(a==="dsellj"){doDeal(+b.dataset.d,b.dataset.strain,false,true);return;}
+ if(a==="stashsell"){var _sd=stashDealer();doDeal(_sd.di,b.dataset.strain,false,false);return;}
+ if(a==="stashsellj"){var _sd2=stashDealer();doDeal(_sd2.di,b.dataset.strain,false,true);return;}
+ if(a==="stashsellall"){doStashSellAll(b.dataset.strain,false);return;}
+ if(a==="stashsellallj"){doStashSellAll(b.dataset.strain,true);return;}
  if(a==="storetab"){S.storetab=b.dataset.sec;save();render();return;}
  if(a==="hustle"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.tab=S.backtab||"grow";save();render();return;}
  if(a==="setsel"){S.setdrug=b.dataset.key;save();render();return;}
@@ -1819,7 +1932,7 @@ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
   if(document.visibilityState==="hidden")saveOnHide();});
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,startCook:startCook};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,startCook:startCook};
 })();
 </script>
 
