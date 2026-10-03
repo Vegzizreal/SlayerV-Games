@@ -790,7 +790,7 @@ var LEVEL_TIPS={
 var DEF_SPEEDS={hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300,estack:120,edouble:150,etriple:180};
 function speedOf(k){var v=S.speeds&&S.speeds[k];return SPEED_OPTS.indexOf(v)>=0?v:DEF_SPEEDS[k];}
 function fmtT(s){s=Math.max(0,Math.round(s));var m=Math.floor(s/60),r=s%60;return m+":"+(r<10?"0":"")+r;}
-function growSec(){return SPEED_OPTS.indexOf(S.growSpeed)>=0?S.growSpeed:120;}
+function growSec(){return SPEED_OPTS.indexOf(S.growSpeed)>=0?S.growSpeed:30;}
 function growMinOf(k){return growSec()/60;}
 var DEALER_NAMES=["Corner Carl","Rooftop Rita","Alley Al","Deli Dave"];
 var DUFFEL=[40,100,200,400];
@@ -856,7 +856,7 @@ var HEAT_TIERS=["CALM","SUSPICIOUS","WATCHED","HUNTED"];
 function mkDealer(name){function m(){return 0.8+Math.random()*0.4;}var d={name:name,buy:{},sell:{}};PKEYS.forEach(function(k){d.buy[k]=m();d.sell[k]=m();});return d;}
 function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
-var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:120,setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,lastVer:"",
+var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,lastVer:"",
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
  msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
@@ -874,7 +874,7 @@ function normalize(s){
   if(gvals.length){var gavg=gvals.reduce(function(a,b){return a+b;},0)/gvals.length;s.growSpeed=Math.min(300,Math.max(30,Math.round(gavg*60/30)*30));}
  }
  delete s.growSpeeds;delete s.setStrain;
- if(SPEED_OPTS.indexOf(s.growSpeed)<0)s.growSpeed=120;
+ if(SPEED_OPTS.indexOf(s.growSpeed)<0)s.growSpeed=30;
  if(RKEYS.indexOf(s.setdrug)<0)s.setdrug="hash";
  s.stats=Object.assign({earned:0,harvested:0,deals:0,busted:0,cooked:0},s.stats);
  if(s.seeds.moonrock>0){s.cash+=s.seeds.moonrock*150;s.seeds.moonrock=0;}
