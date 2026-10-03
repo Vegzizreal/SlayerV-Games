@@ -84,6 +84,7 @@ window.hatchWidget={
 /* Fixed app shell: header stays put, only panes scroll */
 .pg{height:100dvh;max-height:100dvh;display:flex;flex-direction:column;overflow:hidden}
 .roach-topbar,.pg-head,.pg-pills,.pg-heat,.pg-msg,.ticker-help,.pg-ticker,.pg-tabs,.pg-hint{flex:none}
+.pg-head{order:1}.pg-tabs{order:2}.pg-pills{order:3}.pg-heat{order:4}.pg-msg{order:5}.pg-ticker{order:6}.pg-pane{order:7}.pg-hint{order:8}.roach-topbar{order:0}
 .pg-pane{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .pg-pane::-webkit-scrollbar{display:none}
 .pg-pane[hidden]{display:none}
