@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SlayerV Games</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #0d0a1a; color: #f0eafc;
+    min-height: 100vh; display: flex; flex-direction: column;
+    align-items: center; padding: 48px 20px;
+  }
+  h1 { font-size: 28px; letter-spacing: 2px; margin-bottom: 8px; }
+  p.sub { color: #9a8fc0; margin-bottom: 36px; font-size: 15px; }
+  .games { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; max-width: 900px; }
+  a.card {
+    display: block; width: 240px; padding: 28px 20px;
+    background: #1a1430; border: 1px solid #332a5e; border-radius: 16px;
+    text-decoration: none; color: inherit; text-align: center;
+    transition: transform .15s, border-color .15s;
+  }
+  a.card:hover { transform: translateY(-4px); border-color: #7c5cff; }
+  .card .icon { font-size: 44px; margin-bottom: 12px; }
+  .card h2 { font-size: 19px; margin-bottom: 8px; }
+  .card p { font-size: 13px; color: #9a8fc0; line-height: 1.5; }
+</style>
+</head>
+<body>
+  <h1>SLAYERV GAMES</h1>
+  <p class="sub">Tap a game to play</p>
+  <div class="games">
+    <a class="card" href="terpene-tycoon/">
+      <div class="icon">🌿</div>
+      <h2>Terpene Tycoon</h2>
+      <p>Grow strains, cook products, and build your hustle.</p>
+    </a>
+    <a class="card" href="pupgotchi/">
+      <div class="icon">🐶</div>
+      <h2>Vegas Forever Homes</h2>
+      <p>Foster low-poly pups, build your pack, earn Bones.</p>
+    </a>
+  </div>
+</body>
+</html>

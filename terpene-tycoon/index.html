@@ -1,0 +1,1698 @@
+<div class="pg">
+ <div class="pg-head">
+  <div class="pg-title">TERPENE TYCOON<span class="pg-sub">grow op</span></div>
+  <button type="button" class="store-btn" data-act="tab" data-tab="store"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l1.2-4.5h13.6L20 9"/><path d="M4 9v10.5h16V9"/><path d="M4 9.2h16"/><path d="M9.5 19.5v-4.5h5v4.5"/></svg>STORE</button>
+ </div>
+ <div class="pg-pills">
+  <div class="pill"><b class="v-cash">$200</b></div>
+  <div class="pill"><b class="v-stash">0/40g</b></div>
+  <div class="pill"><b class="v-hp">HP 100</b></div>
+  <div class="pill buff v-buff" hidden>HIGH</div>
+  <div class="pill dim v-day">Day 1</div>
+ </div>
+ <div class="pg-heat"><div class="heat-bar"><i class="v-heat"></i></div><span class="v-heattier">CALM</span></div>
+ <div class="pg-msg v-msg">Welcome to the grow op.</div>
+ <div class="pg-tabs">
+  <button type="button" data-act="tab" data-tab="grow" class="on">Grow</button>
+  <button type="button" data-act="tab" data-tab="cook">Cook</button>
+  <button type="button" data-act="tab" data-tab="deal">Deal</button>
+  <button type="button" data-act="tab" data-tab="chill">Chill</button>
+  <button type="button" data-act="tab" data-tab="clinic">Clinic</button>
+  <button type="button" data-act="tab" data-tab="settings">Settings</button>
+ </div>
+ <div class="pg-pane pane-grow"></div>
+ <div class="pg-pane pane-cook" hidden></div>
+ <div class="pg-pane pane-deal" hidden></div>
+ <div class="pg-pane pane-store" hidden></div>
+ <div class="pg-pane pane-chill" hidden></div>
+ <div class="pg-pane pane-clinic" hidden></div>
+ <div class="pg-pane pane-settings" hidden></div>
+ <div class="pg-pane pane-battle" hidden></div>
+ <div class="pg-hint v-hint"></div>
+</div>
+<style>
+.pg{box-sizing:border-box;width:100%;max-width:880px;margin:0 auto;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--hatch-widget-text)}
+.pg *{box-sizing:border-box}
+.pg-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.pg-title{font-weight:900;font-size:19px;letter-spacing:1.5px;color:#4ade80;text-shadow:0 0 14px rgba(74,222,128,.35)}
+.pg-sub{display:block;font-size:10px;letter-spacing:4px;color:var(--hatch-widget-muted);font-weight:700}
+.pg-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.pg [hidden]{display:none!important}
+.pill{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:800}
+.pill.dim{color:var(--hatch-widget-muted);font-weight:600}
+.pg-heat{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:10px;font-weight:800;letter-spacing:2px;color:var(--hatch-widget-muted)}
+.heat-bar{flex:1;height:10px;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:99px;overflow:hidden}
+.heat-bar i{display:block;height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#fbbf24,#f97316);transition:width .4s}
+.heat-bar i.hot{background:linear-gradient(90deg,#f97316,#ef4444);animation:blink .7s steps(2) infinite}
+@keyframes blink{50%{opacity:.55}}
+.v-heattier{min-width:110px;text-align:right;color:#fbbf24}
+.pg-msg{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:10px;padding:6px 10px;font-size:12.5px;margin-bottom:8px;min-height:1.4em}
+.pg-tabs{display:flex;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:3px;gap:4px;margin-bottom:8px}
+.pg-tabs button{flex:1;min-width:0;padding:7px 0;border:0;border-radius:8px;background:transparent;color:var(--hatch-widget-muted);font-weight:800;font-size:13px;cursor:pointer}
+.pg-tabs button.on{background:var(--hatch-widget-surface);color:var(--hatch-widget-text);box-shadow:0 1px 4px var(--hatch-widget-shadow)}
+.store-tabs{display:flex;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:3px;gap:2px;margin-bottom:8px}
+.store-tabs button{flex:1 1 0;min-width:0;display:flex;align-items:center;justify-content:center;gap:4px;padding:7px 0;border:0;border-radius:8px;background:transparent;color:var(--hatch-widget-muted);font-weight:800;font-size:10.5px;letter-spacing:.5px;cursor:pointer;white-space:nowrap}
+.store-tabs button svg{display:block;flex:0 0 auto;width:11px;height:11px}
+.store-tabs button.on{background:var(--hatch-widget-surface);color:var(--hatch-widget-text);box-shadow:0 1px 4px var(--hatch-widget-shadow)}
+.store-tabs button.store-back{flex:0 0 auto;padding:7px 8px;font-size:11px;color:var(--hatch-widget-accent)}
+.store-banner{display:flex;align-items:baseline;gap:9px;margin:2px 2px 8px;padding:8px 12px;border:1px solid var(--hatch-widget-border);border-left:3px solid var(--sc,#4ade80);border-radius:10px;background:var(--hatch-widget-surface)}
+.store-banner b{font-size:15px;letter-spacing:2px;color:var(--sc,#4ade80);white-space:nowrap;display:flex;align-items:center;gap:7px}
+.store-banner b svg{display:block;flex:0 0 auto}
+@media(max-width:560px){.pg-tabs{gap:2px;padding:2px}.pg-tabs button{font-size:12px}.btns button{min-width:0;overflow:hidden;text-overflow:ellipsis}}
+@media(min-width:700px){
+ .pane-store{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;align-items:start}
+ .pane-store>.store-screen-head,.pane-store>.store-tabs,.pane-store>.store-banner{grid-column:1/-1}
+ .pane-deal{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;align-items:start}
+ .pane-deal>.dchips{grid-column:1/-1}
+}
+.store-banner span{font-size:11.5px;color:var(--hatch-widget-muted)}
+.store-btn{display:flex;align-items:center;gap:6px;background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-accent);color:var(--hatch-widget-accent);border-radius:999px;padding:5px 12px;font-weight:800;font-size:12px;letter-spacing:1.5px;cursor:pointer}
+.store-btn svg{display:block}
+.store-btn.on{background:var(--hatch-widget-accent);color:var(--hatch-widget-on-accent)}
+.store-screen-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.store-screen-head .store-back{display:flex;align-items:center;gap:4px;background:transparent;border:1px solid var(--hatch-widget-border);color:var(--hatch-widget-accent);border-radius:8px;padding:6px 10px;font-weight:800;font-size:11px;letter-spacing:1px;cursor:pointer}
+.store-title{display:flex;align-items:center;gap:8px;font-weight:900;font-size:19px;letter-spacing:2px;color:var(--hatch-widget-accent)}
+.pg-pane[hidden]{display:none}
+.pg-hint{font-size:11.5px;color:var(--hatch-widget-muted);margin-top:8px;line-height:1.5}
+.prop{margin-bottom:10px}
+.prop-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.prop-name{font-weight:900;font-size:14px;letter-spacing:.5px}
+.prop-tier{font-size:10px;font-weight:800;letter-spacing:1.5px;color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.35);border-radius:999px;padding:3px 10px}
+.pots{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.pot{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:8px}
+.plant{position:relative;width:100%;height:100px;overflow:hidden}
+.sway{position:absolute;inset:0;transform-origin:50% 100%;animation:sway 3.4s ease-in-out infinite}
+@keyframes sway{50%{transform:rotate(2.2deg)}}
+.stem{position:absolute;bottom:14px;left:50%;width:5px;margin-left:-2.5px;background:linear-gradient(180deg,#4cc36a,#2a7f38);border-radius:3px}
+.lf{position:absolute;height:13px;background:linear-gradient(90deg,#4cc36a,#2c8a3c);border-radius:90% 8% 90% 8%}
+.lf.r{left:50%;transform-origin:0 50%}
+.lf.l{right:50%;transform-origin:100% 50%}
+.bud{position:absolute;width:11px;height:14px;margin-left:-5px;border-radius:50%;animation:budp 1.8s ease-in-out infinite}
+@keyframes budp{50%{transform:scale(1.12)}}
+.wilt .sway{animation:none;transform:rotate(7deg);filter:saturate(.55) brightness(.92)}
+.p-pot{width:66px;height:38px;margin:-8px auto 0;background:linear-gradient(180deg,#c06a28,#8a4a14);clip-path:polygon(0 0,100% 0,86% 100%,14% 100%);border-radius:0 0 6px 6px;position:relative;z-index:2}
+.p-empty{text-align:center;padding:6px 0}
+.p-soil{width:66px;height:16px;margin:58px auto 0;background:#4a3220;border-radius:50%;border:2px solid #8a4a14}
+.p-pick{font-size:11px;font-weight:800;color:var(--hatch-widget-muted);margin:6px 0;letter-spacing:1px}
+.p-name{font-size:12.5px;font-weight:800;text-align:center;margin:6px 0 4px}
+.p-stage{font-size:10px;font-weight:700;color:var(--hatch-widget-muted);letter-spacing:1px;text-transform:uppercase}
+.brow{display:flex;align-items:center;gap:6px;font-size:10.5px;margin:3px 0}
+.brow span{width:44px;color:var(--hatch-widget-muted);font-weight:700}
+.brow b{min-width:26px;width:auto;white-space:nowrap;text-align:right;font-size:10.5px}
+.bar{flex:1;min-width:0;height:7px;background:var(--hatch-widget-surface-muted);border-radius:99px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px}
+.b-g{background:linear-gradient(90deg,#4ade80,#16a34a)}
+.b-w{background:linear-gradient(90deg,#60a5fa,#2563eb)}
+.btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.btns.col{flex-direction:column}
+.btns button{flex:1;padding:7px 5px;border-radius:10px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:12px;cursor:pointer;white-space:nowrap}
+.btns button.go{background:#16a34a;border-color:#16a34a;color:#fff}
+.btns button:disabled{opacity:.35;cursor:default}
+.growbar{margin-bottom:8px;display:flex;gap:8px}
+.growbar button{padding:8px 14px;border-radius:10px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);font-weight:800;font-size:13px;cursor:pointer}
+.hint{font-size:12px;color:var(--hatch-widget-muted);margin-top:8px}
+.dealers{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:8px}
+.dealer{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:8px}
+.d-name{font-weight:900;font-size:14px;margin-bottom:4px;letter-spacing:.5px}
+.drow{display:flex;align-items:center;gap:5px;padding:5px 0;border-top:1px solid var(--hatch-widget-border);font-size:12px}
+.d-strain{font-weight:800;min-width:64px}
+.d-prices{flex:1;color:var(--hatch-widget-muted);font-size:10.5px}
+.d-have{font-weight:800;min-width:30px;text-align:right}
+.drow button{padding:6px 9px;border-radius:9px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:11.5px;cursor:pointer}
+.drow button:disabled{opacity:.35}
+.amtrow{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:13px;font-weight:700;color:var(--hatch-widget-muted);flex-wrap:wrap}
+.amtrow button{padding:7px 16px;border-radius:999px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);font-weight:800;font-size:12.5px;cursor:pointer}
+.amtrow button.on{background:#16a34a;border-color:#16a34a;color:#fff}
+.amtrow button.bribe{margin-left:auto;border-color:#fbbf24;color:#fbbf24}
+.amtrow button.bribe:disabled{opacity:.35;color:var(--hatch-widget-muted);border-color:var(--hatch-widget-border)}
+.lock{background:#7f1d1d;color:#fecaca;border-radius:10px;padding:9px 12px;font-size:13px;font-weight:700;margin-bottom:10px}
+.shopsec{font-size:11px;font-weight:800;letter-spacing:2px;color:var(--hatch-widget-muted);margin:10px 0 6px}
+.srow{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:10px;padding:4px 10px;margin-bottom:4px}
+.srow b{font-size:13.5px}
+.sdesc{font-size:11px;color:var(--hatch-widget-muted);margin-top:2px}
+.srow button{padding:8px 12px;border-radius:10px;border:0;background:#16a34a;color:#fff;font-weight:800;font-size:12.5px;cursor:pointer;white-space:nowrap}
+.seedline{display:flex;align-items:baseline;gap:7px;white-space:nowrap;min-width:0}
+.seedline .sdesc{margin-top:0;overflow:hidden;text-overflow:ellipsis}
+.srow.c.tight{padding:1px 10px;margin-bottom:2px}
+.srow.c.tight button{padding:3px 8px;font-size:11px}
+.srow.c.tight b{font-size:12px}
+.acc-h{padding:3px 10px !important;margin-bottom:2px !important;font-size:11px}
+.srow button:disabled{opacity:.35}
+.srow.locked{opacity:.55}
+</style>
+<style>
+/* ===== POTAGOTCHI v2.2 visual polish (overrides; game logic untouched) ===== */
+.pg{background:radial-gradient(420px 130px at 10% -40px,rgba(74,222,128,.10),transparent 60%),radial-gradient(420px 150px at 90% -30px,rgba(34,211,238,.07),transparent 60%),linear-gradient(180deg,transparent,rgba(0,0,0,.05));border:1px solid var(--hatch-widget-border);border-radius:16px;padding:10px 10px 8px}
+.pg-head{margin-bottom:8px}
+.pg-title{font-size:21px;letter-spacing:2px;background:linear-gradient(180deg,#86efac,#22c55e 65%,#15803d);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;position:relative;padding-left:17px}
+.pg-title::before{content:"";position:absolute;left:1px;top:50%;width:9px;height:9px;margin-top:-4px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#bbf7d0,#22c55e 60%,#14532d);box-shadow:0 0 9px rgba(34,197,94,.9);animation:pgled 2.6s ease-in-out infinite}
+@keyframes pgled{50%{box-shadow:0 0 2px rgba(34,197,94,.35)}}
+.pg-sub{letter-spacing:5px}
+.pill{background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 1px 3px var(--hatch-widget-shadow);font-variant-numeric:tabular-nums}
+.heat-bar{height:12px;box-shadow:inset 0 1px 3px rgba(0,0,0,.28)}
+.heat-bar i{background:linear-gradient(90deg,#4ade80,#fbbf24 55%,#f97316)}
+.heat-bar i.hot{background:linear-gradient(90deg,#f97316,#ef4444,#f97316);background-size:220% 100%;animation:heatflow 1.1s linear infinite,blink .7s steps(2) infinite}
+@keyframes heatflow{to{background-position:-220% 0}}
+.v-heattier.ht0{color:#4ade80}.v-heattier.ht1{color:#fbbf24}.v-heattier.ht2{color:#fb923c}.v-heattier.ht3{color:#ef4444;text-shadow:0 0 9px rgba(239,68,68,.65)}
+.pg-msg{background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-left:3px solid #22c55e;border-radius:8px;box-shadow:0 1px 3px var(--hatch-widget-shadow);font-weight:600}
+.pg-tabs{padding:4px;border-radius:14px;background:linear-gradient(180deg,var(--hatch-widget-surface-muted),transparent)}
+.pg-tabs button{padding:8px 0;border-radius:10px;transition:all .15s}
+.pg-tabs button.on{background:linear-gradient(180deg,#22c55e,#15803d);color:#fff;box-shadow:0 2px 8px rgba(34,197,94,.45),inset 0 1px 0 rgba(255,255,255,.28);text-shadow:0 1px 2px rgba(0,0,0,.35)}
+.prop-head{background:linear-gradient(90deg,rgba(74,222,128,.13),transparent 70%);border-left:3px solid #22c55e;border-radius:8px;padding:5px 9px}
+.prop.pt1 .prop-head{background:linear-gradient(90deg,rgba(245,158,11,.14),transparent 70%);border-left-color:#f59e0b}
+.prop.pt2 .prop-head{background:linear-gradient(90deg,rgba(168,85,247,.14),transparent 70%);border-left-color:#a855f7}
+.prop.pt3 .prop-head{background:linear-gradient(90deg,rgba(34,211,238,.13),transparent 70%);border-left-color:#22d3ee}
+.prop-tier.t0{color:#4ade80;background:rgba(74,222,128,.12);border-color:rgba(74,222,128,.35)}
+.prop-tier.t1{color:#fbbf24;background:rgba(251,191,36,.10);border-color:rgba(251,191,36,.35)}
+.prop-tier.t2{color:#c084fc;background:rgba(192,132,252,.10);border-color:rgba(192,132,252,.35)}
+.prop-tier.t3{color:#67e8f9;background:rgba(103,232,249,.10);border-color:rgba(103,232,249,.35)}
+.pot{background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 2px 6px var(--hatch-widget-shadow);border-radius:14px;position:relative;overflow:hidden}
+.pot::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,rgba(74,222,128,.55),transparent);z-index:3}
+.stem{background:linear-gradient(90deg,#2a7f38,#55d977 50%,#2a7f38);box-shadow:0 1px 2px rgba(0,0,0,.28)}
+.lf{background:linear-gradient(90deg,#57d977 0%,#2f9e44 60%,#257a35 100%);box-shadow:inset 0 -2px 3px rgba(0,0,0,.28),0 1px 2px rgba(0,0,0,.22)}
+.lf::after{content:"";position:absolute;top:50%;left:7%;right:7%;height:1px;background:rgba(255,255,255,.38)}
+.bud{background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.75),rgba(255,255,255,0) 45%)}
+.bud::before,.bud::after{content:"";position:absolute;background:linear-gradient(135deg,#fff,rgba(255,255,255,.1));clip-path:polygon(50% 0,63% 37%,100% 50%,63% 63%,50% 100%,37% 63%,0 50%,37% 37%);animation:pgtw 1.7s ease-in-out infinite;filter:drop-shadow(0 0 3px #fff)}
+.bud::before{width:7px;height:7px;top:-8px;left:-6px}
+.bud::after{width:5px;height:5px;top:-3px;right:-8px;animation-delay:.85s}
+@keyframes pgtw{50%{opacity:.1;transform:scale(.65) rotate(25deg)}}
+.plant.ready::after{content:"";position:absolute;left:14px;right:14px;top:8px;bottom:34px;border:2px solid rgba(74,222,128,.55);border-radius:50%;pointer-events:none;animation:pghalo 2.1s ease-in-out infinite}
+@keyframes pghalo{50%{box-shadow:0 0 16px rgba(74,222,128,.6);transform:scale(1.04)}}
+.p-soil{background:radial-gradient(ellipse at 50% 32%,#6b4a2e 0 32%,#4a3220 72%);border-color:#a16207;box-shadow:inset 0 2px 5px rgba(0,0,0,.55)}
+.p-pot{background:linear-gradient(180deg,#d97b2f 0%,#b45a1b 45%,#8a4a14 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.28),inset 0 -3px 5px rgba(0,0,0,.32),0 2px 4px rgba(0,0,0,.28)}
+.p-pot::after{content:"";position:absolute;top:0;left:9%;right:9%;height:7px;background:linear-gradient(180deg,rgba(255,255,255,.38),transparent);border-radius:0 0 50% 50%}
+.p-stage{display:inline-block;padding:1px 8px;border-radius:99px;font-size:9px;letter-spacing:1px;margin-left:5px;vertical-align:1px;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);text-transform:uppercase}
+.p-stage.st6{background:rgba(74,222,128,.18);border-color:#22c55e;color:#4ade80;font-weight:800}
+.p-stage.st5{background:rgba(192,132,252,.14);border-color:#a855f7;color:#c084fc}
+.btns button{transition:transform .08s,box-shadow .15s;box-shadow:0 1px 3px var(--hatch-widget-shadow)}
+.btns button:active{transform:scale(.95)}
+.btns button.go{background:linear-gradient(180deg,#22c55e,#15803d);box-shadow:0 2px 8px rgba(34,197,94,.5),inset 0 1px 0 rgba(255,255,255,.3);animation:pggo 2s ease-in-out infinite}
+@keyframes pggo{50%{box-shadow:0 2px 15px rgba(34,197,94,.85),inset 0 1px 0 rgba(255,255,255,.3)}}
+.growbar button{flex:1;background:linear-gradient(180deg,#3b82f6,#1d4ed8);border:0;color:#fff;box-shadow:0 2px 8px rgba(59,130,246,.4),inset 0 1px 0 rgba(255,255,255,.28);transition:transform .08s}
+.growbar button:active{transform:scale(.98)}
+.dealer{background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));box-shadow:0 2px 6px var(--hatch-widget-shadow);border-radius:14px;overflow:hidden}
+.d-head{display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.d-av{width:30px;height:30px;flex:none;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.4);box-shadow:inset 0 1px 2px rgba(255,255,255,.45),0 1px 3px rgba(0,0,0,.3)}
+.dealer:nth-child(1) .d-av{background:linear-gradient(135deg,#f59e0b,#b45309)}
+.dealer:nth-child(2) .d-av{background:linear-gradient(135deg,#ec4899,#9d174d)}
+.dealer:nth-child(3) .d-av{background:linear-gradient(135deg,#8b5cf6,#5b21b6)}
+.dealer:nth-child(4) .d-av{background:linear-gradient(135deg,#06b6d4,#0e7490)}
+.d-name{margin:0}
+.drow{border-top:1px dashed var(--hatch-widget-border)}
+.drow button{transition:transform .08s}
+.drow button:active{transform:scale(.93)}
+.drow button[data-act="dsell"]{background:linear-gradient(180deg,#22c55e,#15803d);border-color:transparent;color:#fff;box-shadow:0 1px 5px rgba(34,197,94,.4)}
+.amtrow button.on{background:linear-gradient(180deg,#22c55e,#15803d);box-shadow:0 1px 6px rgba(34,197,94,.45)}
+.amtrow button.bribe:not(:disabled){box-shadow:0 0 8px rgba(251,191,36,.45)}
+.lock{background:repeating-linear-gradient(45deg,#7f1d1d,#7f1d1d 14px,#991b1b 14px,#991b1b 28px);text-shadow:0 1px 2px rgba(0,0,0,.5)}
+.srow{background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));box-shadow:0 1px 4px var(--hatch-widget-shadow);border-radius:12px}
+.srow b{display:flex;align-items:center;gap:7px}
+.dot{width:10px;height:10px;flex:none;border-radius:50%;display:inline-block;box-shadow:inset 0 1px 1px rgba(255,255,255,.5)}
+.srow button{background:linear-gradient(180deg,#22c55e,#15803d);box-shadow:0 1px 6px rgba(34,197,94,.4),inset 0 1px 0 rgba(255,255,255,.28);transition:transform .08s}
+.srow button:active{transform:scale(.96)}
+</style>
+<style>
+/* ===== POTAGOTCHI v3: Cook lab + product art ===== */
+/* NOTE 2026-10-02 (v3.2): the 560px height cap + inner tab-pane scrolling was REMOVED. The widget takes its natural full height and the chat's own scroll handles it. Nested inner scrolling did not work in the chat app (two attempts failed) — do NOT re-add a height cap or inner scroller. */
+/* recipe cards */
+.recipes{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+.rcard{background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-radius:14px;padding:10px 8px;box-shadow:0 2px 6px var(--hatch-widget-shadow);display:flex;flex-direction:column;align-items:center;gap:5px;text-align:center}
+.rcard.locked{opacity:.62}
+.rname{font-weight:900;font-size:13.5px;letter-spacing:.3px}
+.rdesc{font-size:10.5px;color:var(--hatch-widget-muted);line-height:1.45}
+.rheat{font-size:10px;font-weight:800;letter-spacing:1.5px;color:#fb923c}
+.rcard button{width:100%;padding:8px 5px;border-radius:10px;border:0;background:linear-gradient(180deg,#a855f7,#6d28d9);color:#fff;font-weight:800;font-size:12.5px;cursor:pointer;box-shadow:0 2px 8px rgba(168,85,247,.45),inset 0 1px 0 rgba(255,255,255,.28)}
+.rcard button:disabled{opacity:.4;box-shadow:none}
+.rcard button:not(:disabled):active{transform:scale(.96)}
+/* active job panel */
+.job{background:linear-gradient(180deg,rgba(168,85,247,.10),rgba(168,85,247,.03));border:1px solid rgba(168,85,247,.55);border-radius:12px;padding:6px 8px;margin-bottom:5px;box-shadow:0 0 14px rgba(168,85,247,.22)}
+.job-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.job-title{flex:1;min-width:0}
+.job-name{font-weight:900;font-size:14px}
+.job-sub{font-size:11px;color:var(--hatch-widget-muted);line-height:1.4}
+.job-head button{padding:7px 12px;border-radius:9px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:12px;cursor:pointer}
+.tap-row{display:flex;justify-content:space-between;font-size:11.5px;font-weight:800;color:var(--hatch-widget-muted);margin:4px 0 6px}
+.stage-tag{text-align:center;font-size:10px;font-weight:800;letter-spacing:2px;color:#c084fc;margin-top:6px}
+.tapbtn{width:100%;padding:15px;border-radius:14px;border:0;background:linear-gradient(180deg,#a855f7,#6d28d9);color:#fff;font-weight:900;font-size:17px;letter-spacing:2px;cursor:pointer;box-shadow:0 3px 10px rgba(168,85,247,.5),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .06s}
+.tapbtn:active{transform:scale(.97)}
+.tap-prog{height:12px;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:99px;overflow:hidden;margin:2px 0 4px}
+.tap-prog i{display:block;height:100%;width:0%;background:linear-gradient(90deg,#a855f7,#d946ef);border-radius:99px}
+.tm{position:relative;height:26px;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:99px;margin:6px 0 8px;overflow:hidden}
+.tm-zone{position:absolute;top:0;bottom:0;left:42%;width:16%;background:rgba(74,222,128,.35);border-left:1px solid #22c55e;border-right:1px solid #22c55e}
+.tm-zone.blue{left:55%;width:20%;background:rgba(96,165,250,.35);border-left-color:#60a5fa;border-right-color:#60a5fa}
+.tm-zone.orange{left:20%;width:20%;background:rgba(251,146,60,.35);border-left-color:#fb923c;border-right-color:#fb923c}
+.tm-mark{position:absolute;top:2px;bottom:2px;left:0;width:6px;margin-left:-3px;background:#fff;border-radius:3px;box-shadow:0 0 7px #fff}
+.tg{display:flex;gap:10px;justify-content:center;margin:6px 0}
+.tg-pad{width:62px;height:62px;border-radius:16px;border:2px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);cursor:pointer;font-weight:900;font-size:17px;color:var(--hatch-widget-muted);transition:transform .06s}
+.tg-pad:active{transform:scale(.93)}
+.tg-pad.lit{background:radial-gradient(circle at 50% 40%,#fde68a,#f59e0b);border-color:#fbbf24;color:#451a03;box-shadow:0 0 14px rgba(251,191,36,.7)}
+.mm{display:flex;gap:10px;justify-content:center;margin:6px 0}
+.mm-pad{width:54px;height:54px;border-radius:14px;border:2px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);cursor:pointer}
+.mm-pad.lit{background:radial-gradient(circle at 50% 40%,#c4b5fd,#8b5cf6);border-color:#a78bfa;box-shadow:0 0 14px rgba(139,92,246,.8)}
+.mm-dots{display:flex;gap:6px;justify-content:center;margin:2px 0 4px;min-height:12px}
+.mm-dots i{width:10px;height:10px;border-radius:50%;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border)}
+.mm-dots i.hit{background:#22c55e;border-color:#22c55e}
+/* product icons (pure CSS product shots) */
+.picon{width:44px;height:44px;flex:none;border-radius:12px;position:relative;background:radial-gradient(circle at 50% 55%,rgba(0,0,0,.55),transparent 72%)}
+.picon.sm{width:26px;height:26px;border-radius:7px;flex:none}
+.picon::before,.picon::after{content:"";position:absolute}
+.picon-hash::before{inset:22% 18%;background:linear-gradient(135deg,#4a3524,#1c130c 70%);border-radius:24%;box-shadow:inset 2px 2px 3px rgba(255,255,255,.16),inset -2px -3px 4px rgba(0,0,0,.6)}
+.picon-hash::after{inset:22% 18%;border-radius:24%;background:repeating-linear-gradient(45deg,transparent 0 3px,rgba(255,255,255,.06) 3px 4px)}
+.picon-edibles::before{inset:26% 22%;background:linear-gradient(180deg,#6b4226,#3a2113);border-radius:18%;box-shadow:inset 0 3px 3px rgba(255,255,255,.25),inset 0 -3px 4px rgba(0,0,0,.5)}
+.picon-edibles::after{inset:26% 22%;border-radius:18%;border:2px dashed rgba(214,164,110,.55)}
+.picon-moonrock::before{inset:20%;background:radial-gradient(circle at 35% 30%,#9aa08a,#5c604e 78%);border-radius:48% 52% 55% 45%}
+.picon-moonrock::after{inset:20%;border-radius:48% 52% 55% 45%;background-image:radial-gradient(circle,#fff 1px,transparent 1.7px),radial-gradient(circle,#fff 1px,transparent 1.7px),radial-gradient(circle,#e8e8e8 1px,transparent 1.7px);background-size:9px 9px,7px 7px,11px 11px;background-position:2px 3px,8px 10px,12px 4px}
+.picon-acid::before{inset:24%;background:conic-gradient(from 45deg,#ff2fb3 0 25%,#22d3ee 0 50%,#a3e635 0 75%,#b366ff 0);border-radius:12%;box-shadow:0 0 6px rgba(255,47,179,.5)}
+.picon-acid::after{inset:24%;border-radius:12%;border:2px dashed rgba(255,255,255,.8)}
+.picon-dmt::before{inset:16% 27%;background:linear-gradient(135deg,#ffffff 0%,#cfe8ff 45%,#8fb8dd 100%);clip-path:polygon(50% 0,80% 35%,100% 70%,70% 100%,30% 100%,0 70%,20% 35%)}
+.picon-dmt::after{left:38%;top:22%;width:9%;height:42%;background:linear-gradient(180deg,#fff,transparent);transform:rotate(18deg);filter:blur(.4px)}
+.picon-dragon::before{inset:16% 27%;background:linear-gradient(160deg,#2a2a35,#0b0b12 70%);clip-path:polygon(50% 0,85% 30%,100% 65%,65% 100%,35% 100%,0 65%,15% 30%)}
+.picon-dragon::after{inset:16% 27%;clip-path:polygon(50% 0,85% 30%,100% 65%,65% 100%,35% 100%,0 65%,15% 30%);background:linear-gradient(115deg,transparent 42%,#ff6a00 46%,#ffb300 50%,#ff6a00 54%,transparent 58%),linear-gradient(65deg,transparent 58%,#ff3d00 63%,transparent 68%);filter:drop-shadow(0 0 4px #ff6a00)}
+.picon-bud::before{inset:22%;background:radial-gradient(circle at 40% 35%,var(--c,#5be37a),#1d5c2a 80%);border-radius:52% 48% 55% 45%}
+.picon-bud::after{inset:22%;border-radius:52% 48% 55% 45%;background-image:radial-gradient(circle,#ffb35c 1px,transparent 1.8px),radial-gradient(circle,#ff8a3d 1px,transparent 1.8px);background-size:8px 8px;background-position:4px 6px,10px 12px}
+/* growth stages */
+.seed{position:absolute;bottom:14px;left:50%;width:10px;height:8px;margin-left:-5px;background:radial-gradient(circle at 40% 35%,#e0c193,#8a6a3a 78%);border-radius:50%;z-index:2}
+.p-soil2{position:absolute;bottom:6px;left:50%;width:58px;height:13px;margin-left:-29px;background:radial-gradient(ellipse at 50% 35%,#6b4a2e,#38260f 78%);border-radius:50%}
+.cot{position:absolute;bottom:22px;width:17px;height:12px;background:radial-gradient(circle at 40% 35%,#7ce495,#2f9e44 78%);border-radius:50%;box-shadow:inset 0 -2px 3px rgba(0,0,0,.2)}
+.cot.l{left:50%;margin-left:-19px;transform:rotate(-22deg)}
+.cot.r{left:50%;margin-left:2px;transform:rotate(22deg)}
+.pistil{position:absolute;width:2px;height:8px;background:linear-gradient(180deg,#fff,#ffd9a0);border-radius:2px;box-shadow:0 0 3px rgba(255,255,255,.8);z-index:2}
+.p-stage.st6{background:rgba(74,222,128,.18);border-color:#22c55e;color:#4ade80;font-weight:800}
+.p-stage.st5{background:rgba(192,132,252,.14);border-color:#a855f7;color:#c084fc}
+/* new property tiers */
+.prop-tier.t4{color:#fb7185;background:rgba(251,113,133,.10);border-color:rgba(251,113,133,.35)}
+.prop-tier.t5{color:#f97316;background:rgba(249,115,22,.10);border-color:rgba(249,115,22,.35)}
+.prop-tier.t6{color:#e879f9;background:rgba(232,121,249,.10);border-color:rgba(232,121,249,.35)}
+.prop.pt4 .prop-head{background:linear-gradient(90deg,rgba(251,113,133,.14),transparent 70%);border-left-color:#fb7185}
+.prop.pt5 .prop-head{background:linear-gradient(90deg,rgba(249,115,22,.14),transparent 70%);border-left-color:#f97316}
+.prop.pt6 .prop-head{background:linear-gradient(90deg,rgba(232,121,249,.14),transparent 70%);border-left-color:#e879f9}
+</style>
+<style>
+/* ===== POTAGOTCHI v4: Lab tab (per-drug cook speeds) ===== */
+.pg-tabs{gap:3px}
+.pg-tabs button{font-size:12.5px;padding:7px 2px}
+.labrow{background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-radius:12px;padding:8px 10px;margin-bottom:8px;box-shadow:0 1px 4px var(--hatch-widget-shadow)}
+.lab-top{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.lab-top b{font-size:13.5px;flex:1}
+.speeds{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.spd{padding:7px 4px;border-radius:9px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-muted);font-weight:800;font-size:12px;cursor:pointer;transition:transform .08s;font-variant-numeric:tabular-nums}
+.spd:active{transform:scale(.95)}
+.spd.on{background:linear-gradient(180deg,#22c55e,#15803d);border-color:transparent;color:#fff;box-shadow:0 1px 6px rgba(34,197,94,.45)}
+.rtime{font-size:10.5px;color:#c084fc;font-weight:800;letter-spacing:.5px}
+.job.cooking{border-color:rgba(34,211,238,.55);background:linear-gradient(180deg,rgba(34,211,238,.10),rgba(34,211,238,.03));box-shadow:0 0 14px rgba(34,211,238,.22)}
+.job.ready{border-color:rgba(74,222,128,.6);background:linear-gradient(180deg,rgba(74,222,128,.10),rgba(74,222,128,.03));box-shadow:0 0 14px rgba(74,222,128,.25)}
+.job .cook-fill{background:linear-gradient(90deg,#22d3ee,#818cf8)}
+.job-head button.go{background:linear-gradient(180deg,#22c55e,#15803d);border:0;color:#fff;box-shadow:0 2px 8px rgba(34,197,94,.5),inset 0 1px 0 rgba(255,255,255,.3)}
+</style>
+<style>
+/* ===== POTAGOTCHI v5: realistic strain-unique plants ===== */
+.fan{position:absolute;left:50%;bottom:0;width:0;height:0;z-index:1}
+.fan .pet{position:absolute;left:-1px;bottom:0;width:2px;height:9px;background:#3a7d44;border-radius:2px;transform-origin:50% 100%}
+.fan .lft{position:absolute;left:0;bottom:6px;transform-origin:50% 100%;clip-path:polygon(50% 100%,15% 62%,29% 27%,50% 0%,71% 27%,85% 62%);box-shadow:inset 0 -2px 3px rgba(0,0,0,.25)}
+.lft.g-sour{background:linear-gradient(90deg,#3d8b4f 0%,#a5e075 50%,#3d8b4f 100%)}
+.lft.g-og{background:linear-gradient(90deg,#1b4332 0%,#52b788 50%,#1b4332 100%)}
+.lft.g-haze{background:linear-gradient(90deg,#2d6a4f 0%,#80c96f 50%,#2d6a4f 100%)}
+.lft.g-hazeP{background:linear-gradient(90deg,#3b1f7a 0%,#b197fc 50%,#3b1f7a 100%)}
+.lft.g-blue{background:linear-gradient(90deg,#2b6f8e 0%,#7fd4c1 50%,#2b6f8e 100%)}
+.lft.g-gsc{background:linear-gradient(90deg,#1e4620 0%,#4a9e4f 50%,#1e4620 100%)}
+.lft.g-gscP{background:linear-gradient(90deg,#3a2a6e 0%,#a78bfa 50%,#3a2a6e 100%)}
+.lft.g-widow{background:linear-gradient(90deg,#5e8f6a 0%,#cfe8cf 50%,#5e8f6a 100%)}
+.lft.g-glue{background:linear-gradient(90deg,#14351f 0%,#3f8f4f 50%,#14351f 100%)}
+.sx-sour .stem{background:linear-gradient(90deg,#2f7a3d,#7cc78f 50%,#2f7a3d)}
+.sx-og .stem{background:linear-gradient(90deg,#1e4d2b,#4c9a5f 50%,#1e4d2b)}
+.sx-haze .stem{background:linear-gradient(90deg,#2a6b3a,#6fbf7f 50%,#2a6b3a)}
+.sx-haze.hz-purp .stem{background:linear-gradient(90deg,#4a2a7a,#9a6fd0 50%,#4a2a7a)}
+.sx-bluedream .stem{background:linear-gradient(90deg,#2a6b7a,#6fc7c0 50%,#2a6b7a)}
+.sx-gsc .stem{background:linear-gradient(90deg,#24401f,#5aa055 50%,#24401f)}
+.sx-widow .stem{background:linear-gradient(90deg,#3f6b4a,#8fc79a 50%,#3f6b4a)}
+.sx-glue .stem{background:linear-gradient(90deg,#1a3a22,#4a8f5a 50%,#1a3a22)}
+.plantart.ready.sx-widow{filter:brightness(1.07)}
+.pistil.am{background:linear-gradient(180deg,#ffd8a8,#e8590c);box-shadow:0 0 3px rgba(232,89,12,.85)}
+</style>
+<style>
+/* ===== POTAGOTCHI v5: compact fit, tap navigation, no scrolling ===== */
+.pots{grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:8px}
+.potc{background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-radius:10px;padding:5px;position:relative;overflow:hidden;box-shadow:0 1px 4px var(--hatch-widget-shadow)}
+.plantart{position:relative;width:100%;height:56px;overflow:hidden}
+.zoom56{position:absolute;left:0;right:0;bottom:0;height:100px;transform:scale(.56);transform-origin:50% 100%}
+.plantart.ready::after{content:"";position:absolute;left:6px;right:6px;top:3px;bottom:14px;border:2px solid rgba(74,222,128,.55);border-radius:50%;pointer-events:none;animation:pghalo 2.1s ease-in-out infinite}
+.pc-name{font-size:11.5px;font-weight:800;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.pc-stage{text-align:center;margin:1px 0 3px}
+.pc-stage .p-stage{font-size:8px;padding:0 6px;margin:0}
+.pc-bars{margin:2px 1px 4px}
+.pc-bars i{display:block;height:5px;border-radius:99px;margin-bottom:2px}
+.pc-bars i:last-child{margin-bottom:0}
+.pc-bars .g{background:linear-gradient(90deg,#4ade80,#16a34a)}
+.pc-bars .w{background:linear-gradient(90deg,#60a5fa,#2563eb)}
+.pc-btns{display:flex;gap:4px}
+.pc-btns.col{flex-direction:column}
+.pc-btns.erow{flex-direction:row}
+.pc-btns.erow button{font-size:9.5px;font-weight:900;padding:5px 1px;letter-spacing:-0.5px}
+.pc-btns.erow button[data-strain="sour"]{border-color:#4ade80;color:#4ade80}
+.pc-btns.erow button[data-strain="og"]{border-color:#16a34a;color:#16a34a}
+.pc-btns.erow button[data-strain="haze"]{border-color:#a855f7;color:#c084fc}
+.pc-btns.erow button[data-strain="bluedream"]{border-color:#38bdf8;color:#7dd3fc}
+.pc-btns.erow button[data-strain="gsc"]{border-color:#f472b6;color:#f9a8d4}
+.pc-btns.erow button[data-strain="widow"]{border-color:#e2e8f0;color:#f1f5f9}
+.pc-btns.erow button[data-strain="glue"]{border-color:#84cc16;color:#bef264}
+.pc-btns button{flex:1;min-width:0;padding:5px 1px;border-radius:8px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:10px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 1px 3px var(--hatch-widget-shadow)}
+.pc-btns button.go{background:linear-gradient(180deg,#22c55e,#15803d);border-color:transparent;color:#fff}
+.pc-btns button:disabled{opacity:.35}
+.p-soil.mini{width:44px;height:11px;margin:4px auto 0}
+.potc .p-pick{font-size:10px;margin:4px 0}
+.ppager{display:flex;align-items:center;gap:8px;justify-content:center;margin:6px 0}
+.ppager button{width:30px;height:28px;border-radius:9px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);font-weight:900;font-size:12px;cursor:pointer;flex:none}
+.pp-name{font-weight:900;font-size:13.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:60%}
+.ppager.sm{margin:4px 0 0}
+.ppager.sm span{font-size:11px;color:var(--hatch-widget-muted);font-weight:700}
+.growbar{margin-bottom:6px}
+.growbar button{padding:7px 14px;font-size:12px}
+.amtrow.c{margin-bottom:6px;font-size:12px}
+.amtrow.c button{padding:6px 12px;font-size:12px}
+.dchips{display:flex;gap:6px;margin-bottom:4px}
+.dchip{flex:1;display:flex;align-items:center;gap:6px;padding:4px 6px;border-radius:10px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:11px;cursor:pointer;min-width:0}
+.dchip .dc-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dchip.on{border-color:#22c55e;background:linear-gradient(180deg,rgba(34,197,94,.25),rgba(34,197,94,.08));box-shadow:0 0 8px rgba(34,197,94,.35)}
+.d-av.sm{width:22px;height:22px;font-size:11px;flex:none}
+.dchip:nth-child(1) .d-av{background:linear-gradient(135deg,#f59e0b,#b45309)}
+.dchip:nth-child(2) .d-av{background:linear-gradient(135deg,#ec4899,#9d174d)}
+.dchip:nth-child(3) .d-av{background:linear-gradient(135deg,#8b5cf6,#5b21b6)}
+.dchip:nth-child(4) .d-av{background:linear-gradient(135deg,#06b6d4,#0e7490)}
+.drow2{display:flex;align-items:center;gap:6px;padding:2px 4px;border-top:1px solid var(--hatch-widget-border)}
+.drow2 .d2-mid{display:flex;align-items:baseline;gap:6px;white-space:nowrap}
+.drow2 .d2-name{flex:none}
+.drow2 .d2-sub{overflow:hidden;text-overflow:ellipsis}
+.d2-mid{flex:1;min-width:0}
+.d2-name{font-size:12px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.d2-name b{color:#4ade80}
+.d2-sub{font-size:10px;color:var(--hatch-widget-muted);white-space:nowrap}
+.drow2 button{padding:4px 8px;border-radius:8px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:10.5px;cursor:pointer;flex:none}
+.drow2 button[data-act="dsell"]{background:linear-gradient(180deg,#22c55e,#15803d);border-color:transparent;color:#fff}
+.drow2 button:disabled{opacity:.35}
+.picon.xs{width:22px;height:22px;border-radius:6px;flex:none}
+.lock.sm{padding:6px 10px;font-size:11.5px;margin-bottom:6px}
+.rc2{display:flex;align-items:center;gap:8px;padding:4px 8px;background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-radius:10px;margin-bottom:4px;box-shadow:0 1px 4px var(--hatch-widget-shadow)}
+.rc2-mid{flex:1;min-width:0}
+.rc2-name{font-size:12.5px;font-weight:900}
+.rc2-sub{font-size:10px;color:var(--hatch-widget-muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rc2 button{padding:6px 12px;border-radius:9px;border:0;background:linear-gradient(180deg,#a855f7,#6d28d9);color:#fff;font-weight:800;font-size:12px;cursor:pointer;white-space:nowrap;flex:none}
+.rc2 button:disabled{opacity:.4}
+.rc2.locked{opacity:.6}
+.has-job .rc2-sub{display:none}
+.has-job .rc2{padding:2px 8px;margin-bottom:3px}
+.has-job .rc2 button{padding:4px 10px;font-size:11px}
+.has-job .picon.sm{width:22px;height:22px}
+.job{padding:8px;margin-bottom:8px}
+.job-head{margin-bottom:6px;gap:8px}
+.job-name{font-size:13px}
+.tapbtn{padding:7px;font-size:13px}
+.tm{height:22px}
+.tg-pad{width:52px;height:52px}
+.acc-h{width:100%;display:flex;justify-content:space-between;align-items:center;padding:8px 10px;margin:0 0 4px;border-radius:10px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:11px;letter-spacing:2px;cursor:pointer}
+.acc-h.on{border-color:#22c55e;color:#4ade80}
+.acc-x{font-size:12px}
+.acc-b{margin-bottom:2px}
+.srow.c{padding:4px 8px;margin-bottom:4px}
+.srow.c b{font-size:12.5px}
+.srow.c .sdesc{font-size:10px}
+.srow.c button{padding:6px 10px;font-size:11.5px}
+.ownedline{font-size:11px;color:var(--hatch-widget-muted);font-weight:700;padding:2px 2px 6px}
+.dchips.lab{margin-bottom:8px}
+.dchips.lab .dchip{flex-direction:column;gap:3px;padding:6px 2px}
+.dchips.lab .dc-name{font-size:9.5px;text-align:center;line-height:1.2;white-space:normal}
+.lab-sel{display:flex;justify-content:space-between;align-items:center;margin:2px 2px 8px;font-size:13px;font-weight:900}
+.lab-sel span{color:var(--hatch-widget-muted);font-size:12px;font-weight:700}
+.spd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.spd{padding:9px 0;border-radius:10px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:12.5px;cursor:pointer}
+.spd.on{background:linear-gradient(180deg,#22c55e,#15803d);border-color:transparent;color:#fff;box-shadow:0 0 8px rgba(34,197,94,.4)}
+</style>
+<style>
+/* ===== POTAGOTCHI v6: Settings tab (cook speeds + growth speeds), compact fit ===== */
+.pane-settings .shopsec{margin:7px 0 4px}
+.pane-settings .dchips{margin-bottom:3px}
+.pane-settings .dchips.lab{margin-bottom:5px}
+.pane-settings .spd{padding:5px 0;font-size:11px}
+.pane-settings .spd-grid{gap:5px}
+/* ===== POTAGOTCHI v7: slider timers ===== */
+.sld-row{display:flex;align-items:center;gap:8px;background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-radius:10px;padding:6px 10px;margin-bottom:8px;box-shadow:0 1px 4px var(--hatch-widget-shadow)}
+.sld-body{flex:1;min-width:0}
+.sld-lab{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;font-weight:800;margin-bottom:1px}
+.sld-lab b{font-variant-numeric:tabular-nums;color:#4ade80;font-size:13px}
+input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background:transparent;cursor:pointer;accent-color:#22c55e}
+</style>
+<style>
+/* ===== POTAGOTCHI v8: battles, weapons, clinic ===== */
+.pg-tabs{gap:2px;padding:3px}
+.pg-tabs button{font-size:12px;padding:7px 1px}
+.battle{background:linear-gradient(180deg,rgba(239,68,68,.10),transparent 70%);border:1px solid rgba(239,68,68,.55);border-radius:12px;padding:10px;box-shadow:0 0 16px rgba(239,68,68,.28)}
+.bt-head{font-weight:900;font-size:15px;letter-spacing:3px;color:#ef4444;text-align:center;margin-bottom:8px;text-shadow:0 0 10px rgba(239,68,68,.55)}
+.blog{font-size:11.5px;color:var(--hatch-widget-muted);margin:8px 2px;line-height:1.55;min-height:3.4em}
+.blog div::before{content:"\203A ";color:#ef4444;font-weight:900}
+.b-cop{background:linear-gradient(90deg,#60a5fa,#2563eb)}
+.b-you{background:linear-gradient(90deg,#4ade80,#16a34a)}
+.wicon{width:24px;height:24px;flex:none;border-radius:7px;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);position:relative;display:inline-block}
+.wicon::before,.wicon::after{content:"";position:absolute}
+.w-fists::before{left:5px;top:6px;width:14px;height:11px;background:linear-gradient(180deg,#d6a06a,#8a5a30);border-radius:6px 6px 8px 8px}
+.w-fists::after{left:6px;top:8px;width:12px;height:4px;background:repeating-linear-gradient(90deg,#5b3a1e 0 2px,transparent 2px 4px);border-radius:2px}
+.w-knife::before{left:3px;top:11px;width:12px;height:4px;background:linear-gradient(90deg,#e5e7eb,#9ca3af);transform:rotate(-30deg);transform-origin:100% 50%;border-radius:0 2px 2px 0}
+.w-knife::after{left:13px;top:8px;width:7px;height:7px;background:#5b3a1e;border-radius:2px;transform:rotate(30deg)}
+.w-pistol::before{left:4px;top:5px;width:16px;height:6px;background:linear-gradient(180deg,#4b5563,#1f2937);border-radius:2px}
+.w-pistol::after{left:12px;top:10px;width:5px;height:9px;background:linear-gradient(90deg,#374151,#111827);border-radius:2px}
+.w-smg::before{left:3px;top:6px;width:18px;height:5px;background:linear-gradient(180deg,#4b5563,#1f2937);border-radius:2px}
+.w-smg::after{left:9px;top:10px;width:4px;height:9px;background:#1f2937;transform:rotate(12deg);border-radius:2px}
+.srow.c b .wicon{margin-right:2px}
+.acc-h{padding:6px 10px;margin-bottom:3px}
+</style>
+<style>
+/* ===== POTAGOTCHI v9: chill tab, levels, buff, smoke FX ===== */
+.pg{position:relative}
+.pg-tabs button{font-size:11.5px;padding:7px 0;letter-spacing:.2px}
+.pill.buff{border-color:#4ade80;color:#4ade80;font-variant-numeric:tabular-nums}
+.bufftag{font-size:9.5px;font-weight:800;color:#4ade80;background:rgba(74,222,128,.12);border:1px solid rgba(74,222,128,.4);border-radius:99px;padding:1px 6px;margin-left:4px;white-space:nowrap}
+.srow.locked{opacity:.55}
+.lvtag{font-size:9.5px;font-weight:800;letter-spacing:1px;color:#fbbf24;background:rgba(251,191,36,.10);border:1px solid rgba(251,191,36,.4);border-radius:99px;padding:2px 8px;white-space:nowrap}
+.dchip.locked{opacity:.5}
+.dchip .lvtag{margin-left:2px}
+.smoke-fx{position:absolute;inset:0;pointer-events:none;z-index:60;overflow:hidden;border-radius:16px}
+.smoke-fx i{position:absolute;border-radius:50%;filter:blur(16px);animation:smoked 4.2s ease-out forwards;opacity:0}
+.smoke-fx .wash{position:absolute;inset:0;border-radius:16px;filter:none;animation:washfade 4.2s ease-out forwards}
+@keyframes smoked{0%{transform:translateY(30px) scale(.55);opacity:0}18%{opacity:var(--so,.32)}100%{transform:translateY(-170px) scale(1.7);opacity:0}}
+@keyframes washfade{0%{opacity:.13}70%{opacity:.05}100%{opacity:0}}
+</style>
+<style>
+/* ===== TERPENE TYCOON v15: light/dark theme (dark is default; light overrides) ===== */
+.dchip.center{justify-content:center}
+.pg[data-theme="light"]{
+ --hatch-widget-text:#241d33;
+ --hatch-widget-muted:#6f6589;
+ --hatch-widget-surface:#ffffff;
+ --hatch-widget-surface-muted:#efeaf7;
+ --hatch-widget-border:#d9cfee;
+ --hatch-widget-shadow:rgba(74,52,140,.14);
+ --hatch-widget-accent:#6d28d9;
+ --hatch-widget-on-accent:#ffffff;
+}
+/* page backdrop: soft light wash instead of dark glow */
+.pg[data-theme="light"]{background:radial-gradient(420px 130px at 10% -40px,rgba(109,40,217,.09),transparent 60%),radial-gradient(420px 150px at 90% -30px,rgba(34,211,238,.10),transparent 60%),linear-gradient(180deg,transparent,rgba(0,0,0,.03));}
+/* title keeps green identity, darker for contrast */
+.pg[data-theme="light"] .pg-title{background:linear-gradient(180deg,#16a34a,#15803d 65%,#14532d);-webkit-background-clip:text;background-clip:text;}
+/* light-green accents -> deeper green */
+.pg[data-theme="light"] .prop-tier,.pg[data-theme="light"] .prop-tier.t0,.pg[data-theme="light"] .pill.buff,.pg[data-theme="light"] .bufftag,.pg[data-theme="light"] .d2-name b,.pg[data-theme="light"] .sld-lab b{color:#15803d}
+.pg[data-theme="light"] .p-stage.st6{color:#15803d}
+.pg[data-theme="light"] .p-stage.st5{color:#7c3aed}
+.pg[data-theme="light"] .prop-tier.t1{color:#b45309}
+.pg[data-theme="light"] .prop-tier.t2{color:#7c3aed}
+.pg[data-theme="light"] .prop-tier.t3{color:#0e7490}
+.pg[data-theme="light"] .prop-tier.t4{color:#e11d48}
+.pg[data-theme="light"] .prop-tier.t5{color:#ea580c}
+.pg[data-theme="light"] .prop-tier.t6{color:#a21caf}
+.pg[data-theme="light"] .rtime,.pg[data-theme="light"] .stage-tag{color:#7c3aed}
+/* amber accents -> deeper amber */
+.pg[data-theme="light"] .lvtag{color:#b45309}
+.pg[data-theme="light"] .v-heattier.ht0{color:#16a34a}
+.pg[data-theme="light"] .v-heattier.ht1{color:#b45309}
+.pg[data-theme="light"] .v-heattier.ht2{color:#ea580c}
+.pg[data-theme="light"] .rheat{color:#ea580c}
+.pg[data-theme="light"] .amtrow button.bribe:not(:disabled){color:#b45309;border-color:#b45309}
+/* timing minigame marker: white is invisible on light track */
+.pg[data-theme="light"] .tm-mark{background:#6d28d9;box-shadow:0 0 7px rgba(109,40,217,.55)}
+/* near-white widow strain chip needs contrast on white */
+.pg[data-theme="light"] .pc-btns.erow button[data-strain="widow"]{border-color:#94a3b8;color:#475569}
+</style>
+
+<script>
+(function(){
+var root=(document.currentScript&&document.currentScript.parentElement)||document;
+function q(s){return root.querySelector(s);}
+function qa(s){return Array.prototype.slice.call(root.querySelectorAll(s));}
+var bridge=window.hatchWidget||null;
+var PRODUCTS={
+ sour:{name:"Sour D",price:8,seed:15,yld:[6,10],tier:1,c1:"#5be37a",tag:"SD"},
+ og:{name:"OG Kush",price:12,seed:30,yld:[9,13],tier:2,c1:"#7CFC9a",tag:"OG"},
+ haze:{name:"Purple Haze",price:18,seed:50,yld:[12,17],tier:3,c1:"#d8a6ff",tag:"PH"},
+ bluedream:{name:"Blue Dream",price:60,seed:350,yld:[14,20],tier:4,c1:"#7fd4c1",tag:"BD"},
+ gsc:{name:"Girl Scout Cookies",price:95,seed:600,yld:[16,24],tier:5,c1:"#a78bfa",tag:"GSC"},
+ widow:{name:"White Widow",price:150,seed:1000,yld:[18,28],tier:6,c1:"#e8f4e8",tag:"WW"},
+ glue:{name:"Gorilla Glue",price:230,seed:1600,yld:[22,34],tier:7,c1:"#4caf7d",tag:"GG"},
+ hash:{name:"Hash",price:50,tier:1,c1:"#d4a373"},
+ edibles:{name:"Edibles",price:40,tier:2,c1:"#fbbf24"},
+ moonrock:{name:"Moonrocks",price:140,tier:3,c1:"#e9d5ff"},
+ acid:{name:"Acid",price:110,tier:4,c1:"#ff2fb3"},
+ dmt:{name:"DMT",price:200,tier:5,c1:"#bfe6ff"},
+ dragon:{name:"Dragon's Breath",price:600,tier:7,c1:"#ff6a00"}
+};
+var PKEYS=["sour","og","haze","bluedream","gsc","widow","glue","hash","edibles","moonrock","acid","dmt","dragon"];
+var GROWKEYS=["sour","og","haze","bluedream","gsc","widow","glue"];
+var PROPS=[
+ {id:"tent",name:"Grow Tent",cost:0,slots:3,tier:1,desc:"Your closet setup. 3 grow slots."},
+ {id:"trap",name:"Trap House",cost:1500,slots:6,tier:2,desc:"6 grow slots. Requires Level 2."},
+ {id:"warehouse",name:"Warehouse",cost:5000,slots:10,tier:3,desc:"10 grow slots. Requires Level 3."},
+ {id:"mansion",name:"Mansion Lab",cost:15000,slots:16,tier:4,desc:"16 grow slots. Requires Level 4."},
+ {id:"bunker",name:"Bunker",cost:40000,slots:20,tier:5,desc:"20 grow slots. Requires Level 5."},
+ {id:"island",name:"Island Compound",cost:100000,slots:24,tier:6,desc:"24 grow slots. Requires Level 6."},
+ {id:"cartel",name:"Cartel Empire",cost:250000,slots:28,tier:7,desc:"28 grow slots. Requires Level 7."}
+];
+var KITS={
+ butter:{name:"Butter Kit",cost:40,tier:2,desc:"For baking Edibles"},
+ oil:{name:"Hash Oil Kit",cost:80,tier:3,desc:"For infusing Moonrocks"},
+ chem:{name:"Chem Kit",cost:150,tier:4,desc:"For cooking Acid & DMT"},
+ royal:{name:"Royal Kit",cost:500,tier:7,desc:"For Dragon's Breath"}
+};
+var KITKEYS=["butter","oil","chem","royal"];
+var RECIPES={
+ hash:{game:"tap",taps:25,secs:12,bud:5,yield:3,heat:6,hint:"Tap the press 25 times before time runs out!"},
+ edibles:{game:"timing",bud:4,kits:{butter:1},yield:5,heat:6,hint:"Hit PULL when the marker is in the green zone."},
+ moonrock:{game:"target",bud:3,stash:{hash:2},kits:{oil:1},yield:4,heat:8,hint:"Tap the lit pad — 5 rounds, be quick."},
+ acid:{game:"memory",kits:{chem:2},yield:5,heat:10,hint:"Watch the sequence, then repeat it. 2 rounds."},
+ dmt:{game:"freezethaw",kits:{chem:3},yield:4,heat:12,hint:"FREEZE in the blue zone, then THAW in the orange zone."},
+ dragon:{game:"finale",stash:{moonrock:5,dmt:3,acid:2},kits:{royal:1},yield:6,heat:20,hint:"The full gauntlet: press, pull, then the sequence."}
+};
+var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon"];
+var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
+var DEF_SPEEDS={hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300};
+function speedOf(k){var v=S.speeds&&S.speeds[k];return SPEED_OPTS.indexOf(v)>=0?v:DEF_SPEEDS[k];}
+function fmtT(s){s=Math.max(0,Math.round(s));var m=Math.floor(s/60),r=s%60;return m+":"+(r<10?"0":"")+r;}
+function growSec(){return SPEED_OPTS.indexOf(S.growSpeed)>=0?S.growSpeed:120;}
+function growMinOf(k){return growSec()/60;}
+var DEALER_NAMES=["Corner Carl","Rooftop Rita","Alley Al","Deli Dave"];
+var DUFFEL=[40,100,200,400];
+var DUFFEL_COST={100:150,200:400,400:1000};
+var FERT_COST=25,BRIBE_COST=200;
+var WEAPONS={
+ fists:{name:"Fists",cost:0,tier:1,dmg:[5,9]},
+ knife:{name:"Knife",cost:150,tier:2,dmg:[11,16]},
+ pistol:{name:"Pistol",cost:750,tier:4,dmg:[15,22]},
+ smg:{name:"SMG",cost:3000,tier:6,dmg:[24,34]}
+};
+var WKEYS=["fists","knife","pistol","smg"];
+var DEALER_TIER=[1,2,4,6];
+var XP_TH=[0,200,500,900,1400,2000,2700];
+function lvl(xp){xp=xp||0;var L=1;for(var i=0;i<XP_TH.length;i++)if(xp>=XP_TH[i])L=i+1;return L;}
+function pLevel(){return lvl(S.xp);}
+function tierVis(t){var L=pLevel();return t<=L?2:(t===L+1?1:0);}
+var UNLOCKS={
+ 1:["Sour D","Hash","Grow Tent"],
+ 2:["OG Kush","Edibles","Trap House","Knife","Rooftop Rita"],
+ 3:["Purple Haze","Moonrocks","Warehouse"],
+ 4:["Blue Dream","Acid","Mansion Lab","Pistol","Alley Al"],
+ 5:["Girl Scout Cookies","DMT","Bunker"],
+ 6:["White Widow","Island Compound","SMG","Deli Dave"],
+ 7:["Gorilla Glue","Dragon's Breath","Cartel Empire"]
+};
+function addXP(n){
+ if(!n||n<=0)return false;
+ var before=pLevel();
+ S.xp=(S.xp||0)+n;
+ var after=pLevel();
+ if(after>before){
+  var items=[];
+  for(var t=before+1;t<=after;t++)items=items.concat(UNLOCKS[t]||[]);
+  S.msg="LEVEL UP — Level "+after+"! Unlocked: "+items.join(", ")+".";
+  return true;
+ }
+ return false;
+}
+var SMOKE_MSG={
+ sour:"Sharp citrus rush. The Sour D hits fast.",
+ og:"Heavy and calm. OG Kush melts the stress away.",
+ haze:"Colors swirl. Purple Haze lifts you off the ground.",
+ bluedream:"Creative vibes.",
+ gsc:"Sweet and giggly. Cookies hit just right.",
+ widow:"Frosty blast. White Widow numbs it all.",
+ glue:"Couch-lock engaged. Gorilla Glue does not play."
+};
+var SMOKE_COL={
+ sour:{c:["#a3e635"],o:.34},
+ og:{c:["#166534"],o:.36},
+ haze:{c:["#a78bfa"],o:.36},
+ bluedream:{c:["#7dd3fc"],o:.34},
+ gsc:{c:["#4a9e4f","#a78bfa"],o:.36},
+ widow:{c:["#f1f5f9"],o:.5},
+ glue:{c:["#6b7280"],o:.55}
+};
+function bestWeapon(){if(S.weapons&&S.weapons.smg)return "smg";if(S.weapons&&S.weapons.pistol)return "pistol";if(S.weapons&&S.weapons.knife)return "knife";return "fists";}
+function weaponDmg(){var w=WEAPONS[bestWeapon()],d=Math.round(w.dmg[0]+Math.random()*(w.dmg[1]-w.dmg[0])),crit=Math.random()<0.15;if(crit)d=Math.round(d*1.6);return {dmg:d,crit:crit};}
+function copDmg(){return Math.round(8+Math.random()*6);}
+var HEAT_TIERS=["CALM","SUSPICIOUS","WATCHED","HUNTED"];
+function mkDealer(name){function m(){return 0.8+Math.random()*0.4;}var d={name:name,buy:{},sell:{}};PKEYS.forEach(function(k){d.buy[k]=m();d.sell[k]=m();});return d;}
+function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
+function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
+var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:120,setdrug:"hash",xp:0,chillview:"roll",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,
+ props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0}};
+function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
+function normalize(s){
+ var oldSave=(typeof s.xp!=="number");
+ s=Object.assign({},DEF,s);
+ if(s.theme!=="light"&&s.theme!=="dark")s.theme="dark";
+ s.stash=Object.assign(emptyMaps(),s.stash);
+ s.joints=Object.assign(growMaps(),s.joints);
+ s.seeds=Object.assign(emptyMaps(),s.seeds);
+ s.kits=Object.assign({butter:0,oil:0,chem:0,royal:0},s.kits);
+ var sp={};RKEYS.forEach(function(k){var v=s.speeds&&s.speeds[k];sp[k]=SPEED_OPTS.indexOf(v)>=0?v:DEF_SPEEDS[k];});s.speeds=sp;
+ if(s.growSpeeds&&typeof s.growSpeeds==="object"){
+  var gvals=[];GROWKEYS.forEach(function(k){var gv=parseFloat(s.growSpeeds[k]);if(!isNaN(gv))gvals.push(gv);});
+  if(gvals.length){var gavg=gvals.reduce(function(a,b){return a+b;},0)/gvals.length;s.growSpeed=Math.min(300,Math.max(30,Math.round(gavg*60/30)*30));}
+ }
+ delete s.growSpeeds;delete s.setStrain;
+ if(SPEED_OPTS.indexOf(s.growSpeed)<0)s.growSpeed=120;
+ if(RKEYS.indexOf(s.setdrug)<0)s.setdrug="hash";
+ s.stats=Object.assign({earned:0,harvested:0,deals:0,busted:0,cooked:0},s.stats);
+ if(s.seeds.moonrock>0){s.cash+=s.seeds.moonrock*150;s.seeds.moonrock=0;}
+ if(!s.job||!RECIPES[s.job.key])s.job=null;
+ if(!Array.isArray(s.props)||!s.props.length){
+  if(Array.isArray(s.pots)&&s.pots.length)s.props=[{id:"tent",name:"Grow Tent",tier:1,slots:s.pots}];
+  else s.props=[mkProp("tent")];
+ }
+ delete s.pots;
+ if(oldSave){
+  var maxOld=0;
+  s.props.forEach(function(pr){maxOld=Math.max(maxOld,pr.tier||0);pr.tier=(pr.tier||0)+1;});
+  var lv=Math.min(7,maxOld+1);
+  s.xp=XP_TH[lv-1]||0;
+ }
+ if(typeof s.xp!=="number"||isNaN(s.xp)||s.xp<0)s.xp=0;
+ if(s.buffUntil&&Date.now()>s.buffUntil){s.buffMult=1;s.buffUntil=0;}
+ if(SPEED_OPTS.indexOf(s.buffMult)<0&&!(s.buffMult>=1&&s.buffMult<=1.3))s.buffMult=1;
+ if(typeof s.buffUntil!=="number")s.buffUntil=0;
+ s.props.forEach(function(pr){if(!Array.isArray(pr.slots))pr.slots=[];
+  pr.slots.forEach(function(p){if(p&&GROWKEYS.indexOf(p.strain)<0)p.strain="sour";});});
+ if(!Array.isArray(s.dealers)||s.dealers.length!==4)s.dealers=DEALER_NAMES.map(mkDealer);
+ s.dealers.forEach(function(d){PKEYS.forEach(function(k){if(typeof d.buy[k]!=="number")d.buy[k]=1;if(typeof d.sell[k]!=="number")d.sell[k]=1;});});
+ var now=Date.now();
+ if(!s.lastTick)s.lastTick=now;
+ if(!s.bornAt)s.bornAt=now;
+ if(!s.driftAt)s.driftAt=now+4*60000;
+ if(s.amt!==1&&s.amt!==5)s.amt=1;
+ if(s.tab==="lab")s.tab="settings";
+ if(s.tab==="shop")s.tab="store";
+ if(["grow","cook","deal","store","chill","clinic","settings"].indexOf(s.tab)<0)s.tab="grow";
+ if(["grow","cook","deal","chill","clinic","settings"].indexOf(s.backtab)<0)s.backtab="grow";
+ if(["roll","smoke"].indexOf(s.chillview)<0)s.chillview="roll";
+ if(GROWKEYS.indexOf(s.chillStrain)<0)s.chillStrain="sour";
+ if(["bud","joints","lab"].indexOf(s.dealcat)<0)s.dealcat="bud";
+ if(typeof s.hp!=="number"||isNaN(s.hp))s.hp=100;s.hp=Math.max(0,Math.min(100,s.hp));
+ s.weapons=Object.assign({knife:false,pistol:false,smg:false},s.weapons);
+ if(s.battle){
+  if(typeof s.battle.copMax!=="number"||typeof s.battle.copHp!=="number"||!Array.isArray(s.battle.log))s.battle=null;
+  else{s.battle.copHp=Math.max(0,Math.min(s.battle.copMax,s.battle.copHp));s.battle.log=s.battle.log.slice(-3);}
+ }
+ if(typeof s.gprop!=="number"||s.gprop<0)s.gprop=0;
+ if(typeof s.gpage!=="number"||s.gpage<0)s.gpage=0;
+ if(typeof s.dealer!=="number"||s.dealer<0||s.dealer>3)s.dealer=0;
+ var _lv=lvl(s.xp);
+ while(s.dealer>0&&DEALER_TIER[s.dealer]>_lv)s.dealer--;
+ var _secmap={seeds:"seeds",kits:"lab",duffel:"gear",weapons:"guns",props:"realty"};
+ if(_secmap[s.shopsec])s.storetab=_secmap[s.shopsec];
+ delete s.shopsec;
+ if(["seeds","guns","lab","gear","realty"].indexOf(s.storetab)<0)s.storetab="seeds";
+ return s;
+}
+var S=normalize(Object.assign({},DEF,bridge?bridge.getState(DEF):{}));
+function save(){if(bridge)bridge.setState(S);}
+if(bridge)window.addEventListener("hatch-widget-state",function(e){if(e.detail&&e.detail.state){S=normalize(e.detail.state);render();}});
+
+function unlocked(){var t=pLevel();return PKEYS.filter(function(k){return PRODUCTS[k].tier<=t;});}
+function stashTotal(){return PKEYS.reduce(function(a,k){return a+(S.stash[k]||0);},0)+GROWKEYS.reduce(function(a,k){return a+(S.joints[k]||0);},0);}
+function buffActive(){return Date.now()<S.buffUntil;}
+function buffPct(){return Math.round(((S.buffMult||1)-1)*100);}
+function ppu(base,mult){return Math.max(1,Math.round(base*mult*10)/10);}
+function money(n){return "$"+Math.round(n).toLocaleString("en-US");}
+function fmtP(p){return "$"+(Math.round(p*10)/10)+"/g";}
+function heatTier(h){return h<30?0:h<60?1:h<85?2:3;}
+function heatStars(h){var n=heatTier(h)+1,s="";for(var i=0;i<5;i++)s+=i<n?"\u2605":"\u2606";return s;}
+function bar(label,v,cls){return '<div class="brow"><span>'+label+'</span><div class="bar"><i class="b-'+cls+'" style="width:'+Math.round(Math.max(0,Math.min(100,v)))+'%"></i></div><b>'+Math.round(v)+'</b></div>';}
+function stageOf(g){return g>=100?6:g>=75?5:g>=55?4:g>=35?3:g>=20?2:g>=8?1:0;}
+var STAGE_NAMES=["Seed","Sprout","Seedling","Veg","Pre-flower","Flowering","Ready"];
+/* ===== realistic strain-unique plants (v5) ===== */
+var STRAIN_ART={
+ sour:{stemH:[0,7,24,48,62,70,76],perNode:[0,0,1,1,1,1,1],nl:[0,0,3,5,7,7,7],spread:26,lw:9,lh:25,bud1:"#e3f7b8",bud2:"#a9e34b",bud3:"#5c940d",glow:"#a9e34b"},
+ og:{stemH:[0,6,19,38,50,58,64],perNode:[0,0,1,2,2,2,2],nl:[0,0,3,5,7,7,7],spread:46,lw:11,lh:21,bud1:"#dcf0e2",bud2:"#74c69d",bud3:"#2d6a4f",glow:"#74c69d"},
+ haze:{stemH:[0,6,22,43,56,64,70],perNode:[0,0,1,1,2,2,2],nl:[0,0,3,5,7,7,7],spread:35,lw:10,lh:23,bud1:"#e5dbff",bud2:"#b197fc",bud3:"#5f3dc4",glow:"#b197fc"},
+ bluedream:{stemH:[0,7,23,46,60,68,74],perNode:[0,0,1,1,1,2,2],nl:[0,0,3,5,7,7,7],spread:30,lw:10,lh:24,bud1:"#d9f2e4",bud2:"#6fd3a0",bud3:"#2b7a5e",glow:"#6fd3a0"},
+ gsc:{stemH:[0,6,20,40,54,62,68],perNode:[0,0,1,1,2,2,2],nl:[0,0,3,5,7,7,7],spread:38,lw:10,lh:22,bud1:"#e6f2d2",bud2:"#8fce62",bud3:"#5b3a8c",glow:"#a78bfa"},
+ widow:{stemH:[0,6,20,40,54,62,68],perNode:[0,0,1,2,2,2,2],nl:[0,0,3,5,7,7,7],spread:36,lw:10,lh:22,bud1:"#ffffff",bud2:"#dfeedf",bud3:"#8fae8f",glow:"#ffffff"},
+ glue:{stemH:[0,5,16,32,44,52,58],perNode:[0,0,1,2,2,2,2],nl:[0,0,3,5,7,7,7],spread:48,lw:12,lh:20,bud1:"#dcefe0",bud2:"#4caf7d",bud3:"#1d4d33",glow:"#4caf7d"}
+};
+function leafCls(strain,st){
+ if(strain==="sour")return "g-sour";
+ if(strain==="og")return "g-og";
+ if(strain==="glue")return "g-glue";
+ if(strain==="bluedream")return "g-blue";
+ if(strain==="widow")return "g-widow";
+ if(strain==="gsc")return st>=5?"g-gscP":"g-gsc";
+ return st>=5?"g-hazeP":"g-haze";
+}
+function fanHTML(side,bottom,nl,art,lc,scale){
+ var s='<span class="fan" style="bottom:'+bottom+'px"><i class="pet" style="transform:rotate('+(side*42)+'deg)"></i>';
+ var tilt=side*38;
+ for(var i=0;i<nl;i++){
+  var a=Math.round(tilt+(i-(nl-1)/2)*art.spread);
+  var h=Math.round(art.lh*scale),w=Math.round(art.lw*scale);
+  s+='<i class="lft '+lc+'" style="height:'+h+'px;width:'+w+'px;margin-left:-'+Math.round(w/2)+'px;transform:rotate('+a+'deg)"></i>';
+ }
+ return s+'</span>';
+}
+function colaHTML(left,bottom,sc,art){
+ var bg='background:radial-gradient(circle at 35% 30%,'+art.bud1+','+art.bud2+' 48%,'+art.bud3+');box-shadow:0 0 10px '+art.glow+';';
+ var tr='border-radius:50% 50% 50% 50%/64% 64% 36% 36%;';
+ var w1=Math.round(14*sc),h1=Math.round(18*sc),w2=Math.round(10*sc),h2=Math.round(13*sc);
+ return '<b class="bud" style="left:'+left+'%;bottom:'+bottom+'px;width:'+w1+'px;height:'+h1+'px;'+tr+bg+'"></b>'
+ +'<b class="bud" style="left:'+(left-7)+'%;bottom:'+(bottom-8)+'px;width:'+w2+'px;height:'+h2+'px;'+tr+bg+'"></b>'
+ +'<b class="bud" style="left:'+(left+7)+'%;bottom:'+(bottom-10)+'px;width:'+w2+'px;height:'+h2+'px;'+tr+bg+'"></b>';
+}
+function pistilsHTML(cx,cy,n,amber){
+ var s='';
+ for(var i=0;i<n;i++){
+  var px=cx+((i*29)%15)-7,py=cy+((i*37)%13)-6,rot=((i*53)%64)-32;
+  s+='<i class="pistil'+(amber?' am':'')+'" style="left:'+px+'%;bottom:'+py+'px;transform:rotate('+rot+'deg)"></i>';
+ }
+ return s;
+}
+function nodeFracs(st){
+ if(st===2)return [1.0];
+ if(st===3)return [0.45,0.8];
+ if(st===4)return [0.35,0.62,0.88];
+ if(st===5)return [0.3,0.55,0.8];
+ return [0.28,0.5,0.72];
+}
+function plantHTML(p,pi,si){
+ if(!p){
+  var btns=GROWKEYS.filter(function(k){return tierVis(PRODUCTS[k].tier)>0;}).map(function(k){
+   var v=tierVis(PRODUCTS[k].tier);
+   if(v===1)return '<button type="button" disabled title="Unlocks at Level '+PRODUCTS[k].tier+'">'+(PRODUCTS[k].tag||PRODUCTS[k].name.charAt(0))+' <span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></button>';
+   return '<button type="button" data-act="plant" data-pi="'+pi+'" data-si="'+si+'" data-strain="'+k+'"'+(S.seeds[k]>0?"":" disabled")+' title="'+PRODUCTS[k].name+' seeds">'+(PRODUCTS[k].tag||PRODUCTS[k].name.charAt(0))+'&times;'+S.seeds[k]+'</button>';
+  }).join("");
+  return '<div class="potc empty"><div class="p-soil mini"></div><div class="p-pick">PLANT</div><div class="pc-btns erow">'+btns+'</div></div>';
+ }
+ var st=stageOf(p.growth);
+ var pr=PRODUCTS[p.strain];
+ var art=STRAIN_ART[p.strain]||STRAIN_ART.sour;
+ var lc=leafCls(p.strain,st);
+ var inner="";
+ if(st===0){
+  inner='<div class="p-soil2"></div><i class="seed"></i>';
+ }else if(st===1){
+  inner='<div class="stem" style="height:6px"></div><i class="cot l"></i><i class="cot r"></i>';
+ }else{
+  var sh=art.stemH[st];
+  inner='<div class="stem" style="height:'+sh+'px"></div>';
+  var per=art.perNode[st],nl=art.nl[st],sc=[0,0,0.8,1,1.05,1.1,1.05][st];
+  var fr=nodeFracs(st);
+  for(var ni=0;ni<fr.length;ni++){
+   var b=14+Math.round(sh*fr[ni]);
+   if(per===2){inner+=fanHTML(-1,b,nl,art,lc,sc)+fanHTML(1,b,nl,art,lc,sc);}
+   else{inner+=fanHTML(ni%2===0?-1:1,b,nl,art,lc,sc);}
+  }
+  var top=14+sh;
+  if(st===4){
+   inner+=pistilsHTML(50,top-8,5,false);
+  }else if(st===5){
+   var nb5=14+Math.round(sh*0.8);
+   inner+=colaHTML(50,top-10,0.9,art)+colaHTML(50,nb5-6,0.65,art);
+   inner+=pistilsHTML(50,top-2,9,false)+pistilsHTML(50,nb5+4,5,false);
+  }else if(st===6){
+   var nb6a=14+Math.round(sh*0.72),nb6b=14+Math.round(sh*0.5);
+   inner+=colaHTML(50,top-12,1.1,art)+colaHTML(50,nb6a-8,0.85,art)+colaHTML(50,nb6b-6,0.7,art);
+   inner+=pistilsHTML(50,top-4,9,true)+pistilsHTML(43,nb6a,5,true)+pistilsHTML(57,nb6b,5,true);
+  }
+ }
+ var wilt=p.water<25?" wilt":"";
+ var sx=" sx-"+p.strain+((p.strain==="haze"&&st>=5)?" hz-purp":"");
+ var h='<div class="potc"><div class="plantart'+wilt+(st===6?" ready":"")+sx+'"><div class="zoom56"><div class="sway">'+inner+'</div></div></div>'
+  +'<div class="pc-name">'+pr.name+'</div>'
+  +'<div class="pc-stage"><span class="p-stage st'+st+'">'+STAGE_NAMES[st]+'</span></div>'
+  +'<div class="pc-bars"><i class="g" style="width:'+Math.round(p.growth)+'%"></i><i class="w" style="width:'+Math.round(p.water)+'%"></i></div>'
+  +'<div class="pc-btns"><button type="button" data-act="water" data-pi="'+pi+'" data-si="'+si+'">Water</button>';
+ if(st===6){h+='<button type="button" class="go" data-act="harvest" data-pi="'+pi+'" data-si="'+si+'">Harvest</button>';}
+ else{h+='<button type="button" data-act="fert" data-pi="'+pi+'" data-si="'+si+'"'+(S.fert>0?"":" disabled")+'>Feed</button>';}
+ return h+'</div></div>';
+}
+var HINTS={
+ grow:"Water keeps them growing — harvest at 100%. Dry plants stall. Buy properties for more slots and new products.",
+ cook:"Turn bud into product — every recipe is a hands-on job. One job at a time; cancelling refunds your inputs.",
+ deal:"Buy low, sell high — prices drift every few minutes. At 70+ heat the cops may ambush you — win the fight or lose your stash. Bribe to cool off.",
+ store:"Hit the strip — seed bank, gun store, lab supply, depot, realty.",
+ chill:"Roll bud into joints, smoke for heat relief, XP, and better sell prices.",
+ settings:"Cook speeds for every drug, plus one grow speed for all weed. Everything saves instantly.",
+ clinic:"Patch up after fights — $2 per HP. High heat brings cop ambushes; go in armed and healthy."
+};
+function render(){
+ if(root&&root.dataset)root.dataset.theme=(S.theme==="light")?"light":"dark";
+ var now=Date.now();
+ q(".v-cash").textContent=money(S.cash);
+ q(".v-stash").textContent=stashTotal()+"/"+S.stashCap+"g";
+ var hpEl=q(".v-hp");hpEl.textContent="HP "+Math.max(0,Math.round(S.hp));
+ hpEl.style.color=S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444";
+ var bEl=q(".v-buff");
+ if(buffActive()){bEl.hidden=false;bEl.textContent="HIGH +"+buffPct()+"% "+fmtT(Math.ceil((S.buffUntil-Date.now())/1000));}
+ else bEl.hidden=true;
+ q(".v-day").textContent="Day "+(1+Math.floor((now-S.bornAt)/86400000));
+ var hb=q(".v-heat");
+ hb.style.width=Math.min(100,S.heat)+"%";
+ hb.className="v-heat"+(S.heat>70?" hot":"");
+ q(".v-heattier").textContent=heatStars(S.heat)+" "+HEAT_TIERS[heatTier(S.heat)];
+ q(".v-heattier").className="v-heattier ht"+heatTier(S.heat);
+ q(".v-msg").textContent=S.msg;
+ qa(".pg-tabs button").forEach(function(b){b.classList.toggle("on",b.dataset.tab===S.tab);});
+ var _sb=q(".store-btn");if(_sb)_sb.classList.toggle("on",S.tab==="store");
+ var battling=!!S.battle;
+ var inStore=S.tab==="store"&&!battling;
+ q(".pg-head").hidden=inStore;
+ q(".pg-pills").hidden=inStore;
+ q(".pg-heat").hidden=inStore;
+ q(".pg-msg").hidden=inStore;
+ q(".pg-tabs").hidden=inStore;
+ q(".pane-grow").hidden=battling||S.tab!=="grow";
+ q(".pane-cook").hidden=battling||S.tab!=="cook";
+ q(".pane-deal").hidden=battling||S.tab!=="deal";
+ q(".pane-store").hidden=!inStore;
+ q(".pane-chill").hidden=battling||S.tab!=="chill";
+ q(".pane-clinic").hidden=battling||S.tab!=="clinic";
+ q(".pane-settings").hidden=battling||S.tab!=="settings";
+ q(".pane-battle").hidden=!battling;
+ if(battling)q(".pane-battle").innerHTML=battleHTML();
+ q(".v-hint").textContent=battling?"Win the fight or run — nothing else until it's over.":HINTS[S.tab];
+ var gh='<div class="growbar"><button type="button" data-act="waterall">Water all</button><button type="button" data-act="harvestall">Harvest all</button></div>';
+ var gi=S.gprop||0;if(gi>=S.props.length)gi=0;
+ var gguard=0;while(S.props[gi]&&S.props[gi].tier>pLevel()&&gguard<S.props.length){gi=(gi+1)%S.props.length;gguard++;}
+ var pr=S.props[gi];
+ gh+='<div class="ppager"><button type="button" data-act="gprev">\u25C0</button><span class="pp-name">'+pr.name+'</span><span class="prop-tier t'+pr.tier+'">TIER '+pr.tier+'</span><button type="button" data-act="gnext">\u25B6</button></div>';
+ gh+='<div class="pots">';
+ var perPage=4,pages=Math.max(1,Math.ceil(pr.slots.length/perPage));
+ var pgm=Math.min(S.gpage||0,pages-1);
+ for(var si2=pgm*perPage;si2<Math.min(pr.slots.length,(pgm+1)*perPage);si2++)gh+=plantHTML(pr.slots[si2],gi,si2);
+ gh+='</div>';
+ if(pages>1)gh+='<div class="ppager sm"><button type="button" data-act="gpage" data-p="'+(pgm-1)+'">\u25C0</button><span>'+(pgm*perPage+1)+'\u2013'+Math.min(pr.slots.length,(pgm+1)*perPage)+' of '+pr.slots.length+'</span><button type="button" data-act="gpage" data-p="'+(pgm+1)+'">\u25B6</button></div>';
+ q(".pane-grow").innerHTML=gh;
+ q(".pane-cook").innerHTML=cookHTML();q(".pane-cook").classList.toggle("has-job",!!S.job);
+ var locked=now<S.lockedUntil;
+ var dh='<div class="amtrow c"><span>Deal:</span>'
+  +'<button type="button" data-act="amt" data-amt="1"'+(S.amt===1?' class="on"':'')+'>1g</button>'
+  +'<button type="button" data-act="amt" data-amt="5"'+(S.amt===5?' class="on"':'')+'>5g</button>'
+  +'<button type="button" class="bribe" data-act="bribe"'+(locked||S.heat<=0||S.cash<BRIBE_COST?" disabled":"")+'>Bribe '+money(BRIBE_COST)+'</button></div>';
+ if(locked)dh+='<div class="lock sm">Laying low — heat dies down in '+Math.ceil((S.lockedUntil-now)/60000)+' min.</div>';
+ var un=unlocked();
+ var di=S.dealer||0;if(di>=S.dealers.length)di=0;
+ while(di>0&&DEALER_TIER[di]>pLevel())di--;
+ dh+='<div class="dchips">';
+ S.dealers.forEach(function(d,ii){
+  var dv=tierVis(DEALER_TIER[ii]);
+  if(dv===0)return;
+  if(dv===1){dh+='<button type="button" class="dchip locked" disabled><span class="d-av sm">'+d.name.charAt(0)+'</span><span class="dc-name">'+d.name+'</span><span class="lvtag">Lv '+DEALER_TIER[ii]+'</span></button>';return;}
+  dh+='<button type="button" class="dchip'+(ii===di?" on":"")+'" data-act="dealersel" data-d="'+ii+'"><span class="d-av sm">'+d.name.charAt(0)+'</span><span class="dc-name">'+d.name+'</span></button>';
+ });
+ dh+='</div>';
+ var dcat=S.dealcat||"bud";
+ dh+='<div class="dchips">'
+  +'<button type="button" class="dchip'+(dcat==="bud"?" on":"")+'" data-act="dealcat" data-c="bud"><span class="dc-name">Bud</span></button>'
+  +'<button type="button" class="dchip'+(dcat==="joints"?" on":"")+'" data-act="dealcat" data-c="joints"><span class="dc-name">Joints</span></button>'
+  +'<button type="button" class="dchip'+(dcat==="lab"?" on":"")+'" data-act="dealcat" data-c="lab"><span class="dc-name">Lab</span></button>'
+  +'</div>';
+ var d=S.dealers[di];
+ var bActive=buffActive(),bpct=buffPct();
+ function sellU(k,base){var u=base;if(bActive)u=Math.round(u*S.buffMult);return u;}
+ if(dcat==="joints"){
+  GROWKEYS.forEach(function(k){
+   var v=tierVis(PRODUCTS[k].tier);
+   if(v===0)return;
+   if(v===1){dh+='<div class="drow2 locked"><span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span><div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' joints</div><div class="d2-sub"><span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></div></div></div>';return;}
+   var ju=sellU(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9));
+   dh+='<div class="drow2"><span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span><div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' joints <b>'+(S.joints[k]||0)+'</b></div>'
+    +'<div class="d2-sub">pays '+money(ju)+'/joint'+(bActive?'<span class="bufftag">+'+bpct+'%</span>':"")+'</div></div>'
+    +'<button type="button" data-act="dsellj" data-d="'+di+'" data-strain="'+k+'"'+(locked||(S.joints[k]||0)<S.amt?" disabled":"")+'>Sell</button></div>';
+  });
+ }else{
+  var keys=dcat==="lab"?RKEYS:GROWKEYS;
+  keys.forEach(function(k){
+   var v=tierVis(PRODUCTS[k].tier);
+   if(v===0)return;
+   if(v===1){dh+='<div class="drow2 locked"><span class="picon xs '+(GROWKEYS.indexOf(k)>=0?'picon-bud" style="--c:'+PRODUCTS[k].c1:'picon-'+k)+'"></span><div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+'</div><div class="d2-sub"><span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></div></div></div>';return;}
+   var bp=ppu(PRODUCTS[k].price,d.buy[k]);
+   var sp=ppu(PRODUCTS[k].price,d.sell[k]);
+   var su=sellU(k,bp);
+   var pic=GROWKEYS.indexOf(k)>=0?'<span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span>':'<span class="picon xs picon-'+k+'"></span>';
+   dh+='<div class="drow2">'+pic+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' <b>'+S.stash[k]+'g</b></div>'
+    +'<div class="d2-sub">buys '+fmtP(bp)+' &middot; sells '+fmtP(su)+(bActive?'<span class="bufftag">+'+bpct+'%</span>':"")+'</div></div>'
+    +'<button type="button" data-act="dbuy" data-d="'+di+'" data-strain="'+k+'"'+(locked?" disabled":"")+'>Buy</button>'
+    +'<button type="button" data-act="dsell" data-d="'+di+'" data-strain="'+k+'"'+(locked?" disabled":"")+'>Sell</button></div>';
+  });
+ }
+ q(".pane-deal").innerHTML=dh;
+ var STORE_ICON='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l1.2-4.5h13.6L20 9"/><path d="M4 9v10.5h16V9"/><path d="M4 9.2h16"/><path d="M9.5 19.5v-4.5h5v4.5"/></svg>';
+ var SICON={
+  seeds:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 12c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg>',
+  guns:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9h15v4h-7l-1.2 7H5.6L6.8 13H2z"/></svg>',
+  lab:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10 3v5.2L4.8 17a2.4 2.4 0 0 0 2.1 3.5h10.2a2.4 2.4 0 0 0 2.1-3.5L14 8.2V3"/><path d="M7.2 14.5h9.6"/></svg>',
+  gear:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8.5" width="18" height="10.5" rx="2.5"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/><path d="M3 13.5h18"/></svg>',
+  realty:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5L12 5l8 6.5"/><path d="M6.5 10v9.5h11V10"/><path d="M10.5 19.5v-4h3v4"/></svg>'
+ };
+ var sh='<div class="store-screen-head"><button type="button" class="store-back" data-act="hustle">\u25C0 Hustle Time</button><span class="store-title">'+STORE_ICON+'STORE</span><div class="pill"><b>'+money(S.cash)+'</b></div></div>';
+ var stores=[
+  ["seeds","SEEDS","Seed Bank","Premium genetics. No questions asked.","#4ade80"],
+  ["guns","GUNS","Gun Store","Iron & lead. Cash only.","#f87171"],
+  ["lab","LAB","Lab Supply","Everything for the cook.","#fbbf24"],
+  ["gear","GEAR","Supply Depot","Fertilizer & duffel upgrades.","#38bdf8"],
+  ["realty","REALTY","Green Realty","Location, location, cultivation.","#c084fc"]
+ ];
+ var st=S.storetab||"seeds";
+ sh+='<div class="store-tabs">';
+ stores.forEach(function(sc){
+  sh+='<button type="button" data-act="storetab" data-sec="'+sc[0]+'"'+(st===sc[0]?' class="on"':'')+'>'+SICON[sc[0]]+'<span>'+sc[1]+'</span></button>';
+ });
+ sh+='</div>';
+ var _cur=stores[0];
+ stores.forEach(function(sc){if(sc[0]===st)_cur=sc;});
+ sh+='<div class="store-banner" style="--sc:'+_cur[4]+'"><b>'+SICON[_cur[0]]+_cur[2]+'</b><span>'+_cur[3]+'</span></div>';
+ if(st==="seeds"){
+   sh+='<div class="sdesc" style="margin:0 2px 6px">All strains: '+fmtT(growSec())+' grow (Settings tab).</div>';
+   GROWKEYS.forEach(function(k){
+    var v=tierVis(PRODUCTS[k].tier);
+    if(v===0)return;
+    if(v===1){sh+='<div class="srow c tight locked"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></div></div>';return;}
+    sh+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+'</span></div>'
+     +'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+' (&times;'+S.seeds[k]+')</button></div>';
+   });
+  }else if(st==="lab"){
+   KITKEYS.forEach(function(k){
+    var v=tierVis(KITS[k].tier);
+    if(v===0)return;
+    if(v===1){sh+='<div class="srow c locked"><div><b>'+KITS[k].name+'</b><div class="sdesc"><span class="lvtag">Lv '+KITS[k].tier+'</span></div></div></div>';return;}
+    sh+='<div class="srow c"><div><b>'+KITS[k].name+'</b><div class="sdesc">'+KITS[k].desc+'</div></div>'
+     +'<button type="button" data-act="buykit" data-kit="'+k+'"'+(S.cash>=KITS[k].cost?"":" disabled")+'>'+money(KITS[k].cost)+' (&times;'+(S.kits[k]||0)+')</button></div>';
+   });
+  }else if(st==="gear"){
+   sh+='<div class="srow c"><div><b>Fertilizer</b><div class="sdesc">+30 growth, instant</div></div>'
+    +'<button type="button" data-act="buyfert"'+(S.cash>=FERT_COST?"":" disabled")+'>'+money(FERT_COST)+' (&times;'+S.fert+')</button></div>';
+   var ti=DUFFEL.indexOf(S.stashCap);
+   if(ti<DUFFEL.length-1){
+    var nc=DUFFEL[ti+1];
+    sh+='<div class="srow c"><div><b>Bigger duffel</b><div class="sdesc">Carry '+nc+'g (now '+S.stashCap+'g)</div></div>'
+     +'<button type="button" data-act="buyduffel"'+(S.cash>=DUFFEL_COST[nc]?"":" disabled")+'>'+money(DUFFEL_COST[nc])+'</button></div>';
+   }
+  }else if(st==="guns"){
+   WKEYS.forEach(function(wk){
+    var w=WEAPONS[wk],owned=wk==="fists"||(S.weapons&&S.weapons[wk]);
+    var v=tierVis(w.tier);
+    if(v===0)return;
+    if(v===1){sh+='<div class="srow c locked"><div><b><i class="wicon w-'+wk+'"></i>'+w.name+'</b><div class="sdesc"><span class="lvtag">Lv '+w.tier+'</span></div></div></div>';return;}
+    sh+='<div class="srow c"><div><b><i class="wicon w-'+wk+'"></i>'+w.name+' <span class="sdesc">'+w.dmg[0]+'-'+w.dmg[1]+' dmg'+(wk==="fists"?" &middot; always armed":(owned?" &middot; OWNED":""))+'</span></b></div>'
+     +(owned?'<button type="button" disabled>OWNED</button>':'<button type="button" data-act="buyweapon" data-w="'+wk+'"'+(S.cash>=w.cost?"":" disabled")+'>'+money(w.cost)+'</button>')
+     +'</div>';
+   });
+   sh+='<div class="sdesc" style="margin:2px 2px 6px">Best owned weapon auto-used in fights.</div>';
+  }else{
+   var ownedn=S.props.map(function(p){return p.name;});
+   sh+='<div class="ownedline">Owned: '+ownedn.join(' &middot; ')+'</div>';
+   var ownedm={};S.props.forEach(function(p){ownedm[p.id]=1;});
+   PROPS.forEach(function(p){
+    if(ownedm[p.id])return;
+    var v=tierVis(p.tier);
+    if(v===0)return;
+    if(v===1){sh+='<div class="srow c locked"><div><b>'+p.name+'</b><div class="sdesc"><span class="lvtag">Lv '+p.tier+'</span> '+p.desc+'</div></div></div>';return;}
+    sh+='<div class="srow c"><div><b>'+p.name+'</b><div class="sdesc">'+p.desc+'</div></div>'
+     +'<button type="button" data-act="buyprop" data-prop="'+p.id+'"'+(S.cash>=p.cost?"":" disabled")+'>'+money(p.cost)+'</button></div>';
+   });
+  }
+ q(".pane-store").innerHTML=sh;
+ q(".pane-chill").innerHTML=chillHTML();
+ q(".pane-clinic").innerHTML=clinicHTML();
+ var _ae=(typeof document!=="undefined")?document.activeElement:null;
+ if(!(_ae&&_ae.type==="range"&&root.contains&&root.contains(_ae)))q(".pane-settings").innerHTML=settingsHTML();
+}
+function getPot(pi,si){var pr=S.props[pi];return pr?pr.slots[si]:undefined;}
+function doPlant(pi,si,k){
+ var pr=S.props[pi];
+ if(!pr||pr.slots[si]||S.seeds[k]<=0)return;
+ if(PRODUCTS[k].tier>pLevel())return;
+ S.seeds[k]--;
+ pr.slots[si]={strain:k,growth:0,water:70};
+ S.msg="Planted "+PRODUCTS[k].name+" at the "+pr.name+". Keep it watered.";
+ save();render();
+}
+function doHarvest(pi,si){
+ var pr=S.props[pi],p=pr&&pr.slots[si];
+ if(!p||p.growth<100)return;
+ var y=PRODUCTS[p.strain].yld;
+ var grams=Math.round((y[0]+Math.random()*(y[1]-y[0]))*(0.6+0.4*p.water/100));
+ var take=Math.min(grams,S.stashCap-stashTotal());
+ if(take<=0){S.msg="Duffel is full — sell some or upgrade it.";save();render();return;}
+ S.stash[p.strain]+=take;
+ pr.slots[si]=null;
+ S.stats.harvested++;
+ var _hx=addXP(8*PRODUCTS[p.strain].tier);
+ if(!_hx)S.msg="Harvested "+take+"g of "+PRODUCTS[p.strain].name+".";
+ save();render();
+}
+function doHarvestAll(){
+ var hn=0,ht=0,full=false,lv0=pLevel();
+ S.props.forEach(function(pr){pr.slots.forEach(function(p,si){
+  if(!p||p.growth<100)return;
+  var y=PRODUCTS[p.strain].yld;
+  var grams=Math.round((y[0]+Math.random()*(y[1]-y[0]))*(0.6+0.4*p.water/100));
+  var take=Math.min(grams,S.stashCap-stashTotal());
+  if(take<=0){full=true;return;}
+  S.stash[p.strain]+=take;pr.slots[si]=null;S.stats.harvested++;ht+=take;hn++;
+  addXP(8*PRODUCTS[p.strain].tier);
+ });});
+ var lv1=pLevel();
+ if(hn===0)S.msg=full?"Duffel is full — sell some or upgrade it.":"Nothing ready to harvest yet.";
+ else{S.msg="Harvested "+ht+"g from "+hn+" plant"+(hn>1?"s":"")+".";if(full)S.msg+=" Duffel is full — sell some or upgrade it.";if(lv1>lv0)S.msg+=" Reached level "+lv1+"!";}
+ save();render();
+}
+function doBust(){
+ PKEYS.forEach(function(k){S.stash[k]=0;});
+ GROWKEYS.forEach(function(k){S.joints[k]=0;});
+ S.heat=45;S.lockedUntil=Date.now()+5*60000;S.stats.busted++;
+ S.msg="BUSTED! Cops seized your whole stash. Lay low for 5 minutes.";
+}
+function doDeal(di,k,isBuy,isJoint){
+ var now=Date.now();
+ if(now<S.lockedUntil)return;
+ var d=S.dealers[di],g=S.amt,st=PRODUCTS[k];
+ if(isBuy){
+  var unit=ppu(st.price,d.sell[k]),cost=Math.ceil(unit*g);
+  if(S.cash<cost){S.msg="Not enough cash for that.";save();render();return;}
+  if(stashTotal()+g>S.stashCap){S.msg="Duffel is full — sell some or upgrade it.";save();render();return;}
+  S.cash-=cost;S.stash[k]+=g;S.heat=Math.min(100,S.heat+2+g);
+  if(!addXP(5))S.msg="Bought "+g+"g of "+st.name+" for "+money(cost)+".";
+ }else{
+  var have=isJoint?(S.joints[k]||0):S.stash[k];
+  if(have<g){S.msg="You don't have "+g+(isJoint?" joints":"g")+" of "+st.name+".";save();render();return;}
+  var unit2=ppu(st.price,d.buy[k]);
+  if(isJoint)unit2=Math.round(unit2*0.9);
+  if(buffActive())unit2=Math.round(unit2*S.buffMult);
+  var rev=Math.floor(unit2*g);
+  if(isJoint)S.joints[k]-=g;else S.stash[k]-=g;
+  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
+  S.heat=Math.min(100,S.heat+2+g);
+  if(!addXP(5))S.msg="Sold "+g+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+".";
+ }
+ battleRoll();
+ save();render();
+}
+/* ===== CHILL (v9): roll & smoke ===== */
+function chillStrain(){
+ var ck=S.chillStrain;
+ if(ck&&tierVis(PRODUCTS[ck].tier)===2)return ck;
+ var first=null,withBud=null;
+ GROWKEYS.forEach(function(k){
+  if(tierVis(PRODUCTS[k].tier)!==2)return;
+  if(!first)first=k;
+  if(!withBud&&(S.stash[k]||0)>0)withBud=k;
+ });
+ return withBud||first||"sour";
+}
+function doRoll(k,n){
+ if(!k||tierVis(PRODUCTS[k].tier)!==2)return;
+ if((S.stash[k]||0)<n){S.msg="Not enough bud to roll.";save();render();return;}
+ if(stashTotal()+n>S.stashCap){S.msg="Duffel is full — sell some first.";save();render();return;}
+ S.stash[k]-=n;
+ S.joints[k]=(S.joints[k]||0)+n*2;
+ S.msg="Rolled "+(n*2)+" "+PRODUCTS[k].name+" joints.";
+ save();render();
+}
+function doSmoke(k){
+ if(!k||(S.joints[k]||0)<1){S.msg="No joints to smoke.";save();render();return;}
+ S.joints[k]--;
+ S.heat=Math.max(0,S.heat-4);
+ var t=PRODUCTS[k].tier;
+ S.buffMult=Math.round((1.10+0.02*t)*100)/100;
+ S.buffUntil=Date.now()+5*60000;
+ var leveled=addXP(4*t);
+ if(!leveled)S.msg=SMOKE_MSG[k]||("Smoked some "+PRODUCTS[k].name+".");
+ smokeFX(k);
+ save();render();
+}
+function smokeFX(k){
+ try{
+  if(typeof document==="undefined"||!document.createElement||!root||!root.querySelector)return;
+  var pg=root.querySelector(".pg");
+  if(!pg||!pg.appendChild)return;
+  var col=SMOKE_COL[k]||SMOKE_COL.sour;
+  var fx=document.createElement("div");
+  fx.className="smoke-fx";
+  var wash=document.createElement("div");
+  wash.className="wash";
+  wash.style.background=col.c[0];
+  fx.appendChild(wash);
+  for(var i=0;i<8;i++){
+   var b=document.createElement("i");
+   var sz=60+Math.round(Math.random()*90);
+   b.style.width=sz+"px";b.style.height=sz+"px";
+   b.style.left=(Math.random()*85)+"%";
+   b.style.bottom=(Math.random()*30)+"%";
+   b.style.setProperty("--so",col.o);
+   b.style.background="radial-gradient(circle,"+col.c[i%col.c.length]+" 0%,transparent 70%)";
+   fx.appendChild(b);
+  }
+  pg.appendChild(fx);
+  setTimeout(function(){if(fx.parentNode)fx.parentNode.removeChild(fx);},4600);
+ }catch(_){}
+}
+function driftDealers(){
+ S.dealers.forEach(function(d){
+  PKEYS.forEach(function(k){
+   d.buy[k]=Math.max(0.6,Math.min(1.5,d.buy[k]+(Math.random()-0.5)*0.3));
+   d.sell[k]=Math.max(0.6,Math.min(1.5,d.sell[k]+(Math.random()-0.5)*0.3));
+  });
+ });
+}
+function tick(){
+ var now=Date.now();
+ var dtm=Math.max(0,(now-S.lastTick)/60000);
+ S.lastTick=now;
+ if(S.buffUntil&&now>S.buffUntil){S.buffMult=1;S.buffUntil=0;}
+ if(dtm>0){
+  S.props.forEach(function(pr){
+   pr.slots.forEach(function(p){
+    if(!p)return;
+    var wr=100/35,gr=100/growMinOf(p.strain);
+    var growTime=p.water>15?Math.min(dtm,(p.water-15)/wr):0;
+    p.water=Math.max(0,p.water-dtm*wr);
+    if(p.growth<100)p.growth=Math.min(100,p.growth+growTime*gr);
+   });
+  });
+  if(now>=S.driftAt){var _nd=0;while(now>=S.driftAt&&_nd<24){driftDealers();S.driftAt+=4*60000;_nd++;}if(now>=S.driftAt)S.driftAt=now+4*60000;}
+  if(S.heat>0)S.heat=Math.max(0,S.heat-dtm*2.5);
+  if(S.hp<100)S.hp=Math.min(100,S.hp+dtm/2);
+ }
+ if(S.job){
+  if(S.job.phase==="cooking"&&Date.now()>=S.job.readyAt)settleCooking();
+  else if(!S.job.phase)settleJob();
+ }
+ save();render();
+}
+/* ===== COOK LAB (v3) ===== */
+function recipeDesc(r){
+ var parts=[];
+ if(r.bud)parts.push(r.bud+"g bud");
+ for(var k in (r.kits||{}))parts.push(r.kits[k]+"\u00D7 "+KITS[k].name);
+ for(var s in (r.stash||{}))parts.push(r.stash[s]+"g "+PRODUCTS[s].name);
+ return parts.join(" + ")+" \u2192 "+r.yield+"g";
+}
+function budHave(){return GROWKEYS.reduce(function(a,k){return a+(S.stash[k]||0);},0);}
+function canCook(key){
+ var r=RECIPES[key];if(!r)return false;
+ if(PRODUCTS[key].tier>pLevel())return false;
+ if(budHave()<(r.bud||0))return false;
+ for(var k in (r.kits||{}))if((S.kits[k]||0)<r.kits[k])return false;
+ for(var s in (r.stash||{}))if(S.stash[s]<r.stash[s])return false;
+ return stashTotal()<S.stashCap;
+}
+function drawBud(g){
+ var out={};
+ GROWKEYS.forEach(function(k){var t=Math.min(g,S.stash[k]||0);out[k]=t;S.stash[k]-=t;g-=t;});
+ return out;
+}
+function newMem(round,now){
+ var len=round===0?4:5,seq=[];
+ for(var i=0;i<len;i++)seq.push((Math.random()*4)|0);
+ return {seq:seq,round:round,phase:"show",showStart:now,input:[]};
+}
+function startCook(key){
+ if(S.job)return;
+ var r=RECIPES[key];if(!r)return;
+ if(PRODUCTS[key].tier>pLevel()){S.msg="That recipe needs Level "+PRODUCTS[key].tier+".";save();render();return;}
+ if(stashTotal()>=S.stashCap){S.msg="Duffel is full — sell some first.";save();render();return;}
+ if(budHave()<(r.bud||0)){S.msg="Not enough bud for that recipe.";save();render();return;}
+ for(var k in (r.kits||{}))if((S.kits[k]||0)<r.kits[k]){S.msg="You need a "+KITS[k].name+" — check the Shop.";save();render();return;}
+ for(var s in (r.stash||{}))if(S.stash[s]<r.stash[s]){S.msg="Not enough "+PRODUCTS[s].name+" for that recipe.";save();render();return;}
+ var drawn=drawBud(r.bud||0);
+ var kk={};for(var k2 in (r.kits||{})){kk[k2]=r.kits[k2];S.kits[k2]-=r.kits[k2];}
+ var st={};for(var s2 in (r.stash||{})){st[s2]=r.stash[s2];S.stash[s2]-=r.stash[s2];}
+ var now=Date.now();
+ var job={key:key,game:r.game,inputs:{bud:drawn,kits:kk,stash:st},startedAt:now};
+ if(r.game==="tap")job.tp={need:r.taps,have:0,deadline:now+r.secs*1000};
+ if(r.game==="target")job.tg={round:0,hits:0,lit:(Math.random()*3)|0,litAt:now};
+ if(r.game==="memory")job.mem=newMem(0,now);
+ if(r.game==="freezethaw")job.fz={phase:0,pass:[]};
+ if(r.game==="finale"){job.fin={stage:0,scores:[]};job.tp={need:30,have:0,deadline:now+12*1000};}
+ S.job=job;
+ S.msg="Cooking "+PRODUCTS[key].name+" — "+r.hint;
+ save();render();
+}
+function cancelCook(){
+ var j=S.job;if(!j||j.phase)return;
+ var inp=j.inputs;
+ GROWKEYS.forEach(function(k){S.stash[k]+=inp.bud[k]||0;});
+ for(var k in inp.kits)S.kits[k]=(S.kits[k]||0)+inp.kits[k];
+ for(var s in inp.stash)S.stash[s]+=inp.stash[s];
+ S.job=null;
+ S.msg="Job cancelled — inputs refunded.";
+ save();render();
+}
+function battleRoll(){
+ if(S.battle||S.heat<70)return;
+ if(S.heat>=100||Math.random()<(S.heat-70)/30*0.25)startBattle();
+}
+function startBattle(){
+ var cm=50+Math.round(S.heat);
+ S.battle={copHp:cm,copMax:cm,log:["Cops ambush you!"],back:S.tab};
+ S.msg="COP AMBUSH! Fight or run!";
+ save();render();
+}
+function blog(t){var b=S.battle;if(!b)return;b.log.push(t);if(b.log.length>3)b.log=b.log.slice(-3);}
+function battleStrike(){
+ var b=S.battle;if(!b)return;
+ var wd=weaponDmg(),wn=WEAPONS[bestWeapon()].name;
+ b.copHp-=wd.dmg;
+ blog("You strike with "+wn+" for "+wd.dmg+(wd.crit?" — CRIT":"")+".");
+ if(b.copHp<=0){winBattle();return;}
+ var c=copDmg();
+ S.hp-=c;
+ blog("Cops hit back for "+c+".");
+ if(S.hp<=0){loseBattle();return;}
+ save();render();
+}
+function battleRun(){
+ var b=S.battle;if(!b)return;
+ if(Math.random()<0.5){
+  S.battle=null;S.heat=Math.max(0,S.heat-10);
+  S.msg="You slipped away into the night. Heat -10.";
+ }else{
+  var c=copDmg();
+  S.hp-=c;
+  blog("No escape — cops hit you for "+c+".");
+  if(S.hp<=0){loseBattle();return;}
+ }
+ save();render();
+}
+function winBattle(){
+ S.battle=null;
+ S.heat=Math.max(0,S.heat-30);
+ if(!addXP(20))S.msg="You fought them off! Heat -30.";
+ save();render();
+}
+function loseBattle(){
+ S.battle=null;
+ S.hp=25;
+ doBust();
+ S.msg="Beaten down and BUSTED! Cops seized your stash. Lay low for 5 minutes.";
+ save();render();
+}
+function finishCook(score){
+ var j=S.job;if(!j||j.phase)return;
+ var r=RECIPES[j.key],spd=speedOf(j.key),now=Date.now();
+ var g=Math.max(1,Math.floor(r.yield*score));
+ S.job={key:j.key,phase:"cooking",yield:g,heat:r.heat,readyAt:now+spd*1000,cookStart:now};
+ S.msg=PRODUCTS[j.key].name+" is in the lab — ready in "+fmtT(spd)+".";
+ save();render();
+}
+function settleCooking(){
+ var j=S.job;if(!j||j.phase!=="cooking")return;
+ var room=S.stashCap-stashTotal();
+ if(room<=0){j.phase="ready";S.msg="Duffel full — make space, then collect your "+PRODUCTS[j.key].name+".";save();render();return;}
+ var take=Math.min(j.yield,room);
+ S.stash[j.key]+=take;
+ S.stats.cooked++;
+ S.heat=Math.min(100,S.heat+j.heat);
+ S.job=null;
+ var _cx=addXP(10*(RKEYS.indexOf(j.key)+1));
+ if(!_cx)S.msg="Batch ready: +"+take+"g "+PRODUCTS[j.key].name+".";
+ if(take<j.yield)S.msg+=" ("+(j.yield-take)+"g lost — duffel full.)";
+ battleRoll();
+ save();render();
+}
+function collectCook(){
+ var j=S.job;if(!j||j.phase!=="ready")return;
+ var room=S.stashCap-stashTotal();
+ if(room<=0){S.msg="Duffel is still full — sell some first.";save();render();return;}
+ var take=Math.min(j.yield,room);
+ S.stash[j.key]+=take;
+ S.stats.cooked++;
+ S.heat=Math.min(100,S.heat+j.heat);
+ S.job=null;
+ var _cx=addXP(10*(RKEYS.indexOf(j.key)+1));
+ if(!_cx)S.msg="Collected +"+take+"g "+PRODUCTS[j.key].name+".";
+ battleRoll();
+ save();render();
+}
+function finStageDone(score){
+ var j=S.job;j.fin.scores.push(score);
+ var avg=(j.fin.scores[0]+j.fin.scores[1]+j.fin.scores[2])/3;
+ finishCook(Math.max(0.5,avg));
+}
+function cookTap(){
+ var j=S.job;if(!j)return;
+ var r=RECIPES[j.key];
+ if(!(r.game==="tap"||(r.game==="finale"&&j.fin.stage===0)))return;
+ j.tp.have++;
+ if(j.tp.have>=j.tp.need){
+  if(r.game==="finale"){j.fin.scores.push(1);j.fin.stage=1;S.msg="Pressed! Now pull.";}
+  else{finishCook(1);return;}
+ }
+ save();render();
+}
+function markerPos(now){var p=(now/1400)%2;return p<1?p:2-p;}
+function cookPull(){
+ var j=S.job;if(!j)return;
+ var r=RECIPES[j.key];
+ if(!(r.game==="timing"||(r.game==="finale"&&j.fin.stage===1)))return;
+ var pos=markerPos(Date.now());
+ var ok=pos>=0.42&&pos<=0.58;
+ if(r.game==="finale"){j.fin.scores.push(ok?1:0.5);j.fin.stage=2;j.mem=newMem(0,Date.now());S.msg=ok?"Perfect pull! Now the sequence.":"Sloppy pull. Now the sequence.";}
+ else{finishCook(ok?1:0.5);return;}
+ save();render();
+}
+function cookFz(){
+ var j=S.job;if(!j||RECIPES[j.key].game!=="freezethaw")return;
+ var pos=markerPos(Date.now()),ph=j.fz.phase;
+ var ok=ph===0?(pos>=0.55&&pos<=0.75):(pos>=0.20&&pos<=0.40);
+ j.fz.pass[ph]=ok;
+ if(ph===0){j.fz.phase=1;S.msg=ok?"Frozen solid. Now thaw it.":"Weak freeze. Now thaw it.";save();render();}
+ else{
+  var s=j.fz.pass[0]&&j.fz.pass[1]?1:((j.fz.pass[0]||j.fz.pass[1])?0.75:0.5);
+  finishCook(s);
+ }
+}
+function cookPad(pad){
+ var j=S.job;if(!j)return;
+ var r=RECIPES[j.key],now=Date.now();
+ if(r.game==="target"){
+  var t=j.tg;
+  if(pad===t.lit)t.hits++;
+  t.round++;
+  if(t.round>=5){finishCook(0.5+0.5*t.hits/5);return;}
+  t.lit=(Math.random()*3)|0;t.litAt=now;
+  save();render();return;
+ }
+ if(r.game==="memory"||(r.game==="finale"&&j.fin.stage===2)){
+  var m=j.mem;
+  if(m.phase!=="input")return;
+  m.input.push(pad);
+  var idx=m.input.length-1;
+  if(m.input[idx]!==m.seq[idx]){
+   if(r.game==="finale"){finStageDone(0.5);return;}
+   finishCook(0.5);return;
+  }
+  if(m.input.length>=m.seq.length){
+   if(m.round>=1){
+    if(r.game==="finale"){finStageDone(1);return;}
+    finishCook(1);return;
+   }
+   j.mem=newMem(m.round+1,now);
+   S.msg="Round 2 — longer sequence.";
+  }
+  save();render();
+ }
+}
+function gameHTML(j){
+ var r=RECIPES[j.key];
+ if(r.game==="tap"||(r.game==="finale"&&j.fin.stage===0)){
+  var tp=j.tp,pct=Math.min(100,tp.have/tp.need*100);
+  return '<div class="tap-prog"><i class="tap-fill" style="width:'+pct+'%"></i></div>'
+   +'<div class="tap-row"><span class="tap-count">'+tp.have+'/'+tp.need+'</span><span class="tap-time"></span></div>'
+   +'<button type="button" class="tapbtn" data-act="cooktap">TAP</button>'
+   +(r.game==="finale"?'<div class="stage-tag">STAGE 1/3 — PRESS</div>':'');
+ }
+ if(r.game==="timing"||(r.game==="finale"&&j.fin.stage===1)){
+  return '<div class="tm"><div class="tm-zone"></div><div class="tm-mark"></div></div>'
+   +'<button type="button" class="tapbtn" data-act="cookpull">PULL</button>'
+   +(r.game==="finale"?'<div class="stage-tag">STAGE 2/3 — PULL</div>':'');
+ }
+ if(r.game==="freezethaw"){
+  var ph=j.fz.phase;
+  return '<div class="tm"><div class="tm-zone '+(ph===0?"blue":"orange")+'"></div><div class="tm-mark"></div></div>'
+   +'<button type="button" class="tapbtn" data-act="cookfz">'+(ph===0?"FREEZE":"THAW")+'</button>'
+   +'<div class="stage-tag">PHASE '+(ph+1)+'/2</div>';
+ }
+ if(r.game==="target"){
+  var h='<div class="tg">';
+  for(var i=0;i<3;i++)h+='<button type="button" class="tg-pad'+(j.tg.lit===i?" lit":"")+'" data-act="cookpad" data-pad="'+i+'">'+(i+1)+'</button>';
+  return h+'</div><div class="tap-row"><span>Round '+(j.tg.round+1)+'/5</span><span>Hits: '+j.tg.hits+'</span></div>';
+ }
+ if(r.game==="memory"||(r.game==="finale"&&j.fin.stage===2)){
+  var m=j.mem,h2='<div class="mm">';
+  for(var k2=0;k2<4;k2++)h2+='<button type="button" class="mm-pad" data-act="cookpad" data-pad="'+k2+'"></button>';
+  h2+='</div><div class="mm-dots">';
+  for(var d=0;d<m.input.length;d++)h2+='<i class="hit"></i>';
+  h2+='</div><div class="tap-row"><span>Round '+(m.round+1)+'/2</span><span>'+(m.phase==="show"?"Watch…":"Your turn")+'</span></div>'
+   +(r.game==="finale"?'<div class="stage-tag">STAGE 3/3 — SEQUENCE</div>':'');
+  return h2;
+ }
+ return "";
+}
+function cookHTML(){
+ var j=S.job,h="";
+ if(j){
+  var r=RECIPES[j.key],pr=PRODUCTS[j.key];
+  if(j.phase==="cooking"){
+   var tot=Math.max(1,j.readyAt-j.cookStart),rem=Math.max(0,j.readyAt-Date.now());
+   var pct=Math.min(100,(tot-rem)/tot*100);
+   h+='<div class="job cooking"><div class="job-head"><span class="picon sm picon-'+j.key+'"></span><div class="job-title"><div class="job-name">'+pr.name+' — in the lab</div><div class="job-sub">Batch finishing… auto-deposits when done.</div></div></div>'
+    +'<div class="tap-prog"><i class="cook-fill" style="width:'+pct+'%"></i></div>'
+    +'<div class="tap-row"><span class="cook-count">'+fmtT(Math.ceil(rem/1000))+'</span><span>left</span></div></div>';
+  }else if(j.phase==="ready"){
+   h+='<div class="job ready"><div class="job-head"><span class="picon sm picon-'+j.key+'"></span><div class="job-title"><div class="job-name">'+pr.name+' — batch ready!</div><div class="job-sub">The duffel was full. Make space, then collect.</div></div><button type="button" class="go" data-act="cookcollect">Collect</button></div></div>';
+  }else{
+   h+='<div class="job"><div class="job-head"><span class="picon sm picon-'+j.key+'"></span><div class="job-title"><div class="job-name">'+pr.name+'</div><div class="job-sub">'+r.hint+'</div></div><button type="button" data-act="cookcancel">Cancel</button></div>'
+    +gameHTML(j)+'</div>';
+  }
+ }
+ h+='<div class="rc2wrap">';
+ RKEYS.forEach(function(key){
+  var r2=RECIPES[key],pr2=PRODUCTS[key],vv=tierVis(pr2.tier);
+  if(vv===0)return;
+  var locked=vv===1;
+  h+='<div class="rc2'+(locked?" locked":"")+'"><span class="picon sm picon-'+key+'"></span><div class="rc2-mid"><div class="rc2-name">'+pr2.name+'</div><div class="rc2-sub">'+(locked?'<span class="lvtag">Lv '+pr2.tier+'</span>':recipeDesc(r2)+' &middot; ~'+fmtT(speedOf(key))+' &middot; +'+r2.heat+' heat')+'</div></div>';
+  if(locked)h+='<button type="button" disabled>Lv '+pr2.tier+'</button>';
+  else h+='<button type="button" data-act="cookstart" data-key="'+key+'"'+(S.job||!canCook(key)?" disabled":"")+'>Start</button>';
+  h+='</div>';
+ });
+ h+='</div>';
+ return h;
+}
+function battleHTML(){
+ var b=S.battle;
+ var h='<div class="battle"><div class="bt-head">COP AMBUSH</div>';
+ h+='<div class="brow"><span>Cops</span><div class="bar"><i class="b-cop" style="width:'+Math.round(Math.max(0,b.copHp)/b.copMax*100)+'%"></i></div><b>'+Math.max(0,Math.round(b.copHp))+'</b></div>';
+ h+='<div class="brow"><span>You</span><div class="bar"><i class="b-you" style="width:'+Math.round(Math.max(0,Math.min(100,S.hp)))+'%"></i></div><b>'+Math.max(0,Math.round(S.hp))+'</b></div>';
+ h+='<div class="blog">'+b.log.map(function(l){return '<div>'+l+'</div>';}).join("")+'</div>';
+ h+='<div class="btns"><button type="button" class="go" data-act="bstrike">STRIKE ('+WEAPONS[bestWeapon()].name.toUpperCase()+')</button><button type="button" data-act="brun">RUN</button></div></div>';
+ return h;
+}
+function clinicHTML(){
+ var missing=Math.max(0,100-S.hp);
+ var a25=Math.min(25,missing),c25=Math.ceil(a25*2),cf=Math.ceil(missing*2);
+ var full=missing<=0;
+ var h='<div class="shopsec">CLINIC</div>'
+  +'<div class="brow"><span>Health</span><div class="bar"><i class="b-you" style="width:'+Math.round(Math.max(0,Math.min(100,S.hp)))+'%"></i></div><b>'+Math.round(Math.max(0,S.hp))+'/100</b></div>'
+  +'<div class="sdesc" style="margin:4px 2px 8px">$2 per HP. Fights hurt — patch up before the next ambush.</div>'
+  +'<div class="btns col">'
+  +'<button type="button" data-act="heal" data-amt="25"'+(full||S.cash<c25?" disabled":"")+'>Heal +'+Math.round(a25)+' ('+money(c25)+')</button>'
+  +'<button type="button" class="go" data-act="heal" data-amt="full"'+(full||S.cash<cf?" disabled":"")+'>Full heal ('+money(cf)+')</button>'
+  +'</div>';
+ return h;
+}
+function chillHTML(){
+ var cv=S.chillview||"roll";
+ var h='<div class="shopsec">CHILL</div>';
+ h+='<div class="dchips">'
+  +'<button type="button" class="dchip'+(cv==="roll"?" on":"")+'" data-act="chillview" data-v="roll"><span class="dc-name">ROLL</span></button>'
+  +'<button type="button" class="dchip'+(cv==="smoke"?" on":"")+'" data-act="chillview" data-v="smoke"><span class="dc-name">SMOKE</span></button>'
+  +'</div>';
+ if(cv==="roll"){
+  var ck=chillStrain();
+  h+='<div class="dchips">';
+  GROWKEYS.forEach(function(k){
+   var v=tierVis(PRODUCTS[k].tier);
+   if(v===0)return;
+   if(v===1){h+='<button type="button" class="dchip locked" disabled><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+'</span><span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></button>';return;}
+   h+='<button type="button" class="dchip'+(k===ck?" on":"")+'" data-act="chillsel" data-strain="'+k+'"><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+' &times;'+(S.stash[k]||0)+'</span></button>';
+  });
+  h+='</div>';
+  var bud=S.stash[ck]||0;
+  h+='<div class="btns"><button type="button" data-act="roll" data-strain="'+ck+'" data-n="1"'+(bud>=1?"":" disabled")+'>ROLL 1 &rarr; 2 joints</button>'
+   +'<button type="button" data-act="roll" data-strain="'+ck+'" data-n="5"'+(bud>=5?"":" disabled")+'>ROLL 5 &rarr; 10 joints</button></div>'
+   +'<div class="sdesc">1 bud &rarr; 2 joints. Joints sell to dealers for ~0.9&times; bud price each.</div>';
+ }else{
+  var sk=chillStrain(),hasJ=false;
+  h+='<div class="dchips">';
+  GROWKEYS.forEach(function(k){
+   var v=tierVis(PRODUCTS[k].tier);
+   if(v===0)return;
+   var jc=S.joints[k]||0;
+   if(v===2&&jc>0)hasJ=true;
+   if(v===1){h+='<button type="button" class="dchip locked" disabled><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+'</span><span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></button>';return;}
+   if(jc<=0)return;
+   h+='<button type="button" class="dchip'+(k===sk?" on":"")+'" data-act="chillsel" data-strain="'+k+'"><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+' &times;'+jc+'</span></button>';
+  });
+  h+='</div>';
+  var sj=(S.joints[sk]||0);
+  h+='<div class="btns"><button type="button" class="go" data-act="smoke" data-strain="'+sk+'"'+(sj>=1?"":" disabled")+'>SMOKE 1 JOINT'+(sj>0?" ("+PRODUCTS[sk].name+")":"")+'</button></div>'
+   +'<div class="sdesc">&minus;4 heat, +'+(4*PRODUCTS[sk].tier)+' XP, and +'+Math.round((0.10+0.02*PRODUCTS[sk].tier)*100)+'% sell prices for 5 min.</div>';
+  if(!hasJ)h+='<div class="sdesc">No joints yet — roll some first.</div>';
+ }
+ return h;
+}
+function settingsHTML(){
+ var h='<div class="shopsec">APPEARANCE</div>';
+ h+='<div class="dchips"><button type="button" class="dchip center'+(S.theme==="light"?"":" on")+'" data-act="settheme" data-theme="dark"><span class="dc-name">Dark</span></button><button type="button" class="dchip center'+(S.theme==="light"?" on":"")+'" data-act="settheme" data-theme="light"><span class="dc-name">Light</span></button></div>';
+ h+='<div class="shopsec">LAB COOK SPEEDS</div>';
+ var cur=S.setdrug||"hash";
+ if(RKEYS.indexOf(cur)<0)cur="hash";
+ h+='<div class="dchips lab">';
+ RKEYS.forEach(function(key){
+  var pr=PRODUCTS[key];
+  h+='<button type="button" class="dchip'+(key===cur?" on":"")+'" data-act="setsel" data-key="'+key+'"><span class="picon xs picon-'+key+'"></span><span class="dc-name">'+pr.name+'</span></button>';
+ });
+ h+='</div>';
+ h+=cookSliderRow(cur);
+ h+='<div class="shopsec">WEED GROWTH SPEED</div>';
+ h+=growSliderRow();
+ return h;
+}
+function cookSliderRow(key){
+ var pr=PRODUCTS[key],v=speedOf(key);
+ return '<div class="sld-row"><span class="picon sm picon-'+key+'"></span><div class="sld-body">'
+  +'<div class="sld-lab"><span>'+pr.name+'</span><b class="sld-val">'+fmtT(v)+'</b></div>'
+  +'<input type="range" class="sld" data-srange="cook" data-key="'+key+'" min="30" max="300" step="30" value="'+v+'">'
+  +'</div></div>';
+}
+function growSliderRow(){
+ var v=growSec();
+ return '<div class="sld-row"><span class="picon sm picon-bud" style="--c:#4ade80"></span><div class="sld-body">'
+  +'<div class="sld-lab"><span>Growth speed</span><b class="sld-val">'+fmtT(v)+'</b></div>'
+  +'<input type="range" class="sld" data-srange="grow" min="30" max="300" step="30" value="'+v+'">'
+  +'</div></div>';
+}
+function pump(){
+ if(!S.job)return;
+ var j=S.job;
+ if(j.phase==="cooking"){
+  var rem=Math.max(0,j.readyAt-Date.now()),tot=Math.max(1,j.readyAt-j.cookStart);
+  var cc=q(".cook-count");if(cc)cc.textContent=fmtT(Math.ceil(rem/1000));
+  var cf=q(".cook-fill");if(cf)cf.style.width=Math.min(100,(tot-rem)/tot*100)+"%";
+  if(rem<=0)settleCooking();
+  return;
+ }
+ if(j.phase==="ready")return;
+ var r=RECIPES[j.key],now=Date.now();
+ if(r.game==="tap"||(r.game==="finale"&&j.fin.stage===0)){
+  var tp=j.tp;
+  var fill=q(".tap-fill");if(fill)fill.style.width=Math.min(100,tp.have/tp.need*100)+"%";
+  var tt=q(".tap-time");if(tt)tt.textContent=Math.max(0,Math.ceil((tp.deadline-now)/1000))+"s left";
+  if(now>=tp.deadline){
+   if(r.game==="finale"){j.fin.scores.push(tp.have>=tp.need?1:0.5);j.fin.stage=1;S.msg="Time! Now pull.";save();render();}
+   else finishCook(tp.have>=tp.need?1:0.5);
+  }
+  return;
+ }
+ if(r.game==="timing"||r.game==="freezethaw"||(r.game==="finale"&&j.fin.stage===1)){
+  var mk=q(".tm-mark");if(mk)mk.style.left=(markerPos(now)*100)+"%";
+  return;
+ }
+ if(r.game==="target"){
+  var t=j.tg;
+  qa(".tg-pad").forEach(function(el,i){el.classList.toggle("lit",t.lit===i);});
+  if(now-t.litAt>1300){
+   t.round++;
+   if(t.round>=5){finishCook(0.5+0.5*t.hits/5);return;}
+   t.lit=(Math.random()*3)|0;t.litAt=now;
+   save();render();
+  }
+  return;
+ }
+ if(r.game==="memory"||(r.game==="finale"&&j.fin.stage===2)){
+  var m=j.mem,pads=qa(".mm-pad");
+  if(m.phase==="show"){
+   var idx=Math.floor((now-m.showStart)/500);
+   pads.forEach(function(el,i){el.classList.toggle("lit",i===m.seq[idx]);});
+   if(now-m.showStart>m.seq.length*500+400){m.phase="input";m.input=[];save();render();}
+  }
+ }
+}
+function settleJob(){
+ var j=S.job;if(!j)return;
+ var r=RECIPES[j.key],now=Date.now();
+ if((r.game==="tap"||(r.game==="finale"&&j.fin.stage===0))&&now>=j.tp.deadline){
+  if(r.game==="finale"){j.fin.scores.push(j.tp.have>=j.tp.need?1:0.5);j.fin.stage=1;S.msg="Time! Now pull.";save();render();}
+  else finishCook(j.tp.have>=j.tp.need?1:0.5);
+ }
+}
+root.addEventListener("click",function(e){
+ var b=e.target.closest?e.target.closest("button"):null;
+ if(!b||b.disabled)return;
+ var a=b.dataset.act;
+ if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;save();render();return;}
+ if(a==="amt"){S.amt=+b.dataset.amt;save();render();return;}
+ if(a==="plant"){doPlant(+b.dataset.pi,+b.dataset.si,b.dataset.strain);return;}
+ if(a==="water"){var p=getPot(+b.dataset.pi,+b.dataset.si);if(p){p.water=100;S.msg="Watered.";save();render();}return;}
+ if(a==="waterall"){S.props.forEach(function(pr){pr.slots.forEach(function(p){if(p)p.water=100;});});S.msg="Everything watered.";save();render();return;}
+ if(a==="harvestall"){doHarvestAll();return;}
+ if(a==="fert"){var p2=getPot(+b.dataset.pi,+b.dataset.si);if(p2&&S.fert>0&&p2.growth<100){S.fert--;p2.growth=Math.min(100,p2.growth+30);S.msg="Fertilized — growth boosted.";save();render();}return;}
+ if(a==="harvest"){doHarvest(+b.dataset.pi,+b.dataset.si);return;}
+ if(a==="buyseed"){var k=b.dataset.strain;if(PRODUCTS[k].tier<=pLevel()&&S.cash>=PRODUCTS[k].seed){S.cash-=PRODUCTS[k].seed;S.seeds[k]++;S.msg="Bought "+PRODUCTS[k].name+" seeds.";save();render();}return;}
+ if(a==="buyfert"){if(S.cash>=FERT_COST){S.cash-=FERT_COST;S.fert++;S.msg="Fertilizer stocked.";save();render();}return;}
+ if(a==="buyduffel"){var ti=DUFFEL.indexOf(S.stashCap);if(ti<DUFFEL.length-1){var nc=DUFFEL[ti+1];if(S.cash>=DUFFEL_COST[nc]){S.cash-=DUFFEL_COST[nc];S.stashCap=nc;S.msg="Duffel upgraded — carry "+nc+"g now.";save();render();}}return;}
+ if(a==="buyprop"){var pr2=PROPS.filter(function(x){return x.id===b.dataset.prop;})[0];var owned=S.props.some(function(x){return x.id===pr2.id;});if(pr2&&!owned&&pr2.tier<=pLevel()&&S.cash>=pr2.cost){S.cash-=pr2.cost;S.props.push(mkProp(pr2.id));S.msg="New property: "+pr2.name+"! "+pr2.desc;save();render();}return;}
+ if(a==="bribe"){if(S.cash>=BRIBE_COST&&S.heat>0&&Date.now()>=S.lockedUntil){S.cash-=BRIBE_COST;S.heat=Math.max(0,S.heat-50);S.msg="Cops paid off. Heat dropped.";save();render();}return;}
+ if(a==="dbuy"){doDeal(+b.dataset.d,b.dataset.strain,true);return;}
+ if(a==="dsell"){doDeal(+b.dataset.d,b.dataset.strain,false);return;}
+ if(a==="cookstart"){startCook(b.dataset.key);return;}
+ if(a==="cookcancel"){cancelCook();return;}
+ if(a==="cookcollect"){collectCook();return;}
+ if(a==="cooktap"){cookTap();return;}
+ if(a==="cookpull"){cookPull();return;}
+ if(a==="cookpad"){cookPad(+b.dataset.pad);return;}
+ if(a==="cookfz"){cookFz();return;}
+ if(a==="gprev"||a==="gnext"){var dir=a==="gnext"?1:-1,n=S.props.length,gp=S.gprop||0;for(var gi2=0;gi2<n;gi2++){gp=(gp+dir+n)%n;if(S.props[gp].tier<=pLevel())break;}S.gprop=gp;S.gpage=0;save();render();return;}
+ if(a==="gpage"){var pgp=S.props[S.gprop||0]||S.props[0],npg=Math.max(1,Math.ceil(pgp.slots.length/8));S.gpage=Math.max(0,Math.min(npg-1,(S.gpage||0)+(+b.dataset.p)));save();render();return;}
+ if(a==="dealersel"){S.dealer=+b.dataset.d;save();render();return;}
+ if(a==="dealcat"){S.dealcat=b.dataset.c;save();render();return;}
+ if(a==="chillview"){S.chillview=b.dataset.v;save();render();return;}
+ if(a==="chillsel"){S.chillStrain=b.dataset.strain;save();render();return;}
+ if(a==="roll"){doRoll(b.dataset.strain,+b.dataset.n||1);return;}
+ if(a==="smoke"){doSmoke(b.dataset.strain);return;}
+ if(a==="dsellj"){doDeal(+b.dataset.d,b.dataset.strain,false,true);return;}
+ if(a==="storetab"){S.storetab=b.dataset.sec;save();render();return;}
+ if(a==="hustle"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.tab=S.backtab||"grow";save();render();return;}
+ if(a==="setsel"){S.setdrug=b.dataset.key;save();render();return;}
+ if(a==="settheme"){var _th=b.dataset.theme;S.theme=(_th==="light")?"light":"dark";save();render();return;}
+ if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk].tier<=pLevel()&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
+ if(a==="buyweapon"){var wkey=b.dataset.w,wu=WEAPONS[wkey];if(wkey&&wkey!=="fists"&&wu&&wu.tier<=pLevel()&&!(S.weapons&&S.weapons[wkey])&&S.cash>=wu.cost){S.cash-=wu.cost;S.weapons[wkey]=true;S.msg=wu.name+" purchased — best weapon is used in fights.";save();render();}return;}
+ if(a==="bstrike"){battleStrike();return;}
+ if(a==="brun"){battleRun();return;}
+ if(a==="heal"){
+  var ham=b.dataset.amt,miss2=Math.max(0,100-S.hp);
+  var need=ham==="full"?miss2:Math.min(25,miss2),cost=Math.ceil(need*2);
+  if(need>0&&S.cash>=cost){S.cash-=cost;S.hp=Math.min(100,S.hp+need);S.msg="Patched up +"+Math.round(need)+" HP.";save();render();}
+  return;
+ }
+});
+root.addEventListener("input",function(e){
+ var t=e.target;
+ if(!t||t.type!=="range"||!t.dataset||!t.dataset.srange)return;
+ var row=t.closest?t.closest(".sld-row"):null;
+ var lab=row?row.querySelector(".sld-val"):null;
+ if(t.dataset.srange==="cook"){
+  var k=t.dataset.key;
+  if(RKEYS.indexOf(k)<0)return;
+  var v=Math.min(300,Math.max(30,Math.round(+t.value/30)*30));
+  S.speeds[k]=v;
+  if(lab)lab.textContent=fmtT(v);
+  S.msg=PRODUCTS[k].name+" lab time set to "+fmtT(v)+".";
+ }else if(t.dataset.srange==="grow"){
+  var m2=Math.min(300,Math.max(30,Math.round(+t.value/30)*30));
+  if(isNaN(m2))return;
+  S.growSpeed=m2;
+  if(lab)lab.textContent=fmtT(m2);
+  S.msg="Grow time set to "+fmtT(m2)+".";
+ }
+ save();
+});
+root.addEventListener("change",function(e){
+ var t=e.target;
+ if(t&&t.type==="range"&&t.dataset&&t.dataset.srange){
+  if(typeof document!=="undefined"&&document.activeElement&&document.activeElement.blur){try{document.activeElement.blur();}catch(_){}}
+  render();
+ }
+});
+render();
+tick();
+setInterval(tick,15000);
+setInterval(pump,150);
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,startCook:startCook};
+})();
+</script>
