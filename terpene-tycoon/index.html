@@ -1251,7 +1251,7 @@ function render(){
     if(v===0)return;
     if(v===1){sh+='<div class="srow c tight locked"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></div></div>';return;}
     sh+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+'</span></div>'
-     +'<div style="display:flex;gap:6px"><button type="button" data-act="autoplant" data-strain="'+k+'"'+((S.seeds[k]||0)>0?"":" disabled")+'>AUTO PLANT</button>'
+     +'<div style="display:flex;gap:6px">'
      +'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+' (&times;'+S.seeds[k]+')</button></div></div>';
    });
   }else if(st==="lab"){
@@ -1542,6 +1542,20 @@ function stashHTML(){
    +'<button type="button" class="go" data-act="smoke" data-strain="'+k+'">Smoke</button>'
    +'<button type="button" data-act="stashsellj" data-strain="'+k+'" class="sell">Sell</button>'
    +'<button type="button" class="all" data-act="stashsellallj" data-strain="'+k+'" class="sell">All</button>'
+   +'</div></div>';
+ });
+ // seeds with auto-plant
+ var anySeeds=false;
+ GROWKEYS.forEach(function(k){
+  var sc=S.seeds[k]||0;
+  if(sc<=0)return;
+  if(tierVis(PRODUCTS[k].tier)===0)return;
+  if(!anySeeds){h+='<div class="shopsec">SEEDS</div>';anySeeds=true;}
+  any=true;
+  h+='<div class="stashrow">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' seeds <b>'+sc+'</b></div>'
+   +'<div class="d2-sub">Plant in empty pots</div></div>'
+   +'<div class="stashbtns">'
+   +'<button type="button" class="go" data-act="autoplant" data-strain="'+k+'">AUTO PLANT</button>'
    +'</div></div>';
  });
  if(!any)h+='<div class="sdesc">Nothing stashed yet — harvest some bud first.</div>';
