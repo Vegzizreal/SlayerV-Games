@@ -117,7 +117,7 @@ window.hatchWidget={
 .heat-bar i.hot{background:linear-gradient(90deg,#f97316,#ef4444);animation:blink .7s steps(2) infinite}
 @keyframes blink{50%{opacity:.55}}
 .v-heattier{min-width:110px;text-align:right;color:#fbbf24}
-.pg-msg{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:10px;padding:6px 10px;font-size:15.5px;margin-bottom:8px;min-height:1.4em}
+.pg-msg{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:10px;padding:6px 10px;font-size:15.5px;margin-bottom:6px;min-height:1.4em}
 .pg-tabs{display:flex;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:3px;gap:4px;margin-bottom:8px}
 .pg-tabs button{flex:1;min-width:0;padding:7px 0;border:0;border-radius:8px;background:transparent;color:var(--hatch-widget-muted);font-weight:800;font-size:16px;cursor:pointer}
 .pg-tabs button.on{background:var(--hatch-widget-surface);box-shadow:0 1px 4px var(--hatch-widget-shadow)}
@@ -607,10 +607,10 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 /* ===== TERPENE TYCOON v18: breathing room (web) ===== */
 .pg{padding:18px 14px 22px}
 .pg-head{margin-bottom:12px}
-.pg-pills{margin-bottom:10px;gap:8px}
-.pg-heat{margin-bottom:10px}
-.pg-msg{margin-bottom:12px;padding:10px 12px}
-.pg-tabs{margin-bottom:12px}
+.pg-pills{margin-bottom:6px;gap:8px}
+.pg-heat{margin-bottom:6px}
+.pg-msg{margin-bottom:8px;padding:10px 12px}
+.pg-tabs{margin-bottom:8px}
 .growbar{margin-bottom:12px}
 .pots{gap:12px}
 .pot{padding:12px}
@@ -620,9 +620,9 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 @media(min-width:700px){
  .pg{padding:28px 28px 34px}
  .pg-head{margin-bottom:18px}
- .pg-pills{margin-bottom:16px}
- .pg-heat{margin-bottom:16px}
- .pg-msg{margin-bottom:18px;padding:14px 18px}
+ .pg-pills{margin-bottom:8px}
+ .pg-heat{margin-bottom:8px}
+ .pg-msg{margin-bottom:10px;padding:14px 18px}
  .pg-tabs{margin-bottom:18px}
  .growbar{margin-bottom:18px}
  .pots{gap:18px}
@@ -668,7 +668,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
  .pg-tabs button.store-tab.on::before{opacity:1}
 }
 /* ===== TERPENE TYCOON v21: newscast ticker ===== */
-.pg-ticker{display:flex;align-items:stretch;background:#0c0c0f;border:1px solid var(--hatch-widget-border);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.pg-ticker{display:flex;align-items:stretch;background:#0c0c0f;border:1px solid var(--hatch-widget-border);border-radius:10px;margin-bottom:6px;overflow:hidden}
 .pg-ticker[hidden]{display:none}
 .ticker-badge{display:flex;align-items:center;flex:none;background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;padding:6px 9px}
 .ticker-badge i{width:12px;height:12px;flex:none;border-radius:50%;margin-right:7px;background:conic-gradient(#ff5e8a,#ffb35e,#b45eff,#5ee8ff,#ff5e8a);animation:tspin 1.8s linear infinite;box-shadow:0 0 10px rgba(255,94,138,.7)}
@@ -680,7 +680,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .ticker-track{display:flex;width:max-content;white-space:nowrap;will-change:transform}
 .ticker-chunk{padding:7px 0;font-size:15px;color:var(--hatch-widget-text);letter-spacing:.3px}
 .tick-sep{color:#e5484d;padding:0 22px;font-weight:900}
-.ticker-help{font-size:13px;color:var(--hatch-widget-muted);letter-spacing:.3px;margin-bottom:4px}
+.ticker-help{font-size:11px;color:var(--hatch-widget-muted);letter-spacing:.3px;margin-bottom:3px}
 .roach-topbar{display:flex;align-items:center;gap:10px;padding:4px 8px;background:transparent;border:none}
 .roach-topbar[hidden]{display:none}
 .roach-topbar img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #e5484d;flex:none}
