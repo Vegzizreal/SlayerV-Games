@@ -104,8 +104,8 @@ window.hatchWidget={
  --hatch-widget-shadow:rgba(0,0,0,.6);
  background:radial-gradient(620px 260px at 50% -80px,rgba(229,72,77,.06),transparent 60%),radial-gradient(900px 480px at 50% 115%,rgba(0,0,0,.55),transparent 62%),#0a0a0c;
 }
-.pg-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:6px;flex-wrap:wrap}
-.pg-title{font-weight:900;font-size:24px;letter-spacing:2.5px;color:#f2efe8;text-shadow:0 0 18px rgba(229,72,77,.4),0 1px 2px rgba(0,0,0,.6)}
+.pg-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap}
+.pg-title{font-weight:900;font-size:19px;letter-spacing:2px;color:#f2efe8;text-shadow:0 0 18px rgba(229,72,77,.4),0 1px 2px rgba(0,0,0,.6)}
 .pg-sub{display:block;font-size:12.5px;letter-spacing:4px;color:var(--hatch-widget-muted);font-weight:700}
 .pg-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
 .pg [hidden]{display:none!important}
@@ -117,7 +117,7 @@ window.hatchWidget={
 .heat-bar i.hot{background:linear-gradient(90deg,#f97316,#ef4444);animation:blink .7s steps(2) infinite}
 @keyframes blink{50%{opacity:.55}}
 .v-heattier{min-width:110px;text-align:right;color:#fbbf24}
-.pg-msg{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:10px;padding:6px 10px;font-size:15.5px;margin-bottom:6px;min-height:1.4em}
+.pg-msg{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:8px;padding:5px 8px;font-size:15.5px;margin-bottom:5px;min-height:1.2em}
 .pg-tabs{display:flex;background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:3px;gap:4px;margin-bottom:8px}
 .pg-tabs button{flex:1;min-width:0;padding:7px 0;border:0;border-radius:8px;background:transparent;color:var(--hatch-widget-muted);font-weight:800;font-size:16px;cursor:pointer}
 .pg-tabs button.on{background:var(--hatch-widget-surface);box-shadow:0 1px 4px var(--hatch-widget-shadow)}
@@ -241,7 +241,7 @@ window.hatchWidget={
 </style>
 <style>
 /* ===== POTAGOTCHI v2.2 visual polish (overrides; game logic untouched) ===== */
-.pg{background:radial-gradient(620px 260px at 50% -80px,rgba(229,72,77,.06),transparent 60%),radial-gradient(900px 480px at 50% 115%,rgba(0,0,0,.55),transparent 62%),#0a0a0c;border:1px solid var(--hatch-widget-border);border-radius:16px;padding:10px 10px 8px}
+.pg{background:radial-gradient(620px 260px at 50% -80px,rgba(229,72,77,.06),transparent 60%),radial-gradient(900px 480px at 50% 115%,rgba(0,0,0,.55),transparent 62%),#0a0a0c;border:1px solid var(--hatch-widget-border);border-radius:16px;padding:8px 8px 6px}
 .pg-head{margin-bottom:8px}
 .pg-title{font-size:26px;letter-spacing:2.5px;color:#f2efe8;text-shadow:0 0 18px rgba(229,72,77,.4),0 1px 2px rgba(0,0,0,.6);position:relative;padding-left:17px}
 .pg-title::before{content:"";position:absolute;left:1px;top:50%;width:9px;height:9px;margin-top:-4px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffb3b6,#e5484d 60%,#7a1f23);box-shadow:0 0 9px rgba(229,72,77,.9);animation:pgled 2.6s ease-in-out infinite}
@@ -680,7 +680,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .ticker-track{display:flex;width:max-content;white-space:nowrap;will-change:transform}
 .ticker-chunk{padding:7px 0;font-size:15px;color:var(--hatch-widget-text);letter-spacing:.3px}
 .tick-sep{color:#e5484d;padding:0 22px;font-weight:900}
-.ticker-help{font-size:11px;color:var(--hatch-widget-muted);letter-spacing:.3px;margin-bottom:3px}
+.ticker-help{display:none}
 .roach-topbar{display:flex;align-items:center;gap:10px;padding:4px 8px;background:transparent;border:none}
 .roach-topbar[hidden]{display:none}
 .roach-topbar img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid #e5484d;flex:none}
