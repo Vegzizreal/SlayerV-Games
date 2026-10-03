@@ -811,20 +811,20 @@ var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
 var GAME_VER="BETA-0.014";
 var GAME_UPDATED="Oct 3, 2026 · 6:05 PM";
 var CHANGELOG=[
- {v:"BETA-0.014",t:"Smoother streets",d:"The game reloads fresh every time so you always see the latest. Text is bigger and easier to read. The layout fits your screen better with more room for everything. Early game is gentler — less heat, cheaper bribes and clinic visits. Sales now show a real handoff. Roach has more to say when your bag is full."},
- {v:"BETA-0.013",t:"Fresh coat of paint",d:"Every tab now has its own titled header underneath. The tab bar is cleaner with labels under the icons. Roach moved to the right side of his banner with a new look. The Store went white and the Clinic took over the red."},
- {v:"BETA-0.012",t:"New hustle mechanics",d:"Rolling joints now needs papers from the Store. Plant a whole strain with one tap. Hitting the same dealer too many times draws heat — and Roach will warn you. Sales now show your profit going into the bag."},
- {v:"BETA-0.011",t:"Store tab + scrolling update bar",d:"The Store now opens like the other tabs so you can switch tabs without going back first. Roach's update message scrolls across the screen."},
- {v:"BETA-0.010",t:"Level 8",d:"New level with Ecstasy in Single, Double and Triple Stacks, the Emerald Palace with 34 grow slots, and Pill Press Kits."},
- {v:"BETA-0.009",t:"Roach update banner",d:"Roach the hooded stranger now drops by with a package whenever the game updates."},
- {v:"BETA-0.008",t:"Tips bar upgrades",d:"Tap the scrolling tips to skip ahead to the next one. The most useful money-making tips now show first. The little light on the badge spins."},
- {v:"BETA-0.007",t:"Smarter tips + update notes",d:"The tips bar now gives advice based on your level. You can read about every update in Settings under Changelog."},
- {v:"BETA-0.006",t:"Trap Hotline tips bar",d:"A scrolling news bar with helpful tips about what to do next as you play."},
- {v:"BETA-0.005",t:"New tab pictures",d:"Every tab has its own little picture now. The Store is the first tab. Smoking cools your heat down a bit faster."},
- {v:"BETA-0.004",t:"Stash tab",d:"See all your weed and joints in one spot. Roll, smoke, or sell right from there."},
- {v:"BETA-0.003",t:"Roomier layout",d:"More space between everything so the game is easier on the eyes."},
- {v:"BETA-0.002",t:"Bigger screens",d:"The game fills up big screens now, and buttons are easier to tap on phones."},
- {v:"BETA-0.001",t:"Dark look + auto-save",d:"New dark style. Your game saves itself as you play — no need to remember."}
+ {v:"BETA-0.014",ts:"Oct 3, 2026 · 6:05 PM",t:"Smoother streets",d:"The game reloads fresh every time so you always see the latest. Text is bigger and easier to read. The layout fits your screen better with more room for everything. Early game is gentler — less heat, cheaper bribes and clinic visits. Sales now show a real handoff. Roach has more to say when your bag is full."},
+ {v:"BETA-0.013",ts:"Oct 3, 2026 · 11:24 AM",t:"Fresh coat of paint",d:"Every tab now has its own titled header underneath. The tab bar is cleaner with labels under the icons. Roach moved to the right side of his banner with a new look. The Store went white and the Clinic took over the red."},
+ {v:"BETA-0.012",ts:"Oct 2, 2026",t:"New hustle mechanics",d:"Rolling joints now needs papers from the Store. Plant a whole strain with one tap. Hitting the same dealer too many times draws heat — and Roach will warn you. Sales now show your profit going into the bag."},
+ {v:"BETA-0.011",ts:"Oct 2, 2026",t:"Store tab + scrolling update bar",d:"The Store now opens like the other tabs so you can switch tabs without going back first. Roach's update message scrolls across the screen."},
+ {v:"BETA-0.010",ts:"Oct 2, 2026",t:"Level 8",d:"New level with Ecstasy in Single, Double and Triple Stacks, the Emerald Palace with 34 grow slots, and Pill Press Kits."},
+ {v:"BETA-0.009",ts:"Oct 1, 2026",t:"Roach update banner",d:"Roach the hooded stranger now drops by with a package whenever the game updates."},
+ {v:"BETA-0.008",ts:"Oct 1, 2026",t:"Tips bar upgrades",d:"Tap the scrolling tips to skip ahead to the next one. The most useful money-making tips now show first. The little light on the badge spins."},
+ {v:"BETA-0.007",ts:"Oct 1, 2026",t:"Smarter tips + update notes",d:"The tips bar now gives advice based on your level. You can read about every update in Settings under Changelog."},
+ {v:"BETA-0.006",ts:"Sep 30, 2026",t:"Trap Hotline tips bar",d:"A scrolling news bar with helpful tips about what to do next as you play."},
+ {v:"BETA-0.005",ts:"Sep 30, 2026",t:"New tab pictures",d:"Every tab has its own little picture now. The Store is the first tab. Smoking cools your heat down a bit faster."},
+ {v:"BETA-0.004",ts:"Sep 29, 2026",t:"Stash tab",d:"See all your weed and joints in one spot. Roll, smoke, or sell right from there."},
+ {v:"BETA-0.003",ts:"Sep 29, 2026",t:"Roomier layout",d:"More space between everything so the game is easier on the eyes."},
+ {v:"BETA-0.002",ts:"Sep 29, 2026",t:"Bigger screens",d:"The game fills up big screens now, and buttons are easier to tap on phones."},
+ {v:"BETA-0.001",ts:"Sep 28, 2026",t:"Dark look + auto-save",d:"New dark style. Your game saves itself as you play — no need to remember."}
 ];
 var LEVEL_TIPS={
  1:["Water often — dry plants stall completely","Harvest at 100% for the full yield","Sell Sour D to Corner Carl and build your cash","The Stash tab holds every bag you own"],
@@ -1266,7 +1266,7 @@ function render(){
   gear:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8.5" width="18" height="10.5" rx="2.5"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/><path d="M3 13.5h18"/></svg>',
   realty:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5L12 5l8 6.5"/><path d="M6.5 10v9.5h11V10"/><path d="M10.5 19.5v-4h3v4"/></svg>'
  };
- var sh='';
+ var sh='<div class="store-screen-head"><span class="store-title" style="color:#f2efe8">STORE</span><div class="pill"><b>'+money(S.cash)+'</b></div></div>';
  var stores=[
   ["seeds","SEEDS","Seed Bank","Premium genetics. No questions asked.","#4ade80"],
   ["guns","GUNS","Gun Store","Iron & lead. Cash only.","#f87171"],
@@ -2139,7 +2139,7 @@ function settingsHTML(){
   h+='<div class="shopsec">PATCH NOTES</div>';
   h+='<div class="sdesc" style="margin:0 2px 8px">Running list of every update. Current version: <b style="color:var(--hatch-widget-text)">'+GAME_VER+'</b></div>';
   CHANGELOG.forEach(function(c){
-   h+='<div class="clog"><div class="clog-head"><b>'+c.v+'</b><span class="lvtag">'+c.t+'</span></div><div class="sdesc">'+c.d+'</div></div>';
+   h+='<div class="clog"><div class="clog-head"><b>'+c.v+'</b><span class="lvtag">'+c.t+'</span></div><div class="sdesc" style="color:var(--hatch-widget-muted);font-size:11px;margin-bottom:4px">'+c.ts+'</div><div class="sdesc">'+c.d+'</div></div>';
   });
   return h;
  }
