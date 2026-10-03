@@ -9,7 +9,8 @@
 <title>Terpene Tycoon</title>
 <style>
 html,body{margin:0;padding:0;background:#0a0a0c;}
-body{padding:10px 8px 48px;-webkit-tap-highlight-color:transparent;}
+body{padding:0;margin:0;height:100dvh;overflow:hidden;-webkit-tap-highlight-color:transparent;}
+html{height:100dvh;overflow:hidden;}
 </style>
 </head>
 <body>
@@ -80,6 +81,12 @@ window.hatchWidget={
 <style>
 .pg{box-sizing:border-box;width:100%;max-width:1280px;margin:0 auto;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--hatch-widget-text)}
 .pg *{box-sizing:border-box}
+/* Fixed app shell: header stays put, only panes scroll */
+.pg{height:100dvh;max-height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+.roach-topbar,.pg-head,.pg-pills,.pg-heat,.pg-msg,.ticker-help,.pg-ticker,.pg-tabs,.pg-hint{flex:none}
+.pg-pane{flex:1;min-height:0;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.pg-pane::-webkit-scrollbar{display:none}
+.pg-pane[hidden]{display:none}
 /* ===== TERPENE TYCOON v16: noir dark theme (self-contained) =====
    The game owns its theme variables on .pg, so dark mode renders correctly
    no matter what the host page provides (never bright white). The light
