@@ -57,34 +57,32 @@ window.hatchWidget={
  </div>
  <div class="android-appbar" hidden><button type="button" class="android-backbtn" data-act="android-back" aria-label="Back">&#8592;</button><span class="android-apptitle">Grow</span></div>
  <div class="android-home" hidden>
-  <div class="ph-date"></div>
-  <div class="oneui-widgetrow">
-   <div class="oneui-heatwrap">
-    <svg class="oneui-heatring" viewBox="0 0 80 80" aria-label="Battery"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="8"/><circle class="android-wheatring" cx="40" cy="40" r="34" fill="none" stroke="#4ade80" stroke-width="8" stroke-linecap="round" stroke-dasharray="213.63" stroke-dashoffset="213.63" transform="rotate(-90 40 40)"/><text class="android-wheatnum ohr-num" x="40" y="47" text-anchor="middle">0</text></svg>
-    <div class="ohr-label"><span class="android-wheattier">Charged</span></div>
-   </div>
-   <div class="oneui-weather">
-    <svg viewBox="0 0 24 24" width="34" height="34" fill="#cfe3ff" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>
-    <div class="ow-text"><div class="ow-big android-wday">Day 1</div><div class="ow-small ph-dowsub">Sunday</div></div>
+  <div class="hw-weather">
+   <div class="hw-wicon"><svg viewBox="0 0 48 48" width="58" height="58"><path d="M31 27a13 13 0 1 1-12.6-16.6A10.5 10.5 0 0 0 31 27z" fill="#f1f5f9"/><circle cx="35" cy="13" r="2.2" fill="#f1f5f9" opacity=".85"/><circle cx="40" cy="21" r="1.5" fill="#f1f5f9" opacity=".6"/></svg></div>
+   <div class="hw-wtext">
+    <div class="hw-wloc android-wday">Day 1</div>
+    <div class="hw-wcond"><span class="android-wheatnum">0</span>&#176; &#8226; <span class="android-wheattier">CALM</span></div>
+    <div class="hw-whl">H:<span class="android-wstash">0/40g</span> L:<span class="android-wcash">$200</span> &#8226; <span class="ph-dowsub">Sunday</span></div>
    </div>
   </div>
-  <div class="android-notif"><span class="android-notif-av">&#128172;</span><div class="android-notif-body"><b>Messages</b><div class="android-notif-msg">Welcome to the grow op.</div></div></div>
-  <div class="android-appgrid">
-   <button type="button" class="android-app" data-act="openapp" data-app="deal"><span class="aa-icon" style="background:linear-gradient(135deg,#25d366,#128c4b)">&#128172;</span><span class="aa-label">Messages</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="browser"><span class="aa-icon" style="background:linear-gradient(135deg,#7c3aed,#3b82f6)">&#127760;</span><span class="aa-label">Internet</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="stash"><span class="aa-icon" style="background:linear-gradient(135deg,#ffc107,#ff9800)">&#128221;</span><span class="aa-label">Notes</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="grow"><span class="aa-icon" style="background:linear-gradient(135deg,#ec407a,#ab47bc)">&#128247;</span><span class="aa-label">Gallery</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="store"><span class="aa-icon" style="background:linear-gradient(135deg,#ff7043,#f4511e)">&#128722;</span><span class="aa-label">Shop</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="cook"><span class="aa-icon" style="background:linear-gradient(135deg,#26a69a,#00897b)">&#128214;</span><span class="aa-label">Recipes</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="chill"><span class="aa-icon" style="background:linear-gradient(135deg,#5c6bc0,#3949ab)">&#127925;</span><span class="aa-label">Music</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="clinic"><span class="aa-icon" style="background:linear-gradient(135deg,#ef5350,#e53935)">&#10084;&#65039;</span><span class="aa-label">Health</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="settings"><span class="aa-icon" style="background:linear-gradient(135deg,#78909c,#546e7a)">&#9881;&#65039;</span><span class="aa-label">Settings</span></button>
+  <div class="hw-datebar"><span class="hw-cal"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7" stroke-linecap="round"/><line x1="16" y1="3" x2="16" y2="7" stroke-linecap="round"/></svg></span><span class="ph-date">Sunday, October 4</span><span class="hw-evsep"> &#8226; </span><span class="hw-evcount">0</span><span class="hw-evtx"> events today</span></div>
+  <div class="hw-search"><span class="hw-sicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="#9aa0a6" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg></span><input type="text" class="hw-sinput" placeholder="Search" data-hwsearch="1" autocomplete="off"><span class="hw-mic"><svg viewBox="0 0 24 24" width="23" height="23"><rect x="9" y="2" width="6" height="11" rx="3" fill="#4285f4"/><path d="M6.5 11.5a5.5 5.5 0 0 0 11 0" fill="none" stroke="#ea4335" stroke-width="2.2" stroke-linecap="round"/><line x1="12" y1="17" x2="12" y2="20.5" stroke="#34a853" stroke-width="2.2" stroke-linecap="round"/><line x1="8.8" y1="20.5" x2="15.2" y2="20.5" stroke="#fbbc05" stroke-width="2.2" stroke-linecap="round"/></svg></span><span class="hw-lens"><svg viewBox="0 0 24 24" width="23" height="23"><path d="M3.5 9V7.5A4.5 4.5 0 0 1 8 3h1.5v3H8a1.5 1.5 0 0 0-1.5 1.5V9z" fill="#4285f4"/><circle cx="16.8" cy="8.8" r="4.6" fill="none" stroke="#ea4335" stroke-width="2.2"/><path d="M3.5 14v2.5A4.5 4.5 0 0 0 8 21h1.5v-3H8a1.5 1.5 0 0 1-1.5-1.5V14z" fill="#fbbc05"/><circle cx="19.5" cy="17.8" r="2.1" fill="#34a853"/></svg></span></div>
+  <div class="android-appgrid hw-appgrid">
+   <button type="button" class="android-app" data-act="openapp" data-app="deal" data-hwkeys="messages co-op chat deal sell text"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#2563eb)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M24 7c-9.4 0-17 6.4-17 14.3 0 4.4 2.4 8.4 6.2 11l-1.6 6.2 6.8-3.4c1.8.5 3.7.8 5.6.8 9.4 0 17-6.4 17-14.3S33.4 7 24 7z" fill="#fff"/><circle cx="17" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="24" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="31" cy="21.5" r="2.9" fill="#3b82f6"/></svg></span><span class="aa-label">Messages</span><span class="aa-sub">Co-op Chat</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="browser" data-hwkeys="chrome battle match browser internet web realtor"><span class="aa-icon" style="background:#ffffff"><svg viewBox="0 0 48 48" width="38" height="38"><circle cx="24" cy="24" r="14" fill="none" stroke="#ea4335" stroke-width="7.5" stroke-dasharray="29.3 58.7" transform="rotate(-90 24 24)"/><circle cx="24" cy="24" r="14" fill="none" stroke="#fbbc05" stroke-width="7.5" stroke-dasharray="29.3 58.7" transform="rotate(30 24 24)"/><circle cx="24" cy="24" r="14" fill="none" stroke="#34a853" stroke-width="7.5" stroke-dasharray="29.3 58.7" transform="rotate(150 24 24)"/><circle cx="24" cy="24" r="8.5" fill="#1a73e8"/><circle cx="24" cy="24" r="8.5" fill="none" stroke="#fff" stroke-width="1.6"/></svg></span><span class="aa-label">Chrome</span><span class="aa-sub">Battle Match</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="stash" data-hwkeys="notes quest log stash inventory"><span class="aa-icon" style="background:linear-gradient(135deg,#fde047,#f5c211)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M12 5h16l10 10v25a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z" fill="#fff"/><path d="M28 5l10 10H28z" fill="#e2e8f0"/><rect x="15" y="22" width="18" height="2.6" rx="1.3" fill="#cbd5e1"/><rect x="15" y="28.5" width="18" height="2.6" rx="1.3" fill="#cbd5e1"/><rect x="15" y="35" width="11" height="2.6" rx="1.3" fill="#cbd5e1"/></svg></span><span class="aa-label">Notes</span><span class="aa-sub">Quest Log</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="grow" data-hwkeys="camera photo mode grow plants garden"><span class="aa-icon" style="background:linear-gradient(135deg,#a8b0bc,#6b7280)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M17 10h14l3 5h6a3 3 0 0 1 3 3v18a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V18a3 3 0 0 1 3-3h6z" fill="#1f2937"/><circle cx="24" cy="27" r="9" fill="none" stroke="#f3f4f6" stroke-width="3.5"/><circle cx="24" cy="27" r="3.8" fill="#4b5563"/><circle cx="37" cy="21" r="2.2" fill="#f3f4f6"/></svg></span><span class="aa-label">Camera</span><span class="aa-sub">Photo Mode</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="chill" data-hwkeys="contacts players chill smoke dealers"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1e40af)"><svg viewBox="0 0 48 48" width="36" height="36"><circle cx="24" cy="16" r="7.5" fill="none" stroke="#fff" stroke-width="3.6"/><path d="M9 41.5c1.8-7.8 7.6-12 15-12s13.2 4.2 15 12" fill="#fff"/></svg></span><span class="aa-label">Contacts</span><span class="aa-sub">Players</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="cook" data-hwkeys="gallery skins cook lab products"><span class="aa-icon" style="background:#ffffff"><svg viewBox="0 0 48 48" width="38" height="38"><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#ea4335"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#fbbc05" transform="rotate(60 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#34a853" transform="rotate(120 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#1a73e8" transform="rotate(180 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#a142f4" transform="rotate(240 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#ff6d01" transform="rotate(300 24 24)"/><circle cx="24" cy="24" r="6.5" fill="#fff"/></svg></span><span class="aa-label">Gallery</span><span class="aa-sub">Skins</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="clinic" data-hwkeys="clock events clinic health heal time"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><g fill="#fff"><circle cx="24" cy="9.5" r="1.9"/><circle cx="24" cy="38.5" r="1.9"/><circle cx="9.5" cy="24" r="1.9"/><circle cx="38.5" cy="24" r="1.9"/><circle cx="13.8" cy="13.8" r="1.9"/><circle cx="34.2" cy="13.8" r="1.9"/><circle cx="13.8" cy="34.2" r="1.9"/><circle cx="34.2" cy="34.2" r="1.9"/></g><line x1="24" y1="24" x2="24" y2="14.5" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/><line x1="24" y1="24" x2="30.5" y2="29" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg></span><span class="aa-label">Clock</span><span class="aa-sub">Events</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="settings" data-hwkeys="settings game settings options wallpaper"><span class="aa-icon" style="background:linear-gradient(135deg,#a8b0bc,#6b7280)"><svg viewBox="0 0 48 48" width="36" height="36"><g fill="#fff"><rect x="20.5" y="5" width="7" height="11" rx="2"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(45 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(90 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(135 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(180 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(225 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(270 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(315 24 24)"/><circle cx="24" cy="24" r="10.5"/></g><circle cx="24" cy="24" r="5" fill="#6b7280"/></svg></span><span class="aa-label">Settings</span><span class="aa-sub">Game Settings</span></button>
   </div>
-  <div class="oneui-dock">
-   <button type="button" class="android-app" data-act="openapp" data-app="deal" aria-label="Messages"><span class="aa-icon" style="background:linear-gradient(135deg,#25d366,#128c4b)">&#128172;</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="browser" aria-label="Internet"><span class="aa-icon" style="background:linear-gradient(135deg,#7c3aed,#3b82f6)">&#127760;</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="grow" aria-label="Gallery"><span class="aa-icon" style="background:linear-gradient(135deg,#ec407a,#ab47bc)">&#128247;</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="settings" aria-label="Settings"><span class="aa-icon" style="background:linear-gradient(135deg,#78909c,#546e7a)">&#9881;&#65039;</span></button>
+  <div class="hw-dots"><span class="on"></span><span></span><span></span></div>
+  <div class="hw-dock">
+   <button type="button" class="android-app" data-act="openapp" data-app="deal" data-hwkeys="phone lobby deal call"><span class="aa-icon" style="background:linear-gradient(135deg,#4ade80,#16a34a)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M13 6C9.7 6 7 8.7 7 12c0 12.4 10.1 24.5 22.5 26 3.9.5 7-2.6 6.5-6.5l-.7-4.6c-.3-1.9-2.1-3.1-4-2.7l-4.9 1.2c-3.8-2-6.9-5.1-8.9-8.9l1.2-4.9c.4-1.9-.8-3.7-2.7-4z" fill="#fff"/></svg></span><span class="aa-label">Phone</span><span class="aa-sub">Lobby</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="stash" data-hwkeys="my files inventory stash"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M5 13a3 3 0 0 1 3-3h11l4 5h14a3 3 0 0 1 3 3v3H5z" fill="#7db4fb"/><path d="M5 19h38v13a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z" fill="#bcd8fe"/></svg></span><span class="aa-label">My Files</span><span class="aa-sub">Inventory</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="clinic" data-hwkeys="health guild clinic"><span class="aa-icon" style="background:linear-gradient(135deg,#2b2740,#1a1826)"><svg viewBox="0 0 48 48" width="36" height="36"><defs><linearGradient id="thg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset=".55" stop-color="#f472b6"/><stop offset="1" stop-color="#fb923c"/></linearGradient></defs><path d="M24 41C15 33.5 8 27.5 8 19.5 8 14 12 10 17 10c3.5 0 5.8 1.8 7 4 1.2-2.2 3.5-4 7-4 5 0 9 4 9 9.5 0 8-7 14-16 21.5z" fill="url(#thg)"/><polyline points="13.5,22.5 19.5,22.5 22.5,17 26,28 29,22.5 34.5,22.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="aa-label">Health</span><span class="aa-sub">Guild</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="store" data-hwkeys="store shop buy seeds"><span class="aa-icon" style="background:linear-gradient(135deg,#5ea0fa,#8b5cf6)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M11 17h26l-2.2 21a3 3 0 0 1-3 2.7H16.2a3 3 0 0 1-3-2.7z" fill="#fff"/><path d="M17.5 17v-1.5a6.5 6.5 0 0 1 13 0V17" fill="none" stroke="#fff" stroke-width="3.2"/><path d="M24 24.5l1.7 3.4 3.8.6-2.7 2.7.6 3.8-3.4-1.8-3.4 1.8.6-3.8-2.7-2.7 3.8-.6z" fill="#8b5cf6"/></svg></span><span class="aa-label">Store</span><span class="aa-sub">Shop</span></button>
   </div>
  </div>
  <div class="pg-head">
@@ -152,7 +150,19 @@ window.hatchWidget={
 .android-backbtn:active{background:rgba(255,255,255,.12)}
 .android-apptitle{font-size:19px;font-weight:700;letter-spacing:.5px}
 /* ===== Samsung One UI home screen ===== */
-.android-home{flex:1;min-height:0;overflow-y:auto;order:2;padding:22px 18px 0;background:linear-gradient(180deg,#1a1a22,#0e0e13);scrollbar-width:none}
+.android-home{flex:1;min-height:0;overflow-y:auto;order:2;padding:22px 18px 0;scrollbar-width:none;
+ background:
+ radial-gradient(120% 105% at 50% 42%,transparent 58%,rgba(0,0,0,.48) 100%),
+ radial-gradient(170px 170px at 16% 30%,rgba(100,130,230,.34),transparent 70%),
+ radial-gradient(230px 230px at 84% 16%,rgba(130,100,210,.28),transparent 70%),
+ radial-gradient(130px 130px at 68% 54%,rgba(75,120,210,.30),transparent 70%),
+ radial-gradient(200px 200px at 28% 74%,rgba(110,90,200,.24),transparent 70%),
+ radial-gradient(105px 105px at 90% 80%,rgba(85,145,235,.24),transparent 70%),
+ radial-gradient(95px 95px at 48% 40%,rgba(65,95,185,.20),transparent 70%),
+ radial-gradient(65px 65px at 10% 90%,rgba(145,125,225,.20),transparent 70%),
+ radial-gradient(85px 85px at 93% 46%,rgba(95,105,215,.18),transparent 70%),
+ radial-gradient(55px 55px at 40% 12%,rgba(120,140,230,.16),transparent 70%),
+ linear-gradient(180deg,#15151d,#0b0b10)}
 .android-home::-webkit-scrollbar{display:none}
 .android-home[hidden]{display:none}
 .ph-date{font-size:15px;font-weight:600;color:#c9c5d4;margin:2px 4px 14px}
@@ -196,14 +206,64 @@ window.hatchWidget={
 .android-notif.err .android-notif-body b{color:#f59e0b}
 .android-notif-msg{font-size:14px;color:#e8e6e1;line-height:1.45;margin-top:2px}
 .oneui-secttl{font-size:15px;font-weight:700;color:#fff;margin:2px 4px 12px}
-.android-appgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px 6px;margin-bottom:10px}
-.android-app{background:transparent;border:0;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;padding:2px}
-.aa-icon{width:62px;height:62px;border-radius:28%;display:flex;align-items:center;justify-content:center;font-size:29px;box-shadow:0 6px 16px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.25);transition:transform .12s}
+.android-appgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:26px 6px;margin-bottom:10px}
+.android-app{background:transparent;border:0;display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;padding:2px}
+.aa-icon{width:68px;height:68px;border-radius:30%;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .12s;overflow:hidden;position:relative}
+.aa-icon::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,255,255,0) 42%);box-shadow:inset 0 -3px 7px rgba(0,0,0,.25)}
 .android-app:active .aa-icon{transform:scale(.88)}
-.aa-label{font-size:11.5px;color:#e8e6e1;font-weight:600}
+.aa-label{font-size:14px;color:#fff;font-weight:700;letter-spacing:.1px}
 .oneui-dock{position:sticky;bottom:0;margin:20px -18px 0;padding:12px 26px;background:rgba(24,24,32,.66);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;z-index:5}
 .oneui-dock .android-app{padding:0}
 .oneui-dock .aa-icon{width:54px;height:54px;font-size:26px}
+/* ===== REFERENCE PHONE HOME SCREEN ===== */
+.hw-weather{display:flex;align-items:center;gap:18px;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:30px;padding:20px 24px;margin-bottom:12px;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.hw-wicon{flex:none;display:flex;align-items:center;filter:drop-shadow(0 0 16px rgba(190,215,255,.5))}
+.hw-wicon svg{width:74px;height:74px}
+.hw-wtext{min-width:0}
+.hw-wloc{font-size:30px;font-weight:700;color:#fff;letter-spacing:-.3px;line-height:1.15}
+.hw-wcond{font-size:20px;font-weight:600;color:#f0eef5;margin-top:2px}
+.hw-whl{font-size:15px;color:rgba(255,255,255,.55);margin-top:4px}
+.hw-datebar{display:flex;align-items:center;justify-content:center;gap:7px;padding:12px 0 16px;font-size:15.5px;color:rgba(255,255,255,.78)}
+.hw-cal{display:flex;align-items:center;opacity:.8}
+.hw-datebar .ph-date{font-weight:500}
+.hw-evsep,.hw-evcount,.hw-evtx{opacity:.75}
+.hw-search{display:flex;align-items:center;gap:12px;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:30px;padding:15px 22px;margin-bottom:30px;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+.hw-sicon{flex:none;display:flex;align-items:center;opacity:.7}
+.hw-sinput{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font-size:18px;font-family:inherit}
+.hw-sinput::placeholder{color:rgba(255,255,255,.45)}
+.hw-mic{flex:none;display:flex;align-items:center}
+.hw-lens{flex:none;display:flex;align-items:center}
+.hw-appgrid{margin-bottom:8px}
+.aa-sub{font-size:12px;color:rgba(255,255,255,.55);font-weight:400;margin-top:-6px}
+.hw-dots{display:flex;justify-content:center;gap:9px;padding:16px 0 20px}
+.hw-dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25)}
+.hw-dots span.on{background:#fff}
+.hw-dock{display:flex;justify-content:space-around;background:rgba(30,30,38,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.09);border-radius:32px;padding:18px 12px 16px;margin:0 -4px 10px;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.hw-dock .android-app{flex:1}
+.hw-dock .aa-icon{width:64px;height:64px}
+.pg[data-theme="light"] .hw-weather{background:rgba(255,255,255,.75)}
+.pg[data-theme="light"] .hw-wloc{color:#241d33}
+.pg[data-theme="light"] .hw-wcond{color:#3a3348}
+.pg[data-theme="light"] .hw-whl{color:rgba(0,0,0,.5)}
+.pg[data-theme="light"] .hw-datebar{color:rgba(0,0,0,.65)}
+.pg[data-theme="light"] .hw-search{background:rgba(255,255,255,.75)}
+.pg[data-theme="light"] .hw-sinput{color:#241d33}
+.pg[data-theme="light"] .hw-sinput::placeholder{color:rgba(0,0,0,.4)}
+.pg[data-theme="light"] .aa-sub{color:rgba(0,0,0,.5)}
+.pg[data-theme="light"] .hw-dots span{background:rgba(0,0,0,.2)}
+.pg[data-theme="light"] .hw-dots span.on{background:#241d33}
+.pg[data-theme="light"] .hw-dock{background:rgba(255,255,255,.72)}
+/* ===== CLEAN PHONE HOME MODE: hide all game chrome on home screen ===== */
+.pg.home-mode .pg-head,
+.pg.home-mode .roach-topbar,
+.pg.home-mode .pg-pills,
+.pg.home-mode .pg-heat,
+.pg.home-mode .pg-msg,
+.pg.home-mode .ticker-help,
+.pg.home-mode .pg-ticker,
+.pg.home-mode .pg-tabs,
+.pg.home-mode .pg-hint{display:none!important}
+.pg.home-mode .android-home{order:1;flex:1;min-height:0}
 /* ===== Swipe-down notification shade (Samsung style) ===== */
 .shade-scrim{position:fixed;left:50%;transform:translateX(-50%);top:0;bottom:0;width:100%;max-width:480px;background:rgba(0,0,0,.5);z-index:70}
 .shade-scrim[hidden]{display:none}
@@ -1682,6 +1742,8 @@ function render(){
  var _clk=q(".android-clock");
  if(_clk){var _cd=new Date(),_ch=_cd.getHours(),_cm=_cd.getMinutes();_clk.textContent=(_ch%12||12)+":"+(_cm<10?"0":"")+_cm;}
  var _hm=q(".android-home");if(_hm)_hm.hidden=battling||S.view!=="home";
+ // home-mode: clean phone screen hides all legacy game chrome via CSS
+ var _pg=q(".pg");if(_pg)_pg.classList.toggle("home-mode",!battling&&S.view==="home");
  if(_hm){if(S.wallpaper&&/^https?:\/\//i.test(S.wallpaper)){_hm.style.backgroundImage="url(\""+S.wallpaper.replace(/"/g,"")+"\")";_hm.style.backgroundSize="cover";_hm.style.backgroundPosition="center";}else{_hm.style.backgroundImage="";_hm.style.backgroundSize="";_hm.style.backgroundPosition="";}}
  var _ab=q(".android-appbar");
  if(_ab){_ab.hidden=!inApp||battling;
@@ -1702,6 +1764,7 @@ function render(){
  if(!Array.isArray(S.notifs))S.notifs=[];
  if(S.msg&&(!S.notifs.length||S.notifs[0].m!==S.msg)){S.notifs.unshift({m:S.msg,e:_isE?1:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
  renderShade();
+ var _ev2=q(".hw-evcount");if(_ev2)_ev2.textContent=Array.isArray(S.notifs)?S.notifs.length:0;
  var _dt=q(".ph-date");
  if(_dt){try{_dt.textContent=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});}catch(e){}}
  var _dw=q(".ph-dowsub");
@@ -2912,6 +2975,15 @@ root.addEventListener("click",function(e){
 });
 root.addEventListener("input",function(e){
  var t=e.target;
+ if(t&&t.dataset&&t.dataset.hwsearch){
+  var qv=(t.value||"").toLowerCase().trim();
+  var apps=document.querySelectorAll(".hw-appgrid .android-app");
+  for(var i=0;i<apps.length;i++){
+   var keys=(apps[i].dataset.hwkeys||"").toLowerCase();
+   apps[i].style.display=(!qv||keys.indexOf(qv)>=0)?"":"none";
+  }
+  return;
+ }
  if(!t||t.type!=="range"||!t.dataset||!t.dataset.srange)return;
  var row=t.closest?t.closest(".sld-row"):null;
  var lab=row?row.querySelector(".sld-val"):null;
