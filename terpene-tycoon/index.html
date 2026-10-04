@@ -1420,7 +1420,7 @@ function normalize(s){
  if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(!Array.isArray(s.iconOrder))s.iconOrder=[];
- if(!Array.isArray(s.hiddenApps))s.hiddenApps=[];
+ if(!Array.isArray(s.hiddenApps)||s.hiddenApps.length)s.hiddenApps=[];
  if(!s.folders||typeof s.folders!=="object"||Array.isArray(s.folders))s.folders={};
  if(Array.isArray(s.iconOrder))s.iconOrder=s.iconOrder.map(function(k){return (typeof k==="string"&&k.indexOf(":")<0)?("a:"+k):k;});
  Object.keys(s.folders).forEach(function(fid){var _f=s.folders[fid];if(!_f||!Array.isArray(_f.apps)){delete s.folders[fid];return;}});
@@ -3146,11 +3146,6 @@ root.addEventListener("click",function(e){
  if(b&&b.dataset.act==="folder-close"){closeFolder();return;}
  if(b&&b.dataset.act==="folder-ungroup"){var _fbu=b.closest?b.closest(".hw-folderbtn"):null;if(_fbu)hwUngroup(_fbu.dataset.fid);return;}
  if(b&&b.dataset.act==="folder-remove"){hwFolderRemove(b.dataset.fid,b.dataset.label);return;}
- if(b&&b.dataset.act==="hide-app"){
-  var _hb=b.closest?b.closest(".hw-appgrid .android-app"):null;
-  if(_hb){var _hl=hwLabel(_hb);if(S.hiddenApps.indexOf(_hl)<0){S.hiddenApps.push(_hl);_hb.style.display="none";save();}}
-  return;
- }
  if(b&&b.dataset.act==="layout-reset"){
   S.hiddenApps=[];
   S.folders={};
@@ -3258,9 +3253,7 @@ root.addEventListener("input",function(e){
   var apps=document.querySelectorAll(".hw-appgrid .android-app");
   for(var i=0;i<apps.length;i++){
    var keys=(apps[i].dataset.hwkeys||"").toLowerCase();
-   var _al=apps[i].querySelector(".aa-label"),_an=_al?_al.textContent.trim():"";
-   var _hd=S.hiddenApps.indexOf(_an)>=0;
-   apps[i].style.display=(_hd||(qv&&keys.indexOf(qv)<0))?"none":"";
+   apps[i].style.display=(qv&&keys.indexOf(qv)<0)?"none":"";
   }
   return;
  }
@@ -3517,10 +3510,11 @@ function hwDecorate(){
  for(var i=0;i<btns.length;i++){
   var b=btns[i],isF=b.classList.contains("hw-folderbtn");
   var x=b.querySelector(".hw-xbadge");
-  if(!x&&d){x=d.createElement("span");x.className="hw-xbadge";b.appendChild(x);}
-  if(x){x.textContent="\u00d7";x.setAttribute("data-act",isF?"folder-ungroup":"hide-app");}
-  if(!isF&&S.hiddenApps.indexOf(hwLabel(b))>=0)b.style.display="none";
-  else b.style.display="";
+  if(isF){
+   if(!x&&d){x=d.createElement("span");x.className="hw-xbadge";b.appendChild(x);}
+   if(x){x.textContent="\u00d7";x.setAttribute("data-act","folder-ungroup");}
+  }else if(x){x.remove();}
+  b.style.display="";
  }
 }
 function hwSyncDots(){
