@@ -676,7 +676,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
  .pg-tabs button.store-tab.on::before{opacity:1}
 }
 /* ===== TERPENE TYCOON v21: newscast ticker ===== */
-.pg-ticker{display:flex;align-items:stretch;background:#0c0c0f;border:1px solid var(--hatch-widget-border);border-radius:8px;margin-bottom:5px;overflow:hidden;max-height:36px}
+.pg-ticker{display:flex;align-items:center;background:#0c0c0f;border:1px solid var(--hatch-widget-border);border-radius:8px;margin:0 0 5px 0;padding:0;overflow:hidden;min-height:32px;max-height:32px}
 .pg-ticker[hidden]{display:none}
 .ticker-badge{display:flex;align-items:center;flex:none;background:#000;overflow:hidden;position:relative;padding:0;width:28%;min-width:0}
 .ticker-badge .eb-track{display:flex;white-space:nowrap;animation:ebrot 4s linear infinite}
@@ -689,10 +689,9 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .tb-text{display:flex;flex-direction:column;line-height:1.25}
 .tb-main{font-size:11px;font-weight:900;letter-spacing:1px;white-space:nowrap}
 .tb-sub{font-size:9px;font-weight:700;letter-spacing:.4px;opacity:.88;white-space:nowrap}
-.ticker-view{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center;cursor:pointer;-webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
-.ticker-track{display:flex;width:max-content;white-space:nowrap;will-change:transform}
-.ticker-chunk{padding:7px 0;font-size:15px;color:var(--hatch-widget-text);letter-spacing:.3px}
-.tick-sep{color:#e5484d;padding:0 22px;font-weight:900}
+.ticker-view{flex:1;min-width:0;overflow:hidden;display:flex;align-items:center;padding:0 10px}
+.ticker-tip{font-size:14px;color:var(--hatch-widget-text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:0;transform:translateX(20px);transition:opacity .4s ease,transform .4s ease}
+.ticker-tip.show{opacity:1;transform:translateX(0)}
 .ticker-help{display:none}
 .roach-topbar{display:flex;align-items:center;gap:8px;padding:2px 6px;background:transparent;border:none}
 .roach-topbar[hidden]{display:none}
@@ -1704,19 +1703,26 @@ function tickerTick(){
  if(tickerState.x>=half)tickerState.x-=half;
  track.style.transform="translateX("+(-tickerState.x)+"px)";
 }
+var tickerTipIdx=0,tickerTipTimer=null;
 function renderTicker(){
- var track=q(".ticker-track");
- if(!track)return;
+ var view=q(".ticker-view");
+ if(!view)return;
  var hints=tickerHints();
- var key=hints.join("");
- if(track.dataset.h===key)return;
- track.dataset.h=key;
- tickerState.x=0;tickerState.last=0;tickerState.count=hints.length;
- tickIdx=0;
- function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;");}
- var half=hints.map(function(h,i){return '<span class="ticker-chunk" data-i="'+i+'">'+esc(h)+'<span class="tick-sep">\u2022\u2022\u2022</span></span>';}).join("");
- track.innerHTML=half+half;
- track.style.transform="translateX(0)";
+ if(!hints.length)return;
+ function showTip(){
+  var tip=view.querySelector(".ticker-tip");
+  if(!tip){view.innerHTML='<div class="ticker-tip"></div>';tip=view.querySelector(".ticker-tip");}
+  tip.classList.remove("show");
+  setTimeout(function(){
+   tip.textContent=hints[tickerTipIdx%hints.length];
+   void tip.offsetWidth;
+   tip.classList.add("show");
+   tickerTipIdx++;
+  },350);
+ }
+ if(typeof tickerTipTimer!=="undefined"&&tickerTipTimer)clearInterval(tickerTipTimer);
+ showTip();
+ tickerTipTimer=setInterval(showTip,5000);
 }
 function tickGo(i,pauseMs){
  var track=q(".ticker-track");
