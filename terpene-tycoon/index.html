@@ -3109,6 +3109,7 @@ function mapsHTML(){
   }else if(st==="guns"){
    WKEYS.forEach(function(wk){
     var w=WEAPONS[wk],owned=wk==="fists"||(S.weapons&&S.weapons[wk]);
+    if(owned)return; // hide owned weapons (incl. fists — only buyable shown)
     var v=tierVis(w.tier);
     if(v===0)return;
     if(v===1){sh+='<div class="srow c locked"><div><b><i class="wicon w-'+wk+'"></i>'+w.name+'</b><div class="sdesc"><span class="lvtag">Lv '+w.tier+'</span></div></div></div>';return;}
