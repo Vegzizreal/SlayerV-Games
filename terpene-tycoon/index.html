@@ -161,7 +161,7 @@ window.hatchWidget={
 /* finger-sized touch targets on touch devices */
 @media(pointer:coarse){
  .pg-tabs button{padding:5px 0;font-size:16px;min-height:0;overflow:hidden}
- .growbar button{padding:13px 14px;font-size:17.5px;min-height:50px}
+ .growbar button{padding:4px 10px;font-size:14px;min-height:0;line-height:1.2}
  .btns button{padding:12px 8px;font-size:17px;min-height:46px}
  .dchip{padding:10px 8px;min-height:46px;font-size:15.5px}
  .store-tabs button{padding:11px 0;min-height:46px;font-size:15px}
@@ -215,7 +215,7 @@ window.hatchWidget={
 .btns button.go{background:#a92e33;border-color:#a92e33;color:#fff}
 .btns button:disabled{opacity:.35;cursor:default}
 .growbar{margin-bottom:8px;display:flex;gap:8px}
-.growbar button{padding:8px 14px;border-radius:10px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);font-weight:800;font-size:16px;cursor:pointer}
+.growbar button{padding:4px 10px;border-radius:8px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);font-weight:800;font-size:14px;cursor:pointer;line-height:1.2;min-height:0}
 .hint{font-size:15px;color:var(--hatch-widget-muted);margin-top:8px}
 .dealers{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:8px}
 .dealer{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:8px}
@@ -1106,9 +1106,8 @@ function plantHTML(p,pi,si){
   +'<div class="pc-name">'+pr.name+'</div>'
   +'<div class="pc-stage"><span class="p-stage st'+st+'">'+STAGE_NAMES[st]+'</span></div>'
   +'<div class="pc-bars"><i class="g" style="width:'+Math.round(p.growth)+'%"></i><i class="w" style="width:'+Math.round(p.water)+'%"></i></div>'
-  +'<div class="pc-btns"><button type="button" data-act="water" data-pi="'+pi+'" data-si="'+si+'">Water</button>';
- if(st===6){h+='<button type="button" class="go" data-act="harvest" data-pi="'+pi+'" data-si="'+si+'">Harvest</button>';}
- else{h+='<button type="button" data-act="fert" data-pi="'+pi+'" data-si="'+si+'"'+(S.fert>0?"":" disabled")+'>Feed</button>';}
+  +'<div class="pc-btns"><button type="button" data-act="water" data-pi="'+pi+'" data-si="'+si+'">Water</button>'
+  +'<button type="button" data-act="fert" data-pi="'+pi+'" data-si="'+si+'"'+(S.fert>0?"":" disabled")+'>Feed</button>';
  return h+'</div></div>';
 }
 var HINTS={
