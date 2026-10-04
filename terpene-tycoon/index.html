@@ -4467,43 +4467,14 @@ function bindEditMode(){
 hwInitRegistry();
 layoutHome();
 bindEditMode();
-/* Maps app touch fix: on mobile, tap (click) events on SVG <g> pins are unreliable,
-   and the browser may swallow taps inside the scrollable pane. This touchend handler
-   detects clean taps (not scrolls) on any [data-act] inside the Maps pane and
-   dispatches a synthetic click that bubbles to the root click handler. Works
-   alongside the normal click path — preventDefault() suppresses the browser's own
-   synthetic click so actions never double-fire. */
-(function(){
- var panes=document.querySelectorAll(".pane-maps,.pane-rep");
- if(!panes||!panes.length)return;
- panes.forEach(function(mp){
- if(typeof mp.addEventListener!=="function")return;
- var sx=0,sy=0,tapOk=false;
- mp.addEventListener("touchstart",function(e){
-  if(e.touches&&e.touches.length===1){var t=e.touches[0];sx=t.clientX;sy=t.clientY;tapOk=true;}
-  else tapOk=false;
- },{passive:true});
- mp.addEventListener("touchmove",function(){tapOk=false;},{passive:true});
- mp.addEventListener("touchcancel",function(){tapOk=false;},{passive:true});
- mp.addEventListener("touchend",function(e){
-  if(!tapOk){tapOk=false;return;}
-  tapOk=false;
-  var t=e.changedTouches&&e.changedTouches[0];
-  if(!t)return;
-  if(Math.abs(t.clientX-sx)>14||Math.abs(t.clientY-sy)>14)return; // was a scroll/swipe
-  var el=e.target&&e.target.closest?e.target.closest("[data-act]"):null;
-  if(!el||el.disabled)return;
-  if(typeof e.preventDefault==="function")e.preventDefault(); // stop browser's own click
-  var evt=null;
-  try{evt=new MouseEvent("click",{bubbles:true,cancelable:true,view:window});}
-  catch(err){
-   evt=document.createEvent("MouseEvents");
-   evt.initMouseEvent("click",true,true,window,1,0,0,0,0,false,false,false,false,0,null);
-  }
-  if(evt)el.dispatchEvent(evt);
- },{passive:false});
- });
-})();
+/* SVG closest() polyfill: some mobile browsers lack Element.closest on SVG
+   elements (pins are <g>). The root click handler uses closest("[data-act]"),
+   so ensure it exists everywhere. */
+try{
+ if(typeof SVGElement!=="undefined"&&SVGElement.prototype&&!SVGElement.prototype.closest&&Element.prototype.closest){
+  SVGElement.prototype.closest=Element.prototype.closest;
+ }
+}catch(_sce){}
 render();
 tick();
 setInterval(tick,15000);
