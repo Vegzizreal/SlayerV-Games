@@ -1034,7 +1034,8 @@ window.hatchWidget={
    Game logic, HTML structure, and data-act handlers are unchanged. */
 
 /* ---- Territory map (Maps app) — GPS street-view style ---- */
-.pane-maps{background:#070a07;border-radius:12px;padding:0 0 12px;position:relative;overflow:hidden}
+.pane-maps{background:#070a07;border-radius:12px;padding:0 0 12px;position:relative;overflow:hidden;touch-action:manipulation}
+.pane-maps button,.pane-maps .gps-pin{touch-action:manipulation}
 .gps-wrap{position:relative;margin:0 12px 12px;border-radius:16px;overflow:hidden;border:1px solid #1c261c;background:#0a0e0a}
 .gps-map{display:block;width:100%;height:auto}
 .gps-pin{cursor:pointer}
@@ -2475,7 +2476,7 @@ function render(){
   var h='';
   // Zoom: shrink viewBox around center for zoom-in effect
   var _zw=400/GPSZOOM,_zh=320/GPSZOOM,_zx=(400-_zw)/2,_zy=(320-_zh)/2;
-  h+='<svg viewBox="'+_zx+' '+_zy+' '+_zw+' '+_zh+'" role="img" aria-label="Territory GPS map">';
+  h+='<svg class="gps-map" viewBox="'+_zx+' '+_zy+' '+_zw+' '+_zh+'" role="img" aria-label="Territory GPS map">';
   h+='<defs>'
    +'<pattern id="gps-minor" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#141b14" stroke-width="2"/></pattern>'
    +'<pattern id="gps-major" width="104" height="104" patternUnits="userSpaceOnUse"><path d="M104 0H0V104" fill="none" stroke="#1e2a1e" stroke-width="5"/></pattern>'
@@ -4455,6 +4456,40 @@ function bindEditMode(){
 hwInitRegistry();
 layoutHome();
 bindEditMode();
+/* Maps app touch fix: on mobile, tap (click) events on SVG <g> pins are unreliable,
+   and the browser may swallow taps inside the scrollable pane. This touchend handler
+   detects clean taps (not scrolls) on any [data-act] inside the Maps pane and
+   dispatches a synthetic click that bubbles to the root click handler. Works
+   alongside the normal click path — preventDefault() suppresses the browser's own
+   synthetic click so actions never double-fire. */
+(function(){
+ var mp=document.querySelector(".pane-maps");
+ if(!mp||typeof mp.addEventListener!=="function")return;
+ var sx=0,sy=0,tapOk=false;
+ mp.addEventListener("touchstart",function(e){
+  if(e.touches&&e.touches.length===1){var t=e.touches[0];sx=t.clientX;sy=t.clientY;tapOk=true;}
+  else tapOk=false;
+ },{passive:true});
+ mp.addEventListener("touchmove",function(){tapOk=false;},{passive:true});
+ mp.addEventListener("touchcancel",function(){tapOk=false;},{passive:true});
+ mp.addEventListener("touchend",function(e){
+  if(!tapOk){tapOk=false;return;}
+  tapOk=false;
+  var t=e.changedTouches&&e.changedTouches[0];
+  if(!t)return;
+  if(Math.abs(t.clientX-sx)>14||Math.abs(t.clientY-sy)>14)return; // was a scroll/swipe
+  var el=e.target&&e.target.closest?e.target.closest("[data-act]"):null;
+  if(!el||el.disabled)return;
+  if(typeof e.preventDefault==="function")e.preventDefault(); // stop browser's own click
+  var evt=null;
+  try{evt=new MouseEvent("click",{bubbles:true,cancelable:true,view:window});}
+  catch(err){
+   evt=document.createEvent("MouseEvents");
+   evt.initMouseEvent("click",true,true,window,1,0,0,0,0,false,false,false,false,0,null);
+  }
+  if(evt)el.dispatchEvent(evt);
+ },{passive:false});
+})();
 render();
 tick();
 setInterval(tick,15000);
