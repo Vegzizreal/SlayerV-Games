@@ -61,6 +61,13 @@ window.hatchWidget={
  <div class="android-appbar" hidden><button type="button" class="android-backbtn" data-act="android-back" aria-label="Back">&#8592;</button><span class="android-apptitle">Grow</span></div>
  <div class="android-home" hidden>
   <button type="button" class="hw-donebtn" data-act="edit-done" hidden>Done</button>
+  <button type="button" class="hw-status" data-act="shade-open" aria-label="Open status">
+   <span class="hw-sitem"><i class="hw-sdot" style="background:#4ade80"></i><b class="hw-qcash">$200</b></span>
+   <span class="hw-sitem"><i class="hw-sdot" style="background:#a78bfa"></i><b class="hw-qstash">0/40g</b></span>
+   <span class="hw-sitem"><i class="hw-sdot" style="background:#ef4444"></i><b class="hw-qhp">HP 100</b></span>
+   <span class="hw-sitem"><i class="hw-sdot" style="background:#fbbf24"></i><b class="hw-qday">Day 1</b></span>
+   <span class="hw-sitem hw-sheat"><span class="hw-heatbar"><i class="hw-qheatbar"></i></span><b class="hw-qheat">0%</b></span>
+  </button>
   <div class="hw-weather">
    <div class="hw-wicon"><svg viewBox="0 0 48 48" width="58" height="58"><path d="M31 27a13 13 0 1 1-12.6-16.6A10.5 10.5 0 0 0 31 27z" fill="#f1f5f9"/><circle cx="35" cy="13" r="2.2" fill="#f1f5f9" opacity=".85"/><circle cx="40" cy="21" r="1.5" fill="#f1f5f9" opacity=".6"/></svg></div>
    <div class="hw-wtext">
@@ -231,6 +238,16 @@ window.hatchWidget={
 .oneui-dock .android-app{padding:0}
 .oneui-dock .aa-icon{width:54px;height:54px;font-size:26px}
 /* ===== REFERENCE PHONE HOME SCREEN ===== */
+.hw-status{display:flex;align-items:center;gap:14px;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:24px;padding:0 18px;height:48px;margin-bottom:10px;box-shadow:0 6px 18px rgba(0,0,0,.45);flex:none;width:100%;cursor:pointer;color:#fff;font-family:inherit}
+.hw-status:active{transform:scale(.99)}
+.hw-sitem{display:flex;align-items:center;gap:6px;font-size:13.5px;white-space:nowrap}
+.hw-sitem b{font-weight:700;color:#fff;font-size:13.5px}
+.hw-sdot{width:7px;height:7px;border-radius:50%;flex:none}
+.hw-sheat{margin-left:auto}
+.hw-heatbar{width:44px;height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;display:inline-block}
+.hw-qheatbar{display:block;height:100%;width:0;background:linear-gradient(90deg,#4ade80,#fbbf24,#ef4444);border-radius:3px;transition:width .3s}
+.pg[data-theme="light"] .hw-status{background:rgba(255,255,255,.75)}
+.pg[data-theme="light"] .hw-status .hw-sitem b{color:#111}
 .hw-weather{display:flex;align-items:center;gap:16px;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:28px;padding:16px 22px;margin-bottom:10px;box-shadow:0 8px 24px rgba(0,0,0,.5);flex:none}
 .hw-wicon{flex:none;display:flex;align-items:center;filter:drop-shadow(0 0 16px rgba(190,215,255,.5))}
 .hw-wicon svg{width:74px;height:74px}
@@ -2062,6 +2079,13 @@ function renderShade(){
  var st=q(".shade-qstash");if(st)st.textContent=stashTotal()+"/"+S.stashCap+"g";
  var h=q(".shade-qheat");if(h)h.textContent=Math.round(Math.min(100,S.heat))+"%";
  var d=q(".shade-qday");if(d)d.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
+ var hwc=q(".hw-qcash");if(hwc)hwc.textContent=money(S.cash);
+ var hws=q(".hw-qstash");if(hws)hws.textContent=stashTotal()+"/"+S.stashCap+"g";
+ var hwh=q(".hw-qhp");if(hwh){hwh.textContent="HP "+Math.max(0,Math.round(S.hp));
+ hwh.style.color=S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444";}
+ var hwd=q(".hw-qday");if(hwd)hwd.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
+ var hwt=q(".hw-qheat");if(hwt)hwt.textContent=Math.round(Math.min(100,S.heat))+"%";
+ var hwb=q(".hw-qheatbar");if(hwb)hwb.style.width=Math.min(100,S.heat)+"%";
  var list=q(".shade-list");if(!list)return;
  if(shadeListKey===key)return;shadeListKey=key;
  list.innerHTML=(S.notifs&&S.notifs.length)?S.notifs.map(function(n){
