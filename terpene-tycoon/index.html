@@ -56,7 +56,7 @@ window.hatchWidget={
  <div class="pg-heat"><div class="heat-bar"><i class="v-heat"></i></div><span class="v-heattier">CALM</span><button type="button" class="heat-bribe" data-act="bribe" hidden></button></div>
  <div class="pg-msg v-msg">Welcome to the grow op.</div>
  <div class="ticker-help">Tap the scrolling tips to switch speed — now: <b>Slow</b></div>
- <div class="pg-ticker"><span class="ticker-badge"><i></i><span class="tb-text"><span class="tb-main">Trap Hotline</span><span class="tb-sub">All the Hood news!</span></span></span><div class="ticker-view" data-act="tickspd"><div class="ticker-track"></div></div></div>
+ <div class="pg-ticker"><span class="ticker-badge"><span class="eb-track"><span>⚠ BREAKING NEWS ⚠</span><span>⚠ BREAKING NEWS ⚠</span></span></span><span class="ticker-div"></span><span class="ticker-name">Trap Hotline</span><div class="ticker-view" data-act="tickspd"><div class="ticker-track"></div></div></div>
  <div class="pg-tabs">
   <button type="button" data-act="tab" data-tab="store" class="store-tab"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11L21 7H6"/></svg></span></button>
   <button type="button" data-act="tab" data-tab="grow" class="on"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 13c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg></span><span class="tab-tx">Grow</span></button>
@@ -677,8 +677,13 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 /* ===== TERPENE TYCOON v21: newscast ticker ===== */
 .pg-ticker{display:flex;align-items:stretch;background:#0c0c0f;border:1px solid var(--hatch-widget-border);border-radius:8px;margin-bottom:5px;overflow:hidden;max-height:36px}
 .pg-ticker[hidden]{display:none}
-.ticker-badge{display:flex;align-items:center;flex:none;background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;padding:6px 9px}
-.ticker-badge i{width:12px;height:12px;flex:none;border-radius:50%;margin-right:7px;background:conic-gradient(#ff5e8a,#ffb35e,#b45eff,#5ee8ff,#ff5e8a);animation:tspin 1.8s linear infinite;box-shadow:0 0 10px rgba(255,94,138,.7)}
+.ticker-badge{display:flex;align-items:center;flex:none;background:#000;overflow:hidden;position:relative;padding:0;width:42%;min-width:0}
+.ticker-badge .eb-track{display:flex;white-space:nowrap;animation:ebrot 4s linear infinite}
+.ticker-badge .eb-track span{font-weight:900;letter-spacing:2px;color:#ffcc00;font-size:12px;line-height:1;padding:4px 18px}
+@keyframes ebrot{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ticker-div{width:1px;background:#3a3a42;flex:none;margin:6px 0}
+.ticker-name{display:flex;align-items:center;font-size:13px;font-weight:800;color:#fff;padding:4px 6px;flex:none;white-space:nowrap}
+
 @keyframes tspin{to{transform:rotate(360deg)}}
 .tb-text{display:flex;flex-direction:column;line-height:1.25}
 .tb-main{font-size:11px;font-weight:900;letter-spacing:1px;white-space:nowrap}
