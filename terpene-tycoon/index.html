@@ -915,7 +915,7 @@ var HEAT_TIERS=["CALM","SUSPICIOUS","WATCHED","HUNTED"];
 function mkDealer(name){function m(){return 0.8+Math.random()*0.4;}var d={name:name,buy:{},sell:{}};PKEYS.forEach(function(k){d.buy[k]=m();d.sell[k]=m();});return d;}
 function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
-var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",
+var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
  msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
@@ -1147,6 +1147,7 @@ function tabHeader(tab){
 }
 function render(){
  if(root&&root.dataset)root.dataset.theme=(S.theme==="light")?"light":"dark";
+ checkSenorV();
  var now=Date.now();
  q(".v-cash").textContent=money(S.cash);
  q(".v-stash").textContent=stashTotal()+"/"+S.stashCap+"g";
@@ -1481,6 +1482,37 @@ function showBagFullWarn(){
   root.appendChild(pop);
   setTimeout(function(){var p=root.querySelector(".roach-pop");if(p)p.remove();},5000);
  }catch(e){}
+}
+function showSenorVPackage(){
+ try{
+  if(typeof document==="undefined"||!document.createElement||!root)return;
+  var old=root.querySelector(".roach-pop");if(old)old.remove();
+  var rimg=q(".roach-topbar img");
+  var src=rimg?rimg.src:"";
+  // Package contents: cash + fertilizer + random seeds
+  var cashGift=100+Math.floor(Math.random()*100);
+  var fertGift=2+Math.floor(Math.random()*3);
+  S.cash+=cashGift;S.fert+=fertGift;
+  var gk=GROWKEYS[Math.floor(Math.random()*GROWKEYS.length)];
+  var seedGift=1+Math.floor(Math.random()*2);
+  S.seeds[gk]=(S.seeds[gk]||0)+seedGift;
+  var pop=document.createElement("div");
+  pop.className="roach-pop";
+  pop.innerHTML='<div class="roach-card">'
+   +(src?'<img src="'+src+'" alt="Roach">':'')
+   +'<div class="roach-msg">yo yo yo! Se\u00f1or V just dropped a package off for you, bitch! '+money(cashGift)+' cash, '+fertGift+' fertilizer, and '+seedGift+' '+PRODUCTS[gk].name+' seeds. don\'t spend it all in one place!<br><b>\u2014 Roach</b></div>'
+   +'<button type="button" data-act="roachpop-ok">GRAB IT</button></div>';
+  pop.addEventListener("click",function(e){
+   if(e.target===pop||e.target.dataset.act==="roachpop-ok"){pop.remove();}
+  });
+  root.appendChild(pop);
+  setTimeout(function(){var p=root.querySelector(".roach-pop");if(p)p.remove();},8000);
+  save();
+ }catch(e){}
+}
+function checkSenorV(){
+ var day=Math.floor((Date.now()-S.bornAt)/86400000);
+ if(day>0&&day%5===0&&S.lastSenorV!==day){S.lastSenorV=day;showSenorVPackage();}
 }
 function dealerStreakHeat(di){
  // Punish hitting the same dealer repeatedly: streak 4+ adds escalating heat
