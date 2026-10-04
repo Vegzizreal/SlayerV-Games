@@ -84,6 +84,7 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="stash" data-hwkeys="my files inventory stash"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M5 13a3 3 0 0 1 3-3h11l4 5h14a3 3 0 0 1 3 3v3H5z" fill="#7db4fb"/><path d="M5 19h38v13a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z" fill="#bcd8fe"/></svg></span><span class="aa-label">My Files</span><span class="aa-sub">Inventory</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="clinic" data-hwkeys="health guild clinic"><span class="aa-icon" style="background:linear-gradient(135deg,#2b2740,#1a1826)"><svg viewBox="0 0 48 48" width="36" height="36"><defs><linearGradient id="thg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset=".55" stop-color="#f472b6"/><stop offset="1" stop-color="#fb923c"/></linearGradient></defs><path d="M24 41C15 33.5 8 27.5 8 19.5 8 14 12 10 17 10c3.5 0 5.8 1.8 7 4 1.2-2.2 3.5-4 7-4 5 0 9 4 9 9.5 0 8-7 14-16 21.5z" fill="url(#thg)"/><polyline points="13.5,22.5 19.5,22.5 22.5,17 26,28 29,22.5 34.5,22.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="aa-label">Health</span><span class="aa-sub">Guild</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="store" data-hwkeys="store shop buy seeds"><span class="aa-icon" style="background:linear-gradient(135deg,#5ea0fa,#8b5cf6)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M11 17h26l-2.2 21a3 3 0 0 1-3 2.7H16.2a3 3 0 0 1-3-2.7z" fill="#fff"/><path d="M17.5 17v-1.5a6.5 6.5 0 0 1 13 0V17" fill="none" stroke="#fff" stroke-width="3.2"/><path d="M24 24.5l1.7 3.4 3.8.6-2.7 2.7.6 3.8-3.4-1.8-3.4 1.8.6-3.8-2.7-2.7 3.8-.6z" fill="#8b5cf6"/></svg></span><span class="aa-label">Store</span><span class="aa-sub">Shop</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="street" data-hwkeys="street deal dealer deals sell"><span class="aa-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)"><svg viewBox="0 0 48 48" width="36" height="36"><rect x="6" y="40" width="36" height="3" rx="1.5" fill="#fff"/><rect x="9" y="22" width="8" height="18" fill="#fff"/><rect x="20" y="14" width="9" height="26" fill="#fff"/><rect x="32" y="26" width="7" height="14" fill="#fff"/><rect x="11" y="25" width="4" height="4" fill="#f59e0b"/><rect x="11" y="31" width="4" height="4" fill="#f59e0b"/><rect x="22.5" y="18" width="4" height="4" fill="#f59e0b"/><rect x="22.5" y="24" width="4" height="4" fill="#f59e0b"/><rect x="22.5" y="30" width="4" height="4" fill="#f59e0b"/></svg></span><span class="aa-label">Street Deal</span><span class="aa-sub">Dealer Deals</span></button>
    </div>
   </div>
   <div class="hw-dots"><span class="on" data-hwpage="0"></span><span data-hwpage="1"></span></div>
@@ -126,6 +127,7 @@ window.hatchWidget={
  <div class="pg-pane pane-stash" hidden></div>
  <div class="pg-pane pane-cook" hidden></div>
  <div class="pg-pane pane-deal" hidden></div>
+ <div class="pg-pane pane-street" hidden></div>
  <div class="pg-pane pane-store" hidden></div>
  <div class="pg-pane pane-chill" hidden></div>
  <div class="pg-pane pane-clinic" hidden></div>
@@ -493,8 +495,8 @@ window.hatchWidget={
 @media(min-width:5000px){
  .pane-store{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;align-items:start}
  .pane-store>.store-screen-head,.pane-store>.store-tabs,.pane-store>.store-banner{grid-column:1/-1}
- .pane-deal{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;align-items:start}
- .pane-deal>.dchips{grid-column:1/-1}
+ .pane-deal,.pane-street{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;align-items:start}
+ .pane-deal>.dchips,.pane-street>.dchips{grid-column:1/-1}
 }
 /* ===== TERPENE TYCOON v17: fill each device's screen, finger-friendly ===== */
 @media(min-width:5000px){
@@ -506,7 +508,7 @@ window.hatchWidget={
 }
 @media(min-width:5000px){
  .pane-store{grid-template-columns:1fr 1fr 1fr}
- .pane-deal{grid-template-columns:1fr 1fr 1fr}
+ .pane-deal,.pane-street{grid-template-columns:1fr 1fr 1fr}
  .pots{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
  .pg-tabs button{font-size:17.5px;padding:10px 0}
  .pg-title{font-size:29px}
@@ -876,9 +878,9 @@ window.hatchWidget={
 .pg[data-theme="light"] .msg-empty{color:rgba(0,0,0,.4)}
 .pg[data-theme="light"] .msg-order-body{color:rgba(0,0,0,.8)}
 .pg[data-theme="light"] .msg-order-hd{color:#111}
-.pane-deal{background:#0b141a;border-radius:12px;padding:0 0 10px}
-.pane-deal .amtrow{background:#0b141a;padding:8px 12px;margin:0}
-.pane-deal .dchips{background:#0b141a;padding:6px 12px;margin:0}
+.pane-deal,.pane-street{background:#0b141a;border-radius:12px;padding:0 0 10px}
+.pane-deal .amtrow,.pane-street .amtrow{background:#0b141a;padding:8px 12px;margin:0}
+.pane-deal .dchips,.pane-street .dchips{background:#0b141a;padding:6px 12px;margin:0}
 .drow2{background:#dcf8c6;border-radius:12px 12px 12px 4px;margin:8px 12px 8px 48px;padding:10px 12px;color:#111;box-shadow:0 1px 2px rgba(0,0,0,.2)}
 .pg[data-theme="light"] .drow2{background:#dcf8c6}
 .drow2 .d2-name{color:#111}
@@ -1472,8 +1474,8 @@ function normalize(s){
  if(s.amt!==1&&s.amt!==5)s.amt=1;
  if(s.tab==="lab")s.tab="settings";
  if(s.tab==="shop")s.tab="store";
- if(["grow","cook","deal","store","chill","clinic","settings"].indexOf(s.tab)<0)s.tab="grow";
- if(["grow","cook","deal","chill","clinic","settings"].indexOf(s.backtab)<0)s.backtab="grow";
+ if(["grow","cook","deal","store","chill","clinic","settings","street"].indexOf(s.tab)<0)s.tab="grow";
+ if(["grow","cook","deal","chill","clinic","settings","street"].indexOf(s.backtab)<0)s.backtab="grow";
  if(s.view!=="home"&&s.view!=="app")s.view="home";
  if(["roll","smoke"].indexOf(s.chillview)<0)s.chillview="smoke";
  if(GROWKEYS.indexOf(s.chillStrain)<0)s.chillStrain="sour";
@@ -1500,9 +1502,9 @@ var S=normalize(Object.assign({},DEF,bridge?bridge.getState(DEF):{}));
 var navStack=[];
 function navPush(app){if(navStack[navStack.length-1]!==app)navStack.push(app);if(navStack.length>12)navStack.shift();}
 function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
-var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐"};
+var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️"};
 var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
-function appName(a){return a.charAt(0).toUpperCase()+a.slice(1);}
+function appName(a){if(a==="street")return "Street Deal";return a.charAt(0).toUpperCase()+a.slice(1);}
 function save(){if(bridge)bridge.setState(S);}
 if(bridge)window.addEventListener("hatch-widget-state",function(e){if(e.detail&&e.detail.state){S=normalize(e.detail.state);}});
 
@@ -1596,7 +1598,7 @@ var HINTS={
  clinic:"Patch up after fights — $2 per HP. High heat brings cop ambushes; go in armed and healthy.",
  browser:"Browse Terp Estates for grow properties — more slots, bigger operation. Buying here works exactly like the Store realty desk."
 };
-var TAB_COLORS={grow:"#4ade80",stash:"#d4a574",cook:"#fb923c",deal:"#22c55e",chill:"#a78bfa",clinic:"#e5484d",settings:"#9a97a3",browser:"#7c9ef8"};
+var TAB_COLORS={grow:"#4ade80",stash:"#d4a574",cook:"#fb923c",deal:"#22c55e",chill:"#a78bfa",clinic:"#e5484d",settings:"#9a97a3",browser:"#7c9ef8",street:"#f59e0b"};
 var TAB_ICONS={
  grow:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 13c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg>',
  stash:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2.5"/><path d="M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8"/><path d="M3 13h18"/></svg>',
@@ -1605,7 +1607,8 @@ var TAB_ICONS={
  chill:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 L17 7 L19.5 11.5 L5.5 20 Z"/><path d="M3 17 L5.5 20 L4 21.5 L1.5 18.5 Z"/><path d="M17 7 L19.5 11.5 L21 10 L18.5 5.5 Z"/><path d="M20 5c-.8-1 .8-1.6 0-2.6" stroke-width="1.5"/><path d="M22 6c-.6-.8.6-1.2 0-2" stroke-width="1.3"/></svg>',
  clinic:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 8.5v7M8.5 12h7"/></svg>',
  settings:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v2.8M12 18.7v2.8M2.5 12h2.8M18.7 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2"/></svg>',
- browser:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>'
+ browser:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>',
+ street:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l4-3v14"/><path d="M9 21V7l5-3.5V21"/><path d="M14 21v-9l5 3v6"/><path d="M7.5 12.5h1M7.5 15.5h1M11.5 9.5h1M11.5 12.5h1M11.5 15.5h1M16.5 15h1"/></svg>'
 };
 function statusHTML(){
  var hb='<div class="heat-bar"><i style="width:'+Math.min(100,S.heat)+'%"></i></div>';
@@ -1629,18 +1632,20 @@ function tabHeader(tab){
    return '<div class="appnav msg-nav"><div class="msg-contact"><div class="msg-contact-info"><b>Messages'+(_un?' <span class="msg-unread-hd">'+_un+'</span>':'')+'</b><span class="msg-online"><i></i>'+(S.contacts||[]).length+' contacts</span></div></div>'
     +'<div class="msg-nav-actions"><span class="msg-ico">🔍</span><span class="msg-ico">⋮</span></div></div>';
   }
-  if(mv!=="__street__"){
-   var _c=getContact(mv);
-   if(_c){
-    return '<div class="appnav msg-nav"><button type="button" class="msg-back" data-act="msg-back" aria-label="Back">←</button><div class="msg-contact"><span class="msg-avatar">'+escHtml(_c.name.charAt(0))+'</span>'
-     +'<div class="msg-contact-info"><b>'+escHtml(_c.name)+'</b><span class="msg-online"><i></i>online now · loyalty '+Math.round(_c.loyalty)+'%</span></div></div>'
-     +'<div class="msg-nav-actions"><span class="msg-ico">📞</span><span class="msg-ico">📹</span></div></div>';
-   }
+  var _c=getContact(mv);
+  if(_c){
+   return '<div class="appnav msg-nav"><button type="button" class="msg-back" data-act="msg-back" aria-label="Back">←</button><div class="msg-contact"><span class="msg-avatar">'+escHtml(_c.name.charAt(0))+'</span>'
+    +'<div class="msg-contact-info"><b>'+escHtml(_c.name)+'</b><span class="msg-online"><i></i>online now · loyalty '+Math.round(_c.loyalty)+'%</span></div></div>'
+    +'<div class="msg-nav-actions"><span class="msg-ico">📞</span><span class="msg-ico">📹</span></div></div>';
   }
+  return '<div class="appnav msg-nav"><div class="msg-contact"><div class="msg-contact-info"><b>Messages</b><span class="msg-online"><i></i>'+(S.contacts||[]).length+' contacts</span></div></div>'
+   +'<div class="msg-nav-actions"><span class="msg-ico">🔍</span><span class="msg-ico">⋮</span></div></div>';
+ }
+ if(tab==="street"){
   var di=S.dealer||0;if(di>=S.dealers.length)di=0;
   var d=S.dealers[di]||{name:"Dealer"};
-  return '<div class="appnav msg-nav"><button type="button" class="msg-back" data-act="msg-back" aria-label="Back">←</button><div class="msg-contact"><span class="msg-avatar">'+d.name.charAt(0)+'</span>'
-   +'<div class="msg-contact-info"><b>'+d.name+'</b><span class="msg-online"><i></i>online now</span></div></div>'
+  return '<div class="appnav msg-nav"><div class="msg-contact"><span class="msg-avatar">'+d.name.charAt(0)+'</span>'
+   +'<div class="msg-contact-info"><b>Street Deal</b><span class="msg-online"><i></i>'+d.name+' · online now</span></div></div>'
    +'<div class="msg-nav-actions"><span class="msg-ico">📞</span><span class="msg-ico">📹</span></div></div>';
  }
  if(tab==="grow"){
@@ -1844,6 +1849,7 @@ function render(){
  q(".pane-stash").hidden=battling||!inApp||S.tab!=="stash";
  q(".pane-cook").hidden=battling||!inApp||S.tab!=="cook";
  q(".pane-deal").hidden=battling||!inApp||S.tab!=="deal";
+ q(".pane-street").hidden=battling||!inApp||S.tab!=="street";
  q(".pane-store").hidden=battling||!inApp||S.tab!=="store";
  q(".pane-chill").hidden=battling||!inApp||S.tab!=="chill";
  q(".pane-clinic").hidden=battling||!inApp||S.tab!=="clinic";
@@ -1919,10 +1925,6 @@ function render(){
   h+='<button type="button" class="msg-chat pinned" data-act="msg-open" data-c="__roach__">'
    +'<span class="msg-avatar msg-av-roach">🪳</span>'
    +'<div class="msg-chat-mid"><b>Roach 📌</b><span>'+escHtml(rl)+'</span></div></button>';
-  h+='<button type="button" class="msg-chat" data-act="msg-open" data-c="__street__">'
-   +'<span class="msg-avatar msg-av-street">🏙️</span>'
-   +'<div class="msg-chat-mid"><b>Street Deals</b><span>Sell to dealers · choose amount</span></div>'
-   +'<span class="msg-chev">›</span></button>';
   (S.contacts||[]).forEach(function(c){
    var last=c.msgs.length?c.msgs[c.msgs.length-1].text:"New contact — say hi";
    var tm=c.msgs.length?fmtMsgTime(c.msgs[c.msgs.length-1].t):"";
@@ -1965,13 +1967,16 @@ function render(){
   return h;
  }
  var locked=now<S.lockedUntil;
- var _mv=S.msgView||"list";
- if(_mv==="list"){q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
- else if(_mv==="__roach__"){q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
- else if(_mv!=="__street__"&&getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
- else{
- S.msgView="__street__";
- var dh=tabHeader("deal")+'<div class="amtrow c"><span>Deal:</span>'
+ if(S.tab==="deal"){
+  var _mv=S.msgView||"list";
+  if(_mv==="list"){q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
+  else if(_mv==="__roach__"){q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
+  else if(getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
+  else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
+ }
+ if(S.tab==="street"){q(".pane-street").innerHTML=streetHTML();}
+ function streetHTML(){
+ var dh=tabHeader("street")+'<div class="amtrow c"><span>Deal:</span>'
   +'<button type="button" data-act="amt" data-amt="1"'+(S.amt===1?' class="on"':'')+'>1g</button>'
   +'<button type="button" data-act="amt" data-amt="5"'+(S.amt===5?' class="on"':'')+'>5g</button></div>';
  if(locked)dh+='<div class="lock sm">Laying low — heat dies down in '+Math.ceil((S.lockedUntil-now)/60000)+' min.</div>';
@@ -2022,7 +2027,7 @@ function render(){
     +'<button type="button" data-act="dsell" data-d="'+di+'" data-strain="'+k+'"'+(locked?" disabled":"")+'>Sell</button></div>';
   });
  }
- q(".pane-deal").innerHTML=dh;
+ return dh;
  }
  var STORE_ICON='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l1.2-4.5h13.6L20 9"/><path d="M4 9v10.5h16V9"/><path d="M4 9.2h16"/><path d="M9.5 19.5v-4.5h5v4.5"/></svg>';
  var SICON={
@@ -3207,7 +3212,7 @@ root.addEventListener("click",function(e){
  if(a==="gprev"||a==="gnext"){var dir=a==="gnext"?1:-1,n=S.props.length,gp=S.gprop||0;for(var gi2=0;gi2<n;gi2++){gp=(gp+dir+n)%n;if(S.props[gp].tier<=pLevel())break;}S.gprop=gp;S.gpage=0;save();render();return;}
  if(a==="gpage"){var pgp=S.props[S.gprop||0]||S.props[0],npg=Math.max(1,Math.ceil(pgp.slots.length/8));S.gpage=Math.max(0,Math.min(npg-1,(S.gpage||0)+(+b.dataset.p)));save();render();return;}
  if(a==="dealersel"){S.dealer=+b.dataset.d;save();render();return;}
- if(a==="msg-open"){var _mc=b.dataset.c;S.msgView=_mc;if(_mc&&_mc!=="__street__"&&_mc!=="__roach__"){var _gc=getContact(_mc);}save();render();return;}
+ if(a==="msg-open"){var _mc=b.dataset.c;S.msgView=_mc;save();render();return;}
  if(a==="msg-back"){S.msgView="list";save();render();return;}
  if(a==="fulfill-order"){doFulfillOrder(b.dataset.contact);return;}
  if(a==="dealcat"){S.dealcat=b.dataset.c;save();render();return;}
@@ -3300,30 +3305,86 @@ root.addEventListener("change",function(e){
   render();
  }
 });
-/* Swipe-down notification shade: swipe down from the status bar to open,
-   swipe up on the shade (or tap the scrim) to dismiss. Tap = toggle. */
+/* Samsung notification shade: drag down from the status bar to pull it open
+   (follows your finger), drag up on the shade to push it closed.
+   Velocity fling: fast swipe down opens fully, fast swipe up closes.
+   Tap = toggle. List scrolling is never hijacked. */
 (function(){
- var sy=null,sx0=null,starget=null;
- function start(y,x,shade){sy=y;sx0=x;starget=shade?"shade":"bar";}
- function end(y,x){
-  if(sy===null)return;
-  var dy=y-sy,adx=Math.abs(x-sx0),was=starget;sy=null;starget=null;
-  if(adx>60)return; // horizontal swipe: ignore
-  if(was==="shade"){if(dy<-50||Math.abs(dy)<10)closeShade();}
-  else{if(dy>50)openShade();else if(Math.abs(dy)<10)toggleShade();}
+ var sb=q(".android-statusbar"),sh=q(".notif-shade"),sc=q(".shade-scrim");
+ if(!sb||!sh)return;
+ var drag=null; // {startY,startT,lastY,lastT,mode,p,moved}
+ function shH(){return sh.offsetHeight||480;}
+ function applyP(p){
+  p=Math.max(0,Math.min(1,p));
+  sh.style.transition="none";
+  sh.style.transform="translate(-50%,"+(-106+p*106).toFixed(2)+"%)";
+  if(sc){sc.hidden=false;sc.style.transition="none";sc.style.opacity=(p*0.92).toFixed(3);}
+  return p;
  }
- var sb=q(".android-statusbar"),sh=q(".notif-shade");
- if(sb){
-  sb.addEventListener("touchstart",function(e){var t=e.touches[0];start(t.clientY,t.clientX,false);},{passive:true});
-  sb.addEventListener("touchend",function(e){var t=e.changedTouches[0];end(t.clientY,t.clientX);},{passive:true});
-  sb.addEventListener("mousedown",function(e){start(e.clientY,e.clientX,false);});
-  sb.addEventListener("mouseup",function(e){end(e.clientY,e.clientX);});
+ function settle(open){
+  sh.style.transition="transform .26s cubic-bezier(.2,.9,.25,1)";
+  sh.style.transform="translate(-50%,"+(open?0:-106)+"%)";
+  if(sc){sc.hidden=false;sc.style.transition="opacity .26s";sc.style.opacity=open?"1":"0";}
+  setTimeout(function(){
+   sh.style.transition="";sh.style.transform="";
+   if(sc){sc.style.transition="";sc.style.opacity="";sc.hidden=!open;}
+   if(open){shadeOpen=true;sh.hidden=false;sh.classList.add("open");}
+   else{shadeOpen=false;sh.classList.remove("open");sh.hidden=true;}
+   renderShade();
+  },270);
  }
- if(sh){
-  sh.addEventListener("touchstart",function(e){var t=e.touches[0];start(t.clientY,t.clientX,true);},{passive:true});
-  sh.addEventListener("touchend",function(e){var t=e.changedTouches[0];end(t.clientY,t.clientX);},{passive:true});
-  sh.addEventListener("mousedown",function(e){start(e.clientY,e.clientX,true);});
-  sh.addEventListener("mouseup",function(e){end(e.clientY,e.clientX);});
+ function begin(y,t,mode){
+  if(mode==="open"&&shadeOpen)return;
+  if(mode==="close"&&!shadeOpen)return;
+  sh.hidden=false;renderShade();
+  // jump the inline transform to the current state so the drag starts seamlessly
+  applyP(mode==="open"?0:1);
+  drag={startY:y,startT:t,lastY:y,lastT:t,mode:mode,p:mode==="open"?0:1,moved:false};
+ }
+ function move(y,t){
+  if(!drag)return;
+  var dy=y-drag.startY;
+  if(Math.abs(dy)>9)drag.moved=true;
+  if(!drag.moved)return;
+  var p=drag.p+dy/shH();
+  drag.lastY=y;drag.lastT=t;
+  drag.p=applyP(p);
+ }
+ function done(y,t){
+  if(!drag)return;
+  var d=drag;drag=null;
+  if(!d.moved){ // tap: toggle
+   sh.style.transition="";sh.style.transform="";
+   if(sc){sc.style.transition="";sc.style.opacity="";}
+   toggleShade();return;
+  }
+  var dy=y-d.startY,dt=Math.max(1,t-d.startT),vel=dy/dt,open;
+  if(Math.abs(vel)>0.45)open=vel>0; // fling
+  else open=d.mode==="open"?d.p>0.35:d.p>0.6; // snap by progress
+  settle(open);
+ }
+ function cancel(){
+  if(!drag)return;drag=null;
+  sh.style.transition="";sh.style.transform="";
+  if(sc){sc.style.transition="";sc.style.opacity="";}
+  if(shadeOpen){sh.classList.add("open");}else{sh.classList.remove("open");sh.hidden=true;if(sc)sc.hidden=true;}
+ }
+ function inList(t){return !!(t&&t.closest&&t.closest(".shade-list"));}
+ // status bar: drag down to open
+ sb.addEventListener("touchstart",function(e){var t=e.touches[0];begin(t.clientY,Date.now(),"open");},{passive:true});
+ sb.addEventListener("touchmove",function(e){var t=e.touches[0];move(t.clientY,Date.now());},{passive:true});
+ sb.addEventListener("touchend",function(e){var t=e.changedTouches[0];done(t.clientY,Date.now());},{passive:true});
+ sb.addEventListener("touchcancel",cancel,{passive:true});
+ sb.addEventListener("mousedown",function(e){begin(e.clientY,Date.now(),"open");});
+ // shade: drag up to close (never hijack the scrollable list)
+ sh.addEventListener("touchstart",function(e){if(inList(e.target))return;var t=e.touches[0];begin(t.clientY,Date.now(),"close");},{passive:true});
+ sh.addEventListener("touchmove",function(e){var t=e.touches[0];move(t.clientY,Date.now());},{passive:true});
+ sh.addEventListener("touchend",function(e){var t=e.changedTouches[0];done(t.clientY,Date.now());},{passive:true});
+ sh.addEventListener("touchcancel",cancel,{passive:true});
+ sh.addEventListener("mousedown",function(e){if(inList(e.target))return;begin(e.clientY,Date.now(),"close");});
+ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
+  window.addEventListener("mousemove",function(e){move(e.clientY,Date.now());});
+  window.addEventListener("mouseup",function(e){done(e.clientY,Date.now());});
  }
 })();
 /* ===== Home screen edit mode: Samsung One UI (wiggle, drag reorder, edge paging, folders) ===== */
