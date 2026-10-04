@@ -837,6 +837,45 @@ window.hatchWidget={
 .msg-online i{width:8px;height:8px;border-radius:50%;background:#25d366;display:inline-block}
 .msg-nav-actions{display:flex;gap:16px}
 .msg-ico{font-size:20px;opacity:.9}
+.msg-back{background:none;border:none;color:#fff;font-size:22px;padding:4px 10px 4px 0;cursor:pointer}
+.msg-unread-hd{background:#25d366;color:#fff;font-size:12px;border-radius:10px;padding:1px 8px;margin-left:6px;font-weight:700}
+.msg-chats{padding:6px 0}
+.msg-chat{display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:12px 14px;cursor:pointer;text-align:left;color:#fff}
+.msg-chat:active{background:rgba(255,255,255,.05)}
+.msg-chat.pinned{background:rgba(37,211,102,.06)}
+.msg-chat-mid{flex:1;min-width:0}
+.msg-chat-mid b{display:block;font-size:15px;color:#fff}
+.msg-chat-mid span{display:block;font-size:13px;color:rgba(255,255,255,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
+.msg-av-roach{background:linear-gradient(135deg,#2d5a27,#4a8f3c)!important}
+.msg-av-street{background:linear-gradient(135deg,#1a73e8,#4285f4)!important}
+.msg-unread{color:#25d366;font-size:14px;flex:none}
+.msg-time{font-size:11px;color:rgba(255,255,255,.4);flex:none}
+.msg-chev{font-size:22px;color:rgba(255,255,255,.3)}
+.msg-ordtag{font-size:11px;color:#25d366;font-weight:700}
+.msg-empty{text-align:center;color:rgba(255,255,255,.4);font-size:14px;padding:30px 20px;line-height:1.6}
+.msg-convo{padding:14px 12px;display:flex;flex-direction:column;gap:6px}
+.msg-day{text-align:center;font-size:12px;color:rgba(255,255,255,.4);padding:8px}
+.msg-row{display:flex}
+.msg-row.them{justify-content:flex-start}
+.msg-row.me{justify-content:flex-end}
+.msg-bub{max-width:78%;padding:9px 13px;border-radius:16px;font-size:14.5px;line-height:1.45;position:relative;color:#fff}
+.msg-row.them .msg-bub{background:#1f2c34;border-radius:4px 16px 16px 16px}
+.msg-row.me .msg-bub{background:#005c4b;border-radius:16px 4px 16px 16px}
+.msg-bub-t{display:block;font-size:10px;opacity:.55;text-align:right;margin-top:3px}
+.msg-order{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.35);border-radius:14px;padding:14px;margin:10px 4px}
+.msg-order-hd{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#fff;margin-bottom:8px}
+.msg-order-hd span{font-size:12px;color:#fbbf24}
+.msg-order-body{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:12px}
+.msg-order button{width:100%;background:#25d366;color:#fff;border:none;border-radius:20px;padding:12px;font-weight:700;font-size:15px;cursor:pointer}
+.msg-order button:disabled{opacity:.45;cursor:default}
+.pg[data-theme="light"] .msg-chat{border-bottom-color:rgba(0,0,0,.08)}
+.pg[data-theme="light"] .msg-chat-mid b{color:#111}
+.pg[data-theme="light"] .msg-chat-mid span{color:rgba(0,0,0,.55)}
+.pg[data-theme="light"] .msg-row.them .msg-bub{background:#fff;color:#111;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.pg[data-theme="light"] .msg-row.me .msg-bub{background:#dcf8c6;color:#111}
+.pg[data-theme="light"] .msg-empty{color:rgba(0,0,0,.4)}
+.pg[data-theme="light"] .msg-order-body{color:rgba(0,0,0,.8)}
+.pg[data-theme="light"] .msg-order-hd{color:#111}
 .pane-deal{background:#0b141a;border-radius:12px;padding:0 0 10px}
 .pane-deal .amtrow{background:#0b141a;padding:8px 12px;margin:0}
 .pane-deal .dchips{background:#0b141a;padding:6px 12px;margin:0}
@@ -1356,7 +1395,7 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{}};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list"};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
  var oldSave=(typeof s.xp!=="number");
@@ -1372,6 +1411,13 @@ function normalize(s){
  });});
  s=Object.assign({},DEF,s);
  if(!Array.isArray(s.notifs))s.notifs=[];
+ if(!Array.isArray(s.contacts))s.contacts=[];
+ s.contacts=s.contacts.filter(function(c){return c&&typeof c.name==="string";}).map(function(c){
+  var o=null;
+  if(c.order&&typeof c.order.k==="string"&&typeof c.order.g==="number")o={k:c.order.k,g:c.order.g,pu:typeof c.order.pu==="number"?c.order.pu:0,expires:typeof c.order.expires==="number"?c.order.expires:0,sentAt:typeof c.order.sentAt==="number"?c.order.sentAt:0};
+  return {name:String(c.name).slice(0,24),loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0};
+ });
+ if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(!Array.isArray(s.iconOrder))s.iconOrder=[];
  if(!Array.isArray(s.hiddenApps))s.hiddenApps=[];
@@ -1577,9 +1623,23 @@ function tabHeader(tab){
  var c=TAB_COLORS[tab]||"#e5484d";
  // Realistic per-app navigation bars
  if(tab==="deal"){
+  var mv=S.msgView||"list";
+  if(mv==="list"){
+   var _un=(S.contacts||[]).filter(function(c){return c.unread;}).length;
+   return '<div class="appnav msg-nav"><div class="msg-contact"><div class="msg-contact-info"><b>Messages'+(_un?' <span class="msg-unread-hd">'+_un+'</span>':'')+'</b><span class="msg-online"><i></i>'+(S.contacts||[]).length+' contacts</span></div></div>'
+    +'<div class="msg-nav-actions"><span class="msg-ico">🔍</span><span class="msg-ico">⋮</span></div></div>';
+  }
+  if(mv!=="__street__"){
+   var _c=getContact(mv);
+   if(_c){
+    return '<div class="appnav msg-nav"><button type="button" class="msg-back" data-act="msg-back" aria-label="Back">←</button><div class="msg-contact"><span class="msg-avatar">'+escHtml(_c.name.charAt(0))+'</span>'
+     +'<div class="msg-contact-info"><b>'+escHtml(_c.name)+'</b><span class="msg-online"><i></i>online now · loyalty '+Math.round(_c.loyalty)+'%</span></div></div>'
+     +'<div class="msg-nav-actions"><span class="msg-ico">📞</span><span class="msg-ico">📹</span></div></div>';
+   }
+  }
   var di=S.dealer||0;if(di>=S.dealers.length)di=0;
   var d=S.dealers[di]||{name:"Dealer"};
-  return '<div class="appnav msg-nav"><div class="msg-contact"><span class="msg-avatar">'+d.name.charAt(0)+'</span>'
+  return '<div class="appnav msg-nav"><button type="button" class="msg-back" data-act="msg-back" aria-label="Back">←</button><div class="msg-contact"><span class="msg-avatar">'+d.name.charAt(0)+'</span>'
    +'<div class="msg-contact-info"><b>'+d.name+'</b><span class="msg-online"><i></i>online now</span></div></div>'
    +'<div class="msg-nav-actions"><span class="msg-ico">📞</span><span class="msg-ico">📹</span></div></div>';
  }
@@ -1853,7 +1913,64 @@ function render(){
  q(".pane-grow").innerHTML=gh;
  q(".pane-stash").innerHTML=stashHTML();
  q(".pane-cook").innerHTML=cookHTML();q(".pane-cook").classList.toggle("has-job",!!S.job);
+ function dealChatsList(){
+  var h='<div class="msg-chats">';
+  var rl=S.notifs&&S.notifs.length?S.notifs[0].m:"No new messages";
+  h+='<button type="button" class="msg-chat pinned" data-act="msg-open" data-c="__roach__">'
+   +'<span class="msg-avatar msg-av-roach">🪳</span>'
+   +'<div class="msg-chat-mid"><b>Roach 📌</b><span>'+escHtml(rl)+'</span></div></button>';
+  h+='<button type="button" class="msg-chat" data-act="msg-open" data-c="__street__">'
+   +'<span class="msg-avatar msg-av-street">🏙️</span>'
+   +'<div class="msg-chat-mid"><b>Street Deals</b><span>Sell to dealers · choose amount</span></div>'
+   +'<span class="msg-chev">›</span></button>';
+  (S.contacts||[]).forEach(function(c){
+   var last=c.msgs.length?c.msgs[c.msgs.length-1].text:"New contact — say hi";
+   var tm=c.msgs.length?fmtMsgTime(c.msgs[c.msgs.length-1].t):"";
+   var ord=c.order?' <span class="msg-ordtag">📦 order</span>':"";
+   h+='<button type="button" class="msg-chat" data-act="msg-open" data-c="'+escHtml(c.name)+'">'
+    +'<span class="msg-avatar">'+escHtml(c.name.charAt(0).toUpperCase())+'</span>'
+    +'<div class="msg-chat-mid"><b>'+escHtml(c.name)+ord+'</b><span>'+escHtml(last)+'</span></div>'
+    +(c.unread?'<span class="msg-unread">●</span>':'')
+    +'<span class="msg-time">'+tm+'</span></button>';
+  });
+  if(!(S.contacts||[]).length)h+='<div class="msg-empty">No customers yet.<br>Sell on the street — some buyers will hit you up.</div>';
+  h+='</div>';
+  return h;
+ }
+ function dealConvo(c){
+  var h='<div class="msg-convo">';
+  var msgs=c.msgs.slice(-30);
+  if(!msgs.length)h+='<div class="msg-day">No messages yet</div>';
+  msgs.forEach(function(m){
+   h+='<div class="msg-row '+(m.from==="me"?"me":"them")+'"><div class="msg-bub">'+escHtml(m.text)
+    +'<span class="msg-bub-t">'+fmtMsgTime(m.t)+'</span></div></div>';
+  });
+  if(c.order){
+   var o=c.order,left=Math.max(0,o.expires-Date.now());
+   h+='<div class="msg-order"><div class="msg-order-hd">📦 <b>Order request</b><span>'+fmtDur(left)+' left</span></div>'
+    +'<div class="msg-order-body">'+o.g+'g '+escHtml(PRODUCTS[o.k].name)+' · pays <b>'+money(o.pu*o.g)+'</b></div>'
+    +'<button type="button" data-act="fulfill-order" data-contact="'+escHtml(c.name)+'"'+((S.stash[o.k]||0)<o.g?" disabled":"")+'>Fulfill Order</button></div>';
+  }
+  h+='</div>';
+  return h;
+ }
+ function dealRoachConvo(){
+  var h='<div class="msg-convo">';
+  var ns=(S.notifs||[]).slice(0,10).reverse();
+  if(!ns.length)h+='<div class="msg-day">No messages yet</div>';
+  ns.forEach(function(n){
+   h+='<div class="msg-row them"><div class="msg-bub">'+escHtml(n.m)+'<span class="msg-bub-t">'+fmtMsgTime(n.t)+'</span></div></div>';
+  });
+  h+='</div>';
+  return h;
+ }
  var locked=now<S.lockedUntil;
+ var _mv=S.msgView||"list";
+ if(_mv==="list"){q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
+ else if(_mv==="__roach__"){q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
+ else if(_mv!=="__street__"&&getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
+ else{
+ S.msgView="__street__";
  var dh=tabHeader("deal")+'<div class="amtrow c"><span>Deal:</span>'
   +'<button type="button" data-act="amt" data-amt="1"'+(S.amt===1?' class="on"':'')+'>1g</button>'
   +'<button type="button" data-act="amt" data-amt="5"'+(S.amt===5?' class="on"':'')+'>5g</button></div>';
@@ -1906,6 +2023,7 @@ function render(){
   });
  }
  q(".pane-deal").innerHTML=dh;
+ }
  var STORE_ICON='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9l1.2-4.5h13.6L20 9"/><path d="M4 9v10.5h16V9"/><path d="M4 9.2h16"/><path d="M9.5 19.5v-4.5h5v4.5"/></svg>';
  var SICON={
   seeds:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 12c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg>',
@@ -2164,6 +2282,76 @@ function dealerStreakHeat(di){
  }
  return 0;
 }
+/* ===== CUSTOMER CONTACTS (Messages app) ===== */
+var CONTACT_NAMES=["Marcus","Tasha","Big D","Lil Ray","Keisha","Tone","Priya","Ghost","Mikey","Rosa","Dre","Nia","Slim","Jae","T-Bone","Lux","Vic","Sammy","Dez","Kiki","Rico","Aaliyah","Chino","Bree"];
+function pushContactNotif(m,isE){S.notifs.unshift({m:m,e:isE?1:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
+function maybeAddContact(){
+ if(!S.contacts)S.contacts=[];
+ if(S.contacts.length>=12)return;
+ if(Math.random()>0.08)return;
+ var used={};S.contacts.forEach(function(c){used[c.name]=1;});
+ var pool=CONTACT_NAMES.filter(function(n){return !used[n];});
+ if(!pool.length)return;
+ var nm=pool[(Math.random()*pool.length)|0];
+ S.contacts.push({name:nm,loyalty:50,order:null,unread:true,lastOrderAt:0,
+  msgs:[{from:"them",text:"yo it's "+nm+". good lookin on that last one 🤝",t:Date.now()}]});
+ pushContactNotif("📱 New contact: "+nm);
+}
+function randomContactProduct(){
+ var un=unlocked().filter(function(k){return GROWKEYS.indexOf(k)>=0;});
+ if(!un.length)return null;
+ return un[(Math.random()*un.length)|0];
+}
+function tickContacts(now){
+ if(!S.contacts||!S.contacts.length)return;
+ var changed=false;
+ S.contacts.forEach(function(c){
+  if(c.order&&now>c.order.expires){
+   c.order=null;c.loyalty=Math.max(0,c.loyalty-10);
+   c.msgs.push({from:"them",text:"nvm, found someone else.",t:now});
+   c.unread=true;changed=true;
+  }
+ });
+ S.contacts.forEach(function(c){
+  if(c.order)return;
+  if(now-(c.lastOrderAt||0)<3*60000)return;
+  if(Math.random()>0.3)return;
+  var prod=randomContactProduct();
+  if(!prod)return;
+  var grams=[2,3,5,5,7,10][(Math.random()*6)|0];
+  var base=ppu(PRODUCTS[prod].price,1);
+  var premium=1.15+(c.loyalty/100)*0.15;
+  var perUnit=Math.max(1,Math.round(base*premium));
+  c.order={k:prod,g:grams,pu:perUnit,expires:now+3*3600000,sentAt:now};
+  c.lastOrderAt=now;
+  var pn=PRODUCTS[prod].name;
+  var texts=["yo u got any "+pn+"? need "+grams+"g","aye need "+grams+"g of "+pn+" asap 🙏","u holdin "+pn+"? tryna grab "+grams+"g"];
+  c.msgs.push({from:"them",text:texts[(Math.random()*texts.length)|0],t:now});
+  c.unread=true;
+  pushContactNotif("📱 "+c.name+" wants "+grams+"g "+pn);
+  changed=true;
+ });
+}
+function fmtMsgTime(t){try{var d=new Date(t),h=d.getHours(),m=d.getMinutes(),ap=h>=12?"PM":"AM";h=h%12;if(h===0)h=12;return h+":"+(m<10?"0":"")+m+" "+ap;}catch(e){return "";}}
+function fmtDur(ms){var m=Math.max(0,Math.ceil(ms/60000));if(m<60)return m+"m";var h=Math.floor(m/60);return h+"h "+(m%60)+"m";}
+function getContact(nm){if(!S.contacts)return null;for(var i=0;i<S.contacts.length;i++)if(S.contacts[i].name===nm)return S.contacts[i];return null;}
+function doFulfillOrder(nm){
+ var c=getContact(nm);
+ if(!c||!c.order){S.msg="No active order.";save();render();return;}
+ var o=c.order,have=S.stash[o.k]||0;
+ if(have<o.g){S.msg="You don't have "+o.g+"g of "+PRODUCTS[o.k].name+".";save();render();return;}
+ S.stash[o.k]-=o.g;
+ var rev=o.pu*o.g;
+ S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
+ S.heat=Math.min(100,S.heat+heatGain(1+o.g));
+ c.loyalty=Math.min(100,c.loyalty+8);
+ var now=Date.now();
+ c.msgs.push({from:"me",text:"got u. "+o.g+"g comin thru.",t:now});
+ c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
+ c.order=null;c.unread=false;
+ S.msg="Sold "+o.g+"g "+PRODUCTS[o.k].name+" to "+c.name+" for "+money(rev)+".";
+ battleRoll();save();render();
+}
 function doDeal(di,k,isBuy,isJoint){
  var now=Date.now();
  if(now<S.lockedUntil)return;
@@ -2190,6 +2378,7 @@ function doDeal(di,k,isBuy,isJoint){
   var prof=calcProfit(k+(isJoint?"_j":""),g,heldBefore,rev);
   if(!addXP(5))S.msg="Sold "+g+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+"."+(dh2>0?" Same spot too many times — heat +"+dh2+".":"");
   showSalePop(st.name,g+(isJoint?" joints":"g"),rev,prof);
+  maybeAddContact();
  }
  battleRoll();
  save();render();
@@ -2480,6 +2669,7 @@ function tick(){
   if(S.heat>0){var _hd=dtm*2.5;if(S.buffUntil&&now<S.buffUntil)_hd+=dtm*0.5;S.heat=Math.max(0,S.heat-_hd);}
   if(S.hp<100)S.hp=Math.min(100,S.hp+dtm/2);
  }
+ tickContacts(now);
  if(S.job){
   if(S.job.phase==="cooking"&&Date.now()>=S.job.readyAt)settleCooking();
   else if(!S.job.phase)settleJob();
@@ -3022,6 +3212,9 @@ root.addEventListener("click",function(e){
  if(a==="gprev"||a==="gnext"){var dir=a==="gnext"?1:-1,n=S.props.length,gp=S.gprop||0;for(var gi2=0;gi2<n;gi2++){gp=(gp+dir+n)%n;if(S.props[gp].tier<=pLevel())break;}S.gprop=gp;S.gpage=0;save();render();return;}
  if(a==="gpage"){var pgp=S.props[S.gprop||0]||S.props[0],npg=Math.max(1,Math.ceil(pgp.slots.length/8));S.gpage=Math.max(0,Math.min(npg-1,(S.gpage||0)+(+b.dataset.p)));save();render();return;}
  if(a==="dealersel"){S.dealer=+b.dataset.d;save();render();return;}
+ if(a==="msg-open"){var _mc=b.dataset.c;S.msgView=_mc;if(_mc&&_mc!=="__street__"&&_mc!=="__roach__"){var _gc=getContact(_mc);}save();render();return;}
+ if(a==="msg-back"){S.msgView="list";save();render();return;}
+ if(a==="fulfill-order"){doFulfillOrder(b.dataset.contact);return;}
  if(a==="dealcat"){S.dealcat=b.dataset.c;save();render();return;}
  if(a==="chillview"){S.chillview=b.dataset.v;save();render();return;}
  if(a==="chillsel"){S.chillStrain=b.dataset.strain;save();render();return;}
