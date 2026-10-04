@@ -278,6 +278,27 @@ window.hatchWidget={
 .hw-appgrid{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -18px;padding:0 18px 8px;flex:none;min-height:0}
 .hw-appgrid::-webkit-scrollbar{display:none}
 .hw-page{flex:0 0 100%;display:grid;grid-template-columns:repeat(4,1fr);gap:20px 6px;scroll-snap-align:start;scroll-snap-stop:always;align-content:start}
+/* ===== FOLD/TABLET RESPONSIVE ===== */
+@media(min-width:600px){
+ .pg{max-width:700px}
+ .shade-scrim,.notif-shade,.android-recents{max-width:700px}
+ .hw-page{grid-template-columns:repeat(6,1fr);gap:24px 10px}
+ .hw-appgrid{margin:0 -24px;padding:0 24px 8px}
+ .android-home{padding:22px 24px 0}
+ .hw-status{height:54px}
+ .hw-weather{padding:18px 26px}
+}
+@media(min-width:900px){
+ .pg{max-width:960px}
+ .shade-scrim,.notif-shade,.android-recents{max-width:960px}
+ .hw-page{grid-template-columns:repeat(8,1fr);gap:26px 12px}
+ .hw-appgrid{margin:0 -28px;padding:0 28px 8px}
+ .android-home{padding:26px 28px 0}
+ /* 2-column product lists on wide */
+ .pane-street{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;align-content:start}
+ .pane-street>.appnav,.pane-street>.amtrow,.pane-street>.dchips,.pane-street>.lock{grid-column:1/-1}
+ .pane-street>.drow2{margin:0 0 10px}
+}
 .hw-dots span{cursor:pointer}
 .aa-sub{font-size:12px;color:rgba(255,255,255,.55);font-weight:400;margin-top:-6px}
 .hw-dots{display:flex;justify-content:center;gap:9px;padding:10px 0 12px;flex:none}
@@ -1784,6 +1805,9 @@ var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradi
 function appName(a){if(a==="street")return "Street Deal";return a.charAt(0).toUpperCase()+a.slice(1);}
 function save(){if(bridge)bridge.setState(S);}
 if(bridge)window.addEventListener("hatch-widget-state",function(e){if(e.detail&&e.detail.state){S=normalize(e.detail.state);}});
+// Re-layout home grid when viewport crosses fold/tablet breakpoints
+(function(){if(typeof window==="undefined"||typeof window.addEventListener!=="function")return;var _lastW=hwWinW();var _rt=null;function _bp(w){return w>=900?2:w>=600?1:0;}
+window.addEventListener("resize",function(){if(_rt)clearTimeout(_rt);_rt=setTimeout(function(){var w=hwWinW();if(_bp(w)!==_bp(_lastW)){_lastW=w;if(typeof S!=="undefined"&&S&&S.view==="home"&&typeof layoutHome==="function")layoutHome();}},250);});})();
 
 function unlocked(){var t=pLevel();return PKEYS.filter(function(k){return PRODUCTS[k].tier<=t;});}
 function stashTotal(){return PKEYS.reduce(function(a,k){return a+(S.stash[k]||0);},0)+GROWKEYS.reduce(function(a,k){return a+(S.joints[k]||0);},0);}
@@ -3836,7 +3860,7 @@ function layoutHome(){
  // rebuild pages
  var old=grid.querySelectorAll(".hw-page");
  for(i=0;i<old.length;i++)old[i].parentNode.removeChild(old[i]);
- var perPage=8,page=null;
+ var perPage=hwWinW()>=900?16:hwWinW()>=600?12:8,page=null;
  for(i=0;i<keys.length;i++){
   if(i%perPage===0){page=d.createElement("div");page.className="hw-page";grid.appendChild(page);}
   var el=null,k=keys[i];
