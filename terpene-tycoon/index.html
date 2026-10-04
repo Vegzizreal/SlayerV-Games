@@ -1245,7 +1245,7 @@ function render(){
   GROWKEYS.forEach(function(k){
    var v=tierVis(PRODUCTS[k].tier);
    if(v===0)return;
-   if(v===1){dh+='<div class="drow2 locked"><span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span><div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' joints</div><div class="d2-sub"><span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></div></div></div>';return;}
+   if(v===1)return;
    var ju=sellU(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9));
    dh+='<div class="drow2"><span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span><div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' joints <b>'+(S.joints[k]||0)+'</b></div>'
     +'<div class="d2-sub">pays '+money(ju)+'/joint'+(bActive?'<span class="bufftag">+'+bpct+'%</span>':"")+'</div></div>'
@@ -1256,7 +1256,7 @@ function render(){
   keys.forEach(function(k){
    var v=tierVis(PRODUCTS[k].tier);
    if(v===0)return;
-   if(v===1){dh+='<div class="drow2 locked"><span class="picon xs '+(GROWKEYS.indexOf(k)>=0?'picon-bud" style="--c:'+PRODUCTS[k].c1:'picon-'+k)+'"></span><div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+'</div><div class="d2-sub"><span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></div></div></div>';return;}
+   if(v===1)return;
    var bp=ppu(PRODUCTS[k].price,d.buy[k]);
    var sp=ppu(PRODUCTS[k].price,d.sell[k]);
    var su=sellU(k,bp);
