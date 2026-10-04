@@ -57,6 +57,7 @@ window.hatchWidget={
  </div>
  <div class="android-appbar" hidden><button type="button" class="android-backbtn" data-act="android-back" aria-label="Back">&#8592;</button><span class="android-apptitle">Grow</span></div>
  <div class="android-home" hidden>
+  <button type="button" class="hw-donebtn" data-act="edit-done" hidden>Done</button>
   <div class="hw-weather">
    <div class="hw-wicon"><svg viewBox="0 0 48 48" width="58" height="58"><path d="M31 27a13 13 0 1 1-12.6-16.6A10.5 10.5 0 0 0 31 27z" fill="#f1f5f9"/><circle cx="35" cy="13" r="2.2" fill="#f1f5f9" opacity=".85"/><circle cx="40" cy="21" r="1.5" fill="#f1f5f9" opacity=".6"/></svg></div>
    <div class="hw-wtext">
@@ -68,6 +69,7 @@ window.hatchWidget={
   <div class="hw-datebar"><span class="hw-cal"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="rgba(255,255,255,.8)" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="3"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="8" y1="3" x2="8" y2="7" stroke-linecap="round"/><line x1="16" y1="3" x2="16" y2="7" stroke-linecap="round"/></svg></span><span class="ph-date">Sunday, October 4</span><span class="hw-evsep"> &#8226; </span><span class="hw-evcount">0</span><span class="hw-evtx"> events today</span></div>
   <div class="hw-search"><span class="hw-sicon"><svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="#9aa0a6" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg></span><input type="text" class="hw-sinput" placeholder="Search" data-hwsearch="1" autocomplete="off"><span class="hw-mic"><svg viewBox="0 0 24 24" width="23" height="23"><rect x="9" y="2" width="6" height="11" rx="3" fill="#4285f4"/><path d="M6.5 11.5a5.5 5.5 0 0 0 11 0" fill="none" stroke="#ea4335" stroke-width="2.2" stroke-linecap="round"/><line x1="12" y1="17" x2="12" y2="20.5" stroke="#34a853" stroke-width="2.2" stroke-linecap="round"/><line x1="8.8" y1="20.5" x2="15.2" y2="20.5" stroke="#fbbc05" stroke-width="2.2" stroke-linecap="round"/></svg></span><span class="hw-lens"><svg viewBox="0 0 24 24" width="23" height="23"><path d="M3.5 9V7.5A4.5 4.5 0 0 1 8 3h1.5v3H8a1.5 1.5 0 0 0-1.5 1.5V9z" fill="#4285f4"/><circle cx="16.8" cy="8.8" r="4.6" fill="none" stroke="#ea4335" stroke-width="2.2"/><path d="M3.5 14v2.5A4.5 4.5 0 0 0 8 21h1.5v-3H8a1.5 1.5 0 0 1-1.5-1.5V14z" fill="#fbbc05"/><circle cx="19.5" cy="17.8" r="2.1" fill="#34a853"/></svg></span></div>
   <div class="android-appgrid hw-appgrid">
+   <div class="hw-page">
    <button type="button" class="android-app" data-act="openapp" data-app="deal" data-hwkeys="messages co-op chat deal sell text"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#2563eb)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M24 7c-9.4 0-17 6.4-17 14.3 0 4.4 2.4 8.4 6.2 11l-1.6 6.2 6.8-3.4c1.8.5 3.7.8 5.6.8 9.4 0 17-6.4 17-14.3S33.4 7 24 7z" fill="#fff"/><circle cx="17" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="24" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="31" cy="21.5" r="2.9" fill="#3b82f6"/></svg></span><span class="aa-label">Messages</span><span class="aa-sub">Co-op Chat</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="browser" data-hwkeys="chrome battle match browser internet web realtor"><span class="aa-icon" style="background:#ffffff"><svg viewBox="0 0 48 48" width="38" height="38"><circle cx="24" cy="24" r="14" fill="none" stroke="#ea4335" stroke-width="7.5" stroke-dasharray="29.3 58.7" transform="rotate(-90 24 24)"/><circle cx="24" cy="24" r="14" fill="none" stroke="#fbbc05" stroke-width="7.5" stroke-dasharray="29.3 58.7" transform="rotate(30 24 24)"/><circle cx="24" cy="24" r="14" fill="none" stroke="#34a853" stroke-width="7.5" stroke-dasharray="29.3 58.7" transform="rotate(150 24 24)"/><circle cx="24" cy="24" r="8.5" fill="#1a73e8"/><circle cx="24" cy="24" r="8.5" fill="none" stroke="#fff" stroke-width="1.6"/></svg></span><span class="aa-label">Chrome</span><span class="aa-sub">Battle Match</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="stash" data-hwkeys="notes quest log stash inventory"><span class="aa-icon" style="background:linear-gradient(135deg,#fde047,#f5c211)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M12 5h16l10 10v25a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3z" fill="#fff"/><path d="M28 5l10 10H28z" fill="#e2e8f0"/><rect x="15" y="22" width="18" height="2.6" rx="1.3" fill="#cbd5e1"/><rect x="15" y="28.5" width="18" height="2.6" rx="1.3" fill="#cbd5e1"/><rect x="15" y="35" width="11" height="2.6" rx="1.3" fill="#cbd5e1"/></svg></span><span class="aa-label">Notes</span><span class="aa-sub">Quest Log</span></button>
@@ -76,14 +78,15 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="cook" data-hwkeys="gallery skins cook lab products"><span class="aa-icon" style="background:#ffffff"><svg viewBox="0 0 48 48" width="38" height="38"><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#ea4335"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#fbbc05" transform="rotate(60 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#34a853" transform="rotate(120 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#1a73e8" transform="rotate(180 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#a142f4" transform="rotate(240 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#ff6d01" transform="rotate(300 24 24)"/><circle cx="24" cy="24" r="6.5" fill="#fff"/></svg></span><span class="aa-label">Gallery</span><span class="aa-sub">Skins</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="clinic" data-hwkeys="clock events clinic health heal time"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><g fill="#fff"><circle cx="24" cy="9.5" r="1.9"/><circle cx="24" cy="38.5" r="1.9"/><circle cx="9.5" cy="24" r="1.9"/><circle cx="38.5" cy="24" r="1.9"/><circle cx="13.8" cy="13.8" r="1.9"/><circle cx="34.2" cy="13.8" r="1.9"/><circle cx="13.8" cy="34.2" r="1.9"/><circle cx="34.2" cy="34.2" r="1.9"/></g><line x1="24" y1="24" x2="24" y2="14.5" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/><line x1="24" y1="24" x2="30.5" y2="29" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg></span><span class="aa-label">Clock</span><span class="aa-sub">Events</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="settings" data-hwkeys="settings game settings options wallpaper"><span class="aa-icon" style="background:linear-gradient(135deg,#a8b0bc,#6b7280)"><svg viewBox="0 0 48 48" width="36" height="36"><g fill="#fff"><rect x="20.5" y="5" width="7" height="11" rx="2"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(45 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(90 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(135 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(180 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(225 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(270 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(315 24 24)"/><circle cx="24" cy="24" r="10.5"/></g><circle cx="24" cy="24" r="5" fill="#6b7280"/></svg></span><span class="aa-label">Settings</span><span class="aa-sub">Game Settings</span></button>
-  </div>
-  <div class="hw-dots"><span class="on"></span><span></span><span></span></div>
-  <div class="hw-dock">
+   </div>
+   <div class="hw-page">
    <button type="button" class="android-app" data-act="openapp" data-app="deal" data-hwkeys="phone lobby deal call"><span class="aa-icon" style="background:linear-gradient(135deg,#4ade80,#16a34a)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M13 6C9.7 6 7 8.7 7 12c0 12.4 10.1 24.5 22.5 26 3.9.5 7-2.6 6.5-6.5l-.7-4.6c-.3-1.9-2.1-3.1-4-2.7l-4.9 1.2c-3.8-2-6.9-5.1-8.9-8.9l1.2-4.9c.4-1.9-.8-3.7-2.7-4z" fill="#fff"/></svg></span><span class="aa-label">Phone</span><span class="aa-sub">Lobby</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="stash" data-hwkeys="my files inventory stash"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M5 13a3 3 0 0 1 3-3h11l4 5h14a3 3 0 0 1 3 3v3H5z" fill="#7db4fb"/><path d="M5 19h38v13a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z" fill="#bcd8fe"/></svg></span><span class="aa-label">My Files</span><span class="aa-sub">Inventory</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="clinic" data-hwkeys="health guild clinic"><span class="aa-icon" style="background:linear-gradient(135deg,#2b2740,#1a1826)"><svg viewBox="0 0 48 48" width="36" height="36"><defs><linearGradient id="thg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset=".55" stop-color="#f472b6"/><stop offset="1" stop-color="#fb923c"/></linearGradient></defs><path d="M24 41C15 33.5 8 27.5 8 19.5 8 14 12 10 17 10c3.5 0 5.8 1.8 7 4 1.2-2.2 3.5-4 7-4 5 0 9 4 9 9.5 0 8-7 14-16 21.5z" fill="url(#thg)"/><polyline points="13.5,22.5 19.5,22.5 22.5,17 26,28 29,22.5 34.5,22.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="aa-label">Health</span><span class="aa-sub">Guild</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="store" data-hwkeys="store shop buy seeds"><span class="aa-icon" style="background:linear-gradient(135deg,#5ea0fa,#8b5cf6)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M11 17h26l-2.2 21a3 3 0 0 1-3 2.7H16.2a3 3 0 0 1-3-2.7z" fill="#fff"/><path d="M17.5 17v-1.5a6.5 6.5 0 0 1 13 0V17" fill="none" stroke="#fff" stroke-width="3.2"/><path d="M24 24.5l1.7 3.4 3.8.6-2.7 2.7.6 3.8-3.4-1.8-3.4 1.8.6-3.8-2.7-2.7 3.8-.6z" fill="#8b5cf6"/></svg></span><span class="aa-label">Store</span><span class="aa-sub">Shop</span></button>
+   </div>
   </div>
+  <div class="hw-dots"><span class="on" data-hwpage="0"></span><span data-hwpage="1"></span></div>
  </div>
  <div class="pg-head">
   <div class="pg-title">TERPENE TYCOON<span class="pg-sub">grow op</span></div>
@@ -233,14 +236,14 @@ window.hatchWidget={
 .hw-sinput::placeholder{color:rgba(255,255,255,.45)}
 .hw-mic{flex:none;display:flex;align-items:center}
 .hw-lens{flex:none;display:flex;align-items:center}
-.hw-appgrid{margin-bottom:8px}
+.hw-appgrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -18px;padding:0 18px 8px}
+.hw-appgrid::-webkit-scrollbar{display:none}
+.hw-page{flex:0 0 100%;display:grid;grid-template-columns:repeat(4,1fr);gap:26px 6px;scroll-snap-align:start;scroll-snap-stop:always;align-content:start}
+.hw-dots span{cursor:pointer}
 .aa-sub{font-size:12px;color:rgba(255,255,255,.55);font-weight:400;margin-top:-6px}
 .hw-dots{display:flex;justify-content:center;gap:9px;padding:16px 0 20px}
 .hw-dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25)}
 .hw-dots span.on{background:#fff}
-.hw-dock{display:flex;justify-content:space-around;background:rgba(30,30,38,.72);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.09);border-radius:32px;padding:18px 12px 16px;margin:0 -4px 10px;box-shadow:0 8px 24px rgba(0,0,0,.5)}
-.hw-dock .android-app{flex:1}
-.hw-dock .aa-icon{width:64px;height:64px}
 .pg[data-theme="light"] .hw-weather{background:rgba(255,255,255,.75)}
 .pg[data-theme="light"] .hw-wloc{color:#241d33}
 .pg[data-theme="light"] .hw-wcond{color:#3a3348}
@@ -252,7 +255,6 @@ window.hatchWidget={
 .pg[data-theme="light"] .aa-sub{color:rgba(0,0,0,.5)}
 .pg[data-theme="light"] .hw-dots span{background:rgba(0,0,0,.2)}
 .pg[data-theme="light"] .hw-dots span.on{background:#241d33}
-.pg[data-theme="light"] .hw-dock{background:rgba(255,255,255,.72)}
 /* ===== CLEAN PHONE HOME MODE: hide all game chrome on home screen ===== */
 .pg.home-mode .pg-head,
 .pg.home-mode .roach-topbar,
@@ -264,6 +266,21 @@ window.hatchWidget={
 .pg.home-mode .pg-tabs,
 .pg.home-mode .pg-hint{display:none!important}
 .pg.home-mode .android-home{order:1;flex:1;min-height:0}
+/* ===== Home screen edit mode (Samsung-style wiggle) ===== */
+@keyframes hw-wiggle{0%{transform:rotate(-2.2deg)}50%{transform:rotate(2.2deg)}100%{transform:rotate(-2.2deg)}}
+@keyframes hw-editpop{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+.android-home{position:relative}
+.pg.edit-mode .hw-appgrid{touch-action:none;overflow:hidden}
+.pg.edit-mode .hw-appgrid .android-app{position:relative;animation:hw-wiggle .45s ease-in-out infinite,hw-editpop .32s ease-out 1;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.pg.edit-mode .hw-appgrid .android-app:nth-child(2n){animation-delay:.13s,0s}
+.pg.edit-mode .hw-appgrid .android-app:nth-child(3n){animation-delay:.26s,0s}
+.pg.edit-mode .hw-appgrid .android-app:nth-child(4n){animation-delay:.07s,0s}
+.pg.edit-mode .hw-appgrid .android-app.hw-dragging{animation:none;z-index:10;cursor:grabbing}
+.pg.edit-mode .hw-appgrid .android-app.hw-dragging .aa-icon{transform:scale(1.14);box-shadow:0 14px 32px rgba(0,0,0,.7)}
+.hw-xbadge{display:none;position:absolute;top:-4px;right:4px;width:24px;height:24px;border-radius:50%;background:#3a3a44;color:#fff;font-size:16px;font-weight:700;line-height:24px;text-align:center;z-index:5;box-shadow:0 2px 8px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25)}
+.pg.edit-mode .hw-xbadge{display:block}
+.hw-donebtn{position:absolute;top:12px;right:16px;z-index:30;background:rgba(74,143,247,.95);color:#fff;border:0;border-radius:18px;padding:9px 22px;font-size:15px;font-weight:700;font-family:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.hw-donebtn[hidden]{display:none}
 /* ===== Swipe-down notification shade (Samsung style) ===== */
 .shade-scrim{position:fixed;left:50%;transform:translateX(-50%);top:0;bottom:0;width:100%;max-width:480px;background:rgba(0,0,0,.5);z-index:70}
 .shade-scrim[hidden]{display:none}
@@ -1310,7 +1327,7 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:""};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[]};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
  var oldSave=(typeof s.xp!=="number");
@@ -1327,6 +1344,8 @@ function normalize(s){
  s=Object.assign({},DEF,s);
  if(!Array.isArray(s.notifs))s.notifs=[];
  if(typeof s.wallpaper!=="string")s.wallpaper="";
+ if(!Array.isArray(s.iconOrder))s.iconOrder=[];
+ if(!Array.isArray(s.hiddenApps))s.hiddenApps=[];
  if(s.theme!=="light"&&s.theme!=="dark")s.theme="dark";
  s.stash=Object.assign(emptyMaps(),s.stash);
  s.joints=Object.assign(growMaps(),s.joints);
@@ -1744,6 +1763,7 @@ function render(){
  var _hm=q(".android-home");if(_hm)_hm.hidden=battling||S.view!=="home";
  // home-mode: clean phone screen hides all legacy game chrome via CSS
  var _pg=q(".pg");if(_pg)_pg.classList.toggle("home-mode",!battling&&S.view==="home");
+ if(S.view!=="home"&&editMode)setEditMode(false);
  if(_hm){if(S.wallpaper&&/^https?:\/\//i.test(S.wallpaper)){_hm.style.backgroundImage="url(\""+S.wallpaper.replace(/"/g,"")+"\")";_hm.style.backgroundSize="cover";_hm.style.backgroundPosition="center";}else{_hm.style.backgroundImage="";_hm.style.backgroundSize="";_hm.style.backgroundPosition="";}}
  var _ab=q(".android-appbar");
  if(_ab){_ab.hidden=!inApp||battling;
@@ -2806,6 +2826,8 @@ function settingsHTML(){
  h+='<div class="wp-btns"><button type="button" class="wp-apply" data-act="wp-apply">Apply</button>';
  if(S.wallpaper){h+='<button type="button" class="wp-reset" data-act="wp-reset">Reset</button>';}
  h+='</div><div class="sdesc" style="margin-top:6px">Paste a direct image link to change the home screen wallpaper.</div></div>';
+ h+='<div class="shopsec">HOME SCREEN</div>';
+ h+='<div class="wp-wrap"><div class="sdesc" style="margin-bottom:8px">Long-press any home screen icon to rearrange. Tap &times; to hide an app.</div><div class="wp-btns"><button type="button" class="wp-reset" data-act="layout-reset" style="flex:1">Reset home layout</button></div></div>';
  h+='<div class="shopsec">LAB COOK SPEEDS</div>';
  var cur=S.setdrug||"hash";
  if(RKEYS.indexOf(cur)<0)cur="hash";
@@ -2889,7 +2911,29 @@ function settleJob(){
  }
 }
 root.addEventListener("click",function(e){
+ var hd=e.target&&e.target.closest?e.target.closest("[data-hwpage]"):null;
+ if(hd&&hd.dataset&&hd.dataset.hwpage!==undefined&&hd.dataset.hwpage!==""){
+  var grid=document.querySelector(".hw-appgrid");
+  if(grid){var w=grid.clientWidth||1,L=(+hd.dataset.hwpage)*w;if(typeof grid.scrollTo==="function")grid.scrollTo({left:L,behavior:"smooth"});else grid.scrollLeft=L;}
+  return;
+ }
  var b=e.target.closest?e.target.closest("[data-act]"):null;
+ if(b&&b.dataset.act==="edit-done"){setEditMode(false);return;}
+ if(b&&b.dataset.act==="hide-app"){
+  var _hb=b.closest?b.closest(".hw-appgrid .android-app"):null;
+  if(_hb){var _hl=hwLabel(_hb);if(S.hiddenApps.indexOf(_hl)<0){S.hiddenApps.push(_hl);_hb.style.display="none";save();}}
+  return;
+ }
+ if(b&&b.dataset.act==="layout-reset"){
+  S.hiddenApps=[];
+  S.iconOrder=(_hwDefault&&_hwDefault.length)?_hwDefault.slice():[];
+  save();applyIconOrder();S.msg="Home layout reset.";save();render();return;
+ }
+ if(editMode){
+  var _eb=e.target&&e.target.closest?e.target.closest(".hw-appgrid .android-app"):null;
+  if(_eb){if(e.preventDefault)e.preventDefault();return;}
+  setEditMode(false);
+ }
  if(!b||b.disabled)return;
  var a=b.dataset.act;
  if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);save();render();return;}
@@ -2980,7 +3024,9 @@ root.addEventListener("input",function(e){
   var apps=document.querySelectorAll(".hw-appgrid .android-app");
   for(var i=0;i<apps.length;i++){
    var keys=(apps[i].dataset.hwkeys||"").toLowerCase();
-   apps[i].style.display=(!qv||keys.indexOf(qv)>=0)?"":"none";
+   var _al=apps[i].querySelector(".aa-label"),_an=_al?_al.textContent.trim():"";
+   var _hd=S.hiddenApps.indexOf(_an)>=0;
+   apps[i].style.display=(_hd||(qv&&keys.indexOf(qv)<0))?"none":"";
   }
   return;
  }
@@ -3003,6 +3049,18 @@ root.addEventListener("input",function(e){
  }
  save();
 });
+/* Home app pages: swipe dots + dot tap navigation */
+root.addEventListener("scroll",function(e){
+ var t=e.target;
+ if(t&&t.classList&&t.classList.contains("hw-appgrid")){
+  var w=t.clientWidth||1,idx=Math.round(t.scrollLeft/w);
+  var pages=t.querySelectorAll(".hw-page").length;
+  idx=Math.max(0,Math.min(pages-1,idx));
+  var dots=document.querySelectorAll(".hw-dots span");
+  for(var i=0;i<dots.length;i++)dots[i].classList.toggle("on",i===idx);
+ }
+},true);
+
 root.addEventListener("change",function(e){
  var t=e.target;
  if(t&&t.type==="range"&&t.dataset&&t.dataset.srange){
@@ -3036,6 +3094,103 @@ root.addEventListener("change",function(e){
   sh.addEventListener("mouseup",function(e){end(e.clientY,e.clientX);});
  }
 })();
+/* ===== Home screen edit mode: long-press (1.5s) for Samsung-style wiggle, drag to reorder ===== */
+var editMode=false;
+var _hwDefault=null;
+var _lpTimer=null,_lpBtn=null,_lpX=0,_lpY=0,_dragBtn=null,_dragPid=null;
+function hwLabel(b){var l=b.querySelector(".aa-label");return l?l.textContent.trim():"";}
+function setEditMode(on){
+ editMode=!!on;
+ var pg=q(".pg");if(pg)pg.classList.toggle("edit-mode",editMode);
+ var d=q(".hw-donebtn");if(d)d.hidden=!editMode;
+ if(!editMode){_dragBtn=null;_dragPid=null;
+  var g=q(".hw-appgrid");
+  if(g){var ds=g.querySelectorAll(".android-app.hw-dragging");for(var i=0;i<ds.length;i++)ds[i].classList.remove("hw-dragging");}
+ }
+}
+function persistIconOrder(){
+ var grid=q(".hw-appgrid");if(!grid)return;
+ var order=[];
+ var pages=grid.querySelectorAll(".hw-page");
+ for(var p=0;p<pages.length;p++){
+  var btns=pages[p].querySelectorAll(".android-app");
+  for(var i=0;i<btns.length;i++)order.push(hwLabel(btns[i]));
+ }
+ if(order.length){S.iconOrder=order;save();}
+}
+function applyIconOrder(){
+ var grid=q(".hw-appgrid");if(!grid)return;
+ var btns=Array.prototype.slice.call(grid.querySelectorAll(".android-app"));
+ if(!btns.length)return;
+ btns.forEach(function(b){
+  if(!b.querySelector(".hw-xbadge")){
+   var s=document.createElement("span");s.className="hw-xbadge";s.textContent="\u00d7";s.setAttribute("data-act","hide-app");b.appendChild(s);
+  }
+ });
+ var labels=btns.map(hwLabel);
+ if(!_hwDefault)_hwDefault=labels.slice();
+ var saved=S.iconOrder,valid=Array.isArray(saved)&&saved.length===labels.length;
+ if(valid){for(var i=0;i<saved.length;i++){if(labels.indexOf(saved[i])<0){valid=false;break;}}}
+ if(!valid){S.iconOrder=labels.slice();}
+ else{
+  var byLabel={};
+  btns.forEach(function(b){byLabel[hwLabel(b)]=b;});
+  var pages=grid.querySelectorAll(".hw-page"),ordered=[];
+  for(var k=0;k<saved.length;k++){if(byLabel[saved[k]])ordered.push(byLabel[saved[k]]);}
+  for(var p=0;p<pages.length;p++){
+   var slice=ordered.slice(p*8,p*8+8);
+   for(var j=0;j<slice.length;j++)pages[p].appendChild(slice[j]);
+  }
+ }
+ var all=grid.querySelectorAll(".android-app");
+ for(var h=0;h<all.length;h++){all[h].style.display=(S.hiddenApps.indexOf(hwLabel(all[h]))>=0)?"none":"";}
+}
+function bindEditMode(){
+ var grid=q(".hw-appgrid");if(!grid||grid._hwBound)return;grid._hwBound=true;
+ grid.addEventListener("contextmenu",function(e){if(e.target&&e.target.closest&&e.target.closest(".android-app"))e.preventDefault();});
+ grid.addEventListener("pointerdown",function(e){
+  if(S.view!=="home"||!e.target||!e.target.closest)return;
+  var b=e.target.closest(".android-app");
+  if(!b||b.style.display==="none")return;
+  _lpBtn=b;_lpX=e.clientX;_lpY=e.clientY;_dragPid=(e.pointerId===undefined?1:e.pointerId);
+  if(_lpTimer)clearTimeout(_lpTimer);
+  _lpTimer=setTimeout(function(){
+   _lpTimer=null;
+   if(!_lpBtn||S.view!=="home"){_lpBtn=null;return;}
+   setEditMode(true);
+   _dragBtn=_lpBtn;_dragBtn.classList.add("hw-dragging");
+   /* NOTE: no explicit setPointerCapture here — touch applies implicit capture
+      to the button, so the follow-up click still targets the button and gets
+      swallowed by the edit-mode guard. Explicit capture would retarget the
+      click to the grid and wrongly exit edit mode. */
+  },1500);
+ });
+ grid.addEventListener("pointermove",function(e){
+  if(_lpTimer){
+   if(Math.abs(e.clientX-_lpX)>10||Math.abs(e.clientY-_lpY)>10){clearTimeout(_lpTimer);_lpTimer=null;_lpBtn=null;}
+   return;
+  }
+  if(_dragBtn&&(e.pointerId===undefined||e.pointerId===_dragPid)){
+   if(e.cancelable&&e.preventDefault)e.preventDefault();
+   var el=document.elementFromPoint?document.elementFromPoint(e.clientX,e.clientY):null;
+   var over=el&&el.closest?el.closest(".hw-appgrid .android-app"):null;
+   if(over&&over!==_dragBtn&&over.style.display!=="none"){
+    var r=over.getBoundingClientRect();
+    if(e.clientX>r.left+r.width/2){if(over.nextSibling!==_dragBtn)over.parentNode.insertBefore(_dragBtn,over.nextSibling);}
+    else over.parentNode.insertBefore(_dragBtn,over);
+   }
+  }
+ },{passive:false});
+ function _endDrag(){
+  if(_lpTimer){clearTimeout(_lpTimer);_lpTimer=null;}
+  if(_dragBtn){_dragBtn.classList.remove("hw-dragging");_dragBtn=null;_dragPid=null;persistIconOrder();}
+  _lpBtn=null;
+ }
+ grid.addEventListener("pointerup",_endDrag);
+ grid.addEventListener("pointercancel",_endDrag);
+}
+applyIconOrder();
+bindEditMode();
 render();
 tick();
 setInterval(tick,15000);
