@@ -1779,16 +1779,16 @@ function normalize(s){
  if(!Array.isArray(s.iconOrder))s.iconOrder=[];
  if(!Array.isArray(s.hiddenApps)||s.hiddenApps.length)s.hiddenApps=[];
  /* territory heat */
- var _tids=["downtown","suburbs","industrial","waterfront","uptown"];
+ var _tids=["home","downtown","suburbs","industrial","waterfront","uptown"];
  if(!s.terr||typeof s.terr!=="object"||!s.terr.zones||typeof s.terr.zones!=="object"){
   var _oh=(typeof s.heat==="number"&&s.heat>0)?Math.min(100,Math.round(s.heat)):0;
-  s.terr={active:"industrial",zones:{industrial:{heat:{cops:_oh,gangs:0,fam:0},warned:{},cool:0}}};
+  s.terr={active:"home",zones:{home:{heat:{cops:_oh,gangs:0,fam:0},warned:{},cool:0}}};
  }else{
-  if(_tids.indexOf(s.terr.active)<0)s.terr.active="industrial";
-  // Fall back to Industrial if the saved active territory is now locked by level
+  if(_tids.indexOf(s.terr.active)<0)s.terr.active="home";
+  // Fall back to Home if the saved active territory is now locked by level
   var _sl=(typeof s.xp==="number")?lvl(s.xp):1;
   var _atd=null;for(var _ai=0;_ai<TERRITORIES.length;_ai++)if(TERRITORIES[_ai].id===s.terr.active)_atd=TERRITORIES[_ai];
-  if(_atd&&_sl<(_atd.unlock||1))s.terr.active="industrial";
+  if(_atd&&_sl<(_atd.unlock||1))s.terr.active="home";
   Object.keys(s.terr.zones).forEach(function(zid){
    var z=s.terr.zones[zid];
    if(!z||typeof z!=="object"||_tids.indexOf(zid)<0){delete s.terr.zones[zid];return;}
@@ -1899,6 +1899,8 @@ function heatTier(h){return h<30?0:h<60?1:h<85?2:3;}
 function heatStars(h){var n=heatTier(h)+1,s="";for(var i=0;i<5;i++)s+=i<n?"\u2605":"\u2606";return s;}
 /* ===== TERRITORY HEAT ===== */
 var TERRITORIES=[
+ {id:"home",name:"Home",sub:"Home turf — safe & low heat",price:1.0,heat:0.8,unlock:1,likes:"none",likesTxt:"No preference",
+  w:{cops:0.5,gangs:0.5,fam:0.3},color:"#d97706",grad:"linear-gradient(135deg,#92400e,#451a03)",nbors:["suburbs","industrial"]},
  {id:"industrial",name:"Industrial",sub:"Room to move, mid prices",price:1.0,heat:1.0,unlock:1,likes:"none",likesTxt:"No preference",
   w:{cops:0.7,gangs:1.0,fam:0.4},color:"#60a5fa",grad:"linear-gradient(135deg,#334155,#0f172a)",nbors:["downtown","suburbs","waterfront"]},
  {id:"suburbs",name:"Suburbs",sub:"Safe & quiet, lower prices",price:0.9,heat:0.7,unlock:3,likes:"lowbud",likesTxt:"Low-tier bud",
@@ -1912,9 +1914,9 @@ var TERRITORIES=[
 ];
 var HEAT_SOURCES=["cops","gangs","fam"];
 var HEAT_SRC_META={cops:{icon:"\uD83D\uDE94",name:"Cops"},gangs:{icon:"\uD83D\uDD2B",name:"Gangs"},fam:{icon:"\uD83C\uDFE0",name:"Families"}};
-function terrDef(id){for(var i=0;i<TERRITORIES.length;i++)if(TERRITORIES[i].id===id)return TERRITORIES[i];return TERRITORIES[2];}
+function terrDef(id){for(var i=0;i<TERRITORIES.length;i++)if(TERRITORIES[i].id===id)return TERRITORIES[i];return TERRITORIES[0];}
 function terrZone(id){
- if(!S.terr||typeof S.terr!=="object")S.terr={active:"industrial",zones:{}};
+ if(!S.terr||typeof S.terr!=="object")S.terr={active:"home",zones:{}};
  if(!S.terr.zones||typeof S.terr.zones!=="object")S.terr.zones={};
  var z=S.terr.zones[id];
  if(!z||typeof z!=="object"){z={heat:{cops:0,gangs:0,fam:0},warned:{},cool:0};S.terr.zones[id]=z;}
@@ -1928,7 +1930,7 @@ function terrTotal(id){var z=terrZone(id);return Math.max(z.heat.cops,z.heat.gan
 function syncGlobalHeat(){var m=0,i;for(i=0;i<TERRITORIES.length;i++)m=Math.max(m,terrTotal(TERRITORIES[i].id));S.heat=m;}
 function heatColor(h){return h<30?"#4ade80":h<60?"#fbbf24":h<85?"#fb923c":"#ef4444";}
 function addTerrHeat(src,rawAmt,terrId,skipGain){
- var t=terrDef(terrId||(S.terr&&S.terr.active)||"industrial");
+ var t=terrDef(terrId||(S.terr&&S.terr.active)||"home");
  var amt=skipGain?rawAmt:heatGain(Math.max(1,Math.round(rawAmt*(t.w[src]||1)*(t.heat||1))));
  var z=terrZone(t.id);
  z.heat[src]=Math.min(100,z.heat[src]+amt);
@@ -1936,7 +1938,7 @@ function addTerrHeat(src,rawAmt,terrId,skipGain){
  return amt;
 }
 function dealTerrHeat(g,big){
- var tid=(S.terr&&S.terr.active)||"industrial";
+ var tid=(S.terr&&S.terr.active)||"home";
  var base=2+g;
  addTerrHeat("cops",Math.ceil(base*0.6*(big?1.5:1)),tid);
  addTerrHeat("gangs",Math.ceil(base*0.5),tid);
@@ -2001,11 +2003,11 @@ function terrConsequenceCheck(tid,src){
  syncGlobalHeat();
 }
 function flushTerrMsg(){if(S._terrMsg){S.msg=S._terrMsg;S._terrMsg=null;}}
-function terrPriceMult(){return terrDef((S.terr&&S.terr.active)||"industrial").price;}
+function terrPriceMult(){return terrDef((S.terr&&S.terr.active)||"home").price;}
 function terrUnlocked(id){var t=terrDef(id);return pLevel()>=(t.unlock||1);}
 function terrPrefMult(k,isJoint){
- // Territory product preference: +15% for preferred, -10% for non-preferred. Industrial exempt.
- var t=terrDef((S.terr&&S.terr.active)||"industrial");
+ // Territory product preference: +15% for preferred, -10% for non-preferred. Home & Industrial exempt.
+ var t=terrDef((S.terr&&S.terr.active)||"home");
  if(!t.likes||t.likes==="none")return 1;
  var st=PRODUCTS[k];if(!st)return 1;
  var isBud=GROWKEYS.indexOf(k)>=0,pref=false,lk=t.likes;
@@ -2016,7 +2018,7 @@ function terrPrefMult(k,isJoint){
  return pref?1.15:0.9;
 }
 function reduceTerrHeat(terrId,amt){
- var z=terrZone(terrId||(S.terr&&S.terr.active)||"industrial");
+ var z=terrZone(terrId||(S.terr&&S.terr.active)||"home");
  var i;for(i=0;i<3;i++)z.heat[HEAT_SOURCES[i]]=Math.max(0,z.heat[HEAT_SOURCES[i]]-amt);
  syncGlobalHeat();
 }
@@ -2189,12 +2191,12 @@ function tabHeader(tab){
    +'<button type="button" class="bw-menubtn" data-act="bw-menu" aria-label="Menu">&#8942;</button></div>';
  }
  if(tab==="maps"){
-  var _ta=terrDef((S.terr&&S.terr.active)||"industrial");
+  var _ta=terrDef((S.terr&&S.terr.active)||"home");
   return '<div class="appnav"><div class="appnav-title"><span class="appnav-leaf">🗺️</span><div><b>Territories</b><span>pick your turf</span></div></div>'
    +'<div class="appnav-pill" style="border-color:'+_ta.color+';color:'+_ta.color+'">'+_ta.name+'</div></div>';
  }
  if(tab==="rep"){
-  var _ra=terrDef((S.terr&&S.terr.active)||"industrial");
+  var _ra=terrDef((S.terr&&S.terr.active)||"home");
   return '<div class="appnav"><div class="appnav-title"><span class="appnav-leaf">⭐</span><div><b>Reputation</b><span>turf & heat</span></div></div>'
    +'<div class="appnav-pill" style="border-color:'+_ra.color+';color:'+_ra.color+'">'+_ra.name+'</div></div>';
  }
@@ -2531,38 +2533,45 @@ function render(){
  function terrMapHTML(active){
   // GPS night-mode map: territories as interlocking PUZZLE PIECES (pure HTML
   // buttons — reliable mobile taps, no SVG).
-  // Industrial sits center; uptown/downtown top row; suburbs/waterfront flank.
+  // HOME sits center as the hub; uptown/downtown top row; suburbs/waterfront
+  // flank home; industrial spans the bottom. Home touches all five.
   // Pieces overlap slightly at seams; the .pz-knobs layer (pointer-events:none)
   // draws tab/blank joints so they read as meshed jigsaw. Outer edges carry
   // expansion connectors (otab/oblank) where future territories will slot in.
+  // Home has no outer edges (fully surrounded) — correct for the hub.
   // ADDING A TERRITORY: append {id,x,y,w,h,z} to PIECES (rect in % of
   // .gps-pzinner), add its seam joints {x,y,tab:"<id>"} and outer connectors
   // {x,y,o:"tab"|"blank",t:"<id>"} to KNOBS. Colors resolve via terrDef().
   var PIECES=[
-   {id:"uptown",    x:0,  y:0,  w:47, h:46, z:1},
-   {id:"downtown",  x:49, y:0,  w:51, h:46, z:2},
-   {id:"suburbs",   x:0,  y:44, w:31, h:56, z:5},
-   {id:"industrial",x:33, y:44, w:36, h:56, z:4},
-   {id:"waterfront",x:71, y:44, w:29, h:56, z:3}
+   {id:"uptown",    x:0,  y:0,  w:48, h:30, z:1},
+   {id:"downtown",  x:52, y:0,  w:48, h:30, z:2},
+   {id:"suburbs",   x:0,  y:28, w:28, h:40, z:3},
+   {id:"home",      x:30, y:28, w:40, h:40, z:6},
+   {id:"waterfront",x:72, y:28, w:28, h:40, z:4},
+   {id:"industrial",x:15, y:66, w:70, h:34, z:5}
   ];
   var KNOBS=[
    // seam joints (blank cut + tab on top, tab owned by listed territory)
-   {x:48,y:23,tab:"downtown"},    // uptown | downtown
-   {x:15,y:45,tab:"uptown"},      // uptown _ suburbs
-   {x:51,y:45,tab:"industrial"},   // downtown _ industrial
-   {x:85,y:45,tab:"waterfront"},   // downtown _ waterfront
-   {x:32,y:72,tab:"suburbs"},     // suburbs | industrial
-   {x:70,y:72,tab:"industrial"},   // industrial | waterfront
+   {x:50,y:15,tab:"downtown"},  // uptown | downtown
+   {x:24,y:29,tab:"uptown"},    // uptown _ suburbs
+   {x:50,y:29,tab:"home"},      // uptown/downtown _ home
+   {x:86,y:29,tab:"downtown"},  // downtown _ waterfront
+   {x:29,y:48,tab:"suburbs"},   // suburbs | home
+   {x:71,y:48,tab:"home"},      // home | waterfront
+   {x:22,y:67,tab:"suburbs"},   // suburbs _ industrial
+   {x:50,y:67,tab:"home"},      // home _ industrial
+   {x:78,y:67,tab:"waterfront"},// waterfront _ industrial
    // outer expansion connectors (future pieces slot in here)
-   {x:23,y:0,  o:"tab",  t:"uptown"},
-   {x:0, y:23, o:"blank",t:"uptown"},
-   {x:75,y:0,  o:"blank",t:"downtown"},
-   {x:100,y:23,o:"tab",  t:"downtown"},
-   {x:0, y:72, o:"tab",  t:"suburbs"},
-   {x:15,y:100,o:"blank",t:"suburbs"},
-   {x:51,y:100,o:"tab",  t:"industrial"},
-   {x:100,y:72,o:"blank",t:"waterfront"},
-   {x:85,y:100,o:"tab",  t:"waterfront"}
+   {x:24,y:0,  o:"tab",  t:"uptown"},
+   {x:0, y:15, o:"blank",t:"uptown"},
+   {x:76,y:0,  o:"blank",t:"downtown"},
+   {x:100,y:15,o:"tab",  t:"downtown"},
+   {x:0, y:48, o:"tab",  t:"suburbs"},
+   {x:100,y:48,o:"blank",t:"waterfront"},
+   {x:35,y:100,o:"tab",  t:"industrial"},
+   {x:65,y:100,o:"blank",t:"industrial"},
+   {x:15,y:83, o:"blank",t:"industrial"},
+   {x:85,y:83, o:"tab",  t:"industrial"}
   ];
   var h='';
   h+='<div class="gps-pzmap" role="img" aria-label="Territory puzzle map">';
@@ -2627,7 +2636,7 @@ function render(){
   return h;
  }
  function mapsHTML(){
-  var active=(S.terr&&S.terr.active)||"industrial";
+  var active=(S.terr&&S.terr.active)||"home";
   var h=tabHeader("maps");
   // GPS map only — full app height
   h+='<div class="gps-wrap gps-full">'+terrMapHTML(active)
@@ -2638,7 +2647,7 @@ function render(){
  }
  function repHTML(){
   // Reputation app: all territory management (cards with heat, set active, bribe)
-  var active=(S.terr&&S.terr.active)||"industrial";
+  var active=(S.terr&&S.terr.active)||"home";
   var h=tabHeader("rep");
   h+='<div class="rep-list">';
   TERRITORIES.forEach(function(t){
@@ -3371,7 +3380,7 @@ function tick(){
   if(now>=S.driftAt){var _nd=0;while(now>=S.driftAt&&_nd<24){driftDealers();S.driftAt+=4*60000;_nd++;}if(now>=S.driftAt)S.driftAt=now+4*60000;}
   // per-territory heat decay; attribute any unattributed global heat first (legacy/test compat)
   var _tm=0,_ti;for(_ti=0;_ti<TERRITORIES.length;_ti++)_tm=Math.max(_tm,terrTotal(TERRITORIES[_ti].id));
-  if(S.heat>_tm){var _az=terrZone((S.terr&&S.terr.active)||"industrial");_az.heat.cops=Math.min(100,_az.heat.cops+(S.heat-_tm));}
+  if(S.heat>_tm){var _az=terrZone((S.terr&&S.terr.active)||"home");_az.heat.cops=Math.min(100,_az.heat.cops+(S.heat-_tm));}
   var _hd=dtm*2.5;if(S.buffUntil&&now<S.buffUntil)_hd+=dtm*0.5;
   for(_ti=0;_ti<TERRITORIES.length;_ti++){var _tz=terrZone(TERRITORIES[_ti].id);var _si;for(_si=0;_si<3;_si++){var _ss=HEAT_SOURCES[_si];if(_tz.heat[_ss]>0)_tz.heat[_ss]=Math.max(0,_tz.heat[_ss]-_hd);}roachPanicCheck(TERRITORIES[_ti].id,"cops");roachPanicCheck(TERRITORIES[_ti].id,"gangs");roachPanicCheck(TERRITORIES[_ti].id,"fam");}
   syncGlobalHeat();
@@ -3909,8 +3918,8 @@ root.addEventListener("click",function(e){
  if(a==="buypapers"){if(S.cash>=PAPER_COST){S.cash-=PAPER_COST;S.papers+=PAPER_PACK;S.msg="Bought "+PAPER_PACK+" rolling papers.";save();render();}return;}
  if(a==="buyduffel"){var ti=DUFFEL.indexOf(S.stashCap);if(ti<DUFFEL.length-1){var nc=DUFFEL[ti+1];if(S.cash>=DUFFEL_COST[nc]){S.cash-=DUFFEL_COST[nc];S.stashCap=nc;S.msg="Duffel upgraded — carry "+nc+"g now.";save();render();}}return;}
  if(a==="buyprop"){var pr2=PROPS.filter(function(x){return x.id===b.dataset.prop;})[0];var owned=S.props.some(function(x){return x.id===pr2.id;});if(pr2&&!owned&&pr2.tier<=pLevel()&&S.cash>=pr2.cost){S.cash-=pr2.cost;S.props.push(mkProp(pr2.id));S.msg="New property: "+pr2.name+"! "+pr2.desc;save();render();}return;}
- if(a==="bribe"){var _bc=bribeCost();var _at=(S.terr&&S.terr.active)||"industrial";if(S.cash>=_bc&&terrTotal(_at)>0&&Date.now()>=S.lockedUntil){S.cash-=_bc;var _zb=terrZone(_at);var _bi;for(_bi=0;_bi<3;_bi++)_zb.heat[HEAT_SOURCES[_bi]]=Math.max(0,_zb.heat[HEAT_SOURCES[_bi]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+terrDef(_at).name+". Heat dropped.";save();render();}return;}
- if(a==="terr-select"){var _ts=b.dataset.t;if(_ts&&terrDef(_ts)){if(!terrUnlocked(_ts)){S.msg="Locked — unlocks at level "+terrDef(_ts).unlock+".";save();render();return;}if(!S.terr)S.terr={active:"industrial",zones:{}};S.terr.active=_ts;S.msg="Operating in "+terrDef(_ts).name+" now — prices \u00D7"+terrDef(_ts).price+".";save();render();}return;}
+ if(a==="bribe"){var _bc=bribeCost();var _at=(S.terr&&S.terr.active)||"home";if(S.cash>=_bc&&terrTotal(_at)>0&&Date.now()>=S.lockedUntil){S.cash-=_bc;var _zb=terrZone(_at);var _bi;for(_bi=0;_bi<3;_bi++)_zb.heat[HEAT_SOURCES[_bi]]=Math.max(0,_zb.heat[HEAT_SOURCES[_bi]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+terrDef(_at).name+". Heat dropped.";save();render();}return;}
+ if(a==="terr-select"){var _ts=b.dataset.t;if(_ts&&terrDef(_ts)){if(!terrUnlocked(_ts)){S.msg="Locked — unlocks at level "+terrDef(_ts).unlock+".";save();render();return;}if(!S.terr)S.terr={active:"home",zones:{}};S.terr.active=_ts;S.msg="Operating in "+terrDef(_ts).name+" now — prices \u00D7"+terrDef(_ts).price+".";save();render();}return;}
  if(a==="terr-bribe"){var _tbb=b.dataset.t,_tbd=terrDef(_tbb),_bcb=bribeCost();if(S.cash>=_bcb&&terrTotal(_tbb)>0&&Date.now()>=S.lockedUntil){S.cash-=_bcb;var _zbb=terrZone(_tbb);var _bj;for(_bj=0;_bj<3;_bj++)_zbb.heat[HEAT_SOURCES[_bj]]=Math.max(0,_zbb.heat[HEAT_SOURCES[_bj]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+_tbd.name+". Heat dropped.";save();render();}else if(S.cash<_bcb){S.msg="Not enough cash for that.";save();render();}return;}
  if(a==="terr-pin"){var _tp=b.dataset.t;if(_tp&&terrDef(_tp)){if(!terrUnlocked(_tp)){S.msg=terrDef(_tp).name+" unlocks at level "+terrDef(_tp).unlock+".";save();render();return;}MAPSEL=_tp;render();}return;}
  if(a==="gps-zoom"){var _gz=b.dataset.z;GPSZOOM=_gz==="in"?Math.min(3,GPSZOOM+1):Math.max(1,GPSZOOM-1);render();return;}
