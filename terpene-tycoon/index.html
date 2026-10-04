@@ -1145,7 +1145,7 @@ function statusHTML(){
 }
 function tabHeader(tab){
  var c=TAB_COLORS[tab]||"#e5484d",ic=TAB_ICONS[tab]||"";
- return '<div class="store-screen-head"><span class="store-title" style="color:'+c+'">'+ic+tab.toUpperCase()+'</span><div class="pill"><b>'+money(S.cash)+'</b></div></div>'+statusHTML();
+ return '<div class="store-screen-head"><span class="store-title" style="color:'+c+'">'+ic+tab.toUpperCase()+'</span><div class="pill"><b>'+money(S.cash)+'</b></div></div>';
 }
 function render(){
  if(root&&root.dataset)root.dataset.theme=(S.theme==="light")?"light":"dark";
