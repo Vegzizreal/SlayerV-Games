@@ -1040,31 +1040,42 @@ window.hatchWidget={
 .pane-maps button{touch-action:manipulation}
 .gps-wrap{position:relative;margin:0 12px 12px;border-radius:16px;overflow:hidden;border:1px solid #1c261c;background:#0a0e0a}
 .gps-full{margin:12px;border-radius:16px;border:1px solid #1c261c;min-height:60vh}
-/* HTML GPS map (no SVG) */
-.gps-maphtml{position:relative;width:100%;aspect-ratio:5/4;overflow:hidden;background:#0a0e0a}
-.gps-zoomer{position:absolute;inset:0;transform-origin:center;transition:transform .25s ease}
-.gps-grid{position:absolute;inset:-3%;background-color:#0a0e0a;
- background-image:
-  linear-gradient(rgba(46,66,46,.6) 3px,transparent 3px),
-  linear-gradient(90deg,rgba(46,66,46,.6) 3px,transparent 3px),
-  linear-gradient(rgba(22,30,22,.9) 1px,transparent 1px),
-  linear-gradient(90deg,rgba(22,30,22,.9) 1px,transparent 1px);
- background-size:25% 25%,25% 25%,6.25% 6.25%,6.25% 6.25%}
-.gps-water{position:absolute;top:-3%;right:-3%;bottom:-3%;width:14%;background:#0d2231;border-left:2px solid #1e3a4f;border-radius:45% 0 0 45%/30% 0 0 30%}
-.gps-hwy{position:absolute;left:-12%;right:-12%;top:50%;height:12px;margin-top:-6px;background:rgba(42,58,42,.85);transform:rotate(-24deg)}
-.gps-hwy i{position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:repeating-linear-gradient(90deg,#3d5a3d 0 12px,transparent 12px 22px);opacity:.7;display:block}
-.gps-stlabel{position:absolute;font-size:9px;font-weight:600;letter-spacing:1px;color:rgba(232,232,232,.35);pointer-events:none;white-space:nowrap}
-/* map pins — real <button> elements for reliable mobile taps */
-.gps-pinbtn{position:absolute;width:76px;height:96px;margin:-48px 0 0 -38px;background:none;border:none;padding:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
-.gps-halo{position:absolute;left:50%;top:48px;width:60px;height:60px;margin:-30px 0 0 -30px;border-radius:50%;pointer-events:none;display:block}
-.gps-pindrop{position:absolute;left:50%;top:6px;width:34px;height:34px;margin-left:-17px;border:2px solid rgba(0,0,0,.55);border-radius:50% 50% 50% 6px;transform:rotate(-45deg);box-shadow:0 3px 6px rgba(0,0,0,.55);display:block}
-.gps-pindrop>span{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform:rotate(45deg);font-size:13px;font-weight:800;color:#0a0e0a}
-.gps-pinbtn.sel .gps-pindrop{box-shadow:0 0 0 2px #fff,0 3px 6px rgba(0,0,0,.55)}
-.gps-pinlabel{position:absolute;left:50%;top:54px;transform:translateX(-50%);background:rgba(6,10,6,.85);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:2px 8px;font-size:10px;font-weight:600;color:#e8e8e8;white-space:nowrap;pointer-events:none}
-.gps-pinbtn.sel .gps-pinlabel{border-color:#fff}
-.gps-you{position:absolute;left:50%;top:76px;transform:translateX(-50%);width:14px;height:14px;pointer-events:none;display:block}
-.gps-you .you-dot{position:absolute;inset:0;border-radius:50%;background:#3b82f6;border:2.5px solid #fff}
-.gps-you .you-pulse{position:absolute;inset:0;border-radius:50%;background:#3b82f6;animation:gps-pulse 2s ease-out infinite}
+/* HTML GPS map (no SVG) — PUZZLE-PIECE territories.
+   COORDINATE SYSTEM (for adding future territories):
+   - .gps-pzinner is the play area, inset 20px inside .gps-pzmap so outer
+     expansion knobs stay visible instead of being clipped.
+   - Pieces use left/top/width/height in % of .gps-pzinner (see PIECES in
+     terrMapHTML). Slight overlaps at seams let tab/blank knobs mesh.
+   - Knobs use left/top in % of .gps-pzinner, centered via negative margins.
+     Seam joints = blank (28px, map-bg) with tab (22px, piece color) on top.
+     Outer expansion = otab/oblank (26px) on the map's outer boundary.
+   - To add a territory: append a rect to PIECES, add its seam joints +
+     outer connectors to KNOBS, pick an unused region. Knob layer is
+     pointer-events:none so taps always reach the piece <button>s. */
+.gps-pzmap{position:relative;width:100%;aspect-ratio:5/4;overflow:hidden;background:#0a0e0a}
+.gps-pzgrid{position:absolute;inset:0;background-image:linear-gradient(rgba(46,66,46,.55) 2px,transparent 2px),linear-gradient(90deg,rgba(46,66,46,.55) 2px,transparent 2px),linear-gradient(rgba(22,30,22,.9) 1px,transparent 1px),linear-gradient(90deg,rgba(22,30,22,.9) 1px,transparent 1px);background-size:25% 25%,25% 25%,6.25% 6.25%,6.25% 6.25%;pointer-events:none}
+.gps-pzinner{position:absolute;inset:20px}
+.gps-pzzoom{position:absolute;inset:0;transform-origin:center;transition:transform .25s ease}
+/* puzzle pieces — real <button> elements for reliable mobile taps */
+.pz-piece{position:absolute;background:none;border:none;padding:0;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.pz-body{position:absolute;inset:0;border-radius:16px;border:2px solid;display:block}
+.pz-label{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;pointer-events:none;width:94%}
+.pz-label b{display:block;font-size:14px;color:#fff;letter-spacing:.5px;text-shadow:0 2px 4px rgba(0,0,0,.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pz-label small{font-size:11px;font-weight:700;text-shadow:0 1px 3px rgba(0,0,0,.85)}
+/* locked territory: mysterious silhouette teaser */
+.pz-piece.locked{cursor:default}
+.pz-piece.locked .pz-body{border-radius:16px;filter:saturate(.15) brightness(.35)}
+.pz-piece.locked .pz-label b{color:#d8d8d8 !important;text-shadow:0 0 12px rgba(255,255,255,.25),0 2px 4px rgba(0,0,0,.9)}
+/* knobs: decorative only, taps pass through to the piece buttons */
+.pz-knobs{position:absolute;inset:0;pointer-events:none}
+.pz-knob{position:absolute;border-radius:50%;display:block}
+.pz-knob.blank{width:28px;height:28px;margin:-14px 0 0 -14px;background:#0a0e0a}
+.pz-knob.tab{width:22px;height:22px;margin:-11px 0 0 -11px;background:var(--kc);box-shadow:0 1px 3px rgba(0,0,0,.6)}
+.pz-knob.otab{width:26px;height:26px;margin:-13px 0 0 -13px;background:var(--kc);border:2px solid rgba(0,0,0,.45);box-shadow:0 1px 4px rgba(0,0,0,.6)}
+.pz-knob.oblank{width:26px;height:26px;margin:-13px 0 0 -13px;background:#0a0e0a;border:2px solid rgba(255,255,255,.16)}
+.pz-you{position:absolute;left:50%;bottom:8px;transform:translateX(-50%);width:14px;height:14px;pointer-events:none;display:block}
+.pz-you .you-dot{position:absolute;inset:0;border-radius:50%;background:#3b82f6;border:2.5px solid #fff}
+.pz-you .you-pulse{position:absolute;inset:0;border-radius:50%;background:#3b82f6;animation:gps-pulse 2s ease-out infinite}
 @keyframes gps-pulse{0%{transform:scale(.4);opacity:.9}70%{transform:scale(2.2);opacity:0}100%{transform:scale(2.2);opacity:0}}
 .gps-compass{position:absolute;top:10px;right:10px;width:44px;height:44px;border-radius:50%;background:rgba(16,22,16,.92);border:1px solid #2d5a27;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.5)}
 .gps-compass b{color:#e5484d;font-size:13px;line-height:1}
@@ -1094,6 +1105,8 @@ window.hatchWidget={
 .pane-rep button{touch-action:manipulation}
 .rep-list{padding:0 12px;display:flex;flex-direction:column;gap:12px}
 .rep-card{background:#101610;border:1px solid #1c261c;border-left-width:4px;border-radius:16px;padding:14px 16px}
+.rep-card.locked{background:#080808;filter:saturate(.2)}
+.rep-locked-tease{margin-top:10px;font-size:12px;color:rgba(255,255,255,.45);font-style:italic;text-align:center;letter-spacing:.5px}
 .rep-head{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .rep-dot{width:14px;height:14px;border-radius:50%;flex:none}
 .rep-title{flex:1}
@@ -1697,7 +1710,11 @@ function addXP(n){
  if(after>before){
   var items=[];
   for(var t=before+1;t<=after;t++)items=items.concat(UNLOCKS[t]||[]);
-  S.msg="LEVEL UP — Level "+after+"! Unlocked: "+items.join(", ")+".";
+  // Territory unlock notifications
+  var terrs=[];
+  for(var ti=0;ti<TERRITORIES.length;ti++){var td=TERRITORIES[ti];if(td.unlock>before&&td.unlock<=after)terrs.push(td.name);}
+  terrs.forEach(function(tn){pushRoachMsg("NEW TURF UNLOCKED: "+tn+"! Check the Maps app, yo.");});
+  S.msg="LEVEL UP — Level "+after+"! Unlocked: "+items.join(", ")+(terrs.length?"; New territory: "+terrs.join(", "):"")+".";
   return true;
  }
  return false;
@@ -1768,6 +1785,10 @@ function normalize(s){
   s.terr={active:"industrial",zones:{industrial:{heat:{cops:_oh,gangs:0,fam:0},warned:{},cool:0}}};
  }else{
   if(_tids.indexOf(s.terr.active)<0)s.terr.active="industrial";
+  // Fall back to Industrial if the saved active territory is now locked by level
+  var _sl=(typeof s.xp==="number")?lvl(s.xp):1;
+  var _atd=null;for(var _ai=0;_ai<TERRITORIES.length;_ai++)if(TERRITORIES[_ai].id===s.terr.active)_atd=TERRITORIES[_ai];
+  if(_atd&&_sl<(_atd.unlock||1))s.terr.active="industrial";
   Object.keys(s.terr.zones).forEach(function(zid){
    var z=s.terr.zones[zid];
    if(!z||typeof z!=="object"||_tids.indexOf(zid)<0){delete s.terr.zones[zid];return;}
@@ -1878,11 +1899,16 @@ function heatTier(h){return h<30?0:h<60?1:h<85?2:3;}
 function heatStars(h){var n=heatTier(h)+1,s="";for(var i=0;i<5;i++)s+=i<n?"\u2605":"\u2606";return s;}
 /* ===== TERRITORY HEAT ===== */
 var TERRITORIES=[
- {id:"downtown",name:"Downtown",sub:"High prices, hot streets",price:1.25,heat:1.5,w:{cops:1.0,gangs:1.5,fam:0.5},color:"#f59e0b",grad:"linear-gradient(135deg,#7c2d12,#431407)",nbors:["uptown","waterfront","industrial"]},
- {id:"suburbs",name:"Suburbs",sub:"Safe & quiet, lower prices",price:0.85,heat:0.6,w:{cops:0.8,gangs:0.4,fam:1.4},color:"#4ade80",grad:"linear-gradient(135deg,#14532d,#052e16)",nbors:["uptown","industrial"]},
- {id:"industrial",name:"Industrial",sub:"Room to move, mid prices",price:1.0,heat:1.0,w:{cops:0.7,gangs:1.0,fam:0.4},color:"#60a5fa",grad:"linear-gradient(135deg,#334155,#0f172a)",nbors:["downtown","suburbs","waterfront"]},
- {id:"waterfront",name:"Waterfront",sub:"Tourist cash, watchful eyes",price:1.15,heat:1.25,w:{cops:1.3,gangs:0.8,fam:0.8},color:"#22d3ee",grad:"linear-gradient(135deg,#0e7490,#164e63)",nbors:["downtown","industrial"]},
- {id:"uptown",name:"Uptown",sub:"Big money, big risk",price:1.4,heat:1.75,w:{cops:1.5,gangs:1.2,fam:1.0},color:"#a78bfa",grad:"linear-gradient(135deg,#5b21b6,#2e1065)",nbors:["downtown","suburbs"]}
+ {id:"industrial",name:"Industrial",sub:"Room to move, mid prices",price:1.0,heat:1.0,unlock:1,likes:"none",likesTxt:"No preference",
+  w:{cops:0.7,gangs:1.0,fam:0.4},color:"#60a5fa",grad:"linear-gradient(135deg,#334155,#0f172a)",nbors:["downtown","suburbs","waterfront"]},
+ {id:"suburbs",name:"Suburbs",sub:"Safe & quiet, lower prices",price:0.9,heat:0.7,unlock:3,likes:"lowbud",likesTxt:"Low-tier bud",
+  w:{cops:0.8,gangs:0.4,fam:1.4},color:"#4ade80",grad:"linear-gradient(135deg,#14532d,#052e16)",nbors:["uptown","industrial"]},
+ {id:"downtown",name:"Downtown",sub:"High prices, hot streets",price:1.3,heat:1.6,unlock:5,likes:"party",likesTxt:"Joints, Edibles",
+  w:{cops:1.0,gangs:1.5,fam:0.5},color:"#f59e0b",grad:"linear-gradient(135deg,#7c2d12,#431407)",nbors:["uptown","waterfront","industrial"]},
+ {id:"waterfront",name:"Waterfront",sub:"Tourist cash, watchful eyes",price:1.2,heat:1.3,unlock:8,likes:"midbud",likesTxt:"Mid-tier bud",
+  w:{cops:1.3,gangs:0.8,fam:0.8},color:"#22d3ee",grad:"linear-gradient(135deg,#0e7490,#164e63)",nbors:["downtown","industrial"]},
+ {id:"uptown",name:"Uptown",sub:"Big money, big risk",price:1.5,heat:2.0,unlock:12,likes:"highend",likesTxt:"High-tier bud, Lab products",
+  w:{cops:1.5,gangs:1.2,fam:1.0},color:"#a78bfa",grad:"linear-gradient(135deg,#5b21b6,#2e1065)",nbors:["downtown","suburbs"]}
 ];
 var HEAT_SOURCES=["cops","gangs","fam"];
 var HEAT_SRC_META={cops:{icon:"\uD83D\uDE94",name:"Cops"},gangs:{icon:"\uD83D\uDD2B",name:"Gangs"},fam:{icon:"\uD83C\uDFE0",name:"Families"}};
@@ -1976,6 +2002,19 @@ function terrConsequenceCheck(tid,src){
 }
 function flushTerrMsg(){if(S._terrMsg){S.msg=S._terrMsg;S._terrMsg=null;}}
 function terrPriceMult(){return terrDef((S.terr&&S.terr.active)||"industrial").price;}
+function terrUnlocked(id){var t=terrDef(id);return pLevel()>=(t.unlock||1);}
+function terrPrefMult(k,isJoint){
+ // Territory product preference: +15% for preferred, -10% for non-preferred. Industrial exempt.
+ var t=terrDef((S.terr&&S.terr.active)||"industrial");
+ if(!t.likes||t.likes==="none")return 1;
+ var st=PRODUCTS[k];if(!st)return 1;
+ var isBud=GROWKEYS.indexOf(k)>=0,pref=false,lk=t.likes;
+ if(lk==="lowbud")pref=isBud&&!isJoint&&st.tier<=2;
+ else if(lk==="midbud")pref=isBud&&!isJoint&&st.tier>=3&&st.tier<=5;
+ else if(lk==="highend")pref=(isBud&&st.tier>=4)||(!isBud&&PKEYS.indexOf(k)>=0);
+ else if(lk==="party")pref=!!isJoint||k==="edibles";
+ return pref?1.15:0.9;
+}
 function reduceTerrHeat(terrId,amt){
  var z=terrZone(terrId||(S.terr&&S.terr.active)||"industrial");
  var i;for(i=0;i<3;i++)z.heat[HEAT_SOURCES[i]]=Math.max(0,z.heat[HEAT_SOURCES[i]]-amt);
@@ -2490,45 +2529,79 @@ function render(){
  return dh;
  }
  function terrMapHTML(active){
-  // GPS night-mode street map, pure HTML/CSS (no SVG — reliable mobile taps).
-  // Pin positions as % of map area (converted from old 400x320 SVG coords).
-  var pins=[
-   {id:"uptown",x:50,y:15},
-   {id:"suburbs",x:17,y:47},
-   {id:"downtown",x:50,y:47},
-   {id:"waterfront",x:83,y:47},
-   {id:"industrial",x:50,y:82}
+  // GPS night-mode map: territories as interlocking PUZZLE PIECES (pure HTML
+  // buttons — reliable mobile taps, no SVG).
+  // Industrial sits center; uptown/downtown top row; suburbs/waterfront flank.
+  // Pieces overlap slightly at seams; the .pz-knobs layer (pointer-events:none)
+  // draws tab/blank joints so they read as meshed jigsaw. Outer edges carry
+  // expansion connectors (otab/oblank) where future territories will slot in.
+  // ADDING A TERRITORY: append {id,x,y,w,h,z} to PIECES (rect in % of
+  // .gps-pzinner), add its seam joints {x,y,tab:"<id>"} and outer connectors
+  // {x,y,o:"tab"|"blank",t:"<id>"} to KNOBS. Colors resolve via terrDef().
+  var PIECES=[
+   {id:"uptown",    x:0,  y:0,  w:47, h:46, z:1},
+   {id:"downtown",  x:49, y:0,  w:51, h:46, z:2},
+   {id:"suburbs",   x:0,  y:44, w:31, h:56, z:5},
+   {id:"industrial",x:33, y:44, w:36, h:56, z:4},
+   {id:"waterfront",x:71, y:44, w:29, h:56, z:3}
+  ];
+  var KNOBS=[
+   // seam joints (blank cut + tab on top, tab owned by listed territory)
+   {x:48,y:23,tab:"downtown"},    // uptown | downtown
+   {x:15,y:45,tab:"uptown"},      // uptown _ suburbs
+   {x:51,y:45,tab:"industrial"},   // downtown _ industrial
+   {x:85,y:45,tab:"waterfront"},   // downtown _ waterfront
+   {x:32,y:72,tab:"suburbs"},     // suburbs | industrial
+   {x:70,y:72,tab:"industrial"},   // industrial | waterfront
+   // outer expansion connectors (future pieces slot in here)
+   {x:23,y:0,  o:"tab",  t:"uptown"},
+   {x:0, y:23, o:"blank",t:"uptown"},
+   {x:75,y:0,  o:"blank",t:"downtown"},
+   {x:100,y:23,o:"tab",  t:"downtown"},
+   {x:0, y:72, o:"tab",  t:"suburbs"},
+   {x:15,y:100,o:"blank",t:"suburbs"},
+   {x:51,y:100,o:"tab",  t:"industrial"},
+   {x:100,y:72,o:"blank",t:"waterfront"},
+   {x:85,y:100,o:"tab",  t:"waterfront"}
   ];
   var h='';
-  // Zoom: CSS transform scale on the inner layer (GPSZOOM 1-3)
-  h+='<div class="gps-maphtml" role="img" aria-label="Territory GPS map">';
-  h+='<div class="gps-zoomer" style="transform:scale('+GPSZOOM+')">';
-  // base + street grid (CSS gradients)
-  h+='<div class="gps-grid"></div>';
-  // water for waterfront (east edge)
-  h+='<div class="gps-water"></div>';
-  // highway diagonal
-  h+='<div class="gps-hwy"><i></i></div>';
-  // street name labels (flavor)
-  h+='<span class="gps-stlabel" style="left:5%;top:31%;transform:rotate(-90deg)">OAK ST</span>';
-  h+='<span class="gps-stlabel" style="left:35%;top:63%">TRAP AVE</span>';
-  h+='<span class="gps-stlabel" style="left:59%;top:25%;transform:rotate(-90deg)">5TH AVE</span>';
-  h+='<span class="gps-stlabel" style="left:70%;top:72%">PIER RD</span>';
-  h+='<span class="gps-stlabel" style="left:27%;top:89%">DEPOT LN</span>';
-  // pins — real <button> elements for bulletproof touch
-  pins.forEach(function(p){
-   var t=terrDef(p.id),tot=Math.round(terrTotal(p.id)),hc=heatColor(tot),isA=p.id===active,isS=p.id===MAPSEL;
-   var pinC=isA?"#7CFC00":t.color;
-   h+='<button type="button" class="gps-pinbtn'+(isS?' sel':'')+'" style="left:'+p.x+'%;top:'+p.y+'%" data-act="terr-pin" data-t="'+p.id+'" aria-label="'+t.name+'">';
-   h+='<span class="gps-halo" style="background:radial-gradient(circle,'+hc+'55 0%,transparent 70%)"></span>';
-   h+='<span class="gps-pindrop" style="background:'+pinC+';border-color:'+(isS?'#fff':'rgba(0,0,0,.55)')+'"><span>'+t.name.charAt(0)+'</span></span>';
-   h+='<span class="gps-pinlabel"'+(isA?' style="color:#7CFC00;font-weight:800"':'')+'>'+t.name+'</span>';
-   // you-are-here blue dot under the active territory pin
-   if(isA)h+='<span class="gps-you"><i class="you-pulse"></i><i class="you-dot"></i></span>';
+  h+='<div class="gps-pzmap" role="img" aria-label="Territory puzzle map">';
+  h+='<div class="gps-pzgrid"></div>';
+  h+='<div class="gps-pzinner"><div class="gps-pzzoom" style="transform:scale('+GPSZOOM+')">';
+  // pieces
+  PIECES.forEach(function(p){
+   var t=terrDef(p.id),tot=Math.round(terrTotal(p.id)),hc=heatColor(tot),
+       isA=p.id===active,isS=p.id===MAPSEL,locked=!terrUnlocked(p.id);
+   var bc=isA?"#7CFC00":t.color;
+   if(locked){
+    // Mysterious silhouette: near-black body, subtle colored edge glow, name + unlock level teased
+    h+='<button type="button" class="pz-piece locked" style="left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%;z-index:'+p.z+'" data-act="terr-pin" data-t="'+p.id+'" aria-label="'+t.name+' — unlocks at level '+t.unlock+'">';
+    h+='<span class="pz-body" style="border-color:'+t.color+'88;background:#050505;box-shadow:0 0 18px '+t.color+'44,inset 0 0 30px rgba(0,0,0,.9)"></span>';
+    h+='<span class="pz-label"><b style="color:#e8e8e8;letter-spacing:1px">'+t.name+'</b><small style="color:'+t.color+'">&#x1F512; Unlocks at level '+t.unlock+'</small></span>';
+   }else{
+    h+='<button type="button" class="pz-piece'+(isS?' sel':'')+'" style="left:'+p.x+'%;top:'+p.y+'%;width:'+p.w+'%;height:'+p.h+'%;z-index:'+p.z+'" data-act="terr-pin" data-t="'+p.id+'" aria-label="'+t.name+'">';
+    h+='<span class="pz-body" style="border-color:'+bc+';background:'+t.color+'26;box-shadow:0 0 22px '+hc+'66'+(isS?',0 0 0 2px #fff':'')+'"></span>';
+    h+='<span class="pz-label"><b>'+t.name+'</b><small style="color:'+hc+'">'+tot+'% heat</small></span>';
+    if(isA)h+='<span class="pz-you"><i class="you-pulse"></i><i class="you-dot"></i></span>';
+   }
    h+='</button>';
   });
-  h+='</div>'; // .gps-zoomer
-  h+='</div>'; // .gps-maphtml
+  // knobs (decorative layer above pieces, taps pass through)
+  h+='<div class="pz-knobs">';
+  KNOBS.forEach(function(k){
+   if(k.tab){
+    var tc=terrDef(k.tab).color;
+    h+='<i class="pz-knob blank" style="left:'+k.x+'%;top:'+k.y+'%"></i>';
+    h+='<i class="pz-knob tab" style="left:'+k.x+'%;top:'+k.y+'%;--kc:'+tc+'"></i>';
+   }else if(k.o==="tab"){
+    h+='<i class="pz-knob otab" style="left:'+k.x+'%;top:'+k.y+'%;--kc:'+terrDef(k.t).color+'"></i>';
+   }else{
+    h+='<i class="pz-knob oblank" style="left:'+k.x+'%;top:'+k.y+'%"></i>';
+   }
+  });
+  h+='</div>'; // .pz-knobs
+  h+='</div></div>'; // .gps-pzzoom .gps-pzinner
+  h+='</div>'; // .gps-pzmap
   return h;
  }
  // UI-only selection for the bottom sheet (not saved game state)
@@ -2569,6 +2642,16 @@ function render(){
   var h=tabHeader("rep");
   h+='<div class="rep-list">';
   TERRITORIES.forEach(function(t){
+   var locked=!terrUnlocked(t.id);
+   if(locked){
+    // Mysterious silhouette teaser card
+    h+='<div class="rep-card locked" style="border-color:'+t.color+'55">';
+    h+='<div class="rep-head"><span class="rep-dot" style="background:#1a1a1a;box-shadow:0 0 10px '+t.color+'66;border:1px solid '+t.color+'66"></span>'
+     +'<div class="rep-title"><b style="letter-spacing:1px">'+t.name+'</b><span>&#x1F512; Unlocks at level '+t.unlock+'</span></div></div>';
+    h+='<div class="rep-locked-tease">New turf awaits&hellip; level up to claim it.</div>';
+    h+='</div>';
+    return;
+   }
    var z=terrZone(t.id),tot=Math.round(terrTotal(t.id)),isA=t.id===active,hc=heatColor(tot);
    h+='<div class="rep-card" style="border-color:'+t.color+'">';
    h+='<div class="rep-head"><span class="rep-dot" style="background:'+t.color+';box-shadow:0 0 8px '+t.color+'"></span>'
@@ -2576,7 +2659,8 @@ function render(){
     +(isA?'<span class="rep-active">ACTIVE</span>':'')+'</div>';
    h+='<div class="rep-meta"><span>Prices <b class="rep-price">&times;'+t.price+'</b></span>'
     +'<span>Heat <b style="color:'+hc+'">'+tot+'%</b></span>'
-    +'<span>Risk <b>&times;'+t.heat+'</b></span></div>';
+    +'<span>Risk <b>&times;'+t.heat+'</b></span>'
+    +'<span>Likes <b>'+t.likesTxt+'</b></span></div>';
    h+='<div class="rep-heatbar"><i style="width:'+tot+'%;background:'+hc+'"></i></div>';
    h+='<div class="rep-srcs">';
    HEAT_SOURCES.forEach(function(s){
@@ -2985,7 +3069,7 @@ function doDeal(di,k,isBuy,isJoint){
  }else{
   var have=isJoint?(S.joints[k]||0):S.stash[k];
   if(have<g){S.msg="You don't have "+g+(isJoint?" joints":"g")+" of "+st.name+".";save();render();return;}
-  var unit2=ppu(st.price,d.buy[k]*terrPriceMult());
+  var unit2=ppu(st.price,d.buy[k]*terrPriceMult()*terrPrefMult(k,isJoint));
   if(isJoint)unit2=Math.round(unit2*0.9);
   if(buffActive())unit2=Math.round(unit2*S.buffMult);
   var rev=Math.floor(unit2*g);
@@ -3016,7 +3100,7 @@ function doStashSellAll(k,isJoint){
  var have=isJoint?(S.joints[k]||0):(S.stash[k]||0);
  if(have<1){S.msg="Nothing to sell.";save();render();return;}
  var st=PRODUCTS[k];
- var unit=ppu(st.price,d.buy[k]*terrPriceMult());
+ var unit=ppu(st.price,d.buy[k]*terrPriceMult()*terrPrefMult(k,isJoint));
  if(isJoint)unit=Math.round(unit*0.9);
  if(buffActive())unit=Math.round(unit*S.buffMult);
  var rev=Math.floor(unit*have);
@@ -3826,9 +3910,9 @@ root.addEventListener("click",function(e){
  if(a==="buyduffel"){var ti=DUFFEL.indexOf(S.stashCap);if(ti<DUFFEL.length-1){var nc=DUFFEL[ti+1];if(S.cash>=DUFFEL_COST[nc]){S.cash-=DUFFEL_COST[nc];S.stashCap=nc;S.msg="Duffel upgraded — carry "+nc+"g now.";save();render();}}return;}
  if(a==="buyprop"){var pr2=PROPS.filter(function(x){return x.id===b.dataset.prop;})[0];var owned=S.props.some(function(x){return x.id===pr2.id;});if(pr2&&!owned&&pr2.tier<=pLevel()&&S.cash>=pr2.cost){S.cash-=pr2.cost;S.props.push(mkProp(pr2.id));S.msg="New property: "+pr2.name+"! "+pr2.desc;save();render();}return;}
  if(a==="bribe"){var _bc=bribeCost();var _at=(S.terr&&S.terr.active)||"industrial";if(S.cash>=_bc&&terrTotal(_at)>0&&Date.now()>=S.lockedUntil){S.cash-=_bc;var _zb=terrZone(_at);var _bi;for(_bi=0;_bi<3;_bi++)_zb.heat[HEAT_SOURCES[_bi]]=Math.max(0,_zb.heat[HEAT_SOURCES[_bi]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+terrDef(_at).name+". Heat dropped.";save();render();}return;}
- if(a==="terr-select"){var _ts=b.dataset.t;if(_ts&&terrDef(_ts)){if(!S.terr)S.terr={active:"industrial",zones:{}};S.terr.active=_ts;S.msg="Operating in "+terrDef(_ts).name+" now — prices \u00D7"+terrDef(_ts).price+".";save();render();}return;}
+ if(a==="terr-select"){var _ts=b.dataset.t;if(_ts&&terrDef(_ts)){if(!terrUnlocked(_ts)){S.msg="Locked — unlocks at level "+terrDef(_ts).unlock+".";save();render();return;}if(!S.terr)S.terr={active:"industrial",zones:{}};S.terr.active=_ts;S.msg="Operating in "+terrDef(_ts).name+" now — prices \u00D7"+terrDef(_ts).price+".";save();render();}return;}
  if(a==="terr-bribe"){var _tbb=b.dataset.t,_tbd=terrDef(_tbb),_bcb=bribeCost();if(S.cash>=_bcb&&terrTotal(_tbb)>0&&Date.now()>=S.lockedUntil){S.cash-=_bcb;var _zbb=terrZone(_tbb);var _bj;for(_bj=0;_bj<3;_bj++)_zbb.heat[HEAT_SOURCES[_bj]]=Math.max(0,_zbb.heat[HEAT_SOURCES[_bj]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+_tbd.name+". Heat dropped.";save();render();}else if(S.cash<_bcb){S.msg="Not enough cash for that.";save();render();}return;}
- if(a==="terr-pin"){var _tp=b.dataset.t;if(_tp&&terrDef(_tp)){MAPSEL=_tp;render();}return;}
+ if(a==="terr-pin"){var _tp=b.dataset.t;if(_tp&&terrDef(_tp)){if(!terrUnlocked(_tp)){S.msg=terrDef(_tp).name+" unlocks at level "+terrDef(_tp).unlock+".";save();render();return;}MAPSEL=_tp;render();}return;}
  if(a==="gps-zoom"){var _gz=b.dataset.z;GPSZOOM=_gz==="in"?Math.min(3,GPSZOOM+1):Math.max(1,GPSZOOM-1);render();return;}
  if(a==="dbuy"){doDeal(+b.dataset.d,b.dataset.strain,true);return;}
  if(a==="dsell"){doDeal(+b.dataset.d,b.dataset.strain,false);return;}
