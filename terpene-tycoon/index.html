@@ -60,15 +60,13 @@ window.hatchWidget={
  <div class="android-home" hidden>
   <button type="button" class="hw-donebtn" data-act="edit-done" hidden>Done</button>
   <div class="hw-status">
-   <button type="button" class="hw-smain" data-act="shade-open" aria-label="Open status">
-   <span class="hw-sitem"><i class="hw-sdot" style="background:#4ade80"></i><b class="hw-qcash">$200</b></span>
-   <span class="hw-sitem"><i class="hw-sdot" style="background:#a78bfa"></i><b class="hw-qstash">0/40g</b></span>
-   <span class="hw-sitem"><i class="hw-sdot" style="background:#ef4444"></i><b class="hw-qhp">HP 100</b></span>
-   <span class="hw-sitem"><i class="hw-sdot" style="background:#fbbf24"></i><b class="hw-qday">Day 1</b></span>
-   <span class="hw-sitem hw-sheat"><span class="hw-heatbar"><i class="hw-qheatbar"></i></span><b class="hw-qheat">0%</b></span>
-   </button>
-   <button type="button" class="hw-sbtn" data-act="roach-view" aria-label="Changelog" title="Changelog"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><circle cx="4" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.4" fill="currentColor" stroke="none"/></svg></button>
-   <button type="button" class="hw-sbtn" data-act="refresh" aria-label="RE-UP" title="RE-UP"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg></button>
+   <button type="button" class="hw-sitem" data-act="shade-open" aria-label="Open status"><i class="hw-sdot" style="background:#4ade80"></i><b class="hw-qcash">$200</b></button>
+   <button type="button" class="hw-sitem" data-act="shade-open" aria-label="Open status"><i class="hw-sdot" style="background:#a78bfa"></i><b class="hw-qstash">0/40g</b></button>
+   <button type="button" class="hw-sitem" data-act="shade-open" aria-label="Open status"><i class="hw-sdot" style="background:#ef4444"></i><b class="hw-qhp">HP 100</b></button>
+   <button type="button" class="hw-sitem" data-act="shade-open" aria-label="Open status"><i class="hw-sdot" style="background:#fbbf24"></i><b class="hw-qday">Day 1</b></button>
+   <button type="button" class="hw-sitem hw-sheat" data-act="shade-open" aria-label="Open status"><span class="hw-heatbar"><i class="hw-qheatbar"></i></span><b class="hw-qheat">0%</b></button>
+   <button type="button" class="hw-sbtn" data-act="roach-view" aria-label="Changelog" title="Changelog"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><circle cx="4" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.4" fill="currentColor" stroke="none"/></svg></button>
+   <button type="button" class="hw-sbtn" data-act="refresh" aria-label="RE-UP" title="RE-UP"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg></button>
   </div>
   <div class="hw-weather">
    <div class="hw-wicon"><svg viewBox="0 0 48 48" width="58" height="58"><path d="M31 27a13 13 0 1 1-12.6-16.6A10.5 10.5 0 0 0 31 27z" fill="#f1f5f9"/><circle cx="35" cy="13" r="2.2" fill="#f1f5f9" opacity=".85"/><circle cx="40" cy="21" r="1.5" fill="#f1f5f9" opacity=".6"/></svg></div>
@@ -242,20 +240,18 @@ window.hatchWidget={
 .oneui-dock .android-app{padding:0}
 .oneui-dock .aa-icon{width:54px;height:54px;font-size:26px}
 /* ===== REFERENCE PHONE HOME SCREEN ===== */
-.hw-status{display:flex;align-items:center;gap:4px;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:24px;padding:0 6px 0 0;height:48px;margin-bottom:10px;box-shadow:0 6px 18px rgba(0,0,0,.45);flex:none;width:100%;overflow:hidden}
-.hw-smain{flex:1;min-width:0;display:flex;align-items:center;gap:14px;background:none;border:none;padding:0 0 0 18px;height:100%;color:#fff;font:inherit;cursor:pointer}
-.hw-smain:active{transform:scale(.99)}
-.hw-sbtn{flex:none;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+.hw-status{display:flex;align-items:center;justify-content:space-around;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:19px;padding:0 10px;height:38px;margin-bottom:10px;box-shadow:0 6px 18px rgba(0,0,0,.45);flex:none;width:100%;overflow:hidden}
+.hw-sitem{display:flex;align-items:center;gap:5px;background:none;border:none;padding:4px 6px;color:#fff;font:inherit;font-size:12px;cursor:pointer;white-space:nowrap}
+.hw-sitem:active{transform:scale(.94)}
+.hw-sbtn{flex:none;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
 .hw-sbtn:active{transform:scale(.9)}
-.hw-sitem{display:flex;align-items:center;gap:6px;font-size:13.5px;white-space:nowrap}
-.hw-sitem b{font-weight:700;color:#fff;font-size:13.5px}
-.hw-sdot{width:7px;height:7px;border-radius:50%;flex:none}
-.hw-sheat{margin-left:auto}
-.hw-heatbar{width:44px;height:6px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;display:inline-block}
+.hw-sitem b{font-weight:700;color:#fff;font-size:12px}
+.hw-sdot{width:6px;height:6px;border-radius:50%;flex:none}
+.hw-heatbar{width:36px;height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;display:inline-block}
 .hw-qheatbar{display:block;height:100%;width:0;background:linear-gradient(90deg,#4ade80,#fbbf24,#ef4444);border-radius:3px;transition:width .3s}
 .pg[data-theme="light"] .hw-status{background:rgba(255,255,255,.75)}
 .pg[data-theme="light"] .hw-status .hw-sitem b{color:#111}
-.pg[data-theme="light"] .hw-smain{color:#111}
+.pg[data-theme="light"] .hw-status .hw-sitem{color:#111}
 .pg[data-theme="light"] .hw-sbtn{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.12);color:#111}
 .hw-weather{display:flex;align-items:center;gap:12px;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:10px 16px;margin-bottom:10px;box-shadow:0 6px 16px rgba(0,0,0,.45);flex:none}
 .hw-wicon{flex:none;display:flex;align-items:center;filter:drop-shadow(0 0 10px rgba(190,215,255,.45))}
@@ -274,7 +270,7 @@ window.hatchWidget={
  .hw-page{grid-template-columns:repeat(6,1fr);gap:24px 10px}
  .hw-appgrid{margin:0 -24px;padding:0 24px 8px}
  .android-home{padding:22px 24px 0}
- .hw-status{height:54px}
+ .hw-status{height:44px}
  .hw-weather{padding:12px 18px}
 }
 @media(min-width:900px){
