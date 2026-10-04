@@ -1036,11 +1036,11 @@ window.hatchWidget={
    Game logic, HTML structure, and data-act handlers are unchanged. */
 
 /* ---- Territory map (Maps app) — GPS street-view style ---- */
-.pane-maps{background:#070a07;border-radius:12px;padding:0;position:relative;overflow:hidden;touch-action:manipulation;min-height:400px}
+.pane-maps{background:#070a07;border-radius:12px;padding:0 0 12px;position:relative;overflow:hidden;touch-action:manipulation}
 .pane-maps button,.pane-maps .gps-pin{touch-action:manipulation}
 .gps-wrap{position:relative;margin:0 12px 12px;border-radius:16px;overflow:hidden;border:1px solid #1c261c;background:#0a0e0a}
-.gps-full{margin:0;border-radius:0;border:none;position:absolute;top:0;left:0;right:0;bottom:0}
-.gps-full .gps-map{width:100%;height:100%;object-fit:cover}
+.gps-full{margin:12px;border-radius:16px;border:1px solid #1c261c;min-height:60vh}
+.gps-full .gps-map{width:100%;height:auto;display:block}
 .gps-map{display:block;width:100%;height:auto}
 .gps-pin{cursor:pointer}
 .gps-pin .pin-shadow{opacity:.35}
