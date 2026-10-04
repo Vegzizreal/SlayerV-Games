@@ -923,6 +923,30 @@ window.hatchWidget={
 /* Inventory app (Stash) */
 .stashrow{background:#fff;border-radius:12px;margin:8px 2px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,.08);border-left:4px solid #4ade80}
 .pg[data-theme="dark"] .stashrow{background:#1e1e1e}
+/* Notes-app reskin (Stash) */
+.note-sec{font-size:13px;font-weight:800;letter-spacing:2.5px;color:var(--hatch-widget-muted);margin:14px 2px 8px;display:flex;align-items:center;gap:8px}
+.note-sec .note-count{background:rgba(127,127,127,.18);border-radius:10px;padding:1px 8px;font-size:11px;letter-spacing:1px}
+.note-pin{background:#fffdf5;border:1px solid #f0e6c8;border-radius:12px;margin:8px 2px;padding:12px 14px;box-shadow:0 2px 6px rgba(0,0,0,.08);position:relative}
+.note-pin:before{content:"📌";position:absolute;top:-11px;right:12px;font-size:16px}
+.pg[data-theme="dark"] .note-pin{background:#26241c;border-color:#3a3625}
+.todo-note{display:block;width:100%;text-align:left;background:#fff;border:1px solid #e8e2d0;border-radius:12px;margin:8px 2px;padding:11px 12px;box-shadow:0 1px 4px rgba(0,0,0,.07);cursor:pointer;color:inherit;font:inherit}
+.pg[data-theme="dark"] .todo-note{background:#211f18;border-color:#38342a}
+.todo-note:active{transform:scale(.99)}
+.todo-top{display:flex;align-items:center;gap:10px}
+.todo-check{font-size:19px;line-height:1;color:#b9a86a;flex:none}
+.pg[data-theme="dark"] .todo-check{color:#8a7d4f}
+.todo-check.done{color:#4ade80}
+.todo-title{font-weight:700;font-size:14.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.todo-tag{font-size:10.5px;font-weight:800;letter-spacing:1px;color:#b9a86a;text-transform:uppercase;flex:none}
+.todo-sub{font-size:12px;color:var(--hatch-widget-muted);margin:5px 0 0 29px}
+.todo-bar{height:6px;border-radius:3px;background:rgba(127,127,127,.2);margin:8px 0 0 29px;overflow:hidden}
+.todo-bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#d4a017,#f5c518)}
+.todo-bar i.low{background:linear-gradient(90deg,#ef4444,#f59e0b)}
+.note-card{background:#fff;border-radius:12px;margin:8px 2px;padding:12px 14px 12px 12px;box-shadow:0 1px 3px rgba(0,0,0,.08);border-left:5px solid var(--nc,#4ade80);display:flex;align-items:center;gap:11px}
+.pg[data-theme="dark"] .note-card{background:#1e1e1e}
+.note-card .d2-mid{flex:1;min-width:0}
+.note-card .d2-name{font-size:14.5px}
+.note-card .d2-sub{font-size:12px;color:var(--hatch-widget-muted);margin-top:2px}
 /* Health app (Clinic) */
 .health-ring{position:relative;width:52px;height:52px}
 .health-ring svg{width:52px;height:52px}
@@ -3079,7 +3103,7 @@ function stashHTML(){
  var sd=stashDealer(),d=sd.d;
  var bActive=buffActive(),bpct=buffPct();
  function su(k,base){var u=base;if(bActive)u=Math.round(u*S.buffMult);return u;}
- var h=_th+'<div class="shopsec">STASH</div>';
+ var h=_th;
  var tot=stashTotal(),val=0;
  PKEYS.forEach(function(k){
   var g=S.stash[k]||0;
@@ -3090,13 +3114,60 @@ function stashHTML(){
   if(j>0)val+=Math.floor(su(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9))*j);
  });
  var pct=Math.min(100,Math.round(tot/Math.max(1,S.stashCap)*100));
- h+='<div class="stash-sum"><div class="sdesc" style="font-size:15.5px"><b style="color:var(--hatch-widget-text)">'+tot+'g</b> / '+S.stashCap+'g &middot; worth <b style="color:#4ade80">'+money(val)+'</b> at '+d.name+'\'s prices'+(bActive?' <span class="bufftag">+'+bpct+'%</span>':"")+'</div>'
-  +'<div class="heat-bar" style="margin-top:6px"><i style="width:'+pct+'%"></i></div></div>';
+ // pinned summary note
+ h+='<div class="note-pin"><div class="stash-sum"><div class="sdesc" style="font-size:15.5px"><b style="color:var(--hatch-widget-text)">'+tot+'g</b> / '+S.stashCap+'g &middot; worth <b style="color:#4ade80">'+money(val)+'</b> at '+d.name+'\'s prices'+(bActive?' <span class="bufftag">+'+bpct+'%</span>':"")+'</div>'
+  +'<div class="heat-bar" style="margin-top:6px"><i style="width:'+pct+'%"></i></div></div></div>';
+ // ---- IN PROGRESS: to-do notes for growing plants + cooking lab ----
+ var todos=[];
+ (S.props||[]).forEach(function(pr){
+  (pr.slots||[]).forEach(function(p){
+   if(!p)return;
+   var st=stageOf(p.growth),pr2=PRODUCTS[p.strain];
+   var done=p.growth>=100;
+   var sub,barCls="";
+   if(done){sub="Ready to harvest";barCls="";}
+   else if(p.water<=15){sub="Stalled — needs water";barCls="low";}
+   else{
+    var minLeft=(100-p.growth)*growMinOf(p.strain)/100;
+    sub=STAGE_NAMES[st]+" · "+Math.round(p.growth)+"% grown · ~"+fmtT(Math.round(minLeft*60))+" left";
+   }
+   todos.push({tab:"grow",tag:"GROW",done:done,title:pr2.name+" — "+pr.name,sub:sub,pct:Math.round(p.growth),barCls:barCls});
+  });
+ });
+ if(S.job){
+  var j=S.job,jr=PRODUCTS[j.key]||{name:j.key};
+  if(j.phase==="cooking"){
+   var now=Date.now(),span=Math.max(1,j.readyAt-j.cookStart),el=Math.min(span,Math.max(0,now-j.cookStart));
+   var jp=Math.round(el/span*100),jl=Math.max(0,j.readyAt-now);
+   todos.push({tab:"cook",tag:"LAB",done:false,title:jr.name+" ×"+j.yield+"g",sub:"Cooking · ready in "+fmtT(Math.round(jl/1000)),pct:jp,barCls:""});
+  }else if(j.phase==="ready"){
+   todos.push({tab:"cook",tag:"LAB",done:true,title:jr.name+" ×"+j.yield+"g",sub:"Batch ready — collect it",pct:100,barCls:""});
+  }else{
+   todos.push({tab:"cook",tag:"LAB",done:false,title:jr.name,sub:"Hands-on step in the lab",pct:0,barCls:""});
+  }
+ }
+ if(todos.length){
+  h+='<div class="note-sec">IN PROGRESS <span class="note-count">'+todos.length+'</span></div>';
+  todos.forEach(function(t){
+   h+='<button type="button" class="todo-note" data-act="tab" data-tab="'+t.tab+'">'
+    +'<div class="todo-top"><span class="todo-check'+(t.done?" done":"")+'">'+(t.done?"☑":"☐")+'</span>'
+    +'<span class="todo-title">'+t.title+'</span><span class="todo-tag">'+t.tag+'</span></div>'
+    +'<div class="todo-sub">'+t.sub+'</div>'
+    +'<div class="todo-bar"><i class="'+t.barCls+'" style="width:'+t.pct+'%"></i></div></button>';
+  });
+ }
+ // ---- INVENTORY: product notes ----
+ h+='<div class="note-sec">STASH</div>';
  var any=false;
  function pic(k){
   return GROWKEYS.indexOf(k)>=0
    ?'<span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span>'
    :'<span class="picon xs picon-'+k+'"></span>';
+ }
+ function noteCard(k,nameLine,subLine){
+  var col=(PRODUCTS[k]&&(PRODUCTS[k].c1||PRODUCTS[k].c2))||"#4ade80";
+  return '<div class="note-card" style="--nc:'+col+'">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+nameLine+'</div>'
+   +'<div class="d2-sub">'+subLine+'</div></div></div>';
  }
  // bags
  PKEYS.forEach(function(k){
@@ -3104,11 +3175,8 @@ function stashHTML(){
   if(g<=0)return;
   if(tierVis(PRODUCTS[k].tier)===0)return;
   any=true;
-  var isBud=GROWKEYS.indexOf(k)>=0;
   var unit=su(k,ppu(PRODUCTS[k].price,d.buy[k]));
-  h+='<div class="stashrow">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' <b>'+g+'g</b></div>'
-   +'<div class="d2-sub">'+money(unit)+'/g &middot; '+money(Math.floor(unit*g))+' total</div></div>'
-   +'</div>';
+  h+=noteCard(k,PRODUCTS[k].name+' <b>'+g+'g</b>',money(unit)+'/g &middot; '+money(Math.floor(unit*g))+' total');
  });
  // joints
  GROWKEYS.forEach(function(k){
@@ -3117,9 +3185,7 @@ function stashHTML(){
   if(tierVis(PRODUCTS[k].tier)===0)return;
   any=true;
   var ju=su(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9));
-  h+='<div class="stashrow">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' joints <b>'+j+'</b></div>'
-   +'<div class="d2-sub">'+money(ju)+'/joint &middot; '+money(Math.floor(ju*j))+' total</div></div>'
-   +'</div>';
+  h+=noteCard(k,PRODUCTS[k].name+' joints <b>'+j+'</b>',money(ju)+'/joint &middot; '+money(Math.floor(ju*j))+' total');
  });
  // seeds with auto-plant
  var anySeeds=false;
@@ -3127,13 +3193,11 @@ function stashHTML(){
   var sc=S.seeds[k]||0;
   if(sc<=0)return;
   if(tierVis(PRODUCTS[k].tier)===0)return;
-  if(!anySeeds){h+='<div class="shopsec">SEEDS</div>';anySeeds=true;}
+  if(!anySeeds){h+='<div class="note-sec">SEED PACKETS</div>';anySeeds=true;}
   any=true;
-  h+='<div class="stashrow">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' seeds <b>'+sc+'</b></div>'
+  h+='<div class="note-card" style="--nc:'+PRODUCTS[k].c1+'">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' seeds <b>'+sc+'</b></div>'
    +'<div class="d2-sub">Plant in empty pots</div></div>'
-   +'<div class="stashbtns">'
-   +'<button type="button" class="go" data-act="autoplant" data-strain="'+k+'">AUTO PLANT</button>'
-   +'</div></div>';
+   +'<div class="stashbtns"><button type="button" class="go" data-act="autoplant" data-strain="'+k+'">AUTO PLANT</button></div></div>';
  });
  if(!any)h+='<div class="sdesc">Nothing stashed yet — harvest some bud first.</div>';
  h+='<div class="sdesc">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
