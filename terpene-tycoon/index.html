@@ -862,7 +862,7 @@ var DEALER_TIER=[1,2,4,6];
 var XP_TH=[0,200,500,900,1400,2000,2700,3500];
 function lvl(xp){xp=xp||0;var L=1;for(var i=0;i<XP_TH.length;i++)if(xp>=XP_TH[i])L=i+1;return L;}
 function pLevel(){return lvl(S.xp);}
-function heatGain(base){var L=pLevel();if(L<=2)return Math.ceil(base*0.25);if(L<=4)return Math.ceil(base*0.5);if(L<=6)return Math.ceil(base*0.75);return base;}
+function heatGain(base){var L=pLevel(),m=0.5;if(L<=2)return Math.ceil(base*0.25*m);if(L<=4)return Math.ceil(base*0.5*m);if(L<=6)return Math.ceil(base*0.75*m);return Math.ceil(base*m);}
 function bribeCost(){var L=pLevel();if(L<=2)return 50;if(L<=4)return 100;return 200;}
 function clinicRate(){var L=pLevel();if(L<=2)return 1;if(L<=4)return 1.5;return 2;}
 function tierVis(t){var L=pLevel();return t<=L?2:(t===L+1?1:0);}
@@ -1468,7 +1468,7 @@ function dealerStreakHeat(di){
  if(di===S.lastDealer){S.dealerStreak=(S.dealerStreak||0)+1;}else{S.lastDealer=di;S.dealerStreak=1;}
  if(S.dealerStreak>=4){
   var extra=(S.dealerStreak-3)*5;
-  S.heat=Math.min(100,S.heat+extra);
+  S.heat=Math.min(100,S.heat+Math.ceil(extra*0.5));
   if(S.dealerStreak===4)showRoachWarn();
   return extra;
  }
@@ -1523,7 +1523,7 @@ function doStashSellAll(k,isJoint){
  var rev=Math.floor(unit*have);
  if(isJoint)S.joints[k]=0;else S.stash[k]=0;
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
- S.heat=Math.min(100,S.heat+2+have);
+ S.heat=Math.min(100,S.heat+Math.ceil((2+have)*0.5));
  var dh3=dealerStreakHeat(sd.di);
  var prof2=calcProfit(k+(isJoint?"_j":""),have,have,rev);
  if(!addXP(5))S.msg="Sold "+have+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+"."+(dh3>0?" Same spot too many times — heat +"+dh3+".":"");
@@ -1912,7 +1912,7 @@ function settleCooking(){
  var take=Math.min(j.yield,room);
  S.stash[j.key]+=take;
  S.stats.cooked++;
- S.heat=Math.min(100,S.heat+j.heat);
+ S.heat=Math.min(100,S.heat+Math.ceil(j.heat*0.5));
  S.job=null;
  var _cx=addXP(10*(RKEYS.indexOf(j.key)+1));
  if(!_cx)S.msg="Batch ready: +"+take+"g "+PRODUCTS[j.key].name+".";
@@ -1927,7 +1927,7 @@ function collectCook(){
  var take=Math.min(j.yield,room);
  S.stash[j.key]+=take;
  S.stats.cooked++;
- S.heat=Math.min(100,S.heat+j.heat);
+ S.heat=Math.min(100,S.heat+Math.ceil(j.heat*0.5));
  S.job=null;
  var _cx=addXP(10*(RKEYS.indexOf(j.key)+1));
  if(!_cx)S.msg="Collected +"+take+"g "+PRODUCTS[j.key].name+".";
