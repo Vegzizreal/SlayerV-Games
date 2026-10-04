@@ -1149,7 +1149,7 @@ function statusHTML(){
 }
 function tabHeader(tab){
  var c=TAB_COLORS[tab]||"#e5484d",ic=TAB_ICONS[tab]||"";
- return '<div class="store-screen-head"><span class="store-title" style="color:'+c+'">'+ic+tab.toUpperCase()+'</span><div class="pill"><b>'+money(S.cash)+'</b></div></div>';
+ return '<div class="store-screen-head"><span class="store-title" style="color:'+c+'">'+ic+tab.toUpperCase()+'</span></div>';
 }
 function render(){
  if(root&&root.dataset)root.dataset.theme=(S.theme==="light")?"light":"dark";
@@ -1282,7 +1282,7 @@ function render(){
   gear:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8.5" width="18" height="10.5" rx="2.5"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/><path d="M3 13.5h18"/></svg>',
   realty:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11.5L12 5l8 6.5"/><path d="M6.5 10v9.5h11V10"/><path d="M10.5 19.5v-4h3v4"/></svg>'
  };
- var sh='<div class="store-screen-head"><span class="store-title" style="color:#f2efe8">STORE</span><div class="pill"><b>'+money(S.cash)+'</b></div></div>';
+ var sh='<div class="store-screen-head"><span class="store-title" style="color:#f2efe8">'+STORE_ICON+'STORE</span></div>';
  var stores=[
   ["seeds","SEEDS","Seed Bank","Premium genetics. No questions asked.","#4ade80"],
   ["guns","GUNS","Gun Store","Iron & lead. Cash only.","#f87171"],
