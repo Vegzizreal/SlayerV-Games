@@ -43,18 +43,39 @@ window.hatchWidget={
 </script>
 <div class="pg">
  <div class="android-statusbar"><span class="android-clock">--:--</span><span class="android-sicons"><svg viewBox="0 0 24 24" width="14" height="14" fill="#fff"><path d="M3 17h3v4H3zM8.5 13h3v8h-3zM14 9h3v12h-3zM19.5 4h3v17h-3z"/></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 10a12 12 0 0 1 16 0"/><path d="M7.5 13.5a7 7 0 0 1 9 0"/><circle cx="12" cy="17.5" r="1.6" fill="#fff" stroke="none"/></svg><svg viewBox="0 0 28 24" width="18" height="14" fill="none" stroke="#fff" stroke-width="1.6"><rect x="2" y="7" width="21" height="10" rx="2.5"/><rect x="4" y="9" width="14" height="6" rx="1" fill="#4ade80" stroke="none"/><path d="M25.5 10.5v3" stroke-linecap="round"/></svg></span></div>
+ <div class="shade-scrim" hidden data-act="shade-close"></div>
+ <div class="notif-shade" hidden>
+  <div class="shade-handle" data-act="shade-close"></div>
+  <div class="shade-qs">
+   <div class="qs-tile"><span class="qs-v shade-qcash">$200</span><span class="qs-l">Cash</span></div>
+   <div class="qs-tile"><span class="qs-v shade-qstash">0/40g</span><span class="qs-l">Stash</span></div>
+   <div class="qs-tile"><span class="qs-v shade-qheat">0%</span><span class="qs-l">Heat</span></div>
+   <div class="qs-tile"><span class="qs-v shade-qday">Day 1</span><span class="qs-l">Day</span></div>
+  </div>
+  <div class="shade-title"><span>Notifications</span><button type="button" class="shade-clearbtn" data-act="shade-clear">Clear all</button></div>
+  <div class="shade-list"></div>
+ </div>
  <div class="android-appbar" hidden><button type="button" class="android-backbtn" data-act="android-back" aria-label="Back">&#8592;</button><span class="android-apptitle">Grow</span></div>
  <div class="android-home" hidden>
-  <div class="android-greet">Good evening</div>
+  <div class="oneui-title">Terpene<br>Tycoon</div>
   <div class="android-date"></div>
-  <div class="android-widget">
-   <div class="aw-row"><span class="aw-label">CASH</span><span class="aw-cash android-wcash">$200</span></div>
-   <div class="aw-row"><span class="aw-label">STASH</span><span class="aw-val android-wstash">0/40g</span></div>
-   <div class="aw-row"><span class="aw-label">HEAT</span><span class="aw-val android-wheattier">CALM</span></div>
-   <div class="aw-heatbar"><i class="android-wheat"></i></div>
-   <div class="aw-row"><span class="aw-label">DAY</span><span class="aw-val android-wday">Day 1</span></div>
+  <div class="oneui-widgetrow">
+   <div class="oneui-heatwrap">
+    <svg class="oneui-heatring" viewBox="0 0 80 80" aria-label="Heat level"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="8"/><circle class="android-wheatring" cx="40" cy="40" r="34" fill="none" stroke="#4ade80" stroke-width="8" stroke-linecap="round" stroke-dasharray="213.63" stroke-dashoffset="213.63" transform="rotate(-90 40 40)"/><text class="android-wheatnum ohr-num" x="40" y="47" text-anchor="middle">0</text></svg>
+    <div class="ohr-label">HEAT &#183; <span class="android-wheattier">CALM</span></div>
+   </div>
+   <div class="oneui-weather">
+    <svg viewBox="0 0 24 24" width="34" height="34" fill="#cfe3ff" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>
+    <div class="ow-text"><div class="ow-big android-wday">Day 1</div><div class="ow-small">&#8982; Grow Op</div></div>
+   </div>
+  </div>
+  <div class="oneui-cashcard">
+   <div class="occ-block"><div class="aw-label">CASH</div><div class="aw-cash android-wcash">$200</div></div>
+   <div class="occ-div"></div>
+   <div class="occ-block"><div class="aw-label">STASH</div><div class="aw-val android-wstash">0/40g</div></div>
   </div>
   <div class="android-notif"><span class="android-notif-av">&#127793;</span><div class="android-notif-body"><b>Roach</b><div class="android-notif-msg">Welcome to the grow op.</div></div></div>
+  <div class="oneui-secttl">Apps</div>
   <div class="android-appgrid">
    <button type="button" class="android-app" data-act="openapp" data-app="store"><span class="aa-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">&#127978;</span><span class="aa-label">Store</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="grow"><span class="aa-icon" style="background:linear-gradient(135deg,#22c55e,#16a34a)">&#127793;</span><span class="aa-label">Grow</span></button>
@@ -64,6 +85,13 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="chill"><span class="aa-icon" style="background:linear-gradient(135deg,#ec4899,#db2777)">&#128715;&#65039;</span><span class="aa-label">Chill</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="clinic"><span class="aa-icon" style="background:linear-gradient(135deg,#14b8a6,#0d9488)">&#127973;</span><span class="aa-label">Clinic</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="settings"><span class="aa-icon" style="background:linear-gradient(135deg,#6b7280,#4b5563)">&#9881;&#65039;</span><span class="aa-label">Settings</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="browser"><span class="aa-icon" style="background:linear-gradient(135deg,#7c3aed,#3b82f6)">&#127760;</span><span class="aa-label">Browser</span></button>
+  </div>
+  <div class="oneui-dock">
+   <button type="button" class="android-app" data-act="openapp" data-app="deal" aria-label="Deal"><span class="aa-icon" style="background:linear-gradient(135deg,#3b82f6,#2563eb)">&#128176;</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="grow" aria-label="Grow"><span class="aa-icon" style="background:linear-gradient(135deg,#22c55e,#16a34a)">&#127793;</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="stash" aria-label="Stash"><span class="aa-icon" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)">&#127890;</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="store" aria-label="Store"><span class="aa-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">&#127978;</span></button>
   </div>
  </div>
  <div class="pg-head">
@@ -99,6 +127,7 @@ window.hatchWidget={
  <div class="pg-pane pane-chill" hidden></div>
  <div class="pg-pane pane-clinic" hidden></div>
  <div class="pg-pane pane-settings" hidden></div>
+ <div class="pg-pane pane-browser" hidden></div>
  <div class="pg-pane pane-battle" hidden></div>
  <div class="pg-hint v-hint"></div>
  <div class="android-recents" hidden><div class="recents-sheet"><div class="recents-title">Recent apps</div><div class="recents-list"></div><button type="button" class="recents-close" data-act="android-recents">Close</button></div></div>
@@ -129,28 +158,141 @@ window.hatchWidget={
 .android-backbtn{background:transparent;border:0;color:#fff;font-size:22px;cursor:pointer;padding:4px 10px;border-radius:50%;line-height:1}
 .android-backbtn:active{background:rgba(255,255,255,.12)}
 .android-apptitle{font-size:19px;font-weight:700;letter-spacing:.5px}
-.android-home{flex:1;min-height:0;overflow-y:auto;order:2;padding:14px 14px 22px;background:linear-gradient(180deg,#12121a,#0a0a0c);scrollbar-width:none}
+/* ===== Samsung One UI home screen ===== */
+.android-home{flex:1;min-height:0;overflow-y:auto;order:2;padding:22px 18px 0;background:radial-gradient(120% 55% at 85% 0%,rgba(74,222,128,.09),transparent 60%),radial-gradient(110% 50% at 5% 100%,rgba(59,130,246,.08),transparent 60%),linear-gradient(180deg,#15151d,#0a0a0e);scrollbar-width:none}
 .android-home::-webkit-scrollbar{display:none}
 .android-home[hidden]{display:none}
-.android-greet{font-size:25px;font-weight:300;color:#fff;margin:8px 0 2px}
-.android-date{font-size:13px;color:#9a97a3;margin-bottom:14px}
-.android-widget{background:rgba(255,255,255,.07);border-radius:16px;padding:14px 16px;margin-bottom:12px;box-shadow:0 4px 14px rgba(0,0,0,.45)}
-.aw-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px}
-.aw-row:last-child{margin-bottom:0}
-.aw-label{font-size:11px;letter-spacing:1.5px;color:#9a97a3;font-weight:700}
-.aw-cash{font-size:21px;font-weight:800;color:#4ade80}
-.aw-val{font-size:15px;font-weight:700;color:#f2efe8}
-.aw-heatbar{height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden;margin:2px 0 9px}
-.aw-heatbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#4ade80,#f59e0b,#ef4444);border-radius:4px;transition:width .3s}
-.android-notif{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.06);border-radius:14px;padding:12px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.4)}
-.android-notif-av{font-size:22px;flex:none}
+.oneui-title{font-size:38px;font-weight:800;color:#fff;letter-spacing:-.5px;line-height:1.05;margin:4px 0 2px}
+.android-date{font-size:14px;color:#a7a3b3;margin-bottom:16px}
+.oneui-widgetrow{display:flex;gap:12px;align-items:stretch;margin-bottom:14px}
+.oneui-heatwrap{display:flex;flex-direction:column;align-items:center;gap:6px;flex:none}
+.oneui-heatring{width:92px;height:92px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+.ohr-num{fill:#fff;font-size:22px;font-weight:800}
+.ohr-label{font-size:10px;letter-spacing:1.2px;color:#a7a3b3;font-weight:700;white-space:nowrap}
+.ohr-label .android-wheattier{color:#e8e6e1}
+.oneui-weather{flex:1;display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,#1d3a8f,#16245e);border-radius:26px;padding:14px 18px;box-shadow:0 6px 18px rgba(0,0,0,.5);min-width:0}
+.ow-big{font-size:23px;font-weight:800;color:#fff}
+.ow-small{font-size:13px;color:#bcd0f5;margin-top:2px}
+.oneui-cashcard{display:flex;align-items:center;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07);border-radius:22px;padding:16px 20px;margin-bottom:14px;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+.occ-block{flex:1;min-width:0}
+.occ-div{width:1px;align-self:stretch;background:rgba(255,255,255,.1);margin:0 16px;flex:none}
+.aw-label{font-size:11px;letter-spacing:1.5px;color:#a7a3b3;font-weight:700}
+.aw-cash{font-size:25px;font-weight:800;color:#4ade80;margin-top:2px}
+.aw-val{font-size:19px;font-weight:700;color:#f2efe8;margin-top:2px}
+.android-notif{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:14px;margin-bottom:18px;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.android-notif.err{background:rgba(245,158,11,.13);border-color:rgba(245,158,11,.55)}
+.android-notif-av{font-size:24px;flex:none}
 .android-notif-body b{font-size:13px;color:#4ade80}
-.android-notif-msg{font-size:13px;color:#e8e6e1;line-height:1.4;margin-top:2px}
-.android-appgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 6px}
-.android-app{background:transparent;border:0;display:flex;flex-direction:column;align-items:center;gap:7px;cursor:pointer;padding:4px 2px}
-.aa-icon{width:58px;height:58px;border-radius:17px;display:flex;align-items:center;justify-content:center;font-size:27px;box-shadow:0 4px 12px rgba(0,0,0,.5);transition:transform .12s}
+.android-notif.err .android-notif-body b{color:#f59e0b}
+.android-notif-msg{font-size:14px;color:#e8e6e1;line-height:1.45;margin-top:2px}
+.oneui-secttl{font-size:15px;font-weight:700;color:#fff;margin:2px 4px 12px}
+.android-appgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px 6px;margin-bottom:10px}
+.android-app{background:transparent;border:0;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;padding:2px}
+.aa-icon{width:62px;height:62px;border-radius:28%;display:flex;align-items:center;justify-content:center;font-size:29px;box-shadow:0 6px 16px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.25);transition:transform .12s}
 .android-app:active .aa-icon{transform:scale(.88)}
-.aa-label{font-size:11px;color:#e8e6e1;font-weight:600}
+.aa-label{font-size:11.5px;color:#e8e6e1;font-weight:600}
+.oneui-dock{position:sticky;bottom:0;margin:20px -18px 0;padding:12px 26px;background:rgba(24,24,32,.66);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;z-index:5}
+.oneui-dock .android-app{padding:0}
+.oneui-dock .aa-icon{width:54px;height:54px;font-size:26px}
+/* ===== Swipe-down notification shade (Samsung style) ===== */
+.shade-scrim{position:fixed;left:50%;transform:translateX(-50%);top:0;bottom:0;width:100%;max-width:480px;background:rgba(0,0,0,.5);z-index:70}
+.shade-scrim[hidden]{display:none}
+.notif-shade{position:fixed;left:50%;top:0;width:100%;max-width:480px;z-index:71;background:rgba(22,22,30,.94);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-radius:0 0 26px 26px;box-shadow:0 18px 50px rgba(0,0,0,.6);padding:8px 16px 18px;transform:translate(-50%,-106%);transition:transform .32s cubic-bezier(.2,.9,.25,1);max-height:84%;display:flex;flex-direction:column}
+.notif-shade.open{transform:translate(-50%,0)}
+.notif-shade[hidden]{display:none}
+.shade-handle{width:44px;height:5px;border-radius:3px;background:rgba(255,255,255,.25);margin:4px auto 12px;cursor:pointer;flex:none}
+.shade-qs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:14px;flex:none}
+.qs-tile{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:2px}
+.qs-v{font-size:14px;font-weight:800;color:#fff}
+.qs-l{font-size:10px;color:#a7a3b3;font-weight:700;letter-spacing:.5px}
+.shade-title{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;color:#fff;margin-bottom:10px;flex:none}
+.shade-clearbtn{background:transparent;border:0;color:#7c9ef8;font-size:13px;font-weight:700;cursor:pointer;padding:4px 8px}
+.shade-list{overflow-y:auto;display:flex;flex-direction:column;gap:8px;scrollbar-width:none;min-height:60px}
+.shade-list::-webkit-scrollbar{display:none}
+.shade-item{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:12px}
+.shade-item.err{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.45)}
+.si-av{font-size:20px;flex:none}
+.si-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.si-head b{font-size:12.5px;color:#4ade80}
+.shade-item.err .si-head b{color:#f59e0b}
+.si-head span{font-size:11px;color:#a7a3b3;flex:none}
+.si-msg{font-size:13.5px;color:#e8e6e1;line-height:1.4;margin-top:2px}
+.shade-empty{color:#a7a3b3;font-size:13px;text-align:center;padding:18px 0}
+/* ===== Amber error alerts (Android warning style) ===== */
+.v-msg.err{color:#fbbf24;font-weight:700}
+.pg-msg.err{background:rgba(245,158,11,.12);border-left:3px solid #f59e0b}
+/* ===== In-game mobile browser (Samsung Internet style chrome + realtor page) ===== */
+.bw-chrome{display:flex;align-items:center;gap:6px;background:#1a1a22;border-bottom:1px solid rgba(255,255,255,.08);padding:10px 10px}
+.bw-navbtn{background:transparent;border:0;color:#e8e6e1;font-size:19px;padding:6px 8px;border-radius:8px;cursor:pointer;line-height:1;flex:none}
+.bw-navbtn:disabled{color:#55555f}
+.bw-urlbar{flex:1;display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.09);border-radius:999px;padding:8px 12px;min-width:0}
+.bw-lock{font-size:12px;flex:none}
+.bw-url{flex:1;font-size:13px;color:#e8e6e1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bw-reload{background:transparent;border:0;color:#a7a3b3;font-size:15px;cursor:pointer;padding:2px 4px;flex:none}
+.bw-tabsbtn{background:transparent;border:1px solid rgba(255,255,255,.25);border-radius:7px;color:#e8e6e1;font-size:12px;font-weight:800;min-width:30px;height:26px;cursor:pointer;flex:none;display:flex;align-items:center;justify-content:center}
+.bw-menubtn{background:transparent;border:0;color:#e8e6e1;font-size:19px;padding:4px 8px;cursor:pointer;flex:none}
+.bw-page{background:#f4f4f6;color:#1c1c22;min-height:60vh;border-radius:0 0 14px 14px;overflow:hidden}
+.bw-sitehead{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:12px 16px;border-bottom:1px solid #e2e2e8;position:sticky;top:0;z-index:2}
+.bw-logo{font-size:20px;font-weight:800;color:#006aff}
+.bw-logo span{color:#1c1c22}
+.bw-signin{font-size:13px;font-weight:700;color:#006aff}
+.bw-searchbar{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #d5d5dc;border-radius:999px;margin:12px 16px;padding:10px 16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.bw-sic{color:#777}
+.bw-sq{flex:1;font-size:14px;color:#1c1c22}
+.bw-filter{font-size:13px;font-weight:700;color:#006aff}
+.bw-count{font-size:13px;font-weight:700;color:#55555f;margin:2px 16px 10px}
+.bw-cards{display:flex;flex-direction:column;gap:14px;padding:0 16px 16px}
+.bw-card{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 3px 12px rgba(0,0,0,.1);cursor:pointer;border:1px solid #e8e8ee}
+.bw-card.locked{opacity:.85}
+.bw-photo{position:relative;height:170px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.bw-photoemoji{font-size:64px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.5))}
+.bw-photoemoji.big{font-size:96px}
+.bw-badge{position:absolute;top:10px;left:10px;font-size:11px;font-weight:800;letter-spacing:.5px;padding:5px 10px;border-radius:8px;color:#fff}
+.bw-badge.forsale{background:#006aff}
+.bw-badge.owned{background:#16a34a}
+.bw-badge.locked{background:#55555f}
+.bw-price{position:absolute;bottom:10px;left:10px;font-size:22px;font-weight:800;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.7)}
+.bw-price.big{font-size:30px;bottom:14px;left:16px}
+.bw-cardbody{padding:12px 14px 14px}
+.bw-specs{font-size:13px;color:#55555f;margin-bottom:4px}
+.bw-specs b{color:#1c1c22}
+.bw-addr{font-size:16px;font-weight:800;color:#1c1c22}
+.bw-addr.big{font-size:22px}
+.bw-subaddr{font-size:13px;color:#777;margin:2px 0 6px}
+.bw-slots{font-size:13px;font-weight:700;color:#16a34a;margin-bottom:10px}
+.bw-btn{display:block;width:100%;background:#006aff;border:0;border-radius:10px;color:#fff;font-size:15px;font-weight:800;padding:12px;cursor:pointer;margin-top:4px}
+.bw-btn:disabled{background:#c9c9d2;color:#777;cursor:default}
+.bw-btn.owned{background:#16a34a;color:#fff}
+.bw-btn.ghost{background:#eef0f4;color:#006aff;margin-top:8px}
+.bw-dphoto{position:relative;height:230px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.bw-dback{position:absolute;top:12px;left:12px;background:rgba(0,0,0,.45);border:0;color:#fff;font-size:20px;width:38px;height:38px;border-radius:50%;cursor:pointer;line-height:1}
+.bw-dbody{padding:16px}
+.bw-dspecs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:14px 0}
+.bw-dspecs div{background:#eef0f4;border-radius:10px;padding:10px 4px;text-align:center;display:flex;flex-direction:column;gap:2px}
+.bw-dspecs b{font-size:16px;color:#1c1c22}
+.bw-dspecs span{font-size:11px;color:#777}
+.bw-est{font-size:13px;font-weight:700;color:#55555f;margin-bottom:10px}
+.bw-desc{font-size:14px;line-height:1.5;color:#33333a;margin-bottom:12px}
+.bw-feats{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.bw-feats div{font-size:13.5px;color:#33333a;background:#eef7ee;border-radius:10px;padding:10px 12px}
+.bw-foot{text-align:center;font-size:11px;color:#999;padding:6px 16px 20px}
+.bw-news{padding:16px}
+.bw-nh{font-size:12px;font-weight:800;letter-spacing:1.5px;color:#006aff;margin-bottom:10px}
+.bw-nitem{background:#fff;border-radius:12px;padding:14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:4px}
+.bw-nitem b{font-size:15px;color:#1c1c22}
+.bw-nitem span{font-size:13px;color:#666}
+.bw-overlay{position:absolute;left:0;right:0;top:0;bottom:0;z-index:5;display:flex;align-items:flex-start;justify-content:center;background:rgba(0,0,0,.45);padding:14px}
+.bw-sheet{width:100%;background:#23232c;border-radius:18px;padding:16px;box-shadow:0 12px 40px rgba(0,0,0,.6);margin-top:8px}
+.bw-sheet.menu{margin-top:56px}
+.bw-shtitle{font-size:16px;font-weight:800;color:#fff;margin-bottom:10px}
+.bw-swrow{display:flex;gap:8px;align-items:center;margin-bottom:8px}
+.bw-swgo{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:#fff;font-size:14px;font-weight:700;padding:11px;text-align:left;cursor:pointer}
+.bw-swrow.cur .bw-swgo{border-color:#7c9ef8}
+.bw-swx{background:transparent;border:0;color:#999;font-size:15px;cursor:pointer;padding:8px}
+.bw-mitem{display:block;width:100%;background:transparent;border:0;color:#fff;font-size:15px;font-weight:600;padding:13px 8px;text-align:left;cursor:pointer;border-bottom:1px solid rgba(255,255,255,.07)}
+.bw-mitem:last-child{border-bottom:0}
+.bw-mitem:active{background:rgba(255,255,255,.06)}
+.pane-browser{position:relative}
 .android-bottomnav{flex:none;order:9;display:flex;justify-content:space-around;align-items:center;padding:7px 0 9px;background:#000;border-top:1px solid #1f1f23}
 .android-bottomnav button{background:transparent;border:0;color:#8a8a93;font-size:18px;padding:8px 30px;cursor:pointer;border-radius:8px;line-height:1}
 .android-bottomnav button:active{color:#fff;background:rgba(255,255,255,.08)}
@@ -168,13 +310,25 @@ window.hatchWidget={
 .pg button:not(:disabled):active{filter:brightness(1.18)}
 .potc,.stashrow{box-shadow:0 2px 8px rgba(0,0,0,.45)}
 .roach-card{background:#1e1e24!important;border-radius:16px!important;box-shadow:0 12px 40px rgba(0,0,0,.65)!important}
-.pg[data-theme="light"] .android-home{background:linear-gradient(180deg,#f2efe8,#e6e1d3)}
-.pg[data-theme="light"] .android-greet{color:#241d33}
-.pg[data-theme="light"] .aa-label{color:#241d33}
-.pg[data-theme="light"] .android-widget{background:rgba(255,255,255,.75)}
+.pg[data-theme="light"] .android-home{background:radial-gradient(120% 55% at 85% 0%,rgba(74,222,128,.12),transparent 60%),linear-gradient(180deg,#f2efe8,#e6e1d3)}
+.pg[data-theme="light"] .oneui-title{color:#241d33}
+.pg[data-theme="light"] .android-date{color:#6b6580}
+.pg[data-theme="light"] .ohr-num{fill:#241d33}
+.pg[data-theme="light"] .ohr-label{color:#6b6580}
+.pg[data-theme="light"] .ohr-label .android-wheattier{color:#241d33}
+.pg[data-theme="light"] .oneui-cashcard{background:rgba(255,255,255,.8)}
 .pg[data-theme="light"] .aw-val{color:#241d33}
-.pg[data-theme="light"] .android-notif{background:rgba(255,255,255,.7)}
+.pg[data-theme="light"] .aa-label{color:#241d33}
+.pg[data-theme="light"] .android-notif{background:rgba(255,255,255,.8)}
 .pg[data-theme="light"] .android-notif-msg{color:#241d33}
+.pg[data-theme="light"] .oneui-secttl{color:#241d33}
+.pg[data-theme="light"] .oneui-dock{background:rgba(255,255,255,.72)}
+.pg[data-theme="light"] .notif-shade{background:rgba(245,244,240,.96)}
+.pg[data-theme="light"] .shade-title{color:#241d33}
+.pg[data-theme="light"] .qs-tile{background:rgba(0,0,0,.05)}
+.pg[data-theme="light"] .qs-v{color:#241d33}
+.pg[data-theme="light"] .shade-item{background:rgba(0,0,0,.04)}
+.pg[data-theme="light"] .si-msg{color:#241d33}
 .pg[data-theme="light"] .android-appbar{background:#f2efe8;border-bottom:1px solid #d8d2c2}
 .pg[data-theme="light"] .android-apptitle,.pg[data-theme="light"] .android-backbtn{color:#241d33}
 /* ===== TERPENE TYCOON v16: noir dark theme (self-contained) =====
@@ -1086,7 +1240,7 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home"};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[]};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
  var oldSave=(typeof s.xp!=="number");
@@ -1101,6 +1255,7 @@ function normalize(s){
   if(sl&&sl.strain&&keyMap[sl.strain])sl.strain=keyMap[sl.strain];
  });});
  s=Object.assign({},DEF,s);
+ if(!Array.isArray(s.notifs))s.notifs=[];
  if(s.theme!=="light"&&s.theme!=="dark")s.theme="dark";
  s.stash=Object.assign(emptyMaps(),s.stash);
  s.joints=Object.assign(growMaps(),s.joints);
@@ -1176,11 +1331,11 @@ var S=normalize(Object.assign({},DEF,bridge?bridge.getState(DEF):{}));
 var navStack=[];
 function navPush(app){if(navStack[navStack.length-1]!==app)navStack.push(app);if(navStack.length>12)navStack.shift();}
 function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
-var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️"};
-var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)"};
+var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐"};
+var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
 function appName(a){return a.charAt(0).toUpperCase()+a.slice(1);}
 function save(){if(bridge)bridge.setState(S);}
-if(bridge)window.addEventListener("hatch-widget-state",function(e){if(e.detail&&e.detail.state){S=normalize(e.detail.state);render();}});
+if(bridge)window.addEventListener("hatch-widget-state",function(e){if(e.detail&&e.detail.state){S=normalize(e.detail.state);}});
 
 function unlocked(){var t=pLevel();return PKEYS.filter(function(k){return PRODUCTS[k].tier<=t;});}
 function stashTotal(){return PKEYS.reduce(function(a,k){return a+(S.stash[k]||0);},0)+GROWKEYS.reduce(function(a,k){return a+(S.joints[k]||0);},0);}
@@ -1269,9 +1424,10 @@ var HINTS={
  store:"Hit the strip — seed bank, gun store, lab supply, depot, realty.",
  chill:"Roll bud into joints, smoke for heat relief, XP, and better sell prices.",
  settings:"Cook speeds for every drug, plus one grow speed for all weed. Everything saves instantly.",
- clinic:"Patch up after fights — $2 per HP. High heat brings cop ambushes; go in armed and healthy."
+ clinic:"Patch up after fights — $2 per HP. High heat brings cop ambushes; go in armed and healthy.",
+ browser:"Browse Terp Estates for grow properties — more slots, bigger operation. Buying here works exactly like the Store realty desk."
 };
-var TAB_COLORS={grow:"#4ade80",stash:"#d4a574",cook:"#fb923c",deal:"#22c55e",chill:"#a78bfa",clinic:"#e5484d",settings:"#9a97a3"};
+var TAB_COLORS={grow:"#4ade80",stash:"#d4a574",cook:"#fb923c",deal:"#22c55e",chill:"#a78bfa",clinic:"#e5484d",settings:"#9a97a3",browser:"#7c9ef8"};
 var TAB_ICONS={
  grow:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 13c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg>',
  stash:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2.5"/><path d="M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8"/><path d="M3 13h18"/></svg>',
@@ -1279,7 +1435,8 @@ var TAB_ICONS={
  deal:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6.5" width="19" height="11" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.01M18 12h.01"/></svg>',
  chill:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 L17 7 L19.5 11.5 L5.5 20 Z"/><path d="M3 17 L5.5 20 L4 21.5 L1.5 18.5 Z"/><path d="M17 7 L19.5 11.5 L21 10 L18.5 5.5 Z"/><path d="M20 5c-.8-1 .8-1.6 0-2.6" stroke-width="1.5"/><path d="M22 6c-.6-.8.6-1.2 0-2" stroke-width="1.3"/></svg>',
  clinic:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M12 8.5v7M8.5 12h7"/></svg>',
- settings:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v2.8M12 18.7v2.8M2.5 12h2.8M18.7 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2"/></svg>'
+ settings:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v2.8M12 18.7v2.8M2.5 12h2.8M18.7 12h2.8M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2"/></svg>',
+ browser:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.6 3.8 5.7 3.8 9S14.5 18.4 12 21c-2.5-2.6-3.8-5.7-3.8-9S9.5 5.6 12 3z"/></svg>'
 };
 function statusHTML(){
  var hb='<div class="heat-bar"><i style="width:'+Math.min(100,S.heat)+'%"></i></div>';
@@ -1328,8 +1485,142 @@ function tabHeader(tab){
  if(tab==="settings"){
   return '<div class="appnav"><div class="appnav-title"><b style="font-size:22px">Settings</b></div></div>';
  }
+ if(tab==="browser"){
+  var _bt=BWT.tabs[BWT.cur]||{hist:[],hi:0};
+  var _burl=_bt.hist[_bt.hi]||"";
+  var _canB=_bt.hi>0,_canF=_bt.hi<_bt.hist.length-1;
+  var _short=_burl.replace(/^https?:\/\/(www\.)?/,"");
+  return '<div class="appnav bw-chrome">'
+   +'<button type="button" class="bw-navbtn" data-act="bw-back"'+(_canB?"":" disabled")+' aria-label="Back">&#8592;</button>'
+   +'<button type="button" class="bw-navbtn" data-act="bw-fwd"'+(_canF?"":" disabled")+' aria-label="Forward">&#8594;</button>'
+   +'<div class="bw-urlbar"><span class="bw-lock">🔒</span><span class="bw-url">'+escHtml(_short)+'</span><button type="button" class="bw-reload" data-act="bw-refresh" aria-label="Reload">&#10227;</button></div>'
+   +'<button type="button" class="bw-tabsbtn" data-act="bw-tabs" aria-label="Tabs"><span class="bw-tabcount">'+BWT.tabs.length+'</span></button>'
+   +'<button type="button" class="bw-menubtn" data-act="bw-menu" aria-label="Menu">&#8942;</button></div>';
+ }
  var ic=TAB_ICONS[tab]||"";
  return '<div class="store-screen-head"><span class="store-title" style="color:'+c+'">'+ic+tab.toUpperCase()+'</span></div>';
+}
+/* ===== In-game mobile browser: Terp Estates (realtor) ===== */
+var BWT={tabs:[{hist:["https://www.terpestates.com/homes"],hi:0}],cur:0,switcher:false,menu:false};
+var PROP_META={
+ tent:{addr:"14 Closet Ln, Shirley, NY",bd:1,ba:1,sqft:400,grad:"linear-gradient(135deg,#3b3b44,#222228)",tag:"Cozy starter spot"},
+ trap:{addr:"88 Trap Ave, Shirley, NY",bd:2,ba:1,sqft:950,grad:"linear-gradient(135deg,#7c2d12,#431407)",tag:"High foot traffic"},
+ warehouse:{addr:"500 Industrial Pkwy, Brookhaven, NY",bd:3,ba:2,sqft:2600,grad:"linear-gradient(135deg,#334155,#0f172a)",tag:"Room to scale"},
+ mansion:{addr:"1 Emerald Hill Dr, Hamptons, NY",bd:5,ba:4,sqft:6200,grad:"linear-gradient(135deg,#065f46,#022c22)",tag:"Luxury grow estate"},
+ bunker:{addr:"Undisclosed Rd, Adirondacks, NY",bd:4,ba:3,sqft:3800,grad:"linear-gradient(135deg,#44403c,#1c1917)",tag:"Off the grid"},
+ island:{addr:"7 Palm Key, Private Island",bd:6,ba:7,sqft:9200,grad:"linear-gradient(135deg,#0e7490,#164e63)",tag:"Private island compound"},
+ cartel:{addr:"99 Sierra Madre, Undisclosed",bd:8,ba:10,sqft:15000,grad:"linear-gradient(135deg,#7f1d1d,#450a0a)",tag:"Full-scale operation"},
+ palace:{addr:"1 Emerald Palace Way, Beverly Hills, CA",bd:10,ba:12,sqft:25000,grad:"linear-gradient(135deg,#a16207,#422006)",tag:"The crown jewel"}
+};
+function bwUrl(){var t=BWT.tabs[BWT.cur];return t?t.hist[t.hi]:"";}
+function bwNav(url){var t=BWT.tabs[BWT.cur];if(!t)return;t.hist=t.hist.slice(0,t.hi+1);t.hist.push(url);t.hi++;if(t.hist.length>20){t.hist.shift();t.hi--;}BWT.menu=false;BWT.switcher=false;}
+function bwTabTitle(url){
+ if(url.indexOf("growopdaily")>=0)return "GrowOp Daily";
+ var m=/\/homes\/(\w+)/.exec(url||"");
+ if(m){var p=PROPS.filter(function(x){return x.id===m[1];})[0];return p?p.name:"Listing";}
+ return "Terp Estates";
+}
+function bwBuyBtn(p){
+ var owned=S.props.some(function(x){return x.id===p.id;});
+ var locked=p.tier>pLevel();
+ if(owned)return '<button type="button" class="bw-btn owned" disabled>&#10003; Owned</button>';
+ if(locked)return '<button type="button" class="bw-btn" disabled>Unlocks at Lv '+p.tier+'</button>';
+ return '<button type="button" class="bw-btn" data-act="buyprop" data-prop="'+p.id+'"'+(S.cash>=p.cost?"":" disabled")+'>'+(p.cost===0?"Claim FREE":"Buy — "+money(p.cost))+'</button>';
+}
+function bwCardHTML(p){
+ var meta=PROP_META[p.id]||{addr:"",bd:1,ba:1,sqft:500,grad:"linear-gradient(135deg,#333,#111)",tag:""};
+ var owned=S.props.some(function(x){return x.id===p.id;});
+ var locked=p.tier>pLevel();
+ var badge=owned?'<span class="bw-badge owned">OWNED</span>':locked?'<span class="bw-badge locked">LV '+p.tier+'+</span>':'<span class="bw-badge forsale">FOR SALE</span>';
+ return '<div class="bw-card'+(locked?" locked":"")+'" data-act="bw-goto" data-url="https://www.terpestates.com/homes/'+p.id+'">'
+  +'<div class="bw-photo" style="background:'+meta.grad+'"><span class="bw-photoemoji">&#127968;</span>'+badge
+  +'<span class="bw-price">'+(p.cost===0?"FREE":money(p.cost))+'</span></div>'
+  +'<div class="bw-cardbody"><div class="bw-specs"><b>'+meta.bd+'</b> bd &nbsp;<b>'+meta.ba+'</b> ba &nbsp;<b>'+meta.sqft.toLocaleString("en-US")+'</b> sqft</div>'
+  +'<div class="bw-addr">'+escHtml(p.name)+'</div><div class="bw-subaddr">'+escHtml(meta.addr)+'</div>'
+  +'<div class="bw-slots">&#127793; '+p.slots+' grow slots &middot; '+escHtml(meta.tag)+'</div>'
+  +bwBuyBtn(p)+'</div></div>';
+}
+function bwListingsHTML(){
+ var cards=PROPS.map(bwCardHTML).join("");
+ return '<div class="bw-page"><div class="bw-sitehead"><span class="bw-logo">&#127968; Terp<span>Estates</span></span><span class="bw-signin">Sign in</span></div>'
+  +'<div class="bw-searchbar"><span class="bw-sic">&#8981;</span><span class="bw-sq">Shirley, NY</span><span class="bw-filter">Filters</span></div>'
+  +'<div class="bw-count">'+PROPS.length+' homes for sale near you</div>'
+  +'<div class="bw-cards">'+cards+'</div>'
+  +'<div class="bw-foot">Terp Estates &middot; Not a real listing. Your plug Roach approved this message.</div></div>';
+}
+function bwDetailHTML(id){
+ var p=PROPS.filter(function(x){return x.id===id;})[0];
+ if(!p)return bwListingsHTML();
+ var meta=PROP_META[id];
+ var mo=p.cost===0?"—":money(Math.round(p.cost/360*1.15))+"/mo";
+ return '<div class="bw-page"><div class="bw-dphoto" style="background:'+meta.grad+'"><span class="bw-photoemoji big">&#127968;</span>'
+  +'<button type="button" class="bw-dback" data-act="bw-back" aria-label="Back">&#8592;</button>'
+  +'<span class="bw-price big">'+(p.cost===0?"FREE":money(p.cost))+'</span></div>'
+  +'<div class="bw-dbody"><div class="bw-addr big">'+escHtml(p.name)+'</div><div class="bw-subaddr">'+escHtml(meta.addr)+'</div>'
+  +'<div class="bw-dspecs"><div><b>'+meta.bd+'</b><span>beds</span></div><div><b>'+meta.ba+'</b><span>baths</span></div><div><b>'+meta.sqft.toLocaleString("en-US")+'</b><span>sq ft</span></div><div><b>'+p.slots+'</b><span>grow slots</span></div></div>'
+  +'<div class="bw-est">Est. '+mo+' &middot; Requires Level '+p.tier+'</div>'
+  +'<div class="bw-desc">'+escHtml(p.desc)+' '+escHtml(meta.tag)+'. Discreet location, cash buyers preferred — no questions asked.</div>'
+  +bwBuyBtn(p)
+  +'<div class="bw-feats"><div>&#10003; '+p.slots+' climate-controlled grow slots</div><div>&#10003; Low-profile neighborhood</div><div>&#10003; Cash deal — closes instantly</div></div>'
+  +'</div></div>';
+}
+function bwNewsHTML(){
+ return '<div class="bw-page"><div class="bw-sitehead"><span class="bw-logo">&#128240; GrowOp<span>Daily</span></span></div>'
+  +'<div class="bw-news"><div class="bw-nh">STREET WIRE</div>'
+  +'<div class="bw-nitem"><b>Heat wave hits the east side</b><span>Cops stepping up patrols — keep that heat down or pay the bribe.</span></div>'
+  +'<div class="bw-nitem"><b>Seed bank restocks rare strains</b><span>Maui Wowie, Northern Lights and AK-47 seeds moving fast at the Store.</span></div>'
+  +'<div class="bw-nitem"><b>Property values climbing</b><span>More grow slots = more product. Check Terp Estates for your next spot.</span></div>'
+  +'<button type="button" class="bw-btn" data-act="bw-home">Back to Terp Estates</button></div></div>';
+}
+function bwSwitcherHTML(){
+ var items=BWT.tabs.map(function(t,i){
+  return '<div class="bw-swrow'+(i===BWT.cur?" cur":"")+'"><button type="button" class="bw-swgo" data-act="bw-tab" data-i="'+i+'">'+escHtml(bwTabTitle(t.hist[t.hi]))+'</button>'
+   +(BWT.tabs.length>1?'<button type="button" class="bw-swx" data-act="bw-closetab" data-i="'+i+'" aria-label="Close tab">&#10005;</button>':"")+'</div>';
+ }).join("");
+ return '<div class="bw-overlay"><div class="bw-sheet"><div class="bw-shtitle">Tabs</div>'+items
+  +'<button type="button" class="bw-btn ghost" data-act="bw-newtab">+ New tab</button>'
+  +'<button type="button" class="bw-btn ghost" data-act="bw-tabs">Done</button></div></div>';
+}
+function bwMenuHTML(){
+ return '<div class="bw-overlay"><div class="bw-sheet menu"><button type="button" class="bw-mitem" data-act="bw-refresh">&#10227; Refresh</button>'
+  +'<button type="button" class="bw-mitem" data-act="bw-home">&#127968; Terp Estates home</button>'
+  +'<button type="button" class="bw-mitem" data-act="bw-close">&#10005; Close browser</button></div></div>';
+}
+function browserHTML(){
+ var h=tabHeader("browser");
+ var url=bwUrl();
+ if(BWT.switcher)h+=bwSwitcherHTML();
+ else if(BWT.menu)h+=bwMenuHTML();
+ var m=/\/homes\/(\w+)/.exec(url||"");
+ if(m)h+=bwDetailHTML(m[1]);
+ else if((url||"").indexOf("growopdaily")>=0)h+=bwNewsHTML();
+ else h+=bwListingsHTML();
+ return h;
+}
+// Error vs info classifier for S.msg: errors/warnings render as amber alerts,
+// normal/success messages render as plain info.
+function isErrMsg(m){
+ if(!m)return false;
+ return /^(BUSTED|Beaten down|COP AMBUSH|Duffel (full|is full|is still full)|Finish the fight!|Need |No |Not enough|Nothing to sell|That recipe|You don't have|You need)/.test(m);
+}
+function escHtml(x){return String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+// Samsung-style notification shade (swipe down from status bar)
+var shadeOpen=false,shadeListKey=null;
+function openShade(){shadeOpen=true;var sh=q(".notif-shade"),sc=q(".shade-scrim");if(sc)sc.hidden=false;if(sh){sh.hidden=false;void sh.offsetWidth;sh.classList.add("open");}renderShade();}
+function closeShade(){shadeOpen=false;var sh=q(".notif-shade"),sc=q(".shade-scrim");if(sh)sh.classList.remove("open");setTimeout(function(){if(!shadeOpen){if(sh)sh.hidden=true;if(sc)sc.hidden=true;}},340);}
+function toggleShade(){if(shadeOpen)closeShade();else openShade();}
+function fmtShadeTime(t){try{return new Date(t).toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"});}catch(e){return "";}}
+function renderShade(){
+ var key=((S.notifs||[]).map(function(n){return n.m;})).join("");
+ var c=q(".shade-qcash");if(c)c.textContent=money(S.cash);
+ var st=q(".shade-qstash");if(st)st.textContent=stashTotal()+"/"+S.stashCap+"g";
+ var h=q(".shade-qheat");if(h)h.textContent=Math.round(Math.min(100,S.heat))+"%";
+ var d=q(".shade-qday");if(d)d.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
+ var list=q(".shade-list");if(!list)return;
+ if(shadeListKey===key)return;shadeListKey=key;
+ list.innerHTML=(S.notifs&&S.notifs.length)?S.notifs.map(function(n){
+  return '<div class="shade-item'+(n.e?' err':'')+'"><span class="si-av">'+(n.e?'&#9888;&#65039;':'&#127793;')+'</span><div class="si-body"><div class="si-head"><b>Roach</b><span>'+escHtml(fmtShadeTime(n.t))+'</span></div><div class="si-msg">'+escHtml(n.m)+'</div></div></div>';
+ }).join(""):'<div class="shade-empty">No notifications yet — Roach will hit you up here.</div>';
 }
 function render(){
  if(root&&root.dataset)root.dataset.theme=(S.theme==="light")?"light":"dark";
@@ -1357,7 +1648,7 @@ function render(){
   _bb.disabled=S.cash<bribeCost();
   _bb.textContent="BRIBE "+money(bribeCost());
  }
- q(".v-msg").textContent=S.msg;
+ var _vm=q(".v-msg");if(_vm){_vm.textContent=S.msg;_vm.classList.toggle("err",isErrMsg(S.msg));}
  renderTicker();
  qa(".pg-tabs button").forEach(function(b){b.classList.toggle("on",b.dataset.tab===S.tab);});
  var battling=!!S.battle;
@@ -1374,6 +1665,7 @@ function render(){
  q(".pane-chill").hidden=battling||!inApp||S.tab!=="chill";
  q(".pane-clinic").hidden=battling||!inApp||S.tab!=="clinic";
  q(".pane-settings").hidden=battling||!inApp||S.tab!=="settings";
+ q(".pane-browser").hidden=battling||!inApp||S.tab!=="browser";
  q(".pane-battle").hidden=!battling;
  // Android OS shell
  var _clk=q(".android-clock");
@@ -1385,12 +1677,19 @@ function render(){
   if(_at){_at.textContent=appName(S.tab);_at.style.color=TAB_COLORS[S.tab]||"#e5484d";}}
  var _hwc=q(".android-wcash");if(_hwc)_hwc.textContent=money(S.cash);
  var _hws=q(".android-wstash");if(_hws)_hws.textContent=stashTotal()+"/"+S.stashCap+"g";
- var _hwh=q(".android-wheat");if(_hwh)_hwh.style.width=Math.min(100,S.heat)+"%";
- var _hwt=q(".android-wheattier");if(_hwt)_hwt.textContent=heatStars(S.heat)+" "+HEAT_TIERS[heatTier(S.heat)];
+ var _hp=Math.min(100,Math.round(S.heat)),_CIRC=213.63;
+ var _hwr=q(".android-wheatring");
+ if(_hwr){_hwr.style.strokeDashoffset=(_CIRC*(1-_hp/100)).toFixed(1);_hwr.style.stroke=_hp<40?"#4ade80":_hp<70?"#f59e0b":"#ef4444";}
+ var _hwn=q(".android-wheatnum");if(_hwn)_hwn.textContent=_hp;
+ var _hwt=q(".android-wheattier");if(_hwt)_hwt.textContent=HEAT_TIERS[heatTier(S.heat)];
  var _hwd=q(".android-wday");if(_hwd)_hwd.textContent="Day "+(1+Math.floor((now-S.bornAt)/86400000));
  var _nm=q(".android-notif-msg");if(_nm)_nm.textContent=S.msg;
- var _gr=q(".android-greet");
- if(_gr){var _gh=new Date().getHours();_gr.textContent=_gh<12?"Good morning":_gh<18?"Good afternoon":"Good evening";}
+ var _isE=isErrMsg(S.msg);
+ var _nc=q(".android-notif");if(_nc)_nc.classList.toggle("err",_isE);
+ var _na=q(".android-notif-av");if(_na)_na.textContent=_isE?"\u26A0\uFE0F":"\uD83C\uDF3F";
+ if(!Array.isArray(S.notifs))S.notifs=[];
+ if(S.msg&&(!S.notifs.length||S.notifs[0].m!==S.msg)){S.notifs.unshift({m:S.msg,e:_isE?1:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
+ renderShade();
  var _dt=q(".android-date");
  if(_dt){try{_dt.textContent=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});}catch(e){}}
  var _rl=q(".recents-list");
@@ -1560,6 +1859,7 @@ function render(){
  q(".pane-clinic").innerHTML=clinicHTML();
  var _ae=(typeof document!=="undefined")?document.activeElement:null;
  if(!(_ae&&_ae.type==="range"&&root.contains&&root.contains(_ae)))q(".pane-settings").innerHTML=settingsHTML();
+ q(".pane-browser").innerHTML=browserHTML();
 }
 function getPot(pi,si){var pr=S.props[pi];return pr?pr.slots[si]:undefined;}
 function doPlant(pi,si,k){
@@ -2512,6 +2812,20 @@ root.addEventListener("click",function(e){
  if(a==="android-back"){if(S.battle){S.msg="Finish the fight!";save();render();return;}navPop();save();render();return;}
  if(a==="android-home"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
  if(a==="android-recents"){var _rx=q(".android-recents");if(_rx)_rx.hidden=!_rx.hidden;render();return;}
+ if(a==="shade-open"){openShade();return;}
+ if(a==="shade-close"){closeShade();return;}
+ if(a==="shade-clear"){S.notifs=[];shadeListKey=null;save();render();return;}
+ if(a==="bw-back"){var _bt=BWT.tabs[BWT.cur];if(_bt&&_bt.hi>0)_bt.hi--;BWT.menu=false;BWT.switcher=false;render();return;}
+ if(a==="bw-fwd"){var _bt2=BWT.tabs[BWT.cur];if(_bt2&&_bt2.hi<_bt2.hist.length-1)_bt2.hi++;BWT.menu=false;BWT.switcher=false;render();return;}
+ if(a==="bw-goto"){bwNav(b.dataset.url);render();return;}
+ if(a==="bw-tabs"){BWT.switcher=!BWT.switcher;BWT.menu=false;render();return;}
+ if(a==="bw-tab"){BWT.cur=Math.max(0,Math.min(BWT.tabs.length-1,+b.dataset.i||0));BWT.switcher=false;render();return;}
+ if(a==="bw-newtab"){BWT.tabs.push({hist:["https://www.growopdaily.com"],hi:0});BWT.cur=BWT.tabs.length-1;BWT.switcher=false;render();return;}
+ if(a==="bw-closetab"){var _ci=+b.dataset.i||0;if(BWT.tabs.length>1){BWT.tabs.splice(_ci,1);if(BWT.cur>=BWT.tabs.length)BWT.cur=BWT.tabs.length-1;}BWT.switcher=false;render();return;}
+ if(a==="bw-menu"){BWT.menu=!BWT.menu;BWT.switcher=false;render();return;}
+ if(a==="bw-refresh"){BWT.menu=false;render();return;}
+ if(a==="bw-home"){bwNav("https://www.terpestates.com/homes");render();return;}
+ if(a==="bw-close"){S.view="home";BWT.menu=false;BWT.switcher=false;save();render();return;}
  if(a==="amt"){S.amt=+b.dataset.amt;save();render();return;}
  if(a==="plant"){doPlant(+b.dataset.pi,+b.dataset.si,b.dataset.strain);return;}
  if(a==="water"){var p=getPot(+b.dataset.pi,+b.dataset.si);if(p){p.water=100;S.msg="Watered.";save();render();}return;}
@@ -2594,6 +2908,32 @@ root.addEventListener("change",function(e){
   render();
  }
 });
+/* Swipe-down notification shade: swipe down from the status bar to open,
+   swipe up on the shade (or tap the scrim) to dismiss. Tap = toggle. */
+(function(){
+ var sy=null,sx0=null,starget=null;
+ function start(y,x,shade){sy=y;sx0=x;starget=shade?"shade":"bar";}
+ function end(y,x){
+  if(sy===null)return;
+  var dy=y-sy,adx=Math.abs(x-sx0),was=starget;sy=null;starget=null;
+  if(adx>60)return; // horizontal swipe: ignore
+  if(was==="shade"){if(dy<-50||Math.abs(dy)<10)closeShade();}
+  else{if(dy>50)openShade();else if(Math.abs(dy)<10)toggleShade();}
+ }
+ var sb=q(".android-statusbar"),sh=q(".notif-shade");
+ if(sb){
+  sb.addEventListener("touchstart",function(e){var t=e.touches[0];start(t.clientY,t.clientX,false);},{passive:true});
+  sb.addEventListener("touchend",function(e){var t=e.changedTouches[0];end(t.clientY,t.clientX);},{passive:true});
+  sb.addEventListener("mousedown",function(e){start(e.clientY,e.clientX,false);});
+  sb.addEventListener("mouseup",function(e){end(e.clientY,e.clientX);});
+ }
+ if(sh){
+  sh.addEventListener("touchstart",function(e){var t=e.touches[0];start(t.clientY,t.clientX,true);},{passive:true});
+  sh.addEventListener("touchend",function(e){var t=e.changedTouches[0];end(t.clientY,t.clientX);},{passive:true});
+  sh.addEventListener("mousedown",function(e){start(e.clientY,e.clientX,true);});
+  sh.addEventListener("mouseup",function(e){end(e.clientY,e.clientX);});
+ }
+})();
 render();
 tick();
 setInterval(tick,15000);
