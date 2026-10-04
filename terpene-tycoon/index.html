@@ -1645,12 +1645,15 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .prop-dhead b{font-size:18px;flex:1}
 .prop-dhead span{font-size:13px;color:var(--hatch-widget-muted);font-weight:700}
 .prop-scene{position:relative;width:100%;aspect-ratio:4/3;background-size:cover;background-position:center;border-radius:16px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.4)}
-.prop-plant{position:absolute;width:64px;background:none;border:none;padding:0;cursor:pointer;filter:drop-shadow(0 4px 6px rgba(0,0,0,.5))}
-.prop-plant img{width:100%;height:64px;object-fit:cover;border-radius:10px;display:block}
-.prop-plant.empty{opacity:.55}
-.prop-plant.ready img{outline:2px solid #4ade80;outline-offset:2px}
+.prop-plant{position:absolute;width:64px;background:none;border:none;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent;filter:drop-shadow(0 6px 6px rgba(0,0,0,.55))}
+.prop-plant::after{content:"";position:absolute;left:4%;right:4%;bottom:-6px;height:14px;background:radial-gradient(ellipse at center,rgba(0,0,0,.5),transparent 70%);filter:blur(3px);pointer-events:none}
+.prop-plant img{width:100%;height:auto;display:block;-webkit-mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,#000 56%,transparent 80%);mask-image:radial-gradient(ellipse 100% 100% at 50% 50%,#000 56%,transparent 80%)}
+.prop-plant.empty{opacity:.6}
+.prop-plant.ready img{filter:drop-shadow(0 0 10px rgba(74,222,128,.75))}
 .prop-plant.wilt img{filter:saturate(.5) brightness(.8)}
-.prop-plant .pp-gbar,.prop-plant .pp-wbar{display:block;height:4px;border-radius:2px;background:rgba(0,0,0,.5);margin-top:2px;overflow:hidden}
+.prop-plant:active{filter:drop-shadow(0 6px 6px rgba(0,0,0,.55)) brightness(1.12)}
+.prop-plant .pp-gbar,.prop-plant .pp-wbar{display:none;height:4px;border-radius:2px;background:rgba(0,0,0,.55);margin-top:2px;overflow:hidden}
+.prop-plant.sel .pp-gbar,.prop-plant.sel .pp-wbar{display:block}
 .prop-plant .pp-gbar i{display:block;height:100%;background:#4ade80}
 .prop-plant .pp-wbar i{display:block;height:100%;background:#38bdf8}
 .prop-actions{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:14px;padding:10px 12px}
@@ -2937,8 +2940,12 @@ function propsHTML(){
   var scale=1 - r*0.09;
   var st=p?stageOf(p.growth):-1;
   var imgSrc=!p?EMPTY_POT_IMG:((st===6)?(STRAIN_IMGS[p.strain]||STRAIN_IMGS.sour):STAGE_IMGS[st]);
-  var cls="prop-plant"+(!p?" empty":"")+(p&&p.growth>=100?" ready":"")+(p&&p.water<25?" wilt":"");
-  h+='<button type="button" class="'+cls+'" data-act="prop-plant" data-pi="'+pi+'" data-si="'+si+'" style="left:'+x.toFixed(1)+'%;top:'+y.toFixed(1)+'%;transform:translate(-50%,-85%) scale('+scale.toFixed(2)+')">'
+  var selp=S.propSel&&S.propSel.pi===pi&&S.propSel.si===si;
+  var _vr=Math.sin(si*12.9898+pi*78.233)*43758.5453;_vr=_vr-Math.floor(_vr);
+  var _vr2=Math.sin(si*39.346+pi*11.135)*24634.6345;_vr2=_vr2-Math.floor(_vr2);
+  var _rot=((_vr-0.5)*10).toFixed(1),_jx=((_vr2-0.5)*3).toFixed(1),_sv=(0.94+_vr2*0.12).toFixed(2);
+  var cls="prop-plant"+(!p?" empty":"")+(p&&p.growth>=100?" ready":"")+(p&&p.water<25?" wilt":"")+(selp?" sel":"");
+  h+='<button type="button" class="'+cls+'" data-act="prop-plant" data-pi="'+pi+'" data-si="'+si+'" style="left:'+(x+ +_jx).toFixed(1)+'%;top:'+y.toFixed(1)+'%;transform:translate(-50%,-88%) rotate('+_rot+'deg) scale('+(scale*_sv).toFixed(2)+')">'
    +'<img src="'+imgSrc+'" alt="'+(p?PRODUCTS[p.strain].name:"Empty pot")+'">'
    +(p?'<span class="pp-gbar"><i style="width:'+Math.round(p.growth)+'%"></i></span><span class="pp-wbar"><i style="width:'+Math.round(p.water)+'%"></i></span>':"")
    +'</button>';
