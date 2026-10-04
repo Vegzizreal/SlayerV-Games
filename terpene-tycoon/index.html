@@ -3118,10 +3118,8 @@ function mapsHTML(){
    });
    sh+='<div class="sdesc" style="margin:2px 2px 6px">Best owned weapon auto-used in fights.</div>';
   }else{
-   // Home Improvement tab — Grow Tent row expansions (owned upgrades are hidden)
+   // Home Improvement tab — Grow Tent row expansions (only buyable items shown)
    var _ul=(S.propUpgrades&&S.propUpgrades.tent)||1;
-   var _upots={1:3,3:9,4:12}[_ul]||3;
-   sh+='<div class="srow c"><div><b>Grow Tent &mdash; '+_ul+' Row'+(_ul>1?'s':'')+'</b><div class="sdesc">Current setup &middot; '+_upots+' pots</div></div><button type="button" disabled>OWNED</button></div>';
    var _unext=_ul===1?3:(_ul===3?4:0);
    [{rows:3,pots:9,cost:2500},{rows:4,pots:12,cost:7500}].forEach(function(u){
     if(u.rows<=_ul)return;
