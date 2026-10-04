@@ -79,7 +79,7 @@ window.hatchWidget={
  <div class="pg-hint v-hint"></div>
 </div>
 <style>
-.pg{box-sizing:border-box;width:100%;max-width:1280px;margin:0 auto;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--hatch-widget-text)}
+.pg{box-sizing:border-box;width:100%;max-width:480px;margin:0 auto;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--hatch-widget-text)}
 .pg *{box-sizing:border-box}
 /* Fixed app shell: header stays put, only panes scroll */
 .pg{height:100dvh;max-height:100dvh;display:flex;flex-direction:column;overflow:hidden}
@@ -111,7 +111,7 @@ window.hatchWidget={
  --hatch-widget-shadow:rgba(0,0,0,.6);
  background:radial-gradient(620px 260px at 50% -80px,rgba(229,72,77,.06),transparent 60%),radial-gradient(900px 480px at 50% 115%,rgba(0,0,0,.55),transparent 62%),#0a0a0c;
 }
-.pg-head{display:flex;justify-content:center;align-items:center;gap:8px;width:100vw;margin-left:calc(50% - 50vw);margin-bottom:6px;padding:6px 12px;background:linear-gradient(180deg,#0d1f14,#0a0a0c);border-bottom:2px solid #16a34a;flex-wrap:wrap;box-sizing:border-box}
+.pg-head{display:flex;justify-content:center;align-items:center;gap:8px;width:100%;margin:0 0 6px;padding:6px 12px;background:linear-gradient(180deg,#0d1f14,#0a0a0c);border-bottom:2px solid #16a34a;flex-wrap:wrap;box-sizing:border-box}
 .pg-title{font-weight:900;font-size:19px;letter-spacing:2px;color:#4ade80;text-shadow:0 0 12px rgba(74,222,128,.4),0 1px 2px rgba(0,0,0,.6)}
 .pg-sub{display:none}
 .pg-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
@@ -137,21 +137,21 @@ window.hatchWidget={
 .store-banner b{font-size:19px;letter-spacing:2px;color:var(--sc,#4ade80);white-space:nowrap;display:flex;align-items:center;gap:7px}
 .store-banner b svg{display:block;flex:0 0 auto}
 @media(max-width:560px){.pg-tabs{gap:2px;padding:2px}.pg-tabs button{font-size:15px}.btns button{min-width:0;overflow:hidden;text-overflow:ellipsis}}
-@media(min-width:700px){
+@media(min-width:5000px){
  .pane-store{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;align-items:start}
  .pane-store>.store-screen-head,.pane-store>.store-tabs,.pane-store>.store-banner{grid-column:1/-1}
  .pane-deal{display:grid;grid-template-columns:1fr 1fr;gap:2px 10px;align-items:start}
  .pane-deal>.dchips{grid-column:1/-1}
 }
 /* ===== TERPENE TYCOON v17: fill each device's screen, finger-friendly ===== */
-@media(min-width:700px){
+@media(min-width:5000px){
  .pg{padding:16px 18px 12px}
  .pots{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px}
  .plant{height:120px}
  .pg-msg{font-size:17.5px}
  .pill{font-size:16px}
 }
-@media(min-width:1100px){
+@media(min-width:5000px){
  .pane-store{grid-template-columns:1fr 1fr 1fr}
  .pane-deal{grid-template-columns:1fr 1fr 1fr}
  .pots{grid-template-columns:repeat(auto-fill,minmax(230px,1fr))}
@@ -624,7 +624,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .plant{height:112px}
 .pg-hint{margin-top:4px}
 .prop{margin-bottom:14px}
-@media(min-width:700px){
+@media(min-width:5000px){
  .pg{padding:28px 28px 34px}
  .pg-head{margin-bottom:18px}
  .pg-pills{margin-bottom:8px}
