@@ -960,8 +960,15 @@ window.hatchWidget={
 .notes-frow:last-child{border-bottom:none}
 .notes-frow:active{background:rgba(120,120,128,.12)}
 .notes-fico{flex:none;display:flex;align-items:center}
-.notes-fname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.notes-ftext{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center}
+.notes-fname{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:16px}
+.notes-fsub{color:#8e8e93;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:1px}
 .notes-fcount{color:#8e8e93;font-size:15px}
+.notes-actions{display:flex;gap:10px;margin:0 12px 10px}
+.notes-abtn{flex:1;border:none;border-radius:12px;padding:11px 8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;background:#0a84ff;color:#fff}
+.notes-abtn:active{opacity:.75}
+.notes-abtn:disabled{opacity:.35;cursor:default}
+.notes-abtn.danger{background:#ff3b30}
 .notes-fchev{color:#c7c7cc;font-size:18px;font-weight:300}
 .notes-back{background:none;border:none;color:#0a84ff;font-size:16px;cursor:pointer;padding:12px 0 0 10px;font-family:inherit;display:inline-flex;align-items:center;gap:1px}
 .notes-back .notes-bchev{font-size:20px;line-height:1}
@@ -3213,8 +3220,8 @@ function notesCardHTML(c){
   +'<div class="d2-sub">'+c.subLine+'</div></div>'
   +(c.action?'<div class="stashbtns">'+c.action+'</div>':'')+'</div>';
 }
-function notesFolderRow(v,name,count){
- return '<button type="button" class="notes-frow" data-act="notesview" data-v="'+v+'"><span class="notes-fico">'+NOTES_FOLDER_SVG+'</span><span class="notes-fname">'+name+'</span><span class="notes-fcount">'+count+'</span><span class="notes-fchev">›</span></button>';
+function notesFolderRow(v,name,count,sub){
+ return '<button type="button" class="notes-frow" data-act="notesview" data-v="'+v+'"><span class="notes-fico">'+NOTES_FOLDER_SVG+'</span><span class="notes-ftext"><span class="notes-fname">'+name+'</span>'+(sub?'<span class="notes-fsub">'+sub+'</span>':'')+'</span><span class="notes-fcount">'+count+'</span><span class="notes-fchev">›</span></button>';
 }
 function notesSearchBar(){
  return '<div class="notes-search"><span>🔍</span><input type="text" data-nsearch="1" placeholder="Search" value="'+escHtml(NOTESQ||"")+'" autocomplete="off"></div>';
@@ -3237,6 +3244,9 @@ function stashHTML(){
  var sum='<div class="note-pin"><div class="stash-sum"><div class="sdesc" style="font-size:15.5px"><b style="color:var(--hatch-widget-text)">'+tot+'g</b> / '+S.stashCap+'g &middot; worth <b style="color:#4ade80">'+money(val)+'</b> at '+d.name+'\'s prices'+(bActive?' <span class="bufftag">+'+bpct+'%</span>':"")+'</div>'
   +'<div class="heat-bar" style="margin-top:6px"><i style="width:'+pct+'%"></i></div></div></div>';
  var todos=notesTodosData(),cards=notesStashCards(d,su),seeds=notesSeedCards();
+ var gN=todos.filter(function(t){return t.tag==="GROW";}).length;
+ var cN=todos.filter(function(t){return t.tag==="LAB";}).length;
+ var anyReady=todos.some(function(t){return t.done;});
  var q=(NOTESQ||"").toLowerCase();
  function match(s){return !q||String(s||"").toLowerCase().indexOf(q)>=0;}
  var h='<div class="notes-ios">';
@@ -3244,9 +3254,9 @@ function stashHTML(){
   h+='<div class="notes-ios-head"><span class="notes-ios-title">Folders</span><button type="button" class="notes-ios-edit" data-act="notes-edit">Edit</button></div>';
   h+='<div class="notes-ios-sec">Grow Op</div>';
   h+='<div class="notes-folder">'
-   +notesFolderRow("inprogress","In Progress",todos.length)
-   +notesFolderRow("stash","Stash",cards.length)
-   +notesFolderRow("seeds","Seed Packets",seeds.length)
+   +notesFolderRow("inprogress","In Progress",todos.length,gN+" growing · "+cN+" cooking")
+   +notesFolderRow("stash","Stash",cards.length,"Worth "+money(val))
+   +notesFolderRow("seeds","Seed Packets",seeds.length,seeds.length+" ready to plant")
    +'</div>';
   h+='<div class="notes-ios-sec">Summary</div>'+sum;
   h+=notesSearchBar();
@@ -3255,14 +3265,17 @@ function stashHTML(){
   h+='<button type="button" class="notes-back" data-act="notesview" data-v="folders"><span class="notes-bchev">‹</span>Folders</button>';
   h+='<div class="notes-list-title">'+title+'</div>';
   if(view==="inprogress"){
+   h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="waterall"'+(gN?"":" disabled")+'>Water All</button><button type="button" class="notes-abtn" data-act="harvestall"'+(anyReady?"":" disabled")+'>Harvest All</button></div>';
    var ft=todos.filter(function(t){return match(t.title+" "+t.sub+" "+t.tag);});
    h+=ft.length?ft.map(notesTodoHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing in progress.")+'</div>';
   }else if(view==="stash"){
+   h+='<div class="notes-actions"><button type="button" class="notes-abtn danger" data-act="notes-sellall"'+(cards.length?"":" disabled")+'>Sell All</button></div>';
    h+=sum;
    var fc=cards.filter(function(c){return match(c.search);});
    h+=fc.length?fc.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing stashed yet — harvest some bud first.")+'</div>';
    h+='<div class="sdesc" style="margin:10px 18px 0">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
   }else{
+   h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="notes-plantall"'+(seeds.length?"":" disabled")+'>Auto Plant All</button></div>';
    var fs=seeds.filter(function(c){return match(c.search);});
    h+=fs.length?fs.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"No seed packets.")+'</div>';
   }
@@ -3969,6 +3982,37 @@ root.addEventListener("click",function(e){
  var a=b.dataset.act;
  if(a==="notesview"){var _nv=b.dataset.v;S.notesView=(_nv==="inprogress"||_nv==="stash"||_nv==="seeds")?_nv:"folders";NOTESQ="";save();render();return;}
  if(a==="notes-edit"){S.msg="Nothing to edit — your notes manage themselves.";save();render();return;}
+ if(a==="notes-sellall"){
+  var _sln=Date.now();
+  if(_sln<S.lockedUntil)return;
+  var _sls=stashDealer(),_sld=_sls.d,_slb=buffActive(),_slr=0,_sli=0,_slp=0;
+  function _slk(k,ij){
+   var have=ij?(S.joints[k]||0):(S.stash[k]||0);
+   if(have<1||tierVis(PRODUCTS[k].tier)===0)return;
+   var unit=ppu(PRODUCTS[k].price,_sld.buy[k]*terrPriceMult()*terrPrefMult(k,ij));
+   if(ij)unit=Math.round(unit*0.9);
+   if(_slb)unit=Math.round(unit*S.buffMult);
+   var r=Math.floor(unit*have);
+   if(ij)S.joints[k]=0;else S.stash[k]=0;
+   _slr+=r;_sli+=have;
+   dealTerrHeat(have,have>=5);
+   _slp+=calcProfit(k+(ij?"_j":""),have,have,r);
+  }
+  PKEYS.forEach(function(k){_slk(k,false);});
+  GROWKEYS.forEach(function(k){_slk(k,true);});
+  if(_sli<1){S.msg="Nothing to sell.";save();render();return;}
+  S.cash+=_slr;S.stats.earned+=_slr;S.stats.deals++;
+  var _slh=dealerStreakHeat(_sls.di);
+  if(!addXP(5))S.msg="Sold the whole stash to "+_sld.name+" for "+money(_slr)+"."+(_slh>0?" Same spot too many times — heat +"+_slh+".":"");
+  showSalePop("Entire stash",_sli+" items",_slr,_slp);
+  flushTerrMsg();battleRoll();save();render();return;
+ }
+ if(a==="notes-plantall"){
+  var _pla=false;
+  GROWKEYS.forEach(function(k){if((S.seeds[k]||0)>0){doAutoPlant(k);_pla=true;}});
+  if(!_pla){S.msg="No seeds to plant.";save();render();}
+  return;
+ }
  if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);save();render();return;}
  if(a==="openapp"){closeFolder();if(S.battle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";navPush(_ap);var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
  if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle){S.msg="Finish the fight!";save();render();return;}navPop();save();render();return;}
