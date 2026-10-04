@@ -881,10 +881,22 @@ window.hatchWidget={
 .msg-ordtag{font-size:11px;color:#25d366;font-weight:700}
 .msg-chat.unread .msg-chat-mid b{font-weight:800}
 .msg-chat.unread .msg-chat-mid span{color:rgba(255,255,255,.85);font-weight:600}
-.msg-replies{display:flex;flex-wrap:wrap;gap:8px;padding:12px 4px 4px}
-.msg-reply{background:rgba(124,252,0,.1);border:1px solid rgba(124,252,0,.5);color:#7CFC00;border-radius:18px;padding:9px 15px;font-size:13.5px;font-weight:700;cursor:pointer}
-.msg-reply:active{background:rgba(124,252,0,.28)}
-.pg[data-theme="light"] .msg-reply{background:rgba(46,125,50,.08);border-color:rgba(46,125,50,.5);color:#2e7d32}
+.msg-replies{display:flex;flex-wrap:wrap;gap:8px;padding:12px 4px 4px;border-top:1px solid rgba(255,255,255,.08);margin-top:10px}
+.msg-reply{background:rgba(26,115,232,.14);border:1px solid rgba(138,180,248,.55);color:#8ab4f8;border-radius:20px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer}
+.msg-reply:active{background:rgba(26,115,232,.32)}
+.pg[data-theme="light"] .msg-reply{background:rgba(26,115,232,.08);border-color:rgba(26,115,232,.5);color:#1a73e8}
+.pg[data-theme="light"] .msg-replies{border-top-color:rgba(0,0,0,.08)}
+/* Google Messages conversation header */
+.msg-nav-convo{background:transparent;border-bottom:1px solid rgba(255,255,255,.08);padding:8px 6px}
+.msg-nav-convo .msg-back{background:none;border:none;color:#e8eaed;cursor:pointer;padding:8px;display:flex;align-items:center}
+.msg-nav-convo .msg-contact{gap:12px}
+.msg-nav-convo .msg-contact-info b{color:#e8eaed;font-size:17px}
+.msg-nav-convo .msg-nav-actions{gap:20px;align-items:center;padding-right:4px}
+.msg-nav-convo .msg-ico{color:rgba(232,234,237,.85);display:flex;align-items:center}
+.pg[data-theme="light"] .msg-nav-convo{border-bottom-color:rgba(0,0,0,.1)}
+.pg[data-theme="light"] .msg-nav-convo .msg-back{color:#1f1f1f}
+.pg[data-theme="light"] .msg-nav-convo .msg-contact-info b{color:#111}
+.pg[data-theme="light"] .msg-nav-convo .msg-ico{color:rgba(0,0,0,.7)}
 .pg[data-theme="light"] .msg-chat.unread .msg-chat-mid span{color:rgba(0,0,0,.8)}
 .msg-empty{text-align:center;color:rgba(255,255,255,.4);font-size:14px;padding:30px 20px;line-height:1.6}
 .msg-convo{padding:14px 12px;display:flex;flex-direction:column;gap:6px}
@@ -893,8 +905,11 @@ window.hatchWidget={
 .msg-row.them{justify-content:flex-start}
 .msg-row.me{justify-content:flex-end}
 .msg-bub{max-width:78%;padding:9px 13px;border-radius:16px;font-size:14.5px;line-height:1.45;position:relative;color:#fff}
-.msg-row.them .msg-bub{background:#1f2c34;border-radius:4px 16px 16px 16px}
-.msg-row.me .msg-bub{background:#005c4b;border-radius:16px 4px 16px 16px}
+.msg-row.them .msg-bub{background:#2d2d2d;border-radius:20px;color:#fff}
+.msg-row.me .msg-bub{background:#1a73e8;border-radius:20px;color:#fff}
+.msg-read{color:#8ab4f8;font-size:11px;margin-left:4px}
+.msg-daydiv{text-align:center;font-size:12px;color:rgba(255,255,255,.55);padding:10px 0 2px}
+.msg-rcs{text-align:center;font-size:12px;color:rgba(255,255,255,.45);padding:0 0 10px}
 .msg-bub-t{display:block;font-size:10px;opacity:.55;text-align:right;margin-top:3px}
 .msg-order{background:rgba(37,211,102,.1);border:1px solid rgba(37,211,102,.35);border-radius:14px;padding:14px;margin:10px 4px}
 .msg-order-hd{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#fff;margin-bottom:8px}
@@ -905,11 +920,46 @@ window.hatchWidget={
 .pg[data-theme="light"] .msg-chat{border-bottom-color:rgba(0,0,0,.08)}
 .pg[data-theme="light"] .msg-chat-mid b{color:#111}
 .pg[data-theme="light"] .msg-chat-mid span{color:rgba(0,0,0,.55)}
-.pg[data-theme="light"] .msg-row.them .msg-bub{background:#fff;color:#111;box-shadow:0 1px 2px rgba(0,0,0,.1)}
-.pg[data-theme="light"] .msg-row.me .msg-bub{background:#dcf8c6;color:#111}
+.pg[data-theme="light"] .msg-row.them .msg-bub{background:#f0f0f0;color:#111;box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.pg[data-theme="light"] .msg-row.me .msg-bub{background:#1a73e8;color:#fff}
+.pg[data-theme="light"] .msg-daydiv{color:rgba(0,0,0,.55)}
+.pg[data-theme="light"] .msg-rcs{color:rgba(0,0,0,.45)}
+.pg[data-theme="light"] .msg-read{color:#8ab4f8}
 .pg[data-theme="light"] .msg-empty{color:rgba(0,0,0,.4)}
 .pg[data-theme="light"] .msg-order-body{color:rgba(0,0,0,.8)}
 .pg[data-theme="light"] .msg-order-hd{color:#111}
+/* Samsung Contacts phonebook (Phone app) — dark warm brown */
+.sc-wrap{background:#1a1210;border-radius:12px;padding:14px 14px 10px;min-height:62vh;display:flex;flex-direction:column}
+.sc-fav{display:flex;align-items:center;gap:12px;background:#241a15;border-radius:26px;padding:8px 8px 8px 8px;margin-bottom:6px}
+.sc-favstar{width:44px;height:44px;border-radius:50%;background:#d9a441;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+.sc-favtxt{flex:1;min-width:0;color:#e8ded6;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-favacts{display:flex;align-items:center;gap:18px;padding-right:8px;flex:none}
+.sc-favbtn{color:#b9a99c;font-size:24px;line-height:1}
+.sc-seclabel{color:#8d7f74;font-size:13px;font-weight:600;margin:12px 4px 8px}
+.sc-group{background:#241a15;border-radius:24px;overflow:hidden;margin-bottom:2px}
+.sc-row{display:flex;align-items:center;gap:14px;width:100%;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.07);padding:11px 16px;cursor:pointer;text-align:left}
+.sc-row.last{border-bottom:none}
+.sc-row:active{background:rgba(255,255,255,.05)}
+.sc-profile{background:#241a15;border-radius:24px;margin-bottom:2px}
+.sc-ava{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#fff;flex:none}
+.sc-ava-roach{background:linear-gradient(135deg,#2d5a27,#4a8f3c);font-size:24px}
+.sc-nm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.sc-nm b{font-size:16px;font-weight:600;color:#f2e9e1}
+.sc-nm i{font-style:normal;font-size:13px;color:#a89a8d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-bottomnav{margin-top:auto;padding-top:18px;display:flex;justify-content:center}
+.sc-navbtn{display:flex;flex-direction:column;align-items:center;gap:2px;background:#3a2d22;border-radius:24px;padding:12px 36px;color:#e8ded6}
+.sc-navico{font-size:22px;line-height:1}
+.sc-navbtn em{font-style:normal;font-size:13px;font-weight:600}
+.pg[data-theme="light"] .sc-wrap{background:#f5efe9}
+.pg[data-theme="light"] .sc-fav{background:#fff}
+.pg[data-theme="light"] .sc-favtxt{color:#2b2119}
+.pg[data-theme="light"] .sc-favbtn{color:#8a7a6c}
+.pg[data-theme="light"] .sc-seclabel{color:#8a7a6c}
+.pg[data-theme="light"] .sc-group,.pg[data-theme="light"] .sc-profile{background:#fff}
+.pg[data-theme="light"] .sc-row{border-bottom-color:rgba(0,0,0,.07)}
+.pg[data-theme="light"] .sc-nm b{color:#1d1512}
+.pg[data-theme="light"] .sc-nm i{color:#8a7a6c}
+.pg[data-theme="light"] .sc-navbtn{background:#d9cbbd;color:#2b2119}
 .pane-deal,.pane-street{background:#0b141a;border-radius:12px;padding:0 0 10px}
 .pane-deal .amtrow,.pane-street .amtrow{background:#0b141a;padding:8px 12px;margin:0}
 .pane-deal .dchips,.pane-street .dchips{background:#0b141a;padding:6px 12px;margin:0}
@@ -2209,6 +2259,14 @@ function tabHeader(tab){
  // Realistic per-app navigation bars
  if(tab==="deal"){
   var mv=S.msgView||"list";
+  var _backSvg='<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>';
+  var _phoneSvg='<svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+  var _avCols=["#1a73e8","#7b1fa2","#00796b","#c2185b","#e65100"];
+  if(mv==="__roach__"){
+   return '<div class="appnav msg-nav msg-nav-convo"><button type="button" class="msg-back" data-act="msg-back" aria-label="Back">'+_backSvg+'</button>'
+    +'<div class="msg-contact"><span class="msg-avatar msg-av-roach">🪳</span><div class="msg-contact-info"><b>Roach</b></div></div>'
+    +'<div class="msg-nav-actions"><span class="msg-ico">'+_phoneSvg+'</span><span class="msg-ico">&#8942;</span></div></div>';
+  }
   if(mv==="list"){
    var _un=(S.contacts||[]).filter(function(c){return c.unread;}).length;
    return '<div class="appnav msg-nav"><div class="msg-contact"><div class="msg-contact-info"><b>Messages'+(_un?' <span class="msg-unread-hd">'+_un+'</span>':'')+'</b><span class="msg-online"><i></i>'+(S.contacts||[]).length+' contacts</span></div></div>'
@@ -2221,9 +2279,11 @@ function tabHeader(tab){
   }
   var _c=getContact(mv);
   if(_c){
-   return '<div class="appnav msg-nav"><button type="button" class="msg-back msg-back-cb" data-act="msg-back" aria-label="Back">‹<span class="msg-back-txt">Messages</span></button><div class="msg-contact"><span class="msg-avatar">'+escHtml(_c.name.charAt(0))+'</span>'
-    +'<div class="msg-contact-info"><b>'+escHtml(_c.name)+'</b><span class="msg-online"><i></i>online now · loyalty '+Math.round(_c.loyalty)+'%</span></div></div>'
-    +'<div class="msg-nav-actions"><span class="msg-ico">📞</span><span class="msg-ico">📹</span></div></div>';
+   var _avc=_avCols[_c.name.length%_avCols.length];
+   return '<div class="appnav msg-nav msg-nav-convo"><button type="button" class="msg-back" data-act="msg-back" aria-label="Back">'+_backSvg+'</button>'
+    +'<div class="msg-contact"><span class="msg-avatar" style="background:'+_avc+'">'+escHtml(_c.name.charAt(0))+'</span>'
+    +'<div class="msg-contact-info"><b>'+escHtml(_c.name)+'</b></div></div>'
+    +'<div class="msg-nav-actions"><span class="msg-ico">'+_phoneSvg+'</span><span class="msg-ico">&#8942;</span></div></div>';
   }
   return '<div class="appnav msg-nav"><div class="msg-contact"><div class="msg-contact-info"><b>Messages</b><span class="msg-online"><i></i>'+(S.contacts||[]).length+' contacts</span></div></div>'
    +'<div class="msg-nav-actions"><span class="msg-ico">🔍</span><span class="msg-ico">⋮</span></div></div>';
@@ -2525,19 +2585,44 @@ function render(){
  var CONTACT_TYPE_ICONS={stoner:"🌿",party:"🎉",connoisseur:"💎",casual:"🙂"};
  function loyaltyStars(l){var f=Math.max(0,Math.min(5,Math.round((+l||0)/20))),s="";for(var i=0;i<5;i++)s+=i<f?"★":"☆";return s;}
  function dealPhonebook(){
-  var h='<div class="msg-chats">';
-  h+='<button type="button" class="msg-chat pinned" data-act="msg-open" data-c="__roach__">'
-   +'<span class="msg-avatar msg-av-roach">🪳</span>'
-   +'<div class="msg-chat-mid"><b>Roach 📌</b><span>Your plug · always online</span></div>'
-   +'<span class="msg-time">›</span></button>';
-  (S.contacts||[]).forEach(function(c){
-   var ic=CONTACT_TYPE_ICONS[c.type]||"🙂";
-   h+='<button type="button" class="msg-chat" data-act="msg-open" data-c="'+escHtml(c.name)+'">'
-    +'<span class="msg-avatar">'+escHtml(c.name.charAt(0).toUpperCase())+'</span>'
-    +'<div class="msg-chat-mid"><b>'+escHtml(c.name)+'</b><span>'+ic+' '+contactTypeLabel(c.type)+' · '+loyaltyStars(c.loyalty)+'</span></div>'
-    +'<span class="msg-time">›</span></button>';
+  // Samsung Contacts style: favorites banner, My profile (Roach), A-Z grouped contacts, Contacts-only bottom nav
+  var TYPE_AV={stoner:"#8fce7e",party:"#d489b0",connoisseur:"#8d9bd8",casual:"#7fb5a8"};
+  function scRow(name,sub,avHtml,cval,last){
+   return '<button type="button" class="sc-row'+(last?' last':'')+'" data-act="msg-open" data-c="'+escHtml(cval)+'">'
+    +avHtml+'<span class="sc-nm"><b>'+escHtml(name)+'</b><i>'+sub+'</i></span></button>';
+  }
+  var h='<div class="sc-wrap">';
+  h+='<div class="sc-fav"><span class="sc-favstar">★</span><span class="sc-favtxt">Add your favorite contacts</span>'
+   +'<span class="sc-favacts"><span class="sc-favbtn">+</span><span class="sc-favbtn">🔍</span><span class="sc-favbtn">⋮</span></span></div>';
+  h+='<div class="sc-seclabel">My profile</div>';
+  h+=scRow("Roach","Your plug · always online",'<span class="sc-ava sc-ava-roach">🪳</span>',"__roach__",true);
+  var cs=(S.contacts||[]).slice().sort(function(a,b){
+   var an=String(a.name||"").toLowerCase(),bn=String(b.name||"").toLowerCase();
+   return an<bn?-1:(an>bn?1:0);
   });
-  if(!(S.contacts||[]).length)h+='<div class="msg-empty">No customers yet.<br>Sell on the street — some buyers will hit you up.</div>';
+  if(cs.length){
+   var groups={},order=[];
+   cs.forEach(function(c){
+    var L=String(c.name||"?").charAt(0).toUpperCase();
+    if(L<"A"||L>"Z")L="#";
+    if(!groups[L]){groups[L]=[];order.push(L);}
+    groups[L].push(c);
+   });
+   order.forEach(function(L){
+    h+='<div class="sc-seclabel">'+escHtml(L)+'</div><div class="sc-group">';
+    groups[L].forEach(function(c,i){
+     var ic=CONTACT_TYPE_ICONS[c.type]||"🙂";
+     var avc=TYPE_AV[c.type]||"#9aa0a6";
+     h+=scRow(c.name,ic+" "+contactTypeLabel(c.type)+" · "+loyaltyStars(c.loyalty),
+      '<span class="sc-ava" style="background:'+avc+'">'+escHtml(String(c.name||"?").charAt(0).toUpperCase())+'</span>',
+      c.name,i===groups[L].length-1);
+    });
+    h+='</div>';
+   });
+  }else{
+   h+='<div class="msg-empty">No customers yet.<br>Sell on the street — some buyers will hit you up.</div>';
+  }
+  h+='<div class="sc-bottomnav"><span class="sc-navbtn"><span class="sc-navico">👤</span><em>Contacts</em></span></div>';
   h+='</div>';
   return h;
  }
@@ -2545,10 +2630,16 @@ function render(){
   var h='<div class="msg-convo">';
   var msgs=c.msgs.slice(-30);
   if(!msgs.length)h+='<div class="msg-day">No messages yet</div>';
-  msgs.forEach(function(m){
-   h+='<div class="msg-row '+(m.from==="me"?"me":"them")+'"><div class="msg-bub">'+escHtml(m.text)
-    +'<span class="msg-bub-t">'+fmtMsgTime(m.t)+'</span></div></div>';
-  });
+  else{
+   var _lastDay="",_firstDiv=true;
+   msgs.forEach(function(m){
+    var _d="";try{_d=new Date(m.t).toDateString();}catch(e){}
+    if(_d!==_lastDay){_lastDay=_d;h+='<div class="msg-daydiv">'+fmtMsgDay(m.t)+' &bull; '+fmtMsgTime(m.t)+'</div>';if(_firstDiv){_firstDiv=false;h+='<div class="msg-rcs">RCS chat with '+escHtml(c.name)+'</div>';}}
+    var _me=m.from==="me";
+    h+='<div class="msg-row '+(_me?"me":"them")+'"><div class="msg-bub">'+escHtml(m.text)
+     +'<span class="msg-bub-t">'+fmtMsgTime(m.t)+(_me?'<span class="msg-read">&#10003;&#10003;</span>':'')+'</span></div></div>';
+   });
+  }
   if(c.order){
    var o=c.order,left=Math.max(0,o.expires-Date.now());
    h+='<div class="msg-order"><div class="msg-order-hd">📦 <b>Order request</b><span>'+fmtDur(left)+' left</span></div>'
@@ -2570,9 +2661,14 @@ function render(){
   var h='<div class="msg-convo">';
   var ns=(S.notifs||[]).slice(0,10).reverse();
   if(!ns.length)h+='<div class="msg-day">No messages yet</div>';
-  ns.forEach(function(n){
-   h+='<div class="msg-row them"><div class="msg-bub">'+escHtml(n.m)+'<span class="msg-bub-t">'+fmtMsgTime(n.t)+'</span></div></div>';
-  });
+  else{
+   var _lastDay="",_firstDiv=true;
+   ns.forEach(function(n){
+    var _d="";try{_d=new Date(n.t).toDateString();}catch(e){}
+    if(_d!==_lastDay){_lastDay=_d;h+='<div class="msg-daydiv">'+fmtMsgDay(n.t)+' &bull; '+fmtMsgTime(n.t)+'</div>';if(_firstDiv){_firstDiv=false;h+='<div class="msg-rcs">RCS chat with Roach</div>';}}
+    h+='<div class="msg-row them"><div class="msg-bub">'+escHtml(n.m)+'<span class="msg-bub-t">'+fmtMsgTime(n.t)+'</span></div></div>';
+   });
+  }
   h+='</div>';
   return h;
  }
@@ -3116,6 +3212,7 @@ function tickContacts(now){
  });
 }
 function fmtMsgTime(t){try{var d=new Date(t),h=d.getHours(),m=d.getMinutes(),ap=h>=12?"PM":"AM";h=h%12;if(h===0)h=12;return h+":"+(m<10?"0":"")+m+" "+ap;}catch(e){return "";}}
+function fmtMsgDay(t){try{var d=new Date(t),now=new Date();if(d.toDateString()===now.toDateString())return "Today";var y=new Date(now);y.setDate(y.getDate()-1);if(d.toDateString()===y.toDateString())return "Yesterday";return (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();}catch(e){return "";}}
 function fmtDur(ms){var m=Math.max(0,Math.ceil(ms/60000));if(m<60)return m+"m";var h=Math.floor(m/60);return h+"h "+(m%60)+"m";}
 function getContact(nm){if(!S.contacts)return null;for(var i=0;i<S.contacts.length;i++)if(S.contacts[i].name===nm)return S.contacts[i];return null;}
 function doFulfillOrder(nm){
