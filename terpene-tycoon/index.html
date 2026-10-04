@@ -46,6 +46,7 @@ window.hatchWidget={
  <div class="shade-scrim" hidden data-act="shade-close"></div>
  <div class="notif-shade" hidden>
   <div class="shade-handle" data-act="shade-close"></div>
+  <div class="shade-grab"></div>
   <div class="shade-qs">
    <div class="qs-tile"><span class="qs-v shade-qcash">$200</span><span class="qs-l">Cash</span></div>
    <div class="qs-tile"><span class="qs-v shade-qstash">0/40g</span><span class="qs-l">Stash</span></div>
@@ -356,6 +357,7 @@ window.hatchWidget={
 .notif-shade.open{transform:translate(-50%,0)}
 .notif-shade[hidden]{display:none}
 .shade-handle{width:44px;height:5px;border-radius:3px;background:rgba(255,255,255,.25);margin:4px auto 12px;cursor:pointer;flex:none}
+.shade-grab{position:absolute;left:0;right:0;top:100%;height:80px;background:transparent;touch-action:none}
 .shade-qs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;flex:none}
 .qs-tile{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:10px 6px;display:flex;flex-direction:column;align-items:center;gap:2px}
 .qs-v{font-size:14px;font-weight:800;color:#fff}
@@ -4439,6 +4441,15 @@ root.addEventListener("change",function(e){
  sh.addEventListener("touchend",function(e){var t=e.changedTouches[0];done(t.clientY,Date.now());},{passive:true});
  sh.addEventListener("touchcancel",cancel,{passive:true});
  sh.addEventListener("mousedown",function(e){if(inList(e.target))return;begin(e.clientY,Date.now(),"close");});
+ // grab area below shade: same close-drag handlers for easier swipe-up dismissal
+ var grab=sh.querySelector(".shade-grab");
+ if(grab){
+  grab.addEventListener("touchstart",function(e){var t=e.touches[0];begin(t.clientY,Date.now(),"close");},{passive:true});
+  grab.addEventListener("touchmove",function(e){var t=e.touches[0];move(t.clientY,Date.now());},{passive:true});
+  grab.addEventListener("touchend",function(e){var t=e.changedTouches[0];done(t.clientY,Date.now());},{passive:true});
+  grab.addEventListener("touchcancel",cancel,{passive:true});
+  grab.addEventListener("mousedown",function(e){begin(e.clientY,Date.now(),"close");});
+ }
  if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
   window.addEventListener("mousemove",function(e){move(e.clientY,Date.now());});
   window.addEventListener("mouseup",function(e){done(e.clientY,Date.now());});
