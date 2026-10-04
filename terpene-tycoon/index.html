@@ -1385,7 +1385,7 @@ function doHarvest(pi,si){
  var y=PRODUCTS[p.strain].yld;
  var grams=Math.round((y[0]+Math.random()*(y[1]-y[0]))*(0.6+0.4*p.water/100));
  var take=Math.min(grams,S.stashCap-stashTotal());
- if(take<=0){S.msg="Duffel is full — sell some or upgrade it.";save();render();return;}
+ if(take<=0){S.msg="Duffel is full — sell some or upgrade it.";save();render();showBagFullWarn();return;}
  S.stash[p.strain]+=take;
  pr.slots[si]=null;
  S.stats.harvested++;
@@ -1405,7 +1405,7 @@ function doHarvestAll(){
   addXP(8*PRODUCTS[p.strain].tier);
  });});
  var lv1=pLevel();
- if(hn===0)S.msg=full?"Duffel is full — sell some or upgrade it.":"Nothing ready to harvest yet.";
+ if(hn===0){S.msg=full?"Duffel is full — sell some or upgrade it.":"Nothing ready to harvest yet.";if(full)showBagFullWarn();}
  else{S.msg="Harvested "+ht+"g from "+hn+" plant"+(hn>1?"s":"")+".";if(full)S.msg+=" Duffel is full — sell some or upgrade it.";if(lv1>lv0)S.msg+=" Reached level "+lv1+"!";}
  save();render();
 }
@@ -1463,6 +1463,25 @@ function showRoachWarn(){
   setTimeout(function(){var p=root.querySelector(".roach-pop");if(p)p.remove();},5000);
  }catch(e){}
 }
+function showBagFullWarn(){
+ try{
+  if(typeof document==="undefined"||!document.createElement||!root)return;
+  var old=root.querySelector(".roach-pop");if(old)old.remove();
+  var rimg=q(".roach-topbar img");
+  var src=rimg?rimg.src:"";
+  var pop=document.createElement("div");
+  pop.className="roach-pop";
+  pop.innerHTML='<div class="roach-card">'
+   +(src?'<img src="'+src+'" alt="Roach">':'')
+   +'<div class="roach-msg">damn yo, you can\'t fit no more in there! move that product or upgrade, bitch!<br><b>— Roach</b></div>'
+   +'<button type="button" data-act="roachpop-ok">HEARD YOU</button></div>';
+  pop.addEventListener("click",function(e){
+   if(e.target===pop||e.target.dataset.act==="roachpop-ok"){pop.remove();}
+  });
+  root.appendChild(pop);
+  setTimeout(function(){var p=root.querySelector(".roach-pop");if(p)p.remove();},5000);
+ }catch(e){}
+}
 function dealerStreakHeat(di){
  // Punish hitting the same dealer repeatedly: streak 4+ adds escalating heat
  if(di===S.lastDealer){S.dealerStreak=(S.dealerStreak||0)+1;}else{S.lastDealer=di;S.dealerStreak=1;}
@@ -1481,7 +1500,7 @@ function doDeal(di,k,isBuy,isJoint){
  if(isBuy){
   var unit=ppu(st.price,d.sell[k]),cost=Math.ceil(unit*g);
   if(S.cash<cost){S.msg="Not enough cash for that.";save();render();return;}
-  if(stashTotal()+g>S.stashCap){S.msg="Duffel is full — sell some or upgrade it.";save();render();return;}
+  if(stashTotal()+g>S.stashCap){S.msg="Duffel is full — sell some or upgrade it.";save();render();showBagFullWarn();return;}
   S.cash-=cost;S.stash[k]+=g;trackCost(k,cost);S.heat=Math.min(100,S.heat+heatGain(2+g));
   var dh=dealerStreakHeat(di);
   if(!addXP(5))S.msg="Bought "+g+"g of "+st.name+" for "+money(cost)+"."+(dh>0?" Same spot too many times — heat +"+dh+".":"");
@@ -1703,7 +1722,7 @@ function doRoll(k,n){
  if(!k||tierVis(PRODUCTS[k].tier)!==2)return;
  if((S.stash[k]||0)<n){S.msg="Not enough bud to roll.";save();render();return;}
  if((S.papers||0)<n*2){S.msg="Need rolling papers — buy some at the Store.";save();render();return;}
- if(stashTotal()+n>S.stashCap){S.msg="Duffel is full — sell some first.";save();render();return;}
+ if(stashTotal()+n>S.stashCap){S.msg="Duffel is full — sell some first.";save();render();showBagFullWarn();return;}
  S.stash[k]-=n;
  S.papers-=n*2;
  // Transfer cost basis: bud cost moves to joints
@@ -1820,7 +1839,7 @@ function startCook(key){
  if(S.job)return;
  var r=RECIPES[key];if(!r)return;
  if(PRODUCTS[key].tier>pLevel()){S.msg="That recipe needs Level "+PRODUCTS[key].tier+".";save();render();return;}
- if(stashTotal()>=S.stashCap){S.msg="Duffel is full — sell some first.";save();render();return;}
+ if(stashTotal()>=S.stashCap){S.msg="Duffel is full — sell some first.";save();render();showBagFullWarn();return;}
  if(budHave()<(r.bud||0)){S.msg="Not enough bud for that recipe.";save();render();return;}
  for(var k in (r.kits||{}))if((S.kits[k]||0)<r.kits[k]){S.msg="You need a "+KITS[k].name+" — check the Shop.";save();render();return;}
  for(var s in (r.stash||{}))if(S.stash[s]<r.stash[s]){S.msg="Not enough "+PRODUCTS[s].name+" for that recipe.";save();render();return;}
