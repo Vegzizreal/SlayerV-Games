@@ -1586,11 +1586,7 @@ function stashHTML(){
   var unit=su(k,ppu(PRODUCTS[k].price,d.buy[k]));
   h+='<div class="stashrow">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' <b>'+g+'g</b></div>'
    +'<div class="d2-sub">'+money(unit)+'/g &middot; '+money(Math.floor(unit*g))+' total</div></div>'
-   +'<div class="stashbtns">';
-  if(isBud)h+='<button type="button" data-act="roll" data-strain="'+k+'" data-n="1">Roll</button>';
-  h+='<button type="button" data-act="stashsell" data-strain="'+k+'" class="sell">Sell</button>'
-   +'<button type="button" class="all" data-act="stashsellall" data-strain="'+k+'" class="sell">All</button>'
-   +'</div></div>';
+   +'</div>';
  });
  // joints
  GROWKEYS.forEach(function(k){
@@ -1601,11 +1597,7 @@ function stashHTML(){
   var ju=su(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9));
   h+='<div class="stashrow">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' joints <b>'+j+'</b></div>'
    +'<div class="d2-sub">'+money(ju)+'/joint &middot; '+money(Math.floor(ju*j))+' total</div></div>'
-   +'<div class="stashbtns">'
-   +'<button type="button" class="go" data-act="smoke" data-strain="'+k+'">Smoke</button>'
-   +'<button type="button" data-act="stashsellj" data-strain="'+k+'" class="sell">Sell</button>'
-   +'<button type="button" class="all" data-act="stashsellallj" data-strain="'+k+'" class="sell">All</button>'
-   +'</div></div>';
+   +'</div>';
  });
  // seeds with auto-plant
  var anySeeds=false;
