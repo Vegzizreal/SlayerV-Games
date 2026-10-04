@@ -840,6 +840,8 @@ window.hatchWidget={
 .msg-nav-actions{display:flex;gap:16px}
 .msg-ico{font-size:20px;opacity:.9}
 .msg-back{background:none;border:none;color:#fff;font-size:22px;padding:4px 10px 4px 0;cursor:pointer}
+.msg-back-cb{display:flex;align-items:center;gap:2px;color:#7CFC00;font-size:24px;padding:4px 8px 4px 0}
+.msg-back-txt{font-size:16px;font-weight:500;color:#7CFC00;opacity:.85}
 .msg-unread-hd{background:#25d366;color:#fff;font-size:12px;border-radius:10px;padding:1px 8px;margin-left:6px;font-weight:700}
 .msg-chats{padding:6px 0}
 .msg-chat{display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.06);padding:12px 14px;cursor:pointer;text-align:left;color:#fff}
@@ -1008,6 +1010,249 @@ window.hatchWidget={
 .spd-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
 .spd{padding:9px 0;border-radius:10px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:15.5px;cursor:pointer}
 .spd.on{background:linear-gradient(180deg,#e5484d,#a92e33);border-color:transparent;color:#fff;box-shadow:0 0 8px rgba(229,72,77,.4)}
+</style>
+<style>
+/* ===== UNDERGROUND PHONE RESKIN — dark green-black noir, per-app accents =====
+   CSS-only reskin. Messages (.pane-deal) intentionally untouched (stays WhatsApp).
+   Game logic, HTML structure, and data-act handlers are unchanged. */
+
+/* ---- Per-pane theme variables: green-black base ---- */
+.pane-street,.pane-store,.pane-grow,.pane-stash{
+ --hatch-widget-bg:#0a0f0a;
+ --hatch-widget-surface:#101610;
+ --hatch-widget-surface-muted:#131a13;
+ --hatch-widget-text:#e8e8e8;
+ --hatch-widget-muted:#8f9a8f;
+ --hatch-widget-border:#1c261c;
+ --hatch-widget-accent:#2d5a27;
+ --hatch-widget-on-accent:#ffffff;
+ --hatch-widget-focus:#7CFC00;
+ --hatch-widget-shadow:rgba(0,0,0,.6);
+ background:#0a0f0a;
+ border-radius:16px;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+/* ---- Cook: brown-black / amber ---- */
+.pane-cook{
+ --hatch-widget-bg:#0d0b08;
+ --hatch-widget-surface:#12100c;
+ --hatch-widget-surface-muted:#1a150e;
+ --hatch-widget-text:#e8e8e8;
+ --hatch-widget-muted:#a89a80;
+ --hatch-widget-border:#241d12;
+ --hatch-widget-accent:#b45309;
+ --hatch-widget-on-accent:#ffffff;
+ --hatch-widget-focus:#f59e0b;
+ --hatch-widget-shadow:rgba(0,0,0,.6);
+ background:#0d0b08;
+ border-radius:16px;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+/* ---- Chill: purple-black / violet ---- */
+.pane-chill{
+ --hatch-widget-bg:#0c0a12;
+ --hatch-widget-surface:#131020;
+ --hatch-widget-surface-muted:#171224;
+ --hatch-widget-text:#e8e8e8;
+ --hatch-widget-muted:#9a90b8;
+ --hatch-widget-border:#221d33;
+ --hatch-widget-accent:#4c1d95;
+ --hatch-widget-on-accent:#ffffff;
+ --hatch-widget-focus:#a78bfa;
+ --hatch-widget-shadow:rgba(0,0,0,.6);
+ background:#0c0a12;
+ border-radius:16px;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+/* ---- Clinic: red-black / crimson ---- */
+.pane-clinic{
+ --hatch-widget-bg:#100a0a;
+ --hatch-widget-surface:#141010;
+ --hatch-widget-surface-muted:#1a1212;
+ --hatch-widget-text:#e8e8e8;
+ --hatch-widget-muted:#a89090;
+ --hatch-widget-border:#2a1c1c;
+ --hatch-widget-accent:#7f1d1d;
+ --hatch-widget-on-accent:#ffffff;
+ --hatch-widget-focus:#e5484d;
+ --hatch-widget-shadow:rgba(0,0,0,.6);
+ background:#100a0a;
+ border-radius:16px;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+/* ---- Settings: neutral dark ---- */
+.pane-settings{
+ --hatch-widget-bg:#0a0a0c;
+ --hatch-widget-surface:#121218;
+ --hatch-widget-surface-muted:#17171d;
+ --hatch-widget-text:#e8e8e8;
+ --hatch-widget-muted:#8f8f99;
+ --hatch-widget-border:#1e1e26;
+ --hatch-widget-accent:#2d5a27;
+ --hatch-widget-on-accent:#ffffff;
+ --hatch-widget-focus:#7CFC00;
+ --hatch-widget-shadow:rgba(0,0,0,.6);
+ background:#0a0a0c;
+ border-radius:16px;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+/* ---- Shared tab headers (plain .appnav; msg-nav/WhatsApp untouched) ---- */
+.pane-street .appnav:not(.msg-nav),.pane-store .appnav:not(.msg-nav),.pane-grow .appnav:not(.msg-nav),
+.pane-stash .appnav:not(.msg-nav),.pane-cook .appnav:not(.msg-nav),.pane-chill .appnav:not(.msg-nav),
+.pane-clinic .appnav:not(.msg-nav),.pane-settings .appnav:not(.msg-nav){
+ background:#101610;
+ border-bottom:1px solid #1c261c;
+ border-radius:16px 16px 0 0;
+ margin:-4px -4px 10px;
+ padding:14px 20px;
+}
+.pane-cook .appnav:not(.msg-nav){background:#141008;border-bottom-color:#2a2118}
+.pane-chill .appnav:not(.msg-nav){background:#131020;border-bottom-color:#221d33}
+.pane-clinic .appnav:not(.msg-nav){background:#161010;border-bottom-color:#2a1c1c}
+.pane-settings .appnav:not(.msg-nav){background:#101014;border-bottom-color:#1e1e26}
+.appnav-title b{color:#e8e8e8}
+.appnav-title span{color:rgba(232,232,232,.55)}
+.appnav-pill{background:#1a241a;border:1px solid #2a3a2a;color:#7CFC00;font-weight:800;font-size:14px;padding:7px 14px;border-radius:14px}
+.appnav-cart{background:#1a241a;border:1px solid #2a3a2a;border-radius:14px;padding:8px 14px;color:#e8e8e8;font-weight:700;font-size:14px}
+.appnav-cart span{color:#7CFC00}
+
+/* ---- Street Deal header (was WhatsApp green): underground dark ---- */
+.pane-street .appnav.msg-nav{background:#101610;border-bottom:1px solid #1c261c;border-radius:16px 16px 0 0;margin:-4px -4px 0;padding:14px 16px}
+.pane-street .msg-avatar{background:linear-gradient(135deg,#b45309,#f59e0b)}
+.pane-street .msg-online{color:#f59e0b}
+.pane-street .msg-online i{background:#f59e0b}
+.pane-street .msg-contact-info b{color:#e8e8e8}
+
+/* ---- Section labels ---- */
+.pane-street .shopsec,.pane-store .shopsec,.pane-grow .shopsec,.pane-stash .shopsec,
+.pane-cook .shopsec,.pane-chill .shopsec,.pane-clinic .shopsec,.pane-settings .shopsec{
+ font-size:12px;font-weight:800;letter-spacing:1.5px;color:#7CFC00;opacity:.8;
+ padding:14px 20px 8px;margin:0;
+}
+.pane-cook .shopsec{color:#f59e0b}
+.pane-chill .shopsec{color:#a78bfa}
+.pane-clinic .shopsec{color:#e5484d}
+
+/* ---- Street Deal: amount selector ---- */
+.pane-street .amtrow.c{display:flex;gap:10px;padding:14px 20px;align-items:center;margin-bottom:0;font-size:14px}
+.pane-street .amtrow.c>span:first-child{opacity:.6;font-size:14px}
+.pane-street .amtrow.c button{background:#141b14;border:1px solid #263326;color:#e8e8e8;padding:10px 22px;border-radius:12px;font-size:15px;font-weight:700}
+.pane-street .amtrow.c button.on{background:#2d5a27;border-color:#7CFC00;color:#7CFC00}
+
+/* ---- Street Deal: dealer chips + category tabs ---- */
+.pane-street .dchips{display:flex;gap:10px;padding:2px 20px 12px;margin-bottom:0;overflow-x:auto}
+.pane-street .dchip{flex:none;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:16px;border:1px solid #263326;background:#131a13;color:#e8e8e8;font-weight:700;font-size:14px;white-space:nowrap}
+.pane-street .dchip .d-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex:none}
+.pane-street .dchip .dc-name{white-space:nowrap}
+.pane-street .dchip.on{border-color:#7CFC00;background:#1a2a1a;box-shadow:none}
+.pane-street .dchip:has(.d-av).on{border-color:#f59e0b;background:#1c1610}
+.pane-street .dchip.locked{opacity:.45}
+.pane-street .dchip .lvtag{font-size:10px;background:#3a2c12;padding:2px 8px;border-radius:8px;color:#f59e0b}
+
+/* ---- Street Deal: product rows ---- */
+.pane-street .drow2{display:flex;align-items:center;gap:12px;background:#101610;border:1px solid #1c261c;border-radius:16px;margin:0 12px 10px;padding:13px 15px;border-top:1px solid #1c261c}
+.pane-street .drow2 .picon.xs{width:48px;height:48px;border-radius:12px;flex:none;background:linear-gradient(135deg,#16241a,#24382a)}
+.pane-street .drow2 .d2-mid{flex:1;min-width:0;display:block}
+.pane-street .drow2 .d2-name{font-size:15px;font-weight:700;color:#e8e8e8;white-space:normal}
+.pane-street .drow2 .d2-name b{color:#7CFC00}
+.pane-street .drow2 .d2-sub{font-size:12.5px;color:rgba(232,232,232,.6);margin-top:3px;white-space:normal}
+.pane-street .drow2 .bufftag{background:#2d5a27;color:#7CFC00;font-size:11px;padding:1px 7px;border-radius:8px;margin-left:6px;font-weight:700}
+.pane-street .drow2 button{background:#2d5a27;color:#fff;border:none;padding:11px 22px;border-radius:12px;font-size:14px;font-weight:800;flex:none}
+.pane-street .drow2 button:disabled{opacity:.35}
+.pane-street .drow2 button[data-act="dsell"],.pane-street .drow2 button[data-act="dsellj"]{background:#2d5a27;border-color:transparent;color:#fff}
+.pane-street .lock{margin:0 20px 10px}
+
+/* ---- Store: tabs + rows ---- */
+.pane-store .store-tabs{display:flex;gap:8px;overflow-x:auto;padding:14px 20px;background:transparent;border:none;border-radius:0;margin-bottom:0}
+.pane-store .store-tabs button{flex:none;background:#131a13;border:1px solid #263326;color:#e8e8e8;border-radius:14px;padding:10px 16px;font-size:12px;font-weight:800;letter-spacing:.5px;white-space:nowrap}
+.pane-store .store-tabs button.on{background:#162016;border-color:#7CFC00;color:#7CFC00;box-shadow:none}
+.pane-store .store-screen-head{padding:6px 20px 4px}
+.pane-store .srow.c,.pane-grow .srow.c{background:#101610;border:1px solid #1c261c;border-radius:16px;margin:0 12px 10px;padding:14px 16px}
+.pane-store .srow.c b,.pane-grow .srow.c b{font-size:15px;color:#e8e8e8}
+.pane-store .srow.c .sdesc,.pane-grow .srow.c .sdesc{font-size:12.5px;color:rgba(232,232,232,.6)}
+.pane-store .srow.c button,.pane-grow .srow.c button{background:#2d5a27;color:#fff;border:none;padding:10px 18px;border-radius:12px;font-size:14px;font-weight:800;white-space:nowrap}
+.pane-store .srow.c button:disabled,.pane-grow .srow.c button:disabled{opacity:.35}
+.pane-store .ownedline{color:rgba(232,232,232,.55);padding:2px 20px 8px}
+.pane-store .acc-h{background:#131a13;border:1px solid #263326;color:#e8e8e8;border-radius:14px;font-size:13px;letter-spacing:1.5px}
+.pane-store .acc-h.on{border-color:#7CFC00;color:#7CFC00}
+
+/* ---- Grow: plant cards ---- */
+.pane-grow .potc{background:#101610;border:1px solid #1c261c;border-radius:16px;box-shadow:none;padding:0;overflow:hidden}
+.pane-grow .potc .pc-name{color:#e8e8e8}
+.pane-grow .plantart.ready::after{border-color:rgba(124,252,0,.6)}
+.pane-grow .growbar{display:flex;gap:10px;padding:14px 12px 6px;margin-bottom:0}
+.pane-grow .growbar button{flex:1;background:#1a2e1a;color:#7CFC00;border:1px solid #2d5a27;border-radius:14px;padding:13px;font-weight:800;font-size:15px}
+.pane-grow .ppager button{background:#131a13;border:1px solid #263326;color:#e8e8e8;border-radius:12px}
+.pane-grow .pp-name{color:#e8e8e8}
+.pane-grow .fert-bar{background:transparent;border:1px solid #b45309;color:#f59e0b;border-radius:10px}
+.pane-grow .pc-btns button{background:#131a13;border:1px solid #263326;color:#e8e8e8}
+.pane-grow .pc-btns button.go{background:#2d5a27;border-color:transparent;color:#fff}
+
+/* ---- Stash: inventory rows ---- */
+.pane-stash .stashrow{background:#101610;border:1px solid #1c261c;border-left:3px solid #2d5a27;border-radius:12px;margin:0 12px 8px;padding:12px 14px;box-shadow:none;color:#e8e8e8}
+.pane-stash .sdesc{color:rgba(232,232,232,.55);padding:4px 20px}
+
+/* ---- Cook: lab rows + job card ---- */
+.pane-cook .rc2{background:#12100c;border:1px solid #241d12;border-radius:16px;margin:0 12px 10px;padding:14px 15px;box-shadow:none}
+.pane-cook .rc2-name{color:#e8e8e8}
+.pane-cook .rc2-sub{color:rgba(232,232,232,.55)}
+.pane-cook .rc2 button{background:#b45309;color:#fff;border:none;padding:10px 20px;border-radius:12px;font-size:14px;font-weight:800}
+.pane-cook .rc2 button:disabled{opacity:.35}
+.pane-cook .rc2.locked{opacity:.5}
+.pane-cook .job{background:#161208;border:1px solid #b45309;border-radius:16px;padding:16px;margin:0 12px 10px}
+.pane-cook .job-name{color:#f59e0b}
+.pane-cook .tm{background:#0d0b08;border-radius:5px}
+.pane-cook .dchips .dchip{background:#1a150e;border-color:#2a2118;color:#e8e8e8}
+.pane-cook .dchips .dchip.on{border-color:#f59e0b;background:#241c10;box-shadow:none}
+
+/* ---- Chill: violet rows + buttons ---- */
+.pane-chill .dchips .dchip{background:#151222;border:1px solid #2a2440;color:#e8e8e8;border-radius:14px}
+.pane-chill .dchips .dchip.on{border-color:#a78bfa;background:#1e1830;box-shadow:none}
+.pane-chill .btns button{background:#4c1d95;color:#fff;border:none;border-radius:14px;padding:15px;font-size:15px;font-weight:800}
+.pane-chill .btns button:disabled{opacity:.35}
+.pane-chill .sdesc{color:rgba(232,232,232,.55)}
+.pane-chill .sdesc a{color:#a78bfa}
+
+/* ---- Clinic: health ---- */
+.pane-clinic .brow{background:#141010;border:1px solid #2a1c1c;border-radius:14px;padding:12px 14px}
+.pane-clinic .brow .bar{background:#0d0a0a;border:1px solid #2a1c1c}
+.pane-clinic .b-you{background:linear-gradient(90deg,#e5484d,#7f1d1d)}
+.pane-clinic .brow b{color:#e8e8e8}
+.pane-clinic .btns{display:flex;flex-direction:column;gap:10px;padding:6px 12px}
+.pane-clinic .btns button{background:#7f1d1d;color:#fff;border:none;border-radius:14px;padding:15px;font-size:15px;font-weight:800}
+.pane-clinic .btns button.go{background:#2d5a27}
+.pane-clinic .btns button:disabled{opacity:.35}
+.pane-clinic .sdesc{color:rgba(232,232,232,.6);text-align:center}
+
+/* ---- Settings: grouped rows ---- */
+.pane-settings .shopsec{color:#8f8f99}
+.pane-settings .setrow{background:#121218;border-bottom:1px solid #1e1e26;color:#e8e8e8}
+.pane-settings .setrow:first-of-type{border-radius:16px 16px 0 0}
+.pane-settings .setrow:last-of-type{border-radius:0 0 16px 16px}
+.pane-settings .acc-h{background:#121218;border:1px solid #1e1e26;color:#e8e8e8;border-radius:14px}
+.pane-settings .acc-h.on{border-color:#7CFC00;color:#7CFC00}
+.pane-settings .dchips .dchip{background:#17171d;border:1px solid #26262e;color:#e8e8e8}
+.pane-settings .dchips .dchip.on{border-color:#7CFC00;background:#1a2a1a;box-shadow:none}
+.pane-settings .spd{background:#17171d;border:1px solid #26262e;color:#e8e8e8}
+.pane-settings .spd.on{background:#2d5a27;border-color:transparent;color:#7CFC00;box-shadow:none}
+.pane-settings .sld-row{background:#121218;border:1px solid #1e1e26;box-shadow:none;color:#e8e8e8}
+.pane-settings input[type=range].sld{accent-color:#7CFC00}
+.pane-settings .wp-url{background:#17171d;border:1px solid #26262e;color:#e8e8e8}
+.pane-settings .sdesc{color:rgba(232,232,232,.55)}
+
+/* ---- Light theme: keep readable (reskin is dark-first) ---- */
+.pg[data-theme="light"] .pane-street,.pg[data-theme="light"] .pane-store,.pg[data-theme="light"] .pane-grow,
+.pg[data-theme="light"] .pane-stash,.pg[data-theme="light"] .pane-cook,.pg[data-theme="light"] .pane-chill,
+.pg[data-theme="light"] .pane-clinic,.pg[data-theme="light"] .pane-settings{
+ --hatch-widget-bg:#f2efe8;
+ --hatch-widget-surface:#ffffff;
+ --hatch-widget-surface-muted:#f5f3ec;
+ --hatch-widget-text:#1a1a1a;
+ --hatch-widget-muted:#6b6b6b;
+ --hatch-widget-border:#e0dcd0;
+ background:#f2efe8;
+}
 </style>
 <style>
 /* ===== TERPENE TYCOON v6: Settings tab (cook speeds + growth speeds), compact fit ===== */
@@ -1634,7 +1879,7 @@ function tabHeader(tab){
   }
   var _c=getContact(mv);
   if(_c){
-   return '<div class="appnav msg-nav"><button type="button" class="msg-back" data-act="msg-back" aria-label="Back">←</button><div class="msg-contact"><span class="msg-avatar">'+escHtml(_c.name.charAt(0))+'</span>'
+   return '<div class="appnav msg-nav"><button type="button" class="msg-back msg-back-cb" data-act="msg-back" aria-label="Back">‹<span class="msg-back-txt">Messages</span></button><div class="msg-contact"><span class="msg-avatar">'+escHtml(_c.name.charAt(0))+'</span>'
     +'<div class="msg-contact-info"><b>'+escHtml(_c.name)+'</b><span class="msg-online"><i></i>online now · loyalty '+Math.round(_c.loyalty)+'%</span></div></div>'
     +'<div class="msg-nav-actions"><span class="msg-ico">📞</span><span class="msg-ico">📹</span></div></div>';
   }
