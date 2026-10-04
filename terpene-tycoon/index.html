@@ -52,6 +52,9 @@ window.hatchWidget={
    <div class="qs-tile"><span class="qs-v shade-qheat">0%</span><span class="qs-l">Heat</span></div>
    <div class="qs-tile"><span class="qs-v shade-qday">Day 1</span><span class="qs-l">Day</span></div>
   </div>
+  <div class="shade-heat"><div class="heat-bar"><i class="v-heat"></i></div><span class="v-heattier">CALM</span><button type="button" class="heat-bribe" data-act="bribe" hidden></button></div>
+  <div class="shade-ticker"><div class="pg-ticker"><span class="ticker-badge"><span class="eb-track"><span>⚠ BREAKING NEWS ⚠</span><span>⚠ BREAKING NEWS ⚠</span></span></span><span class="ticker-div"></span><span class="ticker-name">Trap Hotline</span><div class="ticker-view" data-act="tickspd"><div class="ticker-track"></div></div></div></div>
+  <div class="shade-actions"><button type="button" class="shade-btn" data-act="roach-view">Changelog</button><button type="button" class="shade-btn shade-btn-green" data-act="refresh"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:3px"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>RE-UP</button></div>
   <div class="shade-title"><span>Notifications</span><button type="button" class="shade-clearbtn" data-act="shade-clear">Clear all</button></div>
   <div class="shade-list"></div>
  </div>
@@ -101,18 +104,16 @@ window.hatchWidget={
  <div class="pg-head">
   <div class="pg-title">TERPENE TYCOON<span class="pg-sub">grow op</span></div>
  </div>
- <div class="roach-topbar"><button type="button" class="rt-go" data-act="roach-view">Changelog</button><button type="button" class="rt-go rt-refresh" data-act="refresh"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px;margin-right:3px"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg>RE-UP</button><div class="rt"><div class="rt-scroll"><span class="ts v-updated"></span>Psst — <b>Señor V</b> says there is some fresh updates in the <b>changelog</b>, check it out</div></div><img src="data:image/webp;base64,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"></div>
- <div class="pg-pills">
-  <div class="pill"><b class="v-cash">$200</b></div>
+
+
   <div class="pill"><b class="v-stash">0/40g</b></div>
   <div class="pill"><b class="v-hp">HP 100</b></div>
   <div class="pill buff v-buff" hidden><span class="buff-bar"></span><span class="buff-tx">HIGH</span></div>
   <div class="pill dim v-day">Day 1</div>
  </div>
- <div class="pg-heat"><div class="heat-bar"><i class="v-heat"></i></div><span class="v-heattier">CALM</span><button type="button" class="heat-bribe" data-act="bribe" hidden></button></div>
+
  <div class="pg-msg v-msg">Welcome to the grow op.</div>
  <div class="ticker-help">Tap the scrolling tips to switch speed — now: <b>Slow</b></div>
- <div class="pg-ticker"><span class="ticker-badge"><span class="eb-track"><span>⚠ BREAKING NEWS ⚠</span><span>⚠ BREAKING NEWS ⚠</span></span></span><span class="ticker-div"></span><span class="ticker-name">Trap Hotline</span><div class="ticker-view" data-act="tickspd"><div class="ticker-track"></div></div></div>
  <div class="pg-tabs">
   <button type="button" data-act="tab" data-tab="store" class="store-tab"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M2 3h3l2.5 12h11L21 7H6"/></svg></span><span class="tab-tx">Store</span></button>
   <button type="button" data-act="tab" data-tab="grow" class="on"><span class="tab-ic"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 13c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg></span><span class="tab-tx">Grow</span></button>
@@ -326,6 +327,18 @@ window.hatchWidget={
 .shade-title{display:flex;justify-content:space-between;align-items:center;font-size:15px;font-weight:700;color:#fff;margin-bottom:10px;flex:none}
 .shade-clearbtn{background:transparent;border:0;color:#7c9ef8;font-size:13px;font-weight:700;cursor:pointer;padding:4px 8px}
 .shade-list{overflow-y:auto;display:flex;flex-direction:column;gap:8px;scrollbar-width:none;min-height:60px}
+.shade-heat{display:flex;align-items:center;gap:8px;margin-bottom:10px;flex:none}
+.shade-heat .heat-bar{flex:1;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
+.shade-heat .v-heat{display:block;height:100%;background:linear-gradient(90deg,#4ade80,#fbbf24,#ef4444);border-radius:4px;transition:width .3s}
+.shade-heat .v-heat.hot{background:linear-gradient(90deg,#fbbf24,#ef4444)}
+.shade-heat .v-heattier{font-size:11px;font-weight:800;letter-spacing:1px;min-width:90px;text-align:right}
+.shade-heat .heat-bribe{background:#f59e0b;color:#000;border:0;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer}
+.shade-heat .heat-bribe[hidden]{display:none}
+.shade-ticker{margin-bottom:10px;flex:none}
+.shade-ticker .pg-ticker{display:flex;margin:0}
+.shade-actions{display:flex;gap:8px;margin-bottom:14px;flex:none}
+.shade-btn{flex:1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);color:#fff;border-radius:12px;padding:10px;font-size:14px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px}
+.shade-btn-green{background:#2d5a27;border-color:#4ade80;color:#fff}
 .shade-list::-webkit-scrollbar{display:none}
 .shade-item{display:flex;gap:10px;align-items:flex-start;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:12px}
 .shade-item.err{background:rgba(245,158,11,.12);border-color:rgba(245,158,11,.45)}
@@ -2059,22 +2072,25 @@ function render(){
  if(root&&root.dataset)root.dataset.theme=(S.theme==="light")?"light":"dark";
  checkSenorV();
  var now=Date.now();
- q(".v-cash").textContent=money(S.cash);
- q(".v-stash").textContent=stashTotal()+"/"+S.stashCap+"g";
- var hpEl=q(".v-hp");hpEl.textContent="HP "+Math.max(0,Math.round(S.hp));
- hpEl.style.color=S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444";
+ var _vc=q(".v-cash");if(_vc)_vc.textContent=money(S.cash);
+ var _vs=q(".v-stash");if(_vs)_vs.textContent=stashTotal()+"/"+S.stashCap+"g";
+ var hpEl=q(".v-hp");if(hpEl){hpEl.textContent="HP "+Math.max(0,Math.round(S.hp));
+ hpEl.style.color=S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444";}
  var bEl=q(".v-buff");
+ if(bEl){
  if(buffActive()){bEl.hidden=false;
  var rem=S.buffUntil-Date.now(),tot=Math.max(1,(S.buffUntil-(S.buffStart||Date.now())));
  bEl.querySelector(".buff-tx").textContent="HIGH +"+buffPct()+"% "+fmtT(Math.ceil(rem/1000));
  bEl.querySelector(".buff-bar").style.width=(100*rem/tot)+"%";}
- else bEl.hidden=true;
- q(".v-day").textContent="Day "+(1+Math.floor((now-S.bornAt)/86400000));
+ else bEl.hidden=true;}
+ var _vd=q(".v-day");if(_vd)_vd.textContent="Day "+(1+Math.floor((now-S.bornAt)/86400000));
  var hb=q(".v-heat");
+ if(hb){
  hb.style.width=Math.min(100,S.heat)+"%";
- hb.className="v-heat"+(S.heat>70?" hot":"");
- q(".v-heattier").textContent=heatStars(S.heat)+" "+HEAT_TIERS[heatTier(S.heat)];
- q(".v-heattier").className="v-heattier ht"+heatTier(S.heat);
+ hb.className="v-heat"+(S.heat>70?" hot":"");}
+ var _ht=q(".v-heattier");
+ if(_ht){_ht.textContent=heatStars(S.heat)+" "+HEAT_TIERS[heatTier(S.heat)];
+ _ht.className="v-heattier ht"+heatTier(S.heat);}
  var _bb=q(".heat-bribe");
  if(_bb){
   _bb.hidden=!(S.heat>0&&now>=S.lockedUntil&&!S.battle);
