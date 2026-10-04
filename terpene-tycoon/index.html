@@ -2150,6 +2150,8 @@ function terrConsequenceCheck(tid,src){
  }
  S._terrMsg=m;
  syncGlobalHeat();
+ // First fight unlocks The Fixer
+ if(!S.fixerUnlocked)unlockFixer();
 }
 function flushTerrMsg(){if(S._terrMsg){S.msg=S._terrMsg;S._terrMsg=null;}}
 function terrPriceMult(){return terrDef((S.terr&&S.terr.active)||"home").price;}
@@ -2606,11 +2608,11 @@ function render(){
  }
  /* Phone app: contact directory — who you know. Roach on top, then customers.
     Tapping a row opens that conversation in Messages (msg-open). */
- var CONTACT_TYPE_ICONS={stoner:"🌿",party:"🎉",connoisseur:"💎",casual:"🙂"};
+ var CONTACT_TYPE_ICONS={stoner:"🌿",party:"🎉",connoisseur:"💎",casual:"🙂",fixer:"🕶️"};
  function loyaltyStars(l){var f=Math.max(0,Math.min(5,Math.round((+l||0)/20))),s="";for(var i=0;i<5;i++)s+=i<f?"★":"☆";return s;}
  function dealPhonebook(){
   // Samsung Contacts style: favorites banner, My profile (Roach), A-Z grouped contacts, Contacts-only bottom nav
-  var TYPE_AV={stoner:"#8fce7e",party:"#d489b0",connoisseur:"#8d9bd8",casual:"#7fb5a8"};
+  var TYPE_AV={stoner:"#8fce7e",party:"#d489b0",connoisseur:"#8d9bd8",casual:"#7fb5a8",fixer:"#6b5b7a"};
   function scRow(name,sub,avHtml,cval,last){
    return '<button type="button" class="sc-row'+(last?' last':'')+'" data-act="msg-open" data-c="'+escHtml(cval)+'">'
     +avHtml+'<span class="sc-nm"><b>'+escHtml(name)+'</b><i>'+sub+'</i></span></button>';
@@ -2669,6 +2671,12 @@ function render(){
    h+='<div class="msg-order"><div class="msg-order-hd">📦 <b>Order request</b><span>'+fmtDur(left)+' left</span></div>'
     +'<div class="msg-order-body">'+escHtml(contactQtyText(o))+' · pays <b>'+money(o.pu*o.g)+'</b></div>'
     +'<button type="button" data-act="fulfill-order" data-contact="'+escHtml(c.name)+'"'+(contactHave(o)<o.g?" disabled":"")+'>Fulfill Order</button></div>';
+  }
+  if(c.fixer){
+   var _fxTid=(S.terr&&S.terr.active)||"home",_fxT=terrDef(_fxTid),_fxCost=bribeCost(),_fxHeat=Math.round(terrTotal(_fxTid));
+   h+='<div class="msg-order"><div class="msg-order-hd">🕶️ <b>Need heat gone?</b><span>'+escHtml(_fxT.name)+' · '+_fxHeat+'%</span></div>'
+    +'<div class="msg-order-body">I can make the heat disappear in '+escHtml(_fxT.name)+'. Cops, gangs, Karens — I know people.</div>'
+    +'<button type="button" data-act="fixer-bribe"'+(S.cash<_fxCost?" disabled":"")+'>Bribe '+money(_fxCost)+'</button></div>';
   }
   var _mreps=msgRepliesFor(c);
   if(_mreps.length){
@@ -3145,7 +3153,7 @@ var CONTACT_NAMES=(function(){
  return out;
 })();
 var CONTACT_TYPES=["stoner","party","connoisseur","casual"];
-function contactTypeLabel(t){return {stoner:"Stoner",party:"Party",connoisseur:"Connoisseur",casual:"Casual"}[t]||"Casual";}
+function contactTypeLabel(t){return {stoner:"Stoner",party:"Party",connoisseur:"Connoisseur",casual:"Casual",fixer:"Fixer"}[t]||"Casual";}
 function contactCap(){return Math.min(200,pLevel()*10);}
 function contactPrefsFor(type,un){
  un=un||unlocked();
@@ -3191,6 +3199,21 @@ function contactQtyText(o){
  return o.kind==="joint"?o.g+" "+pn+" joints":o.g+"g "+pn;
 }
 function pushContactNotif(m,isE){S.notifs.unshift({m:m,e:isE?1:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
+function unlockFixer(){
+ if(!S.contacts)S.contacts=[];
+ if(getContact("The Fixer"))return;
+ var now=Date.now();
+ S.contacts.push({name:"The Fixer",type:"fixer",fixer:true,loyalty:50,order:null,unread:true,lastOrderAt:0,
+  msgs:[
+   {from:"them",text:"Heard you had some trouble out there. Word travels fast in this city.",t:now},
+   {from:"them",text:"Name's Fixer. I got ears everywhere — the families, the gangs, even some badges who owe me favors.",t:now+1000},
+   {from:"them",text:"Heat getting too hot? I can make problems disappear. For the right price.",t:now+2000},
+   {from:"them",text:"Save my number. You're gonna need me.",t:now+3000}
+  ]});
+ S.fixerUnlocked=true;
+ pushContactNotif("📱 New contact: The Fixer — he can help with heat, for a price");
+ S.msg="The Fixer hit you up. Check your messages — he deals in favors.";
+}
 function maybeAddContact(){
  if(!S.contacts)S.contacts=[];
  if(S.contacts.length>=contactCap())return;
@@ -3208,6 +3231,7 @@ function tickContacts(now){
  if(!S.contacts||!S.contacts.length)return;
  var changed=false;
  S.contacts.forEach(function(c){
+  if(c.fixer)return;
   if(c.order&&now>c.order.expires){
    c.order=null;c.loyalty=Math.max(0,c.loyalty-10);
    c.msgs.push({from:"them",text:"nvm, found someone else.",t:now});
@@ -3215,6 +3239,7 @@ function tickContacts(now){
   }
  });
  S.contacts.forEach(function(c){
+  if(c.fixer)return;
   if(c.order)return;
   if(now-(c.lastOrderAt||0)<3*60000)return;
   if(Math.random()>0.3)return;
@@ -3276,6 +3301,7 @@ function msgReplyState(c){
 }
 function msgRepliesFor(c){
  var st=msgReplyState(c),out=[];
+ if(c&&c.fixer)return out;
  Object.keys(MSG_REPLIES).forEach(function(k){
   if(MSG_REPLIES[k].st===st)out.push({id:k,text:MSG_REPLIES[k].text});
  });
@@ -4257,6 +4283,7 @@ root.addEventListener("click",function(e){
  if(a==="bribe"){var _bc=bribeCost();var _at=(S.terr&&S.terr.active)||"home";if(S.cash>=_bc&&terrTotal(_at)>0&&Date.now()>=S.lockedUntil){S.cash-=_bc;var _zb=terrZone(_at);var _bi;for(_bi=0;_bi<3;_bi++)_zb.heat[HEAT_SOURCES[_bi]]=Math.max(0,_zb.heat[HEAT_SOURCES[_bi]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+terrDef(_at).name+". Heat dropped.";save();render();}return;}
  if(a==="terr-select"){var _ts=b.dataset.t;if(_ts&&terrDef(_ts)){if(!terrUnlocked(_ts)){S.msg="Locked \u2014 unlocks at level "+terrDef(_ts).unlock+".";save();render();return;}if(!S.terr)S.terr={active:"home",zones:{}};S.terr.active=_ts;S.msg="Operating in "+terrDef(_ts).name+" now — prices \u00D7"+terrDef(_ts).price+".";save();render();}return;}
  if(a==="terr-bribe"){var _tbb=b.dataset.t,_tbd=terrDef(_tbb),_bcb=bribeCost();if(S.cash>=_bcb&&terrTotal(_tbb)>0&&Date.now()>=S.lockedUntil){S.cash-=_bcb;var _zbb=terrZone(_tbb);var _bj;for(_bj=0;_bj<3;_bj++)_zbb.heat[HEAT_SOURCES[_bj]]=Math.max(0,_zbb.heat[HEAT_SOURCES[_bj]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+_tbd.name+". Heat dropped.";save();render();}else if(S.cash<_bcb){S.msg="Not enough cash for that.";save();render();}return;}
+ if(a==="fixer-bribe"){var _fxb=(S.terr&&S.terr.active)||"home",_fxd=terrDef(_fxb),_fxc=bribeCost();if(S.cash>=_fxc&&Date.now()>=S.lockedUntil){S.cash-=_fxc;var _fxz=terrZone(_fxb);var _fk;for(_fk=0;_fk<3;_fk++)_fxz.heat[HEAT_SOURCES[_fk]]=Math.max(0,_fxz.heat[HEAT_SOURCES[_fk]]-50);syncGlobalHeat();var _fxm=getContact("The Fixer");if(_fxm){_fxm.msgs.push({from:"them",text:"Done. Heat in "+_fxd.name+" is handled. You didn't hear it from me.",t:Date.now()});_fxm.msgs.push({from:"me",text:"Bribe paid — "+money(_fxc),t:Date.now()});}S.msg="The Fixer made some calls. Heat dropped in "+_fxd.name+".";save();render();setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);}else if(S.cash<_fxc){S.msg="Not enough cash for that.";save();render();}return;}
  if(a==="terr-pin"){var _tp=b.dataset.t;if(_tp&&terrDef(_tp)){if(!terrUnlocked(_tp)){S.msg=terrDef(_tp).name+" unlocks at level "+terrDef(_tp).unlock+".";save();render();return;}MAPSEL=_tp;if(!S.terr)S.terr={active:"home",zones:{}};if(S.terr.active!==_tp){S.terr.active=_tp;S.msg="Operating in "+terrDef(_tp).name+" now — prices ×"+terrDef(_tp).price+".";}save();render();}return;}
  if(a==="gps-zoom"){var _gz=b.dataset.z;GPSZOOM=_gz==="in"?Math.min(3,GPSZOOM+1):Math.max(1,GPSZOOM-1);render();return;}
  if(a==="dbuy"){doDeal(+b.dataset.d,b.dataset.strain,true);return;}
