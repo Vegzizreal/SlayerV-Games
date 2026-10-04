@@ -50,7 +50,7 @@ window.hatchWidget={
   <div class="pill"><b class="v-cash">$200</b></div>
   <div class="pill"><b class="v-stash">0/40g</b></div>
   <div class="pill"><b class="v-hp">HP 100</b></div>
-  <div class="pill buff v-buff" hidden>HIGH</div>
+  <div class="pill buff v-buff" hidden><span class="buff-bar"></span><span class="buff-tx">HIGH</span></div>
   <div class="pill dim v-day">Day 1</div>
  </div>
  <div class="pg-heat"><div class="heat-bar"><i class="v-heat"></i></div><span class="v-heattier">CALM</span><button type="button" class="heat-bribe" data-act="bribe" hidden></button></div>
@@ -600,7 +600,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 /* ===== TERPENE TYCOON v9: chill tab, levels, buff, smoke FX ===== */
 .pg{position:relative}
 .pg-tabs button{font-size:14.5px;padding:7px 0;letter-spacing:.2px}
-.pill.buff{border-color:#fbbf24;color:#fbbf24;font-variant-numeric:tabular-nums;text-shadow:0 0 10px rgba(251,191,36,.4)}
+.pill.buff{border-color:#fbbf24;color:#fbbf24;font-variant-numeric:tabular-nums;text-shadow:0 0 10px rgba(251,191,36,.4);position:relative;overflow:hidden}.pill.buff .buff-bar{position:absolute;left:0;top:0;bottom:0;background:rgba(251,191,36,.25);width:0%;transition:width .5s linear}.pill.buff .buff-tx{position:relative;z-index:1}
 .bufftag{font-size:12px;font-weight:800;color:#fbbf24;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.4);border-radius:99px;padding:1px 6px;margin-left:4px;white-space:nowrap}
 .srow.locked{opacity:.55}
 .lvtag{font-size:12px;font-weight:800;letter-spacing:1px;color:#fbbf24;background:rgba(251,191,36,.10);border:1px solid rgba(251,191,36,.4);border-radius:99px;padding:2px 8px;white-space:nowrap}
@@ -913,7 +913,7 @@ var HEAT_TIERS=["CALM","SUSPICIOUS","WATCHED","HUNTED"];
 function mkDealer(name){function m(){return 0.8+Math.random()*0.4;}var d={name:name,buy:{},sell:{}};PKEYS.forEach(function(k){d.buy[k]=m();d.sell[k]=m();});return d;}
 function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
-var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,lastVer:"",
+var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
  msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
@@ -1153,7 +1153,10 @@ function render(){
  var hpEl=q(".v-hp");hpEl.textContent="HP "+Math.max(0,Math.round(S.hp));
  hpEl.style.color=S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444";
  var bEl=q(".v-buff");
- if(buffActive()){bEl.hidden=false;bEl.textContent="HIGH +"+buffPct()+"% "+fmtT(Math.ceil((S.buffUntil-Date.now())/1000));}
+ if(buffActive()){bEl.hidden=false;
+ var rem=S.buffUntil-Date.now(),tot=Math.max(1,(S.buffUntil-(S.buffStart||Date.now())));
+ bEl.querySelector(".buff-tx").textContent="HIGH +"+buffPct()+"% "+fmtT(Math.ceil(rem/1000));
+ bEl.querySelector(".buff-bar").style.width=(100*rem/tot)+"%";}
  else bEl.hidden=true;
  q(".v-day").textContent="Day "+(1+Math.floor((now-S.bornAt)/86400000));
  var hb=q(".v-heat");
@@ -1720,7 +1723,7 @@ function doSmoke(k){
  S.heat=Math.max(0,S.heat-4);
  var t=PRODUCTS[k].tier;
  S.buffMult=Math.round((1.10+0.02*t)*100)/100;
- S.buffUntil=Date.now()+5*60000;
+ S.buffUntil=Date.now()+5*60000;S.buffStart=Date.now();
  var leveled=addXP(4*t);
  if(!leveled)S.msg=SMOKE_MSG[k]||("Smoked some "+PRODUCTS[k].name+".");
  smokeFX(k);
