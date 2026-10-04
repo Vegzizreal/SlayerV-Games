@@ -1062,12 +1062,7 @@ function nodeFracs(st){
 }
 function plantHTML(p,pi,si){
  if(!p){
-  var btns=GROWKEYS.filter(function(k){return tierVis(PRODUCTS[k].tier)>0;}).map(function(k){
-   var v=tierVis(PRODUCTS[k].tier);
-   if(v===1)return '<button type="button" disabled title="Unlocks at Level '+PRODUCTS[k].tier+'">'+(PRODUCTS[k].tag||PRODUCTS[k].name.charAt(0))+' <span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></button>';
-   return '<button type="button" data-act="plant" data-pi="'+pi+'" data-si="'+si+'" data-strain="'+k+'"'+(S.seeds[k]>0?"":" disabled")+' title="'+PRODUCTS[k].name+' seeds">'+(PRODUCTS[k].tag||PRODUCTS[k].name.charAt(0))+'&times;'+S.seeds[k]+'</button>';
-  }).join("");
-  return '<div class="potc empty"><div class="p-soil mini"></div><div class="p-pick">PLANT</div><div class="pc-btns erow">'+btns+'</div></div>';
+  return '<div class="potc empty"><div class="p-soil mini"></div><div class="p-pick">EMPTY</div></div>';
  }
  var st=stageOf(p.growth);
  var pr=PRODUCTS[p.strain];
