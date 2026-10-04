@@ -3268,7 +3268,7 @@ function doSendReply(nm,rid){
  c.msgs.push({from:"me",text:r.text,t:Date.now()});
  c.unread=false;
  save();render();
- setTimeout(function(){var _cv=document.querySelector(".msg-convo");if(_cv)_cv.scrollTop=_cv.scrollHeight;},50);
+ setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);
 }
 function doDeal(di,k,isBuy,isJoint){
  var now=Date.now();
@@ -4252,7 +4252,7 @@ root.addEventListener("click",function(e){
  if(a==="gprev"||a==="gnext"){var dir=a==="gnext"?1:-1,n=S.props.length,gp=S.gprop||0;for(var gi2=0;gi2<n;gi2++){gp=(gp+dir+n)%n;if(S.props[gp].tier<=pLevel())break;}S.gprop=gp;S.gpage=0;save();render();return;}
  if(a==="gpage"){var pgp=S.props[S.gprop||0]||S.props[0],npg=Math.max(1,Math.ceil(pgp.slots.length/8));S.gpage=Math.max(0,Math.min(npg-1,(S.gpage||0)+(+b.dataset.p)));save();render();return;}
  if(a==="dealersel"){S.dealer=+b.dataset.d;save();render();return;}
- if(a==="msg-open"){var _mc=b.dataset.c;S.msgView=_mc;save();render();setTimeout(function(){var _cv=document.querySelector(".msg-convo");if(_cv)_cv.scrollTop=_cv.scrollHeight;},50);return;}
+ if(a==="msg-open"){var _mc=b.dataset.c;S.msgView=_mc;save();render();setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);return;}
  if(a==="msg-back"){S.msgView="list";save();render();return;}
  if(a==="msg-reply"){doSendReply(b.dataset.contact,b.dataset.reply);return;}
  if(a==="fulfill-order"){doFulfillOrder(b.dataset.contact);return;}
