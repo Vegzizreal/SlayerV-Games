@@ -79,7 +79,7 @@ window.hatchWidget={
  <div class="pg-hint v-hint"></div>
 </div>
 <style>
-.pg{box-sizing:border-box;width:100%;max-width:480px;margin:0 auto;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--hatch-widget-text)}
+.pg{box-sizing:border-box;width:100%;max-width:480px;margin:0 auto;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--hatch-widget-text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 .pg *{box-sizing:border-box}
 /* Fixed app shell: header stays put, only panes scroll */
 .pg{height:100dvh;max-height:100dvh;display:flex;flex-direction:column;overflow:hidden}
@@ -112,7 +112,7 @@ window.hatchWidget={
  background:radial-gradient(620px 260px at 50% -80px,rgba(229,72,77,.06),transparent 60%),radial-gradient(900px 480px at 50% 115%,rgba(0,0,0,.55),transparent 62%),#0a0a0c;
 }
 .pg-head{display:flex;justify-content:center;align-items:center;gap:8px;width:100%;margin:0 0 6px;padding:6px 12px;background:linear-gradient(180deg,#0d1f14,#0a0a0c);border-bottom:2px solid #16a34a;flex-wrap:wrap;box-sizing:border-box}
-.pg-title{font-weight:900;font-size:19px;letter-spacing:2px;color:#4ade80;text-shadow:0 0 12px rgba(74,222,128,.4),0 1px 2px rgba(0,0,0,.6)}
+.pg-title{font-weight:900;font-size:19px;letter-spacing:2px;color:#4ade80;text-shadow:0 0 4px rgba(74,222,128,.5),0 1px 1px rgba(0,0,0,.8)}
 .pg-sub{display:none}
 .pg-pills{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
 .pg [hidden]{display:none!important}
@@ -250,7 +250,7 @@ window.hatchWidget={
 /* ===== TERPENE TYCOON v2.2 visual polish (overrides; game logic untouched) ===== */
 .pg{background:radial-gradient(620px 260px at 50% -80px,rgba(229,72,77,.06),transparent 60%),radial-gradient(900px 480px at 50% 115%,rgba(0,0,0,.55),transparent 62%),#0a0a0c;border:1px solid var(--hatch-widget-border);border-radius:16px;padding:8px 8px 6px}
 .pg-head{margin-bottom:8px}
-.pg-title{font-size:26px;letter-spacing:2.5px;color:#4ade80;text-shadow:0 0 12px rgba(74,222,128,.4),0 1px 2px rgba(0,0,0,.6);position:relative;padding-left:17px}
+.pg-title{font-size:26px;letter-spacing:2.5px;color:#4ade80;text-shadow:0 0 4px rgba(74,222,128,.5),0 1px 1px rgba(0,0,0,.8);position:relative;padding-left:17px}
 .pg-title::before{content:"";position:absolute;left:1px;top:50%;width:9px;height:9px;margin-top:-4px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#ffb3b6,#e5484d 60%,#7a1f23);box-shadow:0 0 9px rgba(229,72,77,.9);animation:pgled 2.6s ease-in-out infinite}
 @keyframes pgled{50%{box-shadow:0 0 2px rgba(229,72,77,.35)}}
 .pg-sub{letter-spacing:5px}
@@ -259,7 +259,7 @@ window.hatchWidget={
 .heat-bar i{background:linear-gradient(90deg,#4ade80,#fbbf24 55%,#f97316)}
 .heat-bar i.hot{background:linear-gradient(90deg,#f97316,#ef4444,#f97316);background-size:220% 100%;animation:heatflow 1.1s linear infinite,blink .7s steps(2) infinite}
 @keyframes heatflow{to{background-position:-220% 0}}
-.v-heattier.ht0{color:#4ade80}.v-heattier.ht1{color:#fbbf24}.v-heattier.ht2{color:#fb923c}.v-heattier.ht3{color:#ef4444;text-shadow:0 0 9px rgba(239,68,68,.65)}
+.v-heattier.ht0{color:#4ade80}.v-heattier.ht1{color:#fbbf24}.v-heattier.ht2{color:#fb923c}.v-heattier.ht3{color:#ef4444;text-shadow:0 0 3px rgba(239,68,68,.7)}
 .pg-msg{background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-left:3px solid #e5484d;border-radius:8px;box-shadow:0 1px 3px var(--hatch-widget-shadow);font-weight:600}
 .pg-tabs{padding:4px;border-radius:14px;background:linear-gradient(180deg,var(--hatch-widget-surface-muted),transparent)}
 .pg-tabs button{padding:8px 0;border-radius:10px;transition:all .15s}
@@ -578,7 +578,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .pg-tabs{gap:2px;padding:3px}
 .pg-tabs button{font-size:15px;padding:7px 1px}
 .battle{background:linear-gradient(180deg,rgba(239,68,68,.10),transparent 70%);border:1px solid rgba(239,68,68,.55);border-radius:12px;padding:10px;box-shadow:0 0 16px rgba(239,68,68,.28)}
-.bt-head{font-weight:900;font-size:19px;letter-spacing:3px;color:#ef4444;text-align:center;margin-bottom:8px;text-shadow:0 0 10px rgba(239,68,68,.55)}
+.bt-head{font-weight:900;font-size:19px;letter-spacing:3px;color:#ef4444;text-align:center;margin-bottom:8px;text-shadow:0 0 3px rgba(239,68,68,.6)}
 .blog{font-size:14.5px;color:var(--hatch-widget-muted);margin:8px 2px;line-height:1.55;min-height:3.4em}
 .blog div::before{content:"\203A ";color:#ef4444;font-weight:900}
 .b-cop{background:linear-gradient(90deg,#60a5fa,#2563eb)}
@@ -600,7 +600,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 /* ===== TERPENE TYCOON v9: chill tab, levels, buff, smoke FX ===== */
 .pg{position:relative}
 .pg-tabs button{font-size:14.5px;padding:7px 0;letter-spacing:.2px}
-.pill.buff{border-color:#fbbf24;color:#fbbf24;font-variant-numeric:tabular-nums;text-shadow:0 0 10px rgba(251,191,36,.4);position:relative;overflow:hidden}.pill.buff .buff-bar{position:absolute;left:0;top:0;bottom:0;background:rgba(251,191,36,.25);width:0%;transition:width .5s linear}.pill.buff .buff-tx{position:relative;z-index:1}
+.pill.buff{border-color:#fbbf24;color:#fbbf24;font-variant-numeric:tabular-nums;text-shadow:0 0 3px rgba(251,191,36,.5);position:relative;overflow:hidden}.pill.buff .buff-bar{position:absolute;left:0;top:0;bottom:0;background:rgba(251,191,36,.25);width:0%;transition:width .5s linear}.pill.buff .buff-tx{position:relative;z-index:1}
 .bufftag{font-size:12px;font-weight:800;color:#fbbf24;background:rgba(251,191,36,.1);border:1px solid rgba(251,191,36,.4);border-radius:99px;padding:1px 6px;margin-left:4px;white-space:nowrap}
 .srow.locked{opacity:.55}
 .lvtag{font-size:12px;font-weight:800;letter-spacing:1px;color:#fbbf24;background:rgba(251,191,36,.10);border:1px solid rgba(251,191,36,.4);border-radius:99px;padding:2px 8px;white-space:nowrap}
@@ -679,7 +679,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .pg-ticker[hidden]{display:none}
 .ticker-badge{display:flex;align-items:center;flex:none;background:#000;overflow:hidden;position:relative;padding:0;width:28%;min-width:0}
 .ticker-badge .eb-track{display:flex;white-space:nowrap;animation:ebrot 4s linear infinite}
-.ticker-badge .eb-track span{font-weight:900;letter-spacing:2px;color:#4ade80;font-size:12px;line-height:1;padding:4px 18px;text-shadow:0 0 8px rgba(74,222,128,.6)}
+.ticker-badge .eb-track span{font-weight:900;letter-spacing:2px;color:#4ade80;font-size:12px;line-height:1;padding:4px 18px;text-shadow:0 0 3px rgba(74,222,128,.7)}
 @keyframes ebrot{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .ticker-div{width:1px;background:#3a3a42;flex:none;margin:6px 0}
 .ticker-name{display:flex;align-items:center;flex:none;background:linear-gradient(180deg,#16a34a,#15803d);color:#fff;padding:6px 10px;font-size:13px;font-weight:800;white-space:nowrap;box-shadow:0 0 10px rgba(74,222,128,.3)}
