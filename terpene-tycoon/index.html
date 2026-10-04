@@ -57,41 +57,34 @@ window.hatchWidget={
  </div>
  <div class="android-appbar" hidden><button type="button" class="android-backbtn" data-act="android-back" aria-label="Back">&#8592;</button><span class="android-apptitle">Grow</span></div>
  <div class="android-home" hidden>
-  <div class="oneui-title">Terpene<br>Tycoon</div>
-  <div class="android-date"></div>
+  <div class="ph-date"></div>
   <div class="oneui-widgetrow">
    <div class="oneui-heatwrap">
-    <svg class="oneui-heatring" viewBox="0 0 80 80" aria-label="Heat level"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="8"/><circle class="android-wheatring" cx="40" cy="40" r="34" fill="none" stroke="#4ade80" stroke-width="8" stroke-linecap="round" stroke-dasharray="213.63" stroke-dashoffset="213.63" transform="rotate(-90 40 40)"/><text class="android-wheatnum ohr-num" x="40" y="47" text-anchor="middle">0</text></svg>
-    <div class="ohr-label">HEAT &#183; <span class="android-wheattier">CALM</span></div>
+    <svg class="oneui-heatring" viewBox="0 0 80 80" aria-label="Battery"><circle cx="40" cy="40" r="34" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="8"/><circle class="android-wheatring" cx="40" cy="40" r="34" fill="none" stroke="#4ade80" stroke-width="8" stroke-linecap="round" stroke-dasharray="213.63" stroke-dashoffset="213.63" transform="rotate(-90 40 40)"/><text class="android-wheatnum ohr-num" x="40" y="47" text-anchor="middle">0</text></svg>
+    <div class="ohr-label"><span class="android-wheattier">Charged</span></div>
    </div>
    <div class="oneui-weather">
     <svg viewBox="0 0 24 24" width="34" height="34" fill="#cfe3ff" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 0 1 9.5 4 8.5 8.5 0 1 0 20 14.5z"/></svg>
-    <div class="ow-text"><div class="ow-big android-wday">Day 1</div><div class="ow-small">&#8982; Grow Op</div></div>
+    <div class="ow-text"><div class="ow-big android-wday">Day 1</div><div class="ow-small ph-dowsub">Sunday</div></div>
    </div>
   </div>
-  <div class="oneui-cashcard">
-   <div class="occ-block"><div class="aw-label">CASH</div><div class="aw-cash android-wcash">$200</div></div>
-   <div class="occ-div"></div>
-   <div class="occ-block"><div class="aw-label">STASH</div><div class="aw-val android-wstash">0/40g</div></div>
-  </div>
-  <div class="android-notif"><span class="android-notif-av">&#127793;</span><div class="android-notif-body"><b>Roach</b><div class="android-notif-msg">Welcome to the grow op.</div></div></div>
-  <div class="oneui-secttl">Apps</div>
+  <div class="android-notif"><span class="android-notif-av">&#128172;</span><div class="android-notif-body"><b>Messages</b><div class="android-notif-msg">Welcome to the grow op.</div></div></div>
   <div class="android-appgrid">
-   <button type="button" class="android-app" data-act="openapp" data-app="store"><span class="aa-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">&#127978;</span><span class="aa-label">Store</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="grow"><span class="aa-icon" style="background:linear-gradient(135deg,#22c55e,#16a34a)">&#127793;</span><span class="aa-label">Grow</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="stash"><span class="aa-icon" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)">&#127890;</span><span class="aa-label">Stash</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="cook"><span class="aa-icon" style="background:linear-gradient(135deg,#ef4444,#dc2626)">&#129514;</span><span class="aa-label">Cook</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="deal"><span class="aa-icon" style="background:linear-gradient(135deg,#3b82f6,#2563eb)">&#128176;</span><span class="aa-label">Deal</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="chill"><span class="aa-icon" style="background:linear-gradient(135deg,#ec4899,#db2777)">&#128715;&#65039;</span><span class="aa-label">Chill</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="clinic"><span class="aa-icon" style="background:linear-gradient(135deg,#14b8a6,#0d9488)">&#127973;</span><span class="aa-label">Clinic</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="settings"><span class="aa-icon" style="background:linear-gradient(135deg,#6b7280,#4b5563)">&#9881;&#65039;</span><span class="aa-label">Settings</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="browser"><span class="aa-icon" style="background:linear-gradient(135deg,#7c3aed,#3b82f6)">&#127760;</span><span class="aa-label">Browser</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="deal"><span class="aa-icon" style="background:linear-gradient(135deg,#25d366,#128c4b)">&#128172;</span><span class="aa-label">Messages</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="browser"><span class="aa-icon" style="background:linear-gradient(135deg,#7c3aed,#3b82f6)">&#127760;</span><span class="aa-label">Internet</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="stash"><span class="aa-icon" style="background:linear-gradient(135deg,#ffc107,#ff9800)">&#128221;</span><span class="aa-label">Notes</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="grow"><span class="aa-icon" style="background:linear-gradient(135deg,#ec407a,#ab47bc)">&#128247;</span><span class="aa-label">Gallery</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="store"><span class="aa-icon" style="background:linear-gradient(135deg,#ff7043,#f4511e)">&#128722;</span><span class="aa-label">Shop</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="cook"><span class="aa-icon" style="background:linear-gradient(135deg,#26a69a,#00897b)">&#128214;</span><span class="aa-label">Recipes</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="chill"><span class="aa-icon" style="background:linear-gradient(135deg,#5c6bc0,#3949ab)">&#127925;</span><span class="aa-label">Music</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="clinic"><span class="aa-icon" style="background:linear-gradient(135deg,#ef5350,#e53935)">&#10084;&#65039;</span><span class="aa-label">Health</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="settings"><span class="aa-icon" style="background:linear-gradient(135deg,#78909c,#546e7a)">&#9881;&#65039;</span><span class="aa-label">Settings</span></button>
   </div>
   <div class="oneui-dock">
-   <button type="button" class="android-app" data-act="openapp" data-app="deal" aria-label="Deal"><span class="aa-icon" style="background:linear-gradient(135deg,#3b82f6,#2563eb)">&#128176;</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="grow" aria-label="Grow"><span class="aa-icon" style="background:linear-gradient(135deg,#22c55e,#16a34a)">&#127793;</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="stash" aria-label="Stash"><span class="aa-icon" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed)">&#127890;</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="store" aria-label="Store"><span class="aa-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">&#127978;</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="deal" aria-label="Messages"><span class="aa-icon" style="background:linear-gradient(135deg,#25d366,#128c4b)">&#128172;</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="browser" aria-label="Internet"><span class="aa-icon" style="background:linear-gradient(135deg,#7c3aed,#3b82f6)">&#127760;</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="grow" aria-label="Gallery"><span class="aa-icon" style="background:linear-gradient(135deg,#ec407a,#ab47bc)">&#128247;</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="settings" aria-label="Settings"><span class="aa-icon" style="background:linear-gradient(135deg,#78909c,#546e7a)">&#9881;&#65039;</span></button>
   </div>
  </div>
  <div class="pg-head">
@@ -159,9 +152,26 @@ window.hatchWidget={
 .android-backbtn:active{background:rgba(255,255,255,.12)}
 .android-apptitle{font-size:19px;font-weight:700;letter-spacing:.5px}
 /* ===== Samsung One UI home screen ===== */
-.android-home{flex:1;min-height:0;overflow-y:auto;order:2;padding:22px 18px 0;background:radial-gradient(120% 55% at 85% 0%,rgba(74,222,128,.09),transparent 60%),radial-gradient(110% 50% at 5% 100%,rgba(59,130,246,.08),transparent 60%),linear-gradient(180deg,#15151d,#0a0a0e);scrollbar-width:none}
+.android-home{flex:1;min-height:0;overflow-y:auto;order:2;padding:22px 18px 0;background:linear-gradient(180deg,#1a1a22,#0e0e13);scrollbar-width:none}
 .android-home::-webkit-scrollbar{display:none}
 .android-home[hidden]{display:none}
+.ph-date{font-size:15px;font-weight:600;color:#c9c5d4;margin:2px 4px 14px}
+.ph-dowsub{font-size:13px;color:#bcd0f5;margin-top:2px}
+/* Wallpaper customization */
+.wp-wrap{margin:0 2px 8px}
+.wp-prev{width:100%;height:110px;border-radius:14px;overflow:hidden;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;margin-bottom:8px}
+.wp-prev img{width:100%;height:100%;object-fit:cover;display:block}
+.wp-prev.wp-none span{font-size:13px;color:#a7a3b3}
+.wp-err{font-size:13px;color:#f59e0b}
+.wp-url{width:100%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:#fff;font-size:14px;padding:11px 14px;margin-bottom:8px;outline:none}
+.wp-url:focus{border-color:#7c9ef8}
+.wp-url::placeholder{color:#6b6f7e}
+.wp-btns{display:flex;gap:8px}
+.wp-apply{flex:1;background:linear-gradient(135deg,#3b82f6,#2563eb);border:0;border-radius:12px;color:#fff;font-size:14px;font-weight:700;padding:11px;cursor:pointer}
+.wp-reset{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:12px;color:#e8e6e1;font-size:14px;font-weight:700;padding:11px;cursor:pointer}
+.pg[data-theme="light"] .wp-url{background:rgba(0,0,0,.04);border-color:rgba(0,0,0,.1);color:#241d33}
+.pg[data-theme="light"] .wp-prev{background:rgba(0,0,0,.04)}
+.pg[data-theme="light"] .wp-reset{color:#241d33;border-color:rgba(0,0,0,.12)}
 .oneui-title{font-size:38px;font-weight:800;color:#fff;letter-spacing:-.5px;line-height:1.05;margin:4px 0 2px}
 .android-date{font-size:14px;color:#a7a3b3;margin-bottom:16px}
 .oneui-widgetrow{display:flex;gap:12px;align-items:stretch;margin-bottom:14px}
@@ -182,7 +192,7 @@ window.hatchWidget={
 .android-notif{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07);border-radius:20px;padding:14px;margin-bottom:18px;box-shadow:0 4px 14px rgba(0,0,0,.4)}
 .android-notif.err{background:rgba(245,158,11,.13);border-color:rgba(245,158,11,.55)}
 .android-notif-av{font-size:24px;flex:none}
-.android-notif-body b{font-size:13px;color:#4ade80}
+.android-notif-body b{font-size:13px;color:#e8e6e1;font-weight:600}
 .android-notif.err .android-notif-body b{color:#f59e0b}
 .android-notif-msg{font-size:14px;color:#e8e6e1;line-height:1.45;margin-top:2px}
 .oneui-secttl{font-size:15px;font-weight:700;color:#fff;margin:2px 4px 12px}
@@ -1240,7 +1250,7 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[]};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:""};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
  var oldSave=(typeof s.xp!=="number");
@@ -1256,6 +1266,7 @@ function normalize(s){
  });});
  s=Object.assign({},DEF,s);
  if(!Array.isArray(s.notifs))s.notifs=[];
+ if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(s.theme!=="light"&&s.theme!=="dark")s.theme="dark";
  s.stash=Object.assign(emptyMaps(),s.stash);
  s.joints=Object.assign(growMaps(),s.joints);
@@ -1671,6 +1682,7 @@ function render(){
  var _clk=q(".android-clock");
  if(_clk){var _cd=new Date(),_ch=_cd.getHours(),_cm=_cd.getMinutes();_clk.textContent=(_ch%12||12)+":"+(_cm<10?"0":"")+_cm;}
  var _hm=q(".android-home");if(_hm)_hm.hidden=battling||S.view!=="home";
+ if(_hm){if(S.wallpaper&&/^https?:\/\//i.test(S.wallpaper)){_hm.style.backgroundImage="url(\""+S.wallpaper.replace(/"/g,"")+"\")";_hm.style.backgroundSize="cover";_hm.style.backgroundPosition="center";}else{_hm.style.backgroundImage="";_hm.style.backgroundSize="";_hm.style.backgroundPosition="";}}
  var _ab=q(".android-appbar");
  if(_ab){_ab.hidden=!inApp||battling;
   var _at=q(".android-apptitle");
@@ -1686,12 +1698,14 @@ function render(){
  var _nm=q(".android-notif-msg");if(_nm)_nm.textContent=S.msg;
  var _isE=isErrMsg(S.msg);
  var _nc=q(".android-notif");if(_nc)_nc.classList.toggle("err",_isE);
- var _na=q(".android-notif-av");if(_na)_na.textContent=_isE?"\u26A0\uFE0F":"\uD83C\uDF3F";
+ var _na=q(".android-notif-av");if(_na)_na.textContent=_isE?"\u26A0\uFE0F":"\uD83D\uDCAC";
  if(!Array.isArray(S.notifs))S.notifs=[];
  if(S.msg&&(!S.notifs.length||S.notifs[0].m!==S.msg)){S.notifs.unshift({m:S.msg,e:_isE?1:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
  renderShade();
- var _dt=q(".android-date");
+ var _dt=q(".ph-date");
  if(_dt){try{_dt.textContent=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});}catch(e){}}
+ var _dw=q(".ph-dowsub");
+ if(_dw){try{_dw.textContent=new Date().toLocaleDateString("en-US",{weekday:"long"});}catch(e){}}
  var _rl=q(".recents-list");
  if(_rl){var _seen={},_items=[];
   for(var _ri=navStack.length-1;_ri>=0;_ri--){var _ra=navStack[_ri];if(!_seen[_ra]){_seen[_ra]=1;_items.push(_ra);}}
@@ -2721,6 +2735,14 @@ function settingsHTML(){
  }
  h+='<div class="shopsec">APPEARANCE</div>';
  h+='<div class="dchips"><button type="button" class="dchip center'+(S.theme==="light"?"":" on")+'" data-act="settheme" data-theme="dark"><span class="dc-name">Dark</span></button><button type="button" class="dchip center'+(S.theme==="light"?" on":"")+'" data-act="settheme" data-theme="light"><span class="dc-name">Light</span></button></div>';
+ h+='<div class="shopsec">WALLPAPER</div>';
+ h+='<div class="wp-wrap">';
+ if(S.wallpaper){h+='<div class="wp-prev"><img src="'+escHtml(S.wallpaper)+'" alt="Wallpaper preview" onerror="this.parentNode.innerHTML=\'<span class=&quot;wp-err&quot;>Preview unavailable</span>\'"></div>';}
+ else{h+='<div class="wp-prev wp-none"><span>Default wallpaper</span></div>';}
+ h+='<input type="url" class="wp-url" placeholder="Paste image URL..." value="'+escHtml(S.wallpaper||"")+'" autocapitalize="off" autocorrect="off" spellcheck="false">';
+ h+='<div class="wp-btns"><button type="button" class="wp-apply" data-act="wp-apply">Apply</button>';
+ if(S.wallpaper){h+='<button type="button" class="wp-reset" data-act="wp-reset">Reset</button>';}
+ h+='</div><div class="sdesc" style="margin-top:6px">Paste a direct image link to change the home screen wallpaper.</div></div>';
  h+='<div class="shopsec">LAB COOK SPEEDS</div>';
  var cur=S.setdrug||"hash";
  if(RKEYS.indexOf(cur)<0)cur="hash";
@@ -2869,6 +2891,14 @@ root.addEventListener("click",function(e){
  if(a==="storetab"){S.storetab=b.dataset.sec;save();render();return;}
   if(a==="setsel"){S.setdrug=b.dataset.key;save();render();return;}
  if(a==="settheme"){var _th=b.dataset.theme;S.theme=(_th==="light")?"light":"dark";save();render();return;}
+ if(a==="wp-apply"){var _wi=q(".wp-url"),_wu=_wi?_wi.value.trim():"";
+  if(!_wu){S.msg="No URL entered.";save();render();return;}
+  if(!/^https?:\/\//i.test(_wu)){S.msg="No valid image URL found — use http(s).";save();render();return;}
+  var _wimg=new Image();
+  _wimg.onload=function(){S.wallpaper=_wu;S.msg="Wallpaper updated.";save();render();};
+  _wimg.onerror=function(){S.msg="No image found at that URL.";save();render();};
+  _wimg.src=_wu;return;}
+ if(a==="wp-reset"){S.wallpaper="";S.msg="Wallpaper reset.";save();render();return;}
  if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk].tier<=pLevel()&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
  if(a==="buyweapon"){var wkey=b.dataset.w,wu=WEAPONS[wkey];if(wkey&&wkey!=="fists"&&wu&&wu.tier<=pLevel()&&!(S.weapons&&S.weapons[wkey])&&S.cash>=wu.cost){S.cash-=wu.cost;S.weapons[wkey]=true;S.msg=wu.name+" purchased — best weapon is used in fights.";save();render();}return;}
  if(a==="bstrike"){battleStrike();return;}
