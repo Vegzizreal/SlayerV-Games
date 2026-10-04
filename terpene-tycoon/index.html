@@ -153,7 +153,7 @@ window.hatchWidget={
 .android-backbtn:active{background:rgba(255,255,255,.12)}
 .android-apptitle{font-size:19px;font-weight:700;letter-spacing:.5px}
 /* ===== Samsung One UI home screen ===== */
-.android-home{flex:1;min-height:0;overflow-y:auto;order:2;padding:22px 18px 0;scrollbar-width:none;
+.android-home{flex:1;min-height:0;overflow-y:hidden;overflow-x:hidden;order:2;padding:18px 18px 0;scrollbar-width:none;display:flex;flex-direction:column;
  background:
  radial-gradient(120% 105% at 50% 42%,transparent 58%,rgba(0,0,0,.48) 100%),
  radial-gradient(170px 170px at 16% 30%,rgba(100,130,230,.34),transparent 70%),
@@ -219,29 +219,29 @@ window.hatchWidget={
 .oneui-dock .android-app{padding:0}
 .oneui-dock .aa-icon{width:54px;height:54px;font-size:26px}
 /* ===== REFERENCE PHONE HOME SCREEN ===== */
-.hw-weather{display:flex;align-items:center;gap:18px;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:30px;padding:20px 24px;margin-bottom:12px;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.hw-weather{display:flex;align-items:center;gap:16px;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:28px;padding:16px 22px;margin-bottom:10px;box-shadow:0 8px 24px rgba(0,0,0,.5);flex:none}
 .hw-wicon{flex:none;display:flex;align-items:center;filter:drop-shadow(0 0 16px rgba(190,215,255,.5))}
 .hw-wicon svg{width:74px;height:74px}
 .hw-wtext{min-width:0}
 .hw-wloc{font-size:30px;font-weight:700;color:#fff;letter-spacing:-.3px;line-height:1.15}
 .hw-wcond{font-size:20px;font-weight:600;color:#f0eef5;margin-top:2px}
 .hw-whl{font-size:15px;color:rgba(255,255,255,.55);margin-top:4px}
-.hw-datebar{display:flex;align-items:center;justify-content:center;gap:7px;padding:12px 0 16px;font-size:15.5px;color:rgba(255,255,255,.78)}
+.hw-datebar{display:flex;align-items:center;justify-content:center;gap:7px;padding:8px 0 10px;font-size:15.5px;color:rgba(255,255,255,.78);flex:none}
 .hw-cal{display:flex;align-items:center;opacity:.8}
 .hw-datebar .ph-date{font-weight:500}
 .hw-evsep,.hw-evcount,.hw-evtx{opacity:.75}
-.hw-search{display:flex;align-items:center;gap:12px;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:30px;padding:15px 22px;margin-bottom:30px;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+.hw-search{display:flex;align-items:center;gap:12px;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:30px;padding:13px 22px;margin-bottom:18px;box-shadow:0 6px 18px rgba(0,0,0,.45);flex:none}
 .hw-sicon{flex:none;display:flex;align-items:center;opacity:.7}
 .hw-sinput{flex:1;min-width:0;background:transparent;border:0;outline:0;color:#fff;font-size:18px;font-family:inherit}
 .hw-sinput::placeholder{color:rgba(255,255,255,.45)}
 .hw-mic{flex:none;display:flex;align-items:center}
 .hw-lens{flex:none;display:flex;align-items:center}
-.hw-appgrid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -18px;padding:0 18px 8px}
+.hw-appgrid{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -18px;padding:0 18px 8px;flex:none;min-height:0}
 .hw-appgrid::-webkit-scrollbar{display:none}
-.hw-page{flex:0 0 100%;display:grid;grid-template-columns:repeat(4,1fr);gap:26px 6px;scroll-snap-align:start;scroll-snap-stop:always;align-content:start}
+.hw-page{flex:0 0 100%;display:grid;grid-template-columns:repeat(4,1fr);gap:20px 6px;scroll-snap-align:start;scroll-snap-stop:always;align-content:start}
 .hw-dots span{cursor:pointer}
 .aa-sub{font-size:12px;color:rgba(255,255,255,.55);font-weight:400;margin-top:-6px}
-.hw-dots{display:flex;justify-content:center;gap:9px;padding:16px 0 20px}
+.hw-dots{display:flex;justify-content:center;gap:9px;padding:10px 0 12px;flex:none}
 .hw-dots span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.25)}
 .hw-dots span.on{background:#fff}
 .pg[data-theme="light"] .hw-weather{background:rgba(255,255,255,.75)}
