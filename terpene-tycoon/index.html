@@ -2064,6 +2064,7 @@ function heatColor(h){return h<30?"#4ade80":h<60?"#fbbf24":h<85?"#fb923c":"#ef44
 function addTerrHeat(src,rawAmt,terrId,skipGain){
  var t=terrDef(terrId||(S.terr&&S.terr.active)||"home");
  var amt=skipGain?rawAmt:heatGain(Math.max(1,Math.round(rawAmt*(t.w[src]||1)*(t.heat||1))));
+ amt=Math.max(1,Math.ceil(amt*0.1)); // 90% heat reduction
  var z=terrZone(t.id);
  z.heat[src]=Math.min(100,z.heat[src]+amt);
  terrAfterChange(t.id,src);
@@ -2118,18 +2119,15 @@ function terrConsequenceCheck(tid,src){
   var lostCash=Math.min(S.cash,Math.round(S.cash*0.25));S.cash-=lostCash;S.stats.busted++;
   z.heat.cops=40;
   m="RAID in "+t.name+"! Cops seized "+lostG+"g and "+money(lostCash)+". Heat reset — lay low.";
-  pushRoachMsg("they got us in "+t.name+"!! cops took everything. we rebuild, yo.");
  }else if(src==="gangs"){
   var dmg=25+((Math.random()*20)|0);
   S.hp=Math.max(1,S.hp-dmg);
   z.heat.gangs=40;
   m="AMBUSH in "+t.name+"! Rival gang hit you for "+dmg+" HP. Patch up at the Clinic.";
-  pushRoachMsg("they jumped us in "+t.name+"!! stay strapped or stay home, yo.");
  }else{
   t.nbors.forEach(function(nb){var nz=terrZone(nb);var i;for(i=0;i<3;i++){var s=HEAT_SOURCES[i];nz.heat[s]=Math.min(100,nz.heat[s]+15);}});
   z.heat.fam=40;
   m="COMPLAINTS in "+t.name+"! Families called everyone — heat spreading to nearby turf.";
-  pushRoachMsg("the Karens of "+t.name+" snitched to the whole city. heat's spreading, yo.");
  }
  S._terrMsg=m;
  syncGlobalHeat();
