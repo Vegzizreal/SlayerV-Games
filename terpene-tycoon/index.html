@@ -947,6 +947,40 @@ window.hatchWidget={
 .note-card .d2-mid{flex:1;min-width:0}
 .note-card .d2-name{font-size:14.5px}
 .note-card .d2-sub{font-size:12px;color:var(--hatch-widget-muted);margin-top:2px}
+/* Apple Notes style (Notes/Stash tab) */
+.notes-ios{background:#f2f2f7;border-radius:12px;min-height:430px;padding:0 0 14px;color:#111}
+.pg[data-theme="dark"] .notes-ios{background:#000;color:#f2f2f7}
+.notes-ios-head{display:flex;align-items:flex-end;justify-content:space-between;padding:16px 18px 8px}
+.notes-ios-title{font-size:30px;font-weight:800;letter-spacing:-.5px}
+.notes-ios-edit{background:none;border:none;color:#0a84ff;font-size:16px;cursor:pointer;padding:4px 2px;font-family:inherit}
+.notes-ios-sec{font-size:13px;color:#8e8e93;margin:16px 18px 6px;font-weight:600}
+.notes-folder{background:#fff;border-radius:14px;margin:0 12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.pg[data-theme="dark"] .notes-folder{background:#1c1c1e}
+.notes-frow{display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;border-bottom:1px solid rgba(120,120,128,.2);padding:11px 14px;cursor:pointer;font-family:inherit;color:inherit;text-align:left;font-size:16px}
+.notes-frow:last-child{border-bottom:none}
+.notes-frow:active{background:rgba(120,120,128,.12)}
+.notes-fico{flex:none;display:flex;align-items:center}
+.notes-fname{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.notes-fcount{color:#8e8e93;font-size:15px}
+.notes-fchev{color:#c7c7cc;font-size:18px;font-weight:300}
+.notes-back{background:none;border:none;color:#0a84ff;font-size:16px;cursor:pointer;padding:12px 0 0 10px;font-family:inherit;display:inline-flex;align-items:center;gap:1px}
+.notes-back .notes-bchev{font-size:20px;line-height:1}
+.notes-list-title{font-size:24px;font-weight:800;letter-spacing:-.3px;padding:2px 18px 8px}
+.notes-ios .note-sec{color:#8e8e93}
+.notes-ios .note-pin{background:#fff;border-color:rgba(120,120,128,.2);margin:8px 12px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.notes-ios .note-pin:before{content:none}
+.pg[data-theme="dark"] .notes-ios .note-pin{background:#1c1c1e;border-color:rgba(120,120,128,.25)}
+.notes-ios .todo-note{background:#fff;border-color:rgba(120,120,128,.2);margin:8px 12px}
+.pg[data-theme="dark"] .notes-ios .todo-note{background:#1c1c1e;border-color:rgba(120,120,128,.25)}
+.notes-ios .note-card{background:#fff;margin:8px 12px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.pg[data-theme="dark"] .notes-ios .note-card{background:#1c1c1e}
+.notes-ios .todo-check{color:#c7c7cc}
+.notes-ios .todo-check.done{color:#34c759}
+.notes-ios .todo-tag{color:#8e8e93}
+.notes-search{margin:14px 12px 0;background:rgba(120,120,128,.16);border-radius:10px;display:flex;align-items:center;gap:7px;padding:8px 12px;color:#8e8e93}
+.notes-search input{flex:1;background:none;border:none;outline:none;font-size:15px;color:inherit;font-family:inherit;min-width:0}
+.notes-search input::placeholder{color:#8e8e93}
+.notes-empty{padding:34px 20px;text-align:center;color:#8e8e93;font-size:15px}
 /* Health app (Clinic) */
 .health-ring{position:relative;width:52px;height:52px}
 .health-ring svg{width:52px;height:52px}
@@ -1791,6 +1825,7 @@ function normalize(s){
   return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0};
  });
  if(typeof s.msgView!=="string")s.msgView="list";
+ if(s.notesView!=="inprogress"&&s.notesView!=="stash"&&s.notesView!=="seeds")s.notesView="folders";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(s.homeRows!==2&&s.homeRows!==3&&s.homeRows!==4)s.homeRows=3;
  if(!Array.isArray(s.iconOrder))s.iconOrder=[];
@@ -3098,26 +3133,9 @@ function doStashSellAll(k,isJoint){
  battleRoll();
  save();render();
 }
-function stashHTML(){
- var _th=tabHeader("stash");
- var sd=stashDealer(),d=sd.d;
- var bActive=buffActive(),bpct=buffPct();
- function su(k,base){var u=base;if(bActive)u=Math.round(u*S.buffMult);return u;}
- var h=_th;
- var tot=stashTotal(),val=0;
- PKEYS.forEach(function(k){
-  var g=S.stash[k]||0;
-  if(g>0)val+=Math.floor(su(k,ppu(PRODUCTS[k].price,d.buy[k]))*g);
- });
- GROWKEYS.forEach(function(k){
-  var j=S.joints[k]||0;
-  if(j>0)val+=Math.floor(su(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9))*j);
- });
- var pct=Math.min(100,Math.round(tot/Math.max(1,S.stashCap)*100));
- // pinned summary note
- h+='<div class="note-pin"><div class="stash-sum"><div class="sdesc" style="font-size:15.5px"><b style="color:var(--hatch-widget-text)">'+tot+'g</b> / '+S.stashCap+'g &middot; worth <b style="color:#4ade80">'+money(val)+'</b> at '+d.name+'\'s prices'+(bActive?' <span class="bufftag">+'+bpct+'%</span>':"")+'</div>'
-  +'<div class="heat-bar" style="margin-top:6px"><i style="width:'+pct+'%"></i></div></div></div>';
- // ---- IN PROGRESS: to-do notes for growing plants + cooking lab ----
+var NOTESQ="";
+var NOTES_FOLDER_SVG='<svg width="27" height="27" viewBox="0 0 24 24"><path d="M2.5 6.5c0-1.1.9-2 2-2h4l2 2.4h8c1.1 0 2 .9 2 2v8.6c0 1.1-.9 2-2 2h-14c-1.1 0-2-.9-2-2z" fill="#ffcc00" stroke="#d9a400" stroke-width="1"/></svg>';
+function notesTodosData(){
  var todos=[];
  (S.props||[]).forEach(function(pr){
   (pr.slots||[]).forEach(function(p){
@@ -3146,62 +3164,111 @@ function stashHTML(){
    todos.push({tab:"cook",tag:"LAB",done:false,title:jr.name,sub:"Hands-on step in the lab",pct:0,barCls:""});
   }
  }
- if(todos.length){
-  h+='<div class="note-sec">IN PROGRESS <span class="note-count">'+todos.length+'</span></div>';
-  todos.forEach(function(t){
-   h+='<button type="button" class="todo-note" data-act="tab" data-tab="'+t.tab+'">'
-    +'<div class="todo-top"><span class="todo-check'+(t.done?" done":"")+'">'+(t.done?"☑":"☐")+'</span>'
-    +'<span class="todo-title">'+t.title+'</span><span class="todo-tag">'+t.tag+'</span></div>'
-    +'<div class="todo-sub">'+t.sub+'</div>'
-    +'<div class="todo-bar"><i class="'+t.barCls+'" style="width:'+t.pct+'%"></i></div></button>';
-  });
- }
- // ---- INVENTORY: product notes ----
- h+='<div class="note-sec">STASH</div>';
- var any=false;
- function pic(k){
-  return GROWKEYS.indexOf(k)>=0
-   ?'<span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span>'
-   :'<span class="picon xs picon-'+k+'"></span>';
- }
- function noteCard(k,nameLine,subLine){
-  var col=(PRODUCTS[k]&&(PRODUCTS[k].c1||PRODUCTS[k].c2))||"#4ade80";
-  return '<div class="note-card" style="--nc:'+col+'">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+nameLine+'</div>'
-   +'<div class="d2-sub">'+subLine+'</div></div></div>';
- }
- // bags
+ return todos;
+}
+function notesTodoHTML(t){
+ return '<button type="button" class="todo-note" data-act="tab" data-tab="'+t.tab+'">'
+  +'<div class="todo-top"><span class="todo-check'+(t.done?" done":"")+'">'+(t.done?"☑":"☐")+'</span>'
+  +'<span class="todo-title">'+t.title+'</span><span class="todo-tag">'+t.tag+'</span></div>'
+  +'<div class="todo-sub">'+t.sub+'</div>'
+  +'<div class="todo-bar"><i class="'+t.barCls+'" style="width:'+t.pct+'%"></i></div></button>';
+}
+function notesPic(k){
+ return GROWKEYS.indexOf(k)>=0
+  ?'<span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span>'
+  :'<span class="picon xs picon-'+k+'"></span>';
+}
+function notesStashCards(d,su){
+ var cards=[];
  PKEYS.forEach(function(k){
   var g=S.stash[k]||0;
   if(g<=0)return;
   if(tierVis(PRODUCTS[k].tier)===0)return;
-  any=true;
   var unit=su(k,ppu(PRODUCTS[k].price,d.buy[k]));
-  h+=noteCard(k,PRODUCTS[k].name+' <b>'+g+'g</b>',money(unit)+'/g &middot; '+money(Math.floor(unit*g))+' total');
+  cards.push({k:k,nameLine:PRODUCTS[k].name+' <b>'+g+'g</b>',subLine:money(unit)+'/g &middot; '+money(Math.floor(unit*g))+' total',search:PRODUCTS[k].name,action:""});
  });
- // joints
  GROWKEYS.forEach(function(k){
   var j=S.joints[k]||0;
   if(j<=0)return;
   if(tierVis(PRODUCTS[k].tier)===0)return;
-  any=true;
   var ju=su(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9));
-  h+=noteCard(k,PRODUCTS[k].name+' joints <b>'+j+'</b>',money(ju)+'/joint &middot; '+money(Math.floor(ju*j))+' total');
+  cards.push({k:k,nameLine:PRODUCTS[k].name+' joints <b>'+j+'</b>',subLine:money(ju)+'/joint &middot; '+money(Math.floor(ju*j))+' total',search:PRODUCTS[k].name+" joints",action:""});
  });
- // seeds with auto-plant
- var anySeeds=false;
+ return cards;
+}
+function notesSeedCards(){
+ var cards=[];
  GROWKEYS.forEach(function(k){
   var sc=S.seeds[k]||0;
   if(sc<=0)return;
   if(tierVis(PRODUCTS[k].tier)===0)return;
-  if(!anySeeds){h+='<div class="note-sec">SEED PACKETS</div>';anySeeds=true;}
-  any=true;
-  h+='<div class="note-card" style="--nc:'+PRODUCTS[k].c1+'">'+pic(k)+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' seeds <b>'+sc+'</b></div>'
-   +'<div class="d2-sub">Plant in empty pots</div></div>'
-   +'<div class="stashbtns"><button type="button" class="go" data-act="autoplant" data-strain="'+k+'">AUTO PLANT</button></div></div>';
+  cards.push({k:k,nameLine:PRODUCTS[k].name+' seeds <b>'+sc+'</b>',subLine:'Plant in empty pots',search:PRODUCTS[k].name+" seeds",
+   action:'<button type="button" class="go" data-act="autoplant" data-strain="'+k+'">AUTO PLANT</button>'});
  });
- if(!any)h+='<div class="sdesc">Nothing stashed yet — harvest some bud first.</div>';
- h+='<div class="sdesc">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
- return h;
+ return cards;
+}
+function notesCardHTML(c){
+ var col=(PRODUCTS[c.k]&&(PRODUCTS[c.k].c1||PRODUCTS[c.k].c2))||"#4ade80";
+ return '<div class="note-card" style="--nc:'+col+'">'+notesPic(c.k)+'<div class="d2-mid"><div class="d2-name">'+c.nameLine+'</div>'
+  +'<div class="d2-sub">'+c.subLine+'</div></div>'
+  +(c.action?'<div class="stashbtns">'+c.action+'</div>':'')+'</div>';
+}
+function notesFolderRow(v,name,count){
+ return '<button type="button" class="notes-frow" data-act="notesview" data-v="'+v+'"><span class="notes-fico">'+NOTES_FOLDER_SVG+'</span><span class="notes-fname">'+name+'</span><span class="notes-fcount">'+count+'</span><span class="notes-fchev">›</span></button>';
+}
+function notesSearchBar(){
+ return '<div class="notes-search"><span>🔍</span><input type="text" data-nsearch="1" placeholder="Search" value="'+escHtml(NOTESQ||"")+'" autocomplete="off"></div>';
+}
+function stashHTML(){
+ var view=(S.notesView==="inprogress"||S.notesView==="stash"||S.notesView==="seeds")?S.notesView:"folders";
+ var sd=stashDealer(),d=sd.d;
+ var bActive=buffActive(),bpct=buffPct();
+ function su(k,base){var u=base;if(bActive)u=Math.round(u*S.buffMult);return u;}
+ var tot=stashTotal(),val=0;
+ PKEYS.forEach(function(k){
+  var g=S.stash[k]||0;
+  if(g>0)val+=Math.floor(su(k,ppu(PRODUCTS[k].price,d.buy[k]))*g);
+ });
+ GROWKEYS.forEach(function(k){
+  var j=S.joints[k]||0;
+  if(j>0)val+=Math.floor(su(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9))*j);
+ });
+ var pct=Math.min(100,Math.round(tot/Math.max(1,S.stashCap)*100));
+ var sum='<div class="note-pin"><div class="stash-sum"><div class="sdesc" style="font-size:15.5px"><b style="color:var(--hatch-widget-text)">'+tot+'g</b> / '+S.stashCap+'g &middot; worth <b style="color:#4ade80">'+money(val)+'</b> at '+d.name+'\'s prices'+(bActive?' <span class="bufftag">+'+bpct+'%</span>':"")+'</div>'
+  +'<div class="heat-bar" style="margin-top:6px"><i style="width:'+pct+'%"></i></div></div></div>';
+ var todos=notesTodosData(),cards=notesStashCards(d,su),seeds=notesSeedCards();
+ var q=(NOTESQ||"").toLowerCase();
+ function match(s){return !q||String(s||"").toLowerCase().indexOf(q)>=0;}
+ var h='<div class="notes-ios">';
+ if(view==="folders"){
+  h+='<div class="notes-ios-head"><span class="notes-ios-title">Folders</span><button type="button" class="notes-ios-edit" data-act="notes-edit">Edit</button></div>';
+  h+='<div class="notes-ios-sec">Grow Op</div>';
+  h+='<div class="notes-folder">'
+   +notesFolderRow("inprogress","In Progress",todos.length)
+   +notesFolderRow("stash","Stash",cards.length)
+   +notesFolderRow("seeds","Seed Packets",seeds.length)
+   +'</div>';
+  h+='<div class="notes-ios-sec">Summary</div>'+sum;
+  h+=notesSearchBar();
+ }else{
+  var title=view==="inprogress"?"In Progress":view==="stash"?"Stash":"Seed Packets";
+  h+='<button type="button" class="notes-back" data-act="notesview" data-v="folders"><span class="notes-bchev">‹</span>Folders</button>';
+  h+='<div class="notes-list-title">'+title+'</div>';
+  if(view==="inprogress"){
+   var ft=todos.filter(function(t){return match(t.title+" "+t.sub+" "+t.tag);});
+   h+=ft.length?ft.map(notesTodoHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing in progress.")+'</div>';
+  }else if(view==="stash"){
+   h+=sum;
+   var fc=cards.filter(function(c){return match(c.search);});
+   h+=fc.length?fc.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing stashed yet — harvest some bud first.")+'</div>';
+   h+='<div class="sdesc" style="margin:10px 18px 0">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
+  }else{
+   var fs=seeds.filter(function(c){return match(c.search);});
+   h+=fs.length?fs.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"No seed packets.")+'</div>';
+  }
+  h+=notesSearchBar();
+ }
+ return h+'</div>';
 }
 /* ===== TERPENE TYCOON v21: newscast tips ticker ===== */
 function tickerHints(){
@@ -3900,6 +3967,8 @@ root.addEventListener("click",function(e){
  }
  if(!b||b.disabled)return;
  var a=b.dataset.act;
+ if(a==="notesview"){var _nv=b.dataset.v;S.notesView=(_nv==="inprogress"||_nv==="stash"||_nv==="seeds")?_nv:"folders";NOTESQ="";save();render();return;}
+ if(a==="notes-edit"){S.msg="Nothing to edit — your notes manage themselves.";save();render();return;}
  if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);save();render();return;}
  if(a==="openapp"){closeFolder();if(S.battle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";navPush(_ap);var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
  if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle){S.msg="Finish the fight!";save();render();return;}navPop();save();render();return;}
@@ -3991,6 +4060,13 @@ root.addEventListener("click",function(e){
 });
 root.addEventListener("input",function(e){
  var t=e.target;
+ if(t&&t.dataset&&t.dataset.nsearch!==undefined){
+  NOTESQ=t.value||"";
+  render();
+  var ni=q('.notes-search input');
+  if(ni){try{ni.focus();ni.setSelectionRange(ni.value.length,ni.value.length);}catch(_e){}}
+  return;
+ }
  if(!t||t.type!=="range"||!t.dataset||!t.dataset.srange)return;
  var row=t.closest?t.closest(".sld-row"):null;
  var lab=row?row.querySelector(".sld-val"):null;
