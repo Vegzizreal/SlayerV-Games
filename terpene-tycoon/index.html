@@ -88,6 +88,15 @@ window.hatchWidget={
   </div>
   <div class="hw-dots"><span class="on" data-hwpage="0"></span><span data-hwpage="1"></span></div>
  </div>
+ <div class="hw-folderview" hidden>
+  <div class="hw-fv-scrim" data-act="folder-close"></div>
+  <div class="hw-fv-card">
+   <input class="hw-fv-name" data-hwfoldername="1" maxlength="24" value="Folder" autocomplete="off">
+   <div class="hw-fv-count">0 apps</div>
+   <div class="hw-fv-grid"></div>
+   <button type="button" class="hw-fv-close" data-act="folder-close">Close</button>
+  </div>
+ </div>
  <div class="pg-head">
   <div class="pg-title">TERPENE TYCOON<span class="pg-sub">grow op</span></div>
  </div>
@@ -266,17 +275,37 @@ window.hatchWidget={
 .pg.home-mode .pg-tabs,
 .pg.home-mode .pg-hint{display:none!important}
 .pg.home-mode .android-home{order:1;flex:1;min-height:0}
-/* ===== Home screen edit mode (Samsung-style wiggle) ===== */
-@keyframes hw-wiggle{0%{transform:rotate(-2.2deg)}50%{transform:rotate(2.2deg)}100%{transform:rotate(-2.2deg)}}
+/* ===== Home screen edit mode (Samsung-style) ===== */
+@keyframes hw-wiggle{0%{transform:rotate(-1.5deg) scale(1)}50%{transform:rotate(1.5deg) scale(1.03)}100%{transform:rotate(-1.5deg) scale(1)}}
 @keyframes hw-editpop{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
 .android-home{position:relative}
 .pg.edit-mode .hw-appgrid{touch-action:none;overflow:hidden}
-.pg.edit-mode .hw-appgrid .android-app{position:relative;animation:hw-wiggle .45s ease-in-out infinite,hw-editpop .32s ease-out 1;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
-.pg.edit-mode .hw-appgrid .android-app:nth-child(2n){animation-delay:.13s,0s}
-.pg.edit-mode .hw-appgrid .android-app:nth-child(3n){animation-delay:.26s,0s}
-.pg.edit-mode .hw-appgrid .android-app:nth-child(4n){animation-delay:.07s,0s}
-.pg.edit-mode .hw-appgrid .android-app.hw-dragging{animation:none;z-index:10;cursor:grabbing}
-.pg.edit-mode .hw-appgrid .android-app.hw-dragging .aa-icon{transform:scale(1.14);box-shadow:0 14px 32px rgba(0,0,0,.7)}
+.pg.edit-mode .hw-fv-grid{touch-action:none}
+.pg.edit-mode .hw-appgrid .android-app,.pg.edit-mode .hw-fv-grid .android-app{position:relative;animation:hw-wiggle .6s ease-in-out infinite,hw-editpop .32s ease-out 1;cursor:grab;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.pg.edit-mode .hw-appgrid .android-app:nth-child(2n),.pg.edit-mode .hw-fv-grid .android-app:nth-child(2n){animation-delay:.16s,0s}
+.pg.edit-mode .hw-appgrid .android-app:nth-child(3n),.pg.edit-mode .hw-fv-grid .android-app:nth-child(3n){animation-delay:.32s,0s}
+.pg.edit-mode .hw-appgrid .android-app:nth-child(4n),.pg.edit-mode .hw-fv-grid .android-app:nth-child(4n){animation-delay:.08s,0s}
+.android-app.hw-dragging{animation:none!important;z-index:80;cursor:grabbing;pointer-events:none}
+.android-app.hw-dragging .aa-icon{transform:scale(1.15);box-shadow:0 24px 48px rgba(0,0,0,.75)}
+.hw-ph{border-radius:20px;background:rgba(255,255,255,.08);border:2px dashed rgba(255,255,255,.28);box-sizing:border-box}
+.hw-drop-hint .aa-icon{box-shadow:0 0 0 3px #4a8ff7,0 0 20px rgba(74,143,247,.9)!important;transform:scale(1.08)}
+.hw-foldericon{background:rgba(38,38,48,.94)!important}
+.hw-mg{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr 1fr;gap:3px;width:72%;height:72%}
+.hw-mg-i{min-width:0;min-height:0;display:flex}
+.hw-mg-i .aa-icon{width:100%!important;height:100%!important;border-radius:9px;margin:0;box-shadow:none}
+.hw-mg-i .aa-icon::after{display:none}
+.hw-mg-i svg{width:78%;height:78%}
+/* Folder overlay (Samsung-style popup) */
+.hw-folderview{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center}
+.hw-folderview[hidden]{display:none}
+.hw-fv-scrim{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.hw-fv-card{position:relative;width:min(340px,86vw);background:rgba(32,32,42,.94);border:1px solid rgba(255,255,255,.12);border-radius:28px;padding:20px 18px 16px;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.hw-fv-name{width:100%;background:transparent;border:0;outline:0;color:#fff;font-size:21px;font-weight:700;text-align:center;font-family:inherit;margin-bottom:2px;padding:2px 0}
+.hw-fv-name:not([readonly]){border-bottom:1px dashed rgba(255,255,255,.35)}
+.hw-fv-count{text-align:center;font-size:12.5px;color:rgba(255,255,255,.55);margin-bottom:14px}
+.hw-fv-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px 6px;max-height:320px;overflow-y:auto;scrollbar-width:none}
+.hw-fv-grid::-webkit-scrollbar{display:none}
+.hw-fv-close{display:block;margin:14px auto 0;background:rgba(255,255,255,.12);color:#fff;border:0;border-radius:16px;padding:8px 28px;font-size:14px;font-weight:600;font-family:inherit}
 .hw-xbadge{display:none;position:absolute;top:-4px;right:4px;width:24px;height:24px;border-radius:50%;background:#3a3a44;color:#fff;font-size:16px;font-weight:700;line-height:24px;text-align:center;z-index:5;box-shadow:0 2px 8px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.25)}
 .pg.edit-mode .hw-xbadge{display:block}
 .hw-donebtn{position:absolute;top:12px;right:16px;z-index:30;background:rgba(74,143,247,.95);color:#fff;border:0;border-radius:18px;padding:9px 22px;font-size:15px;font-weight:700;font-family:inherit;box-shadow:0 4px 14px rgba(0,0,0,.4)}
@@ -1327,7 +1356,7 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[]};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
  var oldSave=(typeof s.xp!=="number");
@@ -1346,6 +1375,10 @@ function normalize(s){
  if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(!Array.isArray(s.iconOrder))s.iconOrder=[];
  if(!Array.isArray(s.hiddenApps))s.hiddenApps=[];
+ if(!s.folders||typeof s.folders!=="object"||Array.isArray(s.folders))s.folders={};
+ if(Array.isArray(s.iconOrder))s.iconOrder=s.iconOrder.map(function(k){return (typeof k==="string"&&k.indexOf(":")<0)?("a:"+k):k;});
+ Object.keys(s.folders).forEach(function(fid){var _f=s.folders[fid];if(!_f||!Array.isArray(_f.apps)){delete s.folders[fid];return;}});
+ s.folders=(function(_sf){var _o={};Object.keys(_sf).forEach(function(_k){var _v=_sf[_k];_o[_k]={name:(typeof _v.name==="string"?_v.name:"Folder"),apps:_v.apps.filter(function(_l){return typeof _l==="string";})};});return _o;})(s.folders);
  if(s.theme!=="light"&&s.theme!=="dark")s.theme="dark";
  s.stash=Object.assign(emptyMaps(),s.stash);
  s.joints=Object.assign(growMaps(),s.joints);
@@ -2919,6 +2952,10 @@ root.addEventListener("click",function(e){
  }
  var b=e.target.closest?e.target.closest("[data-act]"):null;
  if(b&&b.dataset.act==="edit-done"){setEditMode(false);return;}
+ if(b&&b.dataset.act==="folder-open"){openFolder(b.dataset.fid);return;}
+ if(b&&b.dataset.act==="folder-close"){closeFolder();return;}
+ if(b&&b.dataset.act==="folder-ungroup"){var _fbu=b.closest?b.closest(".hw-folderbtn"):null;if(_fbu)hwUngroup(_fbu.dataset.fid);return;}
+ if(b&&b.dataset.act==="folder-remove"){hwFolderRemove(b.dataset.fid,b.dataset.label);return;}
  if(b&&b.dataset.act==="hide-app"){
   var _hb=b.closest?b.closest(".hw-appgrid .android-app"):null;
   if(_hb){var _hl=hwLabel(_hb);if(S.hiddenApps.indexOf(_hl)<0){S.hiddenApps.push(_hl);_hb.style.display="none";save();}}
@@ -2926,19 +2963,23 @@ root.addEventListener("click",function(e){
  }
  if(b&&b.dataset.act==="layout-reset"){
   S.hiddenApps=[];
+  S.folders={};
+  closeFolder();
   S.iconOrder=(_hwDefault&&_hwDefault.length)?_hwDefault.slice():[];
-  save();applyIconOrder();S.msg="Home layout reset.";save();render();return;
+  save();layoutHome();S.msg="Home layout reset.";save();render();return;
  }
  if(editMode){
-  var _eb=e.target&&e.target.closest?e.target.closest(".hw-appgrid .android-app"):null;
+  var _eb=e.target&&e.target.closest?e.target.closest(".hw-appgrid .android-app,.hw-fv-grid .android-app"):null;
   if(_eb){if(e.preventDefault)e.preventDefault();return;}
+  var _fvc=e.target&&e.target.closest?e.target.closest(".hw-fv-card"):null;
+  if(_fvc)return;
   setEditMode(false);
  }
  if(!b||b.disabled)return;
  var a=b.dataset.act;
  if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);save();render();return;}
- if(a==="openapp"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";navPush(_ap);var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
- if(a==="android-back"){if(S.battle){S.msg="Finish the fight!";save();render();return;}navPop();save();render();return;}
+ if(a==="openapp"){closeFolder();if(S.battle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";navPush(_ap);var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
+ if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle){S.msg="Finish the fight!";save();render();return;}navPop();save();render();return;}
  if(a==="android-home"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
  if(a==="android-recents"){var _rx=q(".android-recents");if(_rx)_rx.hidden=!_rx.hidden;render();return;}
  if(a==="shade-open"){openShade();return;}
@@ -3063,6 +3104,11 @@ root.addEventListener("scroll",function(e){
 
 root.addEventListener("change",function(e){
  var t=e.target;
+ if(t&&t.dataset&&t.dataset.hwfoldername){
+  var _ff=t.dataset.fid&&S.folders?S.folders[t.dataset.fid]:null;
+  if(_ff){_ff.name=(t.value||"").slice(0,24)||"Folder";save();layoutHome();if(_openFid===t.dataset.fid)renderFolderView();}
+  return;
+ }
  if(t&&t.type==="range"&&t.dataset&&t.dataset.srange){
   if(typeof document!=="undefined"&&document.activeElement&&document.activeElement.blur){try{document.activeElement.blur();}catch(_){}}
   render();
@@ -3094,102 +3140,460 @@ root.addEventListener("change",function(e){
   sh.addEventListener("mouseup",function(e){end(e.clientY,e.clientX);});
  }
 })();
-/* ===== Home screen edit mode: long-press (1.5s) for Samsung-style wiggle, drag to reorder ===== */
+/* ===== Home screen edit mode: Samsung One UI (wiggle, drag reorder, edge paging, folders) ===== */
 var editMode=false;
 var _hwDefault=null;
-var _lpTimer=null,_lpBtn=null,_lpX=0,_lpY=0,_dragBtn=null,_dragPid=null;
+var _hwAppEls={};
+var _lpTimer=null,_lpEl=null,_lpX=0,_lpY=0,_lpPid=null,_lpFromFid=null;
+var _drag=null;
+var _openFid=null;
+var _hintEl=null;
 function hwLabel(b){var l=b.querySelector(".aa-label");return l?l.textContent.trim():"";}
+function hwSlotKey(el){
+ if(el&&el.dataset&&el.dataset.fid)return "f:"+el.dataset.fid;
+ return "a:"+hwLabel(el);
+}
+function hwDoc(){return (typeof document!=="undefined")?document:null;}
+function hwBody(){var d=hwDoc();return (d&&d.body)?d.body:null;}
+function hwWinW(){return (typeof window!=="undefined"&&window.innerWidth)?window.innerWidth:480;}
 function setEditMode(on){
  editMode=!!on;
  var pg=q(".pg");if(pg)pg.classList.toggle("edit-mode",editMode);
  var d=q(".hw-donebtn");if(d)d.hidden=!editMode;
- if(!editMode){_dragBtn=null;_dragPid=null;
-  var g=q(".hw-appgrid");
-  if(g){var ds=g.querySelectorAll(".android-app.hw-dragging");for(var i=0;i<ds.length;i++)ds[i].classList.remove("hw-dragging");}
+ if(!editMode){hwCancelDrag();closeFolder();}
+}
+function hwCancelLP(){if(_lpTimer){try{clearTimeout(_lpTimer);}catch(_){}_lpTimer=null;}_lpEl=null;_lpFromFid=null;}
+function hwDropHint(el){
+ if(_hintEl&&_hintEl!==el)_hintEl.classList.remove("hw-drop-hint");
+ _hintEl=el;
+ if(el)el.classList.add("hw-drop-hint");
+}
+/* ---------- folders ---------- */
+function hwFolderPull(fid,lab){
+ var f=S.folders?S.folders[fid]:null;if(!f)return;
+ f.apps=f.apps.filter(function(l){return l!==lab;});
+ if(!f.apps.length)delete S.folders[fid];
+}
+function hwFolderBtn(fid){
+ var f=S.folders?S.folders[fid]:null;if(!f)return null;
+ var d=hwDoc();if(!d)return null;
+ var b=d.createElement("button");
+ b.type="button";b.className="android-app hw-folderbtn";
+ b.setAttribute("data-act","folder-open");b.setAttribute("data-fid",fid);
+ b.setAttribute("data-hwkeys",((f.name||"")+" "+f.apps.join(" ")+" folder").toLowerCase());
+ var ic=d.createElement("span");ic.className="aa-icon hw-foldericon";
+ var mg=d.createElement("span");mg.className="hw-mg";
+ for(var i=0;i<4&&i<f.apps.length;i++){
+  var orig=_hwAppEls[f.apps[i]],cell=d.createElement("span");cell.className="hw-mg-i";
+  if(orig){var src=orig.querySelector(".aa-icon");if(src)cell.appendChild(src.cloneNode(true));}
+  mg.appendChild(cell);
  }
+ ic.appendChild(mg);b.appendChild(ic);
+ var lb=d.createElement("span");lb.className="aa-label";lb.textContent=f.name||"Folder";b.appendChild(lb);
+ var sb=d.createElement("span");sb.className="aa-sub";sb.textContent=f.apps.length+(f.apps.length===1?" app":" apps");b.appendChild(sb);
+ return b;
+}
+function openFolder(fid){
+ if(!S.folders||!S.folders[fid])return;
+ _openFid=fid;renderFolderView();
+ var ov=q(".hw-folderview");if(ov)ov.hidden=false;
+}
+function closeFolder(){
+ _openFid=null;
+ var ov=q(".hw-folderview");if(ov)ov.hidden=true;
+}
+function renderFolderView(){
+ var ov=q(".hw-folderview");if(!ov)return;
+ var f=(_openFid&&S.folders)?S.folders[_openFid]:null;
+ if(!f){ov.hidden=true;_openFid=null;return;}
+ var d=hwDoc();
+ var grid=ov.querySelector(".hw-fv-grid");
+ if(grid&&d){
+  grid.innerHTML="";
+  for(var i=0;i<f.apps.length;i++){
+   var orig=_hwAppEls[f.apps[i]];if(!orig)continue;
+   var c=orig.cloneNode(true);
+   var x=c.querySelector(".hw-xbadge");
+   if(!x){x=d.createElement("span");x.className="hw-xbadge";c.appendChild(x);}
+   x.textContent="\u00d7";
+   x.setAttribute("data-act","folder-remove");
+   x.setAttribute("data-fid",_openFid);
+   x.setAttribute("data-label",f.apps[i]);
+   grid.appendChild(c);
+  }
+ }
+ var nm=ov.querySelector(".hw-fv-name");
+ if(nm){nm.value=f.name||"Folder";nm.readOnly=!editMode;nm.setAttribute("data-fid",_openFid);}
+ var ct=ov.querySelector(".hw-fv-count");
+ if(ct)ct.textContent=f.apps.length+(f.apps.length===1?" app":" apps");
+}
+function hwUngroup(fid){
+ var f=S.folders?S.folders[fid]:null;if(!f)return;
+ var apps=f.apps.slice();
+ delete S.folders[fid];
+ var io=hwValidOrder(),ni=[];
+ for(var i=0;i<io.length;i++){
+  if(io[i]==="f:"+fid){for(var j=0;j<apps.length;j++)ni.push("a:"+apps[j]);}
+  else ni.push(io[i]);
+ }
+ S.iconOrder=ni;save();layoutHome();
+ if(_openFid===fid)closeFolder();
+}
+function hwFolderRemove(fid,lab){
+ var f=S.folders?S.folders[fid]:null;if(!f||!lab)return;
+ hwFolderPull(fid,lab);
+ var io=hwValidOrder(),ni=[],done=false;
+ for(var i=0;i<io.length;i++){
+  ni.push(io[i]);
+  if(!done&&io[i]==="f:"+fid){ni.push("a:"+lab);done=true;}
+ }
+ if(!done)ni.push("a:"+lab);
+ S.iconOrder=ni;save();layoutHome();
+ if(_openFid===fid)renderFolderView();
+}
+/* ---------- home grid layout ---------- */
+function hwInitRegistry(){
+ if(_hwAppEls._done)return;_hwAppEls._done=true;
+ var grid=q(".hw-appgrid");if(!grid)return;
+ var btns=grid.querySelectorAll(".android-app");
+ for(var i=0;i<btns.length;i++){
+  var lb=hwLabel(btns[i]);
+  if(lb&&!_hwAppEls[lb])_hwAppEls[lb]=btns[i];
+ }
+ if(!_hwDefault){
+  _hwDefault=[];
+  for(var j=0;j<btns.length;j++)_hwDefault.push("a:"+hwLabel(btns[j]));
+ }
+}
+function hwValidOrder(){
+ var s=S.iconOrder;
+ if(!Array.isArray(s))return [];
+ return s.filter(function(k){return typeof k==="string";});
+}
+function layoutHome(){
+ var grid=q(".hw-appgrid");if(!grid)return;
+ hwInitRegistry();
+ var d=hwDoc();if(!d)return;
+ var i;
+ // validate folders against known apps
+ var fids=Object.keys(S.folders||{});
+ for(var fi=0;fi<fids.length;fi++){
+  var f=S.folders[fids[fi]];
+  f.apps=(f.apps||[]).filter(function(l){return !!_hwAppEls[l];});
+  if(!f.apps.length)delete S.folders[fids[fi]];
+ }
+ var inFolder={};
+ Object.keys(S.folders||{}).forEach(function(fid){S.folders[fid].apps.forEach(function(l){inFolder[l]=fid;});});
+ // canonical slot list
+ var keys=hwValidOrder(),have={};
+ for(i=0;i<keys.length;i++)have[keys[i]]=1;
+ Object.keys(_hwAppEls).forEach(function(l){
+  if(l==="_done"||inFolder[l]||have["a:"+l])return;
+  keys.push("a:"+l);have["a:"+l]=1;
+ });
+ Object.keys(S.folders||{}).forEach(function(fid){
+  if(!have["f:"+fid]){keys.push("f:"+fid);have["f:"+fid]=1;}
+ });
+ keys=keys.filter(function(k){
+  if(k.indexOf("f:")===0)return !!(S.folders||{})[k.slice(2)];
+  var lb=k.slice(2);
+  return !!_hwAppEls[lb]&&!inFolder[lb];
+ });
+ // rebuild pages
+ var old=grid.querySelectorAll(".hw-page");
+ for(i=0;i<old.length;i++)old[i].parentNode.removeChild(old[i]);
+ var perPage=8,page=null;
+ for(i=0;i<keys.length;i++){
+  if(i%perPage===0){page=d.createElement("div");page.className="hw-page";grid.appendChild(page);}
+  var el=null,k=keys[i];
+  if(k.indexOf("f:")===0)el=hwFolderBtn(k.slice(2));
+  else el=_hwAppEls[k.slice(2)]||null;
+  if(el)page.appendChild(el);
+ }
+ if(!grid.querySelectorAll(".hw-page").length){
+  var p0=d.createElement("div");p0.className="hw-page";grid.appendChild(p0);
+ }
+ hwDecorate();
+ hwSyncDots();
+ persistIconOrder();
+}
+function hwDecorate(){
+ var grid=q(".hw-appgrid");if(!grid)return;
+ var d=hwDoc();
+ var btns=grid.querySelectorAll(".android-app");
+ for(var i=0;i<btns.length;i++){
+  var b=btns[i],isF=b.classList.contains("hw-folderbtn");
+  var x=b.querySelector(".hw-xbadge");
+  if(!x&&d){x=d.createElement("span");x.className="hw-xbadge";b.appendChild(x);}
+  if(x){x.textContent="\u00d7";x.setAttribute("data-act",isF?"folder-ungroup":"hide-app");}
+  if(!isF&&S.hiddenApps.indexOf(hwLabel(b))>=0)b.style.display="none";
+  else b.style.display="";
+ }
+}
+function hwSyncDots(){
+ var grid=q(".hw-appgrid");if(!grid)return;
+ var n=grid.querySelectorAll(".hw-page").length;
+ var dots=q(".hw-dots");if(!dots)return;
+ var h="";
+ for(var i=0;i<n;i++)h+='<span data-hwpage="'+i+'"'+(i===0?' class="on"':"")+"></span>";
+ dots.innerHTML=h;
 }
 function persistIconOrder(){
  var grid=q(".hw-appgrid");if(!grid)return;
- var order=[];
- var pages=grid.querySelectorAll(".hw-page");
+ var order=[],pages=grid.querySelectorAll(".hw-page");
  for(var p=0;p<pages.length;p++){
   var btns=pages[p].querySelectorAll(".android-app");
-  for(var i=0;i<btns.length;i++)order.push(hwLabel(btns[i]));
+  for(var i=0;i<btns.length;i++)order.push(hwSlotKey(btns[i]));
  }
  if(order.length){S.iconOrder=order;save();}
 }
-function applyIconOrder(){
+function hwTrimPages(){
  var grid=q(".hw-appgrid");if(!grid)return;
- var btns=Array.prototype.slice.call(grid.querySelectorAll(".android-app"));
- if(!btns.length)return;
- btns.forEach(function(b){
-  if(!b.querySelector(".hw-xbadge")){
-   var s=document.createElement("span");s.className="hw-xbadge";s.textContent="\u00d7";s.setAttribute("data-act","hide-app");b.appendChild(s);
-  }
- });
- var labels=btns.map(hwLabel);
- if(!_hwDefault)_hwDefault=labels.slice();
- var saved=S.iconOrder,valid=Array.isArray(saved)&&saved.length===labels.length;
- if(valid){for(var i=0;i<saved.length;i++){if(labels.indexOf(saved[i])<0){valid=false;break;}}}
- if(!valid){S.iconOrder=labels.slice();}
- else{
-  var byLabel={};
-  btns.forEach(function(b){byLabel[hwLabel(b)]=b;});
-  var pages=grid.querySelectorAll(".hw-page"),ordered=[];
-  for(var k=0;k<saved.length;k++){if(byLabel[saved[k]])ordered.push(byLabel[saved[k]]);}
-  for(var p=0;p<pages.length;p++){
-   var slice=ordered.slice(p*8,p*8+8);
-   for(var j=0;j<slice.length;j++)pages[p].appendChild(slice[j]);
-  }
+ var pages=grid.querySelectorAll(".hw-page"),removed=0;
+ for(var p=pages.length-1;p>=0;p--){
+  if(pages.length-removed<=1)break;
+  if(!pages[p].querySelector(".android-app")){pages[p].parentNode.removeChild(pages[p]);removed++;}
  }
- var all=grid.querySelectorAll(".android-app");
- for(var h=0;h<all.length;h++){all[h].style.display=(S.hiddenApps.indexOf(hwLabel(all[h]))>=0)?"none":"";}
+ hwSyncDots();
+}
+/* ---------- drag engine (fixed-position lift, FLIP reorder, edge paging, folder hover) ---------- */
+function hwDragStart(el,x,y,pid,fromFid){
+ var d0=hwDoc();if(!d0)return;
+ var grid=q(".hw-appgrid");if(!grid)return;
+ var r=(el.getBoundingClientRect)?el.getBoundingClientRect():null;
+ closeFolder();
+ var rw=r?(r.width||72):72,rh=r?(r.height||96):96,rl=r?r.left:x-36,rt=r?r.top:y-48;
+ var ph=d0.createElement("div");
+ ph.className="hw-ph";
+ ph.style.width=Math.max(40,rw)+"px";
+ ph.style.height=Math.max(40,rh)+"px";
+ if(fromFid){
+  var w=grid.clientWidth||1,pages=grid.querySelectorAll(".hw-page");
+  var cur=pages.length?Math.max(0,Math.min(pages.length-1,Math.round(grid.scrollLeft/w))):0;
+  if(pages.length)pages[cur].appendChild(ph);
+ }else{
+  if(el.parentNode)el.parentNode.insertBefore(ph,el);
+ }
+ var bd=hwBody();
+ if(bd)bd.appendChild(el);
+ el.classList.add("hw-dragging");
+ el.style.position="fixed";
+ el.style.left=rl+"px";
+ el.style.top=rt+"px";
+ el.style.width=Math.max(40,rw)+"px";
+ el.style.margin="0";
+ el.style.pointerEvents="none";
+ _drag={el:el,ph:ph,pid:pid,dx:x-rl,dy:y-rt,lastX:x,lastY:y,
+        hoverKey:null,hoverT:0,edgeDir:0,edgeT:null,fromFid:fromFid||null,isClone:!!fromFid};
+}
+function hwReorderPH(d,over,x){
+ var ph=d.ph,page=over.parentNode;
+ if(!page)return;
+ var r=over.getBoundingClientRect();
+ var after=x>r.left+r.width/2;
+ if(!after&&ph.nextSibling===over)return;
+ if(after&&over.nextSibling===ph)return;
+ var nodes=page.querySelectorAll(".android-app"),items=[],i;
+ for(i=0;i<nodes.length;i++){if(nodes[i].style.display!=="none")items.push(nodes[i]);}
+ var rects=items.map(function(c){return c.getBoundingClientRect();});
+ if(after)page.insertBefore(ph,over.nextSibling);
+ else page.insertBefore(ph,over);
+ for(i=0;i<items.length;i++){
+  (function(c,a){
+   var b2=c.getBoundingClientRect(),dx=a.left-b2.left,dy=a.top-b2.top;
+   if(dx||dy){
+    c.style.animation="none";c.style.transform="translate("+dx+"px,"+dy+"px)";c.style.transition="none";
+    void c.offsetWidth;
+    c.style.transition="transform .24s cubic-bezier(.25,.8,.3,1)";c.style.transform="";
+    setTimeout(function(){c.style.transition="";c.style.transform="";c.style.animation="";},260);
+   }
+  })(items[i],rects[i]);
+ }
+}
+function hwEdgeCheck(dir){
+ var d=_drag;if(!d)return;
+ if(dir!==d.edgeDir){
+  d.edgeDir=dir;
+  if(d.edgeT){try{clearTimeout(d.edgeT);}catch(_){}d.edgeT=null;}
+  if(dir)d.edgeT=setTimeout(function(){if(_drag===d){d.edgeT=null;hwEdgePage(dir);}},800);
+ }
+}
+function hwEdgePage(dir){
+ var d=_drag;if(!d)return;
+ var grid=q(".hw-appgrid");if(!grid)return;
+ var pages=grid.querySelectorAll(".hw-page");
+ if(pages.length<2)return;
+ var w=grid.clientWidth||1;
+ var cur=Math.round(grid.scrollLeft/w);
+ var next=Math.max(0,Math.min(pages.length-1,cur+dir));
+ if(next!==cur){
+  pages[next].appendChild(d.ph);
+  if(typeof grid.scrollTo==="function")grid.scrollTo({left:next*w,behavior:"smooth"});
+  else grid.scrollLeft=next*w;
+ }
+ if(_drag===d&&d.edgeDir===dir){
+  d.edgeT=setTimeout(function(){if(_drag===d){d.edgeT=null;hwEdgePage(dir);}},800);
+ }
+}
+function hwDragMove(x,y){
+ var d=_drag;if(!d)return;
+ d.lastX=x;d.lastY=y;
+ d.el.style.left=(x-d.dx)+"px";
+ d.el.style.top=(y-d.dy)+"px";
+ var vw=hwWinW(),EDGE=56;
+ hwEdgeCheck(x<EDGE?-1:(x>vw-EDGE?1:0));
+ var doc=hwDoc();
+ var t=(doc&&doc.elementFromPoint)?doc.elementFromPoint(x,y):null;
+ var app=t&&t.closest?t.closest(".hw-appgrid .android-app"):null;
+ var selfFolder=d.el.classList.contains("hw-folderbtn");
+ var hkey=null,hel=null,kind=null;
+ if(app){
+  if(app.classList.contains("hw-folderbtn")){
+   if(!selfFolder){hkey="f:"+app.dataset.fid;hel=app;kind="merge";}
+  }else{
+   hkey="a:"+hwLabel(app);hel=app;
+   if(!selfFolder)kind="make";
+   var pg=app.parentNode;
+   if(pg&&d.ph.parentNode!==pg)pg.appendChild(d.ph);
+   hwReorderPH(d,app,x);
+  }
+ }else{
+  var page=t&&t.closest?t.closest(".hw-appgrid .hw-page"):null;
+  if(page&&d.ph.parentNode!==page)page.appendChild(d.ph);
+ }
+ var now=Date.now();
+ if(hkey&&kind){
+  if(d.hoverKey!==hkey){d.hoverKey=hkey;d.hoverT=now;hwDropHint(hel);}
+  else if(now-d.hoverT>600){hwDropHint(null);d.hoverKey="@@";if(kind==="merge")hwMergeIntoFolder(d,hel);else hwMakeFolder(d,hel);}
+ }else if(d.hoverKey){d.hoverKey=null;hwDropHint(null);}
+}
+function hwEndDragVisual(d){
+ hwDropHint(null);
+ if(d.edgeT){try{clearTimeout(d.edgeT);}catch(_){}}
+ var el=d.el,ph=d.ph;
+ if(el){
+  el.classList.remove("hw-dragging");
+  el.style.position="";el.style.left="";el.style.top="";el.style.width="";el.style.margin="";el.style.pointerEvents="";
+  if(el.parentNode)el.parentNode.removeChild(el);
+ }
+ if(ph&&ph.parentNode)ph.parentNode.removeChild(ph);
+}
+function hwMakeFolder(d,target){
+ var lt=hwLabel(target),ld=hwLabel(d.el);
+ if(!lt||!ld||lt===ld)return;
+ var fid="f"+Date.now().toString(36)+Math.floor(Math.random()*46656).toString(36);
+ S.folders[fid]={name:"Folder",apps:[lt,ld]};
+ if(d.fromFid)hwFolderPull(d.fromFid,ld);
+ var io=hwValidOrder(),ni=[],done=false,i;
+ for(i=0;i<io.length;i++){
+  if(!done&&io[i]==="a:"+lt){ni.push("f:"+fid);done=true;}
+  else ni.push(io[i]);
+ }
+ if(!done)ni.push("f:"+fid);
+ S.iconOrder=ni;
+ hwEndDragVisual(d);
+ _drag=null;
+ save();layoutHome();
+}
+function hwMergeIntoFolder(d,folderBtn){
+ var tfid=folderBtn?folderBtn.dataset.fid:null;
+ var lab=hwLabel(d.el);
+ if(tfid&&S.folders[tfid]&&lab){
+  var arr=S.folders[tfid].apps;
+  if(arr.indexOf(lab)<0)arr.push(lab);
+  if(d.fromFid&&d.fromFid!==tfid)hwFolderPull(d.fromFid,lab);
+ }
+ hwEndDragVisual(d);
+ _drag=null;
+ save();layoutHome();
+ if(_openFid===tfid)renderFolderView();
+}
+function hwCancelDrag(){
+ hwCancelLP();
+ var d=_drag;if(!d)return;
+ _drag=null;
+ hwDropHint(null);
+ if(d.edgeT){try{clearTimeout(d.edgeT);}catch(_){}}
+ var el=d.el,ph=d.ph;
+ el.classList.remove("hw-dragging");
+ el.style.position="";el.style.left="";el.style.top="";el.style.width="";el.style.margin="";el.style.pointerEvents="";
+ if(d.isClone){
+  if(el.parentNode)el.parentNode.removeChild(el);
+ }else if(ph&&ph.parentNode){
+  ph.parentNode.insertBefore(el,ph);
+ }
+ if(ph&&ph.parentNode)ph.parentNode.removeChild(ph);
+ if(_openFid)renderFolderView();
+}
+function hwDragFinish(e,cancelled){
+ hwCancelLP();
+ var d=_drag;if(!d)return;
+ _drag=null;
+ if(d.edgeT){try{clearTimeout(d.edgeT);}catch(_){}}
+ hwDropHint(null);
+ var x=e&&e.clientX!==undefined?e.clientX:d.lastX;
+ var y=e&&e.clientY!==undefined?e.clientY:d.lastY;
+ var el=d.el,ph=d.ph,doc=hwDoc();
+ var t=(!cancelled&&doc&&doc.elementFromPoint)?doc.elementFromPoint(x,y):null;
+ var fb=t&&t.closest?t.closest(".hw-appgrid .hw-folderbtn"):null;
+ if(fb&&!el.classList.contains("hw-folderbtn")){hwMergeIntoFolder(d,fb);return;}
+ var destEl=el;
+ if(d.isClone){
+  var lab=hwLabel(el),orig=_hwAppEls[lab];
+  if(!cancelled&&orig){
+   destEl=orig;
+   if(d.fromFid)hwFolderPull(d.fromFid,lab);
+  }
+  if(el.parentNode)el.parentNode.removeChild(el);
+ }
+ destEl.classList.remove("hw-dragging");
+ destEl.style.position="";destEl.style.left="";destEl.style.top="";destEl.style.width="";destEl.style.margin="";destEl.style.pointerEvents="";
+ if(ph.parentNode)ph.parentNode.insertBefore(destEl,ph);
+ if(ph.parentNode)ph.parentNode.removeChild(ph);
+ hwTrimPages();persistIconOrder();save();
+ if(_openFid)renderFolderView();
 }
 function bindEditMode(){
- var grid=q(".hw-appgrid");if(!grid||grid._hwBound)return;grid._hwBound=true;
- grid.addEventListener("contextmenu",function(e){if(e.target&&e.target.closest&&e.target.closest(".android-app"))e.preventDefault();});
- grid.addEventListener("pointerdown",function(e){
+ if(root._hwBound)return;root._hwBound=true;
+ root.addEventListener("contextmenu",function(e){
+  var a=e.target&&e.target.closest?e.target.closest(".android-app"):null;
+  if(a)e.preventDefault();
+ });
+ root.addEventListener("pointerdown",function(e){
   if(S.view!=="home"||!e.target||!e.target.closest)return;
-  var b=e.target.closest(".android-app");
+  var b=e.target.closest(".hw-appgrid .android-app")||e.target.closest(".hw-fv-grid .android-app");
   if(!b||b.style.display==="none")return;
-  _lpBtn=b;_lpX=e.clientX;_lpY=e.clientY;_dragPid=(e.pointerId===undefined?1:e.pointerId);
-  if(_lpTimer)clearTimeout(_lpTimer);
+  hwCancelLP();
+  _lpEl=b;_lpX=e.clientX;_lpY=e.clientY;_lpPid=(e.pointerId===undefined?1:e.pointerId);
+  _lpFromFid=e.target.closest(".hw-fv-grid")?_openFid:null;
   _lpTimer=setTimeout(function(){
    _lpTimer=null;
-   if(!_lpBtn||S.view!=="home"){_lpBtn=null;return;}
-   setEditMode(true);
-   _dragBtn=_lpBtn;_dragBtn.classList.add("hw-dragging");
-   /* NOTE: no explicit setPointerCapture here — touch applies implicit capture
+   var lb=_lpEl,lf=_lpFromFid,lx=_lpX,ly=_lpY,lp=_lpPid;
+   _lpEl=null;_lpFromFid=null;
+   if(!lb||S.view!=="home")return;
+   /* NOTE: no explicit setPointerCapture — touch applies implicit capture
       to the button, so the follow-up click still targets the button and gets
       swallowed by the edit-mode guard. Explicit capture would retarget the
-      click to the grid and wrongly exit edit mode. */
+      click and wrongly exit edit mode. */
+   setEditMode(true);
+   hwDragStart(lb,lx,ly,lp,lf);
   },1500);
  });
- grid.addEventListener("pointermove",function(e){
+ root.addEventListener("pointermove",function(e){
   if(_lpTimer){
-   if(Math.abs(e.clientX-_lpX)>10||Math.abs(e.clientY-_lpY)>10){clearTimeout(_lpTimer);_lpTimer=null;_lpBtn=null;}
+   if(Math.abs(e.clientX-_lpX)>10||Math.abs(e.clientY-_lpY)>10)hwCancelLP();
    return;
   }
-  if(_dragBtn&&(e.pointerId===undefined||e.pointerId===_dragPid)){
+  if(_drag&&(e.pointerId===undefined||e.pointerId===_drag.pid)){
    if(e.cancelable&&e.preventDefault)e.preventDefault();
-   var el=document.elementFromPoint?document.elementFromPoint(e.clientX,e.clientY):null;
-   var over=el&&el.closest?el.closest(".hw-appgrid .android-app"):null;
-   if(over&&over!==_dragBtn&&over.style.display!=="none"){
-    var r=over.getBoundingClientRect();
-    if(e.clientX>r.left+r.width/2){if(over.nextSibling!==_dragBtn)over.parentNode.insertBefore(_dragBtn,over.nextSibling);}
-    else over.parentNode.insertBefore(_dragBtn,over);
-   }
+   hwDragMove(e.clientX,e.clientY);
   }
  },{passive:false});
- function _endDrag(){
-  if(_lpTimer){clearTimeout(_lpTimer);_lpTimer=null;}
-  if(_dragBtn){_dragBtn.classList.remove("hw-dragging");_dragBtn=null;_dragPid=null;persistIconOrder();}
-  _lpBtn=null;
- }
- grid.addEventListener("pointerup",_endDrag);
- grid.addEventListener("pointercancel",_endDrag);
+ root.addEventListener("pointerup",function(e){hwDragFinish(e,false);});
+ root.addEventListener("pointercancel",function(e){hwDragFinish(e,true);});
 }
-applyIconOrder();
+hwInitRegistry();
+layoutHome();
 bindEditMode();
 render();
 tick();
@@ -3207,7 +3611,7 @@ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
   if(document.visibilityState==="hidden")saveOnHide();});
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode};
 })();
 </script>
 
