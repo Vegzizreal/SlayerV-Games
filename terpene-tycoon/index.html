@@ -1211,7 +1211,9 @@ window.hatchWidget={
 .gps-pinbtn.locked .gps-pinlabel{opacity:.85}
 .gps-pinlabel{position:absolute;left:50%;top:54px;transform:translateX(-50%);background:rgba(6,10,6,.85);border:1px solid rgba(255,255,255,.2);border-radius:8px;padding:2px 8px;font-size:10px;font-weight:600;color:#e8e8e8;white-space:nowrap;pointer-events:none}
 .gps-pinbtn.sel .gps-pinlabel{border-color:#fff}
-.gps-you{position:absolute;left:50%;top:76px;transform:translateX(-50%);width:14px;height:14px;pointer-events:none;display:block}
+.gps-pinheat{position:absolute;left:50%;top:74px;transform:translateX(-50%);width:44px;height:4px;background:rgba(0,0,0,.6);border-radius:2px;overflow:hidden;pointer-events:none;border:1px solid rgba(255,255,255,.15)}
+.gps-pinheat i{display:block;height:100%;border-radius:2px;transition:width .3s}
+.gps-you{position:absolute;left:50%;top:82px;transform:translateX(-50%);width:14px;height:14px;pointer-events:none;display:block}
 .gps-you .you-dot{position:absolute;inset:0;border-radius:50%;background:#3b82f6;border:2.5px solid #fff}
 .gps-you .you-pulse{position:absolute;inset:0;border-radius:50%;background:#3b82f6;animation:gps-pulse 2s ease-out infinite}
 @keyframes gps-pulse{0%{transform:scale(.4);opacity:.9}70%{transform:scale(2.2);opacity:0}100%{transform:scale(2.2);opacity:0}}
@@ -2139,6 +2141,8 @@ function terrZone(id){
  return z;
 }
 function terrTotal(id){var z=terrZone(id);return Math.max(z.heat.cops,z.heat.gangs,z.heat.fam);}
+function activeTerrId(){return (S.terr&&S.terr.active)||"home";}
+function activeHeat(){return terrTotal(activeTerrId());}
 function syncGlobalHeat(){var m=0,i;for(i=0;i<TERRITORIES.length;i++)m=Math.max(m,terrTotal(TERRITORIES[i].id));S.heat=m;}
 function heatColor(h){return h<30?"#4ade80":h<60?"#fbbf24":h<85?"#fb923c":"#ef4444";}
 function addTerrHeat(src,rawAmt,terrId,skipGain){
@@ -2309,7 +2313,7 @@ var HINTS={
  stash:"Every bag you own, one screen. Roll joints, smoke, or sell — quick.",
  cook:"Turn bud into product — every recipe is a hands-on job. One job at a time; cancelling refunds your inputs.",
  deal:"Buy low, sell high — prices drift every few minutes. At 70+ heat the cops may ambush you — win the fight or lose your stash. Bribe to cool off.",
- store:"Hit the strip — seed bank, gun store, lab supply, depot, property upgrades.",
+ store:"Hit the strip — seed bank, gun store, lab supply, depot, home improvement.",
  chill:"Roll bud into joints, smoke for heat relief, XP, and better sell prices.",
  settings:"Cook speeds for every drug, plus one grow speed for all weed. Everything saves instantly.",
  clinic:"Patch up after fights — $2 per HP. High heat brings cop ambushes; go in armed and healthy.",
@@ -2329,8 +2333,9 @@ var TAB_ICONS={
  street:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l4-3v14"/><path d="M9 21V7l5-3.5V21"/><path d="M14 21v-9l5 3v6"/><path d="M7.5 12.5h1M7.5 15.5h1M11.5 9.5h1M11.5 12.5h1M11.5 15.5h1M16.5 15h1"/></svg>'
 };
 function statusHTML(){
- var hb='<div class="heat-bar"><i style="width:'+Math.min(100,S.heat)+'%"></i></div>';
- var ht=heatStars(S.heat)+" "+HEAT_TIERS[heatTier(S.heat)];
+ var _ah=activeHeat();
+ var hb='<div class="heat-bar"><i style="width:'+Math.min(100,_ah)+'%"></i></div>';
+ var ht=heatStars(_ah)+" "+HEAT_TIERS[heatTier(_ah)];
  return '<div class="tab-status">'
   +'<div class="ts-pills"><div class="pill"><b>'+money(S.cash)+'</b></div>'
   +'<div class="pill"><b>'+stashTotal()+"/"+S.stashCap+'g</b></div>'
@@ -2548,7 +2553,7 @@ function renderShade(){
  var key=((S.notifs||[]).map(function(n){return n.m;})).join("");
  var c=q(".shade-qcash");if(c)c.textContent=money(S.cash);
  var st=q(".shade-qstash");if(st)st.textContent=stashTotal()+"/"+S.stashCap+"g";
- var h=q(".shade-qheat");if(h)h.textContent=Math.round(Math.min(100,S.heat))+"%";
+ var h=q(".shade-qheat");if(h)h.textContent=Math.round(Math.min(100,activeHeat()))+"%";
  var d=q(".shade-qday");if(d)d.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
  var hwc=q(".hw-qcash");if(hwc)hwc.textContent=money(S.cash);
  var hws=q(".hw-qstash");if(hws)hws.textContent=stashTotal()+"/"+S.stashCap+"g";
@@ -2557,8 +2562,8 @@ function renderShade(){
  var hwh=q(".hw-qhp");if(hwh){hwh.textContent="HP "+Math.max(0,Math.round(S.hp));
  hwh.style.color=S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444";}
  var hwd=q(".hw-qday");if(hwd)hwd.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
- var hwt=q(".hw-qheat");if(hwt)hwt.textContent=Math.round(Math.min(100,S.heat))+"%";
- var hwb=q(".hw-qheatbar");if(hwb)hwb.style.width=Math.min(100,S.heat)+"%";
+ var hwt=q(".hw-qheat");if(hwt)hwt.textContent=Math.round(Math.min(100,activeHeat()))+"%";
+ var hwb=q(".hw-qheatbar");if(hwb)hwb.style.width=Math.min(100,activeHeat())+"%";
  var list=q(".shade-list");if(!list)return;
  if(shadeListKey===key)return;shadeListKey=key;
  list.innerHTML=(S.notifs&&S.notifs.length)?S.notifs.map(function(n){
@@ -2603,11 +2608,12 @@ function render(){
   if(_at){_at.textContent=appName(S.tab);_at.style.color=TAB_COLORS[S.tab]||"#e5484d";}}
  var _hwc=q(".android-wcash");if(_hwc)_hwc.textContent=money(S.cash);
  var _hws=q(".android-wstash");if(_hws)_hws.textContent=stashTotal()+"/"+S.stashCap+"g";
- var _hp=Math.min(100,Math.round(S.heat)),_CIRC=213.63;
+ var _ah2=activeHeat();
+ var _hp=Math.min(100,Math.round(_ah2)),_CIRC=213.63;
  var _hwr=q(".android-wheatring");
  if(_hwr){_hwr.style.strokeDashoffset=(_CIRC*(1-_hp/100)).toFixed(1);_hwr.style.stroke=_hp<40?"#4ade80":_hp<70?"#f59e0b":"#ef4444";}
  var _hwn=q(".android-wheatnum");if(_hwn)_hwn.textContent=_hp;
- var _hwt=q(".android-wheattier");if(_hwt)_hwt.textContent=HEAT_TIERS[heatTier(S.heat)];
+ var _hwt=q(".android-wheattier");if(_hwt)_hwt.textContent=HEAT_TIERS[heatTier(_ah2)];
  var _hwd=q(".android-wday");if(_hwd)_hwd.textContent="Day "+(1+Math.floor((now-S.bornAt)/86400000));
  var _nm=q(".android-notif-msg");if(_nm)_nm.textContent=S.msg;
  var _isE=isErrMsg(S.msg);
@@ -2872,6 +2878,7 @@ function render(){
    if(!locked)h+='<span class="gps-halo" style="background:radial-gradient(circle,'+hc+'55 0%,transparent 70%)"></span>';
    h+='<span class="gps-pindrop" style="background:'+pinC+';border-color:'+(isS?'#fff':'rgba(0,0,0,.55)')+'"><span>'+(locked?'?':t.name.charAt(0))+'</span></span>';
    h+='<span class="gps-pinlabel"'+(isA?' style="color:#7CFC00;font-weight:800"':'')+'>'+t.name+(locked?'<br><small style="color:#888">Unlocks Lv '+t.unlock+'</small>':'')+'</span>';
+   if(!locked)h+='<span class="gps-pinheat"><i style="width:'+tot+'%;background:'+hc+'"></i></span>';
    // you-are-here blue dot under the active territory pin
    if(isA)h+='<span class="gps-you"><i class="you-pulse"></i><i class="you-dot"></i></span>';
    h+='</button>';
@@ -3051,7 +3058,7 @@ function mapsHTML(){
   guns:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9h15v4h-7l-1.2 7H5.6L6.8 13H2z"/></svg>',
   lab:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10 3v5.2L4.8 17a2.4 2.4 0 0 0 2.1 3.5h10.2a2.4 2.4 0 0 0 2.1-3.5L14 8.2V3"/><path d="M7.2 14.5h9.6"/></svg>',
   gear:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8.5" width="18" height="10.5" rx="2.5"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/><path d="M3 13.5h18"/></svg>',
-  upgrades:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>'
+  upgrades:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6"/><path d="M12.5 5.5l6 6L14 16l-6-6z"/><path d="M11 11L4 18"/><path d="M3.5 20.5l2-2"/></svg>'
  };
  var sh='<div class="store-screen-head"><span class="store-title" style="color:#f2efe8">'+STORE_ICON+'STORE</span></div>';
  var stores=[
@@ -3059,7 +3066,7 @@ function mapsHTML(){
   ["guns","GUNS","Gun Store","Iron & lead. Cash only.","#f87171"],
   ["lab","LAB","Lab Supply","Everything for the cook.","#fbbf24"],
   ["gear","GEAR","Supply Depot","Fertilizer & duffel upgrades.","#38bdf8"],
-  ["upgrades","UPGRADES","Property Upgrades","Expand your grow. More rows, more pots.","#7CFC00"]
+  ["upgrades","HOME IMPROVEMENT","Home Improvement","Expand your grow. More rows, more pots.","#7CFC00"]
  ];
  var st=S.storetab||"seeds";
  sh+='<div class="store-tabs">';
@@ -3111,7 +3118,7 @@ function mapsHTML(){
    });
    sh+='<div class="sdesc" style="margin:2px 2px 6px">Best owned weapon auto-used in fights.</div>';
   }else{
-   // Property Upgrades tab — Grow Tent row expansions (owned upgrades are hidden)
+   // Home Improvement tab — Grow Tent row expansions (owned upgrades are hidden)
    var _ul=(S.propUpgrades&&S.propUpgrades.tent)||1;
    var _upots={1:3,3:9,4:12}[_ul]||3;
    sh+='<div class="srow c"><div><b>Grow Tent &mdash; '+_ul+' Row'+(_ul>1?'s':'')+'</b><div class="sdesc">Current setup &middot; '+_upots+' pots</div></div><button type="button" disabled>OWNED</button></div>';
@@ -3707,8 +3714,8 @@ function tickerHints(){
  S.props.forEach(function(pr){pr.slots.forEach(function(p){if(p&&p.water<20)thirsty=true;});});
  if(thirsty)status.push("Plants are thirsty — hit Water All");
  if(stashTotal()>=S.stashCap*0.9)status.push("Duffel almost full — sell or upgrade before your next harvest");
- if(S.heat>=70)status.push("Heat critical — bribe the cops or smoke to cool down");
- else if(S.heat>=40)status.push("Heat rising — keep it cool");
+ if(activeHeat()>=70)status.push("Heat critical — bribe the cops or smoke to cool down");
+ else if(activeHeat()>=40)status.push("Heat rising — keep it cool");
  if(S.job)status.push("Lab job cooking — check the Cook tab");
  return econ.concat(info,status);
 }
@@ -3943,11 +3950,12 @@ function cancelCook(){
  save();render();
 }
 function battleRoll(){
- if(S.battle||S.heat<70)return;
- if(S.heat>=100||Math.random()<(S.heat-70)/30*0.25)startBattle();
+ var _bh=activeHeat();
+ if(S.battle||_bh<70)return;
+ if(_bh>=100||Math.random()<(_bh-70)/30*0.25)startBattle();
 }
 function startBattle(){
- var cm=50+Math.round(S.heat);
+ var cm=50+Math.round(activeHeat());
  S.battle={copHp:cm,copMax:cm,log:["Cops ambush you!"],back:S.tab};
  S.msg="COP AMBUSH! Fight or run!";
  save();render();
