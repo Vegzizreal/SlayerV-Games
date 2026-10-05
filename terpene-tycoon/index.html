@@ -416,6 +416,25 @@ window.hatchWidget={
 .bw-page{background:#f4f4f6;color:#1c1c22;min-height:60vh;border-radius:0 0 14px 14px;overflow:hidden}
 .bw-sitehead{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:12px 16px;border-bottom:1px solid #e2e2e8;position:sticky;top:0;z-index:2}
 .bw-logo{font-size:20px;font-weight:800;color:#006aff}
+/* browser home page */
+.bw-homegrid{display:grid;grid-template-columns:1fr 1fr;gap:12px;padding:16px}
+.bw-homeopt{background:#fff;border:1px solid #e2e2e8;border-radius:12px;padding:20px 12px;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer}
+.bw-homeopt b{font-size:16px;color:#1c1c22}
+.bw-homeopt span:last-child{font-size:12px;color:#666}
+.bw-hoemoji{font-size:36px}
+/* crypto exchange */
+.bw-crypto{padding:16px}
+.bw-crate{text-align:center;font-size:18px;font-weight:800;margin-bottom:12px;color:#1c1c22}
+.bw-cbals{display:flex;gap:12px;margin-bottom:16px}
+.bw-cbals div{flex:1;background:#fff;border:1px solid #e2e2e8;border-radius:10px;padding:12px;text-align:center}
+.bw-cbals span{display:block;font-size:12px;color:#666;margin-bottom:4px}
+.bw-cbals b{font-size:18px;color:#1c1c22}
+.bw-camt{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px}
+.bw-camtbtn{background:#fff;border:1px solid #e2e2e8;border-radius:8px;padding:8px 12px;font-size:14px;cursor:pointer}
+.bw-camtval{font-size:18px;font-weight:800;min-width:80px;text-align:center}
+.bw-cbtns{display:flex;gap:8px;margin-bottom:12px}
+.bw-cbtns .bw-btn{flex:1}
+.bw-cnote{font-size:12px;color:#666;text-align:center;margin-bottom:16px}
 .bw-logo span{color:#1c1c22}
 .bw-signin{font-size:13px;font-weight:700;color:#006aff}
 .bw-searchbar{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid #d5d5dc;border-radius:999px;margin:12px 16px;padding:10px 16px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
@@ -2098,7 +2117,7 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:4,
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]}};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
  var oldSave=(typeof s.xp!=="number");
@@ -2241,6 +2260,7 @@ function normalize(s){
  if(!s.propUpgrades||typeof s.propUpgrades!=="object")s.propUpgrades={tent:1};
  if([1,3,4].indexOf(s.propUpgrades.tent)<0)s.propUpgrades.tent=1;
  if(!s.bank||typeof s.bank!=="object")s.bank={bal:0,pendInt:0,tx:[]};
+ if(typeof s.crypto!=="number"||s.crypto<0)s.crypto=0;
  if(typeof s.bank.bal!=="number"||s.bank.bal<0)s.bank.bal=0;
  if(typeof s.bank.pendInt!=="number"||s.bank.pendInt<0)s.bank.pendInt=0;
  if(!Array.isArray(s.bank.tx))s.bank.tx=[];
@@ -2599,7 +2619,7 @@ function tabHeader(tab){
  return '<div class="store-screen-head"><span class="store-title" style="color:'+c+'">'+ic+tab.toUpperCase()+'</span></div>';
 }
 /* ===== In-game mobile browser: Terp Estates (realtor) ===== */
-var BWT={tabs:[{hist:["https://www.terpestates.com/homes"],hi:0}],cur:0,switcher:false,menu:false};
+var BWT={tabs:[{hist:["https://darkweb.home"],hi:0}],cur:0,switcher:false,menu:false};
 var PROP_META={
  tent:{addr:"14 Closet Ln, Shirley, NY",bd:1,ba:1,sqft:400,grad:"linear-gradient(135deg,#3b3b44,#222228)",tag:"Cozy starter spot"},
  trap:{addr:"88 Trap Ave, Shirley, NY",bd:2,ba:1,sqft:950,grad:"linear-gradient(135deg,#7c2d12,#431407)",tag:"High foot traffic"},
@@ -2681,8 +2701,31 @@ function bwSwitcherHTML(){
 }
 function bwMenuHTML(){
  return '<div class="bw-overlay"><div class="bw-sheet menu"><button type="button" class="bw-mitem" data-act="bw-refresh">&#10227; Refresh</button>'
-  +'<button type="button" class="bw-mitem" data-act="bw-home">&#127968; Terp Estates home</button>'
+  +'<button type="button" class="bw-mitem" data-act="bw-home">&#127760; Browser home</button>'
   +'<button type="button" class="bw-mitem" data-act="bw-close">&#10005; Close browser</button></div></div>';
+}
+function bwHomeHTML(){
+ return '<div class="bw-page"><div class="bw-sitehead"><span class="bw-logo">&#127760; DarkWeb</span></div>'
+  +'<div class="bw-homegrid">'
+  +'<button type="button" class="bw-homeopt" data-act="bw-goto" data-url="https://www.terpestates.com/homes"><span class="bw-hoemoji">&#127968;</span><b>Terp Estates</b><span>Buy grow properties</span></button>'
+  +'<button type="button" class="bw-homeopt" data-act="bw-goto" data-url="https://terpexchange.onion"><span class="bw-hoemoji">&#128176;</span><b>Terp Exchange</b><span>Convert cash to crypto</span></button>'
+  +'</div>'
+  +'<div class="bw-foot">More services coming soon...</div></div>';
+}
+function bwCryptoHTML(){
+ var rate=100; // $100 = 1 TerpCoin
+ var tc=S.crypto||0;
+ var h='<div class="bw-page"><div class="bw-sitehead"><span class="bw-logo">&#128176; Terp<span>Exchange</span></span><span class="bw-signin">'+tc.toFixed(2)+' TC</span></div>'
+  +'<div class="bw-crypto">'
+  +'<div class="bw-crate">1 TerpCoin = '+money(rate)+'</div>'
+  +'<div class="bw-cbals"><div><span>Cash</span><b>'+money(S.cash)+'</b></div><div><span>TerpCoin</span><b>'+tc.toFixed(2)+' TC</b></div></div>'
+  +'<div class="bw-camt"><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="-100">-100</button><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="-1000">-1K</button><span class="bw-camtval">'+money(S.cryptoAmt||100)+'</span><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="100">+100</button><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="1000">+1K</button></div>'
+  +'<div class="bw-cbtns"><button type="button" class="bw-btn" data-act="bw-buycrypto">Buy '+(tc>0?(S.cryptoAmt||100)/rate: (S.cryptoAmt||100)/rate).toFixed(2)+' TC</button>'
+  +'<button type="button" class="bw-btn ghost" data-act="bw-sellcrypto">Sell Crypto</button></div>'
+  +'<div class="bw-cnote">Convert cash to TerpCoin for discreet transactions.</div>'
+  +'<button type="button" class="bw-btn ghost" data-act="bw-goto" data-url="https://darkweb.home">Back to home</button>'
+  +'</div></div>';
+ return h;
 }
 function browserHTML(){
  var h=tabHeader("browser");
@@ -2692,7 +2735,9 @@ function browserHTML(){
  var m=/\/homes\/(\w+)/.exec(url||"");
  if(m)h+=bwDetailHTML(m[1]);
  else if((url||"").indexOf("growopdaily")>=0)h+=bwNewsHTML();
- else h+=bwListingsHTML();
+ else if((url||"").indexOf("terpexchange")>=0)h+=bwCryptoHTML();
+ else if((url||"").indexOf("/homes")>=0)h+=bwListingsHTML();
+ else h+=bwHomeHTML();
  return h;
 }
 // Error vs info classifier for S.msg: errors/warnings render as amber alerts,
@@ -3092,7 +3137,7 @@ function propsHTML(){
  var h=tabHeader("props");
  var pv=S.propView;
  if(!pv){
-  // List view: all 8 properties
+  // List view: all properties from PROPS array
   h+='<div class="props-list">';
   PROPS.forEach(function(pd){
    var owned=S.props.filter(function(x){return x.id===pd.id;})[0];
@@ -4767,12 +4812,15 @@ root.addEventListener("click",function(e){
  if(a==="bw-goto"){bwNav(b.dataset.url);render();return;}
  if(a==="bw-tabs"){BWT.switcher=!BWT.switcher;BWT.menu=false;render();return;}
  if(a==="bw-tab"){BWT.cur=Math.max(0,Math.min(BWT.tabs.length-1,+b.dataset.i||0));BWT.switcher=false;render();return;}
- if(a==="bw-newtab"){BWT.tabs.push({hist:["https://www.growopdaily.com"],hi:0});BWT.cur=BWT.tabs.length-1;BWT.switcher=false;render();return;}
+ if(a==="bw-newtab"){BWT.tabs.push({hist:["https://darkweb.home"],hi:0});BWT.cur=BWT.tabs.length-1;BWT.switcher=false;render();return;}
  if(a==="bw-closetab"){var _ci=+b.dataset.i||0;if(BWT.tabs.length>1){BWT.tabs.splice(_ci,1);if(BWT.cur>=BWT.tabs.length)BWT.cur=BWT.tabs.length-1;}BWT.switcher=false;render();return;}
  if(a==="bw-menu"){BWT.menu=!BWT.menu;BWT.switcher=false;render();return;}
  if(a==="bw-refresh"){BWT.menu=false;render();return;}
- if(a==="bw-home"){bwNav("https://www.terpestates.com/homes");render();return;}
+ if(a==="bw-home"){bwNav("https://darkweb.home");render();return;}
  if(a==="bw-close"){S.view="home";BWT.menu=false;BWT.switcher=false;save();render();return;}
+ if(a==="bw-camt"){S.cryptoAmt=Math.max(100,(S.cryptoAmt||100)+(+b.dataset.v||0));save();render();return;}
+ if(a==="bw-buycrypto"){var _ca=S.cryptoAmt||100;if(S.cash>=_ca){S.cash-=_ca;S.crypto=(S.crypto||0)+_ca/100;S.msg="Bought "+(_ca/100).toFixed(2)+" TerpCoin.";}else{S.msg="Not enough cash.";}save();render();return;}
+ if(a==="bw-sellcrypto"){var _tc=S.crypto||0;if(_tc>0){var _val=Math.floor(_tc*100);S.crypto=0;S.cash+=_val;S.msg="Sold crypto for "+money(_val)+".";}else{S.msg="No crypto to sell.";}save();render();return;}
  if(a==="amt"){S.amt=+b.dataset.amt;save();render();return;}
  if(a==="prop-view"){S.propView=b.dataset.pid;S.propSel=null;save();render();return;}
  if(a==="prop-back"){S.propView=null;S.propSel=null;save();render();return;}
