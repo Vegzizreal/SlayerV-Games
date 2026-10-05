@@ -1018,6 +1018,7 @@ window.hatchWidget={
 .msg-av-roach{background:linear-gradient(135deg,#2d5a27,#4a8f3c)!important}
 .msg-av-street{background:linear-gradient(135deg,#1a73e8,#4285f4)!important}
 .msg-unread{color:#25d366;font-size:14px;flex:none}
+.msg-unread-count{background:#25d366;color:#fff;font-size:12px;font-weight:700;min-width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;padding:0 6px;flex:none}
 .msg-time{font-size:11px;color:rgba(255,255,255,.4);flex:none}
 .msg-chev{font-size:22px;color:rgba(255,255,255,.3)}
 .msg-ordtag{font-size:11px;color:#25d366;font-weight:700}
@@ -2273,7 +2274,7 @@ function normalize(s){
   var _bun=PKEYS.filter(function(k){return PRODUCTS[k].tier<=_bl;});
   var pr=Array.isArray(c.prefs)?c.prefs.filter(function(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&_bun.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab");}).map(function(p){return {k:p.k,kind:p.kind};}).slice(0,3):[];
   if(!pr.length)pr=contactPrefsFor(tp,_bun);
-  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0};
+  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0};
  });
  if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
@@ -3076,7 +3077,7 @@ function render(){
    h+='<button type="button" class="msg-chat'+(c.unread?" unread":"")+'" data-act="msg-open" data-c="'+escHtml(c.name)+'">'
     +'<span class="msg-avatar">'+escHtml(c.name.charAt(0).toUpperCase())+'</span>'
     +'<div class="msg-chat-mid"><b>'+escHtml(c.name)+ord+'</b><span>'+escHtml(last)+'</span></div>'
-    +(c.unread?'<span class="msg-unread">●</span>':'')
+    +((c.unreadCount>0)?'<span class="msg-unread-count">'+c.unreadCount+'</span>':(c.unread?'<span class="msg-unread">●</span>':''))
     +'<span class="msg-time">'+tm+'</span></button>';
   });
   if(!(S.contacts||[]).length)h+='<div class="msg-empty">No customers yet.<br>Sell on the street — some buyers will hit you up.</div>';
@@ -3188,7 +3189,7 @@ function render(){
   if(_mv==="list"){q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
   else if(_mv==="phonebook"){q(".pane-deal").innerHTML=tabHeader("deal")+dealPhonebook();}
   else if(_mv==="__roach__"){q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
-  else if(getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
+  else if(getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;_cc.unreadCount=0;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
   else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
  }
  if(S.tab==="street"){q(".pane-street").innerHTML=streetHTML();}
@@ -3857,7 +3858,7 @@ function tickContacts(now){
   if(c.order&&now>c.order.expires){
    c.order=null;c.loyalty=Math.max(0,c.loyalty-10);
    c.msgs.push({from:"them",text:"nvm, found someone else.",t:now});
-   c.unread=true;changed=true;
+   c.unread=true;c.unreadCount=(c.unreadCount||0)+1;changed=true;
    notifyMsgArrived(c,"nvm, found someone else.");
   }
  });
@@ -3879,7 +3880,7 @@ function tickContacts(now){
   var texts=["yo u got any "+pn+"? need "+qty,"aye need "+qty+" asap 🙏","u holdin "+pn+"? tryna grab "+qty];
   var _txt=texts[(Math.random()*texts.length)|0];
   c.msgs.push({from:"them",text:_txt,t:now});
-  c.unread=true;
+  c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
   pushContactNotif("📱 "+c.name+" wants "+qty);
   notifyMsgArrived(c,_txt);
   changed=true;
@@ -3902,7 +3903,7 @@ function doFulfillOrder(nm){
  var now=Date.now();
  c.msgs.push({from:"me",text:"got u. "+o.g+"g comin thru.",t:now});
  c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
- c.order=null;c.unread=false;c.lastFulfilledAt=now;
+ c.order=null;c.unread=false;c.unreadCount=0;c.lastFulfilledAt=now;
  S.msg="Sold "+contactQtyText(o)+" to "+c.name+" for "+money(rev)+".";
  battleRoll();save();render();
 }
@@ -4042,7 +4043,7 @@ function doSendReply(nm,rid){
  var c=getContact(nm),r=rid&&MSG_REPLIES[rid];
  if(!c||!r)return;
  c.msgs.push({from:"me",text:r.text,t:Date.now()});
- c.unread=false;
+ c.unread=false;c.unreadCount=0;
  save();render();
  setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);
 }
