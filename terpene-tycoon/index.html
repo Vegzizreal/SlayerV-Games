@@ -4200,8 +4200,12 @@ function notesSeedCards(){
   var sc=S.seeds[k]||0;
   if(sc<=0)return;
   if(tierVis(PRODUCTS[k].tier)===0)return;
-  cards.push({k:k,nameLine:PRODUCTS[k].name+' seeds <b>'+sc+'</b>',subLine:'Plant in empty pots',search:PRODUCTS[k].name+" seeds",
-   action:'<button type="button" class="go" data-act="autoplant" data-strain="'+k+'">AUTO PLANT</button>'});
+  var _needByTask=(S.tasks||[]).some(function(t){return t&&t.k===k;});
+   var _act='';
+   if(sc>0){_act='<button type="button" class="go" data-act="autoplant" data-strain="'+k+'">AUTO PLANT</button>';}
+   else if(_needByTask){_act='<button type="button" class="go" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>BUY '+money(PRODUCTS[k].seed)+'</button>';}
+   cards.push({k:k,nameLine:PRODUCTS[k].name+' seeds <b>'+sc+'</b>',subLine:'Plant in empty pots'+(_needByTask&&sc===0?' · needed for task':''),search:PRODUCTS[k].name+" seeds",
+   action:_act});
  });
  return cards;
 }
@@ -4266,7 +4270,14 @@ function stashHTML(){
    h+=fc.length?fc.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing stashed yet — harvest some bud first.")+'</div>';
    h+='<div class="sdesc" style="margin:10px 18px 0">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
   }else{
-   h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="notes-plantall"'+(seeds.length?"":" disabled")+'>Auto Plant All</button></div>';
+   var _taskStrains={};
+   (S.tasks||[]).forEach(function(t){if(t&&t.k&&PRODUCTS[t.k])_taskStrains[t.k]=1;});
+   var _hasTaskSeeds=Object.keys(_taskStrains).some(function(k){return (S.seeds[k]||0)>0;});
+   h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="notes-plantall"'+(seeds.length?"":" disabled")+'>Auto Plant All</button>';
+   if(Object.keys(_taskStrains).length){
+    h+='<button type="button" class="notes-abtn" data-act="notes-planttasks"'+(_hasTaskSeeds?"":" disabled")+'>Plant Task Seeds</button>';
+   }
+   h+='</div>';
    var fs=seeds.filter(function(c){return match(c.search);});
    h+=fs.length?fs.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"No seed packets.")+'</div>';
   }
@@ -5049,6 +5060,14 @@ root.addEventListener("click",function(e){
   if(!addXP(5))S.msg="Sold the whole stash to "+_sld.name+" for "+money(_slr)+"."+(_slh>0?" Same spot too many times — heat +"+_slh+".":"");
   showSalePop("Entire stash",_sli+" items",_slr,_slp);
   flushTerrMsg();battleRoll();save();render();return;
+ }
+ if(a==="notes-planttasks"){
+  var _ts={};
+  (S.tasks||[]).forEach(function(t){if(t&&t.k&&PRODUCTS[t.k])_ts[t.k]=1;});
+  var _pla=false;
+  Object.keys(_ts).forEach(function(k){if((S.seeds[k]||0)>0){doAutoPlant(k);_pla=true;}});
+  if(!_pla){S.msg="No task seeds to plant.";save();render();}
+  return;
  }
  if(a==="notes-plantall"){
   var _pla=false;
