@@ -62,7 +62,7 @@ window.hatchWidget={
   </div>
   <div class="shade-heatpill">
    <span class="sh-heaticon">🔥</span>
-   <span class="sh-heatval shade-qheat">0%</span>
+   <span class="sh-heatval shade-qheat">Home 0%</span>
   </div>
   <div class="shade-title"><span>Notifications</span><button type="button" class="shade-clearbtn" data-act="shade-clear">Clear all</button></div>
   <div class="shade-list"></div>
@@ -75,7 +75,7 @@ window.hatchWidget={
    <button type="button" class="hw-sitem" data-act="shade-open" aria-label="Open status"><i class="hw-sdot" style="background:#a78bfa"></i><b class="hw-qstash">0/40g</b></button>
    <button type="button" class="hw-sitem" data-act="shade-open" aria-label="Open status"><i class="hw-sdot" style="background:#ef4444"></i><b class="hw-qhp">HP 100</b></button>
    <button type="button" class="hw-sitem" data-act="shade-open" aria-label="Open status"><i class="hw-sdot" style="background:#fbbf24"></i><b class="hw-qday">Day 1</b></button>
-   <button type="button" class="hw-sitem hw-sheat" data-act="shade-open" aria-label="Open status"><span class="hw-heatbar"><i class="hw-qheatbar"></i></span><b class="hw-qheat">0%</b></button>
+   <button type="button" class="hw-sitem hw-sheat" data-act="shade-open" aria-label="Open status"><span class="hw-heaticon">🔥</span><b class="hw-qheat">Home 0%</b></button>
    <button type="button" class="hw-sbtn" data-act="roach-view" aria-label="Changelog" title="Changelog"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><circle cx="4" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.4" fill="currentColor" stroke="none"/></svg></button>
    <button type="button" class="hw-sbtn" data-act="refresh" aria-label="RE-UP" title="RE-UP"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg></button>
   </div>
@@ -259,6 +259,8 @@ window.hatchWidget={
 .hw-sdot{width:6px;height:6px;border-radius:50%;flex:none}
 .hw-heatbar{width:36px;height:5px;background:rgba(255,255,255,.12);border-radius:3px;overflow:hidden;display:inline-block}
 .hw-qheatbar{display:block;height:100%;width:0;background:linear-gradient(90deg,#4ade80,#fbbf24,#ef4444);border-radius:3px;transition:width .3s}
+.hw-heaticon{font-size:12px;line-height:1}
+.hw-sheat .hw-qheat{font-size:11px;font-weight:800;color:#fb923c;white-space:nowrap}
 .pg[data-theme="light"] .hw-status{background:rgba(255,255,255,.75)}
 .pg[data-theme="light"] .hw-status .hw-sitem b{color:#111}
 .pg[data-theme="light"] .hw-status .hw-sitem{color:#111}
@@ -2821,7 +2823,7 @@ function renderShade(){
  var key=((S.notifs||[]).map(function(n){return n.m;})).join("");
  var c=q(".shade-qcash");if(c)c.textContent=money(S.cash);
  var st=q(".shade-qstash");if(st)st.textContent=stashTotal()+"/"+S.stashCap+"g";
- var h=q(".shade-qheat");if(h)h.textContent=Math.round(Math.min(100,activeHeat()))+"%";
+ var h=q(".shade-qheat");if(h){var _td=terrDef(S.terr&&S.terr.active);h.textContent=_td.name+" "+Math.round(Math.min(100,activeHeat()))+"%";}
  var d=q(".shade-qday");if(d)d.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
  var hwc=q(".hw-qcash");if(hwc)hwc.textContent=money(S.cash);
  var hws=q(".hw-qstash");if(hws)hws.textContent=stashTotal()+"/"+S.stashCap+"g";
@@ -2830,7 +2832,7 @@ function renderShade(){
  var hwh=q(".hw-qhp");if(hwh){hwh.textContent="HP "+Math.max(0,Math.round(S.hp));
  hwh.style.color=S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444";}
  var hwd=q(".hw-qday");if(hwd)hwd.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
- var hwt=q(".hw-qheat");if(hwt)hwt.textContent=Math.round(Math.min(100,activeHeat()))+"%";
+ var hwt=q(".hw-qheat");if(hwt){var _td2=terrDef(S.terr&&S.terr.active);hwt.textContent=_td2.name+" "+Math.round(Math.min(100,activeHeat()))+"%";}
  var hwb=q(".hw-qheatbar");if(hwb)hwb.style.width=Math.min(100,activeHeat())+"%";
  var list=q(".shade-list");if(!list)return;
  if(shadeListKey===key)return;shadeListKey=key;
