@@ -251,6 +251,7 @@ window.hatchWidget={
 .aa-icon::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,255,255,0) 42%);box-shadow:inset 0 -3px 7px rgba(0,0,0,.25)}
 .android-app:active .aa-icon{transform:scale(.88)}
 .aa-label{font-size:14px;color:#fff;font-weight:700;letter-spacing:.1px}
+
 .oneui-dock{position:sticky;bottom:0;margin:20px -18px 0;padding:12px 26px;background:rgba(24,24,32,.66);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;z-index:5}
 .oneui-dock .android-app{padding:0}
 .oneui-dock .aa-icon{width:54px;height:54px;font-size:26px}
@@ -2651,7 +2652,9 @@ function statusHTML(){
   +'<div class="ts-msg">'+S.msg+'</div>'
   +'</div>';
 }
-function tabHeader(tab){return "";/* all app headers removed 2026-10-04 - use android nav bar */
+function tabHeader(tab){
+ // Messages keeps its nav header (contact names) - other apps have no header
+ if(tab!=="deal")return "";
  var c=TAB_COLORS[tab]||"#e5484d";
  // Realistic per-app navigation bars
  if(tab==="deal"){
@@ -5037,6 +5040,7 @@ root.addEventListener("click",function(e){
  if(a==="settheme"){var _th=b.dataset.theme;S.theme=(_th==="light")?"light":"dark";save();render();return;}
  if(a==="setrows"){var _sr=+b.dataset.rows;if(_sr===2||_sr===3||_sr===4){S.homeRows=_sr;save();layoutHome();render();}return;}
  if(a==="seticonstyle"){var _ss=+b.dataset.s;if(_ss>=0&&_ss<=4){S.iconStyle=_ss;save();layoutHome();render();}return;}
+ if(a==="msg-back"){S.msgView="list";save();render();return;}
  if(a==="setlabelcolor"){var _lc2=b.dataset.c;if(_lc2==="white"||_lc2==="black"){S.labelColor=_lc2;save();render();}return;}
  if(a==="gofullscreen"){
   try{
