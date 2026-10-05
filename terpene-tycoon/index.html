@@ -3090,10 +3090,8 @@ function propsHTML(){
     h+='<button type="button" class="prop-card" data-act="prop-view" data-pid="'+pd.id+'" style="background-image:url(\''+bg+'\')">'
      +'<div class="prop-card-info"><b>'+pd.name+'</b><span>'+owned.slots.length+' slots &bull; '+growing+' growing'+(ready?' &bull; '+ready+' ready':'')+'</span></div></button>';
    }else{
-    var locked=pd.tier>pLevel();
-    h+='<div class="prop-card locked" style="background-image:url(\''+bg+'\')">'
-     +'<div class="prop-card-info"><b>'+pd.name+' 🔒</b><span>'+pd.slots+' slots &bull; '+money(pd.cost)+'</span>'
-     +'<button type="button" data-act="buyprop" data-prop="'+pd.id+'"'+(locked||S.cash<pd.cost?" disabled":"")+'>'+(locked?("Level "+pd.tier):("Buy "+money(pd.cost)))+'</button></div></div>';
+    // Unowned properties are not shown in My Properties (buying happens elsewhere)
+    return;
    }
   });
   h+='</div>';
