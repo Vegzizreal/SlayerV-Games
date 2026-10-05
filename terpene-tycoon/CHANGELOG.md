@@ -10,7 +10,7 @@
 ### Messages
 - Roach pinned as top contact
 - Unread conversations bubble above read ones, sorted by recency
-- Android-style heads-up notifications for new messages
+- Heads-up notifications for new messages
 - Notification chime (mutable in Settings)
 
 ### Street Dealing
