@@ -2341,6 +2341,7 @@ function normalize(s){
  if(typeof s._dialNum!=="string")s._dialNum="";
  if(!Array.isArray(s.pendingContacts))s.pendingContacts=[];
  if(typeof s.usedNumbers!=="object"||!s.usedNumbers)s.usedNumbers={};
+ if(typeof s.nameToNumber!=="object"||!s.nameToNumber)s.nameToNumber={};
  if(typeof s.prestigeStrain!=="string")s.prestigeStrain="";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(s.homeRows===3||s.homeRows==null)s.homeRows=4;
@@ -4080,12 +4081,17 @@ function unlockFixer(){
  pushContactNotif("📱 New contact: The Fixer — he can help with heat, for a price");
  S.msg="The Fixer hit you up. Check your messages — he deals in favors.";
 }
-function genPhoneNumber(){
- var _num;
+function genPhoneNumber(name){
+ /* permanent name-number pairing: same name always gets same number */
+ if(name&&S.nameToNumber[name])return S.nameToNumber[name];
+ var _num,_tries=0;
  do{
   _num="555"+String(1000000+((Math.random()*9000000)|0));
+  _tries++;
+  if(_tries>100)break;
  }while(S.usedNumbers[_num]);
  S.usedNumbers[_num]=1;
+ if(name)S.nameToNumber[name]=_num;
  return _num;
 }
 function fmtPhone(p){
@@ -4103,7 +4109,7 @@ function maybeAddContact(tier,qty){
  if(!pool.length)return;
  var nm=pool[(Math.random()*pool.length)|0];
  var tp=CONTACT_TYPES[(Math.random()*CONTACT_TYPES.length)|0];
- var _phone=genPhoneNumber();
+ var _phone=genPhoneNumber(nm);
  /* also check pending for name reuse */
  var _pendNames={};S.pendingContacts.forEach(function(p){_pendNames[p.name]=1;});
  if(_pendNames[nm])return;
