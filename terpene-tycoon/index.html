@@ -1260,30 +1260,30 @@ window.hatchWidget={
 .pane-grow .growbar{display:flex;gap:8px;padding:0 4px 10px}
 .pane-grow .growbar button{flex:1;background:#e8f5e9;color:#1b5e20;border:none;border-radius:12px;padding:10px;font-weight:700;font-size:14px}
 .potc{background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.12);overflow:hidden}
-.pg[data-theme="dark"] .potc{background:#1e2a1e}
+.pg:not([data-theme="light"]) .potc{background:#1e2a1e}
 .potc .pc-name{color:#2e7d32;font-weight:700;padding:8px 10px 0}
-.pg[data-theme="dark"] .potc .pc-name{color:#a5d6a7}
+.pg:not([data-theme="light"]) .potc .pc-name{color:#a5d6a7}
 /* Shopping app (Store) */
 .pane-store .store-tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px}
 .pane-store .store-tabs button{flex:none;background:#f1f3f4;border:none;border-radius:20px;padding:8px 16px;font-weight:600;color:#3c4043}
 .pane-store .store-tabs button.on{background:#1a73e8;color:#fff}
 .srow{background:#fff;border-radius:12px;margin:6px 2px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
-.pg[data-theme="dark"] .srow{background:#242424}
+.pg:not([data-theme="light"]) .srow{background:#242424}
 /* Inventory app (Stash) */
 .stashrow{background:#fff;border-radius:12px;margin:8px 2px;padding:12px;box-shadow:0 1px 3px rgba(0,0,0,.08);border-left:4px solid #4ade80}
-.pg[data-theme="dark"] .stashrow{background:#1e1e1e}
+.pg:not([data-theme="light"]) .stashrow{background:#1e1e1e}
 /* Notes-app reskin (Stash) */
 .note-sec{font-size:13px;font-weight:800;letter-spacing:2.5px;color:var(--hatch-widget-muted);margin:14px 2px 8px;display:flex;align-items:center;gap:8px}
 .note-sec .note-count{background:rgba(127,127,127,.18);border-radius:10px;padding:1px 8px;font-size:11px;letter-spacing:1px}
 .note-pin{background:#fffdf5;border:1px solid #f0e6c8;border-radius:12px;margin:8px 2px;padding:12px 14px;box-shadow:0 2px 6px rgba(0,0,0,.08);position:relative}
 .note-pin:before{content:"📌";position:absolute;top:-11px;right:12px;font-size:16px}
-.pg[data-theme="dark"] .note-pin{background:#26241c;border-color:#3a3625}
+.pg:not([data-theme="light"]) .note-pin{background:#26241c;border-color:#3a3625}
 .todo-note{display:block;width:100%;text-align:left;background:#fff;border:1px solid #e8e2d0;border-radius:12px;margin:8px 2px;padding:11px 12px;box-shadow:0 1px 4px rgba(0,0,0,.07);cursor:pointer;color:inherit;font:inherit}
-.pg[data-theme="dark"] .todo-note{background:#211f18;border-color:#38342a}
+.pg:not([data-theme="light"]) .todo-note{background:#211f18;border-color:#38342a}
 .todo-note:active{transform:scale(.99)}
 .todo-top{display:flex;align-items:center;gap:10px}
 .todo-check{font-size:19px;line-height:1;color:#b9a86a;flex:none}
-.pg[data-theme="dark"] .todo-check{color:#8a7d4f}
+.pg:not([data-theme="light"]) .todo-check{color:#8a7d4f}
 .todo-check.done{color:#4ade80}
 .todo-title{font-weight:700;font-size:14.5px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .todo-tag{font-size:10.5px;font-weight:800;letter-spacing:1px;color:#b9a86a;text-transform:uppercase;flex:none}
@@ -1292,19 +1292,19 @@ window.hatchWidget={
 .todo-bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#d4a017,#f5c518)}
 .todo-bar i.low{background:linear-gradient(90deg,#ef4444,#f59e0b)}
 .note-card{background:#fff;border-radius:12px;margin:8px 2px;padding:12px 14px 12px 12px;box-shadow:0 1px 3px rgba(0,0,0,.08);border-left:5px solid var(--nc,#4ade80);display:flex;align-items:center;gap:11px}
-.pg[data-theme="dark"] .note-card{background:#1e1e1e}
+.pg:not([data-theme="light"]) .note-card{background:#1e1e1e}
 .note-card .d2-mid{flex:1;min-width:0}
 .note-card .d2-name{font-size:14.5px}
 .note-card .d2-sub{font-size:12px;color:var(--hatch-widget-muted);margin-top:2px}
 /* Notes style (Notes/Stash tab) */
 .notes-ios{background:#f2f2f7;border-radius:12px;min-height:430px;padding:0 0 14px;color:#111}
-.pg[data-theme="dark"] .notes-ios{background:#000;color:#f2f2f7}
+.pg:not([data-theme="light"]) .notes-ios{background:#000;color:#f2f2f7}
 .notes-ios-head{display:flex;align-items:flex-end;justify-content:space-between;padding:16px 18px 8px}
 .notes-ios-title{font-size:30px;font-weight:800;letter-spacing:-.5px}
 .notes-ios-edit{background:none;border:none;color:#0a84ff;font-size:16px;cursor:pointer;padding:4px 2px;font-family:inherit}
 .notes-ios-sec{font-size:13px;color:#8e8e93;margin:16px 18px 6px;font-weight:600}
 .notes-folder{background:#fff;border-radius:14px;margin:0 12px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.06)}
-.pg[data-theme="dark"] .notes-folder{background:#1c1c1e}
+.pg:not([data-theme="light"]) .notes-folder{background:#1c1c1e}
 .notes-frow{display:flex;align-items:center;gap:12px;width:100%;background:none;border:none;border-bottom:1px solid rgba(120,120,128,.2);padding:11px 14px;cursor:pointer;font-family:inherit;color:inherit;text-align:left;font-size:16px}
 .notes-frow:last-child{border-bottom:none}
 .notes-frow:active{background:rgba(120,120,128,.12)}
@@ -1325,11 +1325,11 @@ window.hatchWidget={
 .notes-ios .note-sec{color:#8e8e93}
 .notes-ios .note-pin{background:#fff;border-color:rgba(120,120,128,.2);margin:8px 12px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
 .notes-ios .note-pin:before{content:none}
-.pg[data-theme="dark"] .notes-ios .note-pin{background:#1c1c1e;border-color:rgba(120,120,128,.25)}
+.pg:not([data-theme="light"]) .notes-ios .note-pin{background:#1c1c1e;border-color:rgba(120,120,128,.25)}
 .notes-ios .todo-note{background:#fff;border-color:rgba(120,120,128,.2);margin:8px 12px}
-.pg[data-theme="dark"] .notes-ios .todo-note{background:#1c1c1e;border-color:rgba(120,120,128,.25)}
+.pg:not([data-theme="light"]) .notes-ios .todo-note{background:#1c1c1e;border-color:rgba(120,120,128,.25)}
 .notes-ios .note-card{background:#fff;margin:8px 12px;box-shadow:0 1px 2px rgba(0,0,0,.06)}
-.pg[data-theme="dark"] .notes-ios .note-card{background:#1c1c1e}
+.pg:not([data-theme="light"]) .notes-ios .note-card{background:#1c1c1e}
 .notes-ios .todo-check{color:#c7c7cc}
 .notes-ios .todo-check.done{color:#34c759}
 .notes-ios .todo-tag{color:#8e8e93}
@@ -1347,7 +1347,7 @@ window.hatchWidget={
 .pane-settings .setrow:last-of-type{border-radius:0 0 12px 12px;border-bottom:none}
 /* Recipe app (Cook) */
 .pane-cook .cookcard{background:#fff8e1;border-radius:16px;padding:14px;margin:8px 2px;box-shadow:0 2px 6px rgba(0,0,0,.08)}
-.pg[data-theme="dark"] .pane-cook .cookcard{background:#2a2416}
+.pg:not([data-theme="light"]) .pane-cook .cookcard{background:#2a2416}
 /* Wellness app (Chill) */
 .pane-chill{background:linear-gradient(180deg,#1a1a2e,#16213e);border-radius:16px;padding:12px}
 .pot-img.fill{height:100%;min-height:120px;border-radius:10px}.potc.empty{padding:0;overflow:hidden}.potc{background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-radius:10px;padding:5px;position:relative;overflow:hidden;box-shadow:0 1px 4px var(--hatch-widget-shadow)}
