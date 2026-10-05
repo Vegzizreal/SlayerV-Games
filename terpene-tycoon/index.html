@@ -1772,7 +1772,7 @@ function q(s){return root.querySelector(s);}
 function qa(s){return Array.prototype.slice.call(root.querySelectorAll(s));}
 var bridge=window.hatchWidget||null;
 
-var BANKAMT=100;
+var BANKAMT=1000;
 var BANK_APY=0.10; // % per day — super small
 function bankAPYPerMin(){return (BANK_APY/100)/1440;}
 function pushBankTx(k,a){
@@ -1794,20 +1794,20 @@ function bankTxTime(t){
 function bankHTML(){
  var bk=(S.bank&&typeof S.bank==="object")?S.bank:{bal:0,tx:[]};
  var bal=Math.max(0,bk.bal||0);
- var chips=[100,500,1000,5000,10000,"max"];
+ var chips=[1000,5000,10000,50000,100000];
  var h='<div class="bk-head"><div class="bk-bankname">🏦 Terpene Bank</div><div class="bk-welcome">Good '+(new Date().getHours()<12?"morning":new Date().getHours()<17?"afternoon":"evening")+', your money is safe here.</div></div>';
  h+='<div class="bk-balcard"><div class="bk-label">Savings Balance</div><div class="bk-balance">'+money(bal)+'</div><div class="bk-apy">▲ '+BANK_APY.toFixed(2)+'% APY &middot; interest accrues daily</div></div>';
  h+='<div class="bk-walletrow"><div class="bk-wallet"><div class="bk-label">Cash on hand</div><div class="bk-amt">'+money(S.cash)+'</div></div>'
    +'<div class="bk-wallet"><div class="bk-label">Total assets</div><div class="bk-amt">'+money(S.cash+bal)+'</div></div></div>';
  h+='<div class="bk-sec"><h4>Move Money</h4><div class="bk-chips">';
  chips.forEach(function(c){
-  var lbl=c==="max"?"MAX":money(c);
+  var lbl="$"+(c/1000)+"K";
   h+='<button type="button" class="bk-chip'+(BANKAMT===c?' on':'')+'" data-act="bank-amt" data-amt="'+c+'">'+lbl+'</button>';
  });
- var depCan=BANKAMT==="max"?Math.floor(S.cash)>=1:S.cash>=BANKAMT;
- var wdCan=BANKAMT==="max"?Math.floor(bal)>=1:bal>=BANKAMT;
- var depLbl=BANKAMT==="max"?"Deposit MAX":"Deposit "+money(BANKAMT);
- var wdLbl=BANKAMT==="max"?"Withdraw MAX":"Withdraw "+money(BANKAMT);
+ var depCan=S.cash>=BANKAMT;
+ var wdCan=bal>=BANKAMT;
+ var depLbl="Deposit "+money(BANKAMT);
+ var wdLbl="Withdraw "+money(BANKAMT);
  h+='</div><div class="bk-actions">'
   +'<button type="button" class="bk-btn bk-dep" data-act="bank-dep"'+(depCan?'':' disabled')+'>'+depLbl+'</button>'
   +'<button type="button" class="bk-btn bk-wd" data-act="bank-wd"'+(wdCan?'':' disabled')+'>'+wdLbl+'</button>'
@@ -4562,9 +4562,9 @@ root.addEventListener("click",function(e){
  if(a==="buyduffel"){var ti=DUFFEL.indexOf(S.stashCap);if(ti<DUFFEL.length-1){var nc=DUFFEL[ti+1];if(S.cash>=DUFFEL_COST[nc]){S.cash-=DUFFEL_COST[nc];S.stashCap=nc;S.msg="Duffel upgraded — carry "+nc+"g now.";save();render();}}return;}
  if(a==="buyprop"){var pr2=PROPS.filter(function(x){return x.id===b.dataset.prop;})[0];var owned=S.props.some(function(x){return x.id===pr2.id;});if(pr2&&!owned&&pr2.tier<=pLevel()&&S.cash>=pr2.cost){S.cash-=pr2.cost;S.props.push(mkProp(pr2.id));S.msg="New property: "+pr2.name+"! "+pr2.desc;save();render();}return;}
  if(a==="buyupgrade"){var _ur=parseInt(b.dataset.rows,10)||0;var _uc=_ur===3?2500:(_ur===4?7500:0);var _uo=(S.propUpgrades&&S.propUpgrades.tent)||1;var _unx=_uo===1?3:(_uo===3?4:0);if(_ur===_unx&&_uc>0&&S.cash>=_uc){S.cash-=_uc;S.propUpgrades.tent=_ur;var _up=_ur===3?9:12;S.msg="Grow Tent upgraded to "+_ur+" rows ("+_up+" pots)!";save();render();}return;}
- if(a==="bank-amt"){var _ba=b.dataset.amt;BANKAMT=(_ba==="max")?"max":(parseInt(_ba,10)||100);render();return;}
- if(a==="bank-dep"){if(!S.bank)S.bank={bal:0,pendInt:0,tx:[]};var _da=BANKAMT==="max"?S.cash:Math.min(BANKAMT,S.cash);_da=Math.floor(_da);if(_da>=1&&S.cash>=_da){S.cash-=_da;S.bank.bal=Math.round((S.bank.bal+_da)*100)/100;pushBankTx("dep",_da);S.msg="Deposited "+money(_da)+" to your savings.";save();render();}else{S.msg="Nothing to deposit.";save();render();}return;}
- if(a==="bank-wd"){if(!S.bank)S.bank={bal:0,pendInt:0,tx:[]};var _bb=S.bank.bal||0;var _wa=BANKAMT==="max"?_bb:Math.min(BANKAMT,_bb);_wa=Math.floor(Math.min(_wa,_bb));if(_wa>=1&&_bb>=_wa){S.bank.bal=Math.round((_bb-_wa)*100)/100;S.cash+=_wa;pushBankTx("wd",_wa);S.msg="Withdrew "+money(_wa)+" from your savings.";save();render();}else{S.msg="Nothing to withdraw.";save();render();}return;}
+ if(a==="bank-amt"){BANKAMT=parseInt(b.dataset.amt,10)||1000;render();return;}
+ if(a==="bank-dep"){if(!S.bank)S.bank={bal:0,pendInt:0,tx:[]};var _da=Math.min(BANKAMT,S.cash);_da=Math.floor(_da);if(_da>=1&&S.cash>=_da){S.cash-=_da;S.bank.bal=Math.round((S.bank.bal+_da)*100)/100;pushBankTx("dep",_da);S.msg="Deposited "+money(_da)+" to your savings.";save();render();}else{S.msg="Nothing to deposit.";save();render();}return;}
+ if(a==="bank-wd"){if(!S.bank)S.bank={bal:0,pendInt:0,tx:[]};var _bb=S.bank.bal||0;var _wa=Math.min(BANKAMT,_bb);_wa=Math.floor(Math.min(_wa,_bb));if(_wa>=1&&_bb>=_wa){S.bank.bal=Math.round((_bb-_wa)*100)/100;S.cash+=_wa;pushBankTx("wd",_wa);S.msg="Withdrew "+money(_wa)+" from your savings.";save();render();}else{S.msg="Nothing to withdraw.";save();render();}return;}
  if(a==="bribe"){var _bc=bribeCost();var _at=(S.terr&&S.terr.active)||"home";if(S.cash>=_bc&&terrTotal(_at)>0&&Date.now()>=S.lockedUntil){S.cash-=_bc;var _zb=terrZone(_at);var _bi;for(_bi=0;_bi<3;_bi++)_zb.heat[HEAT_SOURCES[_bi]]=Math.max(0,_zb.heat[HEAT_SOURCES[_bi]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+terrDef(_at).name+". Heat dropped.";save();render();}return;}
  if(a==="terr-select"){var _ts=b.dataset.t;if(_ts&&terrDef(_ts)){if(!terrUnlocked(_ts)){S.msg="Locked \u2014 unlocks at level "+terrDef(_ts).unlock+".";save();render();return;}if(!S.terr)S.terr={active:"home",zones:{}};S.terr.active=_ts;S.msg="Operating in "+terrDef(_ts).name+" now — prices \u00D7"+terrDef(_ts).price+".";save();render();}return;}
  if(a==="terr-bribe"){var _tbb=b.dataset.t,_tbd=terrDef(_tbb),_bcb=bribeCost();if(S.cash>=_bcb&&terrTotal(_tbb)>0&&Date.now()>=S.lockedUntil){S.cash-=_bcb;var _zbb=terrZone(_tbb);var _bj;for(_bj=0;_bj<3;_bj++)_zbb.heat[HEAT_SOURCES[_bj]]=Math.max(0,_zbb.heat[HEAT_SOURCES[_bj]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+_tbd.name+". Heat dropped.";save();render();}else if(S.cash<_bcb){S.msg="Not enough cash for that.";save();render();}return;}
