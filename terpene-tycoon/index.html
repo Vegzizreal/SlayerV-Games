@@ -3080,7 +3080,7 @@ function render(){
    h+='<button type="button" class="msg-chat'+(c.unread?" unread":"")+'" data-act="msg-open" data-c="'+escHtml(c.name)+'">'
     +'<span class="msg-avatar">'+escHtml(c.name.charAt(0).toUpperCase())+'</span>'
     +'<div class="msg-chat-mid"><b>'+escHtml(c.name)+ord+'</b><span>'+escHtml(last)+'</span></div>'
-    +((c.unreadCount>0)?'<span class="msg-unread-count">'+c.unreadCount+'</span>':(c.unread?'<span class="msg-unread">\u25CF</span>':(!c.unread&&!(c.unreadCount>0)&&c.order?'<span class="msg-unanswered">( ... )</span>':'')))
+    +((c.unreadCount>0)?'<span class="msg-unread-count">'+c.unreadCount+'</span>':(c.unread?'<span class="msg-unread">\u25CF</span>':(!c.unread&&!(c.unreadCount>0)&&c.order?'<span class="msg-unanswered">(!)</span>':'')))
     +'<span class="msg-time">'+tm+'</span></button>';
   });
   if(!(S.contacts||[]).length)h+='<div class="msg-empty">No customers yet.<br>Sell on the street — some buyers will hit you up.</div>';
