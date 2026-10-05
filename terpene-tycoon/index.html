@@ -46,7 +46,7 @@ window.hatchWidget={
 })();
 </script>
 <div class="pg">
- <div class="android-statusbar"><span class="android-clock">--:--</span><span class="sb-stats"><span class="sb-qcash">$200</span><span class="sb-qstash">0/40g</span><span class="sb-qhp">HP 100</span><span class="sb-qday">Day 1</span><span class="sb-qheat">🔥 Home 0%</span></span><span class="android-sicons"><svg id="sb-cellbars" viewBox="0 0 24 24" width="14" height="14" fill="#fff" style="display:none"><path d="M3 17h3v4H3zM8.5 13h3v8h-3zM14 9h3v12h-3zM19.5 4h3v17h-3z"/></svg><svg id="sb-wifi" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 10a12 12 0 0 1 16 0"/><path d="M7.5 13.5a7 7 0 0 1 9 0"/><circle cx="12" cy="17.5" r="1.6" fill="#fff" stroke="none"/></svg><svg viewBox="0 0 28 24" width="18" height="14" fill="none" stroke="#fff" stroke-width="1.6"><rect x="2" y="7" width="21" height="10" rx="2.5"/><rect id="sb-battfill" x="4" y="9" width="14" height="6" rx="1" fill="#4ade80" stroke="none"/><path d="M25.5 10.5v3" stroke-linecap="round"/></svg></span></div>
+ <div class="android-statusbar"><span class="android-clock">--:--</span><span class="sb-stats"><span class="sb-qcash">$200</span><span class="sb-qstash">0/40g</span><span class="sb-qhp">HP 100</span><span class="sb-qday">Day 1</span><span class="sb-prestige" id="sb-prestige" hidden></span><span class="sb-qheat">🔥 Home 0%</span></span><span class="android-sicons"><svg id="sb-cellbars" viewBox="0 0 24 24" width="14" height="14" fill="#fff" style="display:none"><path d="M3 17h3v4H3zM8.5 13h3v8h-3zM14 9h3v12h-3zM19.5 4h3v17h-3z"/></svg><svg id="sb-wifi" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 10a12 12 0 0 1 16 0"/><path d="M7.5 13.5a7 7 0 0 1 9 0"/><circle cx="12" cy="17.5" r="1.6" fill="#fff" stroke="none"/></svg><svg viewBox="0 0 28 24" width="18" height="14" fill="none" stroke="#fff" stroke-width="1.6"><rect x="2" y="7" width="21" height="10" rx="2.5"/><rect id="sb-battfill" x="4" y="9" width="14" height="6" rx="1" fill="#4ade80" stroke="none"/><path d="M25.5 10.5v3" stroke-linecap="round"/></svg></span></div>
  <div class="shade-scrim" hidden data-act="shade-close"></div>
  <div class="heads-up" hidden data-act="heads-up-open" data-c=""><span class="hu-icon"><svg viewBox="0 0 48 48" width="22" height="22"><path d="M24 7c-9.4 0-17 6.4-17 14.3 0 4.4 2.4 8.4 6.2 11l-1.6 6.2 6.8-3.4c1.8.5 3.7.8 5.6.8 9.4 0 17-6.4 17-14.3S33.4 7 24 7z" fill="#fff"/><circle cx="17" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="24" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="31" cy="21.5" r="2.9" fill="#3b82f6"/></svg></span><span class="hu-body"><b class="hu-name"></b><span class="hu-text"></span></span></div>
  <div class="notif-shade" hidden>
@@ -182,6 +182,7 @@ window.hatchWidget={
 .sb-qday{flex:none;font-size:11px;font-weight:800;color:#fbbf24;white-space:nowrap}
 .sb-qheat{flex:none;font-size:11px;font-weight:800;color:#fb923c;white-space:nowrap}
 .sb-stats{display:flex;gap:8px;align-items:center;justify-content:center;flex:1}
+.sb-prestige{color:#fbbf24;font-size:12px;font-weight:700}
 .android-sicons{display:flex;gap:7px;align-items:center;margin-left:auto}
 .android-appbar{flex:none;order:-2;display:flex;align-items:center;gap:10px;padding:9px 10px;background:#141417;border-bottom:1px solid var(--hatch-widget-border)}
 .android-appbar[hidden]{display:none}
@@ -1079,6 +1080,8 @@ window.hatchWidget={
 .todo-tab.on{background:#8b5cf6;border-color:#8b5cf6}
 .drow2.bestprice{border:1px solid #4ade80;background:rgba(74,222,128,.06)}
 .besttag{background:#4ade80;color:#000;font-size:10px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+.mast-tag{background:#8b5cf6;color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+.presttag{background:#fbbf24;color:#000;font-size:10px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
 .tk-prod{margin:8px 0}
 .tk-make{background:#16a34a;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
@@ -1100,6 +1103,8 @@ window.hatchWidget={
 .todo-tab.on{background:#8b5cf6;border-color:#8b5cf6}
 .drow2.bestprice{border:1px solid #4ade80;background:rgba(74,222,128,.06)}
 .besttag{background:#4ade80;color:#000;font-size:10px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+.mast-tag{background:#8b5cf6;color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
+.presttag{background:#fbbf24;color:#000;font-size:10px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
 .tk-prod{margin:8px 0}
 .tk-make{background:#16a34a;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
@@ -3005,6 +3010,11 @@ function render(){
   if(_uc>0){_mb.textContent=_uc>99?"99+":_uc;_mb.hidden=false;}
   else{_mb.hidden=true;}
  }
+ var _sp=q("#sb-prestige");
+ if(_sp){
+  if(S.prestigeCount>0){_sp.textContent="⭐"+S.prestigeCount;_sp.hidden=false;}
+  else{_sp.hidden=true;}
+ }
  checkSenorV();
  var now=Date.now();
  renderTicker();
@@ -3445,12 +3455,14 @@ function propsHTML(){
    GROWKEYS.forEach(function(k){
     if(PRODUCTS[k].tier>pLevel())return;
     var sc=S.seeds[k]||0;
-    h+='<button type="button" data-act="plant" data-pi="'+pi+'" data-si="'+sel.si+'" data-strain="'+k+'"'+(sc>0?"":" disabled")+'>'+PRODUCTS[k].name+' ('+sc+')</button>';
+    var _m=S.strainMastery[k]||0,_mb=Math.min(50,_m*2);
+    h+='<button type="button" data-act="plant" data-pi="'+pi+'" data-si="'+sel.si+'" data-strain="'+k+'"'+(sc>0?"":" disabled")+'>'+PRODUCTS[k].name+' ('+sc+')'+(_m>0?'<span class="mast-tag">Lv'+Math.min(25,_m)+' +'+_mb+'%</span>':'')+'</button>';
    });
    h+='</div>';
   }else{
    var sname=PRODUCTS[sp.strain].name;
-   h+='<div class="pa-title">'+sname+' — '+Math.round(sp.growth)+'% grown, '+Math.round(sp.water)+'% water</div>';
+   var _pm=S.strainMastery[sp.strain]||0,_pmb=Math.min(50,_pm*2);
+   h+='<div class="pa-title">'+sname+' — '+Math.round(sp.growth)+'% grown, '+Math.round(sp.water)+'% water'+(_pm>0?'<br><span class="mast-tag">Mastery Lv'+Math.min(25,_pm)+' (+'+_pmb+'% yield)</span>':'')+'</div>';
    h+='<div class="pa-btns">';
    h+='<button type="button" data-act="water" data-pi="'+pi+'" data-si="'+sel.si+'">💧 Water</button>';
    if(S.fert>0&&sp.growth<100)h+='<button type="button" data-act="fert" data-pi="'+pi+'" data-si="'+sel.si+'">Fertilize ('+S.fert+')</button>';
