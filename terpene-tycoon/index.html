@@ -1996,6 +1996,7 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .set-row{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;background:transparent;border:0;border-bottom:1px solid var(--hatch-widget-border);color:var(--hatch-widget-text);font-size:16px;cursor:pointer;text-align:left}
 .set-row:last-child{border-bottom:0}
 .set-row:active{background:var(--hatch-widget-surface-muted)}
+.set-check{color:#4a8ff7;font-weight:700;font-size:16px}
 .set-chev{color:var(--hatch-widget-muted);font-size:20px;font-weight:300}
 .set-back{display:inline-block;padding:8px 2px;background:transparent;border:0;color:#0a84ff;font-size:16px;cursor:pointer;margin-bottom:4px}
 .set-toggle{width:51px;height:31px;border-radius:16px;background:#3a3a3c;border:0;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
@@ -2414,6 +2415,7 @@ function normalize(s){
  if(typeof s.roachUnread!=="number")s.roachUnread=0;
  if(typeof s.fullscreenDefault==="undefined")s.fullscreenDefault=true;
  if(typeof s.wifi==="undefined")s.wifi=true;
+ if(typeof s.autoLock!=="number")s.autoLock=60;
  if(!Array.isArray(s.callHistory))s.callHistory=[];
  if(!Array.isArray(s.voicemails))s.voicemails=[];
  if(typeof s.usedNumbers!=="object"||!s.usedNumbers)s.usedNumbers={};
@@ -2598,6 +2600,25 @@ function ttLockTick(){
   }).join("");
  }
 }
+/* Auto-lock timer */
+var _lockTimer=null;
+function ttResetLockTimer(){
+ try{if(_lockTimer)clearTimeout(_lockTimer);}catch(e){}
+ _lockTimer=null;
+ var _al=(typeof S!=="undefined"&&typeof S.autoLock==="number")?S.autoLock:60;
+ if(_al<0)return; /* never */
+ _lockTimer=setTimeout(function(){
+  var ls=document.getElementById("tt-lockscreen");
+  if(ls&&ls.hidden)ttLockShow();
+ },_al*1000);
+}
+/* reset on any interaction */
+["touchstart","touchend","click","keydown"].forEach(function(ev){
+ document.addEventListener(ev,function(){ttResetLockTimer();},{passive:true});
+});
+/* start timer on load */
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(ttResetLockTimer,1000);});
+else setTimeout(ttResetLockTimer,1000);
 function ttLockHide(){
  var ls=document.getElementById("tt-lockscreen");
  if(ls)ls.hidden=true;
@@ -5683,6 +5704,19 @@ function settingsHTML(){
   h+=_sr("👥 Customers", (S.contacts||[]).length);
   return h;
  }
+ if(sv==="display"){
+  h+='<div class="shopsec">DISPLAY & LOCK</div>';
+  var _al=S.autoLock;
+  if(typeof _al!=="number")_al=60;
+  var _opts=[[15,"15 seconds"],[30,"30 seconds"],[60,"1 minute"],[120,"2 minutes"],[300,"5 minutes"],[600,"10 minutes"],[-1,"Never"]];
+  h+='<div class="sdesc" style="margin:8px 2px 6px">Auto-lock after</div>';
+  h+='<div class="set-list">';
+  _opts.forEach(function(o){
+   h+='<button type="button" class="set-row" data-act="setautolock" data-v="'+o[0]+'"><span>'+o[1]+'</span>'+(_al===o[0]?'<span class="set-check">✓</span>':'<span class="set-chev">›</span>')+'</button>';
+  });
+  h+='</div>';
+  return h;
+ }
  if(sv==="network"){
   h+='<div class="shopsec">NETWORK & INTERNET</div>';
   var _wf=S.wifi!==false,_bt=S.bluetooth===true,_air=S.airplane===true;
@@ -5701,6 +5735,7 @@ function settingsHTML(){
  h+='<div class="shopsec">PHONE</div>';
  h+='<div class="set-list">';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="network"><span>📶 Network & Internet</span><span class="set-chev">›</span></button>';
+ h+='<button type="button" class="set-row" data-act="settingsview" data-v="display"><span>📱 Display & Lock</span><span class="set-chev">›</span></button>';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="appearance"><span>🎨 Appearance</span><span class="set-chev">›</span></button>';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="notifications"><span>🔔 Notifications</span><span class="set-chev">›</span></button>';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="about"><span>ℹ️ About Phone</span><span class="set-chev">›</span></button>';
@@ -5934,6 +5969,7 @@ root.addEventListener("click",function(e){
  if(a==="heads-up-open"){hideHeadsUp();var _hn=b.dataset.c;if(_hn){S.tab="deal";S.view="app";S.msgView=_hn;navPush("deal");save();render();setTimeout(function(){var _pp2=document.querySelector(".pane-deal");if(_pp2)_pp2.scrollTop=_pp2.scrollHeight;},100);}return;}
  if(a==="msgsound"){S.msgSound=(b.dataset.v==="1");save();render();return;}
  if(a==="phonetoggle"){var _k=b.dataset.k;S[_k]=(b.dataset.v==="1");save();render();return;}
+ if(a==="setautolock"){S.autoLock=parseInt(b.dataset.v,10);ttResetLockTimer();save();render();return;}
  if(a==="fsdefault"){S.fullscreenDefault=(b.dataset.v==="1");save();render();return;}
  if(a==="msg-back"){S.msgView="list";save();render();return;}
  if(a==="msg-reply"){doSendReply(b.dataset.contact,b.dataset.reply);return;}
