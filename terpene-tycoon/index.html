@@ -3334,7 +3334,7 @@ function render(){
  if(S.tab==="rep"){q(".pane-rep").innerHTML=repHTML();}
  if(S.tab==="props"){q(".pane-props").innerHTML=propsHTML();}
  if(S.tab==="bank"){q(".pane-bank").innerHTML=bankHTML();}
- if(S.tab==="tasks"){q(".pane-tasks").innerHTML=todoHTML();}
+ if(S.tab==="tasks"){q(".pane-tasks").innerHTML=todoHTML();todoSwipeInit();}
  function bestDealerFor(k,isJoint){
  var best=-1,bestDi=0;
  S.dealers.forEach(function(dd,ii){
@@ -4132,6 +4132,24 @@ function doDismissTask(i){
  S.tasks.splice(i,1);
  S.msg="Dismissed task for "+t.name+".";
  save();render();
+}
+var _todoTouchX=null;
+function todoSwipeInit(){
+ var _pane=q(".pane-tasks");
+ if(!_pane||_pane._swipeInit)return;
+ _pane._swipeInit=true;
+ _pane.addEventListener("touchstart",function(e){
+  if(e.touches.length===1)_todoTouchX=e.touches[0].clientX;
+ },{passive:true});
+ _pane.addEventListener("touchend",function(e){
+  if(_todoTouchX===null)return;
+  var _dx=e.changedTouches[0].clientX-_todoTouchX;
+  _todoTouchX=null;
+  if(Math.abs(_dx)<60)return;
+  var _tv=S.todoView||"tasks";
+  if(_dx<0&&_tv==="tasks"){S.todoView="stash";save();render();}
+  else if(_dx>0&&_tv==="stash"){S.todoView="tasks";save();render();}
+ },{passive:true});
 }
 function todoHTML(){
  var tv=S.todoView||"tasks";
