@@ -2272,6 +2272,13 @@ function addXP(n){
     S.roachTipIdx=_ti+1;
    }
   }
+  /* Roach prestige congrats at max level */
+  if(after>=8&&!S._prestigeCongrats){
+   S._prestigeCongrats=true;
+   pushRoachMsg("🎉 YO! LEVEL 8, BITCH! You made it to the top of the game! 🏆");
+   pushRoachMsg("Listen up — you can PRESTIGE now. Pick a strain, reset everything, and that strain sells for +25% FOREVER. Every prestige stacks it higher. You in?");
+   S._prestigeOffer=true;
+  }
   S.msg="LEVEL UP — Level "+after+"! Unlocked: "+items.join(", ")+(_tn.length?"; New territory: "+_tn.join(", "):"")+".";
   return true;
  }
@@ -2304,7 +2311,7 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:4,
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0,biggestDeal:0,thievesBeaten:0,thievesLost:0,robberiesSurvived:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
  var oldSave=(typeof s.xp!=="number");
@@ -3407,6 +3414,13 @@ function render(){
  }
  function dealRoachConvo(){
   var h='<div class="msg-convo">';
+  /* prestige yes/no prompt */
+  if(S._prestigeOffer&&pLevel()>=8){
+   h+='<div class="msg-inputbar"><div class="msg-replies">';
+   h+='<button type="button" class="msg-reply" data-act="prestige-yes">Hell yeah, prestige me</button>';
+   h+='<button type="button" class="msg-reply" data-act="prestige-no">Nah, not yet</button>';
+   h+='</div></div>';
+  }
   var ns=(S.roachMsgs||[]).slice(0,20).reverse();
   if(!ns.length)h+='<div class="msg-day">No messages yet</div>';
   else{
@@ -5007,6 +5021,7 @@ function winThiefBattle(){
  if(!S.blockedNames)S.blockedNames=[];
  if(S.blockedNames.indexOf(_bn)<0)S.blockedNames.push(_bn);
  removeContact(_bn);
+ S.stats.thievesBeaten=(S.stats.thievesBeaten||0)+1;
  if(!addXP(25))S.msg="You beat down "+_bn+"!"+(_got?" Took their "+WEAPONS[_tw].name+"!":"")+" 🚫 Blocked.";
  save();render();
 }
@@ -5021,6 +5036,7 @@ function loseThiefBattle(){
  if(_c){_c.isThief=false;_c.ordersBeforeTurn=0;_c.loyalty=0;}
  S.thiefBattle=null;
  S.hp=25;
+ S.stats.thievesLost=(S.stats.thievesLost||0)+1;
  S.msg=b.name+" took your "+_o.g+"g and paid nothing. You're at 25 HP.";
  save();render();
 }
@@ -5456,6 +5472,23 @@ function settingsHTML(){
   h+=growSliderRow();
   return h;
  }
+ if(sv==="stats"){
+  var _st=S.stats||{};
+  function _sr(label,val){return '<div class="set-row"><span>'+label+'</span><b>'+val+'</b></div>';}
+  h+='<div class="shopsec">YOUR STATS</div>';
+  h+=_sr("💰 Total earned",money(_st.earned||0));
+  h+=_sr("🤝 Deals completed",_st.deals||0);
+  h+=_sr("💵 Biggest deal",money(_st.biggestDeal||0));
+  h+=_sr("🌱 Plants harvested",_st.harvested||0);
+  h+=_sr("🧪 Batches cooked",_st.cooked||0);
+  h+=_sr("🚔 Times busted",_st.busted||0);
+  h+=_sr("😡 Thieves beaten",_st.thievesBeaten||0);
+  h+=_sr("💸 Robbed by thieves",_st.thievesLost||0);
+  h+=_sr("⭐ Prestiges",S.prestigeCount||0);
+  h+=_sr("📶 Level",pLevel());
+  h+=_sr("👥 Customers", (S.contacts||[]).length);
+  return h;
+ }
  if(sv==="general"){
   h+='<div class="shopsec">HOME SCREEN</div>';
   h+='<div class="wp-wrap"><div class="sdesc" style="margin-bottom:8px">Long-press any home screen icon to rearrange.</div><div class="wp-btns"><button type="button" class="wp-reset" data-act="layout-reset" style="flex:1">Reset home layout</button></div></div>';
@@ -5472,6 +5505,7 @@ function settingsHTML(){
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="about"><span>ℹ️ About Phone</span><span class="set-chev">›</span></button>';
  if(pLevel()>=8){
   h+='<button type="button" class="set-row" data-act="settingsview" data-v="prestige"><span>⭐ Prestige'+(S.prestigeCount?' ('+S.prestigeCount+')':'')+'</span><span class="set-chev">›</span></button>';
+ h+='<button type="button" class="set-row" data-act="settingsview" data-v="stats"><span>📊 Stats</span><span class="set-chev">›</span></button>';
  }
  h+='</div>';
  return h;
@@ -5744,6 +5778,17 @@ root.addEventListener("click",function(e){
  if(a==="roach-view"){S.lastVer=GAME_VER;S.tab="settings";S.settingsView="about";delete S.settingstab;S.view="app";navPush("settings");save();render();return;}
  if(a==="settingstab"){S.settingstab=b.dataset.t;save();render();return;}
  if(a==="prestigepick"){S._prestigePick=b.dataset.k;save();render();return;}
+ if(a==="prestige-yes"){
+  S._prestigeOffer=false;
+  pushRoachMsg("That's what I'm talkin about! Pick your strain in Settings → Prestige. Choose wisely, bitch.");
+  S.tab="settings";S.settingsView="prestige";S.view="app";
+  save();render();return;
+ }
+ if(a==="prestige-no"){
+  S._prestigeOffer=false;
+  pushRoachMsg("Aight, no rush. When you're ready, hit up Settings → Prestige. I'll be here.");
+  save();render();return;
+ }
  if(a==="doprestige"){
   var _pk=S._prestigePick;
   if(!_pk||!PRODUCTS[_pk])return;
