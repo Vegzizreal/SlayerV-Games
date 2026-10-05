@@ -44,6 +44,7 @@ window.hatchWidget={
 <div class="pg">
  <div class="android-statusbar"><span class="android-clock">--:--</span><span class="sb-qcash">$200</span><span class="sb-qstash">0/40g</span><span class="android-sicons"><svg viewBox="0 0 24 24" width="14" height="14" fill="#fff"><path d="M3 17h3v4H3zM8.5 13h3v8h-3zM14 9h3v12h-3zM19.5 4h3v17h-3z"/></svg><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 10a12 12 0 0 1 16 0"/><path d="M7.5 13.5a7 7 0 0 1 9 0"/><circle cx="12" cy="17.5" r="1.6" fill="#fff" stroke="none"/></svg><svg viewBox="0 0 28 24" width="18" height="14" fill="none" stroke="#fff" stroke-width="1.6"><rect x="2" y="7" width="21" height="10" rx="2.5"/><rect x="4" y="9" width="14" height="6" rx="1" fill="#4ade80" stroke="none"/><path d="M25.5 10.5v3" stroke-linecap="round"/></svg></span></div>
  <div class="shade-scrim" hidden data-act="shade-close"></div>
+ <div class="heads-up" hidden data-act="heads-up-open" data-c=""><span class="hu-icon"><svg viewBox="0 0 48 48" width="22" height="22"><path d="M24 7c-9.4 0-17 6.4-17 14.3 0 4.4 2.4 8.4 6.2 11l-1.6 6.2 6.8-3.4c1.8.5 3.7.8 5.6.8 9.4 0 17-6.4 17-14.3S33.4 7 24 7z" fill="#fff"/><circle cx="17" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="24" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="31" cy="21.5" r="2.9" fill="#3b82f6"/></svg></span><span class="hu-body"><b class="hu-name"></b><span class="hu-text"></span></span></div>
  <div class="notif-shade" hidden>
   <div class="shade-handle" data-act="shade-close"></div>
   <div class="shade-grab"></div>
@@ -107,6 +108,7 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="rep" data-hwkeys="reputation rep turf heat territories standing"><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M24 5l5.9 12 13.1 1.9-9.5 9.2 2.2 13.1L24 34.9l-11.7 6.3 2.2-13.1-9.5-9.2L18.1 17z" fill="#fff"/></svg></span><span class="aa-label">Reputation</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="props" data-hwkeys="properties my properties houses grow locations"><span class="aa-icon" style="background:linear-gradient(135deg,#a78bfa,#7c3aed)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M8 22L24 8l16 14v16a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3z" fill="#fff"/><path d="M19 41V28h10v13" fill="#a78bfa"/></svg></span><span class="aa-label">My Properties</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="bank" data-hwkeys="bank money cash savings account finance deposit withdraw interest"><span class="aa-icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M24 5L5 16h38z" fill="#fff"/><rect x="9" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="17" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="26.5" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="34.5" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="5" y="35" width="38" height="4" rx="1.5" fill="#fff"/><rect x="9" y="41" width="30" height="3" rx="1.5" fill="#bfdbfe"/></svg></span><span class="aa-label">Bank</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="tasks" data-hwkeys="tasks orders todo fulfill deliveries jobs"><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#d97706)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M12 8h24a3 3 0 0 1 3 3v27a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3z" fill="#fff"/><rect x="18" y="4" width="12" height="7" rx="2" fill="#fff" stroke="#d97706" stroke-width="2"/><path d="M17 24l5 5 9-11" fill="none" stroke="#d97706" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 35h14" stroke="#e5e7eb" stroke-width="2.6" stroke-linecap="round"/></svg></span><span class="aa-label">Tasks</span></button>
    </div>
   </div>
   <div class="hw-dots"><span class="on" data-hwpage="0"></span><span data-hwpage="1"></span></div>
@@ -147,6 +149,7 @@ window.hatchWidget={
  <div class="pg-pane pane-rep" hidden></div>
  <div class="pg-pane pane-props" hidden></div>
 <div class="pg-pane pane-bank" hidden></div>
+<div class="pg-pane pane-tasks" hidden></div>
  <div class="pg-pane pane-battle" hidden></div>
  <div class="pg-hint v-hint"></div>
  <div class="android-recents" hidden><div class="recents-sheet"><div class="recents-title">Recent apps</div><div class="recents-list"></div><button type="button" class="recents-close" data-act="android-recents">Close</button></div></div>
@@ -360,6 +363,17 @@ window.hatchWidget={
 .notif-shade{position:fixed;left:50%;top:0;width:100%;max-width:480px;z-index:71;background:rgba(22,22,30,.94);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border-radius:0 0 26px 26px;box-shadow:0 18px 50px rgba(0,0,0,.6);padding:8px 16px 18px;transform:translate(-50%,-106%);transition:transform .32s cubic-bezier(.2,.9,.25,1);max-height:84%;display:flex;flex-direction:column}
 .notif-shade.open{transform:translate(-50%,0)}
 .notif-shade[hidden]{display:none}
+/* ===== Heads-up message banner (Android style) ===== */
+.heads-up{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 10px);width:min(92%,440px);z-index:80;background:rgba(28,28,36,.97);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:10px 14px;display:flex;gap:10px;align-items:center;box-shadow:0 12px 40px rgba(0,0,0,.55);transform:translate(-50%,-160%);transition:transform .38s cubic-bezier(.2,.9,.25,1);cursor:pointer}
+.heads-up.show{transform:translate(-50%,0)}
+.heads-up[hidden]{display:none}
+.hu-icon{flex:none;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#4a8ff7,#2563eb);display:flex;align-items:center;justify-content:center}
+.hu-body{flex:1;min-width:0}
+.hu-name{display:block;font-weight:800;font-size:clamp(12px,3.4vw,14px);color:#fff}
+.hu-text{display:block;font-size:clamp(11px,3.2vw,13px);color:rgba(255,255,255,.72);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pg[data-theme="light"] .heads-up{background:rgba(252,252,250,.97);border-color:rgba(0,0,0,.1)}
+.pg[data-theme="light"] .hu-name{color:#111}
+.pg[data-theme="light"] .hu-text{color:rgba(0,0,0,.6)}
 .shade-handle{width:44px;height:5px;border-radius:3px;background:rgba(255,255,255,.25);margin:4px auto 12px;cursor:pointer;flex:none}
 .shade-grab{position:absolute;left:0;right:0;top:100%;height:80px;background:transparent;touch-action:none}
 .shade-qs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px;flex:none}
@@ -940,6 +954,27 @@ window.hatchWidget={
 .msg-order-body{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:12px}
 .msg-order button{width:100%;background:#25d366;color:#fff;border:none;border-radius:20px;padding:12px;font-weight:700;font-size:15px;cursor:pointer}
 .msg-order button:disabled{opacity:.45;cursor:default}
+.msg-order-btns{display:flex;flex-wrap:wrap;gap:8px}
+.msg-order-btns .msg-order-yes{flex:1 1 45%;width:auto;background:#25d366;border-radius:16px;padding:10px 8px;font-size:13.5px}
+.msg-order-btns .msg-order-no{flex:1 1 100%;width:auto;background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);border-radius:16px;padding:9px;font-size:13.5px;font-weight:600}
+.pg[data-theme="light"] .msg-order-btns .msg-order-no{border-color:rgba(0,0,0,.25);color:rgba(0,0,0,.65)}
+/* Tasks app */
+.tk-empty{text-align:center;color:rgba(255,255,255,.55);padding:48px 20px;font-size:14px;line-height:1.7}
+.tk-card{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:14px;padding:14px;margin:10px 4px}
+.tk-hd{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#fff;margin-bottom:8px}
+.tk-hd span{font-size:11px;color:rgba(255,255,255,.5)}
+.tk-body{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:12px}
+.tk-body b{color:#fbbf24}
+.tk-btns{display:flex;gap:8px}
+.tk-btns button{flex:1;border:none;border-radius:16px;padding:11px;font-weight:700;font-size:14px;cursor:pointer}
+.tk-fulfill{background:#25d366;color:#fff}
+.tk-fulfill:disabled{opacity:.45;cursor:default}
+.tk-dismiss{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
+.pg[data-theme="light"] .tk-empty{color:rgba(0,0,0,.5)}
+.pg[data-theme="light"] .tk-hd{color:#111}
+.pg[data-theme="light"] .tk-hd span{color:rgba(0,0,0,.45)}
+.pg[data-theme="light"] .tk-body{color:rgba(0,0,0,.8)}
+.pg[data-theme="light"] .tk-dismiss{background:rgba(0,0,0,.06);color:#111;border-color:rgba(0,0,0,.15)}
 .pg[data-theme="light"] .msg-chat{border-bottom-color:rgba(0,0,0,.08)}
 .pg[data-theme="light"] .msg-chat-mid b{color:#111}
 .pg[data-theme="light"] .msg-chat-mid span{color:rgba(0,0,0,.55)}
@@ -2051,7 +2086,7 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:3,
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",bank:{bal:0,pendInt:0,tx:[]}};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
  var oldSave=(typeof s.xp!=="number");
@@ -2079,11 +2114,17 @@ function normalize(s){
   return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0};
  });
  if(typeof s.msgView!=="string")s.msgView="list";
+ if(typeof s.msgSound!=="boolean")s.msgSound=true;
  if(s.notesView!=="inprogress"&&s.notesView!=="stash"&&s.notesView!=="seeds")s.notesView="folders";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(s.homeRows!==2&&s.homeRows!==3&&s.homeRows!==4)s.homeRows=3;
  if(!Array.isArray(s.iconOrder))s.iconOrder=[];
  if(!Array.isArray(s.hiddenApps)||s.hiddenApps.length)s.hiddenApps=[];
+ /* tasks: accepted order requests awaiting fulfillment */
+ if(!Array.isArray(s.tasks))s.tasks=[];
+ s.tasks=s.tasks.filter(function(t){return t&&typeof t.name==="string"&&typeof t.k==="string"&&PRODUCTS[t.k]&&typeof t.g==="number"&&t.g>0;}).map(function(t){
+  return {name:String(t.name).slice(0,24),k:t.k,kind:(t.kind==="joint"||t.kind==="lab")?t.kind:"bud",g:t.g,pu:typeof t.pu==="number"?t.pu:0,addedAt:typeof t.addedAt==="number"?t.addedAt:Date.now()};
+ }).slice(0,50);
  /* territory heat */
  var _tids=["home","downtown","suburbs","industrial","waterfront","uptown"];
  if(!s.terr||typeof s.terr!=="object"||!s.terr.zones||typeof s.terr.zones!=="object"){
@@ -2159,8 +2200,8 @@ function normalize(s){
  if(s.amt!==1&&s.amt!==5)s.amt=1;
  if(s.tab==="lab")s.tab="settings";
  if(s.tab==="shop")s.tab="store";
- if(["grow","cook","deal","store","chill","clinic","settings","street","maps","rep","props","bank"].indexOf(s.tab)<0)s.tab="grow";
- if(["grow","cook","deal","chill","clinic","settings","street","maps","rep","props","bank"].indexOf(s.backtab)<0)s.backtab="grow";
+ if(["grow","cook","deal","store","chill","clinic","settings","street","maps","rep","props","bank","tasks"].indexOf(s.tab)<0)s.tab="grow";
+ if(["grow","cook","deal","chill","clinic","settings","street","maps","rep","props","bank","tasks"].indexOf(s.backtab)<0)s.backtab="grow";
  if(s.view!=="home"&&s.view!=="app")s.view="home";
  if(["roll","smoke"].indexOf(s.chillview)<0)s.chillview="smoke";
  if(GROWKEYS.indexOf(s.chillStrain)<0)s.chillStrain="sour";
@@ -2193,7 +2234,7 @@ var S=normalize(Object.assign({},DEF,bridge?bridge.getState(DEF):{}));
 var navStack=[];
 function navPush(app){if(navStack[navStack.length-1]!==app)navStack.push(app);if(navStack.length>12)navStack.shift();}
 function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
-var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦"};
+var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦",tasks:"📋"};
 var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
 function appName(a){if(a==="street")return "Street Deal";if(a==="rep")return "Reputation";if(a==="props")return "My Properties";return a.charAt(0).toUpperCase()+a.slice(1);}
 function save(){if(bridge)bridge.setState(S);}
@@ -2417,7 +2458,7 @@ var HINTS={
  props:"Your grow empire in 3D — tap a property to manage its plants. Tap a plant to water or harvest it.",
  bank:"Keep your cash safe and watch it grow — savings earn a little interest over time."
 };
-var TAB_COLORS={grow:"#4ade80",stash:"#d4a574",cook:"#fb923c",deal:"#22c55e",chill:"#a78bfa",clinic:"#e5484d",settings:"#9a97a3",browser:"#7c9ef8",street:"#f59e0b",maps:"#22c55e",rep:"#fbbf24",props:"#a78bfa",bank:"#3b82f6"};
+var TAB_COLORS={grow:"#4ade80",stash:"#d4a574",cook:"#fb923c",deal:"#22c55e",chill:"#a78bfa",clinic:"#e5484d",settings:"#9a97a3",browser:"#7c9ef8",street:"#f59e0b",maps:"#22c55e",rep:"#fbbf24",props:"#a78bfa",bank:"#3b82f6",tasks:"#fbbf24"};
 var TAB_ICONS={
  grow:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 13c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg>',
  stash:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2.5"/><path d="M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8"/><path d="M3 13h18"/></svg>',
@@ -2532,6 +2573,10 @@ function tabHeader(tab){
  }
  if(tab==="props"){
   return '<div class="appnav"><div class="appnav-title"><span class="appnav-leaf">🏠</span><div><b>My Properties</b><span>'+S.props.length+' owned</span></div></div></div>';
+ }
+ if(tab==="tasks"){
+  var _tn=(S.tasks&&S.tasks.length)||0;
+  return '<div class="appnav"><div class="appnav-title"><span class="appnav-leaf">📋</span><div><b>Tasks</b><span>'+_tn+' open</span></div></div></div>';
  }
  var ic=TAB_ICONS[tab]||"";
  return '<div class="store-screen-head"><span class="store-title" style="color:'+c+'">'+ic+tab.toUpperCase()+'</span></div>';
@@ -2691,6 +2736,7 @@ function render(){
  q(".pane-rep").hidden=battling||!inApp||S.tab!=="rep";
  q(".pane-props").hidden=battling||!inApp||S.tab!=="props";
  q(".pane-bank").hidden=battling||!inApp||S.tab!=="bank";
+ q(".pane-tasks").hidden=battling||!inApp||S.tab!=="tasks";
  q(".pane-battle").hidden=!battling;
  // Android OS shell
  var _clk=q(".android-clock");
@@ -2850,7 +2896,10 @@ function render(){
    var o=c.order,left=Math.max(0,o.expires-Date.now());
    h+='<div class="msg-order"><div class="msg-order-hd">📦 <b>Order request</b><span>'+fmtDur(left)+' left</span></div>'
     +'<div class="msg-order-body">'+escHtml(contactQtyText(o))+' · pays <b>'+money(o.pu*o.g)+'</b></div>'
-    +'<button type="button" data-act="fulfill-order" data-contact="'+escHtml(c.name)+'"'+(contactHave(o)<o.g?" disabled":"")+'>Fulfill Order</button></div>';
+    +'<div class="msg-order-btns">'
+    +ORDER_ACCEPT_VARIANTS.map(function(v){return '<button type="button" class="msg-order-yes" data-act="order-accept" data-contact="'+escHtml(c.name)+'" data-variant="'+escHtml(v)+'">'+escHtml(v)+'</button>';}).join("")
+    +'<button type="button" class="msg-order-no" data-act="order-dismiss" data-contact="'+escHtml(c.name)+'">Can\'t do it rn</button>'
+    +'</div></div>';
   }
   if(c.fixer){
    var _fxTid=(S.terr&&S.terr.active)||"home",_fxT=terrDef(_fxTid),_fxCost=bribeCost(),_fxHeat=Math.round(terrTotal(_fxTid));
@@ -2898,6 +2947,7 @@ function render(){
  if(S.tab==="rep"){q(".pane-rep").innerHTML=repHTML();}
  if(S.tab==="props"){q(".pane-props").innerHTML=propsHTML();}
  if(S.tab==="bank"){q(".pane-bank").innerHTML=bankHTML();}
+ if(S.tab==="tasks"){q(".pane-tasks").innerHTML=tasksHTML();}
  function streetHTML(){
  var dh=tabHeader("street")+'<div class="amtrow c"><span>Deal:</span>'
   +'<button type="button" data-act="amt" data-amt="1"'+(S.amt===1?' class="on"':'')+'>1g</button>'
@@ -3475,6 +3525,50 @@ function contactQtyText(o){
  return o.kind==="joint"?o.g+" "+pn+" joints":o.g+"g "+pn;
 }
 function pushContactNotif(m,isE){S.notifs.unshift({m:m,e:isE?1:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
+/* ===== Heads-up message banner + notification chime (Android style) ===== */
+var _huTimer=null,_huCtx=null;
+function playMsgSound(){
+ try{
+  if(typeof S!=="undefined"&&S.msgSound===false)return;
+  var AC=window.AudioContext||window.webkitAudioContext;
+  if(!AC)return;
+  if(!_huCtx)_huCtx=new AC();
+  if(_huCtx.state==="suspended"){_huCtx.resume();}
+  var t0=_huCtx.currentTime+0.03;
+  [[987.77,0,0.13],[1318.51,0.11,0.20]].forEach(function(n){
+   var o=_huCtx.createOscillator(),g=_huCtx.createGain();
+   o.type="sine";o.frequency.setValueAtTime(n[0],t0+n[1]);
+   g.gain.setValueAtTime(0.0001,t0+n[1]);
+   g.gain.exponentialRampToValueAtTime(0.22,t0+n[1]+0.025);
+   g.gain.exponentialRampToValueAtTime(0.0001,t0+n[1]+n[2]);
+   o.connect(g);g.connect(_huCtx.destination);
+   o.start(t0+n[1]);o.stop(t0+n[1]+n[2]+0.05);
+  });
+ }catch(e){}
+}
+function showHeadsUp(name,text){
+ try{
+  var el=q(".heads-up");if(!el)return;
+  var nm=el.querySelector(".hu-name"),tx=el.querySelector(".hu-text");
+  if(nm)nm.textContent=name;if(tx)tx.textContent=text;
+  el.dataset.c=name;
+  el.hidden=false;void el.offsetWidth;el.classList.add("show");
+  if(_huTimer)clearTimeout(_huTimer);
+  _huTimer=setTimeout(hideHeadsUp,4000);
+ }catch(e){}
+}
+function hideHeadsUp(){
+ try{
+  var el=q(".heads-up");if(!el||el.hidden)return;
+  el.classList.remove("show");
+  setTimeout(function(){if(!el.classList.contains("show"))el.hidden=true;},400);
+ }catch(e){}
+}
+function notifyMsgArrived(c,text){
+ if(!c||!c.name)return;
+ showHeadsUp(c.name,text);
+ playMsgSound();
+}
 function unlockFixer(){
  if(!S.contacts)S.contacts=[];
  if(getContact("The Fixer"))return;
@@ -3502,9 +3596,11 @@ function maybeAddContact(tier,qty){
  if(!pool.length)return;
  var nm=pool[(Math.random()*pool.length)|0];
  var tp=CONTACT_TYPES[(Math.random()*CONTACT_TYPES.length)|0];
+ var _intro="yo it's "+nm+". good lookin on that last one 🤝";
  S.contacts.push({name:nm,type:tp,prefs:contactPrefsFor(tp),loyalty:50,order:null,unread:true,lastOrderAt:0,
-  msgs:[{from:"them",text:"yo it's "+nm+". good lookin on that last one 🤝",t:Date.now()}]});
+  msgs:[{from:"them",text:_intro,t:Date.now()}]});
  pushContactNotif("📱 New contact: "+nm);
+ notifyMsgArrived({name:nm},_intro);
 }
 function tickContacts(now){
  if(!S.contacts||!S.contacts.length)return;
@@ -3515,6 +3611,7 @@ function tickContacts(now){
    c.order=null;c.loyalty=Math.max(0,c.loyalty-10);
    c.msgs.push({from:"them",text:"nvm, found someone else.",t:now});
    c.unread=true;changed=true;
+   notifyMsgArrived(c,"nvm, found someone else.");
   }
  });
  S.contacts.forEach(function(c){
@@ -3533,9 +3630,11 @@ function tickContacts(now){
   var pn=PRODUCTS[pick.k].name;
   var qty=pick.kind==="joint"?grams+" "+pn+" joints":grams+"g "+pn;
   var texts=["yo u got any "+pn+"? need "+qty,"aye need "+qty+" asap 🙏","u holdin "+pn+"? tryna grab "+qty];
-  c.msgs.push({from:"them",text:texts[(Math.random()*texts.length)|0],t:now});
+  var _txt=texts[(Math.random()*texts.length)|0];
+  c.msgs.push({from:"them",text:_txt,t:now});
   c.unread=true;
   pushContactNotif("📱 "+c.name+" wants "+qty);
+  notifyMsgArrived(c,_txt);
   changed=true;
  });
 }
@@ -3560,6 +3659,76 @@ function doFulfillOrder(nm){
  S.msg="Sold "+contactQtyText(o)+" to "+c.name+" for "+money(rev)+".";
  battleRoll();save();render();
 }
+/* ===== TASKS APP: accepted order requests live here until fulfilled/dismissed ===== */
+function doAcceptOrder(nm,variant){
+ var c=getContact(nm);
+ if(!c||!c.order)return;
+ var o=c.order,now=Date.now();
+ if(!Array.isArray(S.tasks))S.tasks=[];
+ S.tasks.push({name:c.name,k:o.k,kind:o.kind,g:o.g,pu:o.pu,addedAt:now});
+ var txt=variant||"Yeah I got you";
+ c.msgs.push({from:"me",text:txt,t:now});
+ c.msgs.push({from:"them",text:"bet 🙏",t:now});
+ c.order=null;c.unread=false;
+ S.msg="Order from "+c.name+" added to Tasks.";
+ save();render();
+}
+function doDismissOrder(nm){
+ var c=getContact(nm);
+ if(!c||!c.order)return;
+ var now=Date.now();
+ c.msgs.push({from:"me",text:"I can't do it right now",t:now});
+ c.msgs.push({from:"them",text:"all good, hmu later",t:now});
+ c.order=null;c.unread=false;
+ S.msg="Dismissed order request from "+c.name+".";
+ save();render();
+}
+function doFulfillTask(i){
+ var t=S.tasks&&S.tasks[i];
+ if(!t){S.msg="No such task.";save();render();return;}
+ var o={k:t.k,kind:t.kind,g:t.g,pu:t.pu},have=contactHave(o);
+ if(have<o.g){S.msg="You don't have "+contactQtyText(o)+".";save();render();return;}
+ if(o.kind==="joint")S.joints[o.k]-=o.g;else S.stash[o.k]-=o.g;
+ var rev=o.pu*o.g,now=Date.now();
+ S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
+ dealTerrHeat(o.g,o.g>=5);
+ var c=getContact(t.name);
+ if(c){
+  c.loyalty=Math.min(100,c.loyalty+8);
+  c.msgs.push({from:"me",text:"got u. "+o.g+"g comin thru.",t:now});
+  c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
+  c.lastFulfilledAt=now;c.unread=true;
+ }
+ S.tasks.splice(i,1);
+ S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+".";
+ battleRoll();save();render();
+}
+function doDismissTask(i){
+ var t=S.tasks&&S.tasks[i];
+ if(!t)return;
+ S.tasks.splice(i,1);
+ S.msg="Dismissed task for "+t.name+".";
+ save();render();
+}
+function tasksHTML(){
+ var h=tabHeader("tasks");
+ var ts=(S.tasks&&Array.isArray(S.tasks))?S.tasks:[];
+ if(!ts.length){
+  h+='<div class="tk-empty">📋 No tasks.<br>Accept a customer order in Messages and it lands here.</div>';
+  return h;
+ }
+ ts.forEach(function(t,i){
+  var o={k:t.k,kind:t.kind,g:t.g,pu:t.pu},can=contactHave(o)>=o.g;
+  var when="";try{when=new Date(t.addedAt).toLocaleString();}catch(e){}
+  h+='<div class="tk-card"><div class="tk-hd"><b>'+escHtml(t.name)+'</b><span>'+escHtml(when)+'</span></div>'
+   +'<div class="tk-body">'+escHtml(contactQtyText(o))+' · pays <b>'+money(o.pu*o.g)+'</b></div>'
+   +'<div class="tk-btns"><button type="button" class="tk-fulfill" data-act="task-fulfill" data-i="'+i+'"'+(can?"":" disabled")+'>Fulfill</button>'
+   +'<button type="button" class="tk-dismiss" data-act="task-dismiss" data-i="'+i+'">Dismiss</button></div></div>';
+ });
+ return h;
+}
+/* ===== ORDER REQUEST FLOW: accept moves to Tasks app, dismiss clears ===== */
+var ORDER_ACCEPT_VARIANTS=["Yeah I got you","Got you","I got you fam","Say less, I got you"];
 /* ===== MESSAGE REPLY BUBBLES (player quick replies, contextual) =====
    data-reply ids are stable mechanic hooks — future game logic can key off them. */
 var MSG_REPLIES={
@@ -3581,6 +3750,7 @@ function msgReplyState(c){
 function msgRepliesFor(c){
  var st=msgReplyState(c),out=[];
  if(c&&c.fixer)return out;
+ if(c&&c.order)return out; /* order card carries its own accept/dismiss options */
  Object.keys(MSG_REPLIES).forEach(function(k){
   if(MSG_REPLIES[k].st===st)out.push({id:k,text:MSG_REPLIES[k].text});
  });
@@ -4393,6 +4563,10 @@ function settingsHTML(){
  h+='</div><div class="sdesc" style="margin-top:6px">Paste a direct image link to change the home screen wallpaper.</div></div>';
  h+='<div class="shopsec">HOME SCREEN</div>';
  h+='<div class="wp-wrap"><div class="sdesc" style="margin-bottom:8px">Long-press any home screen icon to rearrange. Tap &times; to hide an app.</div><div class="wp-btns"><button type="button" class="wp-reset" data-act="layout-reset" style="flex:1">Reset home layout</button></div></div>';
+ h+='<div class="shopsec">NOTIFICATIONS</div>';
+ var _ms=S.msgSound!==false;
+ h+='<div class="dchips"><button type="button" class="dchip center'+(_ms?" on":"")+'" data-act="msgsound" data-v="1"><span class="dc-name">🔔 Sound on</span></button><button type="button" class="dchip center'+(_ms?"":" on")+'" data-act="msgsound" data-v="0"><span class="dc-name">🔕 Muted</span></button></div>';
+ h+='<div class="sdesc" style="margin:8px 2px 6px">Play a chime when a new message arrives.</div>';
  h+='<div class="shopsec">LAB COOK SPEEDS</div>';
  var cur=S.setdrug||"hash";
  if(RKEYS.indexOf(cur)<0)cur="hash";
@@ -4597,9 +4771,14 @@ root.addEventListener("click",function(e){
  if(a==="gpage"){var pgp=S.props[S.gprop||0]||S.props[0],npg=Math.max(1,Math.ceil(pgp.slots.length/8));S.gpage=Math.max(0,Math.min(npg-1,(S.gpage||0)+(+b.dataset.p)));save();render();return;}
  if(a==="dealersel"){S.dealer=+b.dataset.d;save();render();return;}
  if(a==="msg-open"){var _mc=b.dataset.c;S.msgView=_mc;save();render();setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);return;}
+ if(a==="heads-up-open"){hideHeadsUp();var _hn=b.dataset.c;if(_hn){S.tab="deal";S.view="app";S.msgView=_hn;navPush("deal");save();render();setTimeout(function(){var _pp2=document.querySelector(".pane-deal");if(_pp2)_pp2.scrollTop=_pp2.scrollHeight;},100);}return;}
+ if(a==="msgsound"){S.msgSound=(b.dataset.v==="1");save();render();return;}
  if(a==="msg-back"){S.msgView="list";save();render();return;}
  if(a==="msg-reply"){doSendReply(b.dataset.contact,b.dataset.reply);return;}
- if(a==="fulfill-order"){doFulfillOrder(b.dataset.contact);return;}
+ if(a==="order-accept"){doAcceptOrder(b.dataset.contact,b.dataset.variant);return;}
+ if(a==="order-dismiss"){doDismissOrder(b.dataset.contact);return;}
+ if(a==="task-fulfill"){doFulfillTask(+b.dataset.i||0);return;}
+ if(a==="task-dismiss"){doDismissTask(+b.dataset.i||0);return;}
  if(a==="dealcat"){S.dealcat=b.dataset.c;save();render();return;}
  if(a==="chillview"){S.chillview=b.dataset.v;save();render();return;}
  if(a==="chillsel"){S.chillStrain=b.dataset.strain;save();render();return;}
@@ -5262,7 +5441,7 @@ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
   if(document.visibilityState==="hidden")saveOnHide();});
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound};
 })();
 </script>
 
