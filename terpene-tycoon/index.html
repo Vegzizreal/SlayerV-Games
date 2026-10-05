@@ -1023,16 +1023,17 @@ window.hatchWidget={
 .msg-ordtag{font-size:11px;color:#25d366;font-weight:700}
 .msg-chat.unread .msg-chat-mid b{font-weight:800}
 .msg-chat.unread .msg-chat-mid span{color:rgba(255,255,255,.85);font-weight:600}
-.msg-replies{display:flex;flex-wrap:wrap;gap:8px;padding:12px 4px;position:sticky;bottom:0;background:var(--hatch-widget-surface);border-top:1px solid rgba(255,255,255,.08);margin-top:10px;z-index:5}
-.msg-reply{background:rgba(26,115,232,.14);border:1px solid rgba(138,180,248,.55);color:#8ab4f8;border-radius:20px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer}
+.msg-inputbar{position:sticky;bottom:0;z-index:5;background:#141417;border-top:1px solid rgba(255,255,255,.08)}
+.msg-replies{display:flex;flex-wrap:wrap;gap:6px;padding:8px 12px 4px}
+.msg-reply{background:rgba(26,115,232,.14);border:1px solid rgba(138,180,248,.55);color:#8ab4f8;border-radius:16px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer}
 .msg-reply:active{background:rgba(26,115,232,.32)}
-.msg-composer{display:flex;gap:8px;padding:10px 12px;border-top:1px solid rgba(255,255,255,.08);background:#141417;position:sticky;bottom:0;z-index:5}
+.msg-composer{display:flex;gap:8px;padding:8px 12px 10px}
 .msg-input{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:10px 16px;color:#fff;font-size:14px;outline:none}
 .msg-input::placeholder{color:rgba(255,255,255,.4)}
 .msg-send{background:#1a73e8;border:none;color:#fff;border-radius:20px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer}
 .msg-send:active{background:#1557b0}
 .pg[data-theme="light"] .msg-reply{background:rgba(26,115,232,.08);border-color:rgba(26,115,232,.5);color:#1a73e8}
-.pg[data-theme="light"] .msg-replies{border-top-color:rgba(0,0,0,.08)}
+.pg[data-theme="light"] .msg-inputbar{background:#f2efe8;border-top-color:rgba(0,0,0,.08)}
 /* Messages conversation header */
 .msg-nav-convo{background:transparent;border-bottom:1px solid rgba(255,255,255,.08);padding:8px 6px;position:sticky;top:0;z-index:10;background:#141417}
 .msg-nav-convo .msg-back{background:none;border:none;color:#e8eaed;cursor:pointer;padding:8px;display:flex;align-items:center}
@@ -3127,6 +3128,7 @@ function render(){
   }
   var _mreps=msgRepliesFor(c);
   if(_mreps.length){
+   h+='<div class="msg-inputbar">';
    h+='<div class="msg-replies">';
    _mreps.forEach(function(rp){
     var _act=rp.act||"msg-reply";
@@ -3134,10 +3136,9 @@ function render(){
     h+='<button type="button" class="msg-reply" data-act="'+_act+'" data-contact="'+escHtml(c.name)+'"'+_extra+'>'+escHtml(rp.text)+'</button>';
    });
    h+='</div>';
-  }
-  /* text composer with fuzzy matching */
-  if(_mreps.length){
+   /* text composer with fuzzy matching */
    h+='<div class="msg-composer"><input type="text" class="msg-input" data-contact="'+escHtml(c.name)+'" placeholder="Type a message..." autocomplete="off"><button type="button" class="msg-send" data-act="msg-send" data-contact="'+escHtml(c.name)+'">Send</button></div>';
+   h+='</div>';
   }
   h+='</div>';
   return h;
