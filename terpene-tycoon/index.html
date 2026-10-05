@@ -2381,6 +2381,7 @@ function terrZone(id){
  return z;
 }
 function terrTotal(id){var z=terrZone(id);return Math.max(z.heat.cops,z.heat.gangs,z.heat.fam);}
+function heatCooldownTxt(heat){if(heat<=0)return "clear";var mins=heat/2.5;if(mins<1)return Math.ceil(mins*60)+"s";if(mins<60)return Math.ceil(mins)+"m";var h=Math.floor(mins/60),m=Math.ceil(mins%60);return h+"h "+m+"m";}
 function activeTerrId(){return (S.terr&&S.terr.active)||"home";}
 function activeHeat(){return terrTotal(activeTerrId());}
 function syncGlobalHeat(){var m=0,i;for(i=0;i<TERRITORIES.length;i++)m=Math.max(m,terrTotal(TERRITORIES[i].id));S.heat=m;}
@@ -2823,7 +2824,7 @@ function renderShade(){
  var key=((S.notifs||[]).map(function(n){return n.m;})).join("");
  var c=q(".shade-qcash");if(c)c.textContent=money(S.cash);
  var st=q(".shade-qstash");if(st)st.textContent=stashTotal()+"/"+S.stashCap+"g";
- var h=q(".shade-qheat");if(h){var _td=terrDef(S.terr&&S.terr.active);h.textContent=_td.name+" "+Math.round(Math.min(100,activeHeat()))+"%";}
+ var h=q(".shade-qheat");if(h){var _td=terrDef(S.terr&&S.terr.active);var _ah4=activeHeat();h.textContent=_td.name+" "+Math.round(Math.min(100,_ah4))+"%"+(_ah4>0?" ("+heatCooldownTxt(_ah4)+")":"");}
  var d=q(".shade-qday");if(d)d.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
  var hwc=q(".hw-qcash");if(hwc)hwc.textContent=money(S.cash);
  var hws=q(".hw-qstash");if(hws)hws.textContent=stashTotal()+"/"+S.stashCap+"g";
@@ -2832,7 +2833,7 @@ function renderShade(){
  var hwh=q(".hw-qhp");if(hwh){hwh.textContent="HP "+Math.max(0,Math.round(S.hp));
  hwh.style.color=S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444";}
  var hwd=q(".hw-qday");if(hwd)hwd.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
- var hwt=q(".hw-qheat");if(hwt){var _td2=terrDef(S.terr&&S.terr.active);hwt.textContent=_td2.name+" "+Math.round(Math.min(100,activeHeat()))+"%";}
+ var hwt=q(".hw-qheat");if(hwt){var _td2=terrDef(S.terr&&S.terr.active);var _ah3=activeHeat();hwt.textContent=_td2.name+" "+Math.round(Math.min(100,_ah3))+"%"+(_ah3>0?" ("+heatCooldownTxt(_ah3)+")":"");}
  var hwb=q(".hw-qheatbar");if(hwb)hwb.style.width=Math.min(100,activeHeat())+"%";
  var list=q(".shade-list");if(!list)return;
  if(shadeListKey===key)return;shadeListKey=key;
@@ -3020,16 +3021,7 @@ function render(){
      +'<span class="msg-bub-t">'+fmtMsgTime(m.t)+(_me?'<span class="msg-read">&#10003;&#10003;</span>':'')+'</span></div></div>';
    });
   }
-  if(c.order){
-   var o=c.order,left=Math.max(0,o.expires-Date.now());
-   var _deny=randomDenyVariant();
-   h+='<div class="msg-order"><div class="msg-order-hd">📦 <b>Order request</b><span>'+fmtDur(left)+' left</span></div>'
-    +'<div class="msg-order-body">'+escHtml(contactQtyText(o))+' · pays <b>'+money(o.pu*o.g)+'</b></div>'
-    +'<div class="msg-order-btns">'
-    +ORDER_ACCEPT_VARIANTS.map(function(v){return '<button type="button" class="msg-order-yes" data-act="order-accept" data-contact="'+escHtml(c.name)+'" data-variant="'+escHtml(v)+'">'+escHtml(v)+'</button>';}).join("")
-    +'<button type="button" class="msg-order-no" data-act="order-dismiss" data-contact="'+escHtml(c.name)+'" data-variant="'+escHtml(_deny)+'">'+escHtml(_deny)+'</button>'
-    +'</div></div>';
-  }
+  /* order card removed - reply pills handle accept/dismiss */
   if(c.fixer){
    var _fxTid=(S.terr&&S.terr.active)||"home",_fxT=terrDef(_fxTid),_fxCost=bribeCost(),_fxHeat=Math.round(terrTotal(_fxTid));
    h+='<div class="msg-order"><div class="msg-order-hd">🕶️ <b>Need heat gone?</b><span>'+escHtml(_fxT.name)+' · '+_fxHeat+'%</span></div>'
@@ -3040,7 +3032,9 @@ function render(){
   if(_mreps.length){
    h+='<div class="msg-replies">';
    _mreps.forEach(function(rp){
-    h+='<button type="button" class="msg-reply" data-act="msg-reply" data-contact="'+escHtml(c.name)+'" data-reply="'+rp.id+'">'+escHtml(rp.text)+'</button>';
+    var _act=rp.act||"msg-reply";
+    var _extra=rp.act?(' data-variant="'+escHtml(rp.variant||"")+'"'):(' data-reply="'+rp.id+'"');
+    h+='<button type="button" class="msg-reply" data-act="'+_act+'" data-contact="'+escHtml(c.name)+'"'+_extra+'>'+escHtml(rp.text)+'</button>';
    });
    h+='</div>';
   }
@@ -3166,7 +3160,7 @@ function render(){
    if(!locked)h+='<span class="gps-halo" style="background:radial-gradient(circle,'+hc+'55 0%,transparent 70%)"></span>';
    h+='<span class="gps-pindrop" style="background:'+pinC+';border-color:'+(isS?'#fff':'rgba(0,0,0,.55)')+'"><span>'+(locked?'?':t.name.charAt(0))+'</span></span>';
    h+='<span class="gps-pinlabel"'+(isA?' style="color:#7CFC00;font-weight:800"':'')+'>'+t.name+(locked?'<br><small style="color:#888">Unlocks Lv '+t.unlock+'</small>':'')+'</span>';
-   if(!locked)h+='<span class="gps-pinheat"><i style="width:'+tot+'%;background:'+hc+'"></i></span>';
+   if(!locked)h+='<span class="gps-pinheat"><i style="width:'+tot+'%;background:'+hc+'"></i></span>'+(tot>0?'<span class="gps-pincool">'+heatCooldownTxt(tot)+'</span>':'');
    // you-are-here blue dot under the active territory pin
    if(isA)h+='<span class="gps-you"><i class="you-pulse"></i><i class="you-dot"></i></span>';
    h+='</button>';
@@ -3881,7 +3875,12 @@ function msgReplyState(c){
 function msgRepliesFor(c){
  var st=msgReplyState(c),out=[];
  if(c&&c.fixer)return out;
- if(c&&c.order)return out; /* order card carries its own accept/dismiss options */
+ if(c&&c.order){
+  /* order request: reply pills are the accept/dismiss actions */
+  ORDER_ACCEPT_VARIANTS.forEach(function(v){out.push({id:"order-accept",text:v,act:"order-accept",variant:v});});
+  out.push({id:"order-dismiss",text:randomDenyVariant(),act:"order-dismiss",variant:randomDenyVariant()});
+  return out;
+ }
  Object.keys(MSG_REPLIES).forEach(function(k){
   if(MSG_REPLIES[k].st===st)out.push({id:k,text:MSG_REPLIES[k].text});
  });
