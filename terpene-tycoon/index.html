@@ -171,6 +171,7 @@ window.hatchWidget={
   <div class="lock-time" id="lock-time">--:--</div>
   <div class="lock-date" id="lock-date"></div>
   <div class="lock-notifs" id="lock-notifs"></div>
+  <button type="button" class="lock-reup" id="lock-reup" data-act="reup" hidden>&#10227; Update available &mdash; tap to re-up</button>
   <div class="lock-fp" id="lock-fp">
    <svg viewBox="0 0 48 48" width="56" height="56" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round">
     <path d="M12 20c0-6 5-10 12-10s12 4 12 10c0 8-2 14-4 20"/>
@@ -566,6 +567,8 @@ window.hatchWidget={
 .lock-time{font-size:72px;font-weight:200;color:#fff;letter-spacing:-2px}
 .lock-date{font-size:16px;color:#aaa;margin-top:4px}
 .lock-notifs{margin-top:24px;max-width:85%;display:flex;flex-direction:column;gap:8px}
+.lock-reup{margin-top:12px;max-width:85%;border:none;border-radius:16px;padding:13px 20px;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;font-size:14px;font-weight:800;letter-spacing:.5px;cursor:pointer;box-shadow:0 4px 16px rgba(22,163,74,.45)}
+.lock-reup[hidden]{display:none}
 .lock-notif{background:rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;font-size:13px;color:#ddd;backdrop-filter:blur(10px)}
 .lock-fp{position:absolute;bottom:110px;width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;animation:lockPulse 2.5s infinite}
 .lock-fp:active{background:rgba(74,143,247,.25);border-color:#4a8ff7;transform:scale(.95)}
@@ -2288,11 +2291,12 @@ var RECIPES={
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
-var GAME_VER="BETA-0.018";
-var GAME_UPDATED="Oct 4, 2026 · 2:30 AM";
+var GAME_VER="BETA-0.018.5";
+var GAME_UPDATED="Oct 5, 2026 · 6:50 AM";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
- {v:"BETA-0.018.4",ts:"Oct 5, 2026 \u00B7 6:30 AM",t:"Chat variety",d:"Customers ask for product 50 different ways now, and you get 10 quick replies for yes and 10 for no."},
+  {v:"BETA-0.018.5",ts:"Oct 5, 2026 \u00B7 6:50 AM",t:"Re-up button",d:"The lock screen now tells you when a new build is out. Tap the fingerprint and hit re-up to grab the latest."},
+{v:"BETA-0.018.4",ts:"Oct 5, 2026 \u00B7 6:30 AM",t:"Chat variety",d:"Customers ask for product 50 different ways now, and you get 10 quick replies for yes and 10 for no."},
  {v:"BETA-0.018.3",ts:"Oct 5, 2026 \u00B7 6:20 AM",t:"Shade polish",d:"Notifications show who they are actually from, and the shade opens and closes with one clean tap."},
  {v:"BETA-0.018.2",ts:"Oct 5, 2026 \u00B7 6:00 AM",t:"Lock screen notifications",d:"Only Messages show on the lock screen now. Pick what else appears under Settings > Notifications > Lock screen."},
  {v:"BETA-0.018.1",ts:"Oct 5, 2026 · 5:15 AM",t:"Playtime tracking",d:"The Stats screen now shows your total active playtime. Only counts while the game is actually open."},
@@ -2637,6 +2641,8 @@ function ttLockShow(){
  if(!ls)return;
  ls.hidden=false;
  ttLockTick();
+ try{var rp=document.getElementById("lock-reup");if(rp)rp.hidden=true;}catch(e){}
+ try{var fpe=document.getElementById("lock-fp");if(fpe){fpe.style.background="";fpe.style.borderColor="";fpe.style.boxShadow="";}}catch(e2){}
 }
 function ttLockTick(){
  var lt=document.getElementById("lock-time"),ld=document.getElementById("lock-date");
@@ -2677,6 +2683,7 @@ function ttLockHide(){
  var ls=document.getElementById("tt-lockscreen");
  if(ls)ls.hidden=true;
  try{ttLockTick._t&&clearInterval(ttLockTick._t);}catch(e){}
+ try{var fpe2=document.getElementById("lock-fp");if(fpe2){fpe2.style.background="";fpe2.style.borderColor="";fpe2.style.boxShadow="";}}catch(e2){}
 }
 (function(){
  var _sy=null;
@@ -2692,15 +2699,42 @@ function ttLockHide(){
   }
   _sy=null;
  },{passive:true});
- /* fingerprint tap to unlock */
+ /* fingerprint tap: check for a newer build first; the reup pill appears
+    only when the game is actually out of date, otherwise unlock as normal */
  document.addEventListener("click",function(e){
   var fp=document.getElementById("lock-fp");
   var ls=document.getElementById("tt-lockscreen");
   if(fp&&ls&&!ls.hidden&&(e.target===fp||fp.contains(e.target))){
    fp.style.background="rgba(74,143,247,.35)";
-   setTimeout(ttLockHide,250);
+   ttCheckUpdate(function(hasUpdate){
+    if(hasUpdate){
+     /* new build out: red glow on the fingerprint = locked until re-up */
+     try{
+      fp.style.background="rgba(220,38,38,.30)";
+      fp.style.borderColor="#ef4444";
+      fp.style.boxShadow="0 0 26px rgba(239,68,68,.65)";
+      var rp=document.getElementById("lock-reup");if(rp)rp.hidden=false;
+     }catch(e2){}
+    }else{
+     try{fp.style.background="";}catch(e3){}
+     setTimeout(ttLockHide,250);
+    }
+   });
   }
  });
+ /* Version-gated reup: compare this copy against the live build version.
+    The pill only shows when a newer build is actually available. */
+ function ttCheckUpdate(cb){
+  try{
+   if(typeof GAME_VER==="undefined"){cb(false);return;}
+   fetch("version.txt",{cache:"no-store"}).then(function(r){
+    if(!r||!r.ok)throw 0;return r.text();
+   }).then(function(t){
+    var v=String(t||"").trim();
+    cb(!!v&&v!==String(GAME_VER));
+   }).catch(function(){cb(false);});
+  }catch(e){cb(false);}
+ }
  /* show lock on load */
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(ttLockShow,300);});
  else setTimeout(ttLockShow,300);
@@ -6161,6 +6195,7 @@ root.addEventListener("click",function(e){
  if(a==="dsellj"){doDeal(+b.dataset.d,b.dataset.strain,false,true);return;}
  if(a==="tickspd"){tickToggleSpeed();return;}
  if(a==="refresh"){location.href=location.pathname+"?cb="+Date.now();return;}
+   if(a==="reup"){saveOnHide();location.href=location.pathname+"?cb="+Date.now();return;}
  if(a==="roach-view"){S.lastVer=GAME_VER;S.tab="settings";S.settingsView="about";delete S.settingstab;S.view="app";navPush("settings");save();render();return;}
  if(a==="settingstab"){S.settingstab=b.dataset.t;save();render();return;}
  if(a==="prestigepick"){S._prestigePick=b.dataset.k;save();render();return;}
@@ -6904,11 +6939,7 @@ function saveOnHide(){ try{ save(); }catch(e){} }
 if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  window.addEventListener("pagehide",saveOnHide);
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
-  /* Idle reup: if the screen was off/backgrounded for more than 5 minutes,
-     reload on return so the player always gets the latest build, never a
-     stale cached copy. Auto-save already ran on hide, so progress is safe. */
-  if(document.visibilityState==="hidden"){window.__pgIdleSince=Date.now();saveOnHide();}
-  else if(window.__pgIdleSince&&Date.now()-window.__pgIdleSince>5*60*1000){saveOnHide();location.reload();}});
+  if(document.visibilityState==="hidden")saveOnHide();});
 }
 window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound};
 })();
