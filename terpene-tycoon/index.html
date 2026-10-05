@@ -2303,6 +2303,9 @@ function normalize(s){
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
  if(s.notesView!=="inprogress"&&s.notesView!=="stash"&&s.notesView!=="seeds")s.notesView="folders";
  if(s.todoView!=="tasks"&&s.todoView!=="stash")s.todoView="tasks";
+ if(typeof s.strainMastery!=="object"||!s.strainMastery)s.strainMastery={};
+ if(typeof s.prestigeCount!=="number")s.prestigeCount=0;
+ if(typeof s.prestigeStrain!=="string")s.prestigeStrain="";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(s.homeRows===3||s.homeRows==null)s.homeRows=4;
  if(s.homeRows!==2&&s.homeRows!==4)s.homeRows=4;
@@ -2474,6 +2477,10 @@ function stashTotal(){return PKEYS.reduce(function(a,k){return a+(S.stash[k]||0)
 function buffActive(){return Date.now()<S.buffUntil;}
 function buffPct(){return Math.round(((S.buffMult||1)-1)*100);}
 function ppu(base,mult){return Math.max(1,Math.round(base*mult*10)/10);}
+function prestigeBonus(k){
+ if(!S.prestigeStrain||S.prestigeStrain!==k||!S.prestigeCount)return 1;
+ return 1+(0.25*S.prestigeCount);
+}
 function money(n){return "$"+Math.round(n).toLocaleString("en-US");}
 function fmtP(p){return "$"+(Math.round(p*10)/10)+"/g";}
 function heatTier(h){return h<30?0:h<60?1:h<85?2:3;}
@@ -3276,7 +3283,7 @@ function streetHTML(){
    if(v===0)return;
    if(v===1)return;
    if(!(S.joints[k]||0))return;
-   var ju=sellU(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9));
+   var ju=sellU(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9*prestigeBonus(k)));
    dh+='<div class="drow2"><span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span><div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' joints <b>'+(S.joints[k]||0)+'</b></div>'
     +'<div class="d2-sub">pays '+money(ju)+'/joint'+(bActive?'<span class="bufftag">+'+bpct+'%</span>':"")+'</div></div>'
     +'<button type="button" data-act="dsellj" data-d="'+di+'" data-strain="'+k+'"'+(locked||(S.joints[k]||0)<S.amt?" disabled":"")+'>Sell</button></div>';
@@ -3288,7 +3295,7 @@ function streetHTML(){
    if(v===0)return;
    if(v===1)return;
    if(!(S.stash[k]||0))return;
-   var bp=ppu(PRODUCTS[k].price,d.buy[k]);
+   var bp=ppu(PRODUCTS[k].price,d.buy[k])*prestigeBonus(k);
    var sp=ppu(PRODUCTS[k].price,d.sell[k]);
    var su=sellU(k,bp);
    var pic=GROWKEYS.indexOf(k)>=0?'<span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span>':'<span class="picon xs picon-'+k+'"></span>';
@@ -3626,7 +3633,11 @@ function doHarvest(pi,si){
  var pr=S.props[pi],p=pr&&pr.slots[si];
  if(!p||p.growth<100)return;
  var y=PRODUCTS[p.strain].yld;
- var grams=Math.round((y[0]+Math.random()*(y[1]-y[0]))*(0.6+0.4*p.water/100));
+ if(!S.strainMastery)S.strainMastery={};
+ var _mast=S.strainMastery[p.strain]||0;
+ var _mastBonus=Math.min(0.5,_mast*0.02);
+ var grams=Math.round((y[0]+Math.random()*(y[1]-y[0]))*(0.6+0.4*p.water/100)*(1+_mastBonus));
+ S.strainMastery[p.strain]=_mast+1;
  var take=Math.min(grams,S.stashCap-stashTotal());
  if(take<=0){S.msg="Duffel is full — sell some or upgrade it.";save();render();showBagFullWarn();return;}
  S.stash[p.strain]+=take;
@@ -4938,6 +4949,27 @@ function settingsHTML(){
  if(sv!=="list"){
   h+='<button type="button" class="set-back" data-act="settingsview" data-v="list">&lsaquo; Settings</button>';
  }
+ if(sv==="prestige"){
+  h+='<div class="shopsec">PRESTIGE</div>';
+  h+='<div class="sdesc">Reset your progress to specialize in a strain. That strain earns +25% per prestige, permanently.</div>';
+  if(S.prestigeCount>0){
+   h+='<div class="sdesc">Current: '+(S.prestigeCount)+' prestige(s)';
+   if(S.prestigeStrain&&PRODUCTS[S.prestigeStrain])h+=' · '+escHtml(PRODUCTS[S.prestigeStrain].name)+' +'+(25*S.prestigeCount)+'%';
+   h+='</div>';
+  }
+  h+='<div class="sdesc" style="margin:8px 2px 6px">Choose your specialty strain:</div>';
+  h+='<div class="dchips">';
+  GROWKEYS.forEach(function(k){
+   if(PRODUCTS[k]&&tierVis(PRODUCTS[k].tier)===2){
+    var _m=S.strainMastery[k]||0;
+    h+='<button type="button" class="dchip'+(S._prestigePick===k?" on":"")+'" data-act="prestigepick" data-k="'+k+'"><span class="dc-name">'+escHtml(PRODUCTS[k].name)+(_m?' ('+_m+')':'')+'</span></button>';
+   }
+  });
+  h+='</div>';
+  h+='<div style="margin-top:16px"><button type="button" class="dchip center" data-act="doprestige"'+(S._prestigePick?"":" disabled")+' style="width:100%;padding:14px;background:#ef4444;border-color:#ef4444"><span class="dc-name">PRESTIGE RESET</span></button></div>';
+  h+='<div class="sdesc" style="margin-top:8px;color:#ef4444">This resets level, cash, stash, properties, and contacts. Your prestige bonus is permanent.</div>';
+  return h;
+ }
  if(sv==="about"){
   h+='<div class="shopsec">PATCH NOTES</div>';
   h+='<div class="sdesc" style="margin:0 2px 8px">Running list of every update. Current version: <b style="color:var(--hatch-widget-text)">'+GAME_VER+'</b></div>';
@@ -5012,6 +5044,9 @@ function settingsHTML(){
  h+='</div>';
  h+='<div class="set-list" style="margin-top:20px">';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="about"><span>ℹ️ About Phone</span><span class="set-chev">›</span></button>';
+ if(pLevel()>=8){
+  h+='<button type="button" class="set-row" data-act="settingsview" data-v="prestige"><span>⭐ Prestige'+(S.prestigeCount?' ('+S.prestigeCount+')':'')+'</span><span class="set-chev">›</span></button>';
+ }
  h+='</div>';
  return h;
 }
@@ -5282,6 +5317,23 @@ root.addEventListener("click",function(e){
  if(a==="refresh"){location.href=location.pathname+"?cb="+Date.now();return;}
  if(a==="roach-view"){S.lastVer=GAME_VER;S.tab="settings";S.settingsView="about";delete S.settingstab;S.view="app";navPush("settings");save();render();return;}
  if(a==="settingstab"){S.settingstab=b.dataset.t;save();render();return;}
+ if(a==="prestigepick"){S._prestigePick=b.dataset.k;save();render();return;}
+ if(a==="doprestige"){
+  var _pk=S._prestigePick;
+  if(!_pk||!PRODUCTS[_pk])return;
+  if(!confirm("Prestige with "+PRODUCTS[_pk].name+"? This resets everything except your prestige bonus."))return;
+  /* save prestige */
+  var _pc=(S.prestigeCount||0)+1;
+  var _ps=_pk;
+  /* reset everything */
+  var _keep={prestigeCount:_pc,prestigeStrain:_ps,strainMastery:{},smokedStrains:{}};
+  /* preserve settings */
+  _keep.theme=S.theme;_keep.iconStyle=S.iconStyle;_keep.labelColor=S.labelColor;_keep.homeRows=S.homeRows;
+  S=_keep;
+  normalize(S);
+  save();render();
+  return;
+ }
  if(a==="settingsview"){S.settingsView=b.dataset.v;save();render();return;}
  if(a==="stashsell"){var _sd=stashDealer();doDeal(_sd.di,b.dataset.strain,false,false);return;}
  if(a==="stashsellj"){var _sd2=stashDealer();doDeal(_sd2.di,b.dataset.strain,false,true);return;}
