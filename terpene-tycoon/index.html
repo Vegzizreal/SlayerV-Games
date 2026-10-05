@@ -2944,9 +2944,7 @@ function render(){
  if(S.view!=="home"&&editMode)setEditMode(false);
  if(_hm){if(S.wallpaper&&/^https?:\/\//i.test(S.wallpaper)){_hm.style.backgroundImage="url(\""+S.wallpaper.replace(/"/g,"")+"\")";_hm.style.backgroundSize="cover";_hm.style.backgroundPosition="center";}else{_hm.style.backgroundImage="";_hm.style.backgroundSize="";_hm.style.backgroundPosition="";}}
  var _ab=q(".android-appbar");
- if(_ab){_ab.hidden=!inApp||battling;
-  var _at=q(".android-apptitle");
-  if(_at){_at.textContent=appName(S.tab);_at.style.color=TAB_COLORS[S.tab]||"#e5484d";}}
+ if(_ab){_ab.hidden=true;}
  var _hwc=q(".android-wcash");if(_hwc)_hwc.textContent=money(S.cash);
  var _hws=q(".android-wstash");if(_hws)_hws.textContent=stashTotal()+"/"+S.stashCap+"g";
  var _ah2=activeHeat();
