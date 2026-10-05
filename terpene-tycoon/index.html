@@ -3875,6 +3875,7 @@ function msgReplyState(c){
 function msgRepliesFor(c){
  var st=msgReplyState(c),out=[];
  if(c&&c.fixer)return out;
+ if(st==="idle")return out; /* idle prompts hidden until mechanics added */
  if(c&&c.order){
   /* order request: reply pills are the accept/dismiss actions */
   ORDER_ACCEPT_VARIANTS.forEach(function(v){out.push({id:"order-accept",text:v,act:"order-accept",variant:v});});
