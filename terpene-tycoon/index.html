@@ -2344,6 +2344,7 @@ function normalize(s){
  if(typeof s.usedNumbers!=="object"||!s.usedNumbers)s.usedNumbers={};
  if(typeof s.nameToNumber!=="object"||!s.nameToNumber)s.nameToNumber={};
  if(s.thiefBattle!==null&&typeof s.thiefBattle!=="object")s.thiefBattle=null;
+ if(!Array.isArray(s.blockedNames))s.blockedNames=[];
  if(typeof s.prestigeStrain!=="string")s.prestigeStrain="";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(s.homeRows===3||s.homeRows==null)s.homeRows=4;
@@ -4108,7 +4109,8 @@ function maybeAddContact(tier,qty){
  var chance=Math.min(0.80,0.10+0.10*t+Math.min(0.20,0.02*q));
  if(Math.random()>chance)return;
  var used={};S.contacts.forEach(function(c){used[c.name]=1;});
- var pool=CONTACT_NAMES.filter(function(n){return !used[n];});
+ var _blocked={};(S.blockedNames||[]).forEach(function(n){_blocked[n]=1;});
+ var pool=CONTACT_NAMES.filter(function(n){return !used[n]&&!_blocked[n];});
  if(!pool.length)return;
  var nm=pool[(Math.random()*pool.length)|0];
  var tp=CONTACT_TYPES[(Math.random()*CONTACT_TYPES.length)|0];
@@ -4116,7 +4118,7 @@ function maybeAddContact(tier,qty){
  var _phone=genPhoneNumber(nm);
  /* also check pending for name reuse */
  var _pendNames={};S.pendingContacts.forEach(function(p){_pendNames[p.name]=1;});
- if(_pendNames[nm])return;
+ if(_pendNames[nm]||_blocked[nm])return;
  S.pendingContacts.push({name:nm,type:tp,phone:_phone,prefs:contactPrefsFor(tp),t:Date.now(),isThief:_isThief,ordersBeforeTurn:_isThief?(2+((Math.random()*3)|0)):0});
  pushContactNotif("📝 New note: "+nm+" — "+fmtPhone(_phone));
  S.msg="Someone left you their number. Check Notes.";
@@ -4971,6 +4973,7 @@ function thiefRun(){
 function winThiefBattle(){
  var b=S.thiefBattle;if(!b)return;
  var _tw=b.thiefWeapon;
+ var _bn=b.name;
  /* take their weapon */
  if(!S.weapons)S.weapons={};
  var _got=false;
@@ -4980,14 +4983,15 @@ function winThiefBattle(){
  var _t=S.tasks&&S.tasks[b.taskIdx];
  S.thiefBattle=null;
  if(_t){
-  /* product was already deducted, now pay out */
   var rev=_o.pu*_o.g;
   S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
   S.tasks.splice(b.taskIdx,1);
  }
- var _c=getContact(b.name);
- if(_c){_c.isThief=false;_c.ordersBeforeTurn=0;}
- if(!addXP(25))S.msg="You beat down "+b.name+"!"+(_got?" Took their "+WEAPONS[_tw].name+"!":"");
+ /* remove and block the thief */
+ if(!S.blockedNames)S.blockedNames=[];
+ if(S.blockedNames.indexOf(_bn)<0)S.blockedNames.push(_bn);
+ removeContact(_bn);
+ if(!addXP(25))S.msg="You beat down "+_bn+"!"+(_got?" Took their "+WEAPONS[_tw].name+"!":"")+" 🚫 Blocked.";
  save();render();
 }
 function loseThiefBattle(){
