@@ -2096,7 +2096,7 @@ function mkDealer(name){function m(){return 0.8+Math.random()*0.4;}var d={name:n
 function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
- props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:3,
+ props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:4,
  msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
@@ -2128,7 +2128,8 @@ function normalize(s){
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
  if(s.notesView!=="inprogress"&&s.notesView!=="stash"&&s.notesView!=="seeds")s.notesView="folders";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
- if(s.homeRows!==2&&s.homeRows!==3&&s.homeRows!==4)s.homeRows=3;
+ if(s.homeRows===3||s.homeRows==null)s.homeRows=4;
+ if(s.homeRows!==2&&s.homeRows!==4)s.homeRows=4;
  if(!Array.isArray(s.iconOrder))s.iconOrder=[];
  /* one-time homescreen reorder to canonical order (2026-10-04) */
  if(s.hwOrderV!==1){s.iconOrder=[];s.hwOrderV=1;}
@@ -4571,7 +4572,7 @@ function settingsHTML(){
   h+='<div class="shopsec">APPEARANCE</div>';
   h+='<div class="dchips"><button type="button" class="dchip center'+(S.theme==="light"?"":" on")+'" data-act="settheme" data-theme="dark"><span class="dc-name">Dark</span></button><button type="button" class="dchip center'+(S.theme==="light"?" on":"")+'" data-act="settheme" data-theme="light"><span class="dc-name">Light</span></button></div>';
   h+='<div class="sdesc" style="margin:8px 2px 6px">Home Screen Rows</div>';
-  var _hr=S.homeRows||3;
+  var _hr=S.homeRows||4;
   h+='<div class="dchips"><button type="button" class="dchip center'+(_hr===2?" on":"")+'" data-act="setrows" data-rows="2"><span class="dc-name">2 rows</span></button><button type="button" class="dchip center'+(_hr===3?" on":"")+'" data-act="setrows" data-rows="3"><span class="dc-name">3 rows</span></button><button type="button" class="dchip center'+(_hr===4?" on":"")+'" data-act="setrows" data-rows="4"><span class="dc-name">4 rows</span></button></div>';
   h+='<div class="shopsec">WALLPAPER</div>';
   h+='<div class="wp-wrap">';
@@ -5162,7 +5163,7 @@ function layoutHome(){
  // rebuild pages
  var old=grid.querySelectorAll(".hw-page");
  for(i=0;i<old.length;i++)old[i].parentNode.removeChild(old[i]);
- var _rows=(S.homeRows===2||S.homeRows===4)?S.homeRows:3;
+ var _rows=(S.homeRows===2||S.homeRows===3)?S.homeRows:4;
  var _cols=hwWinW()>=900?8:hwWinW()>=600?6:4;
  var perPage=_rows*_cols,page=null;
  grid.dataset.rows=_rows;
