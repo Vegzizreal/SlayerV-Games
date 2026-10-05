@@ -2006,6 +2006,32 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 /* bribe button by the heat bar */
 </style>
 <style>
+/* ===== BANK: realistic dark-mode banking app ===== */
+.pg:not([data-theme="light"]) .pane-bank{background:#0a0c10;color:#e8eaed}
+.pg:not([data-theme="light"]) .bk-head{background:linear-gradient(135deg,#1e40af 0%,#172f7a 60%,#0f2160 100%)}
+.pg:not([data-theme="light"]) .bk-balcard{background:linear-gradient(180deg,#171d28,#12161f);border:1px solid #232b38;box-shadow:0 6px 18px rgba(0,0,0,.45)}
+.pg:not([data-theme="light"]) .bk-balcard .bk-label{color:#8b94a3}
+.pg:not([data-theme="light"]) .bk-balcard .bk-balance{color:#ffffff}
+.pg:not([data-theme="light"]) .bk-balcard .bk-apy{color:#4ade80}
+.pg:not([data-theme="light"]) .bk-wallet{background:#12161f;border:1px solid #232b38;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.pg:not([data-theme="light"]) .bk-wallet .bk-label{color:#8b94a3}
+.pg:not([data-theme="light"]) .bk-wallet .bk-amt{color:#ffffff}
+.pg:not([data-theme="light"]) .bk-sec{background:#12161f;border:1px solid #232b38;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.pg:not([data-theme="light"]) .bk-sec h4{color:#8b94a3}
+.pg:not([data-theme="light"]) .bk-chip{border-color:#2d3748;background:#0f1319;color:#7c9ef8}
+.pg:not([data-theme="light"]) .bk-chip.on{background:#1d4ed8;border-color:#1d4ed8;color:#fff}
+.pg:not([data-theme="light"]) .bk-dep{background:#16a34a;color:#fff}
+.pg:not([data-theme="light"]) .bk-dep:disabled{background:#14532d;color:#4b5563;cursor:not-allowed}
+.pg:not([data-theme="light"]) .bk-wd{background:#0f1319;color:#7c9ef8;border:2px solid #1d4ed8}
+.pg:not([data-theme="light"]) .bk-wd:disabled{border-color:#2d3748;color:#4b5563;cursor:not-allowed}
+.pg:not([data-theme="light"]) .bk-tx{border-color:#1c2330}
+.pg:not([data-theme="light"]) .bk-tx .bk-txdesc{color:#c3c9d4}
+.pg:not([data-theme="light"]) .bk-tx .bk-txdesc small{color:#6b7280}
+.pg:not([data-theme="light"]) .bk-tx .bk-pos{color:#4ade80}
+.pg:not([data-theme="light"]) .bk-tx .bk-neg{color:#f87171}
+.pg:not([data-theme="light"]) .bk-tx .bk-neu{color:#7c9ef8}
+.pg:not([data-theme="light"]) .bk-empty{color:#6b7280}
+.pg:not([data-theme="light"]) .bk-note{color:#6b7280}
 /* ===== NIGHT MODE: comprehensive dark overrides ===== */
 .pg:not([data-theme="light"]) .bw-sitehead{background:#1a1a20;border-color:#2b2b32;color:#ece9e2}
 .pg:not([data-theme="light"]) .bw-homeopt{background:#1a1a20;border-color:#2b2b32;color:#ece9e2}
@@ -2024,10 +2050,6 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .pg:not([data-theme="light"]) .note-card{background:#1a1a20;border-color:#2b2b32;color:#ece9e2}
 .pg:not([data-theme="light"]) .notes-folder{background:#1a1a20;border-color:#2b2b32;color:#ece9e2}
 .pg:not([data-theme="light"]) .pane-cook .cookcard{background:#1a1a20;border-color:#2b2b32;color:#ece9e2}
-.pg:not([data-theme="light"]) .bk-balcard{background:#1a1a20;border-color:#2b2b32;color:#ece9e2}
-.pg:not([data-theme="light"]) .bk-wallet{background:#1a1a20;border-color:#2b2b32;color:#ece9e2}
-.pg:not([data-theme="light"]) .bk-sec{background:#1a1a20;border-color:#2b2b32;color:#ece9e2}
-.pg:not([data-theme="light"]) .bk-chip{background:#1a1a20;border-color:#2b2b32;color:#ece9e2}
 .pg:not([data-theme="light"]) .rep-card{background:#1a1a20!important;border-color:#2b2b32!important;color:#ece9e2}
 /* ===== TERPENE TYCOON v15: light/dark theme (dark is default; light overrides) ===== */
 .dchip.center{justify-content:center}
@@ -6882,7 +6904,11 @@ function saveOnHide(){ try{ save(); }catch(e){} }
 if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  window.addEventListener("pagehide",saveOnHide);
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
-  if(document.visibilityState==="hidden")saveOnHide();});
+  /* Idle reup: if the screen was off/backgrounded for more than 5 minutes,
+     reload on return so the player always gets the latest build, never a
+     stale cached copy. Auto-save already ran on hide, so progress is safe. */
+  if(document.visibilityState==="hidden"){window.__pgIdleSince=Date.now();saveOnHide();}
+  else if(window.__pgIdleSince&&Date.now()-window.__pgIdleSince>5*60*1000){saveOnHide();location.reload();}});
 }
 window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound};
 })();
