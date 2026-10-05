@@ -3327,7 +3327,8 @@ function render(){
   /* Move existing Roach-style messages - they contain "yo", "bitch", or are from pushRoachMsg */
   /* For now, start fresh - old notifs stay in shade */
  }
- if(S.msg&&(!S.notifs.length||S.notifs[0].m!==S.msg)){S.notifs.unshift({m:S.msg,e:_isE?1:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
+ if(S.msg&&!S._suppressNotif&&(!S.notifs.length||S.notifs[0].m!==S.msg)){S.notifs.unshift({m:S.msg,e:_isE?1:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
+ S._suppressNotif=false;
  renderShade();
  var _ev2=q(".hw-evcount");if(_ev2)_ev2.textContent=Array.isArray(S.notifs)?S.notifs.length:0;
  var _dt=q(".ph-date");
@@ -5967,10 +5968,10 @@ root.addEventListener("click",function(e){
  if(a==="dealersel"){S.dealer=+b.dataset.d;save();render();return;}
  if(a==="msg-open"){var _mc=b.dataset.c;S.msgView=_mc;save();render();setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);return;}
  if(a==="heads-up-open"){hideHeadsUp();var _hn=b.dataset.c;if(_hn){S.tab="deal";S.view="app";S.msgView=_hn;navPush("deal");save();render();setTimeout(function(){var _pp2=document.querySelector(".pane-deal");if(_pp2)_pp2.scrollTop=_pp2.scrollHeight;},100);}return;}
- if(a==="msgsound"){S.msgSound=(b.dataset.v==="1");save();render();return;}
- if(a==="phonetoggle"){var _k=b.dataset.k;S[_k]=(b.dataset.v==="1");save();render();return;}
- if(a==="setautolock"){S.autoLock=parseInt(b.dataset.v,10);ttResetLockTimer();save();render();return;}
- if(a==="fsdefault"){S.fullscreenDefault=(b.dataset.v==="1");save();render();return;}
+ if(a==="msgsound"){S._suppressNotif=true;S.msgSound=(b.dataset.v==="1");save();render();return;}
+ if(a==="phonetoggle"){S._suppressNotif=true;var _k=b.dataset.k;S[_k]=(b.dataset.v==="1");save();render();return;}
+ if(a==="setautolock"){S._suppressNotif=true;S.autoLock=parseInt(b.dataset.v,10);ttResetLockTimer();save();render();return;}
+ if(a==="fsdefault"){S._suppressNotif=true;S.fullscreenDefault=(b.dataset.v==="1");save();render();return;}
  if(a==="msg-back"){S.msgView="list";save();render();return;}
  if(a==="msg-reply"){doSendReply(b.dataset.contact,b.dataset.reply);return;}
  if(a==="msg-send"){
@@ -6091,11 +6092,11 @@ root.addEventListener("click",function(e){
  if(a==="stashsellallj"){doStashSellAll(b.dataset.strain,true);return;}
  if(a==="storetab"){S.storetab=b.dataset.sec;save();render();return;}
   if(a==="setsel"){S.setdrug=b.dataset.key;save();render();return;}
- if(a==="settheme"){var _th=b.dataset.theme;S.theme=(_th==="light")?"light":"dark";save();render();return;}
- if(a==="setrows"){var _sr=+b.dataset.rows;if(_sr===2||_sr===3||_sr===4){S.homeRows=_sr;save();layoutHome();render();}return;}
- if(a==="seticonstyle"){var _ss=+b.dataset.s;if(_ss>=0&&_ss<=4){S.iconStyle=_ss;save();layoutHome();render();}return;}
+ if(a==="settheme"){S._suppressNotif=true;var _th=b.dataset.theme;S.theme=(_th==="light")?"light":"dark";save();render();return;}
+ if(a==="setrows"){S._suppressNotif=true;var _sr=+b.dataset.rows;if(_sr===2||_sr===3||_sr===4){S.homeRows=_sr;save();layoutHome();render();}return;}
+ if(a==="seticonstyle"){S._suppressNotif=true;var _ss=+b.dataset.s;if(_ss>=0&&_ss<=4){S.iconStyle=_ss;save();layoutHome();render();}return;}
  if(a==="msg-back"){S.msgView="list";save();render();return;}
- if(a==="setlabelcolor"){var _lc2=b.dataset.c;if(_lc2==="white"||_lc2==="black"){S.labelColor=_lc2;save();render();}return;}
+ if(a==="setlabelcolor"){S._suppressNotif=true;var _lc2=b.dataset.c;if(_lc2==="white"||_lc2==="black"){S.labelColor=_lc2;save();render();}return;}
  if(a==="gofullscreen"){
   try{
    var el=document.documentElement;
