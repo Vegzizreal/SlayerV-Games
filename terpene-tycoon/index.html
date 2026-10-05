@@ -1077,6 +1077,8 @@ window.hatchWidget={
 .todo-tabs{display:flex;gap:8px;padding:12px 16px 0}
 .todo-tab{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:10px;font-size:14px;font-weight:600;cursor:pointer}
 .todo-tab.on{background:#8b5cf6;border-color:#8b5cf6}
+.drow2.bestprice{border:1px solid #4ade80;background:rgba(74,222,128,.06)}
+.besttag{background:#4ade80;color:#000;font-size:10px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
 .tk-prod{margin:8px 0}
 .tk-make{background:#16a34a;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
@@ -1096,6 +1098,8 @@ window.hatchWidget={
 .pg[data-theme="light"] .todo-tabs{display:flex;gap:8px;padding:12px 16px 0}
 .todo-tab{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:10px;font-size:14px;font-weight:600;cursor:pointer}
 .todo-tab.on{background:#8b5cf6;border-color:#8b5cf6}
+.drow2.bestprice{border:1px solid #4ade80;background:rgba(74,222,128,.06)}
+.besttag{background:#4ade80;color:#000;font-size:10px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
 .tk-prod{margin:8px 0}
 .tk-make{background:#16a34a;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
@@ -3232,7 +3236,16 @@ function render(){
  if(S.tab==="props"){q(".pane-props").innerHTML=propsHTML();}
  if(S.tab==="bank"){q(".pane-bank").innerHTML=bankHTML();}
  if(S.tab==="tasks"){q(".pane-tasks").innerHTML=todoHTML();}
- function streetHTML(){
+ function bestDealerFor(k,isJoint){
+ var best=-1,bestDi=0;
+ S.dealers.forEach(function(dd,ii){
+  if(DEALER_TIER[ii]>pLevel())return;
+  var p=isJoint?Math.round(ppu(PRODUCTS[k].price,dd.buy[k])*0.9):ppu(PRODUCTS[k].price,dd.buy[k]);
+  if(p>best){best=p;bestDi=ii;}
+ });
+ return {di:bestDi,price:best};
+}
+function streetHTML(){
  var dh=tabHeader("street")+'<div class="amtrow c"><span>Deal:</span>'
   +'<button type="button" data-act="amt" data-amt="1"'+(S.amt===1?' class="on"':'')+'>1g</button>'
   +'<button type="button" data-act="amt" data-amt="5"'+(S.amt===5?' class="on"':'')+'>5g</button></div>';
@@ -4479,6 +4492,8 @@ function doRoll(k,n){
 function doSmoke(k){
  if(!k||(S.joints[k]||0)<1){S.msg="No joints to smoke.";save();render();return;}
  S.joints[k]--;
+ if(!S.smokedStrains)S.smokedStrains={};
+ S.smokedStrains[k]=1;
  reduceTerrHeat(null,4);
  var t=PRODUCTS[k].tier;
  S.buffMult=Math.round((1.10+0.02*t)*100)/100;
