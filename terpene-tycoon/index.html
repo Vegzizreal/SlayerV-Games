@@ -2762,7 +2762,17 @@ function render(){
   h+='<button type="button" class="msg-chat pinned" data-act="msg-open" data-c="__roach__">'
    +'<span class="msg-avatar msg-av-roach">🪳</span>'
    +'<div class="msg-chat-mid"><b>Roach 📌</b><span>'+escHtml(rl)+'</span></div></button>';
-  (S.contacts||[]).forEach(function(c){
+  // Msg sort: unread first (by most recent msg), then read (by most recent msg). Roach stays pinned above.
+  var _cs=(S.contacts||[]).slice().sort(function(a,b){
+   var au=a.unread?0:1,bu=b.unread?0:1;
+   if(au!==bu)return au-bu;
+   var at=(a.msgs&&a.msgs.length)?(+a.msgs[a.msgs.length-1].t||0):0;
+   var bt=(b.msgs&&b.msgs.length)?(+b.msgs[b.msgs.length-1].t||0):0;
+   if(bt!==at)return bt-at;
+   var an=String(a.name||"").toLowerCase(),bn=String(b.name||"").toLowerCase();
+   return an<bn?-1:(an>bn?1:0);
+  });
+  _cs.forEach(function(c){
    var last=c.msgs.length?c.msgs[c.msgs.length-1].text:"New contact — say hi";
    var tm=c.msgs.length?fmtMsgTime(c.msgs[c.msgs.length-1].t):"";
    var ord=c.order?' <span class="msg-ordtag">📦 order</span>':"";
