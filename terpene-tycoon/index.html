@@ -108,6 +108,7 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="clinic" data-hwkeys="clock events clinic health heal time"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><g fill="#fff"><circle cx="24" cy="9.5" r="1.9"/><circle cx="24" cy="38.5" r="1.9"/><circle cx="9.5" cy="24" r="1.9"/><circle cx="38.5" cy="24" r="1.9"/><circle cx="13.8" cy="13.8" r="1.9"/><circle cx="34.2" cy="13.8" r="1.9"/><circle cx="13.8" cy="34.2" r="1.9"/><circle cx="34.2" cy="34.2" r="1.9"/></g><line x1="24" y1="24" x2="24" y2="14.5" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/><line x1="24" y1="24" x2="30.5" y2="29" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg></span><span class="aa-label">Clock</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="settings" data-hwkeys="settings game settings options wallpaper"><span class="aa-icon" style="background:linear-gradient(135deg,#a8b0bc,#6b7280)"><svg viewBox="0 0 48 48" width="36" height="36"><g fill="#fff"><rect x="20.5" y="5" width="7" height="11" rx="2"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(45 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(90 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(135 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(180 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(225 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(270 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(315 24 24)"/><circle cx="24" cy="24" r="10.5"/></g><circle cx="24" cy="24" r="5" fill="#6b7280"/></svg></span><span class="aa-label">Settings</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="deal" data-mv="phonebook" data-hwkeys="phone lobby deal call"><span class="aa-icon" style="background:linear-gradient(135deg,#4ade80,#16a34a)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M13 6C9.7 6 7 8.7 7 12c0 12.4 10.1 24.5 22.5 26 3.9.5 7-2.6 6.5-6.5l-.7-4.6c-.3-1.9-2.1-3.1-4-2.7l-4.9 1.2c-3.8-2-6.9-5.1-8.9-8.9l1.2-4.9c.4-1.9-.8-3.7-2.7-4z" fill="#fff"/></svg></span><span class="aa-label">Phone</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="devtools" data-hwkeys="dev tools debug" id="aa-devapp" hidden><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M16 14l-8 10 8 10M32 14l8 10-8 10M28 10l-8 28" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="aa-label">Dev</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="stash" data-hwkeys="my files inventory stash"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M5 13a3 3 0 0 1 3-3h11l4 5h14a3 3 0 0 1 3 3v3H5z" fill="#7db4fb"/><path d="M5 19h38v13a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z" fill="#bcd8fe"/></svg></span><span class="aa-label">My Files</span></button>
    </div>
   </div>
@@ -144,6 +145,7 @@ window.hatchWidget={
  <div class="pg-pane pane-chill" hidden></div>
  <div class="pg-pane pane-clinic" hidden></div>
  <div class="pg-pane pane-settings" hidden></div>
+ <div class="pg-pane pane-devtools" hidden></div>
  <div class="pg-pane pane-browser" hidden></div>
  <div class="pg-pane pane-maps" hidden></div>
  <div class="pg-pane pane-rep" hidden></div>
@@ -1148,6 +1150,20 @@ window.hatchWidget={
 .sc-navbtn{display:flex;flex-direction:column;align-items:center;gap:2px;background:#3a2d22;border-radius:24px;padding:12px 36px;color:#e8ded6}
 .sc-navico{font-size:22px;line-height:1}
 .sc-navbtn em{font-style:normal;font-size:13px;font-weight:600}
+.kp-wrap{padding:20px 16px;display:flex;flex-direction:column;align-items:center;gap:16px}
+.kp-display{font-size:28px;font-weight:600;min-height:40px;color:#fff;letter-spacing:1px}
+.kp-ph{color:#666;font-size:18px;font-weight:400}
+.kp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:280px}
+.kp-key{background:#2a2a2a;border:none;border-radius:50%;width:72px;height:72px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;cursor:pointer}
+.kp-key:active{background:#3a3a3a}
+.kp-dig{font-size:24px;font-weight:500}
+.kp-sub{font-size:10px;color:#888;letter-spacing:2px}
+.kp-actions{display:flex;gap:16px;align-items:center}
+.kp-call{background:#4ade80;border:none;border-radius:50%;width:64px;height:64px;font-size:28px;cursor:pointer}
+.kp-call:disabled{opacity:.3}
+.kp-back{background:#333;border:none;border-radius:50%;width:48px;height:48px;font-size:20px;color:#fff;cursor:pointer}
+.kp-dev{background:#fbbf24;color:#000;font-weight:800;padding:6px 12px;border-radius:8px;font-size:12px;margin-top:8px}
+.sc-navbtn.on{background:#8b5cf6 !important}
 .pg[data-theme="light"] .sc-wrap{background:#f5efe9}
 .pg[data-theme="light"] .sc-fav{background:#fff}
 .pg[data-theme="light"] .sc-favtxt{color:#2b2119}
@@ -2310,6 +2326,9 @@ function normalize(s){
  if(s.todoView!=="tasks"&&s.todoView!=="stash")s.todoView="tasks";
  if(typeof s.strainMastery!=="object"||!s.strainMastery)s.strainMastery={};
  if(typeof s.prestigeCount!=="number")s.prestigeCount=0;
+ if(typeof s.devMode!=="boolean")s.devMode=false;
+ if(typeof s.phoneView!=="string")s.phoneView="contacts";
+ if(typeof s._dialNum!=="string")s._dialNum="";
  if(typeof s.prestigeStrain!=="string")s.prestigeStrain="";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(s.homeRows===3||s.homeRows==null)s.homeRows=4;
@@ -3015,6 +3034,9 @@ function render(){
   if(S.prestigeCount>0){_sp.textContent="⭐"+S.prestigeCount;_sp.hidden=false;}
   else{_sp.hidden=true;}
  }
+ /* Dev app visibility */
+ var _dev=q("#aa-devapp");
+ if(_dev)_dev.hidden=!S.devMode;
  /* To Do badge */
  var _tb=q("#aa-todobadge");
  if(_tb){
@@ -3176,6 +3198,24 @@ function render(){
     Tapping a row opens that conversation in Messages (msg-open). */
  var CONTACT_TYPE_ICONS={stoner:"🌿",party:"🎉",connoisseur:"💎",casual:"🙂",fixer:"🕶️"};
  function loyaltyStars(l){var f=Math.max(0,Math.min(5,Math.round((+l||0)/20))),s="";for(var i=0;i<5;i++)s+=i<f?"★":"☆";return s;}
+ function keypadHTML(){
+  var _num=S._dialNum||"";
+  var _keys=[["1",""],["2","ABC"],["3","DEF"],["4","GHI"],["5","JKL"],["6","MNO"],["7","PQRS"],["8","TUV"],["9","WXYZ"],["*",""],["0","+"],["#",""]];
+  var h='<div class="kp-wrap">';
+  h+='<div class="kp-display">'+(_num?escHtml(_num):'<span class="kp-ph">Enter number</span>')+'</div>';
+  h+='<div class="kp-grid">';
+  _keys.forEach(function(k){
+   h+='<button type="button" class="kp-key" data-act="kp-press" data-k="'+k[0]+'"><span class="kp-dig">'+k[0]+'</span>'+(k[1]?'<span class="kp-sub">'+k[1]+'</span>':'')+'</button>';
+  });
+  h+='</div>';
+  h+='<div class="kp-actions">';
+  h+='<button type="button" class="kp-call" data-act="kp-call"'+(_num?"":" disabled")+'>📞</button>';
+  if(_num)h+='<button type="button" class="kp-back" data-act="kp-back">⌫</button>';
+  h+='</div>';
+  if(S.devMode)h+='<div class="kp-dev">DEV MODE ACTIVE</div>';
+  h+='</div>';
+  return h;
+ }
  function dealPhonebook(){
   // Samsung Contacts style: favorites banner, My profile (Roach), A-Z grouped contacts, Contacts-only bottom nav
   var TYPE_AV={stoner:"#8fce7e",party:"#d489b0",connoisseur:"#8d9bd8",casual:"#7fb5a8",fixer:"#6b5b7a"};
@@ -3184,6 +3224,10 @@ function render(){
     +avHtml+'<span class="sc-nm"><b>'+escHtml(name)+'</b><i>'+sub+'</i></span></button>';
   }
   var h='<div class="sc-wrap">';
+  var _pkv=S.phoneView||"contacts";
+  if(_pkv==="keypad"){
+   h+=keypadHTML();
+  }else{
   h+='<div class="sc-fav"><span class="sc-favstar">★</span><span class="sc-favtxt">Add your favorite contacts</span>'
    +'<span class="sc-favacts"><span class="sc-favbtn">+</span><span class="sc-favbtn">🔍</span><span class="sc-favbtn">⋮</span></span></div>';
   h+='<div class="sc-seclabel">My profile</div>';
@@ -3214,7 +3258,12 @@ function render(){
   }else{
    h+='<div class="msg-empty">No customers yet.<br>Sell on the street — some buyers will hit you up.</div>';
   }
-  h+='<div class="sc-bottomnav"><span class="sc-navbtn"><span class="sc-navico">👤</span><em>Contacts</em></span></div>';
+  } // end phoneView else
+  var _pv=S.phoneView||"contacts";
+  h+='<div class="sc-bottomnav">'
+   +'<button type="button" class="sc-navbtn'+(_pv==="contacts"?" on":"")+'" data-act="phoneview" data-v="contacts"><span class="sc-navico">👤</span><em>Contacts</em></button>'
+   +'<button type="button" class="sc-navbtn'+(_pv==="keypad"?" on":"")+'" data-act="phoneview" data-v="keypad"><span class="sc-navico">⌨️</span><em>Keypad</em></button>'
+   +'</div>';
   h+='</div>';
   return h;
  }
@@ -3645,6 +3694,7 @@ function mapsHTML(){
  var _ae=(typeof document!=="undefined")?document.activeElement:null;
  if(!(_ae&&_ae.type==="range"&&root.contains&&root.contains(_ae)))q(".pane-settings").innerHTML=settingsHTML();
  q(".pane-browser").innerHTML=browserHTML();
+ if(S.tab==="devtools"){q(".pane-devtools").innerHTML=tabHeader("devtools")+devtoolsHTML();}
 }
 function getPot(pi,si){var pr=S.props[pi];return pr?pr.slots[si]:undefined;}
 function doPlant(pi,si,k){
@@ -5017,6 +5067,22 @@ function chillHTML(){
  }
  return h;
 }
+function devtoolsHTML(){
+ var h='<div class="shopsec">DEV TOOLS</div>';
+ h+='<div class="sdesc">Dev mode active. All apps visible.</div>';
+ h+='<div class="set-list" style="margin-top:12px">';
+ h+='<div class="set-row"><span>Level</span><b>'+pLevel()+'</b></div>';
+ h+='<div class="set-row"><span>XP</span><b>'+S.xp+'</b></div>';
+ h+='<div class="set-row"><span>Cash</span><b>'+money(S.cash)+'</b></div>';
+ h+='<div class="set-row"><span>Stash</span><b>'+stashTotal()+'g / '+S.stashCap+'g</b></div>';
+ h+='<div class="set-row"><span>Tasks</span><b>'+(S.tasks||[]).length+'</b></div>';
+ h+='<div class="set-row"><span>Contacts</span><b>'+(S.contacts||[]).length+'</b></div>';
+ h+='<div class="set-row"><span>Properties</span><b>'+(S.props||[]).length+'</b></div>';
+ h+='<div class="set-row"><span>Prestige</span><b>'+S.prestigeCount+'x'+(S.prestigeStrain?' ('+PRODUCTS[S.prestigeStrain].name+')':'')+'</b></div>';
+ h+='</div>';
+ h+='<div style="margin-top:16px"><button type="button" class="dchip" data-act="dev-disable" style="width:100%;padding:12px;background:#333;border-color:#555"><span class="dc-name">Disable Dev Mode</span></button></div>';
+ return h;
+}
 function settingsHTML(){
  var _th=tabHeader("settings");
  var sv=S.settingsView||"list";
@@ -5409,6 +5475,31 @@ root.addEventListener("click",function(e){
   normalize(S);
   save();render();
   return;
+ }
+ if(a==="dev-disable"){S.devMode=false;S.msg="Dev mode disabled";save();render();return;}
+ if(a==="phoneview"){S.phoneView=b.dataset.v;save();render();return;}
+ if(a==="kp-press"){
+  var _k=b.dataset.k;
+  S._dialNum=(S._dialNum||"")+_k;
+  /* Mike Jones: 281-330-8004 */
+  if(S._dialNum==="2813308004"&&!S.devMode){
+   S.devMode=true;
+   S._dialNum="";
+   S.msg="DEV MODE UNLOCKED — all apps visible";
+   save();render();return;
+  }
+  if(S._dialNum.length>15)S._dialNum=S._dialNum.slice(0,15);
+  save();render();return;
+ }
+ if(a==="kp-back"){
+  S._dialNum=(S._dialNum||"").slice(0,-1);
+  save();render();return;
+ }
+ if(a==="kp-call"){
+  var _n=S._dialNum||"";
+  S._dialNum="";
+  S.msg="Calling "+_n+"... no answer.";
+  save();render();return;
  }
  if(a==="settingsview"){S.settingsView=b.dataset.v;save();render();return;}
  if(a==="stashsell"){var _sd=stashDealer();doDeal(_sd.di,b.dataset.strain,false,false);return;}
