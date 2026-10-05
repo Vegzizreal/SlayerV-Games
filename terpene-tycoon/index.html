@@ -3490,10 +3490,13 @@ function unlockFixer(){
  pushContactNotif("📱 New contact: The Fixer — he can help with heat, for a price");
  S.msg="The Fixer hit you up. Check your messages — he deals in favors.";
 }
-function maybeAddContact(){
+function maybeAddContact(tier,qty){
  if(!S.contacts)S.contacts=[];
  if(S.contacts.length>=contactCap())return;
- if(Math.random()>0.08)return;
+ // Contact chance scales with product tier and quantity sold in one deal (capped at 80%)
+ var t=Math.max(1,parseInt(tier,10)||1),q=Math.max(1,parseInt(qty,10)||1);
+ var chance=Math.min(0.80,0.10+0.10*t+Math.min(0.20,0.02*q));
+ if(Math.random()>chance)return;
  var used={};S.contacts.forEach(function(c){used[c.name]=1;});
  var pool=CONTACT_NAMES.filter(function(n){return !used[n];});
  if(!pool.length)return;
@@ -3617,7 +3620,7 @@ function doDeal(di,k,isBuy,isJoint){
   var prof=calcProfit(k+(isJoint?"_j":""),g,heldBefore,rev);
   if(!addXP(5))S.msg="Sold "+g+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+"."+(dh2>0?" Same spot too many times — heat +"+dh2+".":"");
   showSalePop(st.name,g+(isJoint?" joints":"g"),rev,prof);
-  maybeAddContact();
+  maybeAddContact(st.tier,g);
  }
  flushTerrMsg();
  battleRoll();
