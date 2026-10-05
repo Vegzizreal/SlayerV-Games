@@ -3904,7 +3904,7 @@ function doDismissTask(i){
  if(!t)return;
  if(!confirm("Dismiss this order from "+t.name+"?"))return;
  S.tasks.splice(i,1);
- S.msg="Dismissed task for "+t.name+".";
+ 
  save();render();
 }
 function tasksHTML(){
@@ -5063,7 +5063,7 @@ root.addEventListener("click",function(e){
   _wimg.onload=function(){S.wallpaper=_wu;S.msg="Wallpaper updated.";save();render();};
   _wimg.onerror=function(){S.msg="No image found at that URL.";save();render();};
   _wimg.src=_wu;return;}
- if(a==="wp-reset"){S.wallpaper="";S.msg="Wallpaper reset.";save();render();return;}
+ if(a==="wp-reset"){S.wallpaper="";save();render();return;}
  if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk].tier<=pLevel()&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
  if(a==="buyweapon"){var wkey=b.dataset.w,wu=WEAPONS[wkey];if(wkey&&wkey!=="fists"&&wu&&wu.tier<=pLevel()&&!(S.weapons&&S.weapons[wkey])&&S.cash>=wu.cost){S.cash-=wu.cost;S.weapons[wkey]=true;S.msg=wu.name+" purchased — best weapon is used in fights.";save();render();}return;}
  if(a==="bstrike"){battleStrike();return;}
