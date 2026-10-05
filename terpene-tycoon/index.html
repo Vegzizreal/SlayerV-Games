@@ -6341,7 +6341,11 @@ function layoutHome(){
  keys=keys.filter(function(k){
   if(k.indexOf("f:")===0)return !!(S.folders||{})[k.slice(2)];
   var lb=k.slice(2);
-  return !!_hwAppEls[lb]&&!inFolder[lb];
+  if(!_hwAppEls[lb]||inFolder[lb])return false;
+  /* skip dev-only apps when dev mode is off (they're hidden) */
+  /* labels: "Clock" is the clock app, "Clinic" is the real clinic */
+  if(!S.devMode&&(lb==="Dev"||lb==="Clock"||lb==="Chill"))return false;
+  return true;
  });
  // rebuild pages
  var old=grid.querySelectorAll(".hw-page");
