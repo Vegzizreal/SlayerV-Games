@@ -1026,6 +1026,11 @@ window.hatchWidget={
 .msg-replies{display:flex;flex-wrap:wrap;gap:8px;padding:12px 4px;position:sticky;bottom:0;background:var(--hatch-widget-surface);border-top:1px solid rgba(255,255,255,.08);margin-top:10px;z-index:5}
 .msg-reply{background:rgba(26,115,232,.14);border:1px solid rgba(138,180,248,.55);color:#8ab4f8;border-radius:20px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer}
 .msg-reply:active{background:rgba(26,115,232,.32)}
+.msg-composer{display:flex;gap:8px;padding:10px 12px;border-top:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.2);position:sticky;bottom:0}
+.msg-input{flex:1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:10px 16px;color:#fff;font-size:14px;outline:none}
+.msg-input::placeholder{color:rgba(255,255,255,.4)}
+.msg-send{background:#1a73e8;border:none;color:#fff;border-radius:20px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer}
+.msg-send:active{background:#1557b0}
 .pg[data-theme="light"] .msg-reply{background:rgba(26,115,232,.08);border-color:rgba(26,115,232,.5);color:#1a73e8}
 .pg[data-theme="light"] .msg-replies{border-top-color:rgba(0,0,0,.08)}
 /* Messages conversation header */
@@ -3130,6 +3135,10 @@ function render(){
    });
    h+='</div>';
   }
+  /* text composer with fuzzy matching */
+  if(_mreps.length){
+   h+='<div class="msg-composer"><input type="text" class="msg-input" data-contact="'+escHtml(c.name)+'" placeholder="Type a message..." autocomplete="off"><button type="button" class="msg-send" data-act="msg-send" data-contact="'+escHtml(c.name)+'">Send</button></div>';
+  }
   h+='</div>';
   return h;
  }
@@ -3963,6 +3972,31 @@ function msgReplyState(c){
  if(c.order)return "order";
  if((c.lastFulfilledAt||0)>(c.lastOrderAt||0))return "done";
  return "idle";
+}
+/* fuzzy match typed input against reply options */
+function fuzzyMatchReply(input,replies){
+ var norm=input.toLowerCase().trim().replace(/[^a-z0-9 ]/g,"");
+ if(!norm)return null;
+ var best=null,bestScore=0;
+ replies.forEach(function(rp){
+  var rt=rp.text.toLowerCase().replace(/[^a-z0-9 ]/g,"");
+  var score=0;
+  /* exact match */
+  if(norm===rt)score=100;
+  /* input contains reply or vice versa */
+  else if(rt.indexOf(norm)>=0||norm.indexOf(rt)>=0)score=80;
+  /* word overlap */
+  else{
+   var nw=norm.split(/\s+/),rw=rt.split(/\s+/);
+   var common=nw.filter(function(w){return rw.indexOf(w)>=0;}).length;
+   if(common>0)score=(common/Math.max(nw.length,rw.length))*60;
+   /* check key words: bet, nah, nope, deal, etc */
+   if(/\b(bet|yeah|yes|yep|ok|okay|sure)\b/.test(norm)&&/\b(bet)\b/.test(rt))score=70;
+   if(/\b(nah|no|nope|pass)\b/.test(norm)&&/\b(nah|nope)\b/.test(rt))score=70;
+  }
+  if(score>bestScore){bestScore=score;best=rp;}
+ });
+ return bestScore>=50?best:null;
 }
 function msgRepliesFor(c){
  var st=msgReplyState(c),out=[];
@@ -5039,6 +5073,26 @@ root.addEventListener("click",function(e){
  if(a==="msgsound"){S.msgSound=(b.dataset.v==="1");save();render();return;}
  if(a==="msg-back"){S.msgView="list";save();render();return;}
  if(a==="msg-reply"){doSendReply(b.dataset.contact,b.dataset.reply);return;}
+ if(a==="msg-send"){
+  var _input=document.querySelector('.msg-input[data-contact="'+b.dataset.contact+'"]');
+  var _text=_input?_input.value.trim():"";
+  if(!_text)return;
+  var _c=getContact(b.dataset.contact);
+  if(!_c)return;
+  var _reps=msgRepliesFor(_c);
+  var _match=fuzzyMatchReply(_text,_reps);
+  if(_match){
+   /* matched a reply option - trigger it */
+   if(_match.act==="order-accept"){doAcceptOrder(_c.name,_match.variant);}
+   else if(_match.act==="order-dismiss"){doDismissOrder(_c.name,_match.variant);}
+   else{doSendReply(_c.name,_match.id);}
+  }else{
+   /* no match - send as free text (no game effect) */
+   _c.msgs.push({from:"me",text:_text,t:Date.now()});
+   _c.unread=false;save();render();
+  }
+  return;
+ }
  if(a==="order-accept"){doAcceptOrder(b.dataset.contact,b.dataset.variant);return;}
  if(a==="order-dismiss"){doDismissOrder(b.dataset.contact,b.dataset.variant);return;}
  if(a==="task-fulfill"){doFulfillTask(+b.dataset.i||0);return;}
