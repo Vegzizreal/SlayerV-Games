@@ -2624,6 +2624,7 @@ function ttLockTick(){
   var _n=S.notifs.filter(function(n){var _a=(n&&(n.app||"system"))||"system";return !!_lnf[_a];}).slice(0,3);
   ln.innerHTML=_n.map(function(n){
    var _txt=typeof n==="string"?n:(n.m||n.text||n.msg||"");
+   if(n&&n.app==="messages"&&n.from)_txt="\uD83D\uDCAC "+n.from+": "+_txt;
    return '<div class="lock-notif">'+escHtml(String(_txt).slice(0,80))+'</div>';
   }).join("");
  }
@@ -3240,7 +3241,10 @@ function renderShade(){
  var list=q(".shade-list");if(!list)return;
  if(shadeListKey===key)return;shadeListKey=key;
  list.innerHTML=(S.notifs&&S.notifs.length)?S.notifs.map(function(n){
-  return '<div class="shade-item'+(n.e?' err':'')+'"><span class="si-av">'+(n.e?'&#9888;&#65039;':'&#127793;')+'</span><div class="si-body"><div class="si-head"><b>Roach</b><span>'+escHtml(fmtShadeTime(n.t))+'</span></div><div class="si-msg">'+escHtml(n.m)+'</div></div></div>';
+  var _a=(n&&(n.app||"system"))||"system";
+  var _who=_a==="messages"?"\uD83D\uDCAC "+(n.from||"Messages"):_a==="roach"?"\uD83D\uDC00 Roach":_a==="phone"?"\uD83D\uDCF1 Phone":"\u2699\uFE0F System";
+  var _mm=(n&&(n.m||n.text||n.msg))||"";
+  return '<div class="shade-item'+(n.e?' err':'')+'"><span class="si-av">'+(n.e?'&#9888;&#65039;':'&#127793;')+'</span><div class="si-body"><div class="si-head"><b>'+escHtml(_who)+'</b><span>'+escHtml(fmtShadeTime(n.t))+'</span></div><div class="si-msg">'+escHtml(_mm)+'</div></div></div>';
  }).join(""):'<div class="shade-empty">No notifications yet — Roach will hit you up here.</div>';
 }
 function render(){
@@ -4331,7 +4335,7 @@ function notifyMsgArrived(c,text){
  showHeadsUp(c.name,text);
  playMsgSound();
  if(!Array.isArray(S.notifs))S.notifs=[];
- S.notifs.unshift({m:"\uD83D\uDCAC "+c.name+": "+text,app:"messages",e:0,t:Date.now()});
+ S.notifs.unshift({m:text,from:c.name,app:"messages",e:0,t:Date.now()});
  if(S.notifs.length>10)S.notifs.length=10;
 }
 function unlockFixer(){
@@ -6307,13 +6311,16 @@ root.addEventListener("change",function(e){
  }
  function inList(t){return !!(t&&t.closest&&t.closest(".shade-list"));}
  // status bar: tap center to toggle shade (no drag)
+ var _sbTouchTs=0;
  sb.addEventListener("click",function(e){
+  if(Date.now()-_sbTouchTs<600)return; /* ignore synthetic click right after touch */
   /* only toggle when tapping the center area (not clock or icons) */
   var r=sb.getBoundingClientRect();
   var x=e.clientX-r.left;
   if(x>r.width*0.25&&x<r.width*0.75)toggleShade();
  });
  sb.addEventListener("touchend",function(e){
+  _sbTouchTs=Date.now();
   var t=e.changedTouches[0];
   var r=sb.getBoundingClientRect();
   var x=t.clientX-r.left;
