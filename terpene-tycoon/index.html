@@ -2349,6 +2349,7 @@ function normalize(s){
  if(typeof s._dialNum!=="string")s._dialNum="";
  if(!Array.isArray(s.pendingContacts))s.pendingContacts=[];
  if(typeof s.roachUnread!=="number")s.roachUnread=0;
+ if(typeof s.fullscreenDefault==="undefined")s.fullscreenDefault=true;
  if(typeof s.usedNumbers!=="object"||!s.usedNumbers)s.usedNumbers={};
  if(typeof s.nameToNumber!=="object"||!s.nameToNumber)s.nameToNumber={};
  if(s.thiefBattle!==null&&typeof s.thiefBattle!=="object")s.thiefBattle=null;
@@ -2511,6 +2512,8 @@ function ttTrapBack(){
  }catch(e){}
 }
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",ttTrapBack);}else{ttTrapBack();}
+/* auto-fullscreen on first tap if enabled (browsers require user gesture) */
+(function(){var _fsDone=false;function _tryFS(){if(_fsDone)return;_fsDone=true;try{if(typeof S!=="undefined"&&S.fullscreenDefault!==false&&!document.fullscreenElement){var el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(function(){});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}}catch(e){}}document.addEventListener("touchend",_tryFS,{once:true,passive:true});document.addEventListener("click",_tryFS,{once:true});})();
 function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
 var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦",tasks:"📋"};
 var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
@@ -5438,8 +5441,10 @@ function settingsHTML(){
   var _lc=S.labelColor||"white";
   h+='<div class="dchips"><button type="button" class="dchip center'+(_lc==="white"?" on":"")+'" data-act="setlabelcolor" data-c="white"><span class="dc-name">White</span></button><button type="button" class="dchip center'+(_lc==="black"?" on":"")+'" data-act="setlabelcolor" data-c="black"><span class="dc-name">Black</span></button></div>';
   h+='<div class="sdesc" style="margin:8px 2px 6px">Fullscreen</div>';
-  h+='<div class="dchips"><button type="button" class="dchip center" data-act="gofullscreen"><span class="dc-name">⛶ Go Fullscreen</span></button></div>';
-  h+='<div class="sdesc" style="margin:4px 2px 0;font-size:11px;opacity:.6">Hides the browser bar on phones. For a permanent app-like feel, use your browser\'s "Add to Home Screen".</div>';
+  var _fsd=S.fullscreenDefault!==false;
+  h+='<div class="set-row"><span>Fullscreen on launch</span><button type="button" class="set-toggle'+(_fsd?" on":"")+'" data-act="fsdefault" data-v="'+(_fsd?"0":"1")+'"><span class="set-knob"></span></button></div>';
+  h+='<div class="dchips"><button type="button" class="dchip center" data-act="gofullscreen"><span class="dc-name">⛶ Go Fullscreen Now</span></button></div>';
+  h+='<div class="sdesc" style="margin:4px 2px 0;font-size:11px;opacity:.6">Auto-fullscreen kicks in on your first tap. For a permanent app-like feel, use your browser\'s "Add to Home Screen".</div>';
   h+='<div class="shopsec">WALLPAPER</div>';
   h+='<div class="wp-wrap">';
   if(S.wallpaper){h+='<div class="wp-prev"><img src="'+escHtml(S.wallpaper)+'" alt="Wallpaper preview"></div>';}
@@ -5727,6 +5732,7 @@ root.addEventListener("click",function(e){
  if(a==="msg-open"){var _mc=b.dataset.c;S.msgView=_mc;save();render();setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);return;}
  if(a==="heads-up-open"){hideHeadsUp();var _hn=b.dataset.c;if(_hn){S.tab="deal";S.view="app";S.msgView=_hn;navPush("deal");save();render();setTimeout(function(){var _pp2=document.querySelector(".pane-deal");if(_pp2)_pp2.scrollTop=_pp2.scrollHeight;},100);}return;}
  if(a==="msgsound"){S.msgSound=(b.dataset.v==="1");save();render();return;}
+ if(a==="fsdefault"){S.fullscreenDefault=(b.dataset.v==="1");save();render();return;}
  if(a==="msg-back"){S.msgView="list";save();render();return;}
  if(a==="msg-reply"){doSendReply(b.dataset.contact,b.dataset.reply);return;}
  if(a==="msg-send"){
