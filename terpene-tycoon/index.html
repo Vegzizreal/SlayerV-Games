@@ -3213,6 +3213,7 @@ function render(){
  function kpPlay(d){
   try{
    if(!_MJ_DIGITS[d])return;
+   if(kpPlayBlob(d))return;
    var _ctx=kpEnsureCtx();if(!_ctx){kpFallbackBeep();return;}
    var _u=KP_AUDIO[d];
    if(_u){
@@ -3243,6 +3244,28 @@ function render(){
    _o.connect(_g);_g.connect(_ctx.destination);
    _o.start(0);_o.stop(_ctx.currentTime+0.15);
   }catch(e){}
+ }
+ var _kpBlobCache={};
+ function kpPlayBlob(d){
+  try{
+   var _u=KP_AUDIO[d];if(!_u)return false;
+   var _a=_kpBlobCache[d];
+   if(!_a){
+    var _b64=_u.split(",")[1];
+    var _bin=atob(_b64);
+    var _arr=new Uint8Array(_bin.length);
+    for(var i=0;i<_bin.length;i++)_arr[i]=_bin.charCodeAt(i);
+    var _blob=new Blob([_arr],{type:"audio/mpeg"});
+    var _url=(window.URL||window.webkitURL).createObjectURL(_blob);
+    _a=new Audio(_url);
+    _a.preload="auto";
+    _kpBlobCache[d]=_a;
+   }
+   try{_a.currentTime=0;}catch(e){}
+   var _p=_a.play();
+   if(_p&&_p.catch)_p.catch(function(){});
+   return true;
+  }catch(e){return false;}
  }
  function kpPlayBuf(_ctx,_buf){
   try{
