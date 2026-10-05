@@ -4871,7 +4871,7 @@ root.addEventListener("click",function(e){
  if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);save();render();return;}
  if(a==="openapp"){closeFolder();if(S.battle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";if(b.dataset.mv)S.msgView=b.dataset.mv;navPush(_ap);var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
  if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle){S.msg="Finish the fight!";save();render();return;}navPop();save();render();return;}
- if(a==="android-home"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
+ if(a==="android-home"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();location.href=location.pathname+"?cb="+Date.now();return;}
  if(a==="android-recents"){var _rx=q(".android-recents");if(_rx)_rx.hidden=!_rx.hidden;render();return;}
  if(a==="shade-open"){openShade();return;}
  if(a==="shade-close"){closeShade();return;}
