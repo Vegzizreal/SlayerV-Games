@@ -5585,16 +5585,20 @@ root.addEventListener("click",function(e){
  if(a==="kp-press"){
   var _k=b.dataset.k;
   S._dialNum=(S._dialNum||"")+_k;
-  try{kpPlay(_k);}catch(_e){}
+  var _kd=_k;
   /* Mike Jones: 281-330-8004 — toggles dev mode */
   if(S._dialNum==="2813308004"){
    S.devMode=!S.devMode;
    S._dialNum="";
    S.msg=S.devMode?"DEV MODE UNLOCKED — all apps visible":"Dev mode disabled";
-   save();render();return;
+   save();render();
+   try{kpPlay(_kd);}catch(_e){}
+   return;
   }
   if(S._dialNum.length>15)S._dialNum=S._dialNum.slice(0,15);
-  save();render();return;
+  save();render();
+  try{kpPlay(_kd);}catch(_e){}
+  return;
  }
  if(a==="kp-back"){
   S._dialNum=(S._dialNum||"").slice(0,-1);
