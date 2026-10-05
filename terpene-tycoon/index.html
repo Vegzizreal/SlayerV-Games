@@ -1794,7 +1794,7 @@ function bankTxTime(t){
 function bankHTML(){
  var bk=(S.bank&&typeof S.bank==="object")?S.bank:{bal:0,tx:[]};
  var bal=Math.max(0,bk.bal||0);
- var chips=[25,100,500,1000,"max"];
+ var chips=[100,500,1000,5000,10000,"max"];
  var h='<div class="bk-head"><div class="bk-bankname">🏦 Terpene Bank</div><div class="bk-welcome">Good '+(new Date().getHours()<12?"morning":new Date().getHours()<17?"afternoon":"evening")+', your money is safe here.</div></div>';
  h+='<div class="bk-balcard"><div class="bk-label">Savings Balance</div><div class="bk-balance">'+money(bal)+'</div><div class="bk-apy">▲ '+BANK_APY.toFixed(2)+'% APY &middot; interest accrues daily</div></div>';
  h+='<div class="bk-walletrow"><div class="bk-wallet"><div class="bk-label">Cash on hand</div><div class="bk-amt">'+money(S.cash)+'</div></div>'
@@ -1804,11 +1804,13 @@ function bankHTML(){
   var lbl=c==="max"?"MAX":money(c);
   h+='<button type="button" class="bk-chip'+(BANKAMT===c?' on':'')+'" data-act="bank-amt" data-amt="'+c+'">'+lbl+'</button>';
  });
- var depAmt=BANKAMT==="max"?S.cash:Math.min(BANKAMT,S.cash);
- var wdAmt=BANKAMT==="max"?bal:Math.min(BANKAMT,bal);
+ var depCan=BANKAMT==="max"?Math.floor(S.cash)>=1:S.cash>=BANKAMT;
+ var wdCan=BANKAMT==="max"?Math.floor(bal)>=1:bal>=BANKAMT;
+ var depLbl=BANKAMT==="max"?"Deposit MAX":"Deposit "+money(BANKAMT);
+ var wdLbl=BANKAMT==="max"?"Withdraw MAX":"Withdraw "+money(BANKAMT);
  h+='</div><div class="bk-actions">'
-  +'<button type="button" class="bk-btn bk-dep" data-act="bank-dep"'+(depAmt>=1?'':' disabled')+'>Deposit'+(depAmt>=1?' '+money(depAmt):'')+'</button>'
-  +'<button type="button" class="bk-btn bk-wd" data-act="bank-wd"'+(wdAmt>=1?'':' disabled')+'>Withdraw'+(wdAmt>=1?' '+money(wdAmt):'')+'</button>'
+  +'<button type="button" class="bk-btn bk-dep" data-act="bank-dep"'+(depCan?'':' disabled')+'>'+depLbl+'</button>'
+  +'<button type="button" class="bk-btn bk-wd" data-act="bank-wd"'+(wdCan?'':' disabled')+'>'+wdLbl+'</button>'
   +'</div></div>';
  h+='<div class="bk-sec"><h4>Recent Activity</h4>';
  var tx=bk.tx||[];
