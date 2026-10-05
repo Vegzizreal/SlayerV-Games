@@ -5206,14 +5206,14 @@ function chillHTML(){
 }
 function notesHTML(){
  var h='<div class="shopsec">NOTES</div>';
- h+='<div class="sdesc">People who left their number. Dial it in the Phone keypad to hit them up.</div>';
+ h+='<div class="sdesc">People who left their number. Dial it manually in the Phone keypad to hit them up.</div>';
  var _pend=S.pendingContacts||[];
  if(!_pend.length){
   h+='<div class="notes-empty" style="margin-top:20px">No numbers yet.<br>Make some deals and people will leave theirs.</div>';
  }else{
   h+='<div class="set-list" style="margin-top:12px">';
   _pend.forEach(function(p){
-   h+='<div class="set-row"><span><b>'+escHtml(p.name)+'</b><br><span style="color:#888;font-size:13px">'+fmtPhone(p.phone)+'</span></span><button type="button" class="notes-abtn" data-act="notes-dial" data-phone="'+p.phone+'">Dial</button></div>';
+   h+='<div class="set-row"><span><b>'+escHtml(p.name)+'</b><br><span style="color:#888;font-size:13px">'+fmtPhone(p.phone)+'</span></span></div>';
   });
   h+='</div>';
  }
@@ -5637,13 +5637,6 @@ root.addEventListener("click",function(e){
   return;
  }
  if(a==="dev-disable"){S.devMode=false;S.msg="Dev mode disabled";save();render();return;}
- if(a==="notes-dial"){
-  var _ph=b.dataset.phone||"";
-  S._dialNum=_ph;
-  S.phoneView="keypad";
-  S.tab="deal";S.view="app";S.msgView="phonebook";
-  save();render();return;
- }
  if(a==="phoneview"){S.phoneView=b.dataset.v;save();render();return;}
  if(a==="kp-press"){
   var _k=b.dataset.k;
