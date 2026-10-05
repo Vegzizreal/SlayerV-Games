@@ -2587,7 +2587,7 @@ function statusHTML(){
   +'<div class="ts-msg">'+S.msg+'</div>'
   +'</div>';
 }
-function tabHeader(tab){if(tab!=="deal")return "";/* app headers removed 2026-10-04 - use android nav bar, except Messages keeps its contact header */
+function tabHeader(tab){return "";/* all app headers removed 2026-10-04 - use android nav bar */
  var c=TAB_COLORS[tab]||"#e5484d";
  // Realistic per-app navigation bars
  if(tab==="deal"){
