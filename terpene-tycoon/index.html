@@ -2341,6 +2341,7 @@ function normalize(s){
  if(typeof s.phoneView!=="string")s.phoneView="contacts";
  if(typeof s._dialNum!=="string")s._dialNum="";
  if(!Array.isArray(s.pendingContacts))s.pendingContacts=[];
+ if(typeof s.roachUnread!=="number")s.roachUnread=0;
  if(typeof s.usedNumbers!=="object"||!s.usedNumbers)s.usedNumbers={};
  if(typeof s.nameToNumber!=="object"||!s.nameToNumber)s.nameToNumber={};
  if(s.thiefBattle!==null&&typeof s.thiefBattle!=="object")s.thiefBattle=null;
@@ -2488,12 +2489,13 @@ function ttTrapBack(){
   history.pushState({tt:1,view:"home"},"");
   window.addEventListener("popstate",function(e){
    /* system back pressed - navigate in-game instead of leaving */
-   if(S.view==="app"){
-    /* go back to home */
-    S.view="home";S.tab=null;navStack=[];
-   }else if(S.msgView&&S.msgView!=="list"){
+   /* check chat FIRST (chat is inside app view) */
+   if(S.tab==="deal"&&(S.msgView&&S.msgView!=="list"&&S.msgView!=="phonebook")){
     /* in a chat - go back to message list */
     S.msgView="list";
+   }else if(S.view==="app"){
+    /* go back to home */
+    S.view="home";S.tab=null;navStack=[];
    }
    /* re-trap for next back press */
    try{history.pushState({tt:1,view:S.view,tab:S.tab},"");}catch(e2){}
@@ -2594,6 +2596,8 @@ var ROACH_PANIC={
 function pushRoachMsg(m){
  if(!Array.isArray(S.roachMsgs))S.roachMsgs=[];
  S.roachMsgs.unshift({m:m,t:Date.now()});if(S.roachMsgs.length>20)S.roachMsgs.length=20;S.roachRead=false;
+ if(typeof S.roachUnread!=="number")S.roachUnread=0;
+ S.roachUnread++;
  /* also show in notification shade */
  if(!Array.isArray(S.notifs))S.notifs=[];
  /* migrate Roach messages from notifs to separate roachMsgs (2026-10-05) */
@@ -3020,7 +3024,7 @@ function renderShade(){
  var sbs=q(".sb-qstash");if(sbs)sbs.textContent=stashTotal()+"/"+S.stashCap+"g";
  var sbh=q(".sb-qhp");if(sbh){sbh.textContent="HP "+Math.max(0,Math.round(S.hp));sbh.style.color=S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444";}
  var sbd=q(".sb-qday");if(sbd)sbd.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
- var sbheat=q(".sb-qheat");if(sbheat){var _tbd=terrDef(S.terr&&S.terr.active);var _ahb=activeHeat();sbheat.textContent="🔥 "+_tbd.name+" "+Math.round(Math.min(100,_ahb))+"%";}
+ var sbheat=q(".sb-qheat");if(sbheat){var _tbd=terrDef(S.terr&&S.terr.active);var _ahb=activeHeat();sbheat.textContent="🔥 "+_tbd.name+" "+Math.round(Math.min(100,_ahb))+"%"+(_ahb>0?" ("+heatCooldownTxt(_ahb)+")":"");sbheat.title=_ahb>0?"Cools down in "+heatCooldownTxt(_ahb):"Heat is clear";}
  var hwh=q(".hw-qhp");if(hwh){hwh.textContent="HP "+Math.max(0,Math.round(S.hp));
  hwh.style.color=S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444";}
  var hwd=q(".hw-qday");if(hwd)hwd.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
@@ -3040,8 +3044,8 @@ function render(){
  if(_mb){
   var _uc=0;
   (S.contacts||[]).forEach(function(c){_uc+=(c.unreadCount||0);});
-  /* also count Roach unread */
-  if(S.roachMsgs&&S.roachMsgs.length&&!S.roachRead)_uc+=S.roachMsgs.length;
+  /* also count Roach unread (only new since last read) */
+  if(S.roachUnread>0)_uc+=S.roachUnread;
   if(_uc>0){_mb.textContent=_uc>99?"99+":_uc;_mb.hidden=false;}
   else{_mb.hidden=true;}
  }
@@ -3421,7 +3425,7 @@ function render(){
   var _mv=S.msgView||"list";
   if(_mv==="list"){q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
   else if(_mv==="phonebook"){q(".pane-deal").innerHTML=tabHeader("deal")+dealPhonebook();}
-  else if(_mv==="__roach__"){S.roachRead=true;q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
+  else if(_mv==="__roach__"){S.roachRead=true;S.roachUnread=0;q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
   else if(getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;_cc.unreadCount=0;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
   else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
  }
@@ -3687,7 +3691,7 @@ function mapsHTML(){
     +'<div class="rep-title"><b>'+t.name+'</b><span>'+t.sub+'</span></div>'
     +(isA?'<span class="rep-active">ACTIVE</span>':'')+'</div>';
    h+='<div class="rep-meta"><span>Prices <b class="rep-price">&times;'+t.price+'</b></span>'
-    +'<span>Heat <b style="color:'+hc+'">'+tot+'%</b></span>'
+    +'<span>Heat <b style="color:'+hc+'">'+tot+'%'+(tot>0?' <i style="font-style:normal;opacity:.7">('+heatCooldownTxt(tot)+')</i>':'')+'</b></span>'
     +'<span>Risk <b>&times;'+t.heat+'</b></span></div>';
    h+='<div class="rep-likes">Likes: <b>'+t.likesTxt+'</b></div>';
    h+='<div class="rep-heatbar"><i style="width:'+tot+'%;background:'+hc+'"></i></div>';
@@ -4165,6 +4169,17 @@ function tickContacts(now){
   var pn=PRODUCTS[pick.k].name;
   var qty=pick.kind==="joint"?grams+" "+pn+" joints":grams+"g "+pn;
   var texts=["yo u got any "+pn+"? need "+qty,"aye need "+qty+" asap 🙏","u holdin "+pn+"? tryna grab "+qty];
+  /* thieves get shadier as they get closer to robbing you */
+  if(c.isThief){
+   var _obt=c.ordersBeforeTurn||0;
+   if(_obt<=0){
+    texts=["bring "+qty+". come alone. no games.","i need "+qty+". meet me, just u.","got the cash for "+qty+". don't bring nobody."];
+   }else if(_obt===1){
+    texts=["yo let me get "+qty+"... somewhere quiet tho","need "+qty+". u still good? no one else around right?","aye "+qty+". keep this between us 🤫"];
+   }else if(_obt===2){
+    texts=["yo u got "+qty+"? can u meet somewhere lowkey?","need "+qty+" asap 🙏 somewhere private"];
+   }
+  }
   var _txt=texts[(Math.random()*texts.length)|0];
   c.msgs.push({from:"them",text:_txt,t:now});
   c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
@@ -4411,7 +4426,8 @@ function msgRepliesFor(c){
  if(c&&c.order){
   /* order request: reply pills are the accept/dismiss actions */
   ORDER_ACCEPT_VARIANTS.forEach(function(v){out.push({id:"order-accept",text:v,act:"order-accept",variant:v});});
-  out.push({id:"order-dismiss",text:randomDenyVariant(),act:"order-dismiss",variant:randomDenyVariant()});
+  var _dv=randomDenyVariant();
+  out.push({id:"order-dismiss",text:_dv,act:"order-dismiss",variant:_dv});
   return out;
  }
  Object.keys(MSG_REPLIES).forEach(function(k){
