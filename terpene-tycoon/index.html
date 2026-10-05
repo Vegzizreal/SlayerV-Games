@@ -120,9 +120,15 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="deal" data-mv="phonebook" data-hwkeys="phone lobby deal call"><span class="aa-icon" style="background:linear-gradient(135deg,#4ade80,#16a34a)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M13 6C9.7 6 7 8.7 7 12c0 12.4 10.1 24.5 22.5 26 3.9.5 7-2.6 6.5-6.5l-.7-4.6c-.3-1.9-2.1-3.1-4-2.7l-4.9 1.2c-3.8-2-6.9-5.1-8.9-8.9l1.2-4.9c.4-1.9-.8-3.7-2.7-4z" fill="#fff"/></svg></span><span class="aa-label">Phone</span></button>
    <button type="button" class="android-app" data-act="dev-disable" data-hwkeys="dev tools debug" id="aa-devapp" hidden><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M16 14l-8 10 8 10M32 14l8 10-8 10M28 10l-8 28" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="aa-label">Dev</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="notes" data-hwkeys="notes contacts numbers"><span class="aa-badge" id="aa-notesbadge" hidden></span><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M12 8h24a3 3 0 0 1 3 3v27a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3z" fill="#fff"/><rect x="18" y="4" width="12" height="7" rx="2" fill="#fff" stroke="#f59e0b" stroke-width="2"/><path d="M15 22h18M15 28h18M15 34h12" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="aa-label">Notes</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="gallery" data-hwkeys="gallery photos harvest"><span class="aa-icon" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)"><svg viewBox="0 0 48 48" width="36" height="36"><rect x="6" y="10" width="36" height="28" rx="4" fill="#fff"/><circle cx="17" cy="20" r="4" fill="#ec4899"/><path d="M10 34l8-8 6 6 5-5 9 9v2H10z" fill="#8b5cf6"/></svg></span><span class="aa-label">Gallery</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="stash" data-hwkeys="my files inventory stash"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M5 13a3 3 0 0 1 3-3h11l4 5h14a3 3 0 0 1 3 3v3H5z" fill="#7db4fb"/><path d="M5 19h38v13a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z" fill="#bcd8fe"/></svg></span><span class="aa-label">My Files</span></button>
    </div>
   </div>
+   <div class="android-drawer" id="tt-drawer" hidden>
+    <div class="drawer-handle"></div>
+    <div class="drawer-search"><input type="text" id="drawer-search" placeholder="Search apps"></div>
+    <div class="drawer-grid" id="drawer-grid"></div>
+   </div>
   <div class="hw-dots"><span class="on" data-hwpage="0"></span><span data-hwpage="1"></span></div>
  </div>
  <div class="hw-folderview" hidden>
@@ -161,12 +167,19 @@ window.hatchWidget={
  <div class="pg-pane pane-browser" hidden></div>
  <div class="pg-pane pane-maps" hidden></div>
  <div class="pg-pane pane-rep" hidden></div>
+ <div class="pg-pane pane-gallery" hidden></div>
  <div class="pg-pane pane-props" hidden></div>
 <div class="pg-pane pane-bank" hidden></div>
 <div class="pg-pane pane-tasks" hidden></div>
  <div class="pg-pane pane-battle" hidden></div>
  <div class="pg-hint v-hint"></div>
  <div class="android-recents" hidden><div class="recents-sheet"><div class="recents-title">Recent apps</div><div class="recents-list"></div><button type="button" class="recents-close" data-act="android-recents">Close</button></div></div>
+ <div class="android-lockscreen" id="tt-lockscreen" hidden>
+  <div class="lock-time" id="lock-time">--:--</div>
+  <div class="lock-date" id="lock-date"></div>
+  <div class="lock-notifs" id="lock-notifs"></div>
+  <div class="lock-hint">Swipe up to unlock</div>
+ </div>
  <div class="android-bottomnav"><button type="button" data-act="android-back" aria-label="Back">&#9664;</button><button type="button" data-act="android-home" aria-label="Home">&#9679;</button><button type="button" data-act="android-recents" aria-label="Recents">&#9632;</button></div>
 </div>
 <style>
@@ -299,6 +312,13 @@ window.hatchWidget={
 .hw-whl{font-size:11.5px;color:rgba(255,255,255,.55);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hw-appgrid{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -18px;padding:12px 18px 8px;flex:none;min-height:0}
 .hw-appgrid::-webkit-scrollbar{display:none}
+.android-drawer{position:absolute;inset:0;z-index:150;background:rgba(10,10,14,.97);backdrop-filter:blur(20px);display:flex;flex-direction:column;padding:16px;transform:translateY(100%);transition:transform .3s ease}
+.android-drawer.open{transform:translateY(0)}
+.android-drawer[hidden]{display:none}
+.drawer-handle{width:40px;height:4px;background:#444;border-radius:2px;margin:0 auto 12px}
+.drawer-search{margin-bottom:12px}
+.drawer-search input{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:10px 16px;color:#fff;font-size:14px;box-sizing:border-box}
+.drawer-grid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:16px 8px;align-content:start;padding-bottom:20px}
 .hw-page{flex:0 0 100%;display:grid;grid-template-columns:repeat(4,1fr);gap:20px 6px;scroll-snap-align:start;scroll-snap-stop:always;align-content:start}
 /* compact icon sizing when 4 rows are selected */
 .hw-appgrid[data-rows="4"] .hw-page{gap:12px 6px}
@@ -535,6 +555,14 @@ window.hatchWidget={
 .bw-mitem:last-child{border-bottom:0}
 .bw-mitem:active{background:rgba(255,255,255,.06)}
 .pane-browser{position:relative}
+.android-lockscreen{position:absolute;inset:0;z-index:200;background:linear-gradient(180deg,#0a0a12 0%,#1a1a2e 50%,#0a0a12 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;touch-action:pan-y}
+.android-lockscreen[hidden]{display:none}
+.lock-time{font-size:72px;font-weight:200;color:#fff;letter-spacing:-2px}
+.lock-date{font-size:16px;color:#aaa;margin-top:4px}
+.lock-notifs{margin-top:24px;max-width:85%;display:flex;flex-direction:column;gap:8px}
+.lock-notif{background:rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;font-size:13px;color:#ddd;backdrop-filter:blur(10px)}
+.lock-hint{position:absolute;bottom:60px;font-size:13px;color:#888;animation:lockPulse 2s infinite}
+@keyframes lockPulse{0%,100%{opacity:.5}50%{opacity:1}}
 .android-bottomnav{flex:none;order:9;display:flex;justify-content:space-around;align-items:center;padding:7px 0 9px;background:#000;border-top:1px solid #1f1f23}
 .android-bottomnav button{background:transparent;border:0;color:#8a8a93;font-size:18px;padding:8px 30px;cursor:pointer;border-radius:8px;line-height:1}
 .android-bottomnav button:active{color:#fff;background:rgba(255,255,255,.08)}
@@ -1159,6 +1187,22 @@ window.hatchWidget={
 .sc-nm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
 .sc-nm b{font-size:16px;font-weight:600;color:#f2e9e1}
 .sc-nm i{font-style:normal;font-size:13px;color:#a89a8d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-history,.sc-voicemail{padding:8px 0}
+.sc-hrow,.sc-vrow{display:flex;align-items:center;gap:12px;padding:10px 4px;border-bottom:1px solid rgba(255,255,255,.06)}
+.sc-hicon,.sc-vicon{font-size:20px;flex:none}
+.sc-hinfo,.sc-vinfo{flex:1;min-width:0;display:flex;flex-direction:column}
+.sc-hinfo b,.sc-vinfo b{font-size:14px;color:#fff}
+.sc-hinfo span,.sc-vinfo span{font-size:12px;color:#888;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sc-htime{font-size:11px;color:#666;flex:none}
+.sc-vdot{width:8px;height:8px;border-radius:50%;background:#3b82f6;flex:none}
+.sc-empty{text-align:center;color:#666;padding:30px;font-size:14px}
+.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px}
+.gal-photo{border-radius:10px;overflow:hidden;background:#1a1a1e;position:relative;aspect-ratio:1}
+.gal-photo img{width:100%;height:100%;object-fit:cover}
+.gal-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.8));padding:12px 8px 6px;display:flex;flex-direction:column}
+.gal-cap b{font-size:11px;color:#fff}
+.gal-cap span{font-size:10px;color:#aaa}
+.gal-empty{text-align:center;color:#666;padding:40px;grid-column:1/-1}
 .sc-bottomnav{margin-top:auto;padding-top:18px;display:flex;justify-content:center}
 .sc-navbtn{display:flex;flex-direction:column;align-items:center;gap:2px;background:#3a2d22;border-radius:24px;padding:12px 36px;color:#e8ded6}
 .sc-navico{font-size:22px;line-height:1}
@@ -2360,6 +2404,10 @@ function normalize(s){
  if(!Array.isArray(s.pendingContacts))s.pendingContacts=[];
  if(typeof s.roachUnread!=="number")s.roachUnread=0;
  if(typeof s.fullscreenDefault==="undefined")s.fullscreenDefault=true;
+ if(typeof s.wifi==="undefined")s.wifi=true;
+ if(!Array.isArray(s.callHistory))s.callHistory=[];
+ if(!Array.isArray(s.voicemails))s.voicemails=[];
+ if(!Array.isArray(s.photos))s.photos=[];
  if(typeof s.usedNumbers!=="object"||!s.usedNumbers)s.usedNumbers={};
  if(typeof s.nameToNumber!=="object"||!s.nameToNumber)s.nameToNumber={};
  if(s.thiefBattle!==null&&typeof s.thiefBattle!=="object")s.thiefBattle=null;
@@ -2522,10 +2570,110 @@ function ttTrapBack(){
  }catch(e){}
 }
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",ttTrapBack);}else{ttTrapBack();}
+/* App drawer: swipe up from home to open */
+function ttDrawerOpen(){
+ var dr=document.getElementById("tt-drawer");
+ if(!dr)return;
+ dr.hidden=false;
+ requestAnimationFrame(function(){dr.classList.add("open");});
+ ttDrawerPopulate("");
+ var si=document.getElementById("drawer-search");
+ if(si){si.value="";si.oninput=function(){ttDrawerPopulate(si.value);};}
+}
+function ttDrawerClose(){
+ var dr=document.getElementById("tt-drawer");
+ if(!dr)return;
+ dr.classList.remove("open");
+ setTimeout(function(){dr.hidden=true;},300);
+}
+function ttDrawerPopulate(q){
+ var dg=document.getElementById("drawer-grid");
+ if(!dg)return;
+ q=(q||"").toLowerCase();
+ var apps=document.querySelectorAll(".hw-appgrid .android-app");
+ var h="";
+ for(var i=0;i<apps.length;i++){
+  var a=apps[i];
+  if(a.hidden)continue;
+  var label=a.querySelector(".aa-label");
+  var name=label?label.textContent:"";
+  var keys=a.getAttribute("data-hwkeys")||"";
+  if(q&&name.toLowerCase().indexOf(q)<0&&keys.toLowerCase().indexOf(q)<0)continue;
+  var app=a.getAttribute("data-app");
+  var icon=a.querySelector(".aa-icon").outerHTML;
+  h+='<button type="button" class="android-app" data-act="openapp" data-app="'+app+'">'+icon+'<span class="aa-label">'+name+'</span></button>';
+ }
+ dg.innerHTML=h||'<div style="color:#888;text-align:center;grid-column:1/-1;padding:20px">No apps found</div>';
+}
+(function(){
+ var _dsy=null;
+ document.addEventListener("touchstart",function(e){
+  /* swipe up from home screen (not in drawer, not locked) */
+  var ls=document.getElementById("tt-lockscreen");
+  var dr=document.getElementById("tt-drawer");
+  if((ls&&!ls.hidden)||(dr&&!dr.hidden))return;
+  if(typeof S!=="undefined"&&S.view==="home"&&e.touches.length===1)_dsy=e.touches[0].clientY;
+ },{passive:true});
+ document.addEventListener("touchend",function(e){
+  if(_dsy!==null){
+   var dy=_dsy-e.changedTouches[0].clientY;
+   if(dy>80)ttDrawerOpen();
+  }
+  _dsy=null;
+  /* swipe down on drawer to close */
+  var dr=document.getElementById("tt-drawer");
+ },{passive:true});
+ /* swipe down on drawer handle to close */
+ document.addEventListener("touchstart",function(e){
+  var dr=document.getElementById("tt-drawer");
+  if(dr&&!dr.hidden&&e.touches.length===1)_dsy=e.touches[0].clientY;
+ },{passive:true});
+})();
+/* Lock screen: show on load, swipe up to unlock */
+function ttLockShow(){
+ var ls=document.getElementById("tt-lockscreen");
+ if(!ls)return;
+ ls.hidden=false;
+ ttLockTick();
+}
+function ttLockTick(){
+ var lt=document.getElementById("lock-time"),ld=document.getElementById("lock-date");
+ if(lt){try{var d=new Date();lt.textContent=d.getHours()+":"+String(d.getMinutes()).padStart(2,"0");}catch(e){}}
+ if(ld){try{ld.textContent=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});}catch(e){}}
+ var ln=document.getElementById("lock-notifs");
+ if(ln&&typeof S!=="undefined"&&S.notifs){
+  var _n=S.notifs.slice(0,3);
+  ln.innerHTML=_n.map(function(n){return '<div class="lock-notif">'+String(n.text||n).slice(0,80)+'</div>';}).join("");
+ }
+}
+function ttLockHide(){
+ var ls=document.getElementById("tt-lockscreen");
+ if(ls)ls.hidden=true;
+ try{ttLockTick._t&&clearInterval(ttLockTick._t);}catch(e){}
+}
+(function(){
+ var _sy=null;
+ document.addEventListener("touchstart",function(e){
+  var ls=document.getElementById("tt-lockscreen");
+  if(ls&&!ls.hidden&&e.touches.length===1)_sy=e.touches[0].clientY;
+ },{passive:true});
+ document.addEventListener("touchend",function(e){
+  var ls=document.getElementById("tt-lockscreen");
+  if(ls&&!ls.hidden&&_sy!==null){
+   var dy=_sy-e.changedTouches[0].clientY;
+   if(dy>60)ttLockHide();
+  }
+  _sy=null;
+ },{passive:true});
+ /* show lock on load */
+ if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(ttLockShow,300);});
+ else setTimeout(ttLockShow,300);
+ setInterval(function(){var ls=document.getElementById("tt-lockscreen");if(ls&&!ls.hidden)ttLockTick();},10000);
+})();
 /* auto-fullscreen on first tap if enabled (browsers require user gesture) */
 (function(){var _fsDone=false;function _tryFS(){if(_fsDone)return;_fsDone=true;try{if(typeof S!=="undefined"&&S.fullscreenDefault!==false&&!document.fullscreenElement){var el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(function(){});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}}catch(e){}}document.addEventListener("touchend",_tryFS,{once:true,passive:true});document.addEventListener("click",_tryFS,{once:true});})();
 function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
-var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦",tasks:"📋"};
+var APP_EMOJI={gallery:"🖼️",store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦",tasks:"📋"};
 var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
 function appName(a){if(a==="street")return "Street Deal";if(a==="rep")return "Reputation";if(a==="props")return "My Properties";return a.charAt(0).toUpperCase()+a.slice(1);}
 function save(){if(bridge)bridge.setState(S);}
@@ -2882,6 +3030,9 @@ function tabHeader(tab){
   return '<div class="appnav"><div class="appnav-title"><span class="appnav-leaf">🗺️</span><div><b>Territories</b><span>pick your turf</span></div></div>'
    +'<div class="appnav-pill" style="border-color:'+_ta.color+';color:'+_ta.color+'">'+_ta.name+'</div></div>';
  }
+ if(tab==="gallery"){
+  return '<div class="appnav"><div class="appnav-title"><span class="appnav-leaf">🖼️</span><div><b>Gallery</b><span>'+((S.photos||[]).length)+' photos</span></div></div></div>';
+ }
  if(tab==="rep"){
   var _ra=terrDef((S.terr&&S.terr.active)||"home");
   return '<div class="appnav"><div class="appnav-title"><span class="appnav-leaf">⭐</span><div><b>Reputation</b><span>turf & heat</span></div></div>'
@@ -3109,6 +3260,7 @@ function render(){
  q(".pane-browser").hidden=battling||!inApp||S.tab!=="browser";
  q(".pane-maps").hidden=battling||!inApp||S.tab!=="maps";
  q(".pane-rep").hidden=battling||!inApp||S.tab!=="rep";
+ q(".pane-gallery").hidden=battling||!inApp||S.tab!=="gallery";
  q(".pane-props").hidden=battling||!inApp||S.tab!=="props";
  q(".pane-bank").hidden=battling||!inApp||S.tab!=="bank";
  q(".pane-tasks").hidden=battling||!inApp||S.tab!=="tasks";
@@ -3383,12 +3535,50 @@ function render(){
   }
   } // end phoneView else
   var _pv=S.phoneView||"contacts";
+  /* call history + voicemail tabs */
+  if(_pv==="history")h+=phoneHistoryHTML();
+  else if(_pv==="voicemail")h+=phoneVoicemailHTML();
   h+='<div class="sc-bottomnav">'
+   +'<button type="button" class="sc-navbtn'+(_pv==="history"?" on":"")+'" data-act="phoneview" data-v="history"><span class="sc-navico">🕐</span><span>History</span></button>'
    +'<button type="button" class="sc-navbtn'+(_pv==="contacts"?" on":"")+'" data-act="phoneview" data-v="contacts"><span class="sc-navico">👤</span><em>Contacts</em></button>'
+   +'<button type="button" class="sc-navbtn'+(_pv==="voicemail"?" on":"")+'" data-act="phoneview" data-v="voicemail"><span class="sc-navico">📼</span><span>Voicemail</span></button>'
    +'<button type="button" class="sc-navbtn'+(_pv==="keypad"?" on":"")+'" data-act="phoneview" data-v="keypad"><span class="sc-navico">⌨️</span><em>Keypad</em></button>'
    +'</div>';
   h+='</div>';
   return h;
+ }
+ function phoneHistoryHTML(){
+  var h='<div class="sc-history">';
+  var hist=(S.callHistory||[]).slice(-20).reverse();
+  if(!hist.length)h+='<div class="sc-empty">No recent calls</div>';
+  hist.forEach(function(c){
+   var icon=c.type==="missed"?"📵":c.type==="outgoing"?"📞":"📲";
+   h+='<div class="sc-hrow"><span class="sc-hicon">'+icon+'</span><div class="sc-hinfo"><b>'+escHtml(c.name)+'</b><span>'+escHtml(c.detail||"")+'</span></div><span class="sc-htime">'+fmtMsgTime(c.t)+'</span></div>';
+  });
+  h+='</div>';
+  return h;
+ }
+ function phoneVoicemailHTML(){
+  var h='<div class="sc-voicemail">';
+  var vm=(S.voicemails||[]).slice().reverse();
+  if(!vm.length)h+='<div class="sc-empty">No voicemails</div>';
+  vm.forEach(function(v,i){
+   h+='<div class="sc-vrow"><span class="sc-vicon">🎙️</span><div class="sc-vinfo"><b>'+escHtml(v.from)+'</b><span>"'+escHtml(v.text)+'"</span></div>'+(v.unread?'<span class="sc-vdot"></span>':'')+'</div>';
+  });
+  h+='</div>';
+  return h;
+ }
+ /* log a call in history */
+ function logCall(name,type,detail){
+  if(!S.callHistory)S.callHistory=[];
+  S.callHistory.push({name:name,type:type,detail:detail||"",t:Date.now()});
+  if(S.callHistory.length>50)S.callHistory=S.callHistory.slice(-50);
+ }
+ /* leave a voicemail */
+ function leaveVoicemail(from,text){
+  if(!S.voicemails)S.voicemails=[];
+  S.voicemails.push({from:from,text:text,t:Date.now(),unread:true});
+  if(S.voicemails.length>20)S.voicemails=S.voicemails.slice(-20);
  }
  function dealConvo(c){
   var h='<div class="msg-convo">';
@@ -3463,6 +3653,7 @@ function render(){
  if(S.tab==="street"){q(".pane-street").innerHTML=streetHTML();}
  if(S.tab==="maps"){q(".pane-maps").innerHTML=mapsHTML();}
  if(S.tab==="rep"){q(".pane-rep").innerHTML=repHTML();}
+ if(S.tab==="gallery"){q(".pane-gallery").innerHTML=galleryHTML();}
  if(S.tab==="props"){q(".pane-props").innerHTML=propsHTML();}
  if(S.tab==="bank"){q(".pane-bank").innerHTML=bankHTML();}
  if(S.tab==="tasks"){q(".pane-tasks").innerHTML=todoHTML();todoSwipeInit();}
@@ -3701,6 +3892,19 @@ function mapsHTML(){
    +'<div class="gps-scale">500 ft</div></div>';
   return h;
  }
+ function galleryHTML(){
+  var h=tabHeader("gallery");
+  h+='<div class="gal-grid">';
+  var photos=(S.photos||[]).slice().reverse();
+  if(!photos.length)h+='<div class="gal-empty">No photos yet.<br>Harvest some plants!</div>';
+  photos.forEach(function(p){
+   var pr=PRODUCTS[p.strain];
+   var img=STRAIN_IMGS[p.strain]||"";
+   h+='<div class="gal-photo"><img src="'+img+'" alt="'+escHtml(pr.name)+'"><div class="gal-cap"><b>'+escHtml(pr.name)+'</b><span>'+p.grams+'g • '+fmtMsgDay(p.t)+'</span></div></div>';
+  });
+  h+='</div>';
+  return h;
+ }
  function repHTML(){
   // Reputation app: all territory management (cards with heat, set active, bribe)
   var active=(S.terr&&S.terr.active)||"home";
@@ -3870,6 +4074,10 @@ function doHarvest(pi,si){
  S.stash[p.strain]+=take;
  pr.slots[si]=null;
  S.stats.harvested++;
+ /* gallery photo */
+ if(!S.photos)S.photos=[];
+ S.photos.push({strain:p.strain,grams:take,t:Date.now()});
+ if(S.photos.length>100)S.photos=S.photos.slice(-100);
  var _hx=addXP(8*PRODUCTS[p.strain].tier);
  if(!_hx)S.msg="Harvested "+take+"g of "+PRODUCTS[p.strain].name+".";
  save();render();
@@ -4985,6 +5193,7 @@ function startThiefBattle(c,o,taskIdx){
  /* thief's weapon (not fists) */
  var _tw=["knife","pistol","smg"][(Math.random()*3)|0];
  S.thiefBattle={name:c.name,thiefHp:_thp,thiefMax:_thp,thiefWeapon:_tw,product:{k:o.k,kind:o.kind,g:o.g},taskIdx:taskIdx,log:["😡 "+c.name+" pulls a "+WEAPONS[_tw].name+"! It's a setup!"]};
+ leaveVoicemail(c.name,"You know what time it is. Bring the product, come alone.");
  S.msg="ROBBERY! "+c.name+" is trying to take your product!";
  c.msgs.push({from:"them",text:"give me everything. now.",t:Date.now()});
  c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
@@ -5507,24 +5716,36 @@ function settingsHTML(){
   h+=_sr("👥 Customers", (S.contacts||[]).length);
   return h;
  }
+ if(sv==="network"){
+  h+='<div class="shopsec">NETWORK & INTERNET</div>';
+  var _wf=S.wifi!==false,_bt=S.bluetooth===true,_air=S.airplane===true;
+  h+='<div class="set-row"><span>📶 Wi-Fi</span><button type="button" class="set-toggle'+(_wf?" on":"")+'" data-act="phonetoggle" data-k="wifi" data-v="'+(_wf?"0":"1")+'"><span class="set-knob"></span></button></div>';
+  h+='<div class="set-row"><span>🔵 Bluetooth</span><button type="button" class="set-toggle'+(_bt?" on":"")+'" data-act="phonetoggle" data-k="bluetooth" data-v="'+(_bt?"0":"1")+'"><span class="set-knob"></span></button></div>';
+  h+='<div class="set-row"><span>✈️ Airplane Mode</span><button type="button" class="set-toggle'+(_air?" on":"")+'" data-act="phonetoggle" data-k="airplane" data-v="'+(_air?"0":"1")+'"><span class="set-knob"></span></button></div>';
+  h+='<div class="sdesc" style="margin:8px 2px 0">Carrier: Terp Mobile<br>Signal: ●●●●○</div>';
+  return h;
+ }
  if(sv==="general"){
   h+='<div class="shopsec">HOME SCREEN</div>';
   h+='<div class="wp-wrap"><div class="sdesc" style="margin-bottom:8px">Long-press any home screen icon to rearrange.</div><div class="wp-btns"><button type="button" class="wp-reset" data-act="layout-reset" style="flex:1">Reset home layout</button></div></div>';
   return h;
  }
- // Main list view (phone-style)
+ // Main list view - split into PHONE and GAME sections
+ h+='<div class="shopsec">PHONE</div>';
  h+='<div class="set-list">';
+ h+='<button type="button" class="set-row" data-act="settingsview" data-v="network"><span>📶 Network & Internet</span><span class="set-chev">›</span></button>';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="appearance"><span>🎨 Appearance</span><span class="set-chev">›</span></button>';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="notifications"><span>🔔 Notifications</span><span class="set-chev">›</span></button>';
+ h+='<button type="button" class="set-row" data-act="settingsview" data-v="about"><span>ℹ️ About Phone</span><span class="set-chev">›</span></button>';
+ h+='</div>';
+ h+='<div class="shopsec" style="margin-top:16px">GAME</div>';
+ h+='<div class="set-list">';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="gameplay"><span>🎮 Gameplay</span><span class="set-chev">›</span></button>';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="general"><span>⚙️ General</span><span class="set-chev">›</span></button>';
- h+='</div>';
- h+='<div class="set-list" style="margin-top:20px">';
- h+='<button type="button" class="set-row" data-act="settingsview" data-v="about"><span>ℹ️ About Phone</span><span class="set-chev">›</span></button>';
  if(pLevel()>=8){
   h+='<button type="button" class="set-row" data-act="settingsview" data-v="prestige"><span>⭐ Prestige'+(S.prestigeCount?' ('+S.prestigeCount+')':'')+'</span><span class="set-chev">›</span></button>';
- h+='<button type="button" class="set-row" data-act="settingsview" data-v="stats"><span>📊 Stats</span><span class="set-chev">›</span></button>';
  }
+ h+='<button type="button" class="set-row" data-act="settingsview" data-v="stats"><span>📊 Stats</span><span class="set-chev">›</span></button>';
  h+='</div>';
  return h;
 }
@@ -5668,9 +5889,9 @@ root.addEventListener("click",function(e){
   return;
  }
  if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);ttPushHist();save();render();return;}
- if(a==="openapp"){closeFolder();if(S.battle||S.thiefBattle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";if(b.dataset.mv)S.msgView=b.dataset.mv;navPush(_ap);ttPushHist();var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
+ if(a==="openapp"){closeFolder();try{ttDrawerClose();}catch(e){}if(S.battle||S.thiefBattle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";if(b.dataset.mv)S.msgView=b.dataset.mv;navPush(_ap);ttPushHist();var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
  if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle){S.msg="Finish the fight!";save();render();return;}navPop();save();render();return;}
- if(a==="android-home"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
+ if(a==="android-home"){try{ttDrawerClose();}catch(e){}if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
  if(a==="android-recents"){var _rx=q(".android-recents");if(_rx)_rx.hidden=!_rx.hidden;render();return;}
  if(a==="shade-open"){openShade();return;}
  if(a==="shade-close"){closeShade();return;}
@@ -5745,6 +5966,7 @@ root.addEventListener("click",function(e){
  if(a==="msg-open"){var _mc=b.dataset.c;S.msgView=_mc;save();render();setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);return;}
  if(a==="heads-up-open"){hideHeadsUp();var _hn=b.dataset.c;if(_hn){S.tab="deal";S.view="app";S.msgView=_hn;navPush("deal");save();render();setTimeout(function(){var _pp2=document.querySelector(".pane-deal");if(_pp2)_pp2.scrollTop=_pp2.scrollHeight;},100);}return;}
  if(a==="msgsound"){S.msgSound=(b.dataset.v==="1");save();render();return;}
+ if(a==="phonetoggle"){var _k=b.dataset.k;S[_k]=(b.dataset.v==="1");save();render();return;}
  if(a==="fsdefault"){S.fullscreenDefault=(b.dataset.v==="1");save();render();return;}
  if(a==="msg-back"){S.msgView="list";save();render();return;}
  if(a==="msg-reply"){doSendReply(b.dataset.contact,b.dataset.reply);return;}
@@ -5852,9 +6074,10 @@ root.addEventListener("click",function(e){
   var _n=(S._dialNum||"").replace(/\D/g,"");
   S._dialNum="";
   if(_n.length===10&&activatePendingContact(_n)){
+   logCall(_n,"outgoing","Contact added");
    save();render();return;
   }
-
+  logCall(_n||"Unknown","outgoing","No answer");
   S.msg="Calling "+_n+"... no answer.";
   save();render();return;
  }
