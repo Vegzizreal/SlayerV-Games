@@ -4829,7 +4829,7 @@ root.addEventListener("click",function(e){
  if(a==="dsellj"){doDeal(+b.dataset.d,b.dataset.strain,false,true);return;}
  if(a==="tickspd"){tickToggleSpeed();return;}
  if(a==="refresh"){location.href=location.pathname+"?cb="+Date.now();return;}
- if(a==="roach-view"){S.lastVer=GAME_VER;S.tab="settings";S.settingsView="about";S.view="app";navPush("settings");save();render();return;}
+ if(a==="roach-view"){S.lastVer=GAME_VER;S.tab="settings";S.settingsView="about";delete S.settingstab;S.view="app";navPush("settings");save();render();return;}
  if(a==="settingstab"){S.settingstab=b.dataset.t;save();render();return;}
  if(a==="settingsview"){S.settingsView=b.dataset.v;save();render();return;}
  if(a==="stashsell"){var _sd=stashDealer();doDeal(_sd.di,b.dataset.strain,false,false);return;}
