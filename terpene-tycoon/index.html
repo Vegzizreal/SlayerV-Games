@@ -2575,7 +2575,10 @@ function ttLockTick(){
  var ln=document.getElementById("lock-notifs");
  if(ln&&typeof S!=="undefined"&&S.notifs){
   var _n=S.notifs.slice(0,3);
-  ln.innerHTML=_n.map(function(n){return '<div class="lock-notif">'+String(n.text||n).slice(0,80)+'</div>';}).join("");
+  ln.innerHTML=_n.map(function(n){
+   var _txt=typeof n==="string"?n:(n.m||n.text||n.msg||"");
+   return '<div class="lock-notif">'+escHtml(String(_txt).slice(0,80))+'</div>';
+  }).join("");
  }
 }
 function ttLockHide(){
