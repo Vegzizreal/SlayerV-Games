@@ -56,7 +56,7 @@ window.hatchWidget={
 })();
 </script>
 <div class="pg">
- <div class="android-statusbar"><span class="android-clock">--:--</span><span class="sb-stats"><span class="sb-qcash">$200</span><span class="sb-qstash">0/40g</span><span class="sb-qhp">HP 100</span><span class="sb-qday">Day 1</span><span class="sb-prestige" id="sb-prestige" hidden></span><span class="sb-qheat">🔥 Home 0%</span></span><span class="android-sicons"><svg id="sb-cellbars" viewBox="0 0 24 24" width="14" height="14" fill="#fff" style="display:none"><path d="M3 17h3v4H3zM8.5 13h3v8h-3zM14 9h3v12h-3zM19.5 4h3v17h-3z"/></svg><svg id="sb-wifi" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 10a12 12 0 0 1 16 0"/><path d="M7.5 13.5a7 7 0 0 1 9 0"/><circle cx="12" cy="17.5" r="1.6" fill="#fff" stroke="none"/></svg><svg viewBox="0 0 28 24" width="18" height="14" fill="none" stroke="#fff" stroke-width="1.6"><rect x="2" y="7" width="21" height="10" rx="2.5"/><rect id="sb-battfill" x="4" y="9" width="14" height="6" rx="1" fill="#4ade80" stroke="none"/><path d="M25.5 10.5v3" stroke-linecap="round"/></svg></span></div>
+ <div class="android-statusbar"><span class="sb-group sb-left"><span class="android-clock">--:--</span><span class="sb-qcash">$200</span><span class="sb-qstash">0/40g</span><span class="sb-qhp">HP 100</span></span><span class="sb-notch"></span><span class="sb-group sb-right"><span class="sb-qday">Day 1</span><span class="sb-prestige" id="sb-prestige" hidden></span><span class="sb-qheat">🔥 Home 0%</span></span><span class="android-sicons"><svg id="sb-cellbars" viewBox="0 0 24 24" width="14" height="14" fill="#fff" style="display:none"><path d="M3 17h3v4H3zM8.5 13h3v8h-3zM14 9h3v12h-3zM19.5 4h3v17h-3z"/></svg><svg id="sb-wifi" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 10a12 12 0 0 1 16 0"/><path d="M7.5 13.5a7 7 0 0 1 9 0"/><circle cx="12" cy="17.5" r="1.6" fill="#fff" stroke="none"/></svg><svg viewBox="0 0 28 24" width="18" height="14" fill="none" stroke="#fff" stroke-width="1.6"><rect x="2" y="7" width="21" height="10" rx="2.5"/><rect id="sb-battfill" x="4" y="9" width="14" height="6" rx="1" fill="#4ade80" stroke="none"/><path d="M25.5 10.5v3" stroke-linecap="round"/></svg></span></div>
  <div class="shade-scrim" hidden data-act="shade-close"></div>
  <div class="heads-up" hidden data-act="heads-up-open" data-c=""><span class="hu-icon"><svg viewBox="0 0 48 48" width="22" height="22"><path d="M24 7c-9.4 0-17 6.4-17 14.3 0 4.4 2.4 8.4 6.2 11l-1.6 6.2 6.8-3.4c1.8.5 3.7.8 5.6.8 9.4 0 17-6.4 17-14.3S33.4 7 24 7z" fill="#fff"/><circle cx="17" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="24" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="31" cy="21.5" r="2.9" fill="#3b82f6"/></svg></span><span class="hu-body"><b class="hu-name"></b><span class="hu-text"></span></span></div>
  <div class="notif-shade" hidden>
@@ -88,7 +88,7 @@ window.hatchWidget={
   <div class="hw-weather">
    <div class="hw-wicon" id="hw-wicon"><svg viewBox="0 0 48 48" width="58" height="58"><path d="M31 27a13 13 0 1 1-12.6-16.6A10.5 10.5 0 0 0 31 27z" fill="#f1f5f9"/><circle cx="35" cy="13" r="2.2" fill="#f1f5f9" opacity=".85"/><circle cx="40" cy="21" r="1.5" fill="#f1f5f9" opacity=".6"/></svg></div>
    <div class="hw-wtext">
-    <div class="hw-wloc">Shirley, NY</div>
+    <div class="hw-wloc">Greenhaven</div>
     <div class="hw-wcond"><span class="android-wheatnum">0</span>&#176; &#8226; <span class="android-wheattier">CALM</span></div>
     <div class="hw-whl"><span class="ph-dowsub">Sunday</span></div>
    </div>
@@ -209,7 +209,9 @@ window.hatchWidget={
 .android-home{animation:appOpen .25s cubic-bezier(.2,.9,.3,1)}
 /* ===== Android OS shell ===== */
 .pg-head,.pg-tabs{display:none!important}
-.android-statusbar{flex:none;order:-3;display:flex;gap:6px;align-items:center;padding:10px 16px 6px;background:transparent;color:#fff;font-size:13px;font-weight:500;font-family:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.2px;position:relative;z-index:60}
+.android-statusbar{flex:none;order:-3;display:flex;gap:5px;align-items:center;padding:10px 16px 6px;background:transparent;color:#fff;font-size:13px;font-weight:500;font-family:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.2px;position:relative;z-index:60}
+.sb-group{display:flex;gap:5px;align-items:center;flex:none}
+.sb-notch{flex:1 1 auto;min-width:44px}
 .android-statusbar .android-clock{font-weight:500;font-size:13px}
 .sb-stats{display:flex;gap:7px;align-items:center;flex:1;justify-content:center;overflow:hidden}
 .android-sicons{display:flex;gap:5px;align-items:center;flex:none}
@@ -1189,7 +1191,7 @@ window.hatchWidget={
 .pg[data-theme="light"] .msg-order-body{color:rgba(0,0,0,.8)}
 .pg[data-theme="light"] .msg-order-hd{color:#111}
 /* Samsung Contacts phonebook (Phone app) — dark warm brown */
-.sc-wrap{background:#1a1210;border-radius:12px;padding:14px 14px 10px;min-height:62vh;display:flex;flex-direction:column}
+.sc-wrap{background:#1a1210;border-radius:12px;padding:14px 14px 10px;min-height:75vh;display:flex;flex-direction:column}
 .sc-fav{display:flex;align-items:center;gap:12px;background:#241a15;border-radius:26px;padding:8px 8px 8px 8px;margin-bottom:6px}
 .sc-favstar{width:44px;height:44px;border-radius:50%;background:#d9a441;color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
 .sc-favtxt{flex:1;min-width:0;color:#e8ded6;font-size:16px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1215,26 +1217,39 @@ window.hatchWidget={
 .sc-htime{font-size:11px;color:#666;flex:none}
 .sc-vdot{width:8px;height:8px;border-radius:50%;background:#3b82f6;flex:none}
 .sc-empty{text-align:center;color:#666;padding:30px;font-size:14px}
-.sc-bottomnav{margin-top:auto;padding-top:18px;display:flex;justify-content:center}
-.sc-navbtn{display:flex;flex-direction:column;align-items:center;gap:2px;background:#3a2d22;border-radius:24px;padding:12px 36px;color:#e8ded6}
-.sc-navico{font-size:22px;line-height:1}
-.sc-navbtn em{font-style:normal;font-size:13px;font-weight:600}
-.kp-wrap{padding:8px 16px 20px;display:flex;flex-direction:column;align-items:center;gap:6px;min-height:50vh}
-.kp-display{font-size:32px;font-weight:400;min-height:48px;color:#e8eaed;letter-spacing:1px;text-align:center;margin:12px 0 8px;font-family:Roboto,Arial,sans-serif}
+.sc-bottomnav{margin-top:auto;padding:14px 16px 14px;display:flex;justify-content:center}
+.sc-pill{display:flex;background:#1e1e1e;border-radius:28px;padding:6px;gap:2px;width:100%;max-width:340px}
+.sc-navbtn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:none;border-radius:22px;padding:10px 8px;color:#9aa0a6;cursor:pointer}
+.sc-navbtn.on{background:#333336;color:#fff}
+.sc-navico{display:flex;align-items:center;justify-content:center;height:24px}
+.sc-navico svg{width:22px;height:22px}
+.sc-navbtn em{font-style:normal;font-size:12px;font-weight:500}
+.sc-navbtn span{font-size:12px;font-weight:500}
+.kp-wrap{padding:4px 16px 12px;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:50vh;background:#000}
+.kp-topbar{display:flex;justify-content:flex-end;gap:18px;width:100%;max-width:340px;padding:8px 4px 0;color:#9aa0a6}
+.kp-ico{display:flex;align-items:center;justify-content:center;width:36px;height:36px;font-size:20px;cursor:pointer;color:#9aa0a6}
+.kp-displayrow{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;max-width:340px;min-height:56px;margin:6px 0 2px}
+.kp-display{font-size:32px;font-weight:400;color:#e8eaed;letter-spacing:1px;text-align:center;font-family:Roboto,Arial,sans-serif;flex:1}
 .kp-ph{color:#5f6368;font-size:20px;font-weight:400}
-.kp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 24px;width:100%;max-width:300px;justify-items:center}
-.kp-key{background:transparent;border:none;border-radius:50%;width:76px;height:68px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#e8eaed;cursor:pointer;-webkit-tap-highlight-color:rgba(255,255,255,.1)}
+.kp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px 16px;width:100%;max-width:340px;justify-items:center}
+.kp-key{background:transparent;border:none;width:96px;height:70px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;cursor:pointer;-webkit-tap-highlight-color:rgba(255,255,255,.1);border-radius:50%}
 .kp-key:active{background:rgba(255,255,255,.08)}
-.kp-dig{font-size:28px;font-weight:400;line-height:1.1;font-family:Roboto,Arial,sans-serif}
-.kp-sub{font-size:11px;color:#9aa0a6;letter-spacing:3px;margin-top:2px;font-weight:500}
-.kp-actions{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%;max-width:300px;margin-top:12px}
-.kp-call{grid-column:2;background:#34a853;border:none;border-radius:50%;width:72px;height:72px;font-size:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-.kp-call:active{background:#2e9448}
-.kp-call:disabled{opacity:.25;box-shadow:none}
-.kp-back{grid-column:3;justify-self:center;background:transparent;border:none;font-size:24px;color:#9aa0a6;cursor:pointer;padding:12px}
+.kp-dig{font-size:34px;font-weight:400;line-height:1.15;font-family:Roboto,Arial,sans-serif}
+.kp-sub{font-size:11px;color:#9aa0a6;letter-spacing:3px;margin-top:1px;font-weight:500;display:flex;align-items:center;justify-content:center;min-height:16px}
+.kp-actions{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;width:100%;max-width:340px;margin-top:8px}
+.kp-vm{grid-column:1;justify-self:center;background:transparent;border:none;color:#9aa0a6;cursor:pointer;padding:12px;display:flex;align-items:center;justify-content:center}
+.kp-vm:active{color:#e8eaed}
+.kp-vm svg{width:30px;height:30px}
+.kp-call{grid-column:2;background:#8ab4f8;border:none;border-radius:50%;width:76px;height:76px;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.kp-call:active{background:#7aa8f5}
+.kp-call:disabled{opacity:.35;box-shadow:none}
+.kp-vid{grid-column:3;justify-self:center;background:#8ab4f8;border:none;border-radius:50%;width:64px;height:64px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.kp-vid:active{background:#7aa8f5}
+.kp-back{background:transparent;border:none;color:#9aa0a6;cursor:pointer;padding:10px;display:flex;align-items:center;justify-content:center;flex:none}
 .kp-back:active{color:#e8eaed}
 .kp-dev{background:#fbbf24;color:#000;font-weight:800;padding:6px 12px;border-radius:8px;font-size:12px;margin-top:8px}
 .sc-navbtn.on{background:#8b5cf6 !important}
+.pg[data-theme="light"] .kp-wrap{background:#fff}
 .pg[data-theme="light"] .kp-display{color:#202124}
 .pg[data-theme="light"] .kp-key{color:#202124}
 .pg[data-theme="light"] .kp-key:active{background:rgba(0,0,0,.06)}
@@ -1294,6 +1309,7 @@ window.hatchWidget={
 .todo-bar{height:6px;border-radius:3px;background:rgba(127,127,127,.2);margin:8px 0 0 29px;overflow:hidden}
 .todo-bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#d4a017,#f5c518)}
 .todo-bar i.low{background:linear-gradient(90deg,#ef4444,#f59e0b)}
+.todo-bar i.ready{background:linear-gradient(90deg,#16a34a,#4ade80)}
 .note-card{background:#fff;border-radius:12px;margin:8px 2px;padding:12px 14px 12px 12px;box-shadow:0 1px 3px rgba(0,0,0,.08);border-left:5px solid var(--nc,#4ade80);display:flex;align-items:center;gap:11px}
 .pg:not([data-theme="light"]) .note-card{background:#1e1e1e}
 .note-card .d2-mid{flex:1;min-width:0}
@@ -1320,6 +1336,11 @@ window.hatchWidget={
 .notes-abtn{flex:1;border:none;border-radius:12px;padding:11px 8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;background:#0a84ff;color:#fff}
 .notes-abtn:active{opacity:.75}
 .notes-abtn:disabled{opacity:.35;cursor:default}
+.notes-abtn.go-harvest{background:linear-gradient(180deg,#22c55e,#16a34a);box-shadow:0 2px 8px rgba(34,197,94,.4)}
+.notes-tended{text-align:center;color:#4ade80;font-size:14px;font-weight:600;padding:8px 0;opacity:.9}
+.go-plant{background:linear-gradient(180deg,#3b82f6,#2563eb);border:none;border-radius:10px;padding:10px 18px;font-size:14px;font-weight:800;color:#fff;cursor:pointer;font-family:inherit;box-shadow:0 2px 8px rgba(59,130,246,.4);white-space:nowrap}
+.go-plant:active{opacity:.8}
+.go-plant:disabled{opacity:.35;cursor:default}
 .notes-abtn.danger{background:#ff3b30}
 .notes-fchev{color:#c7c7cc;font-size:18px;font-weight:300}
 .notes-back{background:none;border:none;color:#0a84ff;font-size:16px;cursor:pointer;padding:12px 0 0 10px;font-family:inherit;display:inline-flex;align-items:center;gap:1px}
@@ -2291,10 +2312,11 @@ var RECIPES={
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
-var GAME_VER="BETA-0.018.6";
-var GAME_UPDATED="Oct 5, 2026 · 8:50 AM";
+var GAME_VER="BETA-0.018.7";
+var GAME_UPDATED="Oct 5, 2026 · 10:35 AM";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"BETA-0.018.7",ts:"Oct 5, 2026 \u00B7 10:35 AM",t:"Idle re-up, new dialer, smarter tasks",d:"Leave the app closed for 30 seconds and it re-locks on return, checking for a new build right away. The phone keypad got rebuilt to look like a real Android dialer. The Tasks page now has one smart garden button, task-aware plant buttons, and clearer tab names."},
    {v:"BETA-0.018.6",ts:"Oct 5, 2026 \u00B7 8:50 AM",t:"Dialogue cleanup",d:"Fixed the reply buttons showing weird codes, cleaned up 50 customer texts, and thieves now get sketchier before they try you \u2014 but chicken out at the meetup first."},
 {v:"BETA-0.018.5",ts:"Oct 5, 2026 \u00B7 6:50 AM",t:"Re-up button",d:"The lock screen now tells you when a new build is out. Tap the fingerprint and hit re-up to grab the latest."},
 {v:"BETA-0.018.4",ts:"Oct 5, 2026 \u00B7 6:30 AM",t:"Chat variety",d:"Customers ask for product 50 different ways now, and you get 10 quick replies for yes and 10 for no."},
@@ -2710,12 +2732,7 @@ function ttLockHide(){
    ttCheckUpdate(function(hasUpdate){
     if(hasUpdate){
      /* new build out: red glow on the fingerprint = locked until re-up */
-     try{
-      fp.style.background="rgba(220,38,38,.30)";
-      fp.style.borderColor="#ef4444";
-      fp.style.boxShadow="0 0 26px rgba(239,68,68,.65)";
-      var rp=document.getElementById("lock-reup");if(rp)rp.hidden=false;
-     }catch(e2){}
+     ttShowReup();
     }else{
      try{fp.style.background="";}catch(e3){}
      setTimeout(ttLockHide,250);
@@ -2740,6 +2757,29 @@ function ttLockHide(){
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(ttLockShow,300);});
  else setTimeout(ttLockShow,300);
  setInterval(function(){var ls=document.getElementById("tt-lockscreen");if(ls&&!ls.hidden)ttLockTick();},10000);
+ /* Idle trigger: 30s close-to-open comparison.
+    saveOnHide() stamps S.lastClosedAt; on return, if 30+ seconds elapsed,
+    re-lock and run the update check right away. */
+ var TT_IDLE_MS=30000;
+ function ttShowReup(){
+  try{
+   var fp=document.getElementById("lock-fp");
+   if(fp){fp.style.background="rgba(220,38,38,.30)";fp.style.borderColor="#ef4444";fp.style.boxShadow="0 0 26px rgba(239,68,68,.65)";}
+   var rp=document.getElementById("lock-reup");if(rp)rp.hidden=false;
+  }catch(e){}
+ }
+ function ttIdleCheck(){
+  if(typeof S==="undefined"||!S||!S.lastClosedAt)return;
+  if(Date.now()-S.lastClosedAt>=TT_IDLE_MS){
+   S.lastClosedAt=0;
+   ttLockShow();
+   ttCheckUpdate(function(hasUpdate){if(hasUpdate)ttShowReup();});
+  }
+ }
+ window.addEventListener("pageshow",ttIdleCheck);
+ document.addEventListener("visibilitychange",function(){
+  if(document.visibilityState!=="hidden")ttIdleCheck();
+ });
 })();
 /* Gesture nav: tap=home, swipe left=back, swipe up=home, swipe right=recents */
 (function(){
@@ -3065,6 +3105,8 @@ function tabHeader(tab){
     +'<div class="msg-nav-actions"><span class="msg-ico">🔍</span><span class="msg-ico">⋮</span></div></div>';
   }
   if(mv==="phonebook"){
+   /* keypad has its own minimal top bar (ref style) — no Contacts header */
+   if((S.phoneView||"contacts")==="keypad")return "";
    var _pc=(S.contacts||[]).length;
    return '<div class="appnav msg-nav"><div class="msg-contact"><div class="msg-contact-info"><b>Contacts</b><span class="msg-online"><i></i>'+_pc+' contacts</span></div></div>'
     +'<div class="msg-nav-actions"><span class="msg-ico">🔍</span><span class="msg-ico">⋮</span></div></div>';
@@ -3147,8 +3189,8 @@ function tabHeader(tab){
 /* ===== In-game mobile browser: Terp Estates (realtor) ===== */
 var BWT={tabs:[{hist:["https://darkweb.home"],hi:0}],cur:0,switcher:false,menu:false};
 var PROP_META={
- tent:{addr:"14 Closet Ln, Shirley, NY",bd:1,ba:1,sqft:400,grad:"linear-gradient(135deg,#3b3b44,#222228)",tag:"Cozy starter spot"},
- trap:{addr:"88 Trap Ave, Shirley, NY",bd:2,ba:1,sqft:950,grad:"linear-gradient(135deg,#7c2d12,#431407)",tag:"High foot traffic"},
+ tent:{addr:"14 Closet Ln, Greenhaven",bd:1,ba:1,sqft:400,grad:"linear-gradient(135deg,#3b3b44,#222228)",tag:"Cozy starter spot"},
+ trap:{addr:"88 Trap Ave, Greenhaven",bd:2,ba:1,sqft:950,grad:"linear-gradient(135deg,#7c2d12,#431407)",tag:"High foot traffic"},
  warehouse:{addr:"500 Industrial Pkwy, Brookhaven, NY",bd:3,ba:2,sqft:2600,grad:"linear-gradient(135deg,#334155,#0f172a)",tag:"Room to scale"},
  mansion:{addr:"1 Emerald Hill Dr, Hamptons, NY",bd:5,ba:4,sqft:6200,grad:"linear-gradient(135deg,#065f46,#022c22)",tag:"Luxury grow estate"},
  bunker:{addr:"Undisclosed Rd, Adirondacks, NY",bd:4,ba:3,sqft:3800,grad:"linear-gradient(135deg,#44403c,#1c1917)",tag:"Off the grid"},
@@ -3187,7 +3229,7 @@ function bwCardHTML(p){
 function bwListingsHTML(){
  var cards=PROPS.map(bwCardHTML).join("");
  return '<div class="bw-page"><div class="bw-sitehead"><span class="bw-logo">&#127968; Terp<span>Estates</span></span><span class="bw-signin">Sign in</span></div>'
-  +'<div class="bw-searchbar"><span class="bw-sic">&#8981;</span><span class="bw-sq">Shirley, NY</span><span class="bw-filter">Filters</span></div>'
+  +'<div class="bw-searchbar"><span class="bw-sic">&#8981;</span><span class="bw-sq">Greenhaven</span><span class="bw-filter">Filters</span></div>'
   +'<div class="bw-count">'+PROPS.length+' homes for sale near you</div>'
   +'<div class="bw-cards">'+cards+'</div>'
   +'<div class="bw-foot">Terp Estates &middot; Not a real listing. Your plug Roach approved this message.</div></div>';
@@ -3572,19 +3614,21 @@ function render(){
  }
  function keypadHTML(){
   var _num=S._dialNum||"";
-  var _keys=[["1",""],["2","ABC"],["3","DEF"],["4","GHI"],["5","JKL"],["6","MNO"],["7","PQRS"],["8","TUV"],["9","WXYZ"],["*",""],["0","+"],["#",""]];
+  var _keys=[["1","vm"],["2","ABC"],["3","DEF"],["4","GHI"],["5","JKL"],["6","MNO"],["7","PQRS"],["8","TUV"],["9","WXYZ"],["*",""],["0","+"],["#",""]];
+  var _vmSvg='<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="13" height="10" rx="2"/><path d="M16 10.5l5-2.5v8l-5-2.5"/><circle cx="7.5" cy="11" r="1" fill="currentColor" stroke="none"/><circle cx="11.5" cy="11" r="1" fill="currentColor" stroke="none"/></svg>';
   var h='<div class="kp-wrap">';
-  h+='<div class="kp-display">'+(_num?escHtml(_num):"")+'</div><div id="kp-dbg" style="opacity:0;transition:opacity .3s;font-size:20px;height:24px;text-align:center"></div>';
+  h+='<div class="kp-topbar"><span class="kp-ico" data-act="kp-search"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></span><span class="kp-ico">&#8942;</span></div>';
+  h+='<div class="kp-displayrow"><div class="kp-display">'+(_num?escHtml(_num):"")+'</div>'+(_num?'<button type="button" class="kp-back" data-act="kp-back" aria-label="Backspace"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M22 3H7c-.7 0-1.3.3-1.8.8L1 11l4.2 7.2c.5.5 1.1.8 1.8.8H22c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3.7 12.6l-1.4 1.4-2.9-2.9-2.9 2.9-1.4-1.4 2.9-2.9-2.9-2.9 1.4-1.4 2.9 2.9 2.9-2.9 1.4 1.4-2.9 2.9 2.9 2.9z"/></svg></button>':"")+'</div><div id="kp-dbg" style="opacity:0;transition:opacity .3s;font-size:20px;height:24px;text-align:center"></div>';
   h+='<div class="kp-grid">';
   _keys.forEach(function(k){
-   h+='<button type="button" class="kp-key" data-act="kp-press" data-k="'+k[0]+'"><span class="kp-dig">'+k[0]+'</span>'+(k[1]?'<span class="kp-sub">'+k[1]+'</span>':'<span class="kp-sub">&nbsp;</span>')+'</button>';
+   var _sub=k[1]==="vm"?_vmSvg:(k[1]?escHtml(k[1]):"&nbsp;");
+   h+='<button type="button" class="kp-key" data-act="kp-press" data-k="'+k[0]+'"><span class="kp-dig">'+k[0]+'</span><span class="kp-sub">'+_sub+'</span></button>';
   });
   h+='</div>';
   h+='<div class="kp-actions">';
-  h+='<span></span>';
-  h+='<button type="button" class="kp-call" data-act="kp-call"'+(_num?"":" disabled")+'><svg viewBox="0 0 24 24" width="30" height="30" fill="#fff"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg></button>';
-  if(_num)h+='<button type="button" class="kp-back" data-act="kp-back"><svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M22 3H7c-.7 0-1.3.3-1.8.8L1 11l4.2 7.2c.5.5 1.1.8 1.8.8H22c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-3.7 12.6l-1.4 1.4-2.9-2.9-2.9 2.9-1.4-1.4 2.9-2.9-2.9-2.9 1.4-1.4 2.9 2.9 2.9-2.9 1.4 1.4-2.9 2.9 2.9 2.9z"/></svg></button>';
-  else h+='<span></span>';
+  h+='<button type="button" class="kp-vm" data-act="phoneview" data-v="voicemail" aria-label="Voicemail">'+_vmSvg+'</button>';
+  h+='<button type="button" class="kp-call" data-act="kp-call"'+(_num?"":" disabled")+'><svg viewBox="0 0 24 24" width="32" height="32" fill="#fff"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg></button>';
+  h+='<button type="button" class="kp-vid" data-act="kp-video" aria-label="Video call"><svg viewBox="0 0 24 24" width="30" height="30" fill="#fff"><path d="M17 10.5V7c0-.6-.4-1-1-1H4c-.6 0-1 .4-1 1v10c0 .6.4 1 1 1h12c.6 0 1-.4 1-1v-3.5l4 4v-11l-4 4z"/></svg></button>';
   h+='</div>';
   if(S.devMode)h+='<div class="kp-dev">DEV MODE ACTIVE</div>';
   h+='</div>';
@@ -3637,12 +3681,11 @@ function render(){
   /* call history + voicemail tabs */
   if(_pv==="history")h+=phoneHistoryHTML();
   else if(_pv==="voicemail")h+=phoneVoicemailHTML();
-  h+='<div class="sc-bottomnav">'
-   +'<button type="button" class="sc-navbtn'+(_pv==="history"?" on":"")+'" data-act="phoneview" data-v="history"><span class="sc-navico">🕐</span><span>History</span></button>'
-   +'<button type="button" class="sc-navbtn'+(_pv==="contacts"?" on":"")+'" data-act="phoneview" data-v="contacts"><span class="sc-navico">👤</span><em>Contacts</em></button>'
-   +'<button type="button" class="sc-navbtn'+(_pv==="voicemail"?" on":"")+'" data-act="phoneview" data-v="voicemail"><span class="sc-navico">📼</span><span>Voicemail</span></button>'
-   +'<button type="button" class="sc-navbtn'+(_pv==="keypad"?" on":"")+'" data-act="phoneview" data-v="keypad"><span class="sc-navico">⌨️</span><em>Keypad</em></button>'
-   +'</div>';
+  h+='<div class="sc-bottomnav"><div class="sc-pill">'
+   +'<button type="button" class="sc-navbtn'+(_pv==="keypad"?" on":"")+'" data-act="phoneview" data-v="keypad"><span class="sc-navico"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="8" cy="8" r="1.6"/><circle cx="12" cy="8" r="1.6"/><circle cx="16" cy="8" r="1.6"/><circle cx="8" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="16" cy="12" r="1.6"/><circle cx="8" cy="16" r="1.6"/><circle cx="12" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/></svg></span><em>Keypad</em></button>'
+   +'<button type="button" class="sc-navbtn'+(_pv==="history"?" on":"")+'" data-act="phoneview" data-v="history"><span class="sc-navico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 3"/></svg></span><span>Recents</span></button>'
+   +'<button type="button" class=\"sc-navbtn'+(_pv==="contacts"?" on":"")+'" data-act="phoneview" data-v="contacts"><span class="sc-navico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><em>Contacts</em></button>'
+   +'</div></div>';
   h+='</div>';
   return h;
  }
@@ -4705,7 +4748,7 @@ function todoSwipeInit(){
 }
 function todoHTML(){
  var tv=S.todoView||"tasks";
- var h='<div class="todo-tabs"><button type="button" class="todo-tab'+(tv==="tasks"?" on":"")+'" data-act="todoview" data-v="tasks">Tasks</button><button type="button" class="todo-tab'+(tv==="stash"?" on":"")+'" data-act="todoview" data-v="stash">Overview</button></div>';
+ var h='<div class="todo-tabs"><button type="button" class="todo-tab'+(tv==="tasks"?" on":"")+'" data-act="todoview" data-v="tasks">Orders</button><button type="button" class="todo-tab'+(tv==="stash"?" on":"")+'" data-act="todoview" data-v="stash">Stash</button></div>';
  if(tv==="stash"){
   /* render stash content without its own header */
   var _sh=stashHTML();
@@ -4973,8 +5016,12 @@ function notesSeedCards(){
   if(tierVis(PRODUCTS[k].tier)===0)return;
   var _needByTask=(S.tasks||[]).some(function(t){return t&&t.k===k;});
    var _act='';
-   if(sc>0){_act='<button type="button" class="go" data-act="autoplant" data-strain="'+k+'">AUTO PLANT</button>';}
-   else if(_needByTask){_act='<button type="button" class="go" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>BUY '+money(PRODUCTS[k].seed)+'</button>';}
+   if(sc>0){
+    var _taskNames=(S.tasks||[]).filter(function(t){return t&&t.k===k;}).map(function(t){return t.name;});
+    var _lbl=_needByTask?("Plant for "+(_taskNames[0]||"Tasks")):"Plant";
+    _act='<button type="button" class="go-plant" data-act="autoplant" data-strain="'+k+'">'+escHtml(_lbl)+'</button>';
+   }
+   else if(_needByTask){_act='<button type="button" class="go-plant" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>BUY '+money(PRODUCTS[k].seed)+'</button>';}
    cards.push({k:k,nameLine:PRODUCTS[k].name+' seeds <b>'+sc+'</b>',subLine:'Plant in empty pots'+(_needByTask&&sc===0?' · needed for task':''),search:PRODUCTS[k].name+" seeds",
    action:_act});
  });
@@ -5030,7 +5077,17 @@ function stashHTML(){
   h+='<button type="button" class="notes-back" data-act="notesview" data-v="folders"><span class="notes-bchev">‹</span>Folders</button>';
   h+='<div class="notes-list-title">'+title+'</div>';
   if(view==="inprogress"){
-   h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="waterall"'+(gN?"":" disabled")+'>Water All</button><button type="button" class="notes-abtn" data-act="harvestall"'+(anyReady?"":" disabled")+'>Harvest All</button></div>';
+   /* smart garden button: harvest ready > water thirsty > all tended > hidden */
+   var _readyN=todos.filter(function(t){return t.tag==="GROW"&&t.done;}).length;
+   var _thirstyN=0;
+   (S.props||[]).forEach(function(pr){(pr.slots||[]).forEach(function(p){if(p&&p.growth<100&&p.water<=15)_thirstyN++;});});
+   if(_readyN>0){
+    h+='<div class="notes-actions"><button type="button" class="notes-abtn go-harvest" data-act="harvestall">Harvest Ready ('+_readyN+')</button></div>';
+   }else if(_thirstyN>0){
+    h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="waterall">Water Thirsty ('+_thirstyN+')</button></div>';
+   }else if(gN>0){
+    h+='<div class="notes-tended">All tended ✓</div>';
+   }
    var ft=todos.filter(function(t){return match(t.title+" "+t.sub+" "+t.tag);});
    h+=ft.length?ft.map(notesTodoHTML).join(""):'';
    /* seeds section merged in */
@@ -5040,14 +5097,33 @@ function stashHTML(){
     var _taskStrains2={};
     (S.tasks||[]).forEach(function(t){if(t&&t.k&&PRODUCTS[t.k])_taskStrains2[t.k]=1;});
     var _hasTaskSeeds2=Object.keys(_taskStrains2).some(function(k){return (S.seeds[k]||0)>0;});
-    h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="notes-plantall"'+(seeds.length?"":" disabled")+'>Auto Plant All</button>';
+    /* smart bulk: only plant what tasks need — per-seed buttons below for selective planting */
     if(Object.keys(_taskStrains2).length){
-     h+='<button type="button" class="notes-abtn" data-act="notes-planttasks"'+(_hasTaskSeeds2?"":" disabled")+'>Plant Task Seeds</button>';
+     h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="notes-planttasks"'+(_hasTaskSeeds2?"":" disabled")+'>Plant Task Seeds</button></div>';
     }
-    h+='</div>';
     h+=fs.length?fs.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"No seed packets.")+'</div>';
    }
-   if(!ft.length&&!fs.length)h+='<div class="notes-empty">Nothing in progress.</div>';
+   /* task product tracker: have vs need per order */
+   var _trk=(S.tasks||[]).filter(function(t){return t&&t.k&&PRODUCTS[t.k];});
+   if(_trk.length){
+    h+='<div class="notes-ios-sec" style="margin-top:12px">Tasks — product tracker</div>';
+    h+=_trk.map(function(t){
+     var o={k:t.k,kind:t.kind,g:t.g,pu:t.pu};
+     var _have=contactHave(o),_need=o.g;
+     var _pct=_need>0?Math.min(100,Math.round(_have/_need*100)):100;
+     var _cls=_have>=_need?"ready":(_have===0?"low":"");
+     var _unit=o.kind==="joint"?"": "g";
+     var _sub=_have>=_need
+      ?contactQtyText(o)+" ready — fulfill it in Tasks"
+      :"Have "+_have+_unit+" of "+_need+_unit+" "+escHtml(PRODUCTS[t.k].name)+(o.kind==="joint"?" joints":"");
+     return '<button type="button" class="todo-note" data-act="tab" data-tab="tasks">'
+      +'<div class="todo-top"><span class="todo-check'+(_have>=_need?" done":"")+'">'+(_have>=_need?"☑":"☐")+'</span>'
+      +'<span class="todo-title">'+escHtml(t.name)+'</span><span class="todo-tag">TASK</span></div>'
+      +'<div class="todo-sub">'+_sub+'</div>'
+      +'<div class="todo-bar"><i class="'+_cls+'" style="width:'+_pct+'%"></i></div></button>';
+    }).join("");
+   }
+   if(!ft.length&&!fs.length&&!_trk.length)h+='<div class="notes-empty">Nothing in progress.</div>';
   }else if(view==="stash"){
    h+=sum;
    var fc=cards.filter(function(c){return match(c.search);});
@@ -5065,7 +5141,7 @@ function stashHTML(){
    var fs=seeds.filter(function(c){return match(c.search);});
    h+=fs.length?fs.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"No seed packets.")+'</div>';
   }
-  h+=notesSearchBar();
+  if(view!=="inprogress")h+=notesSearchBar();
  }
  return h+'</div>';
 }
@@ -6302,6 +6378,14 @@ root.addEventListener("click",function(e){
   S.msg="Calling "+_n+"... no answer.";
   save();render();return;
  }
+ if(a==="kp-video"){
+  S.msg="Video calls aren't a thing on a trap phone.";
+  save();render();return;
+ }
+ if(a==="kp-search"){
+  S.msg="Search your contacts in the Contacts tab.";
+  save();render();return;
+ }
  if(a==="settingsview"){S.settingsView=b.dataset.v;save();render();return;}
  if(a==="stashsell"){var _sd=stashDealer();doDeal(_sd.di,b.dataset.strain,false,false);return;}
  if(a==="stashsellj"){var _sd2=stashDealer();doDeal(_sd2.di,b.dataset.strain,false,true);return;}
@@ -6976,7 +7060,7 @@ setInterval(pump,150);
    standalone browser persists through the shim injected by build_share.py.
    Export/import stays as the manual cross-device transfer. */
 setInterval(function(){ save(); },20000);
-function saveOnHide(){ try{ save(); }catch(e){} }
+function saveOnHide(){ try{ if(typeof S!=="undefined"&&S)S.lastClosedAt=Date.now(); save(); }catch(e){} }
 if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  window.addEventListener("pagehide",saveOnHide);
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
