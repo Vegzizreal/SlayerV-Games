@@ -1094,6 +1094,18 @@ window.hatchWidget={
 .msg-chat.unread .msg-chat-mid span{color:rgba(255,255,255,.85);font-weight:600}
 .msg-inputbar{position:sticky;bottom:0;z-index:5;background:#141417;border-top:1px solid rgba(255,255,255,.08);margin-bottom:-1px;padding-bottom:env(safe-area-inset-bottom,0)}
 .msg-replies{display:flex;flex-wrap:wrap;gap:6px;padding:6px 12px 2px}
+.msg-replybar{display:flex;align-items:stretch;padding:6px 0 2px;min-height:34px;max-height:34px;overflow:hidden}
+.msg-reply-scroll{flex:0 0 80%;max-width:80%;display:flex;flex-direction:row;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;direction:rtl;padding:0 6px 0 12px;scrollbar-width:none;-ms-overflow-style:none;align-items:center}
+.msg-reply-scroll::-webkit-scrollbar{display:none}
+.msg-reply-scroll .msg-reply{direction:ltr;flex:0 0 auto;white-space:nowrap}
+.msg-reply-pin{flex:0 0 20%;max-width:20%;display:flex;flex-direction:row;flex-wrap:nowrap;gap:6px;overflow-x:auto;overflow-y:hidden;direction:rtl;align-items:center;justify-content:flex-start;border-left:1px solid rgba(255,255,255,.12);padding:0 6px;scrollbar-width:none;-ms-overflow-style:none}
+.msg-reply-pin::-webkit-scrollbar{display:none}
+.msg-reply-pin .msg-reply{direction:ltr;flex:0 0 auto}
+.msg-reply{background:rgba(26,115,232,.14);border:1px solid rgba(138,180,248,.55);color:#8ab4f8;border-radius:14px;padding:3px 10px;font-size:11px;font-weight:600;cursor:pointer;line-height:1.3}
+.msg-reply.msg-reply-ok{background:rgba(34,197,94,.16);border:1px solid rgba(74,222,128,.6);color:#4ade80}
+.msg-reply.msg-reply-ok:active{background:rgba(34,197,94,.35)}
+.msg-reply.msg-reply-no{background:rgba(220,38,38,.16);border:1px solid rgba(248,113,113,.6);color:#f87171;white-space:nowrap}
+.msg-reply.msg-reply-no:active{background:rgba(220,38,38,.35)}
 .msg-reply{background:rgba(26,115,232,.14);border:1px solid rgba(138,180,248,.55);color:#8ab4f8;border-radius:14px;padding:3px 10px;font-size:11px;font-weight:600;cursor:pointer;line-height:1.3}
 .msg-reply:active{background:rgba(26,115,232,.32)}
 .msg-composer{display:flex;gap:8px;padding:8px 12px calc(10px + env(safe-area-inset-bottom,0px))}
@@ -2312,10 +2324,11 @@ var RECIPES={
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
-var GAME_VER="BETA-0.018.7";
-var GAME_UPDATED="Oct 5, 2026 · 10:35 AM";
+var GAME_VER="BETA-0.018.8";
+var GAME_UPDATED="Oct 5, 2026 · 5:55 PM";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"BETA-0.018.8",ts:"Oct 5, 2026 \u00B7 5:55 PM",t:"Reply ticker",d:"Chat reply prompts are now a single scrolling row: green yes-pills on the left, all the red no-pills pinned on the right."},
    {v:"BETA-0.018.7",ts:"Oct 5, 2026 \u00B7 10:35 AM",t:"Idle re-up, new dialer, smarter tasks",d:"Leave the app closed for 30 seconds and it re-locks on return, checking for a new build right away. The phone keypad got rebuilt to look like a real Android dialer. The Tasks page now has one smart garden button, task-aware plant buttons, and clearer tab names."},
    {v:"BETA-0.018.6",ts:"Oct 5, 2026 \u00B7 8:50 AM",t:"Dialogue cleanup",d:"Fixed the reply buttons showing weird codes, cleaned up 50 customer texts, and thieves now get sketchier before they try you \u2014 but chicken out at the meetup first."},
 {v:"BETA-0.018.5",ts:"Oct 5, 2026 \u00B7 6:50 AM",t:"Re-up button",d:"The lock screen now tells you when a new build is out. Tap the fingerprint and hit re-up to grab the latest."},
@@ -3746,13 +3759,23 @@ function render(){
   }
   var _mreps=msgRepliesFor(c);
   if(_mreps.length){
+   /* split: accept prompts (green, scrolling) vs dismiss (red, pinned) */
+   var _accepts=_mreps.filter(function(rp){return rp.act!=="order-dismiss";});
+   var _dismiss=_mreps.filter(function(rp){return rp.act==="order-dismiss";});
    h+='<div class="msg-inputbar">';
-   h+='<div class="msg-replies">';
-   _mreps.forEach(function(rp){
+   h+='<div class="msg-replybar">';
+   h+='<div class="msg-reply-scroll">';
+   _accepts.forEach(function(rp){
     var _act=rp.act||"msg-reply";
     var _extra=rp.act?(' data-variant="'+escHtml(rp.variant||"")+'"'):(' data-reply="'+rp.id+'"');
-    h+='<button type="button" class="msg-reply" data-act="'+_act+'" data-contact="'+escHtml(c.name)+'"'+_extra+'>'+escHtml(rp.text)+'</button>';
+    h+='<button type="button" class="msg-reply msg-reply-ok" data-act="'+_act+'" data-contact="'+escHtml(c.name)+'"'+_extra+'>'+escHtml(rp.text)+'</button>';
    });
+   h+='</div>';
+   h+='<div class="msg-reply-pin">';
+   _dismiss.forEach(function(rp){
+    h+='<button type="button" class="msg-reply msg-reply-no" data-act="'+rp.act+'" data-contact="'+escHtml(c.name)+'" data-variant="'+escHtml(rp.variant||"")+'">'+escHtml(rp.text)+'</button>';
+   });
+   h+='</div>';
    h+='</div>';
    /* text composer with fuzzy matching */
    h+='<div class="msg-composer"><input type="text" class="msg-input" data-contact="'+escHtml(c.name)+'" placeholder="Type a message..." autocomplete="off"><button type="button" class="msg-send" data-act="msg-send" data-contact="'+escHtml(c.name)+'">Send</button></div>';
@@ -4868,8 +4891,7 @@ function msgRepliesFor(c){
  if(c&&c.order){
   /* order request: reply pills are the accept/dismiss actions */
   ORDER_ACCEPT_VARIANTS.forEach(function(v){out.push({id:"order-accept",text:v,act:"order-accept",variant:v});});
-  var _dv=randomDenyVariant();
-  out.push({id:"order-dismiss",text:_dv,act:"order-dismiss",variant:_dv});
+  ORDER_DENY_VARIANTS.forEach(function(v){out.push({id:"order-dismiss",text:v,act:"order-dismiss",variant:v});});
   return out;
  }
  Object.keys(MSG_REPLIES).forEach(function(k){
