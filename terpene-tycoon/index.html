@@ -1020,6 +1020,7 @@ window.hatchWidget={
 .msg-chat:active{background:rgba(255,255,255,.05)}
 .msg-chat.pinned{background:rgba(37,211,102,.06)}
 .msg-chat-mid{flex:1;min-width:0}
+.msg-phone{font-size:11px;color:#888;display:block}
 .msg-chat-mid b{display:block;font-size:15px;color:#fff}
 .msg-chat-mid span{display:block;font-size:13px;color:rgba(255,255,255,.55);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:2px}
 .msg-av-roach{background:linear-gradient(135deg,#2d5a27,#4a8f3c)!important}
@@ -3365,9 +3366,10 @@ function render(){
   if(!msgs.length)h+='<div class="msg-day">No messages yet</div>';
   else{
    var _lastDay="",_firstDiv=true;
+   var _rph=c.phone?" &bull; "+fmtPhone(c.phone):"";
    msgs.forEach(function(m){
     var _d="";try{_d=new Date(m.t).toDateString();}catch(e){}
-    if(_d!==_lastDay){_lastDay=_d;h+='<div class="msg-daydiv">'+fmtMsgDay(m.t)+' &bull; '+fmtMsgTime(m.t)+'</div>';if(_firstDiv){_firstDiv=false;h+='<div class="msg-rcs">RCS chat with '+escHtml(c.name)+'</div>';}}
+    if(_d!==_lastDay){_lastDay=_d;h+='<div class="msg-daydiv">'+fmtMsgDay(m.t)+' &bull; '+fmtMsgTime(m.t)+'</div>';if(_firstDiv){_firstDiv=false;h+='<div class="msg-rcs">RCS chat with '+escHtml(c.name)+_rph+'</div>';}}
     var _me=m.from==="me";
     h+='<div class="msg-row '+(_me?"me":"them")+'"><div class="msg-bub">'+escHtml(m.text)
      +'<span class="msg-bub-t">'+fmtMsgTime(m.t)+(_me?'<span class="msg-read">&#10003;&#10003;</span>':'')+'</span></div></div>';
@@ -4125,7 +4127,7 @@ function activatePendingContact(phone){
  S.pendingContacts.splice(_idx,1);
  var _intro="yo it's "+p.name+". good lookin on that last one 🤝";
  if(!S.contacts)S.contacts=[];
- S.contacts.push({name:p.name,type:p.type,prefs:p.prefs,loyalty:50,order:null,unread:true,unreadCount:1,lastOrderAt:0,lastFulfilledAt:0,
+ S.contacts.push({name:p.name,type:p.type,prefs:p.prefs,phone:p.phone,loyalty:50,order:null,unread:true,unreadCount:1,lastOrderAt:0,lastFulfilledAt:0,
   msgs:[{from:"them",text:_intro,t:Date.now()}]});
  pushContactNotif("📱 New contact: "+p.name);
  notifyMsgArrived({name:p.name},_intro);
