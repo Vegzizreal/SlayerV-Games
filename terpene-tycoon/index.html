@@ -1079,6 +1079,7 @@ window.hatchWidget={
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed:disabled{opacity:.4;cursor:not-allowed}
 .tk-need{color:#f59e0b;font-size:13px;font-weight:600}
+.tk-buypapers{background:#3b82f6;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-empty{text-align:center;color:rgba(255,255,255,.55);padding:48px 20px;font-size:14px;line-height:1.7}
 .tk-card{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:14px;padding:14px;margin:10px 4px}
 .tk-hd{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#fff;margin-bottom:8px}
@@ -1098,6 +1099,7 @@ window.hatchWidget={
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed:disabled{opacity:.4;cursor:not-allowed}
 .tk-need{color:#f59e0b;font-size:13px;font-weight:600}
+.tk-buypapers{background:#3b82f6;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-empty{color:rgba(0,0,0,.5)}
 .pg[data-theme="light"] .tk-hd{color:#111}
 .pg[data-theme="light"] .tk-hd span{color:rgba(0,0,0,.45)}
@@ -4017,7 +4019,8 @@ function tasksHTML(){
      var _sp=PRODUCTS[t.k]?PRODUCTS[t.k].seed:0;
      _prodBtns='<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+t.k+'"'+(S.cash>=_sp?"":" disabled")+'>Buy '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+' Seeds '+money(_sp)+'</button>';
     }else{
-     _prodBtns='<span class="tk-need">Need '+_needPaper+' papers</span>';
+     var _short=_needPaper-_havePaper,_packs=Math.ceil(_short/PAPER_PACK),_pcost=_packs*PAPER_COST;
+     _prodBtns='<button type="button" class="tk-buypapers" data-act="task-buypapers" data-packs="'+_packs+'">Buy '+_short+' Papers — '+money(_pcost)+'</button>';
     }
    }else if(RECIPES[t.k]){
     /* lab product: check recipe ingredients */
@@ -5225,6 +5228,11 @@ root.addEventListener("click",function(e){
   S.tab="cook";S.view="app";navPush("cook");ttPushHist();save();render();
   /* auto-start the cook if possible */
   setTimeout(function(){startCook(_tc.k);},200);
+  return;
+ }
+ if(a==="task-buypapers"){
+  var _pks=+b.dataset.packs||1,_cost=_pks*PAPER_COST;
+  if(S.cash>=_cost){S.cash-=_cost;S.papers+=_pks*PAPER_PACK;save();render();}
   return;
  }
  if(a==="task-fulfill"){doFulfillTask(+b.dataset.i||0);return;}
