@@ -1019,6 +1019,7 @@ window.hatchWidget={
 .msg-av-street{background:linear-gradient(135deg,#1a73e8,#4285f4)!important}
 .msg-unread{color:#25d366;font-size:14px;flex:none}
 .msg-unread-count{background:#25d366;color:#fff;font-size:12px;font-weight:700;min-width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;padding:0 6px;flex:none}
+.msg-unanswered{background:#f59e0b;color:#fff;font-size:11px;font-weight:700;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;padding:0 8px;flex:none;letter-spacing:1px}
 .msg-time{font-size:11px;color:rgba(255,255,255,.4);flex:none}
 .msg-chev{font-size:22px;color:rgba(255,255,255,.3)}
 .msg-ordtag{font-size:11px;color:#25d366;font-weight:700}
@@ -3060,9 +3061,11 @@ function render(){
   h+='<button type="button" class="msg-chat pinned" data-act="msg-open" data-c="__roach__">'
    +'<span class="msg-avatar msg-av-roach">🪳</span>'
    +'<div class="msg-chat-mid"><b>Roach 📌</b><span>'+escHtml(rl)+'</span></div></button>';
-  // Msg sort: unread first (by most recent msg), then read (by most recent msg). Roach stays pinned above.
+  // Msg sort: unread first, then unanswered requests, then rest (by most recent msg). Roach stays pinned above.
+  function _hasUnanswered(c){return !c.unread&&!(c.unreadCount>0)&&!!c.order;}
   var _cs=(S.contacts||[]).slice().sort(function(a,b){
-   var au=a.unread?0:1,bu=b.unread?0:1;
+   var au=a.unread||(a.unreadCount>0)?0:(_hasUnanswered(a)?1:2);
+   var bu=b.unread||(b.unreadCount>0)?0:(_hasUnanswered(b)?1:2);
    if(au!==bu)return au-bu;
    var at=(a.msgs&&a.msgs.length)?(+a.msgs[a.msgs.length-1].t||0):0;
    var bt=(b.msgs&&b.msgs.length)?(+b.msgs[b.msgs.length-1].t||0):0;
@@ -3077,7 +3080,7 @@ function render(){
    h+='<button type="button" class="msg-chat'+(c.unread?" unread":"")+'" data-act="msg-open" data-c="'+escHtml(c.name)+'">'
     +'<span class="msg-avatar">'+escHtml(c.name.charAt(0).toUpperCase())+'</span>'
     +'<div class="msg-chat-mid"><b>'+escHtml(c.name)+ord+'</b><span>'+escHtml(last)+'</span></div>'
-    +((c.unreadCount>0)?'<span class="msg-unread-count">'+c.unreadCount+'</span>':(c.unread?'<span class="msg-unread">●</span>':''))
+    +((c.unreadCount>0)?'<span class="msg-unread-count">'+c.unreadCount+'</span>':(c.unread?'<span class="msg-unread">\u25CF</span>':(!c.unread&&!(c.unreadCount>0)&&c.order?'<span class="msg-unanswered">( ... )</span>':'')))
     +'<span class="msg-time">'+tm+'</span></button>';
   });
   if(!(S.contacts||[]).length)h+='<div class="msg-empty">No customers yet.<br>Sell on the street — some buyers will hit you up.</div>';
