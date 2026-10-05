@@ -5511,8 +5511,8 @@ root.addEventListener("click",function(e){
  if(a==="phoneview"){S.phoneView=b.dataset.v;save();render();return;}
  if(a==="kp-press"){
   var _k=b.dataset.k;
-  kpPlay(_k);
   S._dialNum=(S._dialNum||"")+_k;
+  try{kpPlay(_k);}catch(_e){}
   /* Mike Jones: 281-330-8004 */
   if(S._dialNum==="2813308004"&&!S.devMode){
    S.devMode=true;
