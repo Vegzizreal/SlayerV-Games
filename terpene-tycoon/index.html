@@ -90,7 +90,7 @@ window.hatchWidget={
   </div>
     <div class="android-appgrid hw-appgrid">
    <div class="hw-page">
-   <button type="button" class="android-app" data-act="openapp" data-app="deal" data-mv="list" data-hwkeys="messages co-op chat deal sell text"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#2563eb)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M24 7c-9.4 0-17 6.4-17 14.3 0 4.4 2.4 8.4 6.2 11l-1.6 6.2 6.8-3.4c1.8.5 3.7.8 5.6.8 9.4 0 17-6.4 17-14.3S33.4 7 24 7z" fill="#fff"/><circle cx="17" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="24" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="31" cy="21.5" r="2.9" fill="#3b82f6"/></svg></span><span class="aa-label">Messages</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="deal" data-mv="list" data-hwkeys="messages co-op chat deal sell text"><span class="aa-badge" id="aa-msgbadge" hidden></span><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#2563eb)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M24 7c-9.4 0-17 6.4-17 14.3 0 4.4 2.4 8.4 6.2 11l-1.6 6.2 6.8-3.4c1.8.5 3.7.8 5.6.8 9.4 0 17-6.4 17-14.3S33.4 7 24 7z" fill="#fff"/><circle cx="17" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="24" cy="21.5" r="2.9" fill="#3b82f6"/><circle cx="31" cy="21.5" r="2.9" fill="#3b82f6"/></svg></span><span class="aa-label">Messages</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="tasks" data-hwkeys="todo tasks orders fulfill deliveries jobs"><span class="aa-icon" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M12 8h24a3 3 0 0 1 3 3v27a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3z" fill="#fff"/><rect x="18" y="4" width="12" height="7" rx="2" fill="#fff" stroke="#6d28d9" stroke-width="2"/><path d="M15 20l4 4 8-9" fill="none" stroke="#6d28d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 30l4 4 8-9" fill="none" stroke="#6d28d9" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 40h18" stroke="#e5e7eb" stroke-width="2.6" stroke-linecap="round"/></svg></span><span class="aa-label">To Do</span></button>
       <button type="button" class="android-app" data-act="openapp" data-app="store" data-hwkeys="store shop buy seeds"><span class="aa-icon" style="background:linear-gradient(135deg,#5ea0fa,#8b5cf6)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M11 17h26l-2.2 21a3 3 0 0 1-3 2.7H16.2a3 3 0 0 1-3-2.7z" fill="#fff"/><path d="M17.5 17v-1.5a6.5 6.5 0 0 1 13 0V17" fill="none" stroke="#fff" stroke-width="3.2"/><path d="M24 24.5l1.7 3.4 3.8.6-2.7 2.7.6 3.8-3.4-1.8-3.4 1.8.6-3.8-2.7-2.7 3.8-.6z" fill="#8b5cf6"/></svg></span><span class="aa-label">Store</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="clinic" data-hwkeys="clinic heal health"><span class="aa-icon" style="background:linear-gradient(135deg,#2b2740,#1a1826)"><svg viewBox="0 0 48 48" width="36" height="36"><defs><linearGradient id="thg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#c084fc"/><stop offset=".55" stop-color="#f472b6"/><stop offset="1" stop-color="#fb923c"/></linearGradient></defs><path d="M24 41C15 33.5 8 27.5 8 19.5 8 14 12 10 17 10c3.5 0 5.8 1.8 7 4 1.2-2.2 3.5-4 7-4 5 0 9 4 9 9.5 0 8-7 14-16 21.5z" fill="url(#thg)"/><polyline points="13.5,22.5 19.5,22.5 22.5,17 26,28 29,22.5 34.5,22.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="aa-label">Clinic</span></button>
@@ -250,6 +250,9 @@ window.hatchWidget={
 .aa-icon::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.30),rgba(255,255,255,0) 42%);box-shadow:inset 0 -3px 7px rgba(0,0,0,.25)}
 .android-app:active .aa-icon{transform:scale(.88)}
 .aa-label{font-size:14px;color:#fff;font-weight:700;letter-spacing:.1px}
+.android-app{position:relative}
+.aa-badge{position:absolute;top:-4px;right:8px;background:#ef4444;color:#fff;font-size:11px;font-weight:700;min-width:20px;height:20px;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:0 5px;z-index:2;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.aa-badge[hidden]{display:none}
 
 .oneui-dock{position:sticky;bottom:0;margin:20px -18px 0;padding:12px 26px;background:rgba(24,24,32,.66);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;z-index:5}
 .oneui-dock .android-app{padding:0}
@@ -1079,7 +1082,6 @@ window.hatchWidget={
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed:disabled{opacity:.4;cursor:not-allowed}
 .tk-need{color:#f59e0b;font-size:13px;font-weight:600}
-.tk-buypapers{background:#3b82f6;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-empty{text-align:center;color:rgba(255,255,255,.55);padding:48px 20px;font-size:14px;line-height:1.7}
 .tk-card{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:14px;padding:14px;margin:10px 4px}
 .tk-hd{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#fff;margin-bottom:8px}
@@ -1099,7 +1101,6 @@ window.hatchWidget={
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed:disabled{opacity:.4;cursor:not-allowed}
 .tk-need{color:#f59e0b;font-size:13px;font-weight:600}
-.tk-buypapers{background:#3b82f6;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-empty{color:rgba(0,0,0,.5)}
 .pg[data-theme="light"] .tk-hd{color:#111}
 .pg[data-theme="light"] .tk-hd span{color:rgba(0,0,0,.45)}
@@ -2541,7 +2542,7 @@ var ROACH_PANIC={
 };
 function pushRoachMsg(m){
  if(!Array.isArray(S.roachMsgs))S.roachMsgs=[];
- S.roachMsgs.unshift({m:m,t:Date.now()});if(S.roachMsgs.length>20)S.roachMsgs.length=20;
+ S.roachMsgs.unshift({m:m,t:Date.now()});if(S.roachMsgs.length>20)S.roachMsgs.length=20;S.roachRead=false;
  /* also show in notification shade */
  if(!Array.isArray(S.notifs))S.notifs=[];
  /* migrate Roach messages from notifs to separate roachMsgs (2026-10-05) */
@@ -2983,6 +2984,16 @@ function renderShade(){
 function render(){
  if(root&&root.dataset){root.dataset.theme=(S.theme==="light")?"light":"dark";root.dataset.labelcolor=S.labelColor||"white";}
  var _pg=q(".pg");if(_pg&&_pg.dataset)_pg.dataset.labelcolor=S.labelColor||"white";
+ /* update Messages badge */
+ var _mb=q("#aa-msgbadge");
+ if(_mb){
+  var _uc=0;
+  (S.contacts||[]).forEach(function(c){_uc+=(c.unreadCount||0);});
+  /* also count Roach unread */
+  if(S.roachMsgs&&S.roachMsgs.length&&!S.roachRead)_uc+=S.roachMsgs.length;
+  if(_uc>0){_mb.textContent=_uc>99?"99+":_uc;_mb.hidden=false;}
+  else{_mb.hidden=true;}
+ }
  checkSenorV();
  var now=Date.now();
  renderTicker();
@@ -3211,7 +3222,7 @@ function render(){
   var _mv=S.msgView||"list";
   if(_mv==="list"){q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
   else if(_mv==="phonebook"){q(".pane-deal").innerHTML=tabHeader("deal")+dealPhonebook();}
-  else if(_mv==="__roach__"){q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
+  else if(_mv==="__roach__"){S.roachRead=true;q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
   else if(getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;_cc.unreadCount=0;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
   else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
  }
@@ -3423,7 +3434,10 @@ function propsHTML(){
    h+='<div class="pa-btns">';
    h+='<button type="button" data-act="water" data-pi="'+pi+'" data-si="'+sel.si+'">💧 Water</button>';
    if(S.fert>0&&sp.growth<100)h+='<button type="button" data-act="fert" data-pi="'+pi+'" data-si="'+sel.si+'">Fertilize ('+S.fert+')</button>';
-   if(sp.growth>=100)h+='<button type="button" data-act="harvest" data-pi="'+pi+'" data-si="'+sel.si+'" class="go">Harvest</button>';
+   if(sp.growth>=100){
+    h+='<button type="button" data-act="harvest" data-pi="'+pi+'" data-si="'+sel.si+'" class="go">Harvest</button>';
+    if((S.seeds[sp.strain]||0)>0)h+='<button type="button" data-act="harvest-replant" data-pi="'+pi+'" data-si="'+sel.si+'" class="go">Harvest & Replant</button>';
+   }
    h+='</div>';
   }
   h+='</div>';
@@ -4019,8 +4033,7 @@ function tasksHTML(){
      var _sp=PRODUCTS[t.k]?PRODUCTS[t.k].seed:0;
      _prodBtns='<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+t.k+'"'+(S.cash>=_sp?"":" disabled")+'>Buy '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+' Seeds '+money(_sp)+'</button>';
     }else{
-     var _short=_needPaper-_havePaper,_packs=Math.ceil(_short/PAPER_PACK),_pcost=_packs*PAPER_COST;
-     _prodBtns='<button type="button" class="tk-buypapers" data-act="task-buypapers" data-packs="'+_packs+'">Buy '+_short+' Papers — '+money(_pcost)+'</button>';
+     _prodBtns='<span class="tk-need">Need '+_needPaper+' papers</span>';
     }
    }else if(RECIPES[t.k]){
     /* lab product: check recipe ingredients */
@@ -5161,6 +5174,18 @@ root.addEventListener("click",function(e){
  if(a==="harvestall"){doHarvestAll();return;}
  if(a==="fert"){var p2=getPot(+b.dataset.pi,+b.dataset.si);if(p2&&S.fert>0&&p2.growth<100){S.fert--;p2.growth=Math.min(100,p2.growth+30);S.msg="Fertilized — growth boosted.";save();render();}return;}
  if(a==="harvest"){S.propSel=null;doHarvest(+b.dataset.pi,+b.dataset.si);return;}
+ if(a==="harvest-replant"){
+  var _pi=+b.dataset.pi,_si=+b.dataset.si;
+  var _pr=S.props[_pi],_p=_pr&&_pr.slots[_si];
+  if(!_p||_p.growth<100)return;
+  var _strain=_p.strain;
+  doHarvest(_pi,_si);
+  /* replant same strain if seeds available */
+  if((S.seeds[_strain]||0)>0){
+   doPlant(_pi,_si,_strain);
+  }
+  return;
+ }
  if(a==="buyseed"){var k=b.dataset.strain;if(PRODUCTS[k].tier<=pLevel()&&S.cash>=PRODUCTS[k].seed){S.cash-=PRODUCTS[k].seed;S.seeds[k]++;S.msg="Bought "+PRODUCTS[k].name+" seeds.";save();render();}return;}
  if(a==="autoplant"){doAutoPlant(b.dataset.strain);return;}
  if(a==="buyfert"){if(S.cash>=FERT_COST){S.cash-=FERT_COST;S.fert++;S.msg="Fertilizer stocked.";save();render();}return;}
@@ -5228,11 +5253,6 @@ root.addEventListener("click",function(e){
   S.tab="cook";S.view="app";navPush("cook");ttPushHist();save();render();
   /* auto-start the cook if possible */
   setTimeout(function(){startCook(_tc.k);},200);
-  return;
- }
- if(a==="task-buypapers"){
-  var _pks=+b.dataset.packs||1,_cost=_pks*PAPER_COST;
-  if(S.cash>=_cost){S.cash-=_cost;S.papers+=_pks*PAPER_PACK;save();render();}
   return;
  }
  if(a==="task-fulfill"){doFulfillTask(+b.dataset.i||0);return;}
