@@ -4681,7 +4681,6 @@ function stashHTML(){
    }
    if(!ft.length&&!fs.length)h+='<div class="notes-empty">Nothing in progress.</div>';
   }else if(view==="stash"){
-   h+='<div class="notes-actions"><button type="button" class="notes-abtn danger" data-act="notes-sellall"'+(cards.length?"":" disabled")+'>Sell All</button></div>';
    h+=sum;
    var fc=cards.filter(function(c){return match(c.search);});
    h+=fc.length?fc.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing stashed yet — harvest some bud first.")+'</div>';
