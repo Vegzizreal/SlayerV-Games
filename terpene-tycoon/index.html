@@ -74,11 +74,12 @@ window.hatchWidget={
   <div class="hw-weather">
    <div class="hw-wicon"><svg viewBox="0 0 48 48" width="58" height="58"><path d="M31 27a13 13 0 1 1-12.6-16.6A10.5 10.5 0 0 0 31 27z" fill="#f1f5f9"/><circle cx="35" cy="13" r="2.2" fill="#f1f5f9" opacity=".85"/><circle cx="40" cy="21" r="1.5" fill="#f1f5f9" opacity=".6"/></svg></div>
    <div class="hw-wtext">
-    <div class="hw-wloc android-wday">Day 1</div>
+    <div class="hw-wloc">Shirley, NY</div>
     <div class="hw-wcond"><span class="android-wheatnum">0</span>&#176; &#8226; <span class="android-wheattier">CALM</span></div>
-    <div class="hw-whl">H:<span class="android-wstash">0/40g</span> L:<span class="android-wcash">$200</span> &#8226; <span class="ph-dowsub">Sunday</span></div>
+    <div class="hw-whl"><span class="ph-dowsub">Sunday</span></div>
    </div>
    <div class="hw-wbtns">
+    <span class="hw-wday android-wday">Day 1</span>
     <button type="button" class="hw-sbtn" data-act="roach-view" aria-label="Changelog" title="Changelog"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M8 6h13"/><path d="M8 12h13"/><path d="M8 18h13"/><circle cx="4" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.4" fill="currentColor" stroke="none"/></svg></button>
     <button type="button" class="hw-sbtn" data-act="refresh" aria-label="RE-UP" title="RE-UP"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.6-6.4"/><path d="M21 3v6h-6"/></svg></button>
    </div>
@@ -266,6 +267,7 @@ window.hatchWidget={
 .pg[data-theme="light"] .hw-status .hw-sitem{color:#111}
 .pg[data-theme="light"] .hw-sbtn{background:rgba(0,0,0,.06);border-color:rgba(0,0,0,.12);color:#111}
 .hw-wbtns{display:flex;gap:8px;margin-left:auto;align-items:center}
+.hw-wday{font-size:13px;font-weight:700;color:#fbbf24;white-space:nowrap;margin-right:4px}
 .hw-weather{display:flex;align-items:center;gap:8px;background:rgba(30,30,38,.72);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.09);border-radius:19px;padding:0 10px;margin-bottom:10px;box-shadow:0 6px 16px rgba(0,0,0,.45);flex:none;height:38px;overflow:hidden;white-space:nowrap}
 .hw-wicon{flex:none;display:flex;align-items:center;filter:drop-shadow(0 0 10px rgba(190,215,255,.45))}
 .hw-wicon svg{width:20px;height:20px}
