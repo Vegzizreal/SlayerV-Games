@@ -303,6 +303,9 @@ window.hatchWidget={
 /* compact icon sizing when 4 rows are selected */
 .hw-appgrid[data-rows="4"] .hw-page{gap:12px 6px}
 .hw-appgrid[data-rows="4"] .aa-icon{width:54px;height:54px;border-radius:32%}
+.hw-appgrid.hw-manyrows .hw-page{gap:8px 4px}
+.hw-appgrid.hw-manyrows .aa-icon{width:48px;height:48px;border-radius:32%}
+.hw-appgrid.hw-manyrows .aa-label{font-size:10px}
 /* icon style 0: Minimal (dark bg, white icons) */
 .hw-appgrid[data-iconstyle="0"] .aa-icon{background:#1a1a1a !important;border:none !important}
 .hw-appgrid[data-iconstyle="0"] .aa-icon svg *{fill:#fff !important;stroke:#fff !important}
@@ -6201,16 +6204,26 @@ function layoutHome(){
   var lb=k.slice(2);
   return !!_hwAppEls[lb]&&!inFolder[lb];
  });
- // rebuild pages
+ // rebuild pages - condense all onto one screen if possible
  var old=grid.querySelectorAll(".hw-page");
  for(i=0;i<old.length;i++)old[i].parentNode.removeChild(old[i]);
- var _rows=(S.homeRows===2||S.homeRows===3)?S.homeRows:4;
  var _cols=hwWinW()>=900?8:hwWinW()>=600?6:4;
- var perPage=_rows*_cols,page=null;
- grid.dataset.rows=_rows;
+ var _needed=Math.max(1,Math.ceil(keys.length/_cols));
+ /* fit all on one screen if 6 rows or fewer, else fall back to pagination */
+ var _rows,_perPage;
+ if(_needed<=6){
+  _rows=_needed;_perPage=keys.length||1;
+ }else{
+  _rows=(S.homeRows===2||S.homeRows===3)?S.homeRows:4;
+  _perPage=_rows*_cols;
+ }
+ var page=null;
+ grid.dataset.rows=Math.min(_rows,4);
  grid.dataset.iconstyle=(typeof S.iconStyle==="number"?S.iconStyle:4);
+ /* extra-compact for 5-6 rows */
+ grid.classList.toggle("hw-manyrows",_rows>4);
  for(i=0;i<keys.length;i++){
-  if(i%perPage===0){page=d.createElement("div");page.className="hw-page";grid.appendChild(page);}
+  if(i%_perPage===0){page=d.createElement("div");page.className="hw-page";grid.appendChild(page);}
   var el=null,k=keys[i];
   if(k.indexOf("f:")===0)el=hwFolderBtn(k.slice(2));
   else el=_hwAppEls[k.slice(2)]||null;
