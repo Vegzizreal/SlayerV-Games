@@ -4432,7 +4432,56 @@ function tickContacts(now){
   c.lastOrderAt=now;
   var pn=PRODUCTS[pick.k].name;
   var qty=pick.kind==="joint"?grams+" "+pn+" joints":grams+"g "+pn;
-  var texts=["yo u got any "+pn+"? need "+qty,"aye need "+qty+" asap 🙏","u holdin "+pn+"? tryna grab "+qty];
+  var texts=["yo u got any "+pn+"? need "+qty,
+   "aye need "+qty+" asap \u0001F64F",
+   "u holdin "+pn+"? tryna grab "+qty,
+   "lemme get "+qty+" of that "+pn,
+   "u got "+qty+"? need it tonight",
+   "bro "+qty+" "+pn+" rn, u good?",
+   "need "+qty+" "+pn+", how fast can u move?",
+   "aye u still got "+pn+"? need "+qty,
+   "gimme "+qty+", that "+pn+" fire \u0001F525",
+   "u around? tryna cop "+qty+" "+pn,
+   "yo what's good, need "+qty+" of "+pn,
+   "can u do "+qty+"? "+pn+" specifically",
+   "looking for "+qty+" "+pn+", u the plug?",
+   "my guy, "+qty+" "+pn+" \u2014 when can we link?",
+   "need to re-up, "+qty+" "+pn+" please \u0001F64F",
+   "u got time today? need "+qty,
+   "aye, "+qty+" "+pn+" \u2014 cash ready \u0001F4B5",
+   "slide me "+qty+" of "+pn+" when u can",
+   "yo "+qty+" "+pn+", no rush but lmk",
+   "u still in the game? need "+qty+" "+pn,
+   "heard u got that "+pn+", lemme get "+qty,
+   "can I grab "+qty+"? really need that "+pn,
+   "u got "+pn+" on deck? "+qty+" for me",
+   "need "+qty+" asap, "+pn+" only",
+   "yo plug, "+qty+" "+pn+" \u2014 u free?",
+   "aye fam, hook me up with "+qty,
+   "running low, need "+qty+" "+pn+" \u0001F940",
+   "u got "+qty+" for me today?",
+   "what's the word, need "+qty+" "+pn,
+   "lemme cop "+qty+", that "+pn+" been hitting",
+   "yo I need "+qty+" \u2014 u got "+pn+"?",
+   "u able to do "+qty+" "+pn+" tonight?",
+   "aye need a favor, "+qty+" "+pn,
+   "u holding? "+qty+" "+pn+" rn",
+   "my plug fell off, u got "+qty+" "+pn+"?",
+   "need "+qty+" for the weekend, "+pn+" \u0001F64F",
+   "yo u up? "+qty+" "+pn+" please",
+   "can u match me "+qty+"? that "+pn,
+   "u got the "+pn+"? I'll take "+qty,
+   "aye, "+qty+" \u2014 "+pn+" if u got it",
+   "need to stock up, "+qty+" "+pn,
+   "u free to meet? want "+qty+" "+pn,
+   "yo lemme get that "+qty+", "+pn+" \u0001F525",
+   "u still got the gas? "+qty+" "+pn,
+   "need "+qty+", lmk the damage \u0001F4B0",
+   "aye u got "+qty+"? I'm outside already \u0001F605",
+   "u got "+pn+"? bet, "+qty+" then",
+   "slide thru with "+qty+" "+pn+"?",
+   "yo, regular order: "+qty+" "+pn,
+   "u know what I need \u2014 "+qty+" "+pn+" \u0001F64F"];
   /* thieves get shadier as they get closer to robbing you */
   if(c.isThief){
    var _obt=c.ordersBeforeTurn||0;
@@ -4644,8 +4693,8 @@ function tasksHTML(){
  return h;
 }
 /* ===== ORDER REQUEST FLOW: accept moves to Tasks app, dismiss clears ===== */
-var ORDER_ACCEPT_VARIANTS=["Bet","I gotchu","Say less fam"];
-var ORDER_DENY_VARIANTS=["Nah","Nope","I'm good"];
+var ORDER_ACCEPT_VARIANTS=["Bet","I gotchu","Say less fam","On my way \u0001F3C3","Give me 10 mins","Pull up \u0001F4CD","I got that for u","Locked in \u0001F512","Come thru","Bet, cash only \u0001F4B5"];
+var ORDER_DENY_VARIANTS=["Nah","Nope","I'm good","Can't rn","Dry rn \u0001F940","Not today fam","I'm out, sorry","Maybe tomorrow","Nah I'm cool","Pass for now"];
 function randomDenyVariant(){return ORDER_DENY_VARIANTS[Math.floor(Math.random()*ORDER_DENY_VARIANTS.length)];}
 /* ===== MESSAGE REPLY BUBBLES (player quick replies, contextual) =====
    data-reply ids are stable mechanic hooks — future game logic can key off them. */
