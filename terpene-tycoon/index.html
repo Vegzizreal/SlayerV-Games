@@ -566,6 +566,19 @@ window.hatchWidget={
 .pane-browser{position:relative}
 .android-lockscreen{position:absolute;inset:0;z-index:200;background:linear-gradient(180deg,#0a0a12 0%,#1a1a2e 50%,#0a0a12 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;touch-action:pan-y}
 .android-lockscreen[hidden]{display:none}
+/* terminal launch overlays */
+.tt-termboot{position:fixed;inset:0;z-index:999;background:#000;color:#0f0;font-family:"Courier New",monospace;font-size:14px;padding:40px 24px;overflow:hidden;cursor:pointer}
+.tt-termboot .tt-line{margin:4px 0;white-space:pre-wrap;word-break:break-all}
+.tt-termboot .tt-cursor{display:inline-block;width:8px;height:16px;background:#0f0;vertical-align:-2px;animation:tt-blink 0.8s infinite}
+@keyframes tt-blink{0%,50%{opacity:1}51%,100%{opacity:0}}
+.tt-termgate{position:fixed;inset:0;z-index:999;background:#0a0a0a;color:#e0e0e0;font-family:"Courier New",monospace;display:flex;align-items:center;justify-content:center;padding:24px}
+.tt-termgate .tt-box{max-width:480px;border:1px solid #333;background:#111;padding:32px;text-align:center}
+.tt-termgate h2{color:#f00;font-size:20px;margin:0 0 16px;letter-spacing:2px}
+.tt-termgate p{font-size:13px;line-height:1.6;color:#aaa;margin:12px 0}
+.tt-termgate .tt-steps{text-align:left;background:#000;border:1px solid #222;padding:16px;margin:16px 0;font-size:13px;line-height:2}
+.tt-termgate .tt-steps b{color:#0f0}
+.tt-termgate a.tt-dl{display:inline-block;margin-top:8px;padding:12px 28px;background:#0f0;color:#000;font-weight:bold;text-decoration:none;font-size:14px}
+.tt-termgate a.tt-dl:hover{background:#4f4}
 .lock-time{font-size:72px;font-weight:200;color:#fff;letter-spacing:-2px}
 .lock-date{font-size:16px;color:#aaa;margin-top:4px}
 .lock-notifs{margin-top:24px;max-width:85%;display:flex;flex-direction:column;gap:8px}
@@ -2324,10 +2337,11 @@ var RECIPES={
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
-var GAME_VER="BETA-0.018.10";
-var GAME_UPDATED="Oct 5, 2026 · 6:40 PM";
+var GAME_VER="BETA-0.018.11";
+var GAME_UPDATED="Oct 5, 2026 · 7:30 PM";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"BETA-0.018.11",ts:"Oct 5, 2026 \u00b7 7:30 PM",t:"Terminal launch",d:"PC players can now launch via plug.bat in CMD \u2014 terminal boot sequence, plug code unlock. Mobile untouched."},
    {v:"BETA-0.018.10",ts:"Oct 5, 2026 \u00b7 6:40 PM",t:"Secret contacts",d:"Eric Cizan joins the secret contact list. Unique names and numbers never repeat on any list."},
    {v:"BETA-0.018.9",ts:"Oct 5, 2026 \u00B7 6:35 PM",t:"Secret contacts",d:"New secret contact list in Phone contacts. Fozzie and Mike Jones are in — their names and numbers can never repeat on any other list."},
    {v:"BETA-0.018.8",ts:"Oct 5, 2026 \u00B7 5:55 PM",t:"Reply ticker",d:"Chat reply prompts are now a single scrolling row: green yes-pills on the left, all the red no-pills pinned on the right."},
@@ -7107,6 +7121,75 @@ try{
   SVGElement.prototype.closest=Element.prototype.closest;
  }
 }catch(_sce){}
+/* terminal launch: meta-gamey CMD entry */
+(function(){
+ try{
+  var _q=new URLSearchParams(location.search);
+  var _src=_q.get("src");
+  var _unlock=_q.get("unlock");
+  var _isMobile=/Android|iPhone|iPad|iPod|Mobile/i.test(navigator.userAgent||"");
+  var _isPages=(location.hostname||"").indexOf("github.io")>-1;
+  var _isWidget=false;
+  try{_isWidget=!!window.hatchWidget;}catch(_e5){}
+  /* plug code unlock: XXXXX-XXXXX-XXXXX format */
+  var _plugRe=/^[A-Za-z0-9]{5}-[A-Za-z0-9]{5}-[A-Za-z0-9]{5}$/;
+  if(_unlock&&_plugRe.test(_unlock)){
+   try{if(typeof S!=="undefined"){S.plugUnlocked=_unlock;S.plugUnlockedAt=Date.now();}}catch(_e3){}
+  }
+  var _hasUnlock=false;
+  try{if(typeof S!=="undefined"&&S.plugUnlocked&&_plugRe.test(S.plugUnlocked))_hasUnlock=true;}catch(_e4){}
+  if(_src==="terminal"){
+   /* boot sequence */
+   var _ov=document.createElement("div");
+   _ov.className="tt-termboot";_ov.id="tt-termboot";
+   document.body.appendChild(_ov);
+   var _lines=[
+    "TERPENE TYCOON v"+GAME_VER,
+    "",
+    "> Establishing secure connection...",
+    "> Routing through 3 proxies... OK",
+    "> Bypassing firewall... OK",
+    "> Loading trap phone OS...",
+    "> Decrypting contacts...",
+    "",
+    "> Welcome back."
+   ];
+   var _li=0,_ci=0,_buf="";
+   _ov.innerHTML='<div class="tt-line"><span class="tt-cursor"></span></div>';
+   var _tm=setInterval(function(){
+    if(_li>=_lines.length){
+     clearInterval(_tm);
+     setTimeout(function(){var _e=document.getElementById("tt-termboot");if(_e)_e.remove();},1200);
+     return;
+    }
+    var _ln=_lines[_li];
+    if(_ci<=_ln.length){
+     _buf+=_ln.charAt(_ci);_ci++;
+     var _html="";
+     for(var _j=0;_j<_li;_j++)_html+='<div class="tt-line">'+_lines[_j].replace(/</g,"&lt;")+'</div>';
+     _html+='<div class="tt-line">'+_buf.replace(/</g,"&lt;")+'<span class="tt-cursor"></span></div>';
+     _ov.innerHTML=_html;
+    }else{_li++;_ci=0;_buf="";}
+   },28);
+   _ov.addEventListener("click",function(){clearInterval(_tm);_ov.remove();});
+  }else if(!_isMobile&&!_isWidget&&_isPages&&!_hasUnlock){
+   /* gate: PC players must use the terminal launcher */
+   var _g=document.createElement("div");
+   _g.className="tt-termgate";_g.id="tt-termgate";
+   _g.innerHTML='<div class="tt-box"><h2>NAH.</h2>'
+    +'<p>Real ones don\u2019t click links.<br>Real ones use the terminal.</p>'
+    +'<div class="tt-steps">'
+    +'<b>1.</b> Download <b>plug.bat</b> below<br>'
+    +'<b>2.</b> Open CMD, type <b>plug</b><br>'
+    +'<b>3.</b> Enter your plug code when asked<br>'
+    +'<b>4.</b> That\u2019s it. Welcome back.'
+    +'</div>'
+    +'<a class="tt-dl" href="../plug.bat" download>DOWNLOAD plug.bat</a>'
+    +'<p style="margin-top:16px;font-size:11px;color:#555;">Mobile players: you\u2019re good, this is a PC thing.</p></div>';
+   document.body.appendChild(_g);
+  }
+ }catch(_e){}
+})();
 render();
 tick();
 setInterval(tick,15000);
