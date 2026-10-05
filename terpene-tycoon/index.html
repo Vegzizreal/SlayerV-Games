@@ -1951,13 +1951,13 @@ var STRAIN_IMGS={
 var GROWKEYS=["sour","og","haze","bluedream","maui","northern","ak47"];
 var PROPS=[
  {id:"tent",name:"Grow Tent",cost:0,slots:3,tier:1,desc:"Your closet setup. 3 grow slots."},
- {id:"trap",name:"Trap House",cost:1500,slots:6,tier:2,desc:"6 grow slots. Requires Level 2."},
- {id:"warehouse",name:"Warehouse",cost:5000,slots:10,tier:3,desc:"10 grow slots. Requires Level 3."},
- {id:"mansion",name:"Mansion Lab",cost:15000,slots:16,tier:4,desc:"16 grow slots. Requires Level 4."},
- {id:"bunker",name:"Bunker",cost:40000,slots:20,tier:5,desc:"20 grow slots. Requires Level 5."},
- {id:"island",name:"Island Compound",cost:100000,slots:24,tier:6,desc:"24 grow slots. Requires Level 6."},
- {id:"cartel",name:"Cartel Empire",cost:250000,slots:28,tier:7,desc:"28 grow slots. Requires Level 7."},
- {id:"palace",name:"Emerald Palace",cost:500000,slots:34,tier:8,desc:"34 grow slots. Requires Level 8."}
+ {id:"trap",name:"Trap House",cost:40000,slots:6,tier:2,desc:"6 grow slots. Requires Level 2."},
+ {id:"warehouse",name:"Warehouse",cost:130000,slots:10,tier:3,desc:"10 grow slots. Requires Level 3."},
+ {id:"mansion",name:"Mansion Lab",cost:400000,slots:16,tier:4,desc:"16 grow slots. Requires Level 4."},
+ {id:"bunker",name:"Bunker",cost:1050000,slots:20,tier:5,desc:"20 grow slots. Requires Level 5."},
+ {id:"island",name:"Island Compound",cost:2650000,slots:24,tier:6,desc:"24 grow slots. Requires Level 6."},
+ {id:"cartel",name:"Cartel Empire",cost:6500000,slots:28,tier:7,desc:"28 grow slots. Requires Level 7."},
+ {id:"palace",name:"Emerald Palace",cost:13000000,slots:34,tier:8,desc:"34 grow slots. Requires Level 8."}
 ];
 var KITS={
  butter:{name:"Butter Kit",cost:40,tier:2,desc:"For baking Edibles"},
@@ -4736,7 +4736,7 @@ root.addEventListener("click",function(e){
  if(a==="amt"){S.amt=+b.dataset.amt;save();render();return;}
  if(a==="prop-view"){S.propView=b.dataset.pid;S.propSel=null;save();render();return;}
  if(a==="prop-back"){S.propView=null;S.propSel=null;save();render();return;}
- if(a==="prop-plant"){S.propSel={pi:+b.dataset.pi,si:+b.dataset.si};save();render();return;}
+ if(a==="prop-plant"){S.propSel={pi:+b.dataset.pi,si:+b.dataset.si};save();render();var _pa=q(".pane-props .prop-actions");if(_pa&&_pa.scrollIntoView){try{_pa.scrollIntoView({block:"nearest",behavior:"smooth"});}catch(e){}}return;}
  if(a==="prop-waterall"){var _pw=S.props.filter(function(x){return x.id===b.dataset.pid;})[0];if(_pw){_pw.slots.forEach(function(p){if(p)p.water=100;});}S.msg="Everything watered.";save();render();return;}
  if(a==="prop-harvestall"){var _ph=S.props.filter(function(x){return x.id===b.dataset.pid;})[0];if(_ph){var _phi=S.props.indexOf(_ph);_ph.slots.forEach(function(p,si){if(p&&p.growth>=100)doHarvest(_phi,si);});}save();render();return;}
  if(a==="plant"){S.propSel=null;doPlant(+b.dataset.pi,+b.dataset.si,b.dataset.strain);return;}
@@ -5094,14 +5094,10 @@ function hwValidOrder(){
 function layoutHome(){
  var grid=q(".hw-appgrid");if(!grid)return;
  hwInitRegistry();
- /* canonical homescreen order (Oct 2026): force once on all saves */
- if(S.hwOrderV!==1){
-  var _canon=["Messages","Tasks","Notes","Store","Health","Maps","Reputation","Street Deal","Bank","My Properties","Chrome","Camera","Contacts","Gallery","Clock","Settings","Phone","My Files"];
-  var _nk=[],_seen={};
-  for(var _ci=0;_ci<_canon.length;_ci++){var _cl=_canon[_ci];if(_hwAppEls[_cl]&&!_seen[_cl]){_nk.push("a:"+_cl);_seen[_cl]=1;}}
-  Object.keys(_hwAppEls).forEach(function(l){if(l==="_done"||_seen[l])return;_nk.push("a:"+l);_seen[l]=1;});
-  S.iconOrder=_nk;S.hwOrderV=1;
- }
+ if(S.hwOrderV!==1){var _c="Messages|Tasks|Notes|Store|Health|Maps|Reputation|Street Deal|Bank|My Properties".split("|"),_n=[],_h={};
+ _c.forEach(function(l){_n.push("a:"+l);_h[l]=1;});
+ Object.keys(_hwAppEls).forEach(function(l){if(l!=="_done"&&!_h[l])_n.push("a:"+l);});
+ S.iconOrder=_n;S.hwOrderV=1;}
  var d=hwDoc();if(!d)return;
  var i;
  // validate folders against known apps
