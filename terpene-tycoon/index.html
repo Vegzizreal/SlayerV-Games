@@ -2199,7 +2199,8 @@ function addXP(n){
   // Territory unlock notifications (hardcoded levels — keep in sync with TERRITORIES)
   var _tu={3:"Suburbs",5:"Downtown",8:"Waterfront",12:"Uptown"},_tn=[];
   for(var _tl=before+1;_tl<=after;_tl++)if(_tu[_tl])_tn.push(_tu[_tl]);
-  _tn.forEach(function(tn){pushRoachMsg("NEW TURF UNLOCKED: "+tn+"! Check the Maps app, yo.");});
+  if(!S.announcedTurfs)S.announcedTurfs={};
+  _tn.forEach(function(tn){if(!S.announcedTurfs[tn]){S.announcedTurfs[tn]=1;pushRoachMsg("NEW TURF UNLOCKED: "+tn+"! Check the Maps app, yo.");}});
   // Roach texts you a tip for each new level — tips come from Roach, not the system
   for(var _tl2=before+1;_tl2<=after;_tl2++){
    var _tips=LEVEL_TIPS[_tl2]||[];
@@ -2489,12 +2490,16 @@ var ROACH_PANIC={
 function pushRoachMsg(m){S.notifs.unshift({m:m,e:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
 function roachPanicCheck(tid,src){
  var z=terrZone(tid),v=z.heat[src],t=terrDef(tid),th,i;
+ if(!z.warned)z.warned={};
  for(i=0;i<3;i++){th=[30,60,90][i];var key=src+th;
   if(v>=th&&!z.warned[key]){
    z.warned[key]=1;
    var pool=ROACH_PANIC[src][th];
    var m=pool[(Math.random()*pool.length)|0].split("{terr}").join(t.name).split("{src}").join(HEAT_SRC_META[src].name);
    pushRoachMsg(m);
+  }else if(th===90){
+   /* 90% emergency: only reset after heat fully clears below 30 */
+   if(v<30&&z.warned[key]){delete z.warned[key];}
   }else if(v<th-10&&z.warned[key]){delete z.warned[key];}
  }
 }
