@@ -3,6 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0c">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
@@ -4761,6 +4765,9 @@ function settingsHTML(){
   h+='<div class="sdesc" style="margin:8px 2px 6px">App Label Color</div>';
   var _lc=S.labelColor||"white";
   h+='<div class="dchips"><button type="button" class="dchip center'+(_lc==="white"?" on":"")+'" data-act="setlabelcolor" data-c="white"><span class="dc-name">White</span></button><button type="button" class="dchip center'+(_lc==="black"?" on":"")+'" data-act="setlabelcolor" data-c="black"><span class="dc-name">Black</span></button></div>';
+  h+='<div class="sdesc" style="margin:8px 2px 6px">Fullscreen</div>';
+  h+='<div class="dchips"><button type="button" class="dchip center" data-act="gofullscreen"><span class="dc-name">⛶ Go Fullscreen</span></button></div>';
+  h+='<div class="sdesc" style="margin:4px 2px 0;font-size:11px;opacity:.6">Hides the browser bar on phones. For a permanent app-like feel, use your browser\'s "Add to Home Screen".</div>';
   h+='<div class="shopsec">WALLPAPER</div>';
   h+='<div class="wp-wrap">';
   if(S.wallpaper){h+='<div class="wp-prev"><img src="'+escHtml(S.wallpaper)+'" alt="Wallpaper preview"></div>';}
@@ -5033,6 +5040,15 @@ root.addEventListener("click",function(e){
  if(a==="setrows"){var _sr=+b.dataset.rows;if(_sr===2||_sr===3||_sr===4){S.homeRows=_sr;save();layoutHome();render();}return;}
  if(a==="seticonstyle"){var _ss=+b.dataset.s;if(_ss>=0&&_ss<=4){S.iconStyle=_ss;save();layoutHome();render();}return;}
  if(a==="setlabelcolor"){var _lc2=b.dataset.c;if(_lc2==="white"||_lc2==="black"){S.labelColor=_lc2;save();render();}return;}
+ if(a==="gofullscreen"){
+  try{
+   var el=document.documentElement;
+   if(document.fullscreenElement){document.exitFullscreen();}
+   else if(el.requestFullscreen){el.requestFullscreen();}
+   else if(el.webkitRequestFullscreen){el.webkitRequestFullscreen();}
+  }catch(e){}
+  return;
+ }
  if(a==="wp-apply"){var _wi=q(".wp-url"),_wu=_wi?_wi.value.trim():"";
   if(!_wu){S.msg="No URL entered.";save();render();return;}
   if(!/^https?:\/\//i.test(_wu)){S.msg="No valid image URL found — use http(s).";save();render();return;}
