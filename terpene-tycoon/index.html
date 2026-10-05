@@ -954,9 +954,9 @@ window.hatchWidget={
 .msg-order-body{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:12px}
 .msg-order button{width:100%;background:#25d366;color:#fff;border:none;border-radius:20px;padding:12px;font-weight:700;font-size:15px;cursor:pointer}
 .msg-order button:disabled{opacity:.45;cursor:default}
-.msg-order-btns{display:flex;flex-wrap:wrap;gap:8px}
-.msg-order-btns .msg-order-yes{flex:1 1 45%;width:auto;background:#25d366;border-radius:16px;padding:10px 8px;font-size:13.5px}
-.msg-order-btns .msg-order-no{flex:1 1 100%;width:auto;background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);border-radius:16px;padding:9px;font-size:13.5px;font-weight:600}
+.msg-order-btns{display:flex;flex-wrap:nowrap;gap:6px;justify-content:center}
+.msg-order-btns .msg-order-yes{flex:0 0 auto;width:auto;background:#25d366;border-radius:16px;padding:7px 12px;font-size:13px}
+.msg-order-btns .msg-order-no{flex:0 0 auto;width:auto;background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);border-radius:16px;padding:7px 12px;font-size:13px;font-weight:600}
 .pg[data-theme="light"] .msg-order-btns .msg-order-no{border-color:rgba(0,0,0,.25);color:rgba(0,0,0,.65)}
 /* Tasks app */
 .tk-empty{text-align:center;color:rgba(255,255,255,.55);padding:48px 20px;font-size:14px;line-height:1.7}
@@ -2894,11 +2894,12 @@ function render(){
   }
   if(c.order){
    var o=c.order,left=Math.max(0,o.expires-Date.now());
+   var _deny=randomDenyVariant();
    h+='<div class="msg-order"><div class="msg-order-hd">📦 <b>Order request</b><span>'+fmtDur(left)+' left</span></div>'
     +'<div class="msg-order-body">'+escHtml(contactQtyText(o))+' · pays <b>'+money(o.pu*o.g)+'</b></div>'
     +'<div class="msg-order-btns">'
     +ORDER_ACCEPT_VARIANTS.map(function(v){return '<button type="button" class="msg-order-yes" data-act="order-accept" data-contact="'+escHtml(c.name)+'" data-variant="'+escHtml(v)+'">'+escHtml(v)+'</button>';}).join("")
-    +'<button type="button" class="msg-order-no" data-act="order-dismiss" data-contact="'+escHtml(c.name)+'">Can\'t do it rn</button>'
+    +'<button type="button" class="msg-order-no" data-act="order-dismiss" data-contact="'+escHtml(c.name)+'" data-variant="'+escHtml(_deny)+'">'+escHtml(_deny)+'</button>'
     +'</div></div>';
   }
   if(c.fixer){
@@ -3666,18 +3667,19 @@ function doAcceptOrder(nm,variant){
  var o=c.order,now=Date.now();
  if(!Array.isArray(S.tasks))S.tasks=[];
  S.tasks.push({name:c.name,k:o.k,kind:o.kind,g:o.g,pu:o.pu,addedAt:now});
- var txt=variant||"Yeah I got you";
+ var txt=variant||"Bet";
  c.msgs.push({from:"me",text:txt,t:now});
  c.msgs.push({from:"them",text:"bet 🙏",t:now});
  c.order=null;c.unread=false;
  S.msg="Order from "+c.name+" added to Tasks.";
  save();render();
 }
-function doDismissOrder(nm){
+function doDismissOrder(nm,variant){
  var c=getContact(nm);
  if(!c||!c.order)return;
  var now=Date.now();
- c.msgs.push({from:"me",text:"I can't do it right now",t:now});
+ var txt=variant||"Nah";
+ c.msgs.push({from:"me",text:txt,t:now});
  c.msgs.push({from:"them",text:"all good, hmu later",t:now});
  c.order=null;c.unread=false;
  S.msg="Dismissed order request from "+c.name+".";
@@ -3706,6 +3708,7 @@ function doFulfillTask(i){
 function doDismissTask(i){
  var t=S.tasks&&S.tasks[i];
  if(!t)return;
+ if(!confirm("Dismiss this order from "+t.name+"?"))return;
  S.tasks.splice(i,1);
  S.msg="Dismissed task for "+t.name+".";
  save();render();
@@ -3728,7 +3731,9 @@ function tasksHTML(){
  return h;
 }
 /* ===== ORDER REQUEST FLOW: accept moves to Tasks app, dismiss clears ===== */
-var ORDER_ACCEPT_VARIANTS=["Yeah I got you","Got you","I got you fam","Say less, I got you"];
+var ORDER_ACCEPT_VARIANTS=["Bet","I gotchu","Say less fam"];
+var ORDER_DENY_VARIANTS=["Nah","Nope","I'm good"];
+function randomDenyVariant(){return ORDER_DENY_VARIANTS[Math.floor(Math.random()*ORDER_DENY_VARIANTS.length)];}
 /* ===== MESSAGE REPLY BUBBLES (player quick replies, contextual) =====
    data-reply ids are stable mechanic hooks — future game logic can key off them. */
 var MSG_REPLIES={
@@ -4776,7 +4781,7 @@ root.addEventListener("click",function(e){
  if(a==="msg-back"){S.msgView="list";save();render();return;}
  if(a==="msg-reply"){doSendReply(b.dataset.contact,b.dataset.reply);return;}
  if(a==="order-accept"){doAcceptOrder(b.dataset.contact,b.dataset.variant);return;}
- if(a==="order-dismiss"){doDismissOrder(b.dataset.contact);return;}
+ if(a==="order-dismiss"){doDismissOrder(b.dataset.contact,b.dataset.variant);return;}
  if(a==="task-fulfill"){doFulfillTask(+b.dataset.i||0);return;}
  if(a==="task-dismiss"){doDismissTask(+b.dataset.i||0);return;}
  if(a==="dealcat"){S.dealcat=b.dataset.c;save();render();return;}
