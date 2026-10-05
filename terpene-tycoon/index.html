@@ -4018,8 +4018,25 @@ function doFulfillTask(i){
  if(c){
   c.loyalty=Math.min(100,c.loyalty+8);
   c.msgs.push({from:"me",text:"got u. "+o.g+"g comin thru.",t:now});
-  c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
-  c.lastFulfilledAt=now;c.unread=true;
+  /* tip: if this was their preferred strain, they share some product */
+  var _isPref=(c.prefs||[]).some(function(p){return p.k===t.k&&p.kind===t.kind;});
+  if(_isPref){
+   var _tipPool=GROWKEYS.filter(function(k){return PRODUCTS[k]&&tierVis(PRODUCTS[k].tier)===2;});
+   var _tipK=_tipPool[(Math.random()*_tipPool.length)|0];
+   var _tipG=1+((Math.random()*2)|0);
+   if(stashTotal()+_tipG<=S.stashCap){
+    S.stash[_tipK]=(S.stash[_tipK]||0)+_tipG;
+    c.msgs.push({from:"them",text:"yo try this "+PRODUCTS[_tipK].name+" on me 🙏",t:now});
+    S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+". They tipped you "+_tipG+"g "+PRODUCTS[_tipK].name+"!";
+   }else{
+    c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
+    S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+".";
+   }
+  }else{
+   c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
+   S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+".";
+  }
+  c.lastFulfilledAt=now;c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
  }
  S.tasks.splice(i,1);
  S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+".";
