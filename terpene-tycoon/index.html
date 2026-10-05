@@ -109,6 +109,7 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="settings" data-hwkeys="settings game settings options wallpaper"><span class="aa-icon" style="background:linear-gradient(135deg,#a8b0bc,#6b7280)"><svg viewBox="0 0 48 48" width="36" height="36"><g fill="#fff"><rect x="20.5" y="5" width="7" height="11" rx="2"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(45 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(90 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(135 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(180 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(225 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(270 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(315 24 24)"/><circle cx="24" cy="24" r="10.5"/></g><circle cx="24" cy="24" r="5" fill="#6b7280"/></svg></span><span class="aa-label">Settings</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="deal" data-mv="phonebook" data-hwkeys="phone lobby deal call"><span class="aa-icon" style="background:linear-gradient(135deg,#4ade80,#16a34a)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M13 6C9.7 6 7 8.7 7 12c0 12.4 10.1 24.5 22.5 26 3.9.5 7-2.6 6.5-6.5l-.7-4.6c-.3-1.9-2.1-3.1-4-2.7l-4.9 1.2c-3.8-2-6.9-5.1-8.9-8.9l1.2-4.9c.4-1.9-.8-3.7-2.7-4z" fill="#fff"/></svg></span><span class="aa-label">Phone</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="devtools" data-hwkeys="dev tools debug" id="aa-devapp" hidden><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M16 14l-8 10 8 10M32 14l8 10-8 10M28 10l-8 28" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="aa-label">Dev</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="notes" data-hwkeys="notes contacts numbers"><span class="aa-badge" id="aa-notesbadge" hidden></span><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M12 8h24a3 3 0 0 1 3 3v27a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3z" fill="#fff"/><rect x="18" y="4" width="12" height="7" rx="2" fill="#fff" stroke="#f59e0b" stroke-width="2"/><path d="M15 22h18M15 28h18M15 34h12" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="aa-label">Notes</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="stash" data-hwkeys="my files inventory stash"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M5 13a3 3 0 0 1 3-3h11l4 5h14a3 3 0 0 1 3 3v3H5z" fill="#7db4fb"/><path d="M5 19h38v13a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z" fill="#bcd8fe"/></svg></span><span class="aa-label">My Files</span></button>
    </div>
   </div>
@@ -146,6 +147,7 @@ window.hatchWidget={
  <div class="pg-pane pane-clinic" hidden></div>
  <div class="pg-pane pane-settings" hidden></div>
  <div class="pg-pane pane-devtools" hidden></div>
+ <div class="pg-pane pane-notes" hidden></div>
  <div class="pg-pane pane-browser" hidden></div>
  <div class="pg-pane pane-maps" hidden></div>
  <div class="pg-pane pane-rep" hidden></div>
@@ -2337,6 +2339,8 @@ function normalize(s){
  if(typeof s.devMode!=="boolean")s.devMode=false;
  if(typeof s.phoneView!=="string")s.phoneView="contacts";
  if(typeof s._dialNum!=="string")s._dialNum="";
+ if(!Array.isArray(s.pendingContacts))s.pendingContacts=[];
+ if(typeof s.usedNumbers!=="object"||!s.usedNumbers)s.usedNumbers={};
  if(typeof s.prestigeStrain!=="string")s.prestigeStrain="";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(s.homeRows===3||s.homeRows==null)s.homeRows=4;
@@ -3045,6 +3049,7 @@ function render(){
  /* Dev app visibility */
  var _dev=q("#aa-devapp");
  if(_dev)_dev.hidden=!S.devMode;
+ notesBadge();
  /* To Do badge */
  var _tb=q("#aa-todobadge");
  if(_tb){
@@ -3781,6 +3786,7 @@ function mapsHTML(){
  if(!(_ae&&_ae.type==="range"&&root.contains&&root.contains(_ae)))q(".pane-settings").innerHTML=settingsHTML();
  q(".pane-browser").innerHTML=browserHTML();
  if(S.tab==="devtools"){q(".pane-devtools").innerHTML=tabHeader("devtools")+devtoolsHTML();}
+ if(S.tab==="notes"){q(".pane-notes").innerHTML=notesHTML();notesBadge();}
 }
 function getPot(pi,si){var pr=S.props[pi];return pr?pr.slots[si]:undefined;}
 function doPlant(pi,si,k){
@@ -4074,6 +4080,17 @@ function unlockFixer(){
  pushContactNotif("📱 New contact: The Fixer — he can help with heat, for a price");
  S.msg="The Fixer hit you up. Check your messages — he deals in favors.";
 }
+function genPhoneNumber(){
+ var _num;
+ do{
+  _num="555"+String(1000000+((Math.random()*9000000)|0));
+ }while(S.usedNumbers[_num]);
+ S.usedNumbers[_num]=1;
+ return _num;
+}
+function fmtPhone(p){
+ return "("+p.slice(0,3)+") "+p.slice(3,6)+"-"+p.slice(6);
+}
 function maybeAddContact(tier,qty){
  if(!S.contacts)S.contacts=[];
  if(S.contacts.length>=contactCap())return;
@@ -4086,11 +4103,27 @@ function maybeAddContact(tier,qty){
  if(!pool.length)return;
  var nm=pool[(Math.random()*pool.length)|0];
  var tp=CONTACT_TYPES[(Math.random()*CONTACT_TYPES.length)|0];
- var _intro="yo it's "+nm+". good lookin on that last one 🤝";
- S.contacts.push({name:nm,type:tp,prefs:contactPrefsFor(tp),loyalty:50,order:null,unread:true,lastOrderAt:0,
+ var _phone=genPhoneNumber();
+ /* also check pending for name reuse */
+ var _pendNames={};S.pendingContacts.forEach(function(p){_pendNames[p.name]=1;});
+ if(_pendNames[nm])return;
+ S.pendingContacts.push({name:nm,type:tp,phone:_phone,prefs:contactPrefsFor(tp),t:Date.now()});
+ pushContactNotif("📝 New note: "+nm+" — "+fmtPhone(_phone));
+ S.msg="Someone left you their number. Check Notes.";
+}
+function activatePendingContact(phone){
+ var _idx=-1;
+ S.pendingContacts.forEach(function(p,i){if(p.phone===phone)_idx=i;});
+ if(_idx<0)return false;
+ var p=S.pendingContacts[_idx];
+ S.pendingContacts.splice(_idx,1);
+ var _intro="yo it's "+p.name+". good lookin on that last one 🤝";
+ if(!S.contacts)S.contacts=[];
+ S.contacts.push({name:p.name,type:p.type,prefs:p.prefs,loyalty:50,order:null,unread:true,unreadCount:1,lastOrderAt:0,lastFulfilledAt:0,
   msgs:[{from:"them",text:_intro,t:Date.now()}]});
- pushContactNotif("📱 New contact: "+nm);
- notifyMsgArrived({name:nm},_intro);
+ pushContactNotif("📱 New contact: "+p.name);
+ notifyMsgArrived({name:p.name},_intro);
+ return true;
 }
 function tickContacts(now){
  if(!S.contacts||!S.contacts.length)return;
@@ -5171,6 +5204,29 @@ function chillHTML(){
  }
  return h;
 }
+function notesHTML(){
+ var h='<div class="shopsec">NOTES</div>';
+ h+='<div class="sdesc">People who left their number. Dial it in the Phone keypad to hit them up.</div>';
+ var _pend=S.pendingContacts||[];
+ if(!_pend.length){
+  h+='<div class="notes-empty" style="margin-top:20px">No numbers yet.<br>Make some deals and people will leave theirs.</div>';
+ }else{
+  h+='<div class="set-list" style="margin-top:12px">';
+  _pend.forEach(function(p){
+   h+='<div class="set-row"><span><b>'+escHtml(p.name)+'</b><br><span style="color:#888;font-size:13px">'+fmtPhone(p.phone)+'</span></span><button type="button" class="notes-abtn" data-act="notes-dial" data-phone="'+p.phone+'">Dial</button></div>';
+  });
+  h+='</div>';
+ }
+ return h;
+}
+function notesBadge(){
+ var _nb=q("#aa-notesbadge");
+ if(_nb){
+  var _n=(S.pendingContacts||[]).length;
+  if(_n>0){_nb.textContent=_n>99?"99+":_n;_nb.hidden=false;}
+  else{_nb.hidden=true;}
+ }
+}
 function devtoolsHTML(){
  var h='<div class="shopsec">DEV TOOLS</div>';
  h+='<div class="sdesc">Dev mode active. All apps visible.</div>';
@@ -5581,6 +5637,13 @@ root.addEventListener("click",function(e){
   return;
  }
  if(a==="dev-disable"){S.devMode=false;S.msg="Dev mode disabled";save();render();return;}
+ if(a==="notes-dial"){
+  var _ph=b.dataset.phone||"";
+  S._dialNum=_ph;
+  S.phoneView="keypad";
+  S.tab="deal";S.view="app";S.msgView="phonebook";
+  save();render();return;
+ }
  if(a==="phoneview"){S.phoneView=b.dataset.v;save();render();return;}
  if(a==="kp-press"){
   var _k=b.dataset.k;
@@ -5605,8 +5668,12 @@ root.addEventListener("click",function(e){
   save();render();return;
  }
  if(a==="kp-call"){
-  var _n=S._dialNum||"";
+  var _n=(S._dialNum||"").replace(/\D/g,"");
   S._dialNum="";
+  if(_n.length===10&&activatePendingContact(_n)){
+   save();render();return;
+  }
+
   S.msg="Calling "+_n+"... no answer.";
   save();render();return;
  }
