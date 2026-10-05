@@ -2343,6 +2343,7 @@ function normalize(s){
  if(!Array.isArray(s.pendingContacts))s.pendingContacts=[];
  if(typeof s.usedNumbers!=="object"||!s.usedNumbers)s.usedNumbers={};
  if(typeof s.nameToNumber!=="object"||!s.nameToNumber)s.nameToNumber={};
+ if(s.thiefBattle!==null&&typeof s.thiefBattle!=="object")s.thiefBattle=null;
  if(typeof s.prestigeStrain!=="string")s.prestigeStrain="";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
  if(s.homeRows===3||s.homeRows==null)s.homeRows=4;
@@ -3063,7 +3064,7 @@ function render(){
  var now=Date.now();
  renderTicker();
  qa(".pg-tabs button").forEach(function(b){b.classList.toggle("on",b.dataset.tab===S.tab);});
- var battling=!!S.battle;
+ var battling=!!S.battle||!!S.thiefBattle;
  var inStore=S.tab==="store"&&!battling;
 
  var inApp=S.view==="app"||battling;
@@ -3150,7 +3151,7 @@ function render(){
  if(_rl){var _seen={},_items=[];
   for(var _ri=navStack.length-1;_ri>=0;_ri--){var _ra=navStack[_ri];if(!_seen[_ra]){_seen[_ra]=1;_items.push(_ra);}}
   _rl.innerHTML=_items.length?_items.map(function(a){return '<button type="button" class="recent-item" data-act="openapp" data-app="'+a+'">'+APP_EMOJI[a]+" "+appName(a)+'</button>';}).join(""):'<div class="recents-empty">No recent apps</div>';}
- if(battling)q(".pane-battle").innerHTML=battleHTML();
+ if(S.thiefBattle)q(".pane-battle").innerHTML=thiefBattleHTML();else if(battling)q(".pane-battle").innerHTML=battleHTML();
  q(".v-hint").textContent=battling?"Win the fight or run — nothing else until it's over.":HINTS[S.tab];
  var gh=tabHeader("grow")+'<div class="growbar"><button type="button" data-act="waterall">Water all</button><button type="button" data-act="harvestall">Harvest all</button></div>';
  var gi=S.gprop||0;if(gi>=S.props.length)gi=0;
@@ -4111,11 +4112,12 @@ function maybeAddContact(tier,qty){
  if(!pool.length)return;
  var nm=pool[(Math.random()*pool.length)|0];
  var tp=CONTACT_TYPES[(Math.random()*CONTACT_TYPES.length)|0];
+ var _isThief=Math.random()<0.12;
  var _phone=genPhoneNumber(nm);
  /* also check pending for name reuse */
  var _pendNames={};S.pendingContacts.forEach(function(p){_pendNames[p.name]=1;});
  if(_pendNames[nm])return;
- S.pendingContacts.push({name:nm,type:tp,phone:_phone,prefs:contactPrefsFor(tp),t:Date.now()});
+ S.pendingContacts.push({name:nm,type:tp,phone:_phone,prefs:contactPrefsFor(tp),t:Date.now(),isThief:_isThief,ordersBeforeTurn:_isThief?(2+((Math.random()*3)|0)):0});
  pushContactNotif("📝 New note: "+nm+" — "+fmtPhone(_phone));
  S.msg="Someone left you their number. Check Notes.";
 }
@@ -4127,7 +4129,7 @@ function activatePendingContact(phone){
  S.pendingContacts.splice(_idx,1);
  var _intro="yo it's "+p.name+". good lookin on that last one 🤝";
  if(!S.contacts)S.contacts=[];
- S.contacts.push({name:p.name,type:p.type,prefs:p.prefs,phone:p.phone,loyalty:50,order:null,unread:true,unreadCount:1,lastOrderAt:0,lastFulfilledAt:0,
+ S.contacts.push({name:p.name,type:p.type,prefs:p.prefs,phone:p.phone,loyalty:50,order:null,unread:true,unreadCount:1,lastOrderAt:0,lastFulfilledAt:0,isThief:!!p.isThief,ordersBeforeTurn:p.ordersBeforeTurn||0,
   msgs:[{from:"them",text:_intro,t:Date.now()}]});
  pushContactNotif("📱 New contact: "+p.name);
  notifyMsgArrived({name:p.name},_intro);
@@ -4220,6 +4222,12 @@ function doFulfillTask(i){
  if(!t){S.msg="No such task.";save();render();return;}
  var o={k:t.k,kind:t.kind,g:t.g,pu:t.pu},have=contactHave(o);
  if(have<o.g){S.msg="You don't have "+contactQtyText(o)+".";save();render();return;}
+ /* thief turn check */
+ var _tc=getContact(t.name);
+ if(_tc&&_tc.isThief&&(_tc.ordersBeforeTurn||0)<=0){
+  startThiefBattle(_tc,o,i);
+  return;
+ }
  if(o.kind==="joint")S.joints[o.k]-=o.g;else S.stash[o.k]-=o.g;
  var rev=o.pu*o.g,now=Date.now();
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
@@ -4227,6 +4235,7 @@ function doFulfillTask(i){
  var c=getContact(t.name);
  if(c){
   c.loyalty=Math.min(100,c.loyalty+8);
+  if(c.isThief&&c.ordersBeforeTurn>0)c.ordersBeforeTurn--;
   c.msgs.push({from:"me",text:"got u. "+o.g+"g comin thru.",t:now});
   /* tip: if this was their preferred strain, they share some product */
   var _isPref=(c.prefs||[]).some(function(p){return p.k===t.k&&p.kind===t.kind;});
@@ -4923,6 +4932,82 @@ function battleRoll(){
  if(S.battle||_bh<70)return;
  if(_bh>=100||Math.random()<(_bh-70)/30*0.25)startBattle();
 }
+function startThiefBattle(c,o,taskIdx){
+ var _thp=40+Math.round(pLevel()*8);
+ /* thief's weapon (not fists) */
+ var _tw=["knife","pistol","smg"][(Math.random()*3)|0];
+ S.thiefBattle={name:c.name,thiefHp:_thp,thiefMax:_thp,thiefWeapon:_tw,product:{k:o.k,kind:o.kind,g:o.g},taskIdx:taskIdx,log:["😡 "+c.name+" pulls a "+WEAPONS[_tw].name+"! It's a setup!"]};
+ S.msg="ROBBERY! "+c.name+" is trying to take your product!";
+ c.msgs.push({from:"them",text:"give me everything. now.",t:Date.now()});
+ c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
+ save();render();
+}
+function thiefBlog(t){var b=S.thiefBattle;if(!b)return;b.log.push(t);if(b.log.length>3)b.log=b.log.slice(-3);}
+function thiefStrike(){
+ var b=S.thiefBattle;if(!b)return;
+ var wd=weaponDmg(),wn=WEAPONS[bestWeapon()].name;
+ b.thiefHp-=wd.dmg;
+ thiefBlog("You strike with "+wn+" for "+wd.dmg+(wd.crit?" — CRIT":"")+".");
+ if(b.thiefHp<=0){winThiefBattle();return;}
+ /* thief strikes back */
+ var _td=Math.round(6+Math.random()*8+pLevel()*1.5);
+ S.hp-=Math.max(1,_td);
+ thiefBlog(b.name+" hits you for "+Math.max(1,_td)+".");
+ if(S.hp<=0){loseThiefBattle();return;}
+ save();render();
+}
+function thiefRun(){
+ var b=S.thiefBattle;if(!b)return;
+ /* you keep everything, thief is gone */
+ var _c=getContact(b.name);
+ if(_c){
+  _c.msgs.push({from:"them",text:"u got lucky. watch ur back.",t:Date.now()});
+ }
+ removeContact(b.name);
+ S.thiefBattle=null;
+ S.msg="You got away with everything. "+b.name+" is gone.";
+ save();render();
+}
+function winThiefBattle(){
+ var b=S.thiefBattle;if(!b)return;
+ var _tw=b.thiefWeapon;
+ /* take their weapon */
+ if(!S.weapons)S.weapons={};
+ var _got=false;
+ if(_tw!=="fists"&&!S.weapons[_tw]){S.weapons[_tw]=true;_got=true;}
+ /* complete the original task (you keep product, get paid) */
+ var _o=b.product;
+ var _t=S.tasks&&S.tasks[b.taskIdx];
+ S.thiefBattle=null;
+ if(_t){
+  /* product was already deducted, now pay out */
+  var rev=_o.pu*_o.g;
+  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
+  S.tasks.splice(b.taskIdx,1);
+ }
+ var _c=getContact(b.name);
+ if(_c){_c.isThief=false;_c.ordersBeforeTurn=0;}
+ if(!addXP(25))S.msg="You beat down "+b.name+"!"+(_got?" Took their "+WEAPONS[_tw].name+"!":"");
+ save();render();
+}
+function loseThiefBattle(){
+ var b=S.thiefBattle;if(!b)return;
+ var _o=b.product;
+ /* thief takes the product, pays nothing */
+ /* product was already deducted from stash */
+ var _t=S.tasks&&S.tasks[b.taskIdx];
+ if(_t)S.tasks.splice(b.taskIdx,1);
+ var _c=getContact(b.name);
+ if(_c){_c.isThief=false;_c.ordersBeforeTurn=0;_c.loyalty=0;}
+ S.thiefBattle=null;
+ S.hp=25;
+ S.msg=b.name+" took your "+_o.g+"g and paid nothing. You're at 25 HP.";
+ save();render();
+}
+function removeContact(name){
+ if(S.contacts)S.contacts=S.contacts.filter(function(c){return c.name!==name;});
+ if(S.tasks)S.tasks=S.tasks.filter(function(t){return t.name!==name;});
+}
 function startBattle(){
  var cm=50+Math.round(activeHeat());
  S.battle={copHp:cm,copMax:cm,log:["Cops ambush you!"],back:S.tab};
@@ -5152,6 +5237,17 @@ function battleHTML(){
  h+='<div class="brow"><span>You</span><div class="bar"><i class="b-you" style="width:'+Math.round(Math.max(0,Math.min(100,S.hp)))+'%"></i></div><b>'+Math.max(0,Math.round(S.hp))+'</b></div>';
  h+='<div class="blog">'+b.log.map(function(l){return '<div>'+l+'</div>';}).join("")+'</div>';
  h+='<div class="btns"><button type="button" class="go" data-act="bstrike">STRIKE ('+WEAPONS[bestWeapon()].name.toUpperCase()+')</button><button type="button" data-act="brun">RUN</button></div></div>';
+ return h;
+}
+function thiefBattleHTML(){
+ var b=S.thiefBattle;
+ if(!b)return "";
+ var h='<div class="battle"><div class="bt-head">😡 ROBBERY — '+escHtml(b.name)+'</div>';
+ h+='<div class="brow"><span>'+escHtml(b.name)+'</span><div class="bar"><i class="b-cop" style="width:'+Math.round(Math.max(0,b.thiefHp)/b.thiefMax*100)+'%"></i></div><b>'+Math.max(0,Math.round(b.thiefHp))+'</b></div>';
+ h+='<div class="brow"><span>You</span><div class="bar"><i class="b-you" style="width:'+Math.round(Math.max(0,Math.min(100,S.hp)))+'%"></i></div><b>'+Math.round(Math.max(0,Math.min(100,S.hp)))+'</b></div>';
+ h+='<div class="sdesc">At stake: '+b.product.g+'g '+escHtml(PRODUCTS[b.product.k].name)+'. Win and take their '+escHtml(WEAPONS[b.thiefWeapon].name)+'!</div>';
+ h+='<div class="blog">'+b.log.map(function(l){return '<div>'+l+'</div>';}).join("")+'</div>';
+ h+='<div class="btns"><button type="button" class="go" data-act="tstrike">STRIKE ('+WEAPONS[bestWeapon()].name.toUpperCase()+')</button><button type="button" data-act="trun">RUN</button></div></div>';
  return h;
 }
 function clinicHTML(){
@@ -5500,7 +5596,7 @@ root.addEventListener("click",function(e){
   return;
  }
  if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);ttPushHist();save();render();return;}
- if(a==="openapp"){closeFolder();if(S.battle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";if(b.dataset.mv)S.msgView=b.dataset.mv;navPush(_ap);ttPushHist();var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
+ if(a==="openapp"){closeFolder();if(S.battle||S.thiefBattle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";if(b.dataset.mv)S.msgView=b.dataset.mv;navPush(_ap);ttPushHist();var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
  if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle){S.msg="Finish the fight!";save();render();return;}navPop();save();render();return;}
  if(a==="android-home"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
  if(a==="android-recents"){var _rx=q(".android-recents");if(_rx)_rx.hidden=!_rx.hidden;render();return;}
@@ -5709,6 +5805,8 @@ root.addEventListener("click",function(e){
  if(a==="wp-reset"){S.wallpaper="";S.msg="Wallpaper reset.";save();render();return;}
  if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk].tier<=pLevel()&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
  if(a==="buyweapon"){var wkey=b.dataset.w,wu=WEAPONS[wkey];if(wkey&&wkey!=="fists"&&wu&&wu.tier<=pLevel()&&!(S.weapons&&S.weapons[wkey])&&S.cash>=wu.cost){S.cash-=wu.cost;S.weapons[wkey]=true;S.msg=wu.name+" purchased — best weapon is used in fights.";save();render();}return;}
+ if(a==="tstrike"){thiefStrike();return;}
+ if(a==="trun"){thiefRun();return;}
  if(a==="bstrike"){battleStrike();return;}
  if(a==="brun"){battleRun();return;}
  if(a==="heal"){
