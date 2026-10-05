@@ -2306,7 +2306,7 @@ function normalize(s){
  });
  if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
- if(s.notesView!=="inprogress"&&s.notesView!=="stash"&&s.notesView!=="seeds")s.notesView="folders";
+ if(s.notesView!=="inprogress"&&s.notesView!=="stash")s.notesView="folders";
  if(s.todoView!=="tasks"&&s.todoView!=="stash")s.todoView="tasks";
  if(typeof s.strainMastery!=="object"||!s.strainMastery)s.strainMastery={};
  if(typeof s.prestigeCount!=="number")s.prestigeCount=0;
@@ -4399,20 +4399,34 @@ function stashHTML(){
   h+='<div class="notes-ios-head"><span class="notes-ios-title">Folders</span><button type="button" class="notes-ios-edit" data-act="notes-edit">Edit</button></div>';
   h+='<div class="notes-ios-sec">Grow Op</div>';
   h+='<div class="notes-folder">'
-   +notesFolderRow("inprogress","In Progress",todos.length,gN+" growing · "+cN+" cooking")
+   +notesFolderRow("inprogress","In Progress",todos.length+seeds.length,gN+" growing · "+cN+" cooking · "+seeds.length+" seeds")
    +notesFolderRow("stash","Stash",cards.length,"Worth "+money(val))
-   +notesFolderRow("seeds","Seed Packets",seeds.length,seeds.length+" ready to plant")
    +'</div>';
   h+='<div class="notes-ios-sec">Summary</div>'+sum;
   h+=notesSearchBar();
  }else{
-  var title=view==="inprogress"?"In Progress":view==="stash"?"Stash":"Seed Packets";
+  var title=view==="inprogress"?"In Progress":"Stash";
   h+='<button type="button" class="notes-back" data-act="notesview" data-v="folders"><span class="notes-bchev">‹</span>Folders</button>';
   h+='<div class="notes-list-title">'+title+'</div>';
   if(view==="inprogress"){
    h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="waterall"'+(gN?"":" disabled")+'>Water All</button><button type="button" class="notes-abtn" data-act="harvestall"'+(anyReady?"":" disabled")+'>Harvest All</button></div>';
    var ft=todos.filter(function(t){return match(t.title+" "+t.sub+" "+t.tag);});
-   h+=ft.length?ft.map(notesTodoHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing in progress.")+'</div>';
+   h+=ft.length?ft.map(notesTodoHTML).join(""):'';
+   /* seeds section merged in */
+   var fs=seeds.filter(function(c){return match(c.search);});
+   if(fs.length||!ft.length){
+    h+='<div class="notes-ios-sec" style="margin-top:12px">Seeds — ready to plant</div>';
+    var _taskStrains2={};
+    (S.tasks||[]).forEach(function(t){if(t&&t.k&&PRODUCTS[t.k])_taskStrains2[t.k]=1;});
+    var _hasTaskSeeds2=Object.keys(_taskStrains2).some(function(k){return (S.seeds[k]||0)>0;});
+    h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="notes-plantall"'+(seeds.length?"":" disabled")+'>Auto Plant All</button>';
+    if(Object.keys(_taskStrains2).length){
+     h+='<button type="button" class="notes-abtn" data-act="notes-planttasks"'+(_hasTaskSeeds2?"":" disabled")+'>Plant Task Seeds</button>';
+    }
+    h+='</div>';
+    h+=fs.length?fs.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"No seed packets.")+'</div>';
+   }
+   if(!ft.length&&!fs.length)h+='<div class="notes-empty">Nothing in progress.</div>';
   }else if(view==="stash"){
    h+='<div class="notes-actions"><button type="button" class="notes-abtn danger" data-act="notes-sellall"'+(cards.length?"":" disabled")+'>Sell All</button></div>';
    h+=sum;
@@ -5210,7 +5224,7 @@ root.addEventListener("click",function(e){
  if(!b||b.disabled)return;
  var a=b.dataset.act;
  if(a==="todoview"){var _tv=b.dataset.v;S.todoView=(_tv==="stash")?"stash":"tasks";save();render();return;}
- if(a==="notesview"){var _nv=b.dataset.v;S.notesView=(_nv==="inprogress"||_nv==="stash"||_nv==="seeds")?_nv:"folders";NOTESQ="";save();render();return;}
+ if(a==="notesview"){var _nv=b.dataset.v;S.notesView=(_nv==="inprogress"||_nv==="stash")?_nv:"folders";NOTESQ="";save();render();return;}
  if(a==="notes-edit"){S.msg="Nothing to edit — your notes manage themselves.";save();render();return;}
  if(a==="notes-sellall"){
   var _sln=Date.now();
