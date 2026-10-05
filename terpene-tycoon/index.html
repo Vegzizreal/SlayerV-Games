@@ -2487,7 +2487,19 @@ var ROACH_PANIC={
   60:["this is getting real, families in {terr} started a petition or some shit","HOA lady in {terr} taking photos of license plates. NOT good","{terr} parents group chat is all about us, yo. we're the main character and it's bad","families in {terr} calling the cops AND the news. wrap it up"],
   90:["WE GOTTA LAY LOW, families in {terr} about to get us shut down!","{terr} neighborhood watch going full vigilante. cameras everywhere, yo","the {terr} families got a lawyer, yo. A LAWYER. we're done playing","town hall meeting about us in {terr} tomorrow. we're famous and it's bad"]}
 };
-function pushRoachMsg(m){S.notifs.unshift({m:m,e:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
+function pushRoachMsg(m){
+ if(!Array.isArray(S.roachMsgs))S.roachMsgs=[];
+ S.roachMsgs.unshift({m:m,t:Date.now()});if(S.roachMsgs.length>20)S.roachMsgs.length=20;
+ /* also show in notification shade */
+ if(!Array.isArray(S.notifs))S.notifs=[];
+ /* migrate Roach messages from notifs to separate roachMsgs (2026-10-05) */
+ if(!Array.isArray(S.roachMsgs)){
+  S.roachMsgs=[];
+  /* Move existing Roach-style messages - they contain "yo", "bitch", or are from pushRoachMsg */
+  /* For now, start fresh - old notifs stay in shade */
+ }
+ S.notifs.unshift({m:m,e:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;
+}
 function roachPanicCheck(tid,src){
  var z=terrZone(tid),v=z.heat[src],t=terrDef(tid),th,i;
  if(!z.warned)z.warned={};
@@ -2967,6 +2979,12 @@ function render(){
  var _nc=q(".android-notif");if(_nc)_nc.classList.toggle("err",_isE);
  var _na=q(".android-notif-av");if(_na)_na.textContent=_isE?"\u26A0\uFE0F":"\uD83D\uDCAC";
  if(!Array.isArray(S.notifs))S.notifs=[];
+ /* migrate Roach messages from notifs to separate roachMsgs (2026-10-05) */
+ if(!Array.isArray(S.roachMsgs)){
+  S.roachMsgs=[];
+  /* Move existing Roach-style messages - they contain "yo", "bitch", or are from pushRoachMsg */
+  /* For now, start fresh - old notifs stay in shade */
+ }
  if(S.msg&&(!S.notifs.length||S.notifs[0].m!==S.msg)){S.notifs.unshift({m:S.msg,e:_isE?1:0,t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
  renderShade();
  var _ev2=q(".hw-evcount");if(_ev2)_ev2.textContent=Array.isArray(S.notifs)?S.notifs.length:0;
@@ -3007,7 +3025,7 @@ function render(){
  q(".pane-cook").innerHTML=cookHTML();q(".pane-cook").classList.toggle("has-job",!!S.job);
  function dealChatsList(){
   var h='<div class="msg-chats">';
-  var rl=S.notifs&&S.notifs.length?S.notifs[0].m:"No new messages";
+  var rl=S.roachMsgs&&S.roachMsgs.length?S.roachMsgs[0].m:"No new messages";
   h+='<button type="button" class="msg-chat pinned" data-act="msg-open" data-c="__roach__">'
    +'<span class="msg-avatar msg-av-roach">🪳</span>'
    +'<div class="msg-chat-mid"><b>Roach 📌</b><span>'+escHtml(rl)+'</span></div></button>';
@@ -3117,7 +3135,7 @@ function render(){
  }
  function dealRoachConvo(){
   var h='<div class="msg-convo">';
-  var ns=(S.notifs||[]).slice(0,10).reverse();
+  var ns=(S.roachMsgs||[]).slice(0,20).reverse();
   if(!ns.length)h+='<div class="msg-day">No messages yet</div>';
   else{
    var _lastDay="",_firstDiv=true;
@@ -3904,7 +3922,7 @@ function doDismissTask(i){
  if(!t)return;
  if(!confirm("Dismiss this order from "+t.name+"?"))return;
  S.tasks.splice(i,1);
- 
+ S.msg="Dismissed task for "+t.name+".";
  save();render();
 }
 function tasksHTML(){
@@ -5063,7 +5081,7 @@ root.addEventListener("click",function(e){
   _wimg.onload=function(){S.wallpaper=_wu;S.msg="Wallpaper updated.";save();render();};
   _wimg.onerror=function(){S.msg="No image found at that URL.";save();render();};
   _wimg.src=_wu;return;}
- if(a==="wp-reset"){S.wallpaper="";save();render();return;}
+ if(a==="wp-reset"){S.wallpaper="";S.msg="Wallpaper reset.";save();render();return;}
  if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk].tier<=pLevel()&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
  if(a==="buyweapon"){var wkey=b.dataset.w,wu=WEAPONS[wkey];if(wkey&&wkey!=="fists"&&wu&&wu.tier<=pLevel()&&!(S.weapons&&S.weapons[wkey])&&S.cash>=wu.cost){S.cash-=wu.cost;S.weapons[wkey]=true;S.msg=wu.name+" purchased — best weapon is used in fights.";save();render();}return;}
  if(a==="bstrike"){battleStrike();return;}
