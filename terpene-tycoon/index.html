@@ -2408,6 +2408,30 @@ var S=normalize(Object.assign({},DEF,bridge?bridge.getState(DEF):{}));
 // Android OS shell: nav stack + app metadata
 var navStack=[];
 function navPush(app){if(navStack[navStack.length-1]!==app)navStack.push(app);if(navStack.length>12)navStack.shift();}
+/* trap system back button: keep a dummy history entry so back navigates in-game */
+function ttPushHist(){
+ try{history.pushState({tt:1,view:S.view,tab:S.tab},"");}catch(e){}
+}
+function ttTrapBack(){
+ try{
+  /* initial trap */
+  history.pushState({tt:1,view:"home"},"");
+  window.addEventListener("popstate",function(e){
+   /* system back pressed - navigate in-game instead of leaving */
+   if(S.view==="app"){
+    /* go back to home */
+    S.view="home";S.tab=null;navStack=[];
+   }else if(S.msgView&&S.msgView!=="list"){
+    /* in a chat - go back to message list */
+    S.msgView="list";
+   }
+   /* re-trap for next back press */
+   try{history.pushState({tt:1,view:S.view,tab:S.tab},"");}catch(e2){}
+   save();render();
+  });
+ }catch(e){}
+}
+if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",ttTrapBack);}else{ttTrapBack();}
 function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
 var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦",tasks:"📋"};
 var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
@@ -5006,8 +5030,8 @@ root.addEventListener("click",function(e){
   if(!_pla){S.msg="No seeds to plant.";save();render();}
   return;
  }
- if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);save();render();return;}
- if(a==="openapp"){closeFolder();if(S.battle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";if(b.dataset.mv)S.msgView=b.dataset.mv;navPush(_ap);var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
+ if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);ttPushHist();save();render();return;}
+ if(a==="openapp"){closeFolder();if(S.battle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";if(b.dataset.mv)S.msgView=b.dataset.mv;navPush(_ap);ttPushHist();var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
  if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle){S.msg="Finish the fight!";save();render();return;}navPop();save();render();return;}
  if(a==="android-home"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
  if(a==="android-recents"){var _rx=q(".android-recents");if(_rx)_rx.hidden=!_rx.hidden;render();return;}
