@@ -2215,6 +2215,8 @@ function normalize(s){
  if(!Array.isArray(s.iconOrder))s.iconOrder=[];
  /* one-time homescreen reorder to canonical order (2026-10-04) */
  if(s.hwOrderV!==1){s.iconOrder=[];s.hwOrderV=1;}
+ /* migrate Chrome -> Onion in icon order */
+ if(s.iconOrder.indexOf("a:Chrome")>=0){s.iconOrder=s.iconOrder.map(function(k){return k==="a:Chrome"?"a:Onion":k;});}
  /* migrate old settings tab to new phone-style view */
  if(s.settingstab==="changelog"){s.settingsView="about";delete s.settingstab;}
  if(!Array.isArray(s.hiddenApps)||s.hiddenApps.length)s.hiddenApps=[];
