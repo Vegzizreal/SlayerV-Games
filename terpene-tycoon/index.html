@@ -322,7 +322,7 @@ window.hatchWidget={
 .pg.home-mode .pg-tabs,
 .pg.home-mode .pg-hint{display:none!important}
 .pg.home-mode .android-home{order:1;flex:1;min-height:0}
-/* ===== Home screen edit mode (Samsung-style) ===== */
+/* ===== Home screen edit mode ===== */
 @keyframes hw-wiggle{0%{transform:rotate(-1.5deg) scale(1)}50%{transform:rotate(1.5deg) scale(1.03)}100%{transform:rotate(-1.5deg) scale(1)}}
 @keyframes hw-editpop{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
 .android-home{position:relative}
@@ -342,7 +342,7 @@ window.hatchWidget={
 .hw-mg-i .aa-icon{width:100%!important;height:100%!important;border-radius:9px;margin:0;box-shadow:none}
 .hw-mg-i .aa-icon::after{display:none}
 .hw-mg-i svg{width:78%;height:78%}
-/* Folder overlay (Samsung-style popup) */
+/* Folder overlay popup */
 .hw-folderview{position:fixed;inset:0;z-index:70;display:flex;align-items:center;justify-content:center}
 .hw-folderview[hidden]{display:none}
 .hw-fv-scrim{position:absolute;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
@@ -923,7 +923,7 @@ window.hatchWidget={
 .msg-reply:active{background:rgba(26,115,232,.32)}
 .pg[data-theme="light"] .msg-reply{background:rgba(26,115,232,.08);border-color:rgba(26,115,232,.5);color:#1a73e8}
 .pg[data-theme="light"] .msg-replies{border-top-color:rgba(0,0,0,.08)}
-/* Google Messages conversation header */
+/* Messages conversation header */
 .msg-nav-convo{background:transparent;border-bottom:1px solid rgba(255,255,255,.08);padding:8px 6px}
 .msg-nav-convo .msg-back{background:none;border:none;color:#e8eaed;cursor:pointer;padding:8px;display:flex;align-items:center}
 .msg-nav-convo .msg-contact{gap:12px}
@@ -1066,7 +1066,7 @@ window.hatchWidget={
 .note-card .d2-mid{flex:1;min-width:0}
 .note-card .d2-name{font-size:14.5px}
 .note-card .d2-sub{font-size:12px;color:var(--hatch-widget-muted);margin-top:2px}
-/* Apple Notes style (Notes/Stash tab) */
+/* Notes style (Notes/Stash tab) */
 .notes-ios{background:#f2f2f7;border-radius:12px;min-height:430px;padding:0 0 14px;color:#111}
 .pg[data-theme="dark"] .notes-ios{background:#000;color:#f2f2f7}
 .notes-ios-head{display:flex;align-items:flex-end;justify-content:space-between;padding:16px 18px 8px}
@@ -1967,8 +1967,8 @@ var GAME_UPDATED="Oct 4, 2026 · 2:30 AM";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
  {v:"BETA-0.018",ts:"Oct 4, 2026 · 3:00 PM",t:"Turf wars",d:"The map is now real turf. Manage it all from the new Reputation app."},
- {v:"BETA-0.017.4",ts:"Oct 4, 2026 · 1:00 PM",t:"Messages & Phone overhaul",d:"Messages now looks like Google Messages with blue chat bubbles and quick-reply options. The Phone app is a Samsung-style contact list with all your customers. Tips come through as texts from Roach."},
- {v:"BETA-0.017.3",ts:"Oct 4, 2026 · 11:00 AM",t:"Notes app",d:"The Stash is now a proper notes app styled like Apple Notes. Browse folders for In Progress, Stash, and Seeds. Growing plants and cooking batches show as to-do items with progress bars."},
+ {v:"BETA-0.017.4",ts:"Oct 4, 2026 · 1:00 PM",t:"Messages & Phone overhaul",d:"Messages now has blue chat bubbles and quick-reply options. The Phone app is a clean contact list with all your customers. Tips come through as texts from Roach."},
+ {v:"BETA-0.017.3",ts:"Oct 4, 2026 · 11:00 AM",t:"Notes app",d:"The Stash is now a proper notes app with a clean design. Browse folders for In Progress, Stash, and Seeds. Growing plants and cooking batches show as to-do items with progress bars."},
  {v:"BETA-0.017.2",ts:"Oct 4, 2026 · 12:00 PM",t:"Home screen cleanup",d:"Slimmer status and weather widgets, three rows of apps with a setting for 2-4 rows, single labels under icons, and the search and date bars are gone."},
  {v:"BETA-0.017.1",ts:"Oct 4, 2026 · 9:00 AM",t:"Territory foundations",d:"Six territories from Home base to Uptown. Each unlocks as you rank up — higher zones pay more but draw more heat. Every turf prefers certain products for bonus cash. The Maps app shows your turf as a GPS."},
  {v:"BETA-0.017",ts:"Oct 4, 2026 · 2:30 AM",t:"Tighter ship",d:"The Deal tab is now sell-only and hides anything you don't have. The Stash tab is a clean running list with no buttons. The Grow tab is slimmer with less clutter around each plant. Every 5 days, Roach pops up with a surprise package from Se\u00f1or V."},
@@ -2685,7 +2685,7 @@ function isErrMsg(m){
  return /^(BUSTED|Beaten down|COP AMBUSH|Duffel (full|is full|is still full)|Finish the fight!|Need |No |Not enough|Nothing to sell|That recipe|You don't have|You need)/.test(m);
 }
 function escHtml(x){return String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-// Samsung-style notification shade (swipe down from status bar)
+// Notification shade (swipe down from status bar)
 var shadeOpen=false,shadeListKey=null;
 function openShade(){shadeOpen=true;var sh=q(".notif-shade"),sc=q(".shade-scrim");if(sc)sc.hidden=false;if(sh){sh.hidden=false;void sh.offsetWidth;sh.classList.add("open");}renderShade();renderTicker();}
 function closeShade(){shadeOpen=false;var sh=q(".notif-shade"),sc=q(".shade-scrim");if(sh)sh.classList.remove("open");setTimeout(function(){if(!shadeOpen){if(sh)sh.hidden=true;if(sc)sc.hidden=true;}},340);}
