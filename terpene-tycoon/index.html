@@ -3213,6 +3213,10 @@ function render(){
  function kpPlay(d){
   try{
    if(!_MJ_DIGITS[d])return;
+   try{
+    var _dbg=document.getElementById("kp-dbg");
+    if(_dbg){_dbg.textContent="🔊 "+d;_dbg.style.opacity="1";setTimeout(function(){_dbg.style.opacity="0";},500);}
+   }catch(_e){}
    if(kpPlayBlob(d))return;
    var _ctx=kpEnsureCtx();if(!_ctx){kpFallbackBeep();return;}
    var _u=KP_AUDIO[d];
@@ -3282,7 +3286,7 @@ function render(){
   var _num=S._dialNum||"";
   var _keys=[["1",""],["2","ABC"],["3","DEF"],["4","GHI"],["5","JKL"],["6","MNO"],["7","PQRS"],["8","TUV"],["9","WXYZ"],["*",""],["0","+"],["#",""]];
   var h='<div class="kp-wrap">';
-  h+='<div class="kp-display">'+(_num?escHtml(_num):"")+'</div>';
+  h+='<div class="kp-display">'+(_num?escHtml(_num):"")+'</div><div id="kp-dbg" style="opacity:0;transition:opacity .3s;font-size:20px;height:24px;text-align:center"></div>';
   h+='<div class="kp-grid">';
   _keys.forEach(function(k){
    h+='<button type="button" class="kp-key" data-act="kp-press" data-k="'+k[0]+'"><span class="kp-dig">'+k[0]+'</span>'+(k[1]?'<span class="kp-sub">'+k[1]+'</span>':'<span class="kp-sub">&nbsp;</span>')+'</button>';
