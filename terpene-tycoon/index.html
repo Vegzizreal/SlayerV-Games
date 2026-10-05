@@ -106,6 +106,7 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="maps" data-hwkeys="maps gps territories turf map location"><span class="aa-icon" style="background:linear-gradient(135deg,#22c55e,#0ea5e9)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M24 4C15.7 4 9 10.7 9 19c0 10.5 13.2 22.4 13.8 22.9.6.5 1.8.5 2.4 0C25.8 41.4 39 29.5 39 19 39 10.7 32.3 4 24 4z" fill="#fff"/><circle cx="24" cy="19" r="7" fill="#0ea5e9"/></svg></span><span class="aa-label">Maps</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="rep" data-hwkeys="reputation rep turf heat territories standing"><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M24 5l5.9 12 13.1 1.9-9.5 9.2 2.2 13.1L24 34.9l-11.7 6.3 2.2-13.1-9.5-9.2L18.1 17z" fill="#fff"/></svg></span><span class="aa-label">Reputation</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="props" data-hwkeys="properties my properties houses grow locations"><span class="aa-icon" style="background:linear-gradient(135deg,#a78bfa,#7c3aed)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M8 22L24 8l16 14v16a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3z" fill="#fff"/><path d="M19 41V28h10v13" fill="#a78bfa"/></svg></span><span class="aa-label">My Properties</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="bank" data-hwkeys="bank money cash savings account finance deposit withdraw interest"><span class="aa-icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M24 5L5 16h38z" fill="#fff"/><rect x="9" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="17" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="26.5" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="34.5" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="5" y="35" width="38" height="4" rx="1.5" fill="#fff"/><rect x="9" y="41" width="30" height="3" rx="1.5" fill="#bfdbfe"/></svg></span><span class="aa-label">Bank</span></button>
    </div>
   </div>
   <div class="hw-dots"><span class="on" data-hwpage="0"></span><span data-hwpage="1"></span></div>
@@ -145,6 +146,7 @@ window.hatchWidget={
  <div class="pg-pane pane-maps" hidden></div>
  <div class="pg-pane pane-rep" hidden></div>
  <div class="pg-pane pane-props" hidden></div>
+<div class="pg-pane pane-bank" hidden></div>
  <div class="pg-pane pane-battle" hidden></div>
  <div class="pg-hint v-hint"></div>
  <div class="android-recents" hidden><div class="recents-sheet"><div class="recents-title">Recent apps</div><div class="recents-list"></div><button type="button" class="recents-close" data-act="android-recents">Close</button></div></div>
@@ -1243,6 +1245,41 @@ window.hatchWidget={
 /* Reputation app — territory management cards */
 .pane-rep{background:#070a07;border-radius:12px;padding:0 0 12px;position:relative;overflow-y:auto;touch-action:pan-y}
 .pane-rep button{touch-action:manipulation}
+/* Bank app — real banking app look (always light, clean blue/white) */
+.pane-bank{background:#f1f5f9;border-radius:12px;padding:0 0 16px;position:relative;overflow-y:auto;touch-action:pan-y;color:#0f172a}
+.pane-bank button{touch-action:manipulation}
+.bk-head{background:linear-gradient(135deg,#1d4ed8,#1e3a8a);color:#fff;padding:18px 18px 22px;border-radius:12px 12px 0 0}
+.bk-head .bk-bankname{font-size:13px;font-weight:600;letter-spacing:2.5px;opacity:.85;text-transform:uppercase}
+.bk-head .bk-welcome{font-size:15px;margin-top:6px;opacity:.9}
+.bk-balcard{background:#fff;border-radius:16px;margin:-14px 14px 0;padding:18px;box-shadow:0 4px 14px rgba(15,23,42,.10)}
+.bk-balcard .bk-label{font-size:11px;font-weight:600;letter-spacing:1.5px;color:#64748b;text-transform:uppercase}
+.bk-balcard .bk-balance{font-size:34px;font-weight:700;color:#0f172a;margin:4px 0 2px;letter-spacing:-.5px}
+.bk-balcard .bk-apy{font-size:12px;color:#16a34a;font-weight:600}
+.bk-walletrow{display:flex;gap:10px;margin:12px 14px 0}
+.bk-wallet{background:#fff;border-radius:14px;padding:12px 14px;flex:1;box-shadow:0 2px 8px rgba(15,23,42,.07)}
+.bk-wallet .bk-label{font-size:10px;font-weight:600;letter-spacing:1.2px;color:#64748b;text-transform:uppercase}
+.bk-wallet .bk-amt{font-size:19px;font-weight:700;color:#0f172a;margin-top:2px}
+.bk-sec{margin:14px 14px 0;background:#fff;border-radius:14px;padding:14px;box-shadow:0 2px 8px rgba(15,23,42,.07)}
+.bk-sec h4{margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:1.2px;color:#64748b;text-transform:uppercase}
+.bk-chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.bk-chip{border:1.5px solid #cbd5e1;background:#fff;color:#1d4ed8;border-radius:999px;padding:7px 14px;font-size:13px;font-weight:700;cursor:pointer}
+.bk-chip.on{background:#1d4ed8;border-color:#1d4ed8;color:#fff}
+.bk-actions{display:flex;gap:10px}
+.bk-btn{flex:1;border:none;border-radius:12px;padding:13px;font-size:15px;font-weight:700;cursor:pointer}
+.bk-dep{background:#16a34a;color:#fff}
+.bk-dep:disabled{background:#bbf7d0;color:#fff;cursor:not-allowed}
+.bk-wd{background:#fff;color:#1d4ed8;border:2px solid #1d4ed8}
+.bk-wd:disabled{border-color:#cbd5e1;color:#94a3b8;cursor:not-allowed}
+.bk-tx{display:flex;justify-content:space-between;align-items:center;padding:10px 2px;border-bottom:1px solid #f1f5f9;font-size:13px}
+.bk-tx:last-child{border-bottom:none}
+.bk-tx .bk-txdesc{color:#334155}
+.bk-tx .bk-txdesc small{display:block;color:#94a3b8;font-size:11px}
+.bk-tx .bk-txamt{font-weight:700}
+.bk-tx .bk-pos{color:#16a34a}
+.bk-tx .bk-neg{color:#dc2626}
+.bk-tx .bk-neu{color:#1d4ed8}
+.bk-empty{color:#94a3b8;font-size:13px;text-align:center;padding:12px 0}
+.bk-note{margin:12px 14px 0;font-size:11px;color:#94a3b8;text-align:center;line-height:1.5}
 .rep-list{padding:0 12px;display:flex;flex-direction:column;gap:12px}
 .rep-card{background:#101610;border:1px solid #1c261c;border-left-width:4px;border-radius:16px;padding:14px 16px}
 .rep-card.locked{background:#080808;filter:saturate(.2)}
@@ -1734,6 +1771,59 @@ var root=(document.currentScript&&document.currentScript.parentElement)||documen
 function q(s){return root.querySelector(s);}
 function qa(s){return Array.prototype.slice.call(root.querySelectorAll(s));}
 var bridge=window.hatchWidget||null;
+
+var BANKAMT=100;
+var BANK_APY=0.10; // % per day — super small
+function bankAPYPerMin(){return (BANK_APY/100)/1440;}
+function pushBankTx(k,a){
+ if(!S.bank) S.bank={bal:0,pendInt:0,tx:[]};
+ if(!Array.isArray(S.bank.tx))S.bank.tx=[];
+ S.bank.tx.unshift({t:Date.now(),k:k,a:Math.round(a*100)/100});
+ if(S.bank.tx.length>20)S.bank.tx.length=20;
+}
+function bankTxTime(t){
+ var d=new Date(t),now=new Date();
+ var sameDay=d.toDateString()===now.toDateString();
+ var hh=d.getHours(),mm=d.getMinutes();if(mm<10)mm="0"+mm;
+ var hm=(hh%12||12)+":"+mm+" "+(hh<12?"AM":"PM");
+ if(sameDay)return "Today "+hm;
+ var yest=new Date(now-86400000);
+ if(d.toDateString()===yest.toDateString())return "Yesterday "+hm;
+ return (d.getMonth()+1)+"/"+d.getDate()+" "+hm;
+}
+function bankHTML(){
+ var bk=(S.bank&&typeof S.bank==="object")?S.bank:{bal:0,tx:[]};
+ var bal=Math.max(0,bk.bal||0);
+ var chips=[25,100,500,1000,"max"];
+ var h='<div class="bk-head"><div class="bk-bankname">🏦 Terpene Bank</div><div class="bk-welcome">Good '+(new Date().getHours()<12?"morning":new Date().getHours()<17?"afternoon":"evening")+', your money is safe here.</div></div>';
+ h+='<div class="bk-balcard"><div class="bk-label">Savings Balance</div><div class="bk-balance">'+money(bal)+'</div><div class="bk-apy">▲ '+BANK_APY.toFixed(2)+'% APY &middot; interest accrues daily</div></div>';
+ h+='<div class="bk-walletrow"><div class="bk-wallet"><div class="bk-label">Cash on hand</div><div class="bk-amt">'+money(S.cash)+'</div></div>'
+   +'<div class="bk-wallet"><div class="bk-label">Total assets</div><div class="bk-amt">'+money(S.cash+bal)+'</div></div></div>';
+ h+='<div class="bk-sec"><h4>Move Money</h4><div class="bk-chips">';
+ chips.forEach(function(c){
+  var lbl=c==="max"?"MAX":money(c);
+  h+='<button type="button" class="bk-chip'+(BANKAMT===c?' on':'')+'" data-act="bank-amt" data-amt="'+c+'">'+lbl+'</button>';
+ });
+ var depAmt=BANKAMT==="max"?S.cash:Math.min(BANKAMT,S.cash);
+ var wdAmt=BANKAMT==="max"?bal:Math.min(BANKAMT,bal);
+ h+='</div><div class="bk-actions">'
+  +'<button type="button" class="bk-btn bk-dep" data-act="bank-dep"'+(depAmt>=1?'':' disabled')+'>Deposit'+(depAmt>=1?' '+money(depAmt):'')+'</button>'
+  +'<button type="button" class="bk-btn bk-wd" data-act="bank-wd"'+(wdAmt>=1?'':' disabled')+'>Withdraw'+(wdAmt>=1?' '+money(wdAmt):'')+'</button>'
+  +'</div></div>';
+ h+='<div class="bk-sec"><h4>Recent Activity</h4>';
+ var tx=bk.tx||[];
+ if(!tx.length){h+='<div class="bk-empty">No transactions yet.</div>';}
+ tx.forEach(function(e){
+  var desc=e.k==="dep"?"Deposit":e.k==="wd"?"Withdrawal":"Interest earned";
+  var cls=e.k==="dep"?"bk-pos":e.k==="wd"?"bk-neg":"bk-neu";
+  var sign=e.k==="wd"?"−":"+";
+  h+='<div class="bk-tx"><div class="bk-txdesc">'+desc+'<small>'+bankTxTime(e.t)+'</small></div><div class="bk-txamt '+cls+'">'+sign+money(e.a)+'</div></div>';
+ });
+ h+='</div>';
+ h+='<div class="bk-note">Deposits are instant. Interest accrues continuously<br>at '+BANK_APY.toFixed(2)+'% APY on your savings balance.</div>';
+ return h;
+}
+
 var PRODUCTS={
  sour:{name:"Sour D",price:8,seed:15,yld:[6,10],tier:1,c1:"#5be37a",tag:"SD"},
  og:{name:"OG Kush",price:12,seed:30,yld:[9,13],tier:2,c1:"#7CFC9a",tag:"OG"},
@@ -1959,7 +2049,7 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:3,
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list"};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",bank:{bal:0,pendInt:0,tx:[]}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
  var oldSave=(typeof s.xp!=="number");
@@ -2067,8 +2157,8 @@ function normalize(s){
  if(s.amt!==1&&s.amt!==5)s.amt=1;
  if(s.tab==="lab")s.tab="settings";
  if(s.tab==="shop")s.tab="store";
- if(["grow","cook","deal","store","chill","clinic","settings","street","maps","rep","props"].indexOf(s.tab)<0)s.tab="grow";
- if(["grow","cook","deal","chill","clinic","settings","street","maps","rep","props"].indexOf(s.backtab)<0)s.backtab="grow";
+ if(["grow","cook","deal","store","chill","clinic","settings","street","maps","rep","props","bank"].indexOf(s.tab)<0)s.tab="grow";
+ if(["grow","cook","deal","chill","clinic","settings","street","maps","rep","props","bank"].indexOf(s.backtab)<0)s.backtab="grow";
  if(s.view!=="home"&&s.view!=="app")s.view="home";
  if(["roll","smoke"].indexOf(s.chillview)<0)s.chillview="smoke";
  if(GROWKEYS.indexOf(s.chillStrain)<0)s.chillStrain="sour";
@@ -2090,6 +2180,10 @@ function normalize(s){
  if(["seeds","guns","lab","gear","upgrades"].indexOf(s.storetab)<0)s.storetab="seeds";
  if(!s.propUpgrades||typeof s.propUpgrades!=="object")s.propUpgrades={tent:1};
  if([1,3,4].indexOf(s.propUpgrades.tent)<0)s.propUpgrades.tent=1;
+ if(!s.bank||typeof s.bank!=="object")s.bank={bal:0,pendInt:0,tx:[]};
+ if(typeof s.bank.bal!=="number"||s.bank.bal<0)s.bank.bal=0;
+ if(typeof s.bank.pendInt!=="number"||s.bank.pendInt<0)s.bank.pendInt=0;
+ if(!Array.isArray(s.bank.tx))s.bank.tx=[];
  return s;
 }
 var S=normalize(Object.assign({},DEF,bridge?bridge.getState(DEF):{}));
@@ -2097,7 +2191,7 @@ var S=normalize(Object.assign({},DEF,bridge?bridge.getState(DEF):{}));
 var navStack=[];
 function navPush(app){if(navStack[navStack.length-1]!==app)navStack.push(app);if(navStack.length>12)navStack.shift();}
 function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
-var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠"};
+var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦"};
 var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
 function appName(a){if(a==="street")return "Street Deal";if(a==="rep")return "Reputation";if(a==="props")return "My Properties";return a.charAt(0).toUpperCase()+a.slice(1);}
 function save(){if(bridge)bridge.setState(S);}
@@ -2318,9 +2412,10 @@ var HINTS={
  settings:"Cook speeds for every drug, plus one grow speed for all weed. Everything saves instantly.",
  clinic:"Patch up after fights — $2 per HP. High heat brings cop ambushes; go in armed and healthy.",
  browser:"Browse Terp Estates for grow properties — more slots, bigger operation.",
- props:"Your grow empire in 3D — tap a property to manage its plants. Tap a plant to water or harvest it."
+ props:"Your grow empire in 3D — tap a property to manage its plants. Tap a plant to water or harvest it.",
+ bank:"Keep your cash safe and watch it grow — savings earn a little interest over time."
 };
-var TAB_COLORS={grow:"#4ade80",stash:"#d4a574",cook:"#fb923c",deal:"#22c55e",chill:"#a78bfa",clinic:"#e5484d",settings:"#9a97a3",browser:"#7c9ef8",street:"#f59e0b",maps:"#22c55e",rep:"#fbbf24",props:"#a78bfa"};
+var TAB_COLORS={grow:"#4ade80",stash:"#d4a574",cook:"#fb923c",deal:"#22c55e",chill:"#a78bfa",clinic:"#e5484d",settings:"#9a97a3",browser:"#7c9ef8",street:"#f59e0b",maps:"#22c55e",rep:"#fbbf24",props:"#a78bfa",bank:"#3b82f6"};
 var TAB_ICONS={
  grow:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-8"/><path d="M12 13c0-4.5 3.5-8 8.5-8 0 4.5-3.5 8-8.5 8z"/><path d="M12 13c0-4.5-3.5-8-8.5-8 0 4.5 3.5 8 8.5 8z"/></svg>',
  stash:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="11" rx="2.5"/><path d="M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8"/><path d="M3 13h18"/></svg>',
@@ -2593,6 +2688,7 @@ function render(){
  q(".pane-maps").hidden=battling||!inApp||S.tab!=="maps";
  q(".pane-rep").hidden=battling||!inApp||S.tab!=="rep";
  q(".pane-props").hidden=battling||!inApp||S.tab!=="props";
+ q(".pane-bank").hidden=battling||!inApp||S.tab!=="bank";
  q(".pane-battle").hidden=!battling;
  // Android OS shell
  var _clk=q(".android-clock");
@@ -2789,6 +2885,7 @@ function render(){
  if(S.tab==="maps"){q(".pane-maps").innerHTML=mapsHTML();}
  if(S.tab==="rep"){q(".pane-rep").innerHTML=repHTML();}
  if(S.tab==="props"){q(".pane-props").innerHTML=propsHTML();}
+ if(S.tab==="bank"){q(".pane-bank").innerHTML=bankHTML();}
  function streetHTML(){
  var dh=tabHeader("street")+'<div class="amtrow c"><span>Deal:</span>'
   +'<button type="button" data-act="amt" data-amt="1"'+(S.amt===1?' class="on"':'')+'>1g</button>'
@@ -3881,6 +3978,15 @@ function tick(){
   for(_ti=0;_ti<TERRITORIES.length;_ti++){var _tz=terrZone(TERRITORIES[_ti].id);var _si;for(_si=0;_si<3;_si++){var _ss=HEAT_SOURCES[_si];if(_tz.heat[_ss]>0)_tz.heat[_ss]=Math.max(0,_tz.heat[_ss]-_hd);}roachPanicCheck(TERRITORIES[_ti].id,"cops");roachPanicCheck(TERRITORIES[_ti].id,"gangs");roachPanicCheck(TERRITORIES[_ti].id,"fam");}
   syncGlobalHeat();
   if(S.hp<100)S.hp=Math.min(100,S.hp+dtm/2);
+  // Bank interest — super small rate, accrues continuously on savings balance
+  if(S.bank&&S.bank.bal>0){
+   var _bi=S.bank.bal*bankAPYPerMin()*dtm;
+   if(_bi>0){
+    S.bank.bal=Math.round((S.bank.bal+_bi)*100)/100;
+    S.bank.pendInt=Math.round(((S.bank.pendInt||0)+_bi)*100)/100;
+    if(S.bank.pendInt>=1){pushBankTx("int",S.bank.pendInt);S.bank.pendInt=0;}
+   }
+  }
  }
  tickContacts(now);
  if(S.job){
@@ -4454,6 +4560,9 @@ root.addEventListener("click",function(e){
  if(a==="buyduffel"){var ti=DUFFEL.indexOf(S.stashCap);if(ti<DUFFEL.length-1){var nc=DUFFEL[ti+1];if(S.cash>=DUFFEL_COST[nc]){S.cash-=DUFFEL_COST[nc];S.stashCap=nc;S.msg="Duffel upgraded — carry "+nc+"g now.";save();render();}}return;}
  if(a==="buyprop"){var pr2=PROPS.filter(function(x){return x.id===b.dataset.prop;})[0];var owned=S.props.some(function(x){return x.id===pr2.id;});if(pr2&&!owned&&pr2.tier<=pLevel()&&S.cash>=pr2.cost){S.cash-=pr2.cost;S.props.push(mkProp(pr2.id));S.msg="New property: "+pr2.name+"! "+pr2.desc;save();render();}return;}
  if(a==="buyupgrade"){var _ur=parseInt(b.dataset.rows,10)||0;var _uc=_ur===3?2500:(_ur===4?7500:0);var _uo=(S.propUpgrades&&S.propUpgrades.tent)||1;var _unx=_uo===1?3:(_uo===3?4:0);if(_ur===_unx&&_uc>0&&S.cash>=_uc){S.cash-=_uc;S.propUpgrades.tent=_ur;var _up=_ur===3?9:12;S.msg="Grow Tent upgraded to "+_ur+" rows ("+_up+" pots)!";save();render();}return;}
+ if(a==="bank-amt"){var _ba=b.dataset.amt;BANKAMT=(_ba==="max")?"max":(parseInt(_ba,10)||100);render();return;}
+ if(a==="bank-dep"){if(!S.bank)S.bank={bal:0,pendInt:0,tx:[]};var _da=BANKAMT==="max"?S.cash:Math.min(BANKAMT,S.cash);_da=Math.floor(_da);if(_da>=1&&S.cash>=_da){S.cash-=_da;S.bank.bal=Math.round((S.bank.bal+_da)*100)/100;pushBankTx("dep",_da);S.msg="Deposited "+money(_da)+" to your savings.";save();render();}else{S.msg="Nothing to deposit.";save();render();}return;}
+ if(a==="bank-wd"){if(!S.bank)S.bank={bal:0,pendInt:0,tx:[]};var _bb=S.bank.bal||0;var _wa=BANKAMT==="max"?_bb:Math.min(BANKAMT,_bb);_wa=Math.floor(Math.min(_wa,_bb));if(_wa>=1&&_bb>=_wa){S.bank.bal=Math.round((_bb-_wa)*100)/100;S.cash+=_wa;pushBankTx("wd",_wa);S.msg="Withdrew "+money(_wa)+" from your savings.";save();render();}else{S.msg="Nothing to withdraw.";save();render();}return;}
  if(a==="bribe"){var _bc=bribeCost();var _at=(S.terr&&S.terr.active)||"home";if(S.cash>=_bc&&terrTotal(_at)>0&&Date.now()>=S.lockedUntil){S.cash-=_bc;var _zb=terrZone(_at);var _bi;for(_bi=0;_bi<3;_bi++)_zb.heat[HEAT_SOURCES[_bi]]=Math.max(0,_zb.heat[HEAT_SOURCES[_bi]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+terrDef(_at).name+". Heat dropped.";save();render();}return;}
  if(a==="terr-select"){var _ts=b.dataset.t;if(_ts&&terrDef(_ts)){if(!terrUnlocked(_ts)){S.msg="Locked \u2014 unlocks at level "+terrDef(_ts).unlock+".";save();render();return;}if(!S.terr)S.terr={active:"home",zones:{}};S.terr.active=_ts;S.msg="Operating in "+terrDef(_ts).name+" now — prices \u00D7"+terrDef(_ts).price+".";save();render();}return;}
  if(a==="terr-bribe"){var _tbb=b.dataset.t,_tbd=terrDef(_tbb),_bcb=bribeCost();if(S.cash>=_bcb&&terrTotal(_tbb)>0&&Date.now()>=S.lockedUntil){S.cash-=_bcb;var _zbb=terrZone(_tbb);var _bj;for(_bj=0;_bj<3;_bj++)_zbb.heat[HEAT_SOURCES[_bj]]=Math.max(0,_zbb.heat[HEAT_SOURCES[_bj]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+_tbd.name+". Heat dropped.";save();render();}else if(S.cash<_bcb){S.msg="Not enough cash for that.";save();render();}return;}
@@ -5138,7 +5247,7 @@ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
   if(document.visibilityState==="hidden")saveOnHide();});
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult};
 })();
 </script>
 
