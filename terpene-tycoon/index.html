@@ -295,6 +295,8 @@ window.hatchWidget={
 .hw-appgrid[data-iconstyle="3"] .aa-icon svg *{fill:#00ff41 !important;stroke:#00ff41 !important}
 .hw-appgrid[data-rows="4"] .android-app{gap:6px}
 .hw-appgrid[data-rows="4"] .aa-label{font-size:12px}
+.pg[data-labelcolor="white"] .aa-label{color:#fff !important}
+.pg[data-labelcolor="black"] .aa-label{color:#000 !important}
 @media(min-width:600px){
  .hw-appgrid[data-rows="4"] .hw-page{gap:16px 10px}
  .hw-appgrid[data-rows="4"] .aa-icon{width:58px;height:58px}
@@ -2346,6 +2348,7 @@ function normalize(s){
  if(!s.bank||typeof s.bank!=="object")s.bank={bal:0,pendInt:0,tx:[]};
  if(typeof s.crypto!=="number"||s.crypto<0)s.crypto=0;
  if(typeof s.iconStyle!=="number"||s.iconStyle<0||s.iconStyle>4)s.iconStyle=4;
+ if(s.labelColor!=="black"&&s.labelColor!=="white")s.labelColor="white";
  if(typeof s.bank.bal!=="number"||s.bank.bal<0)s.bank.bal=0;
  if(typeof s.bank.pendInt!=="number"||s.bank.pendInt<0)s.bank.pendInt=0;
  if(!Array.isArray(s.bank.tx))s.bank.tx=[];
@@ -2864,7 +2867,7 @@ function renderShade(){
  }).join(""):'<div class="shade-empty">No notifications yet — Roach will hit you up here.</div>';
 }
 function render(){
- if(root&&root.dataset)root.dataset.theme=(S.theme==="light")?"light":"dark";
+ if(root&&root.dataset){root.dataset.theme=(S.theme==="light")?"light":"dark";root.dataset.labelcolor=S.labelColor||"white";}
  checkSenorV();
  var now=Date.now();
  renderTicker();
@@ -4716,6 +4719,9 @@ function settingsHTML(){
    h+='<button type="button" class="dchip center'+(_is===_si?" on":"")+'" data-act="seticonstyle" data-s="'+_si+'"><span class="dc-name">'+_styles[_si]+'</span></button>';
   }
   h+='</div>';
+  h+='<div class="sdesc" style="margin:8px 2px 6px">App Label Color</div>';
+  var _lc=S.labelColor||"white";
+  h+='<div class="dchips"><button type="button" class="dchip center'+(_lc==="white"?" on":"")+'" data-act="setlabelcolor" data-c="white"><span class="dc-name">White</span></button><button type="button" class="dchip center'+(_lc==="black"?" on":"")+'" data-act="setlabelcolor" data-c="black"><span class="dc-name">Black</span></button></div>';
   h+='<div class="shopsec">WALLPAPER</div>';
   h+='<div class="wp-wrap">';
   if(S.wallpaper){h+='<div class="wp-prev"><img src="'+escHtml(S.wallpaper)+'" alt="Wallpaper preview"></div>';}
@@ -4987,6 +4993,7 @@ root.addEventListener("click",function(e){
  if(a==="settheme"){var _th=b.dataset.theme;S.theme=(_th==="light")?"light":"dark";save();render();return;}
  if(a==="setrows"){var _sr=+b.dataset.rows;if(_sr===2||_sr===3||_sr===4){S.homeRows=_sr;save();layoutHome();render();}return;}
  if(a==="seticonstyle"){var _ss=+b.dataset.s;if(_ss>=0&&_ss<=4){S.iconStyle=_ss;save();layoutHome();render();}return;}
+ if(a==="setlabelcolor"){var _lc2=b.dataset.c;if(_lc2==="white"||_lc2==="black"){S.labelColor=_lc2;save();render();}return;}
  if(a==="wp-apply"){var _wi=q(".wp-url"),_wu=_wi?_wi.value.trim():"";
   if(!_wu){S.msg="No URL entered.";save();render();return;}
   if(!/^https?:\/\//i.test(_wu)){S.msg="No valid image URL found — use http(s).";save();render();return;}
