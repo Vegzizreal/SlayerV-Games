@@ -3973,7 +3973,7 @@ function doDismissTask(i){
 }
 function todoHTML(){
  var tv=S.todoView||"tasks";
- var h='<div class="todo-tabs"><button type="button" class="todo-tab'+(tv==="tasks"?" on":"")+'" data-act="todoview" data-v="tasks">Tasks</button><button type="button" class="todo-tab'+(tv==="stash"?" on":"")+'" data-act="todoview" data-v="stash">Stash</button></div>';
+ var h='<div class="todo-tabs"><button type="button" class="todo-tab'+(tv==="tasks"?" on":"")+'" data-act="todoview" data-v="tasks">Tasks</button><button type="button" class="todo-tab'+(tv==="stash"?" on":"")+'" data-act="todoview" data-v="stash">Actions</button></div>';
  if(tv==="stash"){
   /* render stash content without its own header */
   var _sh=stashHTML();
