@@ -2868,6 +2868,7 @@ function renderShade(){
 }
 function render(){
  if(root&&root.dataset){root.dataset.theme=(S.theme==="light")?"light":"dark";root.dataset.labelcolor=S.labelColor||"white";}
+ var _pg=q(".pg");if(_pg&&_pg.dataset)_pg.dataset.labelcolor=S.labelColor||"white";
  checkSenorV();
  var now=Date.now();
  renderTicker();
