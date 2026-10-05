@@ -1074,6 +1074,11 @@ window.hatchWidget={
 .todo-tabs{display:flex;gap:8px;padding:12px 16px 0}
 .todo-tab{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:10px;font-size:14px;font-weight:600;cursor:pointer}
 .todo-tab.on{background:#8b5cf6;border-color:#8b5cf6}
+.tk-prod{margin:8px 0}
+.tk-make{background:#16a34a;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
+.tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
+.tk-buyseed:disabled{opacity:.4;cursor:not-allowed}
+.tk-need{color:#f59e0b;font-size:13px;font-weight:600}
 .tk-empty{text-align:center;color:rgba(255,255,255,.55);padding:48px 20px;font-size:14px;line-height:1.7}
 .tk-card{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:14px;padding:14px;margin:10px 4px}
 .tk-hd{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#fff;margin-bottom:8px}
@@ -1088,6 +1093,11 @@ window.hatchWidget={
 .pg[data-theme="light"] .todo-tabs{display:flex;gap:8px;padding:12px 16px 0}
 .todo-tab{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:10px;font-size:14px;font-weight:600;cursor:pointer}
 .todo-tab.on{background:#8b5cf6;border-color:#8b5cf6}
+.tk-prod{margin:8px 0}
+.tk-make{background:#16a34a;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
+.tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
+.tk-buyseed:disabled{opacity:.4;cursor:not-allowed}
+.tk-need{color:#f59e0b;font-size:13px;font-weight:600}
 .tk-empty{color:rgba(0,0,0,.5)}
 .pg[data-theme="light"] .tk-hd{color:#111}
 .pg[data-theme="light"] .tk-hd span{color:rgba(0,0,0,.45)}
@@ -3994,8 +4004,46 @@ function tasksHTML(){
  ts.forEach(function(t,i){
   var o={k:t.k,kind:t.kind,g:t.g,pu:t.pu},can=contactHave(o)>=o.g;
   var when="";try{when=new Date(t.addedAt).toLocaleString();}catch(e){}
+  /* production helpers */
+  var _prodBtns='';
+  if(!can){
+   if(t.kind==="joint"){
+    /* joints: need bud + papers. 1g bud -> 2 joints */
+    var _needBud=Math.ceil(t.g/2),_haveBud=S.stash[t.k]||0,_havePaper=S.papers||0,_needPaper=t.g*2;
+    if(_haveBud>=_needBud&&_havePaper>=_needPaper){
+     _prodBtns='<button type="button" class="tk-make" data-act="task-roll" data-i="'+i+'">Roll '+t.g+' Joints</button>';
+    }else if(_haveBud<_needBud){
+     /* need seeds */
+     var _sp=PRODUCTS[t.k]?PRODUCTS[t.k].seed:0;
+     _prodBtns='<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+t.k+'"'+(S.cash>=_sp?"":" disabled")+'>Buy '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+' Seeds '+money(_sp)+'</button>';
+    }else{
+     _prodBtns='<span class="tk-need">Need '+_needPaper+' papers</span>';
+    }
+   }else if(RECIPES[t.k]){
+    /* lab product: check recipe ingredients */
+    var _r=RECIPES[t.k],_canCook=true,_missing='';
+    if(_r.bud&&((S.stash[_r.budStrain||t.k]||0)<_r.bud)){_canCook=false;_missing='bud';}
+    /* simplified: if we have bud, show cook button */
+    var _budKey=t.k; /* edibles use generic bud - check stash */
+    var _hasBud=PKEYS.some(function(pk){return (S.stash[pk]||0)>=(_r.bud||0);});
+    if(_hasBud){
+     _prodBtns='<button type="button" class="tk-make" data-act="task-cook" data-i="'+i+'">Cook '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+'</button>';
+    }else{
+     /* need seeds - find cheapest available strain */
+     var _cheapK=PKEYS.filter(function(pk){return PRODUCTS[pk]&&tierVis(PRODUCTS[pk].tier)===2;}).sort(function(a,b){return PRODUCTS[a].seed-PRODUCTS[b].seed;})[0];
+     if(_cheapK){
+      _prodBtns='<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+_cheapK+'"'+(S.cash>=PRODUCTS[_cheapK].seed?"":" disabled")+'>Buy '+escHtml(PRODUCTS[_cheapK].name)+' Seeds '+money(PRODUCTS[_cheapK].seed)+'</button>';
+     }
+    }
+   }else{
+    /* raw bud: need seeds */
+    var _sp2=PRODUCTS[t.k]?PRODUCTS[t.k].seed:0;
+    _prodBtns='<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+t.k+'"'+(S.cash>=_sp2?"":" disabled")+'>Buy '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+' Seeds '+money(_sp2)+'</button>';
+   }
+  }
   h+='<div class="tk-card"><div class="tk-hd"><b>'+escHtml(t.name)+'</b><span>'+escHtml(when)+'</span></div>'
    +'<div class="tk-body">'+escHtml(contactQtyText(o))+' · pays <b>'+money(o.pu*o.g)+'</b></div>'
+   +(_prodBtns?'<div class="tk-prod">'+_prodBtns+'</div>':'')
    +'<div class="tk-btns"><button type="button" class="tk-fulfill" data-act="task-fulfill" data-i="'+i+'"'+(can?"":" disabled")+'>Fulfill</button>'
    +'<button type="button" class="tk-dismiss" data-act="task-dismiss" data-i="'+i+'">Dismiss</button></div></div>';
  });
@@ -5165,6 +5213,20 @@ root.addEventListener("click",function(e){
  }
  if(a==="order-accept"){doAcceptOrder(b.dataset.contact,b.dataset.variant);return;}
  if(a==="order-dismiss"){doDismissOrder(b.dataset.contact,b.dataset.variant);return;}
+ if(a==="task-roll"){
+  var _t=S.tasks[+b.dataset.i||0];if(!_t)return;
+  var _nb=Math.ceil(_t.g/2);
+  doRoll(_t.k,_nb);
+  return;
+ }
+ if(a==="task-cook"){
+  var _tc=S.tasks[+b.dataset.i||0];if(!_tc||!RECIPES[_tc.k])return;
+  /* start cooking - navigate to lab */
+  S.tab="cook";S.view="app";navPush("cook");ttPushHist();save();render();
+  /* auto-start the cook if possible */
+  setTimeout(function(){startCook(_tc.k);},200);
+  return;
+ }
  if(a==="task-fulfill"){doFulfillTask(+b.dataset.i||0);return;}
  if(a==="task-dismiss"){doDismissTask(+b.dataset.i||0);return;}
  if(a==="dealcat"){S.dealcat=b.dataset.c;save();render();return;}
