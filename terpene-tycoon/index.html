@@ -1760,6 +1760,17 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .clog{padding:10px 8px;border-top:1px solid var(--hatch-widget-border)}
 .clog-head{display:flex;align-items:center;gap:8px;margin-bottom:4px}
 .clog-head b{font-size:16px;color:#e5484d;letter-spacing:.5px}
+/* phone-style settings list */
+.set-list{background:var(--hatch-widget-surface);border-radius:12px;overflow:hidden;margin:0 2px}
+.set-row{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;background:transparent;border:0;border-bottom:1px solid var(--hatch-widget-border);color:var(--hatch-widget-text);font-size:16px;cursor:pointer;text-align:left}
+.set-row:last-child{border-bottom:0}
+.set-row:active{background:var(--hatch-widget-surface-muted)}
+.set-chev{color:var(--hatch-widget-muted);font-size:20px;font-weight:300}
+.set-back{display:inline-block;padding:8px 2px;background:transparent;border:0;color:#0a84ff;font-size:16px;cursor:pointer;margin-bottom:4px}
+.set-toggle{width:51px;height:31px;border-radius:16px;background:#3a3a3c;border:0;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.set-toggle.on{background:#34c759}
+.set-knob{position:absolute;top:2px;left:2px;width:27px;height:27px;border-radius:50%;background:#fff;transition:left .2s;box-shadow:0 2px 4px rgba(0,0,0,.3)}
+.set-toggle.on .set-knob{left:22px}
 /* bribe button by the heat bar */
 </style>
 <style>
@@ -2121,6 +2132,8 @@ function normalize(s){
  if(!Array.isArray(s.iconOrder))s.iconOrder=[];
  /* one-time homescreen reorder to canonical order (2026-10-04) */
  if(s.hwOrderV!==1){s.iconOrder=[];s.hwOrderV=1;}
+ /* migrate old settings tab to new phone-style view */
+ if(s.settingstab==="changelog"){s.settingsView="about";delete s.settingstab;}
  if(!Array.isArray(s.hiddenApps)||s.hiddenApps.length)s.hiddenApps=[];
  /* tasks: accepted order requests awaiting fulfillment */
  if(!Array.isArray(s.tasks))s.tasks=[];
@@ -4540,12 +4553,13 @@ function chillHTML(){
 }
 function settingsHTML(){
  var _th=tabHeader("settings");
- var st=S.settingstab||"options";
- var h=_th+'<div class="dchips">'
-  +'<button type="button" class="dchip center'+(st==="options"?" on":"")+'" data-act="settingstab" data-t="options"><span class="dc-name">Options</span></button>'
-  +'<button type="button" class="dchip center'+(st==="changelog"?" on":"")+'" data-act="settingstab" data-t="changelog"><span class="dc-name">Changelog</span></button>'
-  +'</div>';
- if(st==="changelog"){
+ var sv=S.settingsView||"list";
+ var h=_th;
+ // Back button for sub-views
+ if(sv!=="list"){
+  h+='<button type="button" class="set-back" data-act="settingsview" data-v="list">&lsaquo; Settings</button>';
+ }
+ if(sv==="about"){
   h+='<div class="shopsec">PATCH NOTES</div>';
   h+='<div class="sdesc" style="margin:0 2px 8px">Running list of every update. Current version: <b style="color:var(--hatch-widget-text)">'+GAME_VER+'</b></div>';
   CHANGELOG.forEach(function(c){
@@ -4553,37 +4567,59 @@ function settingsHTML(){
   });
   return h;
  }
- h+='<div class="shopsec">APPEARANCE</div>';
- h+='<div class="dchips"><button type="button" class="dchip center'+(S.theme==="light"?"":" on")+'" data-act="settheme" data-theme="dark"><span class="dc-name">Dark</span></button><button type="button" class="dchip center'+(S.theme==="light"?" on":"")+'" data-act="settheme" data-theme="light"><span class="dc-name">Light</span></button></div>';
- h+='<div class="sdesc" style="margin:8px 2px 6px">Home Screen Rows</div>';
- var _hr=S.homeRows||3;
- h+='<div class="dchips"><button type="button" class="dchip center'+(_hr===2?" on":"")+'" data-act="setrows" data-rows="2"><span class="dc-name">2 rows</span></button><button type="button" class="dchip center'+(_hr===3?" on":"")+'" data-act="setrows" data-rows="3"><span class="dc-name">3 rows</span></button><button type="button" class="dchip center'+(_hr===4?" on":"")+'" data-act="setrows" data-rows="4"><span class="dc-name">4 rows</span></button></div>';
- h+='<div class="shopsec">WALLPAPER</div>';
- h+='<div class="wp-wrap">';
- if(S.wallpaper){h+='<div class="wp-prev"><img src="'+escHtml(S.wallpaper)+'" alt="Wallpaper preview" onerror="this.parentNode.innerHTML=\'<span class=&quot;wp-err&quot;>Preview unavailable</span>\'"></div>';}
- else{h+='<div class="wp-prev wp-none"><span>Default wallpaper</span></div>';}
- h+='<input type="url" class="wp-url" placeholder="Paste image URL..." value="'+escHtml(S.wallpaper||"")+'" autocapitalize="off" autocorrect="off" spellcheck="false">';
- h+='<div class="wp-btns"><button type="button" class="wp-apply" data-act="wp-apply">Apply</button>';
- if(S.wallpaper){h+='<button type="button" class="wp-reset" data-act="wp-reset">Reset</button>';}
- h+='</div><div class="sdesc" style="margin-top:6px">Paste a direct image link to change the home screen wallpaper.</div></div>';
- h+='<div class="shopsec">HOME SCREEN</div>';
- h+='<div class="wp-wrap"><div class="sdesc" style="margin-bottom:8px">Long-press any home screen icon to rearrange. Tap &times; to hide an app.</div><div class="wp-btns"><button type="button" class="wp-reset" data-act="layout-reset" style="flex:1">Reset home layout</button></div></div>';
- h+='<div class="shopsec">NOTIFICATIONS</div>';
- var _ms=S.msgSound!==false;
- h+='<div class="dchips"><button type="button" class="dchip center'+(_ms?" on":"")+'" data-act="msgsound" data-v="1"><span class="dc-name">🔔 Sound on</span></button><button type="button" class="dchip center'+(_ms?"":" on")+'" data-act="msgsound" data-v="0"><span class="dc-name">🔕 Muted</span></button></div>';
- h+='<div class="sdesc" style="margin:8px 2px 6px">Play a chime when a new message arrives.</div>';
- h+='<div class="shopsec">LAB COOK SPEEDS</div>';
- var cur=S.setdrug||"hash";
- if(RKEYS.indexOf(cur)<0)cur="hash";
- h+='<div class="dchips lab">';
- RKEYS.forEach(function(key){
-  var pr=PRODUCTS[key];
-  h+='<button type="button" class="dchip'+(key===cur?" on":"")+'" data-act="setsel" data-key="'+key+'"><span class="picon xs picon-'+key+'"></span><span class="dc-name">'+pr.name+'</span></button>';
- });
+ if(sv==="appearance"){
+  h+='<div class="shopsec">APPEARANCE</div>';
+  h+='<div class="dchips"><button type="button" class="dchip center'+(S.theme==="light"?"":" on")+'" data-act="settheme" data-theme="dark"><span class="dc-name">Dark</span></button><button type="button" class="dchip center'+(S.theme==="light"?" on":"")+'" data-act="settheme" data-theme="light"><span class="dc-name">Light</span></button></div>';
+  h+='<div class="sdesc" style="margin:8px 2px 6px">Home Screen Rows</div>';
+  var _hr=S.homeRows||3;
+  h+='<div class="dchips"><button type="button" class="dchip center'+(_hr===2?" on":"")+'" data-act="setrows" data-rows="2"><span class="dc-name">2 rows</span></button><button type="button" class="dchip center'+(_hr===3?" on":"")+'" data-act="setrows" data-rows="3"><span class="dc-name">3 rows</span></button><button type="button" class="dchip center'+(_hr===4?" on":"")+'" data-act="setrows" data-rows="4"><span class="dc-name">4 rows</span></button></div>';
+  h+='<div class="shopsec">WALLPAPER</div>';
+  h+='<div class="wp-wrap">';
+  if(S.wallpaper){h+='<div class="wp-prev"><img src="'+escHtml(S.wallpaper)+'" alt="Wallpaper preview"></div>';}
+  else{h+='<div class="wp-prev wp-none"><span>Default wallpaper</span></div>';}
+  h+='<input type="url" class="wp-url" placeholder="Paste image URL..." value="'+escHtml(S.wallpaper||"")+'" autocapitalize="off" autocorrect="off" spellcheck="false">';
+  h+='<div class="wp-btns"><button type="button" class="wp-apply" data-act="wp-apply">Apply</button>';
+  if(S.wallpaper){h+='<button type="button" class="wp-reset" data-act="wp-reset">Reset</button>';}
+  h+='</div></div>';
+  return h;
+ }
+ if(sv==="notifications"){
+  h+='<div class="shopsec">NOTIFICATIONS</div>';
+  var _ms=S.msgSound!==false;
+  h+='<div class="set-row"><span>Message Sounds</span><button type="button" class="set-toggle'+(_ms?" on":"")+'" data-act="msgsound" data-v="'+(_ms?"0":"1")+'"><span class="set-knob"></span></button></div>';
+  h+='<div class="sdesc" style="margin:8px 2px 6px">Play a chime when a new message arrives.</div>';
+  return h;
+ }
+ if(sv==="gameplay"){
+  h+='<div class="shopsec">LAB COOK SPEEDS</div>';
+  var cur=S.setdrug||"hash";
+  if(RKEYS.indexOf(cur)<0)cur="hash";
+  h+='<div class="dchips lab">';
+  RKEYS.forEach(function(key){
+   var pr=PRODUCTS[key];
+   h+='<button type="button" class="dchip'+(key===cur?" on":"")+'" data-act="setsel" data-key="'+key+'"><span class="dc-name">'+pr.name+'</span></button>';
+  });
+  h+='</div>';
+  h+=cookSliderRow(cur);
+  h+='<div class="shopsec">WEED GROWTH SPEED</div>';
+  h+=growSliderRow();
+  return h;
+ }
+ if(sv==="general"){
+  h+='<div class="shopsec">HOME SCREEN</div>';
+  h+='<div class="wp-wrap"><div class="sdesc" style="margin-bottom:8px">Long-press any home screen icon to rearrange.</div><div class="wp-btns"><button type="button" class="wp-reset" data-act="layout-reset" style="flex:1">Reset home layout</button></div></div>';
+  return h;
+ }
+ // Main list view (phone-style)
+ h+='<div class="set-list">';
+ h+='<button type="button" class="set-row" data-act="settingsview" data-v="appearance"><span>🎨 Appearance</span><span class="set-chev">›</span></button>';
+ h+='<button type="button" class="set-row" data-act="settingsview" data-v="notifications"><span>🔔 Notifications</span><span class="set-chev">›</span></button>';
+ h+='<button type="button" class="set-row" data-act="settingsview" data-v="gameplay"><span>🎮 Gameplay</span><span class="set-chev">›</span></button>';
+ h+='<button type="button" class="set-row" data-act="settingsview" data-v="general"><span>⚙️ General</span><span class="set-chev">›</span></button>';
  h+='</div>';
- h+=cookSliderRow(cur);
- h+='<div class="shopsec">WEED GROWTH SPEED</div>';
- h+=growSliderRow();
+ h+='<div class="set-list" style="margin-top:20px">';
+ h+='<button type="button" class="set-row" data-act="settingsview" data-v="about"><span>ℹ️ About Phone</span><span class="set-chev">›</span></button>';
+ h+='</div>';
  return h;
 }
 function cookSliderRow(key){
@@ -4792,8 +4828,9 @@ root.addEventListener("click",function(e){
  if(a==="dsellj"){doDeal(+b.dataset.d,b.dataset.strain,false,true);return;}
  if(a==="tickspd"){tickToggleSpeed();return;}
  if(a==="refresh"){location.href=location.pathname+"?cb="+Date.now();return;}
- if(a==="roach-view"){S.lastVer=GAME_VER;S.tab="settings";S.settingstab="changelog";S.view="app";navPush("settings");save();render();return;}
+ if(a==="roach-view"){S.lastVer=GAME_VER;S.tab="settings";S.settingsView="about";S.view="app";navPush("settings");save();render();return;}
  if(a==="settingstab"){S.settingstab=b.dataset.t;save();render();return;}
+ if(a==="settingsview"){S.settingsView=b.dataset.v;save();render();return;}
  if(a==="stashsell"){var _sd=stashDealer();doDeal(_sd.di,b.dataset.strain,false,false);return;}
  if(a==="stashsellj"){var _sd2=stashDealer();doDeal(_sd2.di,b.dataset.strain,false,true);return;}
  if(a==="stashsellall"){doStashSellAll(b.dataset.strain,false);return;}
