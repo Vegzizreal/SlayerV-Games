@@ -120,15 +120,9 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="deal" data-mv="phonebook" data-hwkeys="phone lobby deal call"><span class="aa-icon" style="background:linear-gradient(135deg,#4ade80,#16a34a)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M13 6C9.7 6 7 8.7 7 12c0 12.4 10.1 24.5 22.5 26 3.9.5 7-2.6 6.5-6.5l-.7-4.6c-.3-1.9-2.1-3.1-4-2.7l-4.9 1.2c-3.8-2-6.9-5.1-8.9-8.9l1.2-4.9c.4-1.9-.8-3.7-2.7-4z" fill="#fff"/></svg></span><span class="aa-label">Phone</span></button>
    <button type="button" class="android-app" data-act="dev-disable" data-hwkeys="dev tools debug" id="aa-devapp" hidden><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M16 14l-8 10 8 10M32 14l8 10-8 10M28 10l-8 28" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="aa-label">Dev</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="notes" data-hwkeys="notes contacts numbers"><span class="aa-badge" id="aa-notesbadge" hidden></span><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M12 8h24a3 3 0 0 1 3 3v27a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3z" fill="#fff"/><rect x="18" y="4" width="12" height="7" rx="2" fill="#fff" stroke="#f59e0b" stroke-width="2"/><path d="M15 22h18M15 28h18M15 34h12" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="aa-label">Notes</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="gallery" data-hwkeys="gallery photos harvest"><span class="aa-icon" style="background:linear-gradient(135deg,#ec4899,#8b5cf6)"><svg viewBox="0 0 48 48" width="36" height="36"><rect x="6" y="10" width="36" height="28" rx="4" fill="#fff"/><circle cx="17" cy="20" r="4" fill="#ec4899"/><path d="M10 34l8-8 6 6 5-5 9 9v2H10z" fill="#8b5cf6"/></svg></span><span class="aa-label">Gallery</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="stash" data-hwkeys="my files inventory stash"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M5 13a3 3 0 0 1 3-3h11l4 5h14a3 3 0 0 1 3 3v3H5z" fill="#7db4fb"/><path d="M5 19h38v13a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z" fill="#bcd8fe"/></svg></span><span class="aa-label">My Files</span></button>
    </div>
   </div>
-   <div class="android-drawer" id="tt-drawer" hidden>
-    <div class="drawer-handle"></div>
-    <div class="drawer-search"><input type="text" id="drawer-search" placeholder="Search apps"></div>
-    <div class="drawer-grid" id="drawer-grid"></div>
-   </div>
   <div class="hw-dots"><span class="on" data-hwpage="0"></span><span data-hwpage="1"></span></div>
  </div>
  <div class="hw-folderview" hidden>
@@ -167,7 +161,6 @@ window.hatchWidget={
  <div class="pg-pane pane-browser" hidden></div>
  <div class="pg-pane pane-maps" hidden></div>
  <div class="pg-pane pane-rep" hidden></div>
- <div class="pg-pane pane-gallery" hidden></div>
  <div class="pg-pane pane-props" hidden></div>
 <div class="pg-pane pane-bank" hidden></div>
 <div class="pg-pane pane-tasks" hidden></div>
@@ -178,7 +171,16 @@ window.hatchWidget={
   <div class="lock-time" id="lock-time">--:--</div>
   <div class="lock-date" id="lock-date"></div>
   <div class="lock-notifs" id="lock-notifs"></div>
-  <div class="lock-hint">Swipe up to unlock</div>
+  <div class="lock-fp" id="lock-fp">
+   <svg viewBox="0 0 48 48" width="56" height="56" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round">
+    <path d="M12 20c0-6 5-10 12-10s12 4 12 10c0 8-2 14-4 20"/>
+    <path d="M18 20c0-3.5 2.5-6 6-6s6 2.5 6 6c0 6-1.5 11-3 16"/>
+    <path d="M24 20v12c0 3-.5 6-1.5 9"/>
+    <path d="M9 24c0 7 1.5 12 4 17"/>
+    <path d="M39 24c0 7-1.5 12-4 17"/>
+   </svg>
+  </div>
+  <div class="lock-hint">Swipe up or tap fingerprint to unlock</div>
  </div>
  <div class="android-bottomnav"><button type="button" data-act="android-back" aria-label="Back">&#9664;</button><button type="button" data-act="android-home" aria-label="Home">&#9679;</button><button type="button" data-act="android-recents" aria-label="Recents">&#9632;</button></div>
 </div>
@@ -312,13 +314,7 @@ window.hatchWidget={
 .hw-whl{font-size:11.5px;color:rgba(255,255,255,.55);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .hw-appgrid{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -18px;padding:12px 18px 8px;flex:none;min-height:0}
 .hw-appgrid::-webkit-scrollbar{display:none}
-.android-drawer{position:absolute;inset:0;z-index:150;background:rgba(10,10,14,.97);backdrop-filter:blur(20px);display:flex;flex-direction:column;padding:16px;transform:translateY(100%);transition:transform .3s ease}
-.android-drawer.open{transform:translateY(0)}
-.android-drawer[hidden]{display:none}
-.drawer-handle{width:40px;height:4px;background:#444;border-radius:2px;margin:0 auto 12px}
-.drawer-search{margin-bottom:12px}
-.drawer-search input{width:100%;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;padding:10px 16px;color:#fff;font-size:14px;box-sizing:border-box}
-.drawer-grid{flex:1;overflow-y:auto;display:grid;grid-template-columns:repeat(4,1fr);gap:16px 8px;align-content:start;padding-bottom:20px}
+
 .hw-page{flex:0 0 100%;display:grid;grid-template-columns:repeat(4,1fr);gap:20px 6px;scroll-snap-align:start;scroll-snap-stop:always;align-content:start}
 /* compact icon sizing when 4 rows are selected */
 .hw-appgrid[data-rows="4"] .hw-page{gap:12px 6px}
@@ -561,6 +557,9 @@ window.hatchWidget={
 .lock-date{font-size:16px;color:#aaa;margin-top:4px}
 .lock-notifs{margin-top:24px;max-width:85%;display:flex;flex-direction:column;gap:8px}
 .lock-notif{background:rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;font-size:13px;color:#ddd;backdrop-filter:blur(10px)}
+.lock-fp{position:absolute;bottom:110px;width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;animation:lockPulse 2.5s infinite}
+.lock-fp:active{background:rgba(74,143,247,.25);border-color:#4a8ff7;transform:scale(.95)}
+.lock-fp svg{opacity:.8}
 .lock-hint{position:absolute;bottom:60px;font-size:13px;color:#888;animation:lockPulse 2s infinite}
 @keyframes lockPulse{0%,100%{opacity:.5}50%{opacity:1}}
 .android-bottomnav{flex:none;order:9;display:flex;justify-content:space-around;align-items:center;padding:7px 0 9px;background:#000;border-top:1px solid #1f1f23}
@@ -1196,13 +1195,6 @@ window.hatchWidget={
 .sc-htime{font-size:11px;color:#666;flex:none}
 .sc-vdot{width:8px;height:8px;border-radius:50%;background:#3b82f6;flex:none}
 .sc-empty{text-align:center;color:#666;padding:30px;font-size:14px}
-.gal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px}
-.gal-photo{border-radius:10px;overflow:hidden;background:#1a1a1e;position:relative;aspect-ratio:1}
-.gal-photo img{width:100%;height:100%;object-fit:cover}
-.gal-cap{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,.8));padding:12px 8px 6px;display:flex;flex-direction:column}
-.gal-cap b{font-size:11px;color:#fff}
-.gal-cap span{font-size:10px;color:#aaa}
-.gal-empty{text-align:center;color:#666;padding:40px;grid-column:1/-1}
 .sc-bottomnav{margin-top:auto;padding-top:18px;display:flex;justify-content:center}
 .sc-navbtn{display:flex;flex-direction:column;align-items:center;gap:2px;background:#3a2d22;border-radius:24px;padding:12px 36px;color:#e8ded6}
 .sc-navico{font-size:22px;line-height:1}
@@ -2407,7 +2399,6 @@ function normalize(s){
  if(typeof s.wifi==="undefined")s.wifi=true;
  if(!Array.isArray(s.callHistory))s.callHistory=[];
  if(!Array.isArray(s.voicemails))s.voicemails=[];
- if(!Array.isArray(s.photos))s.photos=[];
  if(typeof s.usedNumbers!=="object"||!s.usedNumbers)s.usedNumbers={};
  if(typeof s.nameToNumber!=="object"||!s.nameToNumber)s.nameToNumber={};
  if(s.thiefBattle!==null&&typeof s.thiefBattle!=="object")s.thiefBattle=null;
@@ -2570,65 +2561,6 @@ function ttTrapBack(){
  }catch(e){}
 }
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",ttTrapBack);}else{ttTrapBack();}
-/* App drawer: swipe up from home to open */
-function ttDrawerOpen(){
- var dr=document.getElementById("tt-drawer");
- if(!dr)return;
- dr.hidden=false;
- requestAnimationFrame(function(){dr.classList.add("open");});
- ttDrawerPopulate("");
- var si=document.getElementById("drawer-search");
- if(si){si.value="";si.oninput=function(){ttDrawerPopulate(si.value);};}
-}
-function ttDrawerClose(){
- var dr=document.getElementById("tt-drawer");
- if(!dr)return;
- dr.classList.remove("open");
- setTimeout(function(){dr.hidden=true;},300);
-}
-function ttDrawerPopulate(q){
- var dg=document.getElementById("drawer-grid");
- if(!dg)return;
- q=(q||"").toLowerCase();
- var apps=document.querySelectorAll(".hw-appgrid .android-app");
- var h="";
- for(var i=0;i<apps.length;i++){
-  var a=apps[i];
-  if(a.hidden)continue;
-  var label=a.querySelector(".aa-label");
-  var name=label?label.textContent:"";
-  var keys=a.getAttribute("data-hwkeys")||"";
-  if(q&&name.toLowerCase().indexOf(q)<0&&keys.toLowerCase().indexOf(q)<0)continue;
-  var app=a.getAttribute("data-app");
-  var icon=a.querySelector(".aa-icon").outerHTML;
-  h+='<button type="button" class="android-app" data-act="openapp" data-app="'+app+'">'+icon+'<span class="aa-label">'+name+'</span></button>';
- }
- dg.innerHTML=h||'<div style="color:#888;text-align:center;grid-column:1/-1;padding:20px">No apps found</div>';
-}
-(function(){
- var _dsy=null;
- document.addEventListener("touchstart",function(e){
-  /* swipe up from home screen (not in drawer, not locked) */
-  var ls=document.getElementById("tt-lockscreen");
-  var dr=document.getElementById("tt-drawer");
-  if((ls&&!ls.hidden)||(dr&&!dr.hidden))return;
-  if(typeof S!=="undefined"&&S.view==="home"&&e.touches.length===1)_dsy=e.touches[0].clientY;
- },{passive:true});
- document.addEventListener("touchend",function(e){
-  if(_dsy!==null){
-   var dy=_dsy-e.changedTouches[0].clientY;
-   if(dy>80)ttDrawerOpen();
-  }
-  _dsy=null;
-  /* swipe down on drawer to close */
-  var dr=document.getElementById("tt-drawer");
- },{passive:true});
- /* swipe down on drawer handle to close */
- document.addEventListener("touchstart",function(e){
-  var dr=document.getElementById("tt-drawer");
-  if(dr&&!dr.hidden&&e.touches.length===1)_dsy=e.touches[0].clientY;
- },{passive:true});
-})();
 /* Lock screen: show on load, swipe up to unlock */
 function ttLockShow(){
  var ls=document.getElementById("tt-lockscreen");
@@ -2665,6 +2597,15 @@ function ttLockHide(){
   }
   _sy=null;
  },{passive:true});
+ /* fingerprint tap to unlock */
+ document.addEventListener("click",function(e){
+  var fp=document.getElementById("lock-fp");
+  var ls=document.getElementById("tt-lockscreen");
+  if(fp&&ls&&!ls.hidden&&(e.target===fp||fp.contains(e.target))){
+   fp.style.background="rgba(74,143,247,.35)";
+   setTimeout(ttLockHide,250);
+  }
+ });
  /* show lock on load */
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(ttLockShow,300);});
  else setTimeout(ttLockShow,300);
@@ -2673,7 +2614,7 @@ function ttLockHide(){
 /* auto-fullscreen on first tap if enabled (browsers require user gesture) */
 (function(){var _fsDone=false;function _tryFS(){if(_fsDone)return;_fsDone=true;try{if(typeof S!=="undefined"&&S.fullscreenDefault!==false&&!document.fullscreenElement){var el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(function(){});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}}catch(e){}}document.addEventListener("touchend",_tryFS,{once:true,passive:true});document.addEventListener("click",_tryFS,{once:true});})();
 function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
-var APP_EMOJI={gallery:"🖼️",store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦",tasks:"📋"};
+var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦",tasks:"📋"};
 var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
 function appName(a){if(a==="street")return "Street Deal";if(a==="rep")return "Reputation";if(a==="props")return "My Properties";return a.charAt(0).toUpperCase()+a.slice(1);}
 function save(){if(bridge)bridge.setState(S);}
@@ -3030,9 +2971,6 @@ function tabHeader(tab){
   return '<div class="appnav"><div class="appnav-title"><span class="appnav-leaf">🗺️</span><div><b>Territories</b><span>pick your turf</span></div></div>'
    +'<div class="appnav-pill" style="border-color:'+_ta.color+';color:'+_ta.color+'">'+_ta.name+'</div></div>';
  }
- if(tab==="gallery"){
-  return '<div class="appnav"><div class="appnav-title"><span class="appnav-leaf">🖼️</span><div><b>Gallery</b><span>'+((S.photos||[]).length)+' photos</span></div></div></div>';
- }
  if(tab==="rep"){
   var _ra=terrDef((S.terr&&S.terr.active)||"home");
   return '<div class="appnav"><div class="appnav-title"><span class="appnav-leaf">⭐</span><div><b>Reputation</b><span>turf & heat</span></div></div>'
@@ -3260,7 +3198,6 @@ function render(){
  q(".pane-browser").hidden=battling||!inApp||S.tab!=="browser";
  q(".pane-maps").hidden=battling||!inApp||S.tab!=="maps";
  q(".pane-rep").hidden=battling||!inApp||S.tab!=="rep";
- q(".pane-gallery").hidden=battling||!inApp||S.tab!=="gallery";
  q(".pane-props").hidden=battling||!inApp||S.tab!=="props";
  q(".pane-bank").hidden=battling||!inApp||S.tab!=="bank";
  q(".pane-tasks").hidden=battling||!inApp||S.tab!=="tasks";
@@ -3653,7 +3590,6 @@ function render(){
  if(S.tab==="street"){q(".pane-street").innerHTML=streetHTML();}
  if(S.tab==="maps"){q(".pane-maps").innerHTML=mapsHTML();}
  if(S.tab==="rep"){q(".pane-rep").innerHTML=repHTML();}
- if(S.tab==="gallery"){q(".pane-gallery").innerHTML=galleryHTML();}
  if(S.tab==="props"){q(".pane-props").innerHTML=propsHTML();}
  if(S.tab==="bank"){q(".pane-bank").innerHTML=bankHTML();}
  if(S.tab==="tasks"){q(".pane-tasks").innerHTML=todoHTML();todoSwipeInit();}
@@ -3892,19 +3828,6 @@ function mapsHTML(){
    +'<div class="gps-scale">500 ft</div></div>';
   return h;
  }
- function galleryHTML(){
-  var h=tabHeader("gallery");
-  h+='<div class="gal-grid">';
-  var photos=(S.photos||[]).slice().reverse();
-  if(!photos.length)h+='<div class="gal-empty">No photos yet.<br>Harvest some plants!</div>';
-  photos.forEach(function(p){
-   var pr=PRODUCTS[p.strain];
-   var img=STRAIN_IMGS[p.strain]||"";
-   h+='<div class="gal-photo"><img src="'+img+'" alt="'+escHtml(pr.name)+'"><div class="gal-cap"><b>'+escHtml(pr.name)+'</b><span>'+p.grams+'g • '+fmtMsgDay(p.t)+'</span></div></div>';
-  });
-  h+='</div>';
-  return h;
- }
  function repHTML(){
   // Reputation app: all territory management (cards with heat, set active, bribe)
   var active=(S.terr&&S.terr.active)||"home";
@@ -4074,10 +3997,6 @@ function doHarvest(pi,si){
  S.stash[p.strain]+=take;
  pr.slots[si]=null;
  S.stats.harvested++;
- /* gallery photo */
- if(!S.photos)S.photos=[];
- S.photos.push({strain:p.strain,grams:take,t:Date.now()});
- if(S.photos.length>100)S.photos=S.photos.slice(-100);
  var _hx=addXP(8*PRODUCTS[p.strain].tier);
  if(!_hx)S.msg="Harvested "+take+"g of "+PRODUCTS[p.strain].name+".";
  save();render();
@@ -5889,9 +5808,9 @@ root.addEventListener("click",function(e){
   return;
  }
  if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);ttPushHist();save();render();return;}
- if(a==="openapp"){closeFolder();try{ttDrawerClose();}catch(e){}if(S.battle||S.thiefBattle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";if(b.dataset.mv)S.msgView=b.dataset.mv;navPush(_ap);ttPushHist();var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
+ if(a==="openapp"){closeFolder();if(S.battle||S.thiefBattle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";if(b.dataset.mv)S.msgView=b.dataset.mv;navPush(_ap);ttPushHist();var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
  if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle){S.msg="Finish the fight!";save();render();return;}navPop();save();render();return;}
- if(a==="android-home"){try{ttDrawerClose();}catch(e){}if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
+ if(a==="android-home"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
  if(a==="android-recents"){var _rx=q(".android-recents");if(_rx)_rx.hidden=!_rx.hidden;render();return;}
  if(a==="shade-open"){openShade();return;}
  if(a==="shade-close"){closeShade();return;}
