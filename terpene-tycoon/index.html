@@ -1730,7 +1730,8 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .prop-plant.sel .pp-gbar,.prop-plant.sel .pp-wbar{display:block}
 .prop-plant .pp-gbar i{display:block;height:100%;background:#4ade80}
 .prop-plant .pp-wbar i{display:block;height:100%;background:#38bdf8}
-.prop-actions{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:14px;padding:10px 12px}
+.prop-actions{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:100;background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:14px;padding:16px;max-width:90vw;max-height:80vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.pa-close{position:absolute;top:8px;right:12px;background:transparent;border:0;font-size:24px;color:var(--hatch-widget-muted);cursor:pointer;line-height:1;padding:4px}
 .pa-title{font-weight:800;font-size:14px;margin-bottom:8px}
 .pa-btns{display:flex;gap:8px}
 .pa-btns button{flex:1;padding:10px;border-radius:10px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface-muted);color:var(--hatch-widget-text);font-weight:800;font-size:14px;cursor:pointer}
@@ -3152,7 +3153,7 @@ function propsHTML(){
  var sel=S.propSel;
  if(sel&&sel.pi===pi){
   var sp=pr.slots[sel.si];
-  h+='<div class="prop-actions">';
+  h+='<div class="prop-actions"><button type="button" class="pa-close" data-act="prop-sel-clear" aria-label="Close">&times;</button>';
   if(!sp){
    h+='<div class="pa-title">Empty pot — plant a seed:</div><div class="pa-strains">';
    GROWKEYS.forEach(function(k){
@@ -4775,6 +4776,7 @@ root.addEventListener("click",function(e){
  if(a==="amt"){S.amt=+b.dataset.amt;save();render();return;}
  if(a==="prop-view"){S.propView=b.dataset.pid;S.propSel=null;save();render();return;}
  if(a==="prop-back"){S.propView=null;S.propSel=null;save();render();return;}
+ if(a==="prop-sel-clear"){S.propSel=null;save();render();return;}
  if(a==="prop-plant"){S.propSel={pi:+b.dataset.pi,si:+b.dataset.si};save();render();return;}
  if(a==="prop-waterall"){var _pw=S.props.filter(function(x){return x.id===b.dataset.pid;})[0];if(_pw){_pw.slots.forEach(function(p){if(p)p.water=100;});}S.msg="Everything watered.";save();render();return;}
  if(a==="prop-harvestall"){var _ph=S.props.filter(function(x){return x.id===b.dataset.pid;})[0];if(_ph){var _phi=S.props.indexOf(_ph);_ph.slots.forEach(function(p,si){if(p&&p.growth>=100)doHarvest(_phi,si);});}save();render();return;}
