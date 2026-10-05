@@ -6142,10 +6142,8 @@ root.addEventListener("change",function(e){
   render();
  }
 });
-/* Samsung notification shade: drag down from the status bar to pull it open
-   (follows your finger), drag up on the shade to push it closed.
-   Velocity fling: fast swipe down opens fully, fast swipe up closes.
-   Tap = toggle. List scrolling is never hijacked. */
+/* Notification shade: tap center of status bar to toggle.
+   Drag up on the shade to push it closed. List scrolling is never hijacked. */
 (function(){
  var sb=q(".android-statusbar"),sh=q(".notif-shade"),sc=q(".shade-scrim");
  if(!sb||!sh)return;
@@ -6207,12 +6205,19 @@ root.addEventListener("change",function(e){
   if(shadeOpen){sh.classList.add("open");}else{sh.classList.remove("open");sh.hidden=true;if(sc)sc.hidden=true;}
  }
  function inList(t){return !!(t&&t.closest&&t.closest(".shade-list"));}
- // status bar: drag down to open
- sb.addEventListener("touchstart",function(e){var t=e.touches[0];begin(t.clientY,Date.now(),"open");},{passive:true});
- sb.addEventListener("touchmove",function(e){var t=e.touches[0];move(t.clientY,Date.now());},{passive:true});
- sb.addEventListener("touchend",function(e){var t=e.changedTouches[0];done(t.clientY,Date.now());},{passive:true});
- sb.addEventListener("touchcancel",cancel,{passive:true});
- sb.addEventListener("mousedown",function(e){begin(e.clientY,Date.now(),"open");});
+ // status bar: tap center to toggle shade (no drag)
+ sb.addEventListener("click",function(e){
+  /* only toggle when tapping the center area (not clock or icons) */
+  var r=sb.getBoundingClientRect();
+  var x=e.clientX-r.left;
+  if(x>r.width*0.25&&x<r.width*0.75)toggleShade();
+ });
+ sb.addEventListener("touchend",function(e){
+  var t=e.changedTouches[0];
+  var r=sb.getBoundingClientRect();
+  var x=t.clientX-r.left;
+  if(x>r.width*0.25&&x<r.width*0.75)toggleShade();
+ },{passive:true});
  // shade: drag up to close (never hijack the scrollable list)
  sh.addEventListener("touchstart",function(e){if(inList(e.target))return;var t=e.touches[0];begin(t.clientY,Date.now(),"close");},{passive:true});
  sh.addEventListener("touchmove",function(e){var t=e.touches[0];move(t.clientY,Date.now());},{passive:true});
