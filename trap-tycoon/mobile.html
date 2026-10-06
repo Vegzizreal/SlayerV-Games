@@ -171,9 +171,9 @@ body.electron-phone #ewin-controls{display:flex}
 .android-home{animation:appOpen .25s cubic-bezier(.2,.9,.3,1)}
 /* ===== Android OS shell ===== */
 .pg-head,.pg-tabs{display:none!important}
-.android-statusbar{flex:none;order:-3;display:flex;gap:5px;align-items:center;padding:10px 16px 6px;background:transparent;color:#fff;font-size:13px;font-weight:500;font-family:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.2px;position:relative;z-index:60}
+.android-statusbar{flex:none;order:-3;display:flex;gap:5px;align-items:center;padding:8px 16px 6px;background:transparent;color:#fff;font-size:13px;font-weight:500;font-family:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.2px;position:relative;z-index:60}
 .sb-group{display:flex;gap:5px;align-items:center;flex:none}
-.sb-notch{flex:1 1 auto;min-width:44px}
+.sb-notch{flex:1 1 auto;min-width:44px}body.capacitor-fullscreen .sb-notch{flex:0 0 auto;width:110px;height:28px;background:#000;border-radius:16px;margin:0 auto;position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}body.capacitor-fullscreen .sb-notch::after{content:"";position:absolute;right:18px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#1a2332 0%,#0a0e14 60%,#000 100%);box-shadow:inset 0 1px 2px rgba(0,0,0,.8)}
 .android-statusbar .android-clock{font-weight:500;font-size:13px}
 .sb-stats{display:flex;gap:7px;align-items:center;flex:1;justify-content:center;overflow:hidden}
 .android-sicons{display:flex;gap:5px;align-items:center;flex:none}
@@ -777,6 +777,7 @@ body.electron-phone #ewin-controls{display:flex}
 .bw-dphoto{height:180px;position:relative;display:flex;align-items:flex-end;padding:16px}
 .bw-dback{position:absolute;top:12px;left:12px;background:#000;border:1px solid #00ff41;color:#00ff41;border-radius:50%;width:36px;height:36px;font-size:18px;cursor:pointer}
 .bw-price.big{font-size:20px}
+.bw-dbody{padding:16px}
 .bw-addr.big{font-size:22px}
 .bw-dspecs{display:flex;gap:16px;margin:12px 0}
 .bw-dspecs div{text-align:center}
@@ -2134,6 +2135,25 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 })();
 </script>
 <script>
+// Electron hatchWidget shim - uses localStorage for persistence
+(function(){
+  if(window.hatchWidget) return;
+  var KEY='tt-electron-save';
+  window.hatchWidget={
+    getState:function(def){
+      try{
+        var raw=localStorage.getItem(KEY);
+        if(raw) return JSON.parse(raw);
+      }catch(e){}
+      return JSON.parse(JSON.stringify(def));
+    },
+    setState:function(s){
+      try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){}
+    }
+  };
+})();
+</script>
+<script>
 (function(){
 var root=(document.currentScript&&document.currentScript.parentElement)||document;
 /* real phone battery display */
@@ -2157,6 +2177,21 @@ function updatePhoneBattery(){
 }
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",updatePhoneBattery);}else{updatePhoneBattery();}
 /* show cellular bars vs wifi based on connection type */
+function updateConnIcon(){
+ try{
+  var bars=document.getElementById("sb-cellbars");
+  var wifi=document.getElementById("sb-wifi");
+  if(!bars||!wifi)return;
+  var isCell=false;
+  if(navigator.connection){
+   var c=navigator.connection;
+   if(c.type==="cellular")isCell=true;
+   else if(c.effectiveType&&(c.effectiveType.indexOf("2g")>=0||c.effectiveType==="3g"||c.effectiveType==="4g"))isCell=true;
+  }
+  bars.style.display=isCell?"":"none";
+  wifi.style.display=isCell?"none":"";
+ }catch(e){}
+}
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",updateConnIcon);}else{updateConnIcon();}
 if(navigator.connection&&navigator.connection.addEventListener){navigator.connection.addEventListener("change",updateConnIcon);}
 function q(s){return root.querySelector(s);}
@@ -2372,7 +2407,7 @@ var RECIPES={
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
-var GAME_VER="BETA-0.018.20";
+var GAME_VER="BETA-0.018.25";
 var GAME_UPDATED="Oct 5, 2026 · 7:30 PM";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
@@ -2913,31 +2948,14 @@ if(_isElectron){document.body.classList.add('electron-phone');var _wc=document.c
 /* right-click + drag anywhere to move window */
 document.addEventListener('contextmenu',function(e){e.preventDefault();});
 var _rdrag=null;
-document.addEventListener('mousedown',function(e){
-  if(e.button===2){_rdrag={x:e.screenX,y:e.screenY};}
-});
-document.addEventListener('mousemove',function(e){if(_rdrag&&window.ttDesktop&&ttDesktop.dragMove){ttDesktop.dragMove(e.screenX-_rdrag.x,e.screenY-_rdrag.y);_rdrag.x=e.screenX;_rdrag.y=e.screenY;}});
-document.addEventListener('mouseup',function(e){_rdrag=null;});
+document.addEventListener('mousedown',function(e){if(e.button===2){_rdrag={x:e.screenX,y:e.screenY};}});
+document.addEventListener('mousemove',function(e){if(_rdrag&&window.ttDesktop&&ttDesktop.dragMove){ttDesktop.dragMove(e.screenX-_rdrag.x,e.screenY-_rdrag.y);_rdrag={x:e.screenX,y:e.screenY};}});
+document.addEventListener('mouseup',function(e){if(e.button===2)_rdrag=null;});
 return;}
 var _fsDone=false;function _tryFS(){if(_fsDone)return;_fsDone=true;try{if(typeof S!=="undefined"&&S.fullscreenDefault!==false&&!document.fullscreenElement){var el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(function(){});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}}catch(e){}}document.addEventListener("touchend",_tryFS,{once:true,passive:true});document.addEventListener("click",_tryFS,{once:true});})();
+function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
 var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦",tasks:"📋"};
 var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
-function updateConnIcon(){
- try{
-  var bars=document.getElementById("sb-cellbars");
-  var wifi=document.getElementById("sb-wifi");
-  if(!bars||!wifi)return;
-  var isCell=false;
-  if(navigator.connection){
-   var c=navigator.connection;
-   if(c.type==="cellular")isCell=true;
-   else if(c.effectiveType&&(c.effectiveType.indexOf("2g")>=0||c.effectiveType==="3g"||c.effectiveType==="4g"))isCell=true;
-  }
-  bars.style.display=isCell?"":"none";
-  wifi.style.display=isCell?"none":"";
- }catch(e){}
-}
-function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
 function appName(a){if(a==="street")return "Street Deal";if(a==="rep")return "Reputation";if(a==="props")return "My Properties";return a.charAt(0).toUpperCase()+a.slice(1);}
 function save(){if(bridge)bridge.setState(S);}
 if(bridge)window.addEventListener("hatch-widget-state",function(e){if(e.detail&&e.detail.state){S=normalize(e.detail.state);}});
@@ -7336,7 +7354,6 @@ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
 window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound};
 })();
 </script>
-
 <style>
 /* APK fullscreen: fill to rounded corners, no 480px constraint */
 body.capacitor-fullscreen .pg{max-width:none!important;margin:0!important;border-radius:0!important;border:0!important;padding:0!important}
@@ -7344,5 +7361,40 @@ body.capacitor-fullscreen .shade-scrim,body.capacitor-fullscreen .notif-shade,bo
 body.capacitor-fullscreen{padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
 </style>
 <script>
-if(window.Capacitor&&window.Capacitor.isNative)document.body.classList.add('capacitor-fullscreen');
+(function(){
+  function isCap(){
+    if(window.Capacitor)return true;
+    try{
+      var p=window.location.protocol;
+      if(p==='capacitor:'||p==='ionic:')return true;
+      if(p==='https:'&&window.location.hostname==='localhost')return true;
+    }catch(e){}
+    return /Capacitor/.test(window.navigator.userAgent||'');
+  }
+  function apply(){document.body.classList.add('capacitor-fullscreen');}
+  if(isCap())apply();
+  else{
+    var n=0;var iv=setInterval(function(){
+      if(isCap()){apply();clearInterval(iv);}
+      else if(++n>20)clearInterval(iv);
+    },250);
+    document.addEventListener('deviceready',apply);
+  }
+})();
+</script>
+<script>
+/* Desktop update hotkey: listen for shell trigger (Electron only) */
+(function(){
+  try{
+    if(window.electronAPI&&window.electronAPI.onTriggerUpdate){
+      window.electronAPI.onTriggerUpdate(function(){
+        if(typeof ttCheckUpdate==='function'){
+          ttCheckUpdate(function(hasUpdate){
+            if(hasUpdate&&typeof ttShowReup==='function')ttShowReup();
+          });
+        }
+      });
+    }
+  }catch(e){}
+})();
 </script>
