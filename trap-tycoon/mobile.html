@@ -1925,6 +1925,8 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 }
 /* ===== TRAP TYCOON v19: stash tab ===== */
 .stash-sum{margin-bottom:10px}
+.stash-topbar{display:flex;justify-content:center;padding:12px 16px 4px}
+.stash-topbar-inner{text-align:center;background:var(--hatch-widget-surface,#1c1c1e);border:1px solid rgba(120,120,128,.25);border-radius:12px;padding:10px 18px;min-width:260px}
 .stashrow{display:flex;align-items:center;gap:8px;padding:9px 6px;border-top:1px solid var(--hatch-widget-border)}
 .stashrow .d2-mid{flex:1;min-width:0}
 .stashrow .d2-name{font-weight:800;font-size:16px;color:var(--hatch-widget-text)}
@@ -2407,7 +2409,7 @@ var RECIPES={
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
-var GAME_VER="BETA-0.018.71";
+var GAME_VER="BETA-0.018.73";
 var GAME_UPDATED="Oct 5, 2026 · 7:30 PM";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
@@ -4979,7 +4981,7 @@ function todoSwipeInit(){
 }
 function todoHTML(){
  var tv=S.todoView||"tasks";
- var h='<div class="todo-tabs"><button type="button" class="todo-tab'+(tv==="tasks"?" on":"")+'" data-act="todoview" data-v="tasks">Orders</button><button type="button" class="todo-tab'+(tv==="stash"?" on":"")+'" data-act="todoview" data-v="stash">Stash</button></div>';
+ var h='<div class="todo-tabs"><button type="button" class="todo-tab'+(tv==="stash"?" on":"")+'" data-act="todoview" data-v="stash">Stash</button><button type="button" class="todo-tab'+(tv==="tasks"?" on":"")+'" data-act="todoview" data-v="tasks">Orders</button></div>';
  if(tv==="stash"){
   /* render stash content without its own header */
   var _sh=stashHTML();
@@ -5270,7 +5272,7 @@ function notesSearchBar(){
  return '<div class="notes-search"><span>🔍</span><input type="text" data-nsearch="1" placeholder="Search" value="'+escHtml(NOTESQ||"")+'" autocomplete="off"></div>';
 }
 function stashHTML(){
- var view=(S.notesView==="inprogress"||S.notesView==="stash"||S.notesView==="seeds")?S.notesView:"folders";
+ var view="unified";
  var sd=stashDealer(),d=sd.d;
  var bActive=buffActive(),bpct=buffPct();
  function su(k,base){var u=base;if(bActive)u=Math.round(u*S.buffMult);return u;}
@@ -5284,8 +5286,8 @@ function stashHTML(){
   if(j>0)val+=Math.floor(su(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9))*j);
  });
  var pct=Math.min(100,Math.round(tot/Math.max(1,S.stashCap)*100));
- var sum='<div class="note-pin"><div class="stash-sum"><div class="sdesc" style="font-size:15.5px"><b style="color:var(--hatch-widget-text)">'+tot+'g</b> / '+S.stashCap+'g &middot; worth <b style="color:#4ade80">'+money(val)+'</b> at '+d.name+'\'s prices'+(bActive?' <span class="bufftag">+'+bpct+'%</span>':"")+'</div>'
-  +'<div class="heat-bar" style="margin-top:6px"><i style="width:'+pct+'%"></i></div></div></div>';
+ var sum='<div class="stash-topbar"><div class="stash-topbar-inner"><div class="sdesc" style="font-size:15.5px"><b style="color:var(--hatch-widget-text)">'+tot+'g</b> / '+S.stashCap+'g &middot; worth <b style="color:#4ade80">'+money(val)+'</b> at '+d.name+'\'s prices'+(bActive?' <span class="bufftag">+'+bpct+'%</span>':"")+'</div>'
+  +'<div class="heat-bar" style="margin-top:6px;max-width:280px;margin-left:auto;margin-right:auto"><i style="width:'+pct+'%"></i></div></div></div>';
  var todos=notesTodosData(),cards=notesStashCards(d,su),seeds=notesSeedCards();
  var gN=todos.filter(function(t){return t.tag==="GROW";}).length;
  var cN=todos.filter(function(t){return t.tag==="LAB";}).length;
@@ -5293,20 +5295,12 @@ function stashHTML(){
  var q=(NOTESQ||"").toLowerCase();
  function match(s){return !q||String(s||"").toLowerCase().indexOf(q)>=0;}
  var h='<div class="notes-ios">';
- if(view==="folders"){
-  h+='<div class="notes-ios-head"><span class="notes-ios-title">Folders</span><button type="button" class="notes-ios-edit" data-act="notes-edit">Edit</button></div>';
-  h+='<div class="notes-ios-sec">Grow Op</div>';
-  h+='<div class="notes-folder">'
-   +notesFolderRow("inprogress","In Progress",todos.length+seeds.length,gN+" growing · "+cN+" cooking · "+seeds.length+" seeds")
-   +notesFolderRow("stash","Stash",cards.length,"Worth "+money(val))
-   +'</div>';
-  h+='<div class="notes-ios-sec">Summary</div>'+sum;
-  h+=notesSearchBar();
- }else{
-  var title=view==="inprogress"?"In Progress":"Stash";
-  h+='<button type="button" class="notes-back" data-act="notesview" data-v="folders"><span class="notes-bchev">‹</span>Folders</button>';
+ /* unified stash page: summary bar on top, then in-progress, then stash cards */
+ h+=sum;
+ {
+  var title="In Progress";
   h+='<div class="notes-list-title">'+title+'</div>';
-  if(view==="inprogress"){
+  {
    /* smart garden button: harvest ready > water thirsty > all tended > hidden */
    var _readyN=todos.filter(function(t){return t.tag==="GROW"&&t.done;}).length;
    var _thirstyN=0;
@@ -5354,24 +5348,13 @@ function stashHTML(){
     }).join("");
    }
    if(!ft.length&&!fs.length&&!_trk.length)h+='<div class="notes-empty">Nothing in progress.</div>';
-  }else if(view==="stash"){
-   h+=sum;
-   var fc=cards.filter(function(c){return match(c.search);});
-   h+=fc.length?fc.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing stashed yet — harvest some bud first.")+'</div>';
-   h+='<div class="sdesc" style="margin:10px 18px 0">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
-  }else{
-   var _taskStrains={};
-   (S.tasks||[]).forEach(function(t){if(t&&t.k&&PRODUCTS[t.k])_taskStrains[t.k]=1;});
-   var _hasTaskSeeds=Object.keys(_taskStrains).some(function(k){return (S.seeds[k]||0)>0;});
-   h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="notes-plantall"'+(seeds.length?"":" disabled")+'>Auto Plant All</button>';
-   if(Object.keys(_taskStrains).length){
-    h+='<button type="button" class="notes-abtn" data-act="notes-planttasks"'+(_hasTaskSeeds?"":" disabled")+'>Plant Task Seeds</button>';
-   }
-   h+='</div>';
-   var fs=seeds.filter(function(c){return match(c.search);});
-   h+=fs.length?fs.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"No seed packets.")+'</div>';
   }
-  if(view!=="inprogress")h+=notesSearchBar();
+  /* stash inventory cards */
+  h+='<div class="notes-list-title" style="margin-top:14px">Stash</div>';
+  var fc=cards.filter(function(c){return match(c.search);});
+  h+=fc.length?fc.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing stashed yet — harvest some bud first.")+'</div>';
+  h+='<div class="sdesc" style="margin:10px 18px 0">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
+  h+=notesSearchBar();
  }
  return h+'</div>';
 }
@@ -7517,8 +7500,7 @@ function ttGoBack(){
       return;
     }
     // Notes: sub-view -> folders (default)
-    if(S.notesView&&S.notesView!=='folders'){
-      S.notesView='folders';
+    if(false){
       if(typeof window.ttSave==='function')window.ttSave();
       if(typeof window.ttRender==='function')window.ttRender();
       return;
