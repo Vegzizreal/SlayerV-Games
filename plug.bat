@@ -28,5 +28,5 @@ echo  [+] Code accepted. Unlocking...
 ping -n 2 127.0.0.1 ^>nul
 echo  [+] Welcome back.
 ping -n 2 127.0.0.1 ^>nul
-start "" "https://vegzizreal.github.io/SlayerV-Games/terpene-tycoon/?src=terminal&unlock=%code%"
+start "" "https://vegzizreal.github.io/SlayerV-Games/trap-tycoon/?src=terminal&unlock=%code%"
 exit
