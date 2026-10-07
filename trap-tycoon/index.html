@@ -183,7 +183,7 @@ window.hatchWidget={
     <path d="M39 24c0 7-1.5 12-4 17"/>
    </svg>
   </div>
-  <div class="lock-hint">Swipe up or tap fingerprint to unlock</div>
+  <div class="lock-hint">Tap fingerprint to unlock</div>
   <div class="lock-sync" style="margin-top:18px;width:80%;max-width:280px">
    <input id="lock-synccode" maxlength="6" placeholder="SYNC CODE" autocomplete="off"
     style="width:100%;padding:12px;font-size:18px;text-align:center;letter-spacing:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;box-sizing:border-box;font-family:monospace;text-transform:uppercase">
@@ -196,6 +196,16 @@ window.hatchWidget={
  <div class="android-bottomnav" hidden><button type="button" data-act="android-back" aria-label="Back">&#9664;</button><button type="button" data-act="android-home" aria-label="Home">&#9679;</button><button type="button" data-act="android-recents" aria-label="Recents">&#9632;</button></div>
 </div>
 <style>
+html,body{overflow:hidden;margin:0;padding:0;background:transparent!important;-webkit-user-select:none;user-select:none}
+input,textarea{user-select:text;-webkit-user-select:text}
+/* Electron phone frame: realistic rounded phone edges, theme-aware */
+body.electron-phone .pg{border-radius:38px;border:3px solid #1a1a1e;overflow:hidden;background:var(--hatch-widget-bg)}
+body.electron-phone .pg .tab-status,body.electron-phone .pg .android-statusbar{-webkit-app-region:drag}
+body.electron-phone .pg button,body.electron-phone .pg input,body.electron-phone .pg a{-webkit-app-region:no-drag}
+#ewin-controls{position:fixed;top:14px;right:18px;z-index:99999;display:none;gap:8px}
+body.electron-phone #ewin-controls{display:flex}
+#ewin-controls button{width:28px;height:28px;border-radius:50%;border:1px solid var(--hatch-widget-border);background:rgba(20,20,23,.85);color:var(--hatch-widget-muted);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px)}
+#ewin-controls button:hover{background:var(--hatch-widget-surface);color:var(--hatch-widget-text)}
 .pg{box-sizing:border-box;width:100%;max-width:480px;margin:0 auto;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--hatch-widget-text);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility}
 .pg *{box-sizing:border-box}
 /* Fixed app shell: header stays put, only panes scroll */
@@ -218,9 +228,9 @@ window.hatchWidget={
 .android-home{animation:appOpen .25s cubic-bezier(.2,.9,.3,1)}
 /* ===== Android OS shell ===== */
 .pg-head,.pg-tabs{display:none!important}
-.android-statusbar{flex:none;order:-3;display:flex;gap:5px;align-items:center;padding:10px 16px 6px;background:transparent;color:#fff;font-size:13px;font-weight:500;font-family:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.2px;position:relative;z-index:60}
+.android-statusbar{flex:none;order:-3;display:flex;gap:5px;align-items:center;padding:8px 16px 6px;background:transparent;color:#fff;font-size:13px;font-weight:500;font-family:Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;letter-spacing:.2px;position:relative;z-index:60}
 .sb-group{display:flex;gap:5px;align-items:center;flex:none}
-.sb-notch{flex:1 1 auto;min-width:44px}
+.sb-notch{flex:1 1 auto;min-width:44px}body.capacitor-fullscreen .sb-notch{flex:0 0 auto;width:110px;height:28px;background:#000;border-radius:16px;margin:0 auto;position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06)}body.capacitor-fullscreen .sb-notch::after{content:"";position:absolute;right:18px;top:50%;transform:translateY(-50%);width:10px;height:10px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#1a2332 0%,#0a0e14 60%,#000 100%);box-shadow:inset 0 1px 2px rgba(0,0,0,.8)}
 .android-statusbar .android-clock{font-weight:500;font-size:13px}
 .sb-stats{display:flex;gap:7px;align-items:center;flex:1;justify-content:center;overflow:hidden}
 .android-sicons{display:flex;gap:5px;align-items:center;flex:none}
@@ -443,10 +453,10 @@ window.hatchWidget={
 .notif-shade.open{transform:translate(-50%,0)}
 .notif-shade[hidden]{display:none}
 /* ===== Heads-up message banner (Android style) ===== */
-.heads-up{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 10px);width:min(92%,440px);z-index:80;background:rgba(28,28,36,.97);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:10px 14px;display:flex;gap:10px;align-items:center;box-shadow:0 12px 40px rgba(0,0,0,.55);transform:translate(-50%,-160%);transition:transform .38s cubic-bezier(.2,.9,.25,1);cursor:pointer}
+.heads-up{position:fixed;left:50%;top:calc(env(safe-area-inset-top,0px) + 10px);width:min(92%,440px);z-index:80;background:rgba(28,28,36,.97);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.14);border-radius:10px;padding:4px 10px;display:flex;gap:6px;align-items:center;box-shadow:0 12px 40px rgba(0,0,0,.55);transform:translate(-50%,-160%);transition:transform .38s cubic-bezier(.2,.9,.25,1);cursor:pointer}
 .heads-up.show{transform:translate(-50%,0)}
 .heads-up[hidden]{display:none}
-.hu-icon{flex:none;width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#4a8ff7,#2563eb);display:flex;align-items:center;justify-content:center}
+.hu-icon{flex:none;width:20px;height:20px;border-radius:50%;background:linear-gradient(135deg,#4a8ff7,#2563eb);display:flex;align-items:center;justify-content:center}
 .hu-body{flex:1;min-width:0}
 .hu-name{display:block;font-weight:800;font-size:clamp(12px,3.4vw,14px);color:#fff}
 .hu-text{display:block;font-size:clamp(11px,3.2vw,13px);color:rgba(255,255,255,.72);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1173,7 +1183,7 @@ window.hatchWidget={
 .msg-order-btns .msg-order-no{flex:0 0 auto;width:auto;background:transparent;border:1px solid rgba(255,255,255,.25);color:rgba(255,255,255,.75);border-radius:16px;padding:7px 12px;font-size:13px;font-weight:600}
 .pg[data-theme="light"] .msg-order-btns .msg-order-no{border-color:rgba(0,0,0,.25);color:rgba(0,0,0,.65)}
 /* Tasks app */
-.todo-tabs{display:flex;gap:8px;padding:12px 16px 0}
+.todo-tabs{display:flex;gap:8px;padding:12px 16px 8px;position:sticky;top:0;z-index:50;background:var(--hatch-widget-bg,#000)}
 .todo-tab{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:10px;font-size:14px;font-weight:600;cursor:pointer}
 .todo-tab.on{background:#8b5cf6;border-color:#8b5cf6}
 .drow2.bestprice{border:1px solid #4ade80;background:rgba(74,222,128,.06)}
@@ -1185,7 +1195,7 @@ window.hatchWidget={
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed:disabled{opacity:.4;cursor:not-allowed}
 .tk-need{color:#f59e0b;font-size:13px;font-weight:600}
-.tk-empty{text-align:center;color:rgba(255,255,255,.55);padding:48px 20px;font-size:14px;line-height:1.7}
+.tk-empty{text-align:center;color:rgba(255,255,255,.92);padding:48px 20px;font-size:17px;line-height:1.7;font-weight:600}
 .tk-card{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:14px;padding:14px;margin:10px 4px}
 .tk-hd{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#fff;margin-bottom:8px}
 .tk-hd span{font-size:11px;color:rgba(255,255,255,.5)}
@@ -1196,7 +1206,7 @@ window.hatchWidget={
 .tk-fulfill{background:#25d366;color:#fff}
 .tk-fulfill:disabled{opacity:.45;cursor:default}
 .tk-dismiss{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
-.pg[data-theme="light"] .todo-tabs{display:flex;gap:8px;padding:12px 16px 0}
+.pg[data-theme="light"] .todo-tabs{display:flex;gap:8px;padding:12px 16px 8px;position:sticky;top:0;z-index:50;background:#fff}
 .todo-tab{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:10px;font-size:14px;font-weight:600;cursor:pointer}
 .todo-tab.on{background:#8b5cf6;border-color:#8b5cf6}
 .drow2.bestprice{border:1px solid #4ade80;background:rgba(74,222,128,.06)}
@@ -1208,7 +1218,7 @@ window.hatchWidget={
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed:disabled{opacity:.4;cursor:not-allowed}
 .tk-need{color:#f59e0b;font-size:13px;font-weight:600}
-.tk-empty{color:rgba(0,0,0,.5)}
+.pg[data-theme="light"] .tk-empty{color:rgba(0,0,0,.5)}
 .pg[data-theme="light"] .tk-hd{color:#111}
 .pg[data-theme="light"] .tk-hd span{color:rgba(0,0,0,.45)}
 .pg[data-theme="light"] .tk-body{color:rgba(0,0,0,.8)}
@@ -1972,6 +1982,8 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 }
 /* ===== TRAP TYCOON v19: stash tab ===== */
 .stash-sum{margin-bottom:10px}
+.stash-topbar{display:flex;justify-content:center;padding:12px 16px 4px}
+.stash-topbar-inner{text-align:center;background:var(--hatch-widget-surface,#1c1c1e);border:1px solid rgba(120,120,128,.25);border-radius:12px;padding:10px 18px;min-width:260px}
 .stashrow{display:flex;align-items:center;gap:8px;padding:9px 6px;border-top:1px solid var(--hatch-widget-border)}
 .stashrow .d2-mid{flex:1;min-width:0}
 .stashrow .d2-name{font-weight:800;font-size:16px;color:var(--hatch-widget-text)}
@@ -2416,7 +2428,7 @@ var RECIPES={
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
-var GAME_VER="BETA-0.018.11";
+var GAME_VER="BETA-0.018.76";
 var GAME_UPDATED="Oct 5, 2026 · 7:30 PM";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
@@ -2453,6 +2465,30 @@ var CHANGELOG=[
  {v:"BETA-0.003",ts:"Sep 29, 2026",t:"Roomier layout",d:"More space between everything so the game is easier on the eyes."},
  {v:"BETA-0.002",ts:"Sep 29, 2026",t:"Bigger screens",d:"The game fills up big screens now, and buttons are easier to tap on phones."},
  {v:"BETA-0.001",ts:"Sep 28, 2026",t:"Dark look + auto-save",d:"New dark style. Your game saves itself as you play — no need to remember."}
+];
+
+var GAME_FEATURES=[
+ {c:"Stealth",t:"SIM card stealth icon",d:"A tiny SIM card hides in your status bar. Tap to open the game, hold and drag to move it anywhere."},
+ {c:"Stealth",t:"12-hour lock screen clock",d:"The lock screen shows time in 12-hour format with AM/PM."},
+ {c:"Stealth",t:"Fingerprint unlock",d:"Tap the fingerprint to unlock. No swipe needed."},
+ {c:"Display",t:"Fullscreen edge-to-edge",d:"The game fills the entire screen on modern phones with rounded corners."},
+ {c:"Gameplay",t:"Grow operation",d:"Plant strains, manage grow slots, harvest your product. Fertilize for better yields."},
+ {c:"Gameplay",t:"Street dealing",d:"Sell to customers on the street. Manage risk vs reward with heat levels."},
+ {c:"Gameplay",t:"Reputation system",d:"Build your rep to unlock new territories and better prices."},
+ {c:"Gameplay",t:"Territory control",d:"Six territories from Home base to Uptown. Each has preferred products for bonus cash."},
+ {c:"Gameplay",t:"Property management",d:"Buy and manage properties including the Emerald Palace with 34 grow slots."},
+ {c:"Gameplay",t:"Level progression",d:"Level up to unlock new products including Ecstasy in Single, Double and Triple Stacks."},
+ {c:"Phone",t:"In-game smartphone",d:"Full phone UI with home screen, app icons, and navigation."},
+ {c:"Phone",t:"Messages",d:"Chat with customers using quick-reply options. Blue chat bubbles."},
+ {c:"Phone",t:"Contacts",d:"Manage customers and secret contacts."},
+ {c:"Phone",t:"Dialer",d:"Real Android-style phone keypad."},
+ {c:"Phone",t:"Notes/Stash app",d:"Track inventory, growing plants, and cooking batches with progress bars."},
+ {c:"Phone",t:"Maps",d:"View your territory as a GPS map."},
+ {c:"Phone",t:"Trap Hotline",d:"Neon green news feed with breaking updates."},
+ {c:"System",t:"Auto-save",d:"Your progress saves automatically."},
+ {c:"System",t:"Day/night cycle",d:"The game world changes with time of day."},
+ {c:"System",t:"Heat system",d:"Dealing draws heat. Bribe cops or lay low to cool down."},
+ {c:"System",t:"Playtime tracking",d:"Stats screen shows your total active playtime."},
 ];
 var LEVEL_TIPS={
  1:["Water often — dry plants stall completely","Harvest at 100% for the full yield","Sell Sour D to Corner Carl and build your cash","The Stash tab holds every bag you own"],
@@ -2794,7 +2830,7 @@ function ttLockShow(){
 }
 function ttLockTick(){
  var lt=document.getElementById("lock-time"),ld=document.getElementById("lock-date");
- if(lt){try{var d=new Date();lt.textContent=d.getHours()+":"+String(d.getMinutes()).padStart(2,"0");}catch(e){}}
+ if(lt){try{var d=new Date();var _h=d.getHours();var _ap=_h>=12?'PM':'AM';_h=_h%12;if(_h===0)_h=12;lt.textContent=_h+":"+String(d.getMinutes()).padStart(2,"0")+" "+_ap;}catch(e){}}
  if(ld){try{ld.textContent=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});}catch(e){}}
  var ln=document.getElementById("lock-notifs");
  if(ln&&typeof S!=="undefined"&&S.notifs){
@@ -2840,11 +2876,6 @@ function ttLockHide(){
   if(ls&&!ls.hidden&&e.touches.length===1)_sy=e.touches[0].clientY;
  },{passive:true});
  document.addEventListener("touchend",function(e){
-  var ls=document.getElementById("tt-lockscreen");
-  if(ls&&!ls.hidden&&_sy!==null){
-   var dy=_sy-e.changedTouches[0].clientY;
-   if(dy>60)ttLockHide();
-  }
   _sy=null;
  },{passive:true});
  /* fingerprint tap: check for a newer build first; the reup pill appears
@@ -2854,6 +2885,8 @@ function ttLockHide(){
   var ls=document.getElementById("tt-lockscreen");
   if(fp&&ls&&!ls.hidden&&(e.target===fp||fp.contains(e.target))){
    fp.style.background="rgba(74,143,247,.35)";
+   /* APK auto-update: check GitHub for newer app shell, download in background */
+   try{ if(window.ApkUpdater&&typeof window.ApkUpdater.checkForUpdate==="function") window.ApkUpdater.checkForUpdate(); }catch(e){}
    ttCheckUpdate(function(hasUpdate){
     if(hasUpdate){
      /* new build out: red glow on the fingerprint = locked until re-up */
@@ -2877,6 +2910,19 @@ function ttLockHide(){
     The pill only shows when a newer build is actually available. */
  function ttCheckUpdate(cb){
   try{
+   // Electron desktop: check GitHub releases
+   if(window.ttDesktop&&ttDesktop.checkUpdate){
+     ttDesktop.checkUpdate().then(function(info){
+       if(info&&info.tag&&info.updateUrl){
+         // Compare release tag with GAME_VER (strip 'v' prefix if present)
+         var tag=String(info.tag).replace(/^v/,'');
+         var cur=typeof GAME_VER!=="undefined"?String(GAME_VER):"";
+         if(tag!==cur){window._ttUpdateUrl=info.updateUrl;cb(true);return;}
+       }
+       cb(false);
+     }).catch(function(){cb(false);});
+     return;
+   }
    if(typeof GAME_VER==="undefined"){cb(false);return;}
    fetch("version.txt",{cache:"no-store"}).then(function(r){
     if(!r||!r.ok)throw 0;return r.text();
@@ -2913,6 +2959,14 @@ function ttLockHide(){
  document.addEventListener("visibilitychange",function(){
   if(document.visibilityState!=="hidden")ttIdleCheck();
  });
+ // Expose for Android back button (outside IIFE)
+ try{
+   window.ttGameState=function(){return typeof S!=='undefined'?S:null;};
+   window.ttNavStack=function(){return typeof navStack!=='undefined'?navStack:null;};
+   window.ttNavPop=function(){if(typeof navPop==='function')navPop();};
+   window.ttRender=function(){if(typeof render==='function')render();};
+   window.ttSave=function(){if(typeof save==='function')save();};
+ }catch(e){}
 })();
 /* Gesture nav: tap=home, swipe left=back, swipe up=home, swipe right=recents */
 (function(){
@@ -2942,8 +2996,18 @@ function handleNavGesture(g){
  var real=document.querySelector('.android-bottomnav [data-act="'+b.getAttribute("data-act")+'"]');
  if(real)real.click();
 }
-/* auto-fullscreen on first tap if enabled (browsers require user gesture) */
-(function(){var _fsDone=false;function _tryFS(){if(_fsDone)return;_fsDone=true;try{if(typeof S!=="undefined"&&S.fullscreenDefault!==false&&!document.fullscreenElement){var el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(function(){});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}}catch(e){}}document.addEventListener("touchend",_tryFS,{once:true,passive:true});document.addEventListener("click",_tryFS,{once:true});})();
+/* auto-fullscreen on first tap if enabled (browsers require user gesture; skipped in Electron desktop) */
+(function(){var _isElectron=(typeof navigator!=='undefined'&&/Electron/.test(navigator.userAgent))||(typeof window!=='undefined'&&window.process&&window.process.type);
+/* Electron phone frame: add class + window controls */
+if(_isElectron){document.body.classList.add('electron-phone');var _wc=document.createElement('div');_wc.id='ewin-controls';_wc.innerHTML='<button id="ewin-min" title="Minimize">−</button><button id="ewin-close" title="Close">×</button>';document.body.appendChild(_wc);document.getElementById('ewin-min').onclick=function(){if(window.ttDesktop&&ttDesktop.minimize)ttDesktop.minimize();};document.getElementById('ewin-close').onclick=function(){if(window.ttDesktop&&ttDesktop.close)ttDesktop.close();};
+/* right-click + drag anywhere to move window */
+document.addEventListener('contextmenu',function(e){e.preventDefault();});
+var _rdrag=null;
+document.addEventListener('mousedown',function(e){if(e.button===2){_rdrag={x:e.screenX,y:e.screenY};}});
+document.addEventListener('mousemove',function(e){if(_rdrag&&window.ttDesktop&&ttDesktop.dragMove){ttDesktop.dragMove(e.screenX-_rdrag.x,e.screenY-_rdrag.y);_rdrag={x:e.screenX,y:e.screenY};}});
+document.addEventListener('mouseup',function(e){if(e.button===2)_rdrag=null;});
+return;}
+var _fsDone=false;function _tryFS(){if(_fsDone)return;_fsDone=true;try{if(typeof S!=="undefined"&&S.fullscreenDefault!==false&&!document.fullscreenElement){var el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(function(){});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}}catch(e){}}document.addEventListener("touchend",_tryFS,{once:true,passive:true});document.addEventListener("click",_tryFS,{once:true});})();
 function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
 var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦",tasks:"📋"};
 var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
@@ -3545,7 +3609,34 @@ function render(){
  // home-mode: clean phone screen hides all legacy game chrome via CSS
  var _pg=q(".pg");if(_pg)_pg.classList.toggle("home-mode",!battling&&S.view==="home");
  if(S.view!=="home"&&editMode)setEditMode(false);
- if(_hm){if(S.wallpaper&&/^https?:\/\//i.test(S.wallpaper)){_hm.style.backgroundImage="url(\""+S.wallpaper.replace(/"/g,"")+"\")";_hm.style.backgroundSize="cover";_hm.style.backgroundPosition="center";}else{_hm.style.backgroundImage="";_hm.style.backgroundSize="";_hm.style.backgroundPosition="";}}
+ if(_hm){
+  // Remove existing video wallpaper if any
+  var _oldVid=_hm.querySelector(".wp-video-bg");
+  if(_oldVid)_oldVid.remove();
+  if(S.wallpaper&&/^https?:\/\//i.test(S.wallpaper)){
+    var _wpUrl=S.wallpaper.replace(/"/g,"");
+    // Check if it's a video URL
+    if(/\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(_wpUrl)){
+      // Video wallpaper: create video element
+      _hm.style.backgroundImage="";
+      var _vid=document.createElement("video");
+      _vid.className="wp-video-bg";
+      _vid.src=_wpUrl;
+      _vid.autoplay=true;_vid.muted=true;_vid.loop=true;_vid.playsInline=true;
+      _vid.style.cssText="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;";
+      _hm.style.position="relative";
+      _hm.insertBefore(_vid,_hm.firstChild);
+      _vid.play().catch(function(){});
+    }else{
+      // Image/GIF wallpaper (GIFs animate automatically)
+      _hm.style.backgroundImage="url(\""+_wpUrl+"\")";
+      _hm.style.backgroundSize="cover";
+      _hm.style.backgroundPosition="center";
+    }
+  }else{
+    _hm.style.backgroundImage="";_hm.style.backgroundSize="";_hm.style.backgroundPosition="";
+  }
+}
  var _ab=q(".android-appbar");
  if(_ab){_ab.hidden=true;}
  var _hwc=q(".android-wcash");if(_hwc)_hwc.textContent=money(S.cash);
@@ -4911,7 +5002,7 @@ function todoSwipeInit(){
 }
 function todoHTML(){
  var tv=S.todoView||"tasks";
- var h='<div class="todo-tabs"><button type="button" class="todo-tab'+(tv==="tasks"?" on":"")+'" data-act="todoview" data-v="tasks">Orders</button><button type="button" class="todo-tab'+(tv==="stash"?" on":"")+'" data-act="todoview" data-v="stash">Stash</button></div>';
+ var h='<div class="todo-tabs"><button type="button" class="todo-tab'+(tv==="stash"?" on":"")+'" data-act="todoview" data-v="stash">Stash</button><button type="button" class="todo-tab'+(tv==="tasks"?" on":"")+'" data-act="todoview" data-v="tasks">Orders</button></div>';
  if(tv==="stash"){
   /* render stash content without its own header */
   var _sh=stashHTML();
@@ -5202,7 +5293,7 @@ function notesSearchBar(){
  return '<div class="notes-search"><span>🔍</span><input type="text" data-nsearch="1" placeholder="Search" value="'+escHtml(NOTESQ||"")+'" autocomplete="off"></div>';
 }
 function stashHTML(){
- var view=(S.notesView==="inprogress"||S.notesView==="stash"||S.notesView==="seeds")?S.notesView:"folders";
+ var view="unified";
  var sd=stashDealer(),d=sd.d;
  var bActive=buffActive(),bpct=buffPct();
  function su(k,base){var u=base;if(bActive)u=Math.round(u*S.buffMult);return u;}
@@ -5216,8 +5307,8 @@ function stashHTML(){
   if(j>0)val+=Math.floor(su(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9))*j);
  });
  var pct=Math.min(100,Math.round(tot/Math.max(1,S.stashCap)*100));
- var sum='<div class="note-pin"><div class="stash-sum"><div class="sdesc" style="font-size:15.5px"><b style="color:var(--hatch-widget-text)">'+tot+'g</b> / '+S.stashCap+'g &middot; worth <b style="color:#4ade80">'+money(val)+'</b> at '+d.name+'\'s prices'+(bActive?' <span class="bufftag">+'+bpct+'%</span>':"")+'</div>'
-  +'<div class="heat-bar" style="margin-top:6px"><i style="width:'+pct+'%"></i></div></div></div>';
+ var sum='<div class="stash-topbar"><div class="stash-topbar-inner"><div class="sdesc" style="font-size:15.5px"><b style="color:var(--hatch-widget-text)">'+tot+'g</b> / '+S.stashCap+'g &middot; worth <b style="color:#4ade80">'+money(val)+'</b> at '+d.name+'\'s prices'+(bActive?' <span class="bufftag">+'+bpct+'%</span>':"")+'</div>'
+  +'<div class="heat-bar" style="margin-top:6px;max-width:280px;margin-left:auto;margin-right:auto"><i style="width:'+pct+'%"></i></div></div></div>';
  var todos=notesTodosData(),cards=notesStashCards(d,su),seeds=notesSeedCards();
  var gN=todos.filter(function(t){return t.tag==="GROW";}).length;
  var cN=todos.filter(function(t){return t.tag==="LAB";}).length;
@@ -5225,20 +5316,12 @@ function stashHTML(){
  var q=(NOTESQ||"").toLowerCase();
  function match(s){return !q||String(s||"").toLowerCase().indexOf(q)>=0;}
  var h='<div class="notes-ios">';
- if(view==="folders"){
-  h+='<div class="notes-ios-head"><span class="notes-ios-title">Folders</span><button type="button" class="notes-ios-edit" data-act="notes-edit">Edit</button></div>';
-  h+='<div class="notes-ios-sec">Grow Op</div>';
-  h+='<div class="notes-folder">'
-   +notesFolderRow("inprogress","In Progress",todos.length+seeds.length,gN+" growing · "+cN+" cooking · "+seeds.length+" seeds")
-   +notesFolderRow("stash","Stash",cards.length,"Worth "+money(val))
-   +'</div>';
-  h+='<div class="notes-ios-sec">Summary</div>'+sum;
-  h+=notesSearchBar();
- }else{
-  var title=view==="inprogress"?"In Progress":"Stash";
-  h+='<button type="button" class="notes-back" data-act="notesview" data-v="folders"><span class="notes-bchev">‹</span>Folders</button>';
+ /* unified stash page: summary bar on top, then in-progress, then stash cards */
+ h+=sum;
+ {
+  var title="In Progress";
   h+='<div class="notes-list-title">'+title+'</div>';
-  if(view==="inprogress"){
+  {
    /* smart garden button: harvest ready > water thirsty > all tended > hidden */
    var _readyN=todos.filter(function(t){return t.tag==="GROW"&&t.done;}).length;
    var _thirstyN=0;
@@ -5286,24 +5369,13 @@ function stashHTML(){
     }).join("");
    }
    if(!ft.length&&!fs.length&&!_trk.length)h+='<div class="notes-empty">Nothing in progress.</div>';
-  }else if(view==="stash"){
-   h+=sum;
-   var fc=cards.filter(function(c){return match(c.search);});
-   h+=fc.length?fc.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing stashed yet — harvest some bud first.")+'</div>';
-   h+='<div class="sdesc" style="margin:10px 18px 0">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
-  }else{
-   var _taskStrains={};
-   (S.tasks||[]).forEach(function(t){if(t&&t.k&&PRODUCTS[t.k])_taskStrains[t.k]=1;});
-   var _hasTaskSeeds=Object.keys(_taskStrains).some(function(k){return (S.seeds[k]||0)>0;});
-   h+='<div class="notes-actions"><button type="button" class="notes-abtn" data-act="notes-plantall"'+(seeds.length?"":" disabled")+'>Auto Plant All</button>';
-   if(Object.keys(_taskStrains).length){
-    h+='<button type="button" class="notes-abtn" data-act="notes-planttasks"'+(_hasTaskSeeds?"":" disabled")+'>Plant Task Seeds</button>';
-   }
-   h+='</div>';
-   var fs=seeds.filter(function(c){return match(c.search);});
-   h+=fs.length?fs.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"No seed packets.")+'</div>';
   }
-  if(view!=="inprogress")h+=notesSearchBar();
+  /* stash inventory cards */
+  h+='<div class="notes-list-title" style="margin-top:14px">Stash</div>';
+  var fc=cards.filter(function(c){return match(c.search);});
+  h+=fc.length?fc.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing stashed yet — harvest some bud first.")+'</div>';
+  h+='<div class="sdesc" style="margin:10px 18px 0">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
+  h+=notesSearchBar();
  }
  return h+'</div>';
 }
@@ -6071,10 +6143,12 @@ function settingsHTML(){
   return h;
  }
  if(sv==="about"){
-  h+='<div class="shopsec">PATCH NOTES</div>';
-  h+='<div class="sdesc" style="margin:0 2px 8px">Running list of every update. Current version: <b style="color:var(--hatch-widget-text)">'+GAME_VER+'</b></div>';
-  CHANGELOG.forEach(function(c){
-   h+='<div class="clog"><div class="clog-head"><b>'+c.v+'</b><span class="lvtag">'+c.t+'</span></div><div class="sdesc" style="color:var(--hatch-widget-muted);font-size:11px;margin-bottom:4px">'+c.ts+'</div><div class="sdesc">'+c.d+'</div></div>';
+  h+='<div class="shopsec">FEATURES</div>';
+  h+='<div class="sdesc" style="margin:0 2px 8px">Everything in the game. Current version: <b style="color:var(--hatch-widget-text)">'+GAME_VER+'</b></div>';
+  var _lastCat="";
+  GAME_FEATURES.forEach(function(f){
+   if(f.c!==_lastCat){h+='<div class="shopsec" style="margin-top:10px">'+f.c.toUpperCase()+'</div>';_lastCat=f.c;}
+   h+='<div class="clog"><div class="clog-head"><span class="lvtag">'+f.t+'</span></div><div class="sdesc">'+f.d+'</div></div>';
   });
   return h;
  }
@@ -6102,9 +6176,15 @@ function settingsHTML(){
   h+='<div class="sdesc" style="margin:4px 2px 0;font-size:11px;opacity:.6">Auto-fullscreen kicks in on your first tap. For a permanent app-like feel, use your browser\'s "Add to Home Screen".</div>';
   h+='<div class="shopsec">WALLPAPER</div>';
   h+='<div class="wp-wrap">';
-  if(S.wallpaper){h+='<div class="wp-prev"><img src="'+escHtml(S.wallpaper)+'" alt="Wallpaper preview"></div>';}
+  if(S.wallpaper){
+    if(/\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(S.wallpaper)){
+      h+='<div class="wp-prev"><video src="'+escHtml(S.wallpaper)+'" muted loop autoplay playsinline style="width:100%;height:100%;object-fit:cover;"></video></div>';
+    }else{
+      h+='<div class="wp-prev"><img src="'+escHtml(S.wallpaper)+'" alt="Wallpaper preview"></div>';
+    }
+  }
   else{h+='<div class="wp-prev wp-none"><span>Default wallpaper</span></div>';}
-  h+='<input type="url" class="wp-url" placeholder="Paste image URL..." value="'+escHtml(S.wallpaper||"")+'" autocapitalize="off" autocorrect="off" spellcheck="false">';
+  h+='<input type="url" class="wp-url" placeholder="Paste image, GIF, or video URL..." value="'+escHtml(S.wallpaper||"")+'" autocapitalize="off" autocorrect="off" spellcheck="false">';
   h+='<div class="wp-btns"><button type="button" class="wp-apply" data-act="wp-apply">Apply</button>';
   if(S.wallpaper){h+='<button type="button" class="wp-reset" data-act="wp-reset">Reset</button>';}
   h+='</div></div>';
@@ -6486,7 +6566,18 @@ root.addEventListener("click",function(e){
  if(a==="dsellj"){doDeal(+b.dataset.d,b.dataset.strain,false,true);return;}
  if(a==="tickspd"){tickToggleSpeed();return;}
  if(a==="refresh"){location.href=location.pathname+"?cb="+Date.now();return;}
-   if(a==="reup"){saveOnHide();location.href=location.pathname+"?cb="+Date.now();return;}
+   if(a==="reup"){
+     // Electron desktop: download and apply update from GitHub, then reload
+     if(window.ttDesktop&&ttDesktop.applyUpdate&&window._ttUpdateUrl){
+       var btn=document.querySelector('[data-act="reup"]');
+       if(btn){btn.textContent='Downloading update...';btn.disabled=true;}
+       ttDesktop.applyUpdate(window._ttUpdateUrl).then(function(ok){
+         if(ok){saveOnHide();location.reload();}
+         else{if(btn){btn.textContent='Update failed — tap to retry';btn.disabled=false;}}
+       });
+       return;
+     }
+     saveOnHide();location.href=location.pathname+"?cb="+Date.now();return;}
  if(a==="roach-view"){S.lastVer=GAME_VER;S.tab="settings";S.settingsView="about";delete S.settingstab;S.view="app";navPush("settings");save();render();return;}
  if(a==="settingstab"){S.settingstab=b.dataset.t;save();render();return;}
  if(a==="prestigepick"){S._prestigePick=b.dataset.k;save();render();return;}
@@ -6605,7 +6696,11 @@ root.addEventListener("click",function(e){
  }
  if(a==="wp-apply"){var _wi=q(".wp-url"),_wu=_wi?_wi.value.trim():"";
   if(!_wu){S.msg="No URL entered.";save();render();return;}
-  if(!/^https?:\/\//i.test(_wu)){S.msg="No valid image URL found — use http(s).";save();render();return;}
+  if(!/^https?:\/\//i.test(_wu)){S.msg="No valid URL found — use http(s).";save();render();return;}
+  // Check if it's a video URL
+  if(/\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(_wu)){
+    S.wallpaper=_wu;S.msg="Video wallpaper updated.";save();render();return;
+  }
   var _wimg=new Image();
   _wimg.onload=function(){S.wallpaper=_wu;S.msg="Wallpaper updated.";save();render();};
   _wimg.onerror=function(){S.msg="No image found at that URL.";save();render();};
@@ -7334,6 +7429,137 @@ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
 window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound};
 })();
 </script>
+<style>
+/* APK fullscreen: fill to rounded corners, no 480px constraint */
+body.capacitor-fullscreen .pg{max-width:none!important;margin:0!important;border-radius:0!important;border:0!important;padding:0!important}
+body.capacitor-fullscreen .shade-scrim,body.capacitor-fullscreen .notif-shade,body.capacitor-fullscreen .android-recents{max-width:none!important}
+body.capacitor-fullscreen{padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0)}
+</style>
+<script>
+(function(){
+  function isCap(){
+    if(window.Capacitor)return true;
+    try{
+      var p=window.location.protocol;
+      if(p==='capacitor:'||p==='ionic:')return true;
+      if(p==='https:'&&window.location.hostname==='localhost')return true;
+    }catch(e){}
+    return /Capacitor/.test(window.navigator.userAgent||'');
+  }
+  function apply(){document.body.classList.add('capacitor-fullscreen');}
+  if(isCap())apply();
+  else{
+    var n=0;var iv=setInterval(function(){
+      if(isCap()){apply();clearInterval(iv);}
+      else if(++n>20)clearInterval(iv);
+    },250);
+    document.addEventListener('deviceready',apply);
+  }
+})();
+</script>
+<script>
+/* Desktop update hotkey: listen for shell trigger (Electron only) */
+(function(){
+  try{
+    if(window.electronAPI&&window.electronAPI.onTriggerUpdate){
+      window.electronAPI.onTriggerUpdate(function(){
+        if(typeof ttCheckUpdate==='function'){
+          ttCheckUpdate(function(hasUpdate){
+            if(hasUpdate&&typeof ttShowReup==='function')ttShowReup();
+          });
+        }
+      });
+    }
+  }catch(e){}
+})();
+</script>
+
+<script>
+/* Android back button support */
+function ttIsAtHomeScreen(){
+  try{
+    // Use exposed getters (game is in IIFE)
+    var stack=(typeof window.ttNavStack==='function')?window.ttNavStack():null;
+    if(stack&&stack.length>0)return false;
+    var S=(typeof window.ttGameState==='function')?window.ttGameState():null;
+    if(!S)return true;
+    return S.view==='home'||S.view==='lock';
+  }catch(e){return true;}
+}
+function ttGoBack(){
+  try{
+    var S=(typeof window.ttGameState==='function')?window.ttGameState():null;
+    if(!S)return;
+    // First: handle in-app sub-navigation (go back one level within the app)
+    // Messages/Deal: conversation -> list
+    if(S.msgView&&S.msgView!=='list'&&S.msgView!=='phonebook'){
+      S.msgView='list';
+      if(typeof window.ttSave==='function')window.ttSave();
+      if(typeof window.ttRender==='function')window.ttRender();
+      return;
+    }
+    // Settings: sub-view -> list
+    if(S.settingsView&&S.settingsView!=='list'){
+      S.settingsView='list';
+      delete S.settingstab;
+      if(typeof window.ttSave==='function')window.ttSave();
+      if(typeof window.ttRender==='function')window.ttRender();
+      return;
+    }
+    // Phone: sub-view -> keypad (default)
+    if(S.phoneView&&S.phoneView!=='keypad'){
+      S.phoneView='keypad';
+      if(typeof window.ttSave==='function')window.ttSave();
+      if(typeof window.ttRender==='function')window.ttRender();
+      return;
+    }
+    // To Do: sub-view -> tasks (default)
+    if(S.todoView&&S.todoView!=='tasks'){
+      S.todoView='tasks';
+      if(typeof window.ttSave==='function')window.ttSave();
+      if(typeof window.ttRender==='function')window.ttRender();
+      return;
+    }
+    // Notes: sub-view -> folders (default)
+    if(false){
+      if(typeof window.ttSave==='function')window.ttSave();
+      if(typeof window.ttRender==='function')window.ttRender();
+      return;
+    }
+    // Properties: detail -> list
+    if(S.propView){
+      S.propView=null;S.propSel=null;
+      if(typeof window.ttSave==='function')window.ttSave();
+      if(typeof window.ttRender==='function')window.ttRender();
+      return;
+    }
+    // Otherwise: no sub-pages left — go back to homescreen
+    try{
+      var _ns=(typeof window.ttNavStack==='function')?window.ttNavStack():null;
+      if(_ns)_ns.length=0;
+    }catch(e){}
+    S.view='home';
+    try{ S.tab=null; }catch(e){}
+    if(typeof window.ttSave==='function'){try{window.ttSave();}catch(e){}}
+    if(typeof window.ttRender==='function'){try{window.ttRender();}catch(e){}}
+  }catch(e){}
+}
+</script>
+
+<script>
+/* Notification count for Android stealth icon */
+function ttGetNotificationCount(){
+  try{
+    var uc=0;
+    if(typeof S!=='undefined'&&S.contacts){
+      S.contacts.forEach(function(c){uc+=(c.unreadCount||0);});
+      if(S.roachUnread>0)uc+=S.roachUnread;
+    }
+    return uc;
+  }catch(e){return 0;}
+}
+</script>
+
 
 </body>
 </html>
