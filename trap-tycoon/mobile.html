@@ -1885,6 +1885,40 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .w-pistol::after{left:12px;top:10px;width:5px;height:9px;background:linear-gradient(90deg,#374151,#111827);border-radius:2px}
 .w-smg::before{left:3px;top:6px;width:18px;height:5px;background:linear-gradient(180deg,#4b5563,#1f2937);border-radius:2px}
 .w-smg::after{left:9px;top:10px;width:4px;height:9px;background:#1f2937;transform:rotate(12deg);border-radius:2px}
+.w-revolver::before{left:4px;top:7px;width:14px;height:5px;background:linear-gradient(180deg,#6b7280,#374151);border-radius:2px}
+.w-revolver::after{left:8px;top:11px;width:8px;height:8px;background:#4b5563;border-radius:50%}
+.w-shotgun::before{left:2px;top:8px;width:20px;height:4px;background:linear-gradient(180deg,#92400e,#451a03);border-radius:2px}
+.w-shotgun::after{left:14px;top:11px;width:5px;height:7px;background:#78350f;border-radius:1px}
+.w-uzi::before{left:5px;top:5px;width:13px;height:7px;background:linear-gradient(180deg,#4b5563,#1f2937);border-radius:2px}
+.w-uzi::after{left:8px;top:11px;width:4px;height:8px;background:#1f2937;border-radius:1px}
+.w-rifle::before{left:2px;top:7px;width:20px;height:4px;background:linear-gradient(180deg,#374151,#111827);border-radius:2px}
+.w-rifle::after{left:15px;top:10px;width:4px;height:8px;background:#1f2937;transform:rotate(-10deg);border-radius:1px}
+.w-deagle::before{left:3px;top:5px;width:18px;height:7px;background:linear-gradient(180deg,#9ca3af,#4b5563);border-radius:2px}
+.w-deagle::after{left:13px;top:11px;width:5px;height:8px;background:#374151;border-radius:2px}
+.w-bat::before{left:4px;top:4px;width:5px;height:16px;background:linear-gradient(180deg,#d6a06a,#8a5a30);border-radius:3px;transform:rotate(25deg)}
+.w-bat::after{left:11px;top:14px;width:7px;height:5px;background:#5b3a1e;border-radius:2px;transform:rotate(25deg)}
+.w-knuckles::before{left:5px;top:8px;width:14px;height:8px;background:linear-gradient(180deg,#fbbf24,#92400e);border-radius:4px}
+.w-knuckles::after{left:7px;top:10px;width:10px;height:4px;background:transparent;border:2px solid #78350f;border-radius:2px}
+.w-crowbar::before{left:4px;top:5px;width:4px;height:14px;background:linear-gradient(90deg,#ef4444,#991b1b);border-radius:2px;transform:rotate(20deg)}
+.w-crowbar::after{left:3px;top:4px;width:8px;height:4px;background:#991b1b;border-radius:2px;transform:rotate(20deg)}
+.w-machete::before{left:3px;top:9px;width:16px;height:5px;background:linear-gradient(90deg,#e5e7eb,#6b7280);border-radius:0 3px 3px 0;transform:rotate(-15deg)}
+.w-machete::after{left:15px;top:11px;width:6px;height:6px;background:#1f2937;border-radius:1px;transform:rotate(-15deg)}
+.w-katana::before{left:2px;top:10px;width:18px;height:3px;background:linear-gradient(90deg,#f3f4f6,#9ca3af);border-radius:2px;transform:rotate(-20deg)}
+.w-katana::after{left:16px;top:12px;width:5px;height:5px;background:#111827;border-radius:1px;transform:rotate(-20deg)}
+/* GEAR avatar */
+.gear-avatar-wrap{display:flex;gap:14px;align-items:center;background:#14141c;border:1px solid #2a2a3a;border-radius:12px;padding:14px;margin-bottom:10px}
+.gear-avatar{position:relative;width:64px;height:88px;flex:none;border-radius:12px;background:#1e1e2a;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:8px}
+.gear-avatar.full{box-shadow:0 0 18px 2px var(--aura),0 0 42px 6px var(--aura);border:1px solid var(--aura);animation:gavPulse 2.2s ease-in-out infinite}
+@keyframes gavPulse{0%,100%{box-shadow:0 0 14px 2px var(--aura)}50%{box-shadow:0 0 26px 6px var(--aura)}}
+.gav-head{width:24px;height:24px;border-radius:50%;background:linear-gradient(180deg,#d6a06a,#8a5a30);margin-bottom:4px}
+.gav-body{width:34px;height:34px;border-radius:8px;background:linear-gradient(180deg,#3a3f4a,#23262e)}
+.gav-legs{width:26px;height:16px;border-radius:0 0 6px 6px;background:#1a1d24;margin-top:2px}
+.gav-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:800;letter-spacing:1px;color:#000;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.gav-info{flex:1;min-width:0}
+.gav-slots{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px}
+.gav-slot{background:#1a1a26;border-radius:6px;padding:4px 8px;font-size:11px}
+.gav-slot span{color:#6b7280;text-transform:uppercase;font-size:9px;display:block}
+.gav-slot b{font-size:11px}
 .srow.c b .wicon{margin-right:2px}
 .acc-h{padding:6px 10px;margin-bottom:3px}
 </style>
@@ -2408,8 +2442,8 @@ var RECIPES={
  etriple:{game:"target",kits:{press:3},yield:12,heat:18,hint:"Tap the lit pad — 6 rounds, be quick."}
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
-var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
-var GAME_VER="BETA-0.018.78";
+var SPEED_OPTS=[30,45,60,75,90,105,120];
+var GAME_VER="BETA-0.018.81";
 var GAME_UPDATED="Oct 5, 2026 · 7:30 PM";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
@@ -2481,11 +2515,12 @@ var LEVEL_TIPS={
  7:["Dragon's Breath: the final cook","Cartel Empire: 28 slots of endgame growing","Gorilla Glue is the highest bud tier"],
  8:["Triple Stack E is the best money in the game","Emerald Palace: 34 grow slots","Stock Pill Press Kits for every Ecstasy cook"]
 };
-var DEF_SPEEDS={hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300,estack:120,edouble:150,etriple:180};
+var DEF_SPEEDS={hash:60,edibles:90,moonrock:120,acid:120,dmt:120,dragon:120,estack:120,edouble:120,etriple:120};
 function speedOf(k){var v=S.speeds&&S.speeds[k];return SPEED_OPTS.indexOf(v)>=0?v:DEF_SPEEDS[k];}
 function fmtT(s){s=Math.max(0,Math.round(s));var m=Math.floor(s/60),r=s%60;return m+":"+(r<10?"0":"")+r;}
-function growSec(){return SPEED_OPTS.indexOf(S.growSpeed)>=0?S.growSpeed:30;}
-function growMinOf(k){return growSec()/60;}
+var GROW_TIMES={sour:30,og:45,haze:60,bluedream:75,maui:90,northern:105,ak47:120};
+function growSec(k){if(k&&GROW_TIMES[k])return GROW_TIMES[k];return SPEED_OPTS.indexOf(S.growSpeed)>=0?S.growSpeed:30;}
+function growMinOf(k){return growSec(k)/60;}
 var DEALER_NAMES=["Corner Carl","Rooftop Rita","Alley Al","Deli Dave"];
 var DUFFEL=[40,100,200,400];
 var DUFFEL_COST={100:150,200:400,400:1000};
@@ -2493,27 +2528,63 @@ var FERT_COST=25,BRIBE_COST=200,PAPER_COST=10,PAPER_PACK=20;
 var WEAPONS={
  fists:{name:"Fists",cost:0,tier:1,dmg:[5,9]},
  knife:{name:"Knife",cost:150,tier:2,dmg:[11,16]},
+ bat:{name:"Baseball Bat",cost:200,tier:2,dmg:[10,15]},
+ knuckles:{name:"Brass Knuckles",cost:250,tier:2,dmg:[9,14]},
+ revolver:{name:"Revolver",cost:400,tier:3,dmg:[13,19]},
+ crowbar:{name:"Crowbar",cost:300,tier:3,dmg:[12,18]},
+ machete:{name:"Machete",cost:350,tier:3,dmg:[14,20]},
  pistol:{name:"Pistol",cost:750,tier:4,dmg:[15,22]},
- smg:{name:"SMG",cost:3000,tier:6,dmg:[24,34]}
+ shotgun:{name:"Shotgun",cost:1500,tier:5,dmg:[20,30]},
+ uzi:{name:"Uzi",cost:2000,tier:5,dmg:[18,26]},
+ smg:{name:"SMG",cost:3000,tier:6,dmg:[24,34]},
+ katana:{name:"Katana",cost:2500,tier:6,dmg:[22,32]},
+ rifle:{name:"Rifle",cost:5000,tier:7,dmg:[28,40]},
+ deagle:{name:"Desert Eagle",cost:4500,tier:7,dmg:[30,42]}
 };
-var WKEYS=["fists","knife","pistol","smg"];
+var WKEYS=["fists","knife","bat","knuckles","revolver","crowbar","machete","pistol","shotgun","uzi","smg","katana","rifle","deagle"];
+var GEAR={
+ cb_head:{name:"Fitted Cap",set:"cornerboy",slot:"head",cost:100,tier:1,bonus:{prices:2},desc:"+2% deal prices"},
+ cb_body:{name:"White Tee",set:"cornerboy",slot:"body",cost:80,tier:1,bonus:{prices:2},desc:"+2% deal prices"},
+ cb_feet:{name:"Beat Sneakers",set:"cornerboy",slot:"feet",cost:60,tier:1,bonus:{heat:-3},desc:"-3% heat gain"},
+ cb_chain:{name:"Fake Gold Chain",set:"cornerboy",slot:"chain",cost:120,tier:2,bonus:{rep:3},desc:"+3% rep gain"},
+ ts_head:{name:"Designer Beanie",set:"trapstar",slot:"head",cost:500,tier:3,bonus:{prices:3},desc:"+3% deal prices"},
+ ts_body:{name:"Graphic Hoodie",set:"trapstar",slot:"body",cost:700,tier:3,bonus:{prices:3},desc:"+3% deal prices"},
+ ts_feet:{name:"Fresh Jordans",set:"trapstar",slot:"feet",cost:900,tier:4,bonus:{heat:-5},desc:"-5% heat gain"},
+ ts_chain:{name:"Gold Rope Chain",set:"trapstar",slot:"chain",cost:1500,tier:4,bonus:{rep:5},desc:"+5% rep gain"},
+ kp_head:{name:"Custom Snapback",set:"kingpin",slot:"head",cost:3000,tier:5,bonus:{prices:4},desc:"+4% deal prices"},
+ kp_body:{name:"Designer Jacket",set:"kingpin",slot:"body",cost:5000,tier:5,bonus:{prices:4},desc:"+4% deal prices"},
+ kp_feet:{name:"Luxe Sneakers",set:"kingpin",slot:"feet",cost:4000,tier:6,bonus:{heat:-8},desc:"-8% heat gain"},
+ kp_chain:{name:"Diamond Tennis Chain",set:"kingpin",slot:"chain",cost:8000,tier:6,bonus:{rep:8},desc:"+8% rep gain"},
+ ej_head:{name:"Croc Leather Cap",set:"eljefe",slot:"head",cost:15000,tier:7,bonus:{prices:6},desc:"+6% deal prices"},
+ ej_body:{name:"Tailored Suit Jacket",set:"eljefe",slot:"body",cost:25000,tier:7,bonus:{prices:6},desc:"+6% deal prices"},
+ ej_feet:{name:"Ostrich Boots",set:"eljefe",slot:"feet",cost:18000,tier:8,bonus:{heat:-12},desc:"-12% heat gain"},
+ ej_chain:{name:"Cuban Link + Pendant",set:"eljefe",slot:"chain",cost:40000,tier:8,bonus:{rep:12},desc:"+12% rep gain"}
+};
+var GEAR_SETS={
+ cornerboy:{name:"Corner Boy",fullBonus:{prices:5},aura:"#9ca3af",desc:"Full set: +5% deal prices"},
+ trapstar:{name:"Trap Star",fullBonus:{prices:10,heat:-10},aura:"#f59e0b",desc:"Full set: +10% prices, -10% heat"},
+ kingpin:{name:"Kingpin",fullBonus:{prices:15,heat:-15,rep:10},aura:"#a855f7",desc:"Full set: +15% prices, -15% heat, +10% rep"},
+ eljefe:{name:"El Jefe",fullBonus:{prices:25,heat:-20,rep:20},aura:"#ef4444",desc:"Full set: +25% prices, -20% heat, +20% rep"}
+};
+var GEAR_SLOTS=["head","body","feet","chain"];
+var GKEYS=["cb_head","cb_body","cb_feet","cb_chain","ts_head","ts_body","ts_feet","ts_chain","kp_head","kp_body","kp_feet","kp_chain","ej_head","ej_body","ej_feet","ej_chain"];
 var DEALER_TIER=[1,2,4,6];
 var XP_TH=[0,200,500,900,1400,2000,2700,3500];
 function lvl(xp){xp=xp||0;var L=1;for(var i=0;i<XP_TH.length;i++)if(xp>=XP_TH[i])L=i+1;return L;}
 function pLevel(){return lvl(S.xp);}
-function heatGain(base){var L=pLevel(),m=0.5;if(L<=2)return Math.ceil(base*0.25*m);if(L<=4)return Math.ceil(base*0.5*m);if(L<=6)return Math.ceil(base*0.75*m);return Math.ceil(base*m);}
+function heatGain(base){var L=pLevel(),m=0.5,r;if(L<=2)r=Math.ceil(base*0.25*m);else if(L<=4)r=Math.ceil(base*0.5*m);else if(L<=6)r=Math.ceil(base*0.75*m);else r=Math.ceil(base*m);var gm=1+gearBonus().heat/100;return Math.max(0,Math.ceil(r*gm));}
 function bribeCost(){var L=pLevel();if(L<=2)return 50;if(L<=4)return 100;return 200;}
 function clinicRate(){var L=pLevel();if(L<=2)return 1;if(L<=4)return 1.5;return 2;}
 function tierVis(t){var L=pLevel();return t<=L?2:(t===L+1?1:0);}
 var UNLOCKS={
- 1:["Sour D","Hash","Grow Tent"],
- 2:["OG Kush","Edibles","Trap House","Knife","Rooftop Rita"],
- 3:["Purple Haze","Moonrocks","Warehouse"],
- 4:["Blue Dream","Acid","Mansion Lab","Pistol","Alley Al"],
- 5:["Girl Scout Cookies","DMT","Bunker"],
- 6:["White Widow","Island Compound","SMG","Deli Dave"],
- 7:["Gorilla Glue","Dragon's Breath","Cartel Empire"],
- 8:["Ecstasy Stacks","Emerald Palace","Pill Press Kit"]
+ 1:["Sour D","Hash","Grow Tent","Fitted Cap","White Tee","Beat Sneakers"],
+ 2:["OG Kush","Edibles","Trap House","Knife","Baseball Bat","Brass Knuckles","Rooftop Rita","Fake Gold Chain"],
+ 3:["Purple Haze","Moonrocks","Warehouse","Revolver","Crowbar","Machete","Designer Beanie","Graphic Hoodie"],
+ 4:["Blue Dream","Acid","Mansion Lab","Pistol","Alley Al","Fresh Jordans","Gold Rope Chain"],
+ 5:["Girl Scout Cookies","DMT","Bunker","Shotgun","Uzi","Custom Snapback","Designer Jacket"],
+ 6:["White Widow","Island Compound","SMG","Katana","Deli Dave","Luxe Sneakers","Diamond Tennis Chain"],
+ 7:["Gorilla Glue","Dragon's Breath","Cartel Empire","Rifle","Desert Eagle","Croc Leather Cap","Tailored Suit Jacket"],
+ 8:["Ecstasy Stacks","Emerald Palace","Pill Press Kit","Ostrich Boots","Cuban Link + Pendant"]
 };
 function addXP(n){
  if(!n||n<=0)return false;
@@ -2567,7 +2638,59 @@ var SMOKE_COL={
  northern:{c:["#4dd0e1"],o:.5},
  ak47:{c:["#ff8a65"],o:.55}
 };
-function bestWeapon(){if(S.weapons&&S.weapons.smg)return "smg";if(S.weapons&&S.weapons.pistol)return "pistol";if(S.weapons&&S.weapons.knife)return "knife";return "fists";}
+function bestWeapon(){var b="fists",bd=-1;WKEYS.forEach(function(k){var owned=(k==="fists")||(S.weapons&&S.weapons[k]);if(!owned)return;var d=WEAPONS[k].dmg[1];if(d>bd){bd=d;b=k;}});return b;}
+function gearBonus(){
+ var b={prices:0,heat:0,rep:0};
+ var eq=(S&&S.equipped)||{},sets=[];
+ GEAR_SLOTS.forEach(function(slot){
+  var k=eq[slot],g=k&&GEAR[k];
+  if(!g)return;
+  var bn=g.bonus||{};
+  if(bn.prices)b.prices+=bn.prices;
+  if(bn.heat)b.heat+=bn.heat;
+  if(bn.rep)b.rep+=bn.rep;
+  sets.push(g.set);
+ });
+ if(sets.length===4&&sets[0]===sets[1]&&sets[1]===sets[2]&&sets[2]===sets[3]){
+  var fb=(GEAR_SETS[sets[0]]||{}).fullBonus||{};
+  if(fb.prices)b.prices+=fb.prices;
+  if(fb.heat)b.heat+=fb.heat;
+  if(fb.rep)b.rep+=fb.rep;
+ }
+ return b;
+}
+function gearSetEquipped(){
+ var eq=(S&&S.equipped)||{},sets=[];
+ GEAR_SLOTS.forEach(function(slot){var k=eq[slot],g=k&&GEAR[k];if(g)sets.push(g.set);});
+ if(sets.length===4&&sets[0]===sets[1]&&sets[1]===sets[2]&&sets[2]===sets[3])return sets[0];
+ return null;
+}
+function gearPriceMult(){return 1+gearBonus().prices/100;}
+function gearAvatarHTML(){
+ var setId=gearSetEquipped(),set=setId?GEAR_SETS[setId]:null;
+ var aura=set?set.aura:"transparent";
+ var eq=(S&&S.equipped)||{};
+ var slotHtml="";
+ GEAR_SLOTS.forEach(function(slot){
+  var k=eq[slot],g=k&&GEAR[k];
+  slotHtml+='<div class="gav-slot"><span>'+slot+'</span><b>'+(g?g.name:"—")+'</b></div>';
+ });
+ var bonus=gearBonus();
+ var bonusTxt=[];
+ if(bonus.prices)bonusTxt.push("+"+bonus.prices+"% prices");
+ if(bonus.heat)bonusTxt.push(bonus.heat+"% heat");
+ if(bonus.rep)bonusTxt.push("+"+bonus.rep+"% rep");
+ var h='<div class="gear-avatar-wrap">';
+ h+='<div class="gear-avatar'+(set?" full":"")+'" style="'+(set?("--aura:"+aura+";"):"")+'">';
+ h+='<div class="gav-head"></div><div class="gav-body"></div><div class="gav-legs"></div>';
+ if(set)h+='<div class="gav-badge" style="background:'+aura+'">'+set.name.toUpperCase()+'</div>';
+ h+='</div>';
+ h+='<div class="gav-info"><div class="gav-slots">'+slotHtml+'</div>';
+ h+='<div class="sdesc">Active: '+(bonusTxt.length?bonusTxt.join(" · "):"no bonuses")+'</div>';
+ if(set)h+='<div class="sdesc" style="color:'+aura+'">'+set.desc+'</div>';
+ h+='</div></div>';
+ return h;
+}
 function weaponDmg(){var w=WEAPONS[bestWeapon()],d=Math.round(w.dmg[0]+Math.random()*(w.dmg[1]-w.dmg[0])),crit=Math.random()<0.15;if(crit)d=Math.round(d*1.6);return {dmg:d,crit:crit};}
 function copDmg(){return Math.round(8+Math.random()*6);}
 var HEAT_TIERS=["CALM","SUSPICIOUS","WATCHED","HUNTED"];
@@ -2658,6 +2781,9 @@ function normalize(s){
  if(s.settingstab==="changelog"){s.settingsView="about";delete s.settingstab;}
  if(!Array.isArray(s.hiddenApps)||s.hiddenApps.length)s.hiddenApps=[];
  /* tasks: accepted order requests awaiting fulfillment */
+ if(!Array.isArray(s.gear))s.gear=[];
+ if(!s.equipped||typeof s.equipped!=="object")s.equipped={};
+ GEAR_SLOTS.forEach(function(slot){var k=s.equipped[slot];if(k&&(!GEAR[k]||s.gear.indexOf(k)<0))delete s.equipped[slot];});
  if(!Array.isArray(s.tasks))s.tasks=[];
  s.tasks=s.tasks.filter(function(t){return t&&typeof t.name==="string"&&typeof t.k==="string"&&PRODUCTS[t.k]&&typeof t.g==="number"&&t.g>0;}).map(function(t){
   return {name:String(t.name).slice(0,24),k:t.k,kind:(t.kind==="joint"||t.kind==="lab")?t.kind:"bud",g:t.g,pu:typeof t.pu==="number"?t.pu:0,addedAt:typeof t.addedAt==="number"?t.addedAt:Date.now()};
@@ -2759,7 +2885,7 @@ function normalize(s){
  var _secmap={seeds:"seeds",kits:"lab",duffel:"gear",weapons:"guns",props:"upgrades"};
  if(_secmap[s.shopsec])s.storetab=_secmap[s.shopsec];
  delete s.shopsec;
- if(["seeds","guns","lab","gear","upgrades"].indexOf(s.storetab)<0)s.storetab="seeds";
+ if(["seeds","guns","lab","gear","style","upgrades"].indexOf(s.storetab)<0)s.storetab="seeds";
  if(!s.propUpgrades||typeof s.propUpgrades!=="object")s.propUpgrades={tent:1};
  if([1,3,4].indexOf(s.propUpgrades.tent)<0)s.propUpgrades.tent=1;
  if(!s.bank||typeof s.bank!=="object")s.bank={bal:0,pendInt:0,tx:[]};
@@ -4306,7 +4432,8 @@ function mapsHTML(){
   guns:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9h15v4h-7l-1.2 7H5.6L6.8 13H2z"/></svg>',
   lab:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10 3v5.2L4.8 17a2.4 2.4 0 0 0 2.1 3.5h10.2a2.4 2.4 0 0 0 2.1-3.5L14 8.2V3"/><path d="M7.2 14.5h9.6"/></svg>',
   gear:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8.5" width="18" height="10.5" rx="2.5"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/><path d="M3 13.5h18"/></svg>',
-  upgrades:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6"/><path d="M12.5 5.5l6 6L14 16l-6-6z"/><path d="M11 11L4 18"/><path d="M3.5 20.5l2-2"/></svg>'
+  upgrades:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6"/><path d="M12.5 5.5l6 6L14 16l-6-6z"/><path d="M11 11L4 18"/><path d="M3.5 20.5l2-2"/></svg>',
+  style:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 7l2 4 2-1v10h10V10l2 1 2-4z"/><path d="M9 4c1 1.5 5 1.5 6 0"/></svg>'
  };
  var sh='<div class="store-screen-head"><span class="store-title" style="color:#f2efe8">'+STORE_ICON+'STORE</span></div>';
  var stores=[
@@ -4314,6 +4441,7 @@ function mapsHTML(){
   ["guns","GUNS","Gun Store","Iron & lead. Cash only.","#f87171"],
   ["lab","LAB","Lab Supply","Everything for the cook.","#fbbf24"],
   ["gear","GEAR","Supply Depot","Fertilizer & duffel upgrades.","#38bdf8"],
+  ["style","STYLE","Style Shop","Look the part. Full matching sets trigger aura bonuses.","#c084fc"],
   ["upgrades","HOME IMPROVEMENT","Home Improvement","Expand your grow. More rows, more pots.","#7CFC00"]
  ];
  var st=S.storetab||"seeds";
@@ -4326,7 +4454,7 @@ function mapsHTML(){
  stores.forEach(function(sc){if(sc[0]===st)_cur=sc;});
  sh+='<div class="store-screen-head sec"><span class="store-title" style="color:'+_cur[4]+'">'+SICON[_cur[0]].replace('width="12" height="12"','width="17" height="17"')+_cur[2].toUpperCase()+'</span><span class="sec-desc">'+_cur[3]+'</span></div>';
  if(st==="seeds"){
-   sh+='<div class="sdesc" style="margin:0 2px 6px">All strains: '+fmtT(growSec())+' grow (Settings tab).</div>';
+   sh+='<div class="sdesc" style="margin:0 2px 6px">Grow times: 30s-2min by strain (faster strains earn less).</div>';
    GROWKEYS.forEach(function(k){
     var v=tierVis(PRODUCTS[k].tier);
     if(v===0)return;
@@ -4366,6 +4494,25 @@ function mapsHTML(){
      +'</div>';
    });
    sh+='<div class="sdesc" style="margin:2px 2px 6px">Best owned weapon auto-used in fights.</div>';
+  }else if(st==="style"){
+   sh+=gearAvatarHTML();
+   sh+='<div class="sdesc" style="margin:0 2px 6px">Full matching set = aura bonus. Mix sets for piece bonuses only.</div>';
+   Object.keys(GEAR_SETS).forEach(function(setId){
+    var set=GEAR_SETS[setId];
+    sh+='<div class="srow c tight" style="border-color:'+set.aura+'"><div><b style="color:'+set.aura+'">'+set.name+' Set</b><div class="sdesc">'+set.desc+'</div></div></div>';
+    GKEYS.forEach(function(gk){
+     var g=GEAR[gk];
+     if(g.set!==setId)return;
+     var owned=(S.gear||[]).indexOf(gk)>=0,eq=(S.equipped||{})[g.slot]===gk;
+     var v=tierVis(g.tier);
+     if(v===0)return;
+     if(v===1){sh+='<div class="srow c tight locked"><div><b>'+g.name+'</b> <span class="sdesc">'+g.slot+' &middot; '+g.desc+'</span><div class="sdesc"><span class="lvtag">Lv '+g.tier+'</span></div></div></div>';return;}
+     sh+='<div class="srow c tight"><div><b>'+g.name+(eq?' <span style="color:#4ade80">&#10003; WORN</span>':'')+'</b><div class="sdesc">'+g.slot+' &middot; '+g.desc+' &middot; <span class="lvtag">Lv '+g.tier+'</span></div></div>'
+      +'<div style="display:flex;gap:6px">'
+      +(owned?(eq?'<button type="button" data-act="unequipgear" data-g="'+gk+'">Unequip</button>':'<button type="button" data-act="equipgear" data-g="'+gk+'">Equip</button>'):'<button type="button" data-act="buygear" data-g="'+gk+'"'+(S.cash>=g.cost?"":" disabled")+'>'+money(g.cost)+'</button>')
+      +'</div></div>';
+    });
+   });
   }else{
    // Home Improvement tab — Grow Tent row expansions (only buyable items shown)
    var _ul=(S.propUpgrades&&S.propUpgrades.tent)||1;
@@ -4868,10 +5015,10 @@ function doFulfillOrder(nm){
  var o=c.order,have=contactHave(o);
  if(have<o.g){S.msg="You don't have "+contactQtyText(o)+".";save();render();return;}
  if(o.kind==="joint")S.joints[o.k]-=o.g;else S.stash[o.k]-=o.g;
- var rev=o.pu*o.g;
+ var rev=Math.floor(o.pu*o.g*gearPriceMult());
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
  dealTerrHeat(o.g,o.g>=5);
- c.loyalty=Math.min(100,c.loyalty+8);
+ c.loyalty=Math.min(100,c.loyalty+Math.round(8*(1+gearBonus().rep/100)));
  var now=Date.now();
  c.msgs.push({from:"me",text:"got u. "+o.g+"g comin thru.",t:now});
  c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
@@ -4916,14 +5063,14 @@ function doFulfillTask(i){
   return;
  }
  if(o.kind==="joint")S.joints[o.k]-=o.g;else S.stash[o.k]-=o.g;
- var rev=o.pu*o.g,now=Date.now();
+ var rev=Math.floor(o.pu*o.g*gearPriceMult()),now=Date.now();
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
  dealTerrHeat(o.g,o.g>=5);
  var c=getContact(t.name);
  if(c){
   var _thiefLeadup=c.isThief&&(c.ordersBeforeTurn||0)>0;
   var _obtBefore=c.ordersBeforeTurn||0;
-  c.loyalty=Math.min(100,c.loyalty+8);
+  c.loyalty=Math.min(100,c.loyalty+Math.round(8*(1+gearBonus().rep/100)));
   if(c.isThief&&c.ordersBeforeTurn>0)c.ordersBeforeTurn--;
   c.msgs.push({from:"me",text:"got u. "+o.g+"g comin thru.",t:now});
   /* thief chickens out at the meetup: sketchy in texts, soft in person */
@@ -5136,6 +5283,7 @@ function doDeal(di,k,isBuy,isJoint){
   var unit2=ppu(st.price,d.buy[k]*terrPriceMult()*terrPrefMult(k,isJoint));
   if(isJoint)unit2=Math.round(unit2*0.9);
   if(buffActive())unit2=Math.round(unit2*S.buffMult);
+  unit2=Math.round(unit2*gearPriceMult());
   var rev=Math.floor(unit2*g);
   var heldBefore=isJoint?(S.joints[k]||0):(S.stash[k]||0);
   if(isJoint)S.joints[k]-=g;else S.stash[k]-=g;
@@ -5167,6 +5315,7 @@ function doStashSellAll(k,isJoint){
  var unit=ppu(st.price,d.buy[k]*terrPriceMult()*terrPrefMult(k,isJoint));
  if(isJoint)unit=Math.round(unit*0.9);
  if(buffActive())unit=Math.round(unit*S.buffMult);
+ unit=Math.round(unit*gearPriceMult());
  var rev=Math.floor(unit*have);
  if(isJoint)S.joints[k]=0;else S.stash[k]=0;
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
@@ -5724,7 +5873,7 @@ function winThiefBattle(){
  var _t=S.tasks&&S.tasks[b.taskIdx];
  S.thiefBattle=null;
  if(_t){
-  var rev=_o.pu*_o.g;
+  var rev=Math.floor(_o.pu*_o.g*gearPriceMult());
   S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
   S.tasks.splice(b.taskIdx,1);
  }
@@ -6385,7 +6534,7 @@ root.addEventListener("click",function(e){
    var unit=ppu(PRODUCTS[k].price,_sld.buy[k]*terrPriceMult()*terrPrefMult(k,ij));
    if(ij)unit=Math.round(unit*0.9);
    if(_slb)unit=Math.round(unit*S.buffMult);
-   var r=Math.floor(unit*have);
+   var r=Math.floor(unit*have*gearPriceMult());
    if(ij)S.joints[k]=0;else S.stash[k]=0;
    _slr+=r;_sli+=have;
    dealTerrHeat(have,have>=5);
@@ -6689,6 +6838,9 @@ root.addEventListener("click",function(e){
  if(a==="wp-reset"){S.wallpaper="";S.msg="Wallpaper reset.";save();render();return;}
  if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk].tier<=pLevel()&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
  if(a==="buyweapon"){var wkey=b.dataset.w,wu=WEAPONS[wkey];if(wkey&&wkey!=="fists"&&wu&&wu.tier<=pLevel()&&!(S.weapons&&S.weapons[wkey])&&S.cash>=wu.cost){S.cash-=wu.cost;S.weapons[wkey]=true;S.msg=wu.name+" purchased — best weapon is used in fights.";save();render();}return;}
+ if(a==="buygear"){var gk=b.dataset.g,g=GEAR[gk];if(gk&&g&&g.tier<=pLevel()&&S.gear.indexOf(gk)<0&&S.cash>=g.cost){S.cash-=g.cost;S.gear.push(gk);S.equipped[g.slot]=gk;S.msg=g.name+" purchased & equipped.";save();render();}return;}
+ if(a==="equipgear"){var ek=b.dataset.g,eg=GEAR[ek];if(ek&&eg&&S.gear.indexOf(ek)>=0){S.equipped[eg.slot]=ek;var _fs=gearSetEquipped();S.msg=eg.name+" equipped."+(_fs?" "+GEAR_SETS[_fs].name+" set complete — aura active!":"");save();render();}return;}
+ if(a==="unequipgear"){var uk=b.dataset.g,ug=GEAR[uk];if(uk&&ug&&S.equipped[ug.slot]===uk){delete S.equipped[ug.slot];S.msg=ug.name+" unequipped.";save();render();}return;}
  if(a==="tstrike"){thiefStrike();return;}
  if(a==="trun"){thiefRun();return;}
  if(a==="bstrike"){battleStrike();return;}
@@ -7407,7 +7559,7 @@ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
   if(document.visibilityState==="hidden")saveOnHide();});
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound};
 })();
 </script>
 <style>
