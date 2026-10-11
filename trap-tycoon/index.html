@@ -1301,6 +1301,47 @@ body.electron-phone #ewin-controls{display:flex}
 .sc-group{background:#241a15;border-radius:24px;overflow:hidden;margin-bottom:2px}
 .sc-row{display:flex;align-items:center;gap:14px;width:100%;background:none;border:none;border-bottom:1px solid rgba(255,255,255,.07);padding:11px 16px;cursor:pointer;text-align:left}
 .sc-row.last{border-bottom:none}
+/* runners */
+.msg-callbtn{background:none;border:none;cursor:pointer;display:flex;align-items:center;color:inherit;padding:4px}
+.rn-detail{padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.rn-head{display:flex;gap:14px;align-items:center}
+.rn-headinfo{display:flex;flex-direction:column;gap:2px}
+.rn-headinfo b{font-size:18px}
+.rn-headinfo span{font-size:13px;color:#9aa3b2}
+.rn-traitdesc{font-size:12px!important;color:#7ee2a8!important}
+.rn-row{display:flex;align-items:center;gap:10px;font-size:14px}
+.rn-row span:first-child{color:#9aa3b2;flex:1}
+.rn-bar{flex:2;height:8px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
+.rn-barfill{height:100%;background:linear-gradient(90deg,#16a34a,#4ade80);border-radius:4px}
+.rn-seclabel{color:#8d7f74;font-size:13px;font-weight:600;margin:6px 0 2px}
+.rn-empty{color:#9aa3b2;font-size:13px;font-style:italic}
+.rn-warn{background:rgba(229,72,77,.15);border:1px solid rgba(229,72,77,.4);border-radius:10px;padding:10px;font-size:13px;color:#f87171}
+.rn-badge{display:inline-block;background:rgba(217,119,6,.2);border-radius:8px;padding:2px 8px;font-size:12px;margin-left:6px}
+.rn-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.rn-actions button{background:#2a4a3a;border:none;color:#fff;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer;flex:1;min-width:100px}
+.rn-actions button:disabled{opacity:.4;cursor:not-allowed}
+.rn-callbtn{background:#16a34a!important;font-size:15px!important}
+.rn-danger{background:#7f1d1d!important}
+/* runner call overlay */
+.runner-call{position:absolute;top:0;left:0;right:0;bottom:0;z-index:150;background:rgba(5,8,5,.97);display:flex;flex-direction:column;padding:20px 16px;gap:12px;overflow-y:auto}
+.rc-head{display:flex;align-items:center;gap:12px}
+.rc-headinfo{display:flex;flex-direction:column;flex:1}
+.rc-headinfo b{font-size:17px}
+.rc-headinfo span{font-size:12px;color:#9aa3b2}
+.rc-end{background:#7f1d1d;border:none;color:#fff;border-radius:20px;padding:10px 18px;font-weight:700;cursor:pointer}
+.rc-body{display:flex;flex-direction:column;gap:8px;flex:1;overflow-y:auto}
+.rc-actions{display:flex;flex-wrap:wrap;gap:8px}
+.rc-actions button{background:#2a4a3a;border:none;color:#fff;border-radius:10px;padding:10px 12px;font-size:13px;font-weight:700;cursor:pointer;flex:1;min-width:90px}
+.rc-actions button:disabled{opacity:.4;cursor:not-allowed}
+.rc-panel{background:#1a241d;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px}
+.rc-panelhd{font-size:13px;font-weight:700;color:#9aa3b2}
+.rc-stepper{display:flex;align-items:center;gap:8px}
+.rc-stepper select{flex:1;background:#0f1512;color:#fff;border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:8px;font-size:13px}
+.rc-stepper button{background:#2a4a3a;border:none;color:#fff;border-radius:8px;padding:8px 12px;font-size:14px;font-weight:700;cursor:pointer}
+.rc-terrs{display:flex;flex-wrap:wrap;gap:6px}
+.rc-terrs button{background:#2a4a3a;border:none;color:#fff;border-radius:8px;padding:8px 10px;font-size:12px;cursor:pointer}
+.rc-terrs button.on{background:#16a34a}
+.rc-terrs button:disabled{opacity:.35;cursor:not-allowed}
 .sc-row:active{background:rgba(255,255,255,.05)}
 .sc-profile{background:#241a15;border-radius:24px;margin-bottom:2px}
 .sc-ava{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#fff;flex:none}
@@ -2642,7 +2683,7 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,grow:true,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v135";
+var GAME_VER="v136";
 var GAME_UPDATED="Oct 5, 2026 · 7:30 PM";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
@@ -2815,6 +2856,12 @@ function addXP(n){
    S._prestigeOffer=true;
   }
   S.msg="LEVEL UP — Level "+after+"! Unlocked: "+items.join(", ")+(_tn.length?"; New territory: "+_tn.join(", "):"")+".";
+  /* runner intro: Fixer points out your solid regulars at level 5 */
+  if(after>=5&&!S.runnerIntroSeen){
+   S.runnerIntroSeen=true;
+   var _fxc=getContact("The Fixer");
+   if(_fxc){_fxc.msgs.push({from:"them",text:"Heard u been building a name. Some of your regulars are asking to work for u — run product, handle their own clients. Say the word and I'll tell u who's solid. Check your contacts.",t:Date.now()});_fxc.unread=true;_fxc.unreadCount=(_fxc.unreadCount||0)+1;}
+  }
   return true;
  }
  return false;
@@ -2897,7 +2944,7 @@ function mkDealer(name){function m(){return 0.8+Math.random()*0.4;}var d={name:n
 function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
- props:[],dealers:[],driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:4,
+ props:[],dealers:[],runners:[],call:null,driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:4,
  msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0,biggestDeal:0,thievesBeaten:0,thievesLost:0,robberiesSurvived:0,playtime:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
@@ -2905,6 +2952,9 @@ function normalize(s){
  if(typeof s.snoozed!=="boolean")s.snoozed=false;
  if(typeof s.phoneNotif!=="boolean")s.phoneNotif=true;
  if(!s.phoneNotifSet&&s.phoneNotif!==false)s.phoneNotif=true;
+ /* runners (sub-dealer network): additive, old saves get empty */
+ if(!Array.isArray(s.runners))s.runners=[];
+ s.call=null; /* never reopen a stale call overlay on boot */
  // Migrate old strain keys to new names
  var keyMap={gsc:"maui",widow:"northern",glue:"ak47"};
  ["stash","seeds","joints"].forEach(function(store){
@@ -3141,6 +3191,8 @@ function ttTrapBack(){
   history.pushState({tt:1,view:"home"},"");
   window.addEventListener("popstate",function(e){
    /* system back pressed - navigate in-game instead of leaving */
+   /* runner call overlay closes first */
+   if(S.call&&S.call.runnerId){S.call=null;runnerCallTickStop();save();render();return;}
    /* check chat FIRST (chat is inside app view) */
    if(S.tab==="deal"&&(S.msgView&&S.msgView!=="list"&&S.msgView!=="phonebook")){
     /* in a chat - go back to message list */
@@ -3734,6 +3786,15 @@ function tabHeader(tab){
     +'<div class="msg-contact-info"><b>'+escHtml(_c.name)+'</b></div></div>'
     +'<div class="msg-nav-actions"><span class="msg-ico">'+_phoneSvg+'</span><span class="msg-ico">&#8942;</span></div></div>';
   }
+  if(mv.indexOf("__runner_")===0){
+   var _rr=runnerById(mv.slice(9));
+   if(_rr){
+    return '<div class="appnav msg-nav msg-nav-convo"><button type="button" class="msg-back" data-act="msg-back" aria-label="Back">'+_backSvg+'</button>'
+     +'<div class="msg-contact"><span class="msg-avatar" style="background:#2a4a3a">'+escHtml(_rr.name.charAt(0))+'</span>'
+     +'<div class="msg-contact-info"><b>'+escHtml(_rr.name)+'</b><span class="msg-online"><i></i>'+escHtml((RUNNER_TRAITS[_rr.trait]||{}).name||"Runner")+'</span></div></div>'
+     +'<div class="msg-nav-actions"><button type="button" class="msg-callbtn" data-act="runner-call" data-id="'+_rr.id+'" aria-label="Call">'+_phoneSvg+'</button><span class="msg-ico">&#8942;</span></div></div>';
+   }
+  }
   return '<div class="appnav msg-nav"><div class="msg-contact"><div class="msg-contact-info"><b>Messages</b><span class="msg-online"><i></i>'+(S.contacts||[]).length+' contacts</span></div></div>'
    +'<div class="msg-nav-actions"><span class="msg-ico">🔍</span><span class="msg-ico">⋮</span></div></div>';
  }
@@ -4320,6 +4381,8 @@ function render(){
    });
    h+='</div>';
   }
+  /* runners section */
+  h+=runnerPhonebookSection();
   h+='<div class="sc-seclabel">My profile</div>';
   h+=scRow("Roach","Your plug · always online",'<span class="sc-ava sc-ava-roach">🪳</span>',"__roach__",true);
   var cs=(S.contacts||[]).slice().sort(function(a,b){
@@ -4416,6 +4479,12 @@ function render(){
     +'<div class="msg-order-body">I can make the heat disappear in '+escHtml(_fxT.name)+'. Cops, gangs, Karens — I know people.</div>'
     +'<button type="button" data-act="fixer-bribe"'+(S.cash<_fxCost?" disabled":"")+'>Bribe '+money(_fxCost)+'</button></div>';
   }
+  /* runner offer: eligible regulars can be promoted */
+  if(runnerAskEligible(c)&&S.runners.length<runnerMax()){
+   h+='<div class="msg-order"><div class="msg-order-hd">🏃 <b>Bring them on?</b></div>'
+    +'<div class="msg-order-body">'+escHtml(c.name)+' is solid — '+(S.regulars[c.name]||0)+' deals, loyal. Make them a runner?</div>'
+    +'<button type="button" data-act="runner-promote" data-c="'+escHtml(c.name)+'">Make runner</button></div>';
+  }
   var _mreps=msgRepliesFor(c);
   if(_mreps.length){
    /* split: accept prompts (green, scrolling) vs dismiss (red, pinned) */
@@ -4472,6 +4541,7 @@ function render(){
   if(_mv==="list"){q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
   else if(_mv==="phonebook"){q(".pane-deal").innerHTML=tabHeader("deal")+dealPhonebook();}
   else if(_mv==="__roach__"){S.roachRead=true;S.roachUnread=0;q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
+  else if(_mv.indexOf("__runner_")===0){var _rr=runnerById(_mv.slice(9));if(_rr){q(".pane-deal").innerHTML=tabHeader("deal")+runnerDetailHTML(_rr);}else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}}
   else if(getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;_cc.unreadCount=0;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
   else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
  }
@@ -4916,6 +4986,20 @@ function mapsHTML(){
  if(!(_ae&&_ae.type==="range"&&root.contains&&root.contains(_ae)))q(".pane-settings").innerHTML=settingsHTML();
  q(".pane-browser").innerHTML=browserHTML();
  if(S.tab==="devtools"){q(".pane-devtools").innerHTML=tabHeader("devtools")+devtoolsHTML();}
+ /* runner call overlay: state-driven (S.call), survives the 15s re-render */
+ try{
+  var _rco=document.getElementById("tt-runnercall"),_rcr=(S.call&&S.call.runnerId)?runnerById(S.call.runnerId):null;
+  if(_rcr){
+   if(!_rco){_rco=document.createElement("div");_rco.id="tt-runnercall";_rco.className="runner-call";(q(".pg")||document.body).appendChild(_rco);}
+   _rco.innerHTML=runnerCallHTML(_rcr);
+   _rco.style.display="flex";
+   runnerCallTickStart();
+  }else{
+   if(_rco)_rco.style.display="none";
+   if(S.call)S.call=null;
+   runnerCallTickStop();
+  }
+ }catch(_rce){}
 }
 function getPot(pi,si){var pr=S.props[pi];return pr?pr.slots[si]:undefined;}
 function doPlant(pi,si,k){
@@ -5245,6 +5329,7 @@ function maybeAddContact(tier,qty){
  var chance=Math.min(0.80,0.10+0.10*t+Math.min(0.20,0.02*q));
  if(Math.random()>chance)return;
  var used={};S.contacts.forEach(function(c){used[c.name]=1;});
+ (S.runners||[]).forEach(function(r){used[r.name]=1;}); /* runner names never recycled */
  var _blocked={};(S.blockedNames||[]).forEach(function(n){_blocked[n]=1;});
  /* unique/secret contacts: name+number combo never repeats anywhere */
  (S.secretContacts||[]).forEach(function(c){if(c.unique)used[c.name]=1;});
@@ -5389,6 +5474,9 @@ function tickContacts(now){
   var base=contactBasePrice(pick);
   var premium=1.15+(c.loyalty/100)*0.15;
   var perUnit=Math.max(1,Math.round(base*premium));
+  /* runner absorb: before the order exists — no half-built state */
+  var _ab=tryAbsorb(c,pick,grams,now);
+  if(_ab){c.lastOrderAt=now;S.recentOrderTimes.push(now);_orderBudget--;changed=true;return;}
   c.order={k:pick.k,kind:pick.kind,g:grams,pu:perUnit,expires:now+3*3600000,sentAt:now};
   c.lastOrderAt=now;
   S.recentOrderTimes.push(now);_orderBudget--;
@@ -5472,6 +5560,19 @@ function tickContacts(now){
   c.msgs.push({from:"them",text:_txt,t:now});
   c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
   notifyMsgArrived(c,_txt);
+  changed=true;
+ });
+ /* runner recruitment asks: eligible, orderless contacts */
+ S.contacts.forEach(function(c){
+  if(c.fixer||c.brokenUp||c.order)return;
+  if(!runnerAskEligible(c))return;
+  if(c.runnerAskedAt&&now-c.runnerAskedAt<24*3600000)return;
+  if(Math.random()>0.05)return;
+  c.runnerAskedAt=now;
+  var _rtxt=RUNNER_ASK[(Math.random()*RUNNER_ASK.length)|0];
+  c.msgs.push({from:"them",text:_rtxt,t:now});
+  c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
+  notifyMsgArrived(c,_rtxt);
   changed=true;
  });
 }
@@ -6274,6 +6375,7 @@ function tick(){
    }
   }
  }
+ tickRunners(now); /* complete sales first — freed capacity is reusable */
  tickContacts(now);
  arTick(now);
  /* task expiry: remove expired orders, customer walks, loyalty hit */
@@ -7716,6 +7818,20 @@ root.addEventListener("click",function(e){
  if(a==="secret-call"){var _scn=b.dataset.c,_sc=null;
  (S.secretContacts||[]).forEach(function(c){if(c.name===_scn)_sc=c;});
  if(_sc){S._dialNum=_sc.phone;S.phoneView="keypad";save();render();}return;}
+ /* ===== RUNNERS actions ===== */
+ if(a==="runner-open"){S.msgView="__runner_"+b.dataset.id;save();render();return;}
+ if(a==="runner-promote"){promoteToRunner(b.dataset.c);return;}
+ if(a==="runner-call"){var _rco=runnerById(b.dataset.id);if(_rco){S.call={runnerId:_rco.id,startedAt:Date.now(),show:null,restockK:"",restockAmt:10};_rco._callLine=null;save();render();}return;}
+ if(a==="runner-call-end"){S.call=null;runnerCallTickStop();save();render();return;}
+ if(a==="runner-call-show"){if(S.call&&S.call.runnerId===b.dataset.id){S.call.show=S.call.show===b.dataset.v?null:b.dataset.v;if(S.call.show==="restock"&&!S.call.restockK){var _rk="";PKEYS.forEach(function(k){if(!_rk&&PRODUCTS[k]&&(S.stash[k]||0)>=10)_rk=k;});S.call.restockK=_rk;S.call.restockAmt=10;}save();render();}return;}
+ if(a==="runner-rstock-amt"){if(S.call&&S.call.runnerId===b.dataset.id){var _rk2=document.getElementById("rc-rstock-k");if(_rk2)S.call.restockK=_rk2.value;var _mx=(S.stash[S.call.restockK]||0);S.call.restockAmt=Math.min(Math.max(10,(S.call.restockAmt||10)+parseInt(b.dataset.d||"0",10)),Math.max(10,_mx));save();render();}return;}
+ if(a==="runner-rstock-go"){if(S.call&&S.call.runnerId===b.dataset.id){var _rk3=document.getElementById("rc-rstock-k");var _kk=_rk3?_rk3.value:S.call.restockK;restockRunner(b.dataset.id,_kk,S.call.restockAmt||10);var _rcr=runnerById(b.dataset.id);if(_rcr)_rcr._callLine=null;}return;}
+ if(a==="runner-collect"){collectRunner(b.dataset.id);var _rc2=S.call&&runnerById(S.call.runnerId);if(_rc2)_rc2._callLine=null;return;}
+ if(a==="runner-terr"){setRunnerTerritory(b.dataset.id,b.dataset.t);return;}
+ if(a==="runner-autotake"){toggleRunnerAuto(b.dataset.id);return;}
+ if(a==="runner-fire"){var _rf=runnerById(b.dataset.id);if(_rf&&confirm("Fire "+_rf.name+"? Stock returns to your stash."))fireRunner(b.dataset.id);return;}
+ if(a==="runner-bail"){bailRunner(b.dataset.id);return;}
+ if(a==="runner-confront"){confrontRunner(b.dataset.id);var _rc3=S.call&&runnerById(S.call.runnerId);if(_rc3)_rc3._callLine=null;return;}
  if(a==="msg-open"){var _mc=b.dataset.c;S.msgView=_mc;save();render();setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);return;}
  if(a==="heads-up-open"){hideHeadsUp();var _hn=b.dataset.c;if(_hn){S.tab="deal";S.view="app";S.msgView=_hn;navPush("deal");save();render();setTimeout(function(){var _pp2=document.querySelector(".pane-deal");if(_pp2)_pp2.scrollTop=_pp2.scrollHeight;},100);}return;}
  if(a==="msgsound"){S._suppressNotif=true;S.msgSound=(b.dataset.v==="1");save();render();return;}
@@ -8795,7 +8911,425 @@ if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
   if(document.visibilityState==="hidden")saveOnHide();});
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound};
+/* ===== RUNNERS (sub-dealer network) =====
+   All code lives in the main game IIFE — same scope as S, tick(), render().
+   New surface only; nothing here crosses an IIFE boundary. */
+var RUNNER_TRAITS={
+ networker:{name:"Networker",desc:"+50% client pull"},
+ ghost:{name:"Ghost",desc:"-40% heat per sale"},
+ hustler:{name:"Hustler",desc:"+30% sale speed, skims more"},
+ steady:{name:"Steady",desc:"+1 client slot"},
+ muscle:{name:"Muscle",desc:"-60% robbery chance"}
+};
+var RUNNER_ASK=[
+ "Yo... I know like six people who want in. Let me move weight for you?",
+ "Real talk — I could move product for u. Got the connects.",
+ "U trust me, right? Let me run a corner for u."
+];
+var RUNNER_FOES=["Jackboy","Turf Goblin","Rival Runner","Agent Slick"];
+var RUNNER_LINES={
+ dry:{
+  networker:["Yo I'm out — my people keep asking and I got nothing. Re-up me.","Dry over here and it's embarrassing. Need product.","I coulda moved weight today but the bag's empty."],
+  ghost:["Lowkey... I'm out. Keep it quiet, just re-up when u can.","Need a refill. No rush, no noise.","Empty. Slide thru discreet."],
+  hustler:["I'm DRY and money's walking past me. Fix this.","No product = no profit. U leaving money on the table.","Re-up. Now. I'm watching sales walk away."],
+  steady:["Running low on stock. Send more when u get a chance.","Almost out — just letting u know ahead of time.","Inventory's thin. Restock when convenient."],
+  muscle:["Need product. My hands are idle and I don't like that.","Out of stock. Say the word and I'll come grab it.","Bag's empty. Fix it."]},
+ cash:{
+  networker:["Got your cut stacked. Come grab it.","Money's piling up over here. Collect?","Made us some money today. Your share's waiting."],
+  ghost:["Your cut's put aside. Quiet handoff whenever.","Stacked your share. No eyes on it.","Got it tucked away. Come thru lowkey."],
+  hustler:["Your cut's ready. I move fast, u should collect fast.","Stacked up. Don't let it sit.","Money's waiting. U know the drill."],
+  steady:["Your share is ready for pickup.","Holding your cut. All accounted for.","Got your money set aside."],
+  muscle:["Your cut's here. Nobody touches it but u.","Stacked. Guarded. Come get it.","Money's safe with me. Always."]},
+ heat:{
+  networker:["Block's hot today, people talking. Keep it low.","Heard sirens twice. We lay low a bit?","Streets are buzzing — and not the good kind."],
+  ghost:["Too hot. I'm ghosting till it cools.","Eyes everywhere. Going quiet.","Not moving nothing till this passes."],
+  hustler:["Heat's up but money's money. Just saying.","Cops around. I can still work careful.","Hot out here. Your call if we pause."],
+  steady:["Heat's elevated. Might be smart to slow down.","Noticing more patrols. Heads up.","Suggest we keep volume low for a bit."],
+  muscle:["Cops sniffing around. I can handle it but stay sharp.","Heat's up. Nobody touches my corner though.","Let em come. Actually — maybe lay low."]},
+ robbed:{
+  networker:["They took everything. I'm sorry — it happened so fast.","Got hit. Took the cash and product. I tried.","Robbed. I — I'm sorry."],
+  ghost:["Wasn't careful enough. They got me.","Hit me when I was exposed. My fault.","They took it all. I shoulda seen it."],
+  hustler:["THEY TOOK MY MONEY. Find them.","Got robbed. This can't happen again.","Took everything. I'm heated."],
+  steady:["I was robbed. Lost the holding and some stock.","They got me. I'm okay, the money's gone.","Incident today — robbed. Reporting it straight."],
+  muscle:["They tried me. Won't happen twice.","Got jumped. They got the bag but they'll regret it.","Took my stash. I'll get it back."]},
+ skim:{
+  networker:["Count's... yeah it's all there. Probably.","Money? It's — let me check again.","Huh? No, everything's fine. Why?"],
+  ghost:["I don't know what u mean.","Count it yourself if u want.","...it's all there."],
+  hustler:["U accusing me? After all I move?","The count's the count. Take it or leave it.","I earn my cut. Don't start."],
+  steady:["The numbers are correct to my knowledge.","I've double-checked. It's accurate.","If there's a discrepancy I'll find it."],
+  muscle:["Watch yourself.","Count it. Then apologize.","I don't skim. Ever."]},
+ dark:{
+  networker:["Laying low. Don't blow up my phone.","Dark right now. Bail me or wait."],
+  ghost:["Ghost. As usual.","Dark. U know the drill."],
+  hustler:["This is costing me money. Bail me out.","Laying low — either way I need out."],
+  steady:["Currently unavailable. Awaiting instructions.","Dark. Will report when clear."],
+  muscle:["Sitting tight. Come get me or don't.","Dark. They got nothing on me."]},
+ idle:{
+  networker:["All quiet. Got people ready when product lands.","Chilling. Network's warm.","Ready when u are."],
+  ghost:["Quiet. Good.","Laying low. All good.","Nothing to report."],
+  hustler:["Waiting on product to flip. Let's go.","Idle and I hate it. Stock me.","Ready to work."],
+  steady:["All good here. Standing by.","No issues to report.","Ready."],
+  muscle:["Posted up. All quiet.","Holding it down.","Ready."]}
+};
+function runnerById(id){if(!S.runners)return null;for(var i=0;i<S.runners.length;i++)if(S.runners[i].id===id)return S.runners[i];return null;}
+function runnerMax(){return 1+Math.floor(pLevel()/3);}
+function runnerCapacity(r){return r.trait==="steady"?3:2;}
+function runnerSaleMs(r){var ms=15*60000;if(r.trait==="hustler")ms=Math.round(ms/1.3);return ms;}
+function runnerCut(r){var c=0.30;if(r.trust>=80)c=0.25;if(r.trait==="hustler")c+=0.05;return Math.min(0.35,Math.max(0.25,c));}
+function runnerStockOf(r,k){return (r.stock&&r.stock[k])||0;}
+function runnerState(r,now){
+ if(r.darkUntil&&now<r.darkUntil)return "dark";
+ var st=0,k;for(k in (r.stock||{}))st+=(r.stock[k]||0);
+ if(st<=0)return "dry";
+ if((r.sales||[]).length>0)return "working";
+ return "idle";
+}
+/* territory-parameterized likes — mirrors terrPrefMult's exact tier rules */
+function runnerLikesMult(k,terrId){
+ var t=terrDef(terrId||"home");
+ if(!t.likes||t.likes==="none")return 1;
+ var st=PRODUCTS[k];if(!st)return 1;
+ var isBud=GROWKEYS.indexOf(k)>=0,pref=false,lk=t.likes;
+ if(lk==="lowbud")pref=isBud&&st.tier<=2;
+ else if(lk==="midbud")pref=isBud&&st.tier>=3&&st.tier<=5;
+ else if(lk==="highend")pref=(isBud&&st.tier>=4)||(!isBud&&PKEYS.indexOf(k)>=0);
+ else if(lk==="party")pref=(k==="edibles"); /* joints excluded from runners */
+ return pref?1.15:0.9;
+}
+function runnerHeatHigh(r){
+ try{var z=terrZone(r.territory||"home");return ((z.heat.cops||0)+(z.heat.gangs||0))/2>60;}catch(e){return false;}
+}
+function runnerTraitFor(type){
+ if(type==="party")return "networker";
+ if(type==="stoner")return "ghost";
+ if(type==="connoisseur")return "hustler";
+ if(type==="casual")return "steady";
+ if(Math.random()<0.25)return "muscle";
+ var all=["networker","ghost","hustler","steady"];
+ return all[(Math.random()*all.length)|0];
+}
+function runnerAskEligible(c){
+ if(!c||c.fixer||c.brokenUp||c.isThief)return false;
+ if((c.loyalty||0)<70)return false;
+ if(!(S.regulars&&S.regulars[c.name]>=8))return false;
+ if(S.runners&&S.runners.some(function(r){return r.name===c.name;}))return false;
+ return true;
+}
+/* absorb: called in tickContacts BEFORE c.order is built. Returns runner or null. */
+function tryAbsorb(c,pick,grams,now){
+ if(!S.runners||!S.runners.length)return null;
+ if(!pick||pick.kind==="joint")return null; /* joints excluded v1 */
+ if(c&&c.isThief)return null;
+ var cands=[],i,r;
+ for(i=0;i<S.runners.length;i++){
+  r=S.runners[i];
+  if(!r.autoTake)continue;
+  var st=runnerState(r,now);
+  if(st!=="idle"&&st!=="working")continue;
+  if((r.sales||[]).length>=runnerCapacity(r))continue;
+  if(runnerStockOf(r,pick.k)<grams)continue;
+  cands.push(r);
+ }
+ if(!cands.length)return null;
+ var order=cands.slice().sort(function(a,b){return a.id<b.id?-1:(a.id>b.id?1:0);});
+ var first={};
+ order.forEach(function(x){if(!first[x.territory])first[x.territory]=x.id;});
+ var scored=cands.map(function(x){
+  var w=1;
+  if(runnerLikesMult(pick.k,x.territory)>1)w+=2;
+  w+=(runnerCapacity(x)-(x.sales||[]).length)*0.5;
+  if(x.trait==="networker")w*=1.5;
+  if(first[x.territory]!==x.id)w*=0.75; /* turf crowding */
+  return {r:x,w:w};
+ });
+ var tot=0,j;scored.forEach(function(s){tot+=s.w;});
+ var roll=Math.random()*tot,acc=0,chosen=scored[0].r;
+ for(j=0;j<scored.length;j++){acc+=scored[j].w;if(roll<=acc){chosen=scored[j].r;break;}}
+ chosen.stock[pick.k]-=grams; /* deduct at assignment */
+ var tid=chosen.territory||"home",t=terrDef(tid);
+ var pu=Math.max(1,Math.round(contactBasePrice(pick)*t.price*runnerLikesMult(pick.k,tid)*gearPriceMult()));
+ chosen.sales.push({k:pick.k,g:grams,pu:pu,endsAt:now+runnerSaleMs(chosen)});
+ return chosen;
+}
+/* heat mirror of dealTerrHeat, but for the RUNNER's territory */
+function runnerDealHeat(r,g){
+ var tid=r.territory||"home",base=2+g,big=g>=5,mult=r.trait==="ghost"?0.6:1;
+ addTerrHeat("cops",Math.ceil(base*0.6*(big?1.5:1)*mult),tid);
+ addTerrHeat("gangs",Math.ceil(base*0.5*mult),tid);
+ addTerrHeat("fam",Math.ceil(base*0.35*mult),tid);
+}
+function completeRunnerSale(r,sale,now){
+ var rev=sale.pu*sale.g,cut=runnerCut(r),mine=Math.floor(rev*(1-cut));
+ var skimCh=(100-r.trust)*0.0005;
+ if(r.trait==="hustler")skimCh+=0.01;
+ if(!(r.noSkimUntil&&now<r.noSkimUntil)&&Math.random()<skimCh){
+  mine-=Math.floor(mine*(0.10+Math.random()*0.10));
+  r.lastSkimAt=now;
+ }
+ mine=Math.max(0,mine);
+ r.holding=(r.holding||0)+mine;
+ r.salesDone=(r.salesDone||0)+1;
+ if(r.salesDone%10===0)r.trust=Math.min(100,r.trust+2);
+ runnerDealHeat(r,sale.g);
+ var z=terrZone(r.territory||"home");
+ if(Math.random()<(z.heat.cops/100)*0.02){runnerBusted(r,now);return;}
+ var robCh=(r.holding>5000?0.03:0)+(z.heat.gangs/100)*0.02;
+ if(r.trait==="muscle")robCh*=0.4;
+ if(Math.random()<robCh)runnerRobbed(r,now);
+ if(S.stats)S.stats.deals=(S.stats.deals||0)+1;
+ if(S.statsToday&&S.statsToday.date===new Date().toISOString().slice(0,10))S.statsToday.orders=(S.statsToday.orders||0)+1;
+}
+function runnerBusted(r,now){
+ r.darkUntil=now+(4+Math.random()*4)*3600000;
+ r.stock={};r.sales=[];
+ r.trust=Math.max(0,r.trust-15);
+ pushContactNotif("🚔 "+r.name+" got busted! Stock seized.");
+ if(r.trust<=0)runnerQuit(r,"Trust hit zero.");
+}
+function runnerRobbed(r,now){
+ var foe=RUNNER_FOES[(Math.random()*RUNNER_FOES.length)|0];
+ var cashHit=Math.floor((r.holding||0)*0.5);
+ r.holding=(r.holding||0)-cashHit;
+ var sk=Object.keys(r.stock||{});
+ if(sk.length){var k=sk[(Math.random()*sk.length)|0];r.stock[k]=Math.max(0,(r.stock[k]||0)-Math.ceil((r.stock[k]||0)/2));}
+ r.trust=Math.max(0,r.trust-5);
+ r.robbedAt=now;
+ pushContactNotif("🔫 "+foe+" robbed "+r.name+"! Lost "+money(cashHit)+".");
+ if(r.trust<=0)runnerQuit(r,"Trust hit zero.");
+}
+function runnerQuit(r,reason){
+ for(var k in (r.stock||{}))S.stash[k]=(S.stash[k]||0)+(r.stock[k]||0);
+ S.runners=S.runners.filter(function(x){return x.id!==r.id;});
+ if(S.call&&S.call.runnerId===r.id)S.call=null;
+ pushContactNotif("🚪 "+r.name+" quit. "+(reason||""));
+}
+function tickRunners(now){
+ if(!S.runners||!S.runners.length)return;
+ for(var i=0;i<S.runners.length;i++){
+  var r=S.runners[i];
+  if(!r.sales)r.sales=[];
+  if(!r.stock)r.stock={};
+  if(r.darkUntil&&now>=r.darkUntil){r.darkUntil=0;r.robbedAt=0;}
+  var st=runnerState(r,now);
+  if(st==="dry"){
+   if(!r.drySince)r.drySince=now;
+   else if(now-r.drySince>=24*3600000){r.drySince=now;r.trust=Math.max(0,r.trust-5);if(r.trust<=0){runnerQuit(r,"Left dry too long.");continue;}}
+  }else r.drySince=0;
+  if(r.sales.length){
+   r.sales.sort(function(a,b){return a.endsAt-b.endsAt;});
+   var done=[],j;
+   for(j=r.sales.length-1;j>=0;j--)if(now>=r.sales[j].endsAt)done.unshift(r.sales.splice(j,1)[0]);
+   for(j=0;j<done.length;j++)completeRunnerSale(r,done[j],now);
+  }
+ }
+}
+function promoteToRunner(name){
+ var c=getContact(name);
+ if(!c||!runnerAskEligible(c))return;
+ if(S.runners.length>=runnerMax()){S.msg="No open runner slots — level up for more.";save();render();return;}
+ S.contacts=S.contacts.filter(function(x){return x!==c;});
+ S.tasks=(S.tasks||[]).filter(function(t){return t.name!==name;});
+ var r={id:"r"+Date.now().toString(36)+Math.random().toString(36).slice(2,7),
+  name:c.name,type:c.type,trait:runnerTraitFor(c.type),
+  territory:(S.terr&&S.terr.active)||"home",
+  stock:{},holding:0,trust:50,autoTake:true,darkUntil:0,
+  sales:[],salesDone:0,lastSkimAt:0,robbedAt:0,drySince:0};
+ S.runners.push(r);
+ S.msg=c.name+" runs for you now. Stock them up in Contacts.";
+ save();render();
+}
+function collectRunner(id){
+ var r=runnerById(id);if(!r||!(r.holding>0))return;
+ var amt=Math.floor(r.holding);r.holding=0;r.lastCollectAt=Date.now();
+ S.cash+=amt;
+ if(S.stats)S.stats.earned=(S.stats.earned||0)+amt;
+ if(S.statsToday&&S.statsToday.date===new Date().toISOString().slice(0,10))S.statsToday.earned=(S.statsToday.earned||0)+amt;
+ S.msg="Collected "+money(amt)+" from "+r.name+".";
+ save();render();
+}
+function restockRunner(id,k,g){
+ var r=runnerById(id);if(!r||!PRODUCTS[k])return;
+ g=Math.max(10,Math.floor(g||0));
+ var have=(S.stash[k]||0);
+ if(have<g){S.msg="Not enough "+PRODUCTS[k].name+" in stash.";save();render();return;}
+ S.stash[k]-=g;
+ r.stock[k]=(r.stock[k]||0)+g;
+ var now=Date.now();
+ if(r.drySince&&now-r.drySince<3600000)r.trust=Math.min(100,r.trust+5);
+ S.msg="Stocked "+r.name+" with "+g+"g "+PRODUCTS[k].name+".";
+ save();render();
+}
+function setRunnerTerritory(id,tid){
+ var r=runnerById(id);if(!r)return;
+ var t=terrDef(tid);if(!t||t.id!==tid)return;
+ if(pLevel()<t.unlock){S.msg=t.name+" unlocks at level "+t.unlock+".";save();render();return;}
+ var count=0;S.runners.forEach(function(x){if(x.territory===tid)count++;});
+ if(count>=2&&r.territory!==tid){S.msg="Turf's crowded — max 2 runners in "+t.name+".";save();render();return;}
+ r.territory=tid;
+ S.msg=r.name+" posted up in "+t.name+".";
+ save();render();
+}
+function toggleRunnerAuto(id){
+ var r=runnerById(id);if(!r)return;
+ r.autoTake=!r.autoTake;
+ S.msg=r.name+(r.autoTake?" will take new clients.":" won't take new clients.");
+ save();render();
+}
+function fireRunner(id){
+ var r=runnerById(id);if(!r)return;
+ for(var k in (r.stock||{}))S.stash[k]=(S.stash[k]||0)+(r.stock[k]||0);
+ S.runners=S.runners.filter(function(x){return x.id!==r.id;});
+ if(S.call&&S.call.runnerId===r.id)S.call=null;
+ S.msg=r.name+" is out. Stock returned to your stash.";
+ save();render();
+}
+function bailRunner(id){
+ var r=runnerById(id);if(!r||!r.darkUntil)return;
+ if(S.cash<1000){S.msg="Bail is $1,000 — not enough cash.";save();render();return;}
+ S.cash-=1000;r.darkUntil=0;
+ S.msg=r.name+" is out. Stock's gone, but they're back.";
+ save();render();
+}
+function confrontRunner(id){
+ var r=runnerById(id);if(!r)return;
+ var now=Date.now();
+ if(Math.random()*100<r.trust){
+  r.trust=Math.min(100,r.trust+10);r.noSkimUntil=now+24*3600000;
+  S.msg=r.name+" straightened up. Clean for 24h.";
+ }else{
+  r.trust=Math.max(0,r.trust-10);
+  S.msg=r.name+" didn't take that well. Trust down.";
+  if(r.trust<=0)runnerQuit(r,"Trust hit zero.");
+ }
+ save();render();
+}
+/* call overlay: state-driven (S.call), drawn by render path */
+var _rcTimer=null;
+function runnerCallTickStart(){
+ if(_rcTimer)return;
+ _rcTimer=setInterval(function(){
+  if(!(S.call&&S.call.runnerId)){runnerCallTickStop();return;}
+  var el=document.getElementById("rc-timer");
+  if(el)el.textContent=runnerCallDur();
+ },1000);
+}
+function runnerCallTickStop(){if(_rcTimer){clearInterval(_rcTimer);_rcTimer=null;}}
+function runnerCallDur(){
+ if(!(S.call&&S.call.startedAt))return "00:00";
+ var s=Math.max(0,Math.floor((Date.now()-S.call.startedAt)/1000)),m=Math.floor(s/60);s=s%60;
+ return (m<10?"0":"")+m+":"+(s<10?"0":"")+s;
+}
+function runnerCallLine(r){
+ var now=Date.now(),st=runnerState(r,now),trait=r.trait||"steady";
+ function pick(p){return p[(Math.random()*p.length)|0];}
+ var L=RUNNER_LINES;
+ if(st==="dark")return pick(L.dark[trait]||L.dark.steady);
+ if(r.robbedAt&&now-r.robbedAt<3600000)return pick(L.robbed[trait]);
+ if(st==="dry")return pick(L.dry[trait]);
+ if((r.holding||0)>=1000)return pick(L.cash[trait]);
+ if(runnerHeatHigh(r))return pick(L.heat[trait]);
+ if(r.lastSkimAt&&now-r.lastSkimAt<24*3600000)return pick(L.skim[trait]);
+ return pick(L.idle[trait]);
+}
+function runnerStatusDot(st){return st==="working"?"🟢":st==="dry"?"🟠":st==="dark"?"🔴":"⚪";}
+function runnerPhonebookSection(){
+ var rns=S.runners||[];
+ if(!rns.length)return "";
+ var now=Date.now(),h='<div class="sc-seclabel">🏃 Runners</div><div class="sc-group">';
+ rns.forEach(function(r,i){
+  var st=runnerState(r,now),tr=RUNNER_TRAITS[r.trait]||RUNNER_TRAITS.steady;
+  var sub=runnerStatusDot(st)+" "+tr.name+" · "+escHtml(terrDef(r.territory||"home").name);
+  if((r.holding||0)>=1000)sub+=" · 💰"+money(Math.floor(r.holding));
+  else if(st==="dry")sub+=" · dry";
+  else if(st==="dark")sub+=" · dark";
+  h+='<button type="button" class="sc-row'+(i===rns.length-1?" last":"")+'" data-act="runner-open" data-id="'+r.id+'">'
+   +'<span class="sc-ava" style="background:#2a4a3a">'+escHtml(String(r.name||"?").charAt(0).toUpperCase())+'</span>'
+   +'<span class="sc-nm"><b>'+escHtml(r.name)+'</b><i>'+sub+'</i></span></button>';
+ });
+ return h+'</div>';
+}
+function runnerDetailHTML(r){
+ var now=Date.now(),st=runnerState(r,now),tr=RUNNER_TRAITS[r.trait]||RUNNER_TRAITS.steady;
+ var t=terrDef(r.territory||"home");
+ var h='<div class="rn-detail">';
+ h+='<div class="rn-head"><span class="sc-ava" style="background:#2a4a3a;font-size:28px;width:56px;height:56px;line-height:56px;">'+escHtml(String(r.name||"?").charAt(0).toUpperCase())+'</span>'
+  +'<div class="rn-headinfo"><b>'+escHtml(r.name)+'</b><span>'+runnerStatusDot(st)+' '+st+' · '+escHtml(tr.name)+'</span><span class="rn-traitdesc">'+escHtml(tr.desc)+'</span></div></div>';
+ /* trust bar */
+ h+='<div class="rn-row"><span>Trust</span><div class="rn-bar"><div class="rn-barfill" style="width:'+Math.round(r.trust)+'%"></div></div><b>'+Math.round(r.trust)+'</b></div>';
+ h+='<div class="rn-row"><span>Territory</span><b>'+escHtml(t.name)+'</b></div>';
+ h+='<div class="rn-row"><span>Holding (your cut)</span><b>'+money(Math.floor(r.holding||0))+'</b>'+((r.holding||0)>=1000?'<span class="rn-badge">💰 ready</span>':"")+'</div>';
+ h+='<div class="rn-row"><span>Clients</span><b>'+(r.sales||[]).length+'/'+runnerCapacity(r)+'</b></div>';
+ h+='<div class="rn-row"><span>Auto-take</span><b>'+(r.autoTake?"ON":"OFF")+'</b></div>';
+ /* stock */
+ h+='<div class="rn-seclabel">Stock</div>';
+ var sk=Object.keys(r.stock||{}),hasStock=false;
+ sk.forEach(function(k){if((r.stock[k]||0)>0){hasStock=true;h+='<div class="rn-row"><span>'+escHtml(PRODUCTS[k]?PRODUCTS[k].name:k)+'</span><b>'+(r.stock[k]||0)+'g</b></div>';}});
+ if(!hasStock)h+='<div class="rn-empty">Dry — restock to get them moving.</div>';
+ /* active sales */
+ if((r.sales||[]).length){
+  h+='<div class="rn-seclabel">Active sales</div>';
+  r.sales.forEach(function(s){
+   var left=Math.max(0,s.endsAt-now),mm=Math.floor(left/60000),ss=Math.floor(left%60000/1000);
+   h+='<div class="rn-row"><span>'+s.g+'g '+escHtml(PRODUCTS[s.k]?PRODUCTS[s.k].name:s.k)+'</span><b>'+(mm<10?"0":"")+mm+':'+(ss<10?"0":"")+ss+'</b></div>';
+  });
+ }
+ if(st==="dark")h+='<div class="rn-warn">Dark — busted. Bail them out or wait.</div>';
+ /* actions */
+ h+='<div class="rn-actions">';
+ h+='<button type="button" class="rn-callbtn" data-act="runner-call" data-id="'+r.id+'">📞 Call</button>';
+ h+='<button type="button" data-act="runner-collect" data-id="'+r.id+'"'+((r.holding||0)<1?" disabled":"")+'>Collect '+money(Math.floor(r.holding||0))+'</button>';
+ if(st==="dark")h+='<button type="button" data-act="runner-bail" data-id="'+r.id+'">Bail $1,000</button>';
+ h+='<button type="button" data-act="runner-autotake" data-id="'+r.id+'">Auto-take: '+(r.autoTake?"ON":"OFF")+'</button>';
+ h+='<button type="button" data-act="runner-fire" data-id="'+r.id+'" class="rn-danger">Fire</button>';
+ h+='</div></div>';
+ return h;
+}
+function runnerCallHTML(r){
+ var now=Date.now(),st=runnerState(r,now),tr=RUNNER_TRAITS[r.trait]||RUNNER_TRAITS.steady;
+ var line=r._callLine||(r._callLine=runnerCallLine(r));
+ var h='<div class="rc-head"><span class="sc-ava" style="background:#2a4a3a">'+escHtml(String(r.name||"?").charAt(0).toUpperCase())+'</span>'
+  +'<div class="rc-headinfo"><b>'+escHtml(r.name)+'</b><span><span id="rc-timer">'+runnerCallDur()+'</span> · '+escHtml(tr.name)+'</span></div>'
+  +'<button type="button" class="rc-end" data-act="runner-call-end">End</button></div>';
+ h+='<div class="rc-body"><div class="msg-row them"><div class="msg-bub">'+escHtml(line)+'<span class="msg-bub-t">'+fmtMsgTime(now)+'</span></div></div>';
+ if(st==="dry")h+='<div class="rn-badge">🟠 dry — needs restock</div>';
+ if((r.holding||0)>=1000)h+='<div class="rn-badge">💰 '+money(Math.floor(r.holding))+' ready to collect</div>';
+ if(st==="dark")h+='<div class="rn-warn">Dark — busted.</div>';
+ h+='</div><div class="rc-actions">';
+ h+='<button type="button" data-act="runner-call-show" data-id="'+r.id+'" data-v="restock">Restock</button>';
+ h+='<button type="button" data-act="runner-collect" data-id="'+r.id+'"'+((r.holding||0)<1?" disabled":"")+'>Collect '+money(Math.floor(r.holding||0))+'</button>';
+ h+='<button type="button" data-act="runner-call-show" data-id="'+r.id+'" data-v="terr">Territory</button>';
+ h+='<button type="button" data-act="runner-autotake" data-id="'+r.id+'">Auto: '+(r.autoTake?"ON":"OFF")+'</button>';
+ if(st==="dark")h+='<button type="button" data-act="runner-bail" data-id="'+r.id+'">Bail $1k</button>';
+ if(r.lastSkimAt&&now-r.lastSkimAt<24*3600000&&!(r.noSkimUntil&&now<r.noSkimUntil))h+='<button type="button" data-act="runner-confront" data-id="'+r.id+'">Confront</button>';
+ h+='<button type="button" data-act="runner-fire" data-id="'+r.id+'" class="rn-danger">Fire</button>';
+ h+='</div>';
+ /* restock panel */
+ if(S.call&&S.call.show==="restock"){
+  var opts="",sel=S.call.restockK||"";
+  PKEYS.forEach(function(k){
+   if(!PRODUCTS[k]||(S.stash[k]||0)<10)return;
+   opts+='<option value="'+k+'"'+(sel===k?" selected":"")+'>'+escHtml(PRODUCTS[k].name)+' ('+(S.stash[k]||0)+'g)</option>';
+  });
+  var amt=S.call.restockAmt||10;
+  h+='<div class="rc-panel"><div class="rc-panelhd">Restock (min 10g)</div>'
+   +'<div class="rc-stepper"><select id="rc-rstock-k">'+opts+'</select>'
+   +'<button type="button" data-act="runner-rstock-amt" data-id="'+r.id+'" data-d="-10">−</button><b>'+amt+'g</b><button type="button" data-act="runner-rstock-amt" data-id="'+r.id+'" data-d="10">+</button>'
+   +'<button type="button" data-act="runner-rstock-go" data-id="'+r.id+'">Stock</button></div></div>';
+ }
+ /* territory panel */
+ if(S.call&&S.call.show==="terr"){
+  h+='<div class="rc-panel"><div class="rc-panelhd">Post up in…</div><div class="rc-terrs">';
+  TERRITORIES.forEach(function(t){
+   var locked=pLevel()<t.unlock,n=0;
+   S.runners.forEach(function(x){if(x.territory===t.id)n++;});
+   h+='<button type="button" data-act="runner-terr" data-id="'+r.id+'" data-t="'+t.id+'"'+(locked||(n>=2&&r.territory!==t.id)?" disabled":"")+' class="'+(r.territory===t.id?"on":"")+'">'
+    +escHtml(t.name)+(locked?" 🔒"+t.unlock:"")+(n>=2&&r.territory!==t.id?" (full)":"")+'</button>';
+  });
+  h+='</div></div>';
+ }
+ return h;
+}
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine};
 })();
 </script>
 <style>
