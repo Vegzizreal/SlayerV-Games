@@ -37,12 +37,13 @@ if('serviceWorker' in navigator){
 (function(){
 "use strict";
 if(window.hatchWidget)return;
-var KEY="terpene-tycoon.pages.save.v1";
+var KEY="trap-tycoon.pages.save.v1",OLDKEY="terpene-tycoon.pages.save.v1";
 function ls(){try{return window.localStorage||null;}catch(e){return null;}}
 window.hatchWidget={
  getState:function(def){
   var s=ls(),raw=null;
   if(s){try{raw=s.getItem(KEY);}catch(e){}}
+  if(!raw&&s){try{raw=s.getItem(OLDKEY);}catch(e){}if(raw){try{s.setItem(KEY,raw);s.removeItem(OLDKEY);}catch(e){}}}
   if(raw){try{var o=JSON.parse(raw);if(o&&typeof o==="object"&&!Array.isArray(o))return o;}catch(e){}}
   var d=JSON.parse(JSON.stringify(def));
   if(s){try{s.setItem(KEY,JSON.stringify(d));}catch(e){}}
@@ -78,7 +79,7 @@ window.hatchWidget={
    <span class="sh-heaticon">🔥</span>
    <span class="sh-heatval shade-qheat">Home 0%</span>
   </div>
-  <div class="shade-title"><span>Notifications</span><button type="button" class="shade-clearbtn" data-act="shade-clear">Clear all</button></div>
+  <div class="shade-title"><span>Notifications</span><span style="display:flex;gap:8px;align-items:center"><button type="button" class="shade-clearbtn" data-act="shade-clear">Clear all</button><button type="button" class="shade-snoozebtn" data-act="shade-snooze" aria-label="Snooze popups" title="Snooze popups" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">🔕</button><button type="button" class="shade-phonebtn" data-act="shade-phonenotif" aria-label="Phone notifications" title="Phone notifications" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:999px;height:32px;min-width:52px;font-size:11px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0 10px;gap:4px">📲<span class="shade-phonetoggle">OFF</span></button><button type="button" class="shade-powerbtn" data-act="power" aria-label="Power" style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:#fff;border-radius:50%;width:32px;height:32px;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">&#9211;</button></span></div>
   <div class="shade-list"></div>
  </div>
  <div class="android-appbar" hidden><button type="button" class="android-backbtn" data-act="android-back" aria-label="Back">&#8592;</button><span class="android-apptitle">Grow</span></div>
@@ -120,7 +121,6 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="settings" data-hwkeys="settings game settings options wallpaper"><span class="aa-icon" style="background:linear-gradient(135deg,#a8b0bc,#6b7280)"><svg viewBox="0 0 48 48" width="36" height="36"><g fill="#fff"><rect x="20.5" y="5" width="7" height="11" rx="2"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(45 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(90 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(135 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(180 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(225 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(270 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(315 24 24)"/><circle cx="24" cy="24" r="10.5"/></g><circle cx="24" cy="24" r="5" fill="#6b7280"/></svg></span><span class="aa-label">Settings</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="deal" data-mv="phonebook" data-hwkeys="phone lobby deal call"><span class="aa-icon" style="background:linear-gradient(135deg,#4ade80,#16a34a)"><svg viewBox="0 0 48 48" width="34" height="34"><path d="M13 6C9.7 6 7 8.7 7 12c0 12.4 10.1 24.5 22.5 26 3.9.5 7-2.6 6.5-6.5l-.7-4.6c-.3-1.9-2.1-3.1-4-2.7l-4.9 1.2c-3.8-2-6.9-5.1-8.9-8.9l1.2-4.9c.4-1.9-.8-3.7-2.7-4z" fill="#fff"/></svg></span><span class="aa-label">Phone</span></button>
    <button type="button" class="android-app" data-act="dev-disable" data-hwkeys="dev tools debug" id="aa-devapp" hidden><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M16 14l-8 10 8 10M32 14l8 10-8 10M28 10l-8 28" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="aa-label">Dev</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="notes" data-hwkeys="notes contacts numbers"><span class="aa-badge" id="aa-notesbadge" hidden></span><span class="aa-icon" style="background:linear-gradient(135deg,#fbbf24,#f59e0b)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M12 8h24a3 3 0 0 1 3 3v27a3 3 0 0 1-3 3H12a3 3 0 0 1-3-3V11a3 3 0 0 1 3-3z" fill="#fff"/><rect x="18" y="4" width="12" height="7" rx="2" fill="#fff" stroke="#f59e0b" stroke-width="2"/><path d="M15 22h18M15 28h18M15 34h12" stroke="#f59e0b" stroke-width="2.5" stroke-linecap="round"/></svg></span><span class="aa-label">Notes</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="stash" data-hwkeys="my files inventory stash"><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M5 13a3 3 0 0 1 3-3h11l4 5h14a3 3 0 0 1 3 3v3H5z" fill="#7db4fb"/><path d="M5 19h38v13a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3z" fill="#bcd8fe"/></svg></span><span class="aa-label">My Files</span></button>
    </div>
   </div>
@@ -158,7 +158,6 @@ window.hatchWidget={
  <div class="pg-pane pane-clinic" hidden></div>
  <div class="pg-pane pane-settings" hidden></div>
  <div class="pg-pane pane-devtools" hidden></div>
- <div class="pg-pane pane-notes" hidden></div>
  <div class="pg-pane pane-browser" hidden></div>
  <div class="pg-pane pane-maps" hidden></div>
  <div class="pg-pane pane-rep" hidden></div>
@@ -174,6 +173,7 @@ window.hatchWidget={
   <div class="lock-date" id="lock-date"></div>
   <div class="lock-notifs" id="lock-notifs"></div>
   <button type="button" class="lock-reup" id="lock-reup" data-act="reup" hidden>&#10227; Update available &mdash; tap to re-up</button>
+<div class="err-bubble" id="err-bubble" onclick="ttHideErr()"><b>Download failed</b><br><span id="err-reason">Unknown error</span><span class="err-hint">Tap this bubble to dismiss. Tap ? to show again.</span></div>
   <div class="lock-fp" id="lock-fp">
    <svg viewBox="0 0 48 48" width="56" height="56" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round">
     <path d="M12 20c0-6 5-10 12-10s12 4 12 10c0 8-2 14-4 20"/>
@@ -184,11 +184,12 @@ window.hatchWidget={
    </svg>
   </div>
   <div class="lock-hint">Tap fingerprint to unlock</div>
-  <div class="lock-sync" style="margin-top:18px;width:80%;max-width:280px">
+  <div class="lock-ver" id="lock-ver" style="position:absolute;bottom:12px;right:14px;color:#e5484d;font-size:11px;font-weight:700;opacity:.9"></div>
+  <div class="lock-sync" style="margin-top:12px;width:80%;max-width:260px">
    <input id="lock-synccode" maxlength="6" placeholder="SYNC CODE" autocomplete="off"
-    style="width:100%;padding:12px;font-size:18px;text-align:center;letter-spacing:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;box-sizing:border-box;font-family:monospace;text-transform:uppercase">
+    style="width:100%;padding:9px;font-size:15px;text-align:center;letter-spacing:5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;box-sizing:border-box;font-family:monospace;text-transform:uppercase">
    <button type="button" id="lock-syncbtn" data-act="lock-sync"
-    style="width:100%;margin-top:8px;padding:12px;background:linear-gradient(180deg,#10b981,#059669);color:#fff;border:0;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer">Load Save From Code</button>
+    style="width:100%;margin-top:6px;padding:9px;background:linear-gradient(180deg,#10b981,#059669);color:#fff;border:0;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer">Load Save From Code</button>
    <div id="lock-syncstatus" style="text-align:center;font-size:12px;min-height:1.4em;margin-top:6px;color:#e5484d"></div>
   </div>
  </div>
@@ -598,16 +599,22 @@ body.electron-phone #ewin-controls{display:flex}
 .tt-termgate .tt-steps b{color:#0f0}
 .tt-termgate a.tt-dl{display:inline-block;margin-top:8px;padding:12px 28px;background:#0f0;color:#000;font-weight:bold;text-decoration:none;font-size:14px}
 .tt-termgate a.tt-dl:hover{background:#4f4}
-.lock-time{font-size:72px;font-weight:200;color:#fff;letter-spacing:-2px}
-.lock-date{font-size:16px;color:#aaa;margin-top:4px}
-.lock-notifs{margin-top:24px;max-width:85%;display:flex;flex-direction:column;gap:8px}
-.lock-reup{margin-top:12px;max-width:85%;border:none;border-radius:16px;padding:13px 20px;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;font-size:14px;font-weight:800;letter-spacing:.5px;cursor:pointer;box-shadow:0 4px 16px rgba(22,163,74,.45)}
+.lock-time{font-size:60px;font-weight:200;color:#fff;letter-spacing:-2px;line-height:1.1}
+.lock-date{font-size:14px;color:#aaa;margin-top:2px}
+.lock-notifs{margin-top:16px;max-width:85%;width:85%;display:flex;flex-direction:column;gap:6px}
+.lock-reup{margin-top:12px;max-width:85%;border:none;border-radius:10px;padding:8px 16px;background:linear-gradient(135deg,#16a34a,#15803d);color:#fff;font-size:13px;font-weight:700;letter-spacing:.3px;cursor:pointer;box-shadow:0 4px 16px rgba(22,163,74,.45);position:relative;overflow:hidden}.lock-reup .rup-fill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(180deg,#fde047 0%,#f97316 35%,#dc2626 70%,#7c2d12 100%);transition:width .3s ease;width:0;box-shadow:0 0 20px rgba(249,115,22,.8),inset 0 2px 4px rgba(255,255,255,.3);overflow:hidden}.lock-reup .rup-fill::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 30%,rgba(255,255,200,.5) 0%,transparent 40%),radial-gradient(ellipse at 70% 60%,rgba(255,200,100,.4) 0%,transparent 35%),radial-gradient(ellipse at 40% 80%,rgba(255,150,50,.35) 0%,transparent 30%);animation:lava-bubble 1.2s ease-in-out infinite alternate}.lock-reup .rup-fill::after{content:"";position:absolute;top:0;bottom:0;right:0;width:3px;background:#fef08a;box-shadow:0 0 12px 4px rgba(253,224,71,.9)}@keyframes lava-bubble{from{transform:translateY(-2px) scale(1)}to{transform:translateY(2px) scale(1.03)}}.lock-reup .rup-lbl{position:relative;z-index:1}.lock-reup.prog{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);cursor:default;box-shadow:none}.lock-reup.st-purple{background:linear-gradient(135deg,#7c3aed,#6d28d9)}.lock-reup.st-red{background:linear-gradient(135deg,#dc2626,#991b1b)}
 .lock-reup[hidden]{display:none}
-.lock-notif{background:rgba(255,255,255,.08);border-radius:12px;padding:10px 14px;font-size:13px;color:#ddd;backdrop-filter:blur(10px)}
-.lock-fp{position:absolute;bottom:110px;width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;animation:lockPulse 2.5s infinite}
+.err-info{width:18px;height:18px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:transparent;color:#fff;font-size:10px;font-weight:800;cursor:pointer;line-height:1;padding:0;position:relative;z-index:2;flex-shrink:0}
+.err-info:active{transform:scale(.9)}
+.err-bubble{position:fixed;left:50%;bottom:32%;transform:translateX(-50%) translateY(8px);max-width:82vw;background:#1c1c26;border:1px solid rgba(248,113,113,.4);border-radius:14px;padding:14px 16px;font-size:13px;line-height:1.5;color:#e5e7eb;opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;z-index:9999;box-shadow:0 8px 32px rgba(0,0,0,.5)}
+.err-bubble.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}
+.err-bubble b{color:#f87171}
+.err-bubble .err-hint{display:block;margin-top:8px;color:#6b7280;font-size:11px}
+.lock-notif{background:rgba(255,255,255,.08);border-radius:10px;padding:8px 12px;font-size:12px;color:#ddd;backdrop-filter:blur(10px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lock-fp{position:absolute;bottom:96px;width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;animation:lockPulse 2.5s infinite}
 .lock-fp:active{background:rgba(74,143,247,.25);border-color:#4a8ff7;transform:scale(.95)}
 .lock-fp svg{opacity:.8}
-.lock-hint{position:absolute;bottom:60px;font-size:13px;color:#888;animation:lockPulse 2s infinite}
+.lock-hint{position:absolute;bottom:52px;font-size:13px;color:#888;animation:lockPulse 2s infinite}
 @keyframes lockPulse{0%,100%{opacity:.5}50%{opacity:1}}
 .android-gesturenav{flex:none;order:9;display:flex;justify-content:center;align-items:center;padding:8px 0 10px;background:transparent;position:relative;z-index:50}
 .gesture-pill{width:120px;height:4px;border-radius:2px;background:rgba(255,255,255,.85);box-shadow:0 1px 4px rgba(0,0,0,.4)}
@@ -959,6 +966,25 @@ body.electron-phone #ewin-controls{display:flex}
 .roach-msg{font-size:20px;font-weight:700;color:#ece9e2;line-height:1.5;margin-bottom:16px;font-style:italic}
 .roach-msg b{color:#e5484d}
 .roach-card button{background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;font-weight:900;border:0;border-radius:10px;padding:12px 32px;font-size:19px;cursor:pointer}
+/* AirDrop contact popup */
+.airdrop-pop{position:fixed;inset:0;z-index:10000;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.6);animation:spFade .25s ease-out}
+.airdrop-card{background:linear-gradient(180deg,#1e1e24,#16161a);border:1px solid #3a3a5a;border-bottom:0;border-radius:20px 20px 0 0;padding:24px 20px 28px;width:100%;max-width:340px;text-align:center;animation:adSlideUp .4s cubic-bezier(.2,1.2,.4,1);box-shadow:0 -8px 40px rgba(0,0,0,.5)}
+@keyframes adSlideUp{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+.airdrop-head{font-size:15px;font-weight:700;color:#9ca3af;margin-bottom:14px}
+.airdrop-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#7dd3fc,#3b82f6);margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:2em;font-weight:800;color:#fff;animation:adBounce 1.2s ease-in-out infinite}
+@keyframes adBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.airdrop-name{font-size:1.3em;font-weight:800;margin-bottom:4px}
+.airdrop-phone{color:#9ca3af;font-size:.95em;margin-bottom:10px}
+.airdrop-type{display:inline-block;font-size:.75em;padding:4px 14px;border-radius:20px;background:#1e3a5f;color:#7dd3fc;font-weight:700;margin-bottom:18px;text-transform:capitalize}
+.airdrop-btns{display:flex;gap:10px}
+.airdrop-btns button{flex:1;padding:14px;border:0;border-radius:12px;font-weight:800;font-size:1em;cursor:pointer}
+.airdrop-accept{background:linear-gradient(180deg,#22c55e,#16a34a);color:#fff}
+.airdrop-decline{background:#2a2a3a;color:#9ca3af}
+.airdrop-confirm{position:fixed;inset:0;z-index:10001;display:flex;align-items:center;justify-content:center;pointer-events:none;animation:spFade .25s ease-out}
+.airdrop-confirm-card{background:linear-gradient(180deg,#1a2a1a,#141a14);border:1px solid #4ade80;border-radius:14px;padding:18px 28px;font-size:1.1em;font-weight:700;color:#4ade80;animation:adFlyIn .5s cubic-bezier(.2,1.4,.4,1);box-shadow:0 8px 40px rgba(74,222,128,.2)}
+@keyframes adFlyIn{from{transform:translateY(40px) scale(.8);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
+.airdrop-confirm.fadeout{animation:spFadeOut .4s ease-in forwards}
+@keyframes spFadeOut{from{opacity:1}to{opacity:0}}
 </style>
 <style>
 /* ===== TRAP TYCOON v3: Cook lab + product art ===== */
@@ -1190,19 +1216,38 @@ body.electron-phone #ewin-controls{display:flex}
 .besttag{background:#4ade80;color:#000;font-size:10px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
 .mast-tag{background:#8b5cf6;color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
 .presttag{background:#fbbf24;color:#000;font-size:10px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
-.tk-prod{margin:8px 0}
+.tk-prod{margin:5px 0}
 .tk-make{background:#16a34a;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed:disabled{opacity:.4;cursor:not-allowed}
 .tk-need{color:#f59e0b;font-size:13px;font-weight:600}
 .tk-empty{text-align:center;color:rgba(255,255,255,.92);padding:48px 20px;font-size:17px;line-height:1.7;font-weight:600}
-.tk-card{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:14px;padding:14px;margin:10px 4px}
-.tk-hd{display:flex;justify-content:space-between;align-items:center;font-size:14px;color:#fff;margin-bottom:8px}
-.tk-hd span{font-size:11px;color:rgba(255,255,255,.5)}
-.tk-body{font-size:14px;color:rgba(255,255,255,.85);margin-bottom:12px}
+.tk-card{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:10px;margin:6px 2px;position:relative}
+.tk-card.vip{border-color:rgba(251,191,36,.7);box-shadow:0 0 12px rgba(251,191,36,.15)}
+.tk-hd{display:flex;justify-content:space-between;align-items:center;font-size:13px;color:#fff;margin-bottom:5px;padding-right:14px}
+.tk-hd span{font-size:10px;color:rgba(255,255,255,.5)}
+.tk-body{font-size:13px;color:rgba(255,255,255,.85);margin-bottom:8px}
 .tk-body b{color:#fbbf24}
-.tk-btns{display:flex;gap:8px}
-.tk-btns button{flex:1;border:none;border-radius:16px;padding:11px;font-weight:700;font-size:14px;cursor:pointer}
+.tk-btns{display:flex;gap:6px}
+.tk-btns button{flex:1;border:none;border-radius:12px;padding:8px;font-weight:700;font-size:13px;cursor:pointer}
+.tk-dot{position:absolute;top:10px;right:10px;width:8px;height:8px;border-radius:50%}
+.tk-dot.g{background:#22c55e;box-shadow:0 0 6px #22c55e}
+.tk-dot.gry{background:#6b7280}
+.tk-dot.r{background:#ef4444;box-shadow:0 0 6px #ef4444;animation:tkblink 1s infinite}
+@keyframes tkblink{50%{opacity:.3}}
+.tk-meta{font-size:11px;color:rgba(255,255,255,.45);margin-bottom:8px}
+.tk-meta .t-left{color:#fbbf24}
+.tk-meta .t-soon{color:#ef4444;font-weight:700}
+.tk-vipbadge{display:inline-block;font-size:10px;font-weight:800;background:#fbbf24;color:#000;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:middle}
+.tk-regtag{display:inline-block;font-size:10px;font-weight:700;background:#8b5cf6;color:#fff;border-radius:6px;padding:1px 6px;margin-left:6px;vertical-align:middle}
+.tk-head{display:flex;align-items:center;justify-content:space-between;padding:4px 4px 10px;gap:8px}
+.tk-title{font-size:14px;font-weight:800;color:#fff}
+.tk-today{font-size:11px;color:rgba(255,255,255,.5)}
+.tk-headbtns{display:flex;gap:6px}
+.tk-abtn{border:none;border-radius:10px;padding:7px 10px;font-size:12px;font-weight:700;cursor:pointer}
+.tk-prepall{background:#7c3aed;color:#fff}
+.tk-fulfillall{background:#16a34a;color:#fff}
+.tk-fulfillall:disabled{opacity:.4;cursor:default}
 .tk-fulfill{background:#25d366;color:#fff}
 .tk-fulfill:disabled{opacity:.45;cursor:default}
 .tk-dismiss{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2)}
@@ -1213,7 +1258,7 @@ body.electron-phone #ewin-controls{display:flex}
 .besttag{background:#4ade80;color:#000;font-size:10px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
 .mast-tag{background:#8b5cf6;color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
 .presttag{background:#fbbf24;color:#000;font-size:10px;font-weight:800;border-radius:6px;padding:2px 6px;margin-left:6px;vertical-align:middle}
-.tk-prod{margin:8px 0}
+.tk-prod{margin:5px 0}
 .tk-make{background:#16a34a;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%}
 .tk-buyseed:disabled{opacity:.4;cursor:not-allowed}
@@ -1223,6 +1268,10 @@ body.electron-phone #ewin-controls{display:flex}
 .pg[data-theme="light"] .tk-hd span{color:rgba(0,0,0,.45)}
 .pg[data-theme="light"] .tk-body{color:rgba(0,0,0,.8)}
 .pg[data-theme="light"] .tk-dismiss{background:rgba(0,0,0,.06);color:#111;border-color:rgba(0,0,0,.15)}
+.pg[data-theme="light"] .tk-title{color:#111}
+.pg[data-theme="light"] .tk-today{color:rgba(0,0,0,.5)}
+.pg[data-theme="light"] .tk-meta{color:rgba(0,0,0,.45)}
+.pg[data-theme="light"] .tk-hd{padding-right:14px}
 .pg[data-theme="light"] .msg-chat{border-bottom-color:rgba(0,0,0,.08)}
 .pg[data-theme="light"] .msg-chat-mid b{color:#111}
 .pg[data-theme="light"] .msg-chat-mid span{color:rgba(0,0,0,.55)}
@@ -1329,6 +1378,23 @@ body.electron-phone #ewin-controls{display:flex}
 .pane-store .store-tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 2px 10px}
 .pane-store .store-tabs button{flex:none;background:#f1f3f4;border:none;border-radius:20px;padding:8px 16px;font-weight:600;color:#3c4043}
 .pane-store .store-tabs button.on{background:#1a73e8;color:#fff}
+.store-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;grid-column:1/-1}
+.scard{border-radius:16px;padding:20px 14px;cursor:pointer;border:1.5px solid;min-height:150px;display:flex;flex-direction:column;justify-content:center;transition:transform .1s}
+.scard:active{transform:scale(.97)}
+.scard-ico{font-size:32px;margin-bottom:10px}
+.scard b{display:block;font-size:15px;margin-bottom:6px}
+.scard span{font-size:12px;color:var(--hatch-widget-muted);line-height:1.45}
+/* booklet swipe */
+.store-book-dots{display:flex;gap:10px;justify-content:center;padding:8px 0 12px;grid-column:1/-1;position:sticky;top:0;z-index:5;background:var(--hatch-widget-bg,#0a0a0f)}
+.bk-dot{width:10px;height:10px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;padding:0;transition:transform .15s}
+.bk-dot.on{transform:scale(1.3);border-color:transparent}
+.store-book{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;grid-column:1/-1;scrollbar-width:none}
+.store-book::-webkit-scrollbar{display:none}
+.store-page{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;padding:0 2px;min-width:0}
+.store-page-body{padding-bottom:16px}
+.store-detail-head{display:flex;align-items:center;gap:10px;grid-column:1/-1;margin-bottom:10px}
+.store-backbtn{background:#1a1a26;border:1px solid var(--hatch-widget-border);color:var(--hatch-widget-accent);border-radius:10px;padding:9px 14px;font-weight:800;font-size:14px;cursor:pointer;white-space:nowrap}
+.store-backbtn:active{transform:scale(.95)}
 .srow{background:#fff;border-radius:12px;margin:6px 2px;box-shadow:0 1px 3px rgba(0,0,0,.1)}
 .pg:not([data-theme="light"]) .srow{background:#242424}
 /* Inventory app (Stash) */
@@ -1942,6 +2008,40 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .w-pistol::after{left:12px;top:10px;width:5px;height:9px;background:linear-gradient(90deg,#374151,#111827);border-radius:2px}
 .w-smg::before{left:3px;top:6px;width:18px;height:5px;background:linear-gradient(180deg,#4b5563,#1f2937);border-radius:2px}
 .w-smg::after{left:9px;top:10px;width:4px;height:9px;background:#1f2937;transform:rotate(12deg);border-radius:2px}
+.w-revolver::before{left:4px;top:7px;width:14px;height:5px;background:linear-gradient(180deg,#6b7280,#374151);border-radius:2px}
+.w-revolver::after{left:8px;top:11px;width:8px;height:8px;background:#4b5563;border-radius:50%}
+.w-shotgun::before{left:2px;top:8px;width:20px;height:4px;background:linear-gradient(180deg,#92400e,#451a03);border-radius:2px}
+.w-shotgun::after{left:14px;top:11px;width:5px;height:7px;background:#78350f;border-radius:1px}
+.w-uzi::before{left:5px;top:5px;width:13px;height:7px;background:linear-gradient(180deg,#4b5563,#1f2937);border-radius:2px}
+.w-uzi::after{left:8px;top:11px;width:4px;height:8px;background:#1f2937;border-radius:1px}
+.w-rifle::before{left:2px;top:7px;width:20px;height:4px;background:linear-gradient(180deg,#374151,#111827);border-radius:2px}
+.w-rifle::after{left:15px;top:10px;width:4px;height:8px;background:#1f2937;transform:rotate(-10deg);border-radius:1px}
+.w-deagle::before{left:3px;top:5px;width:18px;height:7px;background:linear-gradient(180deg,#9ca3af,#4b5563);border-radius:2px}
+.w-deagle::after{left:13px;top:11px;width:5px;height:8px;background:#374151;border-radius:2px}
+.w-bat::before{left:4px;top:4px;width:5px;height:16px;background:linear-gradient(180deg,#d6a06a,#8a5a30);border-radius:3px;transform:rotate(25deg)}
+.w-bat::after{left:11px;top:14px;width:7px;height:5px;background:#5b3a1e;border-radius:2px;transform:rotate(25deg)}
+.w-knuckles::before{left:5px;top:8px;width:14px;height:8px;background:linear-gradient(180deg,#fbbf24,#92400e);border-radius:4px}
+.w-knuckles::after{left:7px;top:10px;width:10px;height:4px;background:transparent;border:2px solid #78350f;border-radius:2px}
+.w-crowbar::before{left:4px;top:5px;width:4px;height:14px;background:linear-gradient(90deg,#ef4444,#991b1b);border-radius:2px;transform:rotate(20deg)}
+.w-crowbar::after{left:3px;top:4px;width:8px;height:4px;background:#991b1b;border-radius:2px;transform:rotate(20deg)}
+.w-machete::before{left:3px;top:9px;width:16px;height:5px;background:linear-gradient(90deg,#e5e7eb,#6b7280);border-radius:0 3px 3px 0;transform:rotate(-15deg)}
+.w-machete::after{left:15px;top:11px;width:6px;height:6px;background:#1f2937;border-radius:1px;transform:rotate(-15deg)}
+.w-katana::before{left:2px;top:10px;width:18px;height:3px;background:linear-gradient(90deg,#f3f4f6,#9ca3af);border-radius:2px;transform:rotate(-20deg)}
+.w-katana::after{left:16px;top:12px;width:5px;height:5px;background:#111827;border-radius:1px;transform:rotate(-20deg)}
+/* GEAR avatar */
+.gear-avatar-wrap{display:flex;gap:14px;align-items:center;background:#14141c;border:1px solid #2a2a3a;border-radius:12px;padding:14px;margin-bottom:10px}
+.gear-avatar{position:relative;width:64px;height:88px;flex:none;border-radius:12px;background:#1e1e2a;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:8px}
+.gear-avatar.full{box-shadow:0 0 18px 2px var(--aura),0 0 42px 6px var(--aura);border:1px solid var(--aura);animation:gavPulse 2.2s ease-in-out infinite}
+@keyframes gavPulse{0%,100%{box-shadow:0 0 14px 2px var(--aura)}50%{box-shadow:0 0 26px 6px var(--aura)}}
+.gav-head{width:24px;height:24px;border-radius:50%;background:linear-gradient(180deg,#d6a06a,#8a5a30);margin-bottom:4px}
+.gav-body{width:34px;height:34px;border-radius:8px;background:linear-gradient(180deg,#3a3f4a,#23262e)}
+.gav-legs{width:26px;height:16px;border-radius:0 0 6px 6px;background:#1a1d24;margin-top:2px}
+.gav-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:9px;font-weight:800;letter-spacing:1px;color:#000;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.gav-info{flex:1;min-width:0}
+.gav-slots{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-bottom:6px}
+.gav-slot{background:#1a1a26;border-radius:6px;padding:4px 8px;font-size:11px}
+.gav-slot span{color:#6b7280;text-transform:uppercase;font-size:9px;display:block}
+.gav-slot b{font-size:11px}
 .srow.c b .wicon{margin-right:2px}
 .acc-h{padding:6px 10px;margin-bottom:3px}
 </style>
@@ -2175,6 +2275,25 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 </style>
 
 <script>
+// Electron hatchWidget shim - uses localStorage for persistence
+(function(){
+  if(window.hatchWidget) return;
+  var KEY='tt-electron-save';
+  window.hatchWidget={
+    getState:function(def){
+      try{
+        var raw=localStorage.getItem(KEY);
+        if(raw) return JSON.parse(raw);
+      }catch(e){}
+      return JSON.parse(JSON.stringify(def));
+    },
+    setState:function(s){
+      try{ localStorage.setItem(KEY, JSON.stringify(s)); }catch(e){}
+    }
+  };
+})();
+</script>
+<script>
 (function(){
 var root=(document.currentScript&&document.currentScript.parentElement)||document;
 /* real phone battery display */
@@ -2337,10 +2456,10 @@ var PRODUCTS={
  ak47:{name:"AK-47",price:230,seed:1600,yld:[22,34],tier:7,c1:"#ff8a65",tag:"AK"},
  hash:{name:"Hash",price:50,tier:1,c1:"#d4a373"},
  edibles:{name:"Edibles",price:40,tier:2,c1:"#fbbf24"},
- moonrock:{name:"Moonrocks",price:140,tier:3,c1:"#e9d5ff"},
+ moonrock:{name:"Moonrock",price:140,tier:3,c1:"#e9d5ff"},
  acid:{name:"Acid",price:110,tier:4,c1:"#ff2fb3"},
  dmt:{name:"DMT",price:200,tier:5,c1:"#bfe6ff"},
- dragon:{name:"Dragon's Breath",price:600,tier:7,c1:"#ff6a00"},
+ dragon:{name:"Dragon",price:600,tier:7,c1:"#ff6a00"},
  estack:{name:"E Single Stack",price:180,tier:8,c1:"#ff7ad9"},
  edouble:{name:"E Double Stack",price:320,tier:8,c1:"#ff4dc8"},
  etriple:{name:"E Triple Stack",price:500,tier:8,c1:"#ff1fb0"}
@@ -2427,8 +2546,8 @@ var RECIPES={
  etriple:{game:"target",kits:{press:3},yield:12,heat:18,hint:"Tap the lit pad — 6 rounds, be quick."}
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
-var SPEED_OPTS=[30,60,90,120,150,180,210,240,270,300];
-var GAME_VER="BETA-0.018.76";
+var SPEED_OPTS=[30,45,60,75,90,105,120];
+var GAME_VER="v125";
 var GAME_UPDATED="Oct 5, 2026 · 7:30 PM";
 var ROACH_IMG="data:image/webp;base64,UklGRr4GAABXRUJQVlA4ILIGAADwJACdASqAAIAAPlEijkWjoaETCK4kOAUEtICd6Vxf5LbW38r0oRLsJbuNa8xD5ZzXAGiPFaGBHrJAAEUee7tMBMt9YoYtuKD9d7b/cpjfTSoXgQpp8vZUuIedJjj5xwGN4sDIpDVPgg8k6Fp6jAWhEXUIyrasiUtUEDoxZ6Yv+zRoA36d5LZ28xDACykaidnvIz7IT8dRrjI+cO2AVcx/eD9MPVIHbXGf/4Nmlmwbajr743dcZ4GvGLGm2c1Bystpm2NGr0pU3SoxBBNM8YLxyurkYv/ZvR4Y4DxHQHUV9/D2rW+n1++3ebLqv8kuEV9ygdShMyE3ULou9ksc0xgMMBhv8Sj90TcrL6DkLBv4sjSTsdRxeRZSzZmneTXCE1FCxHo2rD5avzg55qKeyTUgAP7+BtGFzFYxFsdLaFrja39Fq14y/19bA8XfI5H9/mKCzEXQ9n9xDdlDTaaTUF4GFcaXmc4nly+OJfyqe0pQILIamLEwYrGngbqsvtRC4Kjn1S5C6DhkkI4q5rC/+Iavj6Ip6ic0gJou7xf5QFyPvnSnvbfNuxNCNV7lHxssInMLK2T//fCb/Fjn6Srx9y8wGQxL7d4XXFNMWwHKijcYrPrZrKCXi2+mqLhyniEPOKa9BQaC4Y+8TupmjOZiFPmkSHSXYjnd/uglMGAE+x3WnIPMx93p7d/f8/3XwhtKXSnGHHWs/pcY2eKQ+mzQeFzd58Qnu0UqxmVkm/1Jh4hoyN4ruTzzidgdpmiA5o5rnj5OoLTadYGn5bpGYxweQumzsceRzBBRGjXETFB4NeLZCabMzk9eFzjK/MXH/WmwkKNElG+K+tou3N939/0iPs9b8AupGMLHACH8B4Rcsxjx2HVQDovCyBrzcitmVTDZqM7TWsstPaby+b+HquIpE5T3f6z2WLMxJdPwC8TmTgVjczNV8EDN3ah4VJh2jq39vG5Cahe7XM8HOCaDifQZL58i6IdTlEZktr0dUJk2Bppr2efYa7gCdoOKLXl9YKnwBcZxB+kQbGcNgNGknFLkKNwyWWH19YXMA6XsZN/vLsISzTNQQf1hirYYap9QKd9K7cgRu7yrkDJN1g+rfUnAUkm28QJYoPaIQE0cH2co2Y1LDhV9uALHQJwMfJDzRO8J7kaftrRHp2MBDDbrMitwfRaMAo/DCcLqdkGehS8OrlgtMZGmS9PtLzKbeVisbSoKgGl8bjkwSvfJBqGh9gAdqqSahxMG7wFw4pTAbbmFTdb/4r3tm36FecvF6BL8Ix8y+GpPg4h2g2bPJt3N1XTF2ovm7nsgPr6ioROQZfVD7hkYRoZ+aZFFFsxViQBT419x4s/5lt57WO+w6Wdqa/KezDpFFPaLWfAfRkoPU20+n7Kiy3qNxv/sH3pXH2oCdpSZ53P4ouWpQKpQp0MDmrH3ws7HeGFjKCIze9GOB4vVNLGRWawP/YOH4vn4FzO1ZAsz9OTPOq+V5xlaVn4S4dLtXCnMZR33gCCjW39J+37bpaUzd/RjN9/nd8gBLAHju934PXcyqnsm8ZwwlPEKGdUs/+TI0PbXtUHmaJ+D0RejLkrHgl7VExc7u7z6zFa2/h6RAXfKJhM68LopUkUCK/nBQpVGiPZpbJHxmllOn55TdnRGXkp/ZT31VVaSn/grDWkwHrXlKYCZaP1xy2wlTby3HuHIHo90BuJP+7FPtR8GkV6Y+Ys0+uNJce71ke3mGcideMvTpWTyCeJ7ixavjozMw/jgKuEH5Yw4Qi16dcZC+YxrKTgtRH43JQYD1zzsECugRoUpwglmKVVFmj1BAG0c7BzcbuISlCP6NGW5FLgAgc2kWMuMFQNbkInEoENRxiDFjPoetepeuwpDQWC0cwcmlo76iNZPLcIxkPF/lqSgphvUNTheK3MCS5nhv7RMTVeteIAQ1Gi7qbd019GNWiVHToa8zB9r/HFcL+uyjPhSiZdunz7dc0IRI1c6D9YkHrNxgGS1Xosy5//TfsjZkqXhNeYLo8n6xo7xeKU+eBiYxpCE+TXJxnWbg3muCAm+WCHopi5LtSbMuCyiBacqSKYa9kKRq3vUlY+EtWHwD1lRKuFbxs0nZFIqCUeVrgWLptRtEdiJ8mCGkj4VCDvvofTb5bjUdhLoQCrmsoh/fbtyeRLWTDf0x7C3vojL+LCUz2fGsFrVOSLJJq6nY+rLdwvG3IQcZKGuxWy/OrChPCd75CuOzHaux+coDCq3Z33ZYws1AwzCgIjz3OHBb97sM7luVvmNaZxL05XGNMcXlT+LnCQDUAAA";
 var CHANGELOG=[
@@ -2500,11 +2619,12 @@ var LEVEL_TIPS={
  7:["Dragon's Breath: the final cook","Cartel Empire: 28 slots of endgame growing","Gorilla Glue is the highest bud tier"],
  8:["Triple Stack E is the best money in the game","Emerald Palace: 34 grow slots","Stock Pill Press Kits for every Ecstasy cook"]
 };
-var DEF_SPEEDS={hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300,estack:120,edouble:150,etriple:180};
+var DEF_SPEEDS={hash:60,edibles:90,moonrock:120,acid:120,dmt:120,dragon:120,estack:120,edouble:120,etriple:120};
 function speedOf(k){var v=S.speeds&&S.speeds[k];return SPEED_OPTS.indexOf(v)>=0?v:DEF_SPEEDS[k];}
 function fmtT(s){s=Math.max(0,Math.round(s));var m=Math.floor(s/60),r=s%60;return m+":"+(r<10?"0":"")+r;}
-function growSec(){return SPEED_OPTS.indexOf(S.growSpeed)>=0?S.growSpeed:30;}
-function growMinOf(k){return growSec()/60;}
+var GROW_TIMES={sour:30,og:45,haze:60,bluedream:75,maui:90,northern:105,ak47:120};
+function growSec(k){if(k&&GROW_TIMES[k])return GROW_TIMES[k];return SPEED_OPTS.indexOf(S.growSpeed)>=0?S.growSpeed:30;}
+function growMinOf(k){return growSec(k)/60;}
 var DEALER_NAMES=["Corner Carl","Rooftop Rita","Alley Al","Deli Dave"];
 var DUFFEL=[40,100,200,400];
 var DUFFEL_COST={100:150,200:400,400:1000};
@@ -2512,27 +2632,63 @@ var FERT_COST=25,BRIBE_COST=200,PAPER_COST=10,PAPER_PACK=20;
 var WEAPONS={
  fists:{name:"Fists",cost:0,tier:1,dmg:[5,9]},
  knife:{name:"Knife",cost:150,tier:2,dmg:[11,16]},
+ bat:{name:"Baseball Bat",cost:200,tier:2,dmg:[12,17]},
+ knuckles:{name:"Brass Knuckles",cost:125,tier:2,dmg:[9,14]},
+ revolver:{name:"Revolver",cost:400,tier:3,dmg:[15,21]},
+ crowbar:{name:"Crowbar",cost:300,tier:3,dmg:[12,18]},
+ machete:{name:"Machete",cost:350,tier:3,dmg:[14,20]},
  pistol:{name:"Pistol",cost:750,tier:4,dmg:[15,22]},
- smg:{name:"SMG",cost:3000,tier:6,dmg:[24,34]}
+ shotgun:{name:"Shotgun",cost:1500,tier:5,dmg:[20,30]},
+ uzi:{name:"Uzi",cost:1800,tier:5,dmg:[22,30]},
+ smg:{name:"SMG",cost:3000,tier:6,dmg:[24,34]},
+ katana:{name:"Katana",cost:2500,tier:6,dmg:[22,32]},
+ rifle:{name:"Rifle",cost:5000,tier:7,dmg:[32,44]},
+ deagle:{name:"Desert Eagle",cost:4500,tier:7,dmg:[30,42]}
 };
-var WKEYS=["fists","knife","pistol","smg"];
+var WKEYS=["fists","knife","bat","knuckles","revolver","crowbar","machete","pistol","shotgun","uzi","smg","katana","rifle","deagle"];
+var GEAR={
+ cb_head:{name:"Fitted Cap",set:"cornerboy",slot:"head",cost:100,tier:1,bonus:{prices:2},desc:"+2% deal prices"},
+ cb_body:{name:"White Tee",set:"cornerboy",slot:"body",cost:80,tier:1,bonus:{prices:2},desc:"+2% deal prices"},
+ cb_feet:{name:"Beat Sneakers",set:"cornerboy",slot:"feet",cost:60,tier:1,bonus:{heat:-3},desc:"-3% heat gain"},
+ cb_chain:{name:"Fake Gold Chain",set:"cornerboy",slot:"chain",cost:120,tier:2,bonus:{rep:3},desc:"+3% rep gain"},
+ ts_head:{name:"Designer Beanie",set:"trapstar",slot:"head",cost:500,tier:3,bonus:{prices:3},desc:"+3% deal prices"},
+ ts_body:{name:"Graphic Hoodie",set:"trapstar",slot:"body",cost:700,tier:3,bonus:{prices:3},desc:"+3% deal prices"},
+ ts_feet:{name:"Fresh Jordans",set:"trapstar",slot:"feet",cost:900,tier:4,bonus:{heat:-5},desc:"-5% heat gain"},
+ ts_chain:{name:"Gold Rope Chain",set:"trapstar",slot:"chain",cost:1500,tier:4,bonus:{rep:5},desc:"+5% rep gain"},
+ kp_head:{name:"Custom Snapback",set:"kingpin",slot:"head",cost:3000,tier:5,bonus:{prices:4},desc:"+4% deal prices"},
+ kp_body:{name:"Designer Jacket",set:"kingpin",slot:"body",cost:5000,tier:5,bonus:{prices:4},desc:"+4% deal prices"},
+ kp_feet:{name:"Luxe Sneakers",set:"kingpin",slot:"feet",cost:4000,tier:6,bonus:{heat:-8},desc:"-8% heat gain"},
+ kp_chain:{name:"Diamond Tennis Chain",set:"kingpin",slot:"chain",cost:8000,tier:6,bonus:{rep:8},desc:"+8% rep gain"},
+ ej_head:{name:"Croc Leather Cap",set:"eljefe",slot:"head",cost:15000,tier:7,bonus:{prices:6},desc:"+6% deal prices"},
+ ej_body:{name:"Tailored Suit Jacket",set:"eljefe",slot:"body",cost:25000,tier:7,bonus:{prices:6},desc:"+6% deal prices"},
+ ej_feet:{name:"Ostrich Boots",set:"eljefe",slot:"feet",cost:18000,tier:8,bonus:{heat:-12},desc:"-12% heat gain"},
+ ej_chain:{name:"Cuban Link + Pendant",set:"eljefe",slot:"chain",cost:40000,tier:8,bonus:{rep:12},desc:"+12% rep gain"}
+};
+var GEAR_SETS={
+ cornerboy:{name:"Corner Boy",fullBonus:{prices:5},aura:"#9ca3af",desc:"Full set: +5% deal prices"},
+ trapstar:{name:"Trap Star",fullBonus:{prices:10,heat:-10},aura:"#f59e0b",desc:"Full set: +10% prices, -10% heat"},
+ kingpin:{name:"Kingpin",fullBonus:{prices:15,heat:-15,rep:10},aura:"#a855f7",desc:"Full set: +15% prices, -15% heat, +10% rep"},
+ eljefe:{name:"El Jefe",fullBonus:{prices:25,heat:-20,rep:20},aura:"#ef4444",desc:"Full set: +25% prices, -20% heat, +20% rep"}
+};
+var GEAR_SLOTS=["head","body","feet","chain"];
+var GKEYS=["cb_head","cb_body","cb_feet","cb_chain","ts_head","ts_body","ts_feet","ts_chain","kp_head","kp_body","kp_feet","kp_chain","ej_head","ej_body","ej_feet","ej_chain"];
 var DEALER_TIER=[1,2,4,6];
 var XP_TH=[0,200,500,900,1400,2000,2700,3500];
 function lvl(xp){xp=xp||0;var L=1;for(var i=0;i<XP_TH.length;i++)if(xp>=XP_TH[i])L=i+1;return L;}
 function pLevel(){return lvl(S.xp);}
-function heatGain(base){var L=pLevel(),m=0.5;if(L<=2)return Math.ceil(base*0.25*m);if(L<=4)return Math.ceil(base*0.5*m);if(L<=6)return Math.ceil(base*0.75*m);return Math.ceil(base*m);}
+function heatGain(base){var L=pLevel(),m=0.5,r;if(L<=2)r=Math.ceil(base*0.25*m);else if(L<=4)r=Math.ceil(base*0.5*m);else if(L<=6)r=Math.ceil(base*0.75*m);else r=Math.ceil(base*m);var gm=1+gearBonus().heat/100;return Math.max(0,Math.ceil(r*gm));}
 function bribeCost(){var L=pLevel();if(L<=2)return 50;if(L<=4)return 100;return 200;}
 function clinicRate(){var L=pLevel();if(L<=2)return 1;if(L<=4)return 1.5;return 2;}
 function tierVis(t){var L=pLevel();return t<=L?2:(t===L+1?1:0);}
 var UNLOCKS={
- 1:["Sour D","Hash","Grow Tent"],
- 2:["OG Kush","Edibles","Trap House","Knife","Rooftop Rita"],
- 3:["Purple Haze","Moonrocks","Warehouse"],
- 4:["Blue Dream","Acid","Mansion Lab","Pistol","Alley Al"],
- 5:["Girl Scout Cookies","DMT","Bunker"],
- 6:["White Widow","Island Compound","SMG","Deli Dave"],
- 7:["Gorilla Glue","Dragon's Breath","Cartel Empire"],
- 8:["Ecstasy Stacks","Emerald Palace","Pill Press Kit"]
+ 1:["Sour D","Hash","Grow Tent","Fitted Cap","White Tee","Beat Sneakers"],
+ 2:["OG Kush","Edibles","Trap House","Knife","Baseball Bat","Brass Knuckles","Rooftop Rita","Fake Gold Chain"],
+ 3:["Purple Haze","Moonrock","Warehouse","Revolver","Crowbar","Machete","Designer Beanie","Graphic Hoodie"],
+ 4:["Blue Dream","Acid","Mansion Lab","Pistol","Alley Al","Fresh Jordans","Gold Rope Chain"],
+ 5:["Maui Wowie","DMT","Bunker","Shotgun","Uzi","Custom Snapback","Designer Jacket"],
+ 6:["Northern Lights","Island Compound","SMG","Katana","Deli Dave","Luxe Sneakers","Diamond Tennis Chain"],
+ 7:["AK-47","Dragon","Cartel Empire","Rifle","Desert Eagle","Croc Leather Cap","Tailored Suit Jacket"],
+ 8:["E-Stacks","Emerald Palace","Pill Press Kit","Ostrich Boots","Cuban Link + Pendant"]
 };
 function addXP(n){
  if(!n||n<=0)return false;
@@ -2586,7 +2742,59 @@ var SMOKE_COL={
  northern:{c:["#4dd0e1"],o:.5},
  ak47:{c:["#ff8a65"],o:.55}
 };
-function bestWeapon(){if(S.weapons&&S.weapons.smg)return "smg";if(S.weapons&&S.weapons.pistol)return "pistol";if(S.weapons&&S.weapons.knife)return "knife";return "fists";}
+function bestWeapon(){var b="fists",bd=-1;WKEYS.forEach(function(k){var owned=(k==="fists")||(S.weapons&&S.weapons[k]);if(!owned)return;var d=WEAPONS[k].dmg[1];if(d>bd){bd=d;b=k;}});return b;}
+function gearBonus(){
+ var b={prices:0,heat:0,rep:0};
+ var eq=(S&&S.equipped)||{},sets=[];
+ GEAR_SLOTS.forEach(function(slot){
+  var k=eq[slot],g=k&&GEAR[k];
+  if(!g)return;
+  var bn=g.bonus||{};
+  if(bn.prices)b.prices+=bn.prices;
+  if(bn.heat)b.heat+=bn.heat;
+  if(bn.rep)b.rep+=bn.rep;
+  sets.push(g.set);
+ });
+ if(sets.length===4&&sets[0]===sets[1]&&sets[1]===sets[2]&&sets[2]===sets[3]){
+  var fb=(GEAR_SETS[sets[0]]||{}).fullBonus||{};
+  if(fb.prices)b.prices+=fb.prices;
+  if(fb.heat)b.heat+=fb.heat;
+  if(fb.rep)b.rep+=fb.rep;
+ }
+ return b;
+}
+function gearSetEquipped(){
+ var eq=(S&&S.equipped)||{},sets=[];
+ GEAR_SLOTS.forEach(function(slot){var k=eq[slot],g=k&&GEAR[k];if(g)sets.push(g.set);});
+ if(sets.length===4&&sets[0]===sets[1]&&sets[1]===sets[2]&&sets[2]===sets[3])return sets[0];
+ return null;
+}
+function gearPriceMult(){return 1+gearBonus().prices/100;}
+function gearAvatarHTML(){
+ var setId=gearSetEquipped(),set=setId?GEAR_SETS[setId]:null;
+ var aura=set?set.aura:"transparent";
+ var eq=(S&&S.equipped)||{};
+ var slotHtml="";
+ GEAR_SLOTS.forEach(function(slot){
+  var k=eq[slot],g=k&&GEAR[k];
+  slotHtml+='<div class="gav-slot"><span>'+slot+'</span><b>'+(g?g.name:"—")+'</b></div>';
+ });
+ var bonus=gearBonus();
+ var bonusTxt=[];
+ if(bonus.prices)bonusTxt.push("+"+bonus.prices+"% prices");
+ if(bonus.heat)bonusTxt.push(bonus.heat+"% heat");
+ if(bonus.rep)bonusTxt.push("+"+bonus.rep+"% rep");
+ var h='<div class="gear-avatar-wrap">';
+ h+='<div class="gear-avatar'+(set?" full":"")+'" style="'+(set?("--aura:"+aura+";"):"")+'">';
+ h+='<div class="gav-head"></div><div class="gav-body"></div><div class="gav-legs"></div>';
+ if(set)h+='<div class="gav-badge" style="background:'+aura+'">'+set.name.toUpperCase()+'</div>';
+ h+='</div>';
+ h+='<div class="gav-info"><div class="gav-slots">'+slotHtml+'</div>';
+ h+='<div class="sdesc">Active: '+(bonusTxt.length?bonusTxt.join(" · "):"no bonuses")+'</div>';
+ if(set)h+='<div class="sdesc" style="color:'+aura+'">'+set.desc+'</div>';
+ h+='</div></div>';
+ return h;
+}
 function weaponDmg(){var w=WEAPONS[bestWeapon()],d=Math.round(w.dmg[0]+Math.random()*(w.dmg[1]-w.dmg[0])),crit=Math.random()<0.15;if(crit)d=Math.round(d*1.6);return {dmg:d,crit:crit};}
 function copDmg(){return Math.round(8+Math.random()*6);}
 var HEAT_TIERS=["CALM","SUSPICIOUS","WATCHED","HUNTED"];
@@ -2599,6 +2807,9 @@ var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s){
  var oldSave=(typeof s.xp!=="number");
+ if(typeof s.snoozed!=="boolean")s.snoozed=false;
+ if(typeof s.phoneNotif!=="boolean")s.phoneNotif=true;
+ if(!s.phoneNotifSet&&s.phoneNotif!==false)s.phoneNotif=true;
  // Migrate old strain keys to new names
  var keyMap={gsc:"maui",widow:"northern",glue:"ak47"};
  ["stash","seeds","joints"].forEach(function(store){
@@ -2620,11 +2831,10 @@ function normalize(s){
   var _bun=PKEYS.filter(function(k){return PRODUCTS[k].tier<=_bl;});
   var pr=Array.isArray(c.prefs)?c.prefs.filter(function(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&_bun.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab");}).map(function(p){return {k:p.k,kind:p.kind};}).slice(0,3):[];
   if(!pr.length)pr=contactPrefsFor(tp,_bun);
-  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0};
+  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0};
  });
  if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
- if(s.notesView!=="inprogress"&&s.notesView!=="stash")s.notesView="folders";
  if(s.todoView!=="tasks"&&s.todoView!=="stash")s.todoView="tasks";
  if(typeof s.strainMastery!=="object"||!s.strainMastery)s.strainMastery={};
  if(typeof s.prestigeCount!=="number")s.prestigeCount=0;
@@ -2677,10 +2887,19 @@ function normalize(s){
  if(s.settingstab==="changelog"){s.settingsView="about";delete s.settingstab;}
  if(!Array.isArray(s.hiddenApps)||s.hiddenApps.length)s.hiddenApps=[];
  /* tasks: accepted order requests awaiting fulfillment */
+ if(!Array.isArray(s.gear))s.gear=[];
+ if(!s.equipped||typeof s.equipped!=="object")s.equipped={};
+ GEAR_SLOTS.forEach(function(slot){var k=s.equipped[slot];if(k&&(!GEAR[k]||s.gear.indexOf(k)<0))delete s.equipped[slot];});
  if(!Array.isArray(s.tasks))s.tasks=[];
  s.tasks=s.tasks.filter(function(t){return t&&typeof t.name==="string"&&typeof t.k==="string"&&PRODUCTS[t.k]&&typeof t.g==="number"&&t.g>0;}).map(function(t){
-  return {name:String(t.name).slice(0,24),k:t.k,kind:(t.kind==="joint"||t.kind==="lab")?t.kind:"bud",g:t.g,pu:typeof t.pu==="number"?t.pu:0,addedAt:typeof t.addedAt==="number"?t.addedAt:Date.now()};
+  var _added=typeof t.addedAt==="number"?t.addedAt:Date.now();
+  return {name:String(t.name).slice(0,24),k:t.k,kind:(t.kind==="joint"||t.kind==="lab")?t.kind:"bud",g:t.g,pu:typeof t.pu==="number"?t.pu:0,addedAt:_added,expiresAt:typeof t.expiresAt==="number"?t.expiresAt:(_added+20*60*1000),vip:t.vip===true,referral:typeof t.referral==="string"?t.referral.slice(0,60):""};
  }).slice(0,50);
+ /* regulars: fulfill count per customer name */
+ if(!s.regulars||typeof s.regulars!=="object")s.regulars={};
+ /* today's stats: reset when date changes */
+ var _today=new Date().toISOString().slice(0,10);
+ if(!s.statsToday||typeof s.statsToday!=="object"||s.statsToday.date!==_today)s.statsToday={orders:0,earned:0,date:_today};
  /* territory heat */
  var _tids=["home","downtown","suburbs","industrial","waterfront","uptown"];
  if(!s.terr||typeof s.terr!=="object"||!s.terr.zones||typeof s.terr.zones!=="object"){
@@ -2778,7 +2997,7 @@ function normalize(s){
  var _secmap={seeds:"seeds",kits:"lab",duffel:"gear",weapons:"guns",props:"upgrades"};
  if(_secmap[s.shopsec])s.storetab=_secmap[s.shopsec];
  delete s.shopsec;
- if(["seeds","guns","lab","gear","upgrades"].indexOf(s.storetab)<0)s.storetab="seeds";
+ if(["seeds","guns","lab","gear","style","upgrades"].indexOf(s.storetab)<0)s.storetab=null;
  if(!s.propUpgrades||typeof s.propUpgrades!=="object")s.propUpgrades={tent:1};
  if([1,3,4].indexOf(s.propUpgrades.tent)<0)s.propUpgrades.tent=1;
  if(!s.bank||typeof s.bank!=="object")s.bank={bal:0,pendInt:0,tx:[]};
@@ -2809,8 +3028,8 @@ function ttTrapBack(){
     /* in a chat - go back to message list */
     S.msgView="list";
    }else if(S.view==="app"){
-    /* go back to home */
-    S.view="home";S.tab=null;navStack=[];
+    /* go back to home — todo tabs never keep back history */
+    S.view="home";S.tab=null;S.todoView="tasks";navStack=[];
    }
    /* re-trap for next back press */
    try{history.pushState({tt:1,view:S.view,tab:S.tab},"");}catch(e2){}
@@ -2819,6 +3038,7 @@ function ttTrapBack(){
  }catch(e){}
 }
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",ttTrapBack);}else{ttTrapBack();}
+try{if(window.ApkUpdater&&window.ApkUpdater.showVegaNotif)setTimeout(function(){try{window.ApkUpdater.showVegaNotif();}catch(e){}},2000);}catch(e){}
 /* Lock screen: show on load, swipe up to unlock */
 function ttLockShow(){
  var ls=document.getElementById("tt-lockscreen");
@@ -2842,6 +3062,8 @@ function ttLockTick(){
    return '<div class="lock-notif">'+escHtml(String(_txt).slice(0,80))+'</div>';
   }).join("");
  }
+
+ var lv=document.getElementById("lock-ver");if(lv)lv.textContent=GAME_VER;
 }
 /* Auto-lock timer */
 var _lockTimer=null;
@@ -2924,7 +3146,7 @@ function ttLockHide(){
      return;
    }
    if(typeof GAME_VER==="undefined"){cb(false);return;}
-   fetch("version.txt",{cache:"no-store"}).then(function(r){
+   fetch("https://vegzizreal.github.io/SlayerV-Games/trap-tycoon/version.txt",{cache:"no-store"}).then(function(r){
     if(!r||!r.ok)throw 0;return r.text();
    }).then(function(t){
     var v=String(t||"").trim();
@@ -2936,11 +3158,46 @@ function ttLockHide(){
  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",function(){setTimeout(ttLockShow,300);});
  else setTimeout(ttLockShow,300);
  setInterval(function(){var ls=document.getElementById("tt-lockscreen");if(ls&&!ls.hidden)ttLockTick();},10000);
+ /* Auto-check for APK updates on launch */
+ setTimeout(function(){try{if(window.ApkUpdater&&typeof window.ApkUpdater.checkForUpdate==="function")window.ApkUpdater.checkForUpdate();}catch(e){}},3000);
  /* Idle trigger: 30s close-to-open comparison.
     saveOnHide() stamps S.lastClosedAt; on return, if 30+ seconds elapsed,
     re-lock and run the update check right away. */
  var TT_IDLE_MS=30000;
- function ttShowReup(){
+ /* Native updater status -> re-up button text. Called by Android via ApkUpdater.notifyJs */
+/* Native can set this before page load to deep-link into messages */
+if(typeof window.__ttOpenMessages==="undefined")window.__ttOpenMessages=false;
+function ttCheckOpenMessages(){
+ try{
+  if(window.__ttOpenMessages){
+   window.__ttOpenMessages=false;
+   S.tab="deal";S.view="app";S.msgView="list";navPush("deal");save();render();
+  }
+ }catch(e){}
+}
+if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",ttCheckOpenMessages);}else{ttCheckOpenMessages();}
+window.__ttUpdateState=function(st){
+ try{
+  var btn=document.querySelector('[data-act="reup"]');
+  if(!btn)return;
+  btn.classList.remove("prog","st-purple","st-red");
+  if(st==="downloading"){btn.classList.add("prog");btn.innerHTML='<div class="rup-fill" style="width:0%"></div><div class="rup-lbl">Downloading... 0%</div>';btn.disabled=true;}
+  else if(st.indexOf("progress:")===0){var p=parseInt(st.split(":")[1],10)||0;var f=btn.querySelector(".rup-fill"),l=btn.querySelector(".rup-lbl");if(f)f.style.width=p+"%";if(l)l.textContent="Downloading... "+p+"%";}
+  else if(st==="downloaded"){btn.innerHTML='<div class="rup-lbl">Download complete — opening installer...</div>';btn.disabled=true;}
+  else if(st==="installing"){btn.classList.add("st-purple");btn.innerHTML='<div class="rup-lbl">Tap Install when prompted!</div>';btn.disabled=false;btn.onclick=function(){try{if(window.ApkUpdater&&window.ApkUpdater.openInstaller)window.ApkUpdater.openInstaller();}catch(e){}};}
+  else if(st.indexOf("failed")==0){btn.classList.add("st-red");var _rsn=st.length>7?st.slice(7):"Unknown error";window.__ttLastErr=_rsn;btn.innerHTML='<div class="rup-lbl" style="flex:1">Update failed — tap to retry</div><button type="button" class="err-info" id="err-info-btn">?</button>';btn.disabled=false;btn.style.display="flex";btn.style.alignItems="center";btn.style.gap="8px";var _eb=document.getElementById("err-info-btn");if(_eb){_eb.addEventListener("click",function(e){e.stopPropagation();ttShowErr();});}}
+ }catch(e){}
+};
+function ttShowErr(){
+ try{
+  var b=document.getElementById("err-bubble"),r=document.getElementById("err-reason");
+  if(r)r.textContent="Reason: "+(window.__ttLastErr||"Unknown error");
+  if(b)b.classList.add("show");
+ }catch(e){}
+}
+function ttHideErr(){try{var b=document.getElementById("err-bubble");if(b)b.classList.remove("show");}catch(e){}}
+document.addEventListener("click",function(e){var b=document.getElementById("err-bubble");if(b&&b.classList.contains("show")&&!b.contains(e.target))ttHideErr();});
+function ttShowReup(){
   try{
    var fp=document.getElementById("lock-fp");
    if(fp){fp.style.background="rgba(220,38,38,.30)";fp.style.borderColor="#ef4444";fp.style.boxShadow="0 0 26px rgba(239,68,68,.65)";}
@@ -3037,9 +3294,9 @@ var TERRITORIES=[
   w:{cops:0.5,gangs:0.5,fam:0.3},color:"#d97706",grad:"linear-gradient(135deg,#92400e,#451a03)",nbors:["suburbs","industrial"]},
  {id:"downtown",name:"Downtown",sub:"High prices, hot streets",price:1.25,heat:1.5,unlock:5,likes:"party",likesTxt:"Joints, Edibles",w:{cops:1.0,gangs:1.5,fam:0.5},color:"#f59e0b",grad:"linear-gradient(135deg,#7c2d12,#431407)",nbors:["uptown","waterfront","industrial"]},
  {id:"suburbs",name:"Suburbs",sub:"Safe & quiet, lower prices",price:0.85,heat:0.6,unlock:3,likes:"lowbud",likesTxt:"Low-tier bud",w:{cops:0.8,gangs:0.4,fam:1.4},color:"#4ade80",grad:"linear-gradient(135deg,#14532d,#052e16)",nbors:["uptown","industrial"]},
- {id:"industrial",name:"Industrial",sub:"Room to move, mid prices",price:1.0,heat:1.0,unlock:1,likes:"none",likesTxt:"No preference",w:{cops:0.7,gangs:1.0,fam:0.4},color:"#60a5fa",grad:"linear-gradient(135deg,#334155,#0f172a)",nbors:["downtown","suburbs","waterfront"]},
- {id:"waterfront",name:"Waterfront",sub:"Tourist cash, watchful eyes",price:1.15,heat:1.25,unlock:8,likes:"midbud",likesTxt:"Mid-tier bud",w:{cops:1.3,gangs:0.8,fam:0.8},color:"#22d3ee",grad:"linear-gradient(135deg,#0e7490,#164e63)",nbors:["downtown","industrial"]},
- {id:"uptown",name:"Uptown",sub:"Big money, big risk",price:1.4,heat:1.75,unlock:12,likes:"highend",likesTxt:"High-tier bud, Lab products",w:{cops:1.5,gangs:1.2,fam:1.0},color:"#a78bfa",grad:"linear-gradient(135deg,#5b21b6,#2e1065)",nbors:["downtown","suburbs"]}
+ {id:"industrial",name:"Industrial",sub:"Room to move, mid prices",price:1.0,heat:1.0,unlock:2,likes:"none",likesTxt:"No preference",w:{cops:0.7,gangs:1.0,fam:0.4},color:"#60a5fa",grad:"linear-gradient(135deg,#334155,#0f172a)",nbors:["downtown","suburbs","waterfront"]},
+ {id:"waterfront",name:"Waterfront",sub:"Tourist cash, watchful eyes",price:1.15,heat:1.25,unlock:7,likes:"midbud",likesTxt:"Mid-tier bud",w:{cops:1.3,gangs:0.8,fam:0.8},color:"#22d3ee",grad:"linear-gradient(135deg,#0e7490,#164e63)",nbors:["downtown","industrial"]},
+ {id:"uptown",name:"Uptown",sub:"Big money, big risk",price:1.4,heat:1.75,unlock:8,likes:"highend",likesTxt:"High-tier bud, Lab products",w:{cops:1.5,gangs:1.2,fam:1.0},color:"#a78bfa",grad:"linear-gradient(135deg,#5b21b6,#2e1065)",nbors:["downtown","suburbs"]}
 ];
 var HEAT_SOURCES=["cops","gangs","fam"];
 var HEAT_SRC_META={cops:{icon:"\uD83D\uDE94",name:"Cops"},gangs:{icon:"\uD83D\uDD2B",name:"Gangs"},fam:{icon:"\uD83C\uDFE0",name:"Families"}};
@@ -3111,6 +3368,14 @@ function pushRoachMsg(m){
   /* For now, start fresh - old notifs stay in shade */
  }
  S.notifs.unshift({m:m,e:0,app:"roach",t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;
+ /* in-game heads-up for Roach too (respect snooze) */
+ if(!S.snoozed){showHeadsUp("\uD83D\uDC00 Roach",m);playMsgSound();}
+ /* phone notification for Roach — same as customer messages */
+ if(S.phoneNotif){
+  try{
+   if(window.ApkUpdater&&window.ApkUpdater.postPhoneNotif)window.ApkUpdater.postPhoneNotif("\uD83D\uDC00 Roach",m);
+  }catch(e){}
+ }
 }
 function roachPanicCheck(tid,src){
  var z=terrZone(tid),v=z.heat[src],t=terrDef(tid),th,i;
@@ -3534,6 +3799,13 @@ function renderShade(){
  var hwh=q(".hw-qhp");if(hwh){hwh.textContent="HP "+Math.max(0,Math.round(S.hp));
  hwh.style.color=S.hp>=60?"#4ade80":S.hp>=30?"#fbbf24":"#ef4444";}
  var hwd=q(".hw-qday");if(hwd)hwd.textContent="Day "+(1+Math.floor((Date.now()-S.bornAt)/86400000));
+ /* snooze + phone toggle button states */
+ var _snz=q(".shade-snoozebtn");
+ if(_snz){_snz.style.background=S.snoozed?"rgba(251,191,36,.25)":"rgba(255,255,255,.08)";_snz.style.borderColor=S.snoozed?"#fbbf24":"rgba(255,255,255,.15)";_snz.title=S.snoozed?"Popups snoozed — tap to unmute":"Snooze popups";}
+ var _pht=q(".shade-phonetoggle");
+ if(_pht){_pht.textContent=S.phoneNotif?"ON":"OFF";}
+ var _phb=q(".shade-phonebtn");
+ if(_phb){_phb.style.background=S.phoneNotif?"rgba(22,163,74,.25)":"rgba(255,255,255,.08)";_phb.style.borderColor=S.phoneNotif?"#16a34a":"rgba(255,255,255,.15)";}
  var hwt=q(".hw-qheat");if(hwt){var _td2=terrDef(S.terr&&S.terr.active);var _ah3=activeHeat();hwt.textContent=_td2.name+" "+Math.round(Math.min(100,_ah3))+"%"+(_ah3>0?" ("+heatCooldownTxt(_ah3)+")":"");}
  var hwb=q(".hw-qheatbar");if(hwb)hwb.style.width=Math.min(100,activeHeat())+"%";
  var list=q(".shade-list");if(!list)return;
@@ -3545,7 +3817,15 @@ function renderShade(){
   return '<div class="shade-item'+(n.e?' err':'')+'"><span class="si-av">'+(n.e?'&#9888;&#65039;':'&#127793;')+'</span><div class="si-body"><div class="si-head"><b>'+escHtml(_who)+'</b><span>'+escHtml(fmtShadeTime(n.t))+'</span></div><div class="si-msg">'+escHtml(_mm)+'</div></div></div>';
  }).join(""):'<div class="shade-empty">No notifications yet — Roach will hit you up here.</div>';
 }
+var _notifPermAsked=false;
+function ttEnsureNotifPerm(){
+ if(_notifPermAsked)return;_notifPermAsked=true;
+ try{
+  if(S&&S.phoneNotif&&window.ApkUpdater&&window.ApkUpdater.requestNotifPermission)window.ApkUpdater.requestNotifPermission();
+ }catch(e){}
+}
 function render(){
+ ttEnsureNotifPerm();
  if(root&&root.dataset){root.dataset.theme=(S.theme==="light")?"light":"dark";root.dataset.labelcolor=S.labelColor||"white";}
  var _pg=q(".pg");if(_pg&&_pg.dataset)_pg.dataset.labelcolor=S.labelColor||"white";
  /* update Messages badge */
@@ -3570,7 +3850,6 @@ function render(){
  if(_clk)_clk.hidden=!S.devMode;
  var _chl=q("#aa-chillapp");
  if(_chl)_chl.hidden=!S.devMode;
- notesBadge();
  /* To Do badge */
  var _tb=q("#aa-todobadge");
  if(_tb){
@@ -3733,6 +4012,8 @@ function render(){
   // Msg sort: unread first, then unanswered requests, then rest (by most recent msg). Roach stays pinned above.
   function _hasUnanswered(c){return !c.unread&&!(c.unreadCount>0)&&!!c.order;}
   var _cs=(S.contacts||[]).slice().sort(function(a,b){
+   var ap=a.pinned?0:1,bp=b.pinned?0:1;
+   if(ap!==bp)return ap-bp;
    var au=a.unread||(a.unreadCount>0)?0:(_hasUnanswered(a)?1:2);
    var bu=b.unread||(b.unreadCount>0)?0:(_hasUnanswered(b)?1:2);
    if(au!==bu)return au-bu;
@@ -3746,9 +4027,10 @@ function render(){
    var last=c.msgs.length?c.msgs[c.msgs.length-1].text:"New contact — say hi";
    var tm=c.msgs.length?fmtMsgTime(c.msgs[c.msgs.length-1].t):"";
    var ord=c.order?' <span class="msg-ordtag">📦 order</span>':"";
-   h+='<button type="button" class="msg-chat'+(c.unread?" unread":"")+'" data-act="msg-open" data-c="'+escHtml(c.name)+'">'
+   var pinTag=c.pinned?' 📌':"";
+   h+='<button type="button" class="msg-chat'+(c.pinned?" pinned":"")+(c.unread?" unread":"")+'" data-act="msg-open" data-c="'+escHtml(c.name)+'">'
     +'<span class="msg-avatar">'+escHtml(c.name.charAt(0).toUpperCase())+'</span>'
-    +'<div class="msg-chat-mid"><b>'+escHtml(c.name)+ord+'</b><span>'+escHtml(last)+'</span></div>'
+    +'<div class="msg-chat-mid"><b>'+escHtml(c.name)+ord+pinTag+'</b><span>'+escHtml(last)+'</span></div>'
     +((c.unreadCount>0)?'<span class="msg-unread-count">'+c.unreadCount+'</span>':(c.unread?'<span class="msg-unread">\u25CF</span>':(!c.unread&&!(c.unreadCount>0)&&c.order?'<span class="msg-unanswered">(!)</span>':'')))
     +'<span class="msg-time">'+tm+'</span></button>';
   });
@@ -4030,6 +4312,7 @@ function render(){
  }
  var locked=now<S.lockedUntil;
  if(S.tab==="deal"){
+  try{if(window.ApkUpdater&&window.ApkUpdater.cancelPhoneNotif)window.ApkUpdater.cancelPhoneNotif();}catch(e){}
   var _mv=S.msgView||"list";
   if(_mv==="list"){q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
   else if(_mv==="phonebook"){q(".pane-deal").innerHTML=tabHeader("deal")+dealPhonebook();}
@@ -4325,32 +4608,49 @@ function mapsHTML(){
   guns:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9h15v4h-7l-1.2 7H5.6L6.8 13H2z"/></svg>',
   lab:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.5 3h5"/><path d="M10 3v5.2L4.8 17a2.4 2.4 0 0 0 2.1 3.5h10.2a2.4 2.4 0 0 0 2.1-3.5L14 8.2V3"/><path d="M7.2 14.5h9.6"/></svg>',
   gear:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8.5" width="18" height="10.5" rx="2.5"/><path d="M9 8.5V7a3 3 0 0 1 6 0v1.5"/><path d="M3 13.5h18"/></svg>',
-  upgrades:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6"/><path d="M12.5 5.5l6 6L14 16l-6-6z"/><path d="M11 11L4 18"/><path d="M3.5 20.5l2-2"/></svg>'
+  upgrades:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4l6 6"/><path d="M12.5 5.5l6 6L14 16l-6-6z"/><path d="M11 11L4 18"/><path d="M3.5 20.5l2-2"/></svg>',
+  style:'<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L3 7l2 4 2-1v10h10V10l2 1 2-4z"/><path d="M9 4c1 1.5 5 1.5 6 0"/></svg>'
  };
  var sh='<div class="store-screen-head"><span class="store-title" style="color:#f2efe8">'+STORE_ICON+'STORE</span></div>';
  var stores=[
-  ["seeds","SEEDS","Seed Bank","Premium genetics. No questions asked.","#4ade80"],
-  ["guns","GUNS","Gun Store","Iron & lead. Cash only.","#f87171"],
-  ["lab","LAB","Lab Supply","Everything for the cook.","#fbbf24"],
-  ["gear","GEAR","Supply Depot","Fertilizer & duffel upgrades.","#38bdf8"],
-  ["upgrades","HOME IMPROVEMENT","Home Improvement","Expand your grow. More rows, more pots.","#7CFC00"]
+  ["seeds","SEEDS","Seed Bank","Premium genetics. No questions asked.","#4ade80","🌱"],
+  ["guns","GUNS","Gun Store","Iron & lead. Cash only.","#f87171","🔫"],
+  ["lab","LAB","Lab Supply","Everything for the cook.","#fbbf24","🧪"],
+  ["gear","GEAR","Supply Depot","Fertilizer & duffel upgrades.","#38bdf8","🎒"],
+  ["style","STYLE","Style Shop","Look the part. Full matching sets trigger aura bonuses.","#c084fc","👕"],
+  ["upgrades","HOME IMPROVEMENT","Home Improvement","Expand your grow. More rows, more pots.","#7CFC00","🏠"]
  ];
  var st=S.storetab||"seeds";
- sh+='<div class="store-tabs">';
- stores.forEach(function(sc){
-  sh+='<button type="button" data-act="storetab" data-sec="'+sc[0]+'"'+(st===sc[0]?' class="on"':'')+'>'+SICON[sc[0]]+'<span>'+sc[1]+'</span></button>';
+ /* booklet: all shops as swipeable chapters */
+ var _sidx=0;
+ stores.forEach(function(sc,i){if(sc[0]===st)_sidx=i;});
+ sh+='<div class="store-book-dots">';
+ stores.forEach(function(sc,i){
+  sh+='<button type="button" data-act="storetab" data-sec="'+sc[0]+'" class="bk-dot'+(i===_sidx?' on':'')+'" style="'+(i===_sidx?'background:'+sc[4]+';':'')+'" title="'+sc[2]+'"></button>';
  });
+ sh+='</div><div class="store-book" id="store-book">';
+ /* triple the pages for seamless infinite scroll */
+ for(var _rep=0;_rep<3;_rep++){
+  stores.forEach(function(sc,i){
+   sh+='<div class="store-page" data-sec="'+sc[0]+'" data-rep="'+_rep+'">'
+    +'<div class="store-screen-head sec"><span class="store-title" style="color:'+sc[4]+'">'+sc[5]+' '+sc[2].toUpperCase()+'</span><span class="sec-desc">'+sc[3]+'</span></div>'
+    +'<div class="store-page-body" data-pagebody="'+sc[0]+'-'+_rep+'"></div></div>';
+  });
+ }
  sh+='</div>';
- var _cur=stores[0];
- stores.forEach(function(sc){if(sc[0]===st)_cur=sc;});
- sh+='<div class="store-screen-head sec"><span class="store-title" style="color:'+_cur[4]+'">'+SICON[_cur[0]].replace('width="12" height="12"','width="17" height="17"')+_cur[2].toUpperCase()+'</span><span class="sec-desc">'+_cur[3]+'</span></div>';
- if(st==="seeds"){
-   sh+='<div class="sdesc" style="margin:0 2px 6px">All strains: '+fmtT(growSec())+' grow (Settings tab).</div>';
+ /* render current chapter items into its page body */
+ var _cur=stores[_sidx];
+ st=_cur[0];
+ function _renderSec(sec){
+  var _pageHtml="";
+  var st=sec;
+  if(st==="seeds"){
+   _pageHtml+='<div class="sdesc" style="margin:0 2px 6px">Grow times: 30s-2min by strain (faster strains earn less).</div>';
    GROWKEYS.forEach(function(k){
     var v=tierVis(PRODUCTS[k].tier);
     if(v===0)return;
-    if(v===1){sh+='<div class="srow c tight locked"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></div></div>';return;}
-    sh+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+'</span></div>'
+    if(v===1){_pageHtml+='<div class="srow c tight locked"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></div></div>';return;}
+    _pageHtml+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+'</span></div>'
      +'<div style="display:flex;gap:6px">'
      +'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+' (&times;'+S.seeds[k]+')</button></div></div>';
    });
@@ -4358,19 +4658,19 @@ function mapsHTML(){
    KITKEYS.forEach(function(k){
     var v=tierVis(KITS[k].tier);
     if(v===0)return;
-    if(v===1){sh+='<div class="srow c locked"><div><b>'+KITS[k].name+'</b><div class="sdesc"><span class="lvtag">Lv '+KITS[k].tier+'</span></div></div></div>';return;}
-    sh+='<div class="srow c"><div><b>'+KITS[k].name+'</b><div class="sdesc">'+KITS[k].desc+'</div></div>'
+    if(v===1){_pageHtml+='<div class="srow c locked"><div><b>'+KITS[k].name+'</b><div class="sdesc"><span class="lvtag">Lv '+KITS[k].tier+'</span></div></div></div>';return;}
+    _pageHtml+='<div class="srow c"><div><b>'+KITS[k].name+'</b><div class="sdesc">'+KITS[k].desc+'</div></div>'
      +'<button type="button" data-act="buykit" data-kit="'+k+'"'+(S.cash>=KITS[k].cost?"":" disabled")+'>'+money(KITS[k].cost)+' (&times;'+(S.kits[k]||0)+')</button></div>';
    });
   }else if(st==="gear"){
-   sh+='<div class="srow c"><div><b>Fertilizer</b><div class="sdesc">+30 growth, instant</div></div>'
+   _pageHtml+='<div class="srow c"><div><b>Fertilizer</b><div class="sdesc">+30 growth, instant</div></div>'
     +'<button type="button" data-act="buyfert"'+(S.cash>=FERT_COST?"":" disabled")+'>'+money(FERT_COST)+' (&times;'+S.fert+')</button></div>';
-   sh+='<div class="srow c"><div><b>Rolling papers</b><div class="sdesc">Pack of '+PAPER_PACK+' — needed to roll joints</div></div>'
+   _pageHtml+='<div class="srow c"><div><b>Rolling papers</b><div class="sdesc">Pack of '+PAPER_PACK+' — needed to roll joints</div></div>'
     +'<button type="button" data-act="buypapers"'+(S.cash>=PAPER_COST?"":" disabled")+'>'+money(PAPER_COST)+' (&times;'+S.papers+')</button></div>';
    var ti=DUFFEL.indexOf(S.stashCap);
    if(ti<DUFFEL.length-1){
     var nc=DUFFEL[ti+1];
-    sh+='<div class="srow c"><div><b>Bigger duffel</b><div class="sdesc">Carry '+nc+'g (now '+S.stashCap+'g)</div></div>'
+    _pageHtml+='<div class="srow c"><div><b>Bigger duffel</b><div class="sdesc">Carry '+nc+'g (now '+S.stashCap+'g)</div></div>'
      +'<button type="button" data-act="buyduffel"'+(S.cash>=DUFFEL_COST[nc]?"":" disabled")+'>'+money(DUFFEL_COST[nc])+'</button></div>';
    }
   }else if(st==="guns"){
@@ -4379,32 +4679,81 @@ function mapsHTML(){
     if(owned)return; // hide owned weapons (incl. fists — only buyable shown)
     var v=tierVis(w.tier);
     if(v===0)return;
-    if(v===1){sh+='<div class="srow c locked"><div><b><i class="wicon w-'+wk+'"></i>'+w.name+'</b><div class="sdesc"><span class="lvtag">Lv '+w.tier+'</span></div></div></div>';return;}
-    sh+='<div class="srow c"><div><b><i class="wicon w-'+wk+'"></i>'+w.name+' <span class="sdesc">'+w.dmg[0]+'-'+w.dmg[1]+' dmg'+(wk==="fists"?" &middot; always armed":(owned?" &middot; OWNED":""))+'</span></b></div>'
+    if(v===1){_pageHtml+='<div class="srow c locked"><div><b><i class="wicon w-'+wk+'"></i>'+w.name+'</b><div class="sdesc"><span class="lvtag">Lv '+w.tier+'</span></div></div></div>';return;}
+    _pageHtml+='<div class="srow c"><div><b><i class="wicon w-'+wk+'"></i>'+w.name+' <span class="sdesc">'+w.dmg[0]+'-'+w.dmg[1]+' dmg'+(wk==="fists"?" &middot; always armed":(owned?" &middot; OWNED":""))+'</span></b></div>'
      +(owned?'<button type="button" disabled>OWNED</button>':'<button type="button" data-act="buyweapon" data-w="'+wk+'"'+(S.cash>=w.cost?"":" disabled")+'>'+money(w.cost)+'</button>')
      +'</div>';
    });
-   sh+='<div class="sdesc" style="margin:2px 2px 6px">Best owned weapon auto-used in fights.</div>';
-  }else{
+   _pageHtml+='<div class="sdesc" style="margin:2px 2px 6px">Best owned weapon auto-used in fights.</div>';
+  }else if(st==="style"){
+   _pageHtml+=gearAvatarHTML();
+   _pageHtml+='<div class="sdesc" style="margin:0 2px 6px">Full matching set = aura bonus. Mix sets for piece bonuses only.</div>';
+   Object.keys(GEAR_SETS).forEach(function(setId){
+    var set=GEAR_SETS[setId];
+    _pageHtml+='<div class="srow c tight" style="border-color:'+set.aura+'"><div><b style="color:'+set.aura+'">'+set.name+' Set</b><div class="sdesc">'+set.desc+'</div></div></div>';
+    GKEYS.forEach(function(gk){
+     var g=GEAR[gk];
+     if(g.set!==setId)return;
+     var owned=(S.gear||[]).indexOf(gk)>=0,eq=(S.equipped||{})[g.slot]===gk;
+     var v=tierVis(g.tier);
+     if(v===0)return;
+     if(v===1){_pageHtml+='<div class="srow c tight locked"><div><b>'+g.name+'</b> <span class="sdesc">'+g.slot+' &middot; '+g.desc+'</span><div class="sdesc"><span class="lvtag">Lv '+g.tier+'</span></div></div></div>';return;}
+     _pageHtml+='<div class="srow c tight"><div><b>'+g.name+(eq?' <span style="color:#4ade80">&#10003; WORN</span>':'')+'</b><div class="sdesc">'+g.slot+' &middot; '+g.desc+' &middot; <span class="lvtag">Lv '+g.tier+'</span></div></div>'
+      +'<div style="display:flex;gap:6px">'
+      +(owned?(eq?'<button type="button" data-act="unequipgear" data-g="'+gk+'">Unequip</button>':'<button type="button" data-act="equipgear" data-g="'+gk+'">Equip</button>'):'<button type="button" data-act="buygear" data-g="'+gk+'"'+(S.cash>=g.cost?"":" disabled")+'>'+money(g.cost)+'</button>')
+      +'</div></div>';
+    });
+   });
+  }else if(st==="upgrades"){
    // Home Improvement tab — Grow Tent row expansions (only buyable items shown)
    var _ul=(S.propUpgrades&&S.propUpgrades.tent)||1;
    var _unext=_ul===1?3:(_ul===3?4:0);
    [{rows:3,pots:9,cost:2500},{rows:4,pots:12,cost:7500}].forEach(function(u){
     if(u.rows<=_ul)return;
     var _ulock=u.rows!==_unext;
-    sh+='<div class="srow c'+(_ulock?' locked':'')+'"><div><b>Grow Tent &mdash; '+u.rows+' Rows</b><div class="sdesc">'+u.pots+' pots'+(_ulock?' &middot; Requires '+_unext+' Rows first':'')+'</div></div>'
+    _pageHtml+='<div class="srow c'+(_ulock?' locked':'')+'"><div><b>Grow Tent &mdash; '+u.rows+' Rows</b><div class="sdesc">'+u.pots+' pots'+(_ulock?' &middot; Requires '+_unext+' Rows first':'')+'</div></div>'
      +'<button type="button" data-act="buyupgrade" data-rows="'+u.rows+'"'+((_ulock||S.cash<u.cost)?' disabled':'')+'>'+money(u.cost)+'</button></div>';
    });
-   if(!_unext)sh+='<div class="sdesc" style="margin:2px 2px 6px">&#9733; Maxed out &#9733;</div>';
+   if(!_unext)_pageHtml+='<div class="sdesc" style="margin:2px 2px 6px">&#9733; Maxed out &#9733;</div>';
   }
+  return _pageHtml;
+ }
  q(".pane-store").innerHTML=sh;
+ /* booklet: inject chapter items + wire swipe */
+ try{
+  stores.forEach(function(sc){
+   for(var _r=0;_r<3;_r++){
+    var _pb=document.querySelector('.store-page-body[data-pagebody="'+sc[0]+'-'+_r+'"]');
+    if(_pb)_pb.innerHTML=_renderSec(sc[0]);
+   }
+  });
+  var _book=document.getElementById("store-book");
+  if(_book){
+   /* start in middle copy for infinite scroll */
+   var _pages=_book.querySelectorAll(".store-page");
+   var _n6=stores.length,_mid=_n6+_sidx;
+   _book.scrollLeft=_mid*_book.clientWidth;
+   var _st=null;
+   _book.addEventListener("scroll",function(){
+    clearTimeout(_st);
+    _st=setTimeout(function(){
+     var _w=_book.clientWidth,_total=_pages.length;
+     var _i=Math.round(_book.scrollLeft/_w);
+     /* seamless jump: if in first or last copy, teleport to middle copy */
+     if(_i<_n6){_book.scrollLeft=(_i+_n6)*_w;_i+=_n6;}
+     else if(_i>=_n6*2){_book.scrollLeft=(_i-_n6)*_w;_i-=_n6;}
+     var _p=_pages[_i];
+     if(_p&&_p.dataset.sec!==S.storetab){S.storetab=_p.dataset.sec;save();render();}
+    },120);
+   },{passive:true});
+  }
+ }catch(e){}
  q(".pane-chill").innerHTML=chillHTML();
  q(".pane-clinic").innerHTML=clinicHTML();
  var _ae=(typeof document!=="undefined")?document.activeElement:null;
  if(!(_ae&&_ae.type==="range"&&root.contains&&root.contains(_ae)))q(".pane-settings").innerHTML=settingsHTML();
  q(".pane-browser").innerHTML=browserHTML();
  if(S.tab==="devtools"){q(".pane-devtools").innerHTML=tabHeader("devtools")+devtoolsHTML();}
- if(S.tab==="notes"){q(".pane-notes").innerHTML=notesHTML();notesBadge();}
 }
 function getPot(pi,si){var pr=S.props[pi];return pr?pr.slots[si]:undefined;}
 function doPlant(pi,si,k){
@@ -4415,7 +4764,7 @@ function doPlant(pi,si,k){
  trackCost(k,PRODUCTS[k].seed);
  pr.slots[si]={strain:k,growth:0,water:70};
  S.msg="Planted "+PRODUCTS[k].name+" at the "+pr.name+". Keep it watered.";
- save();render();
+ save();render();pushGrowToWidget(true);
 }
 function doAutoPlant(k){
  if(!k||PRODUCTS[k].tier>pLevel())return;
@@ -4450,7 +4799,7 @@ function doHarvest(pi,si){
  S.stats.harvested++;
  var _hx=addXP(8*PRODUCTS[p.strain].tier);
  if(!_hx)S.msg="Harvested "+take+"g of "+PRODUCTS[p.strain].name+".";
- save();render();
+ save();render();pushGrowToWidget(true);
 }
 function doHarvestAll(){
  var hn=0,ht=0,full=false,lv0=pLevel();
@@ -4466,7 +4815,7 @@ function doHarvestAll(){
  var lv1=pLevel();
  if(hn===0){S.msg=full?"Duffel is full — sell some or upgrade it.":"Nothing ready to harvest yet.";if(full)showBagFullWarn();}
  else{S.msg="Harvested "+ht+"g from "+hn+" plant"+(hn>1?"s":"")+".";if(full)S.msg+=" Duffel is full — sell some or upgrade it.";if(lv1>lv0)S.msg+=" Reached level "+lv1+"!";}
- save();render();
+ save();render();pushGrowToWidget(true);
 }
 function doBust(){
  PKEYS.forEach(function(k){S.stash[k]=0;});
@@ -4680,17 +5029,26 @@ function hideHeadsUp(){
 }
 function notifyMsgArrived(c,text){
  if(!c||!c.name)return;
- showHeadsUp(c.name,text);
- playMsgSound();
+ /* snooze: suppress in-game popups + sound, but still track */
+ if(!S.snoozed){
+  showHeadsUp(c.name,text);
+  playMsgSound();
+ }
  if(!Array.isArray(S.notifs))S.notifs=[];
  S.notifs.unshift({m:text,from:c.name,app:"messages",e:0,t:Date.now()});
  if(S.notifs.length>10)S.notifs.length=10;
+ /* phone notification: fire real Android notification if enabled */
+ if(S.phoneNotif){
+  try{
+   if(window.ApkUpdater&&window.ApkUpdater.postPhoneNotif)window.ApkUpdater.postPhoneNotif("💬 "+c.name,text);
+  }catch(e){}
+ }
 }
 function unlockFixer(){
  if(!S.contacts)S.contacts=[];
  if(getContact("The Fixer"))return;
  var now=Date.now();
- S.contacts.push({name:"The Fixer",type:"fixer",fixer:true,loyalty:50,order:null,unread:true,lastOrderAt:0,
+ S.contacts.push({name:"The Fixer",type:"fixer",fixer:true,pinned:true,loyalty:50,order:null,unread:true,lastOrderAt:0,
   msgs:[
    {from:"them",text:"Heard you had some trouble out there. Word travels fast in this city.",t:now},
    {from:"them",text:"Name's Fixer. I got ears everywhere — the families, the gangs, even some badges who owe me favors.",t:now+1000},
@@ -4738,8 +5096,9 @@ function maybeAddContact(tier,qty){
  var _pendNames={};S.pendingContacts.forEach(function(p){_pendNames[p.name]=1;});
  if(_pendNames[nm]||_blocked[nm])return;
  S.pendingContacts.push({name:nm,type:tp,phone:_phone,prefs:contactPrefsFor(tp),t:Date.now(),isThief:_isThief,ordersBeforeTurn:_isThief?(2+((Math.random()*3)|0)):0});
- pushContactNotif("📝 New note: "+nm+" — "+fmtPhone(_phone));
- S.msg="Someone left you their number. Check Notes.";
+ pushContactNotif("📲 Incoming contact: "+nm);
+ save();
+ showAirdropPopup();
 }
 function activatePendingContact(phone){
  var _idx=-1;
@@ -4754,6 +5113,62 @@ function activatePendingContact(phone){
  pushContactNotif("📱 New contact: "+p.name);
  notifyMsgArrived({name:p.name},_intro);
  return true;
+}
+/* ---------- AirDrop contact flow ---------- */
+function showAirdropPopup(){
+ try{
+  if(typeof document==="undefined"||!document.createElement||!root)return;
+  if(root.querySelector(".airdrop-pop"))return;
+  var pend=S.pendingContacts||[];
+  if(!pend.length)return;
+  var p=pend[0];
+  var pop=document.createElement("div");
+  pop.className="airdrop-pop";
+  var initial=(p.name||"?").charAt(0).toUpperCase();
+  pop.innerHTML='<div class="airdrop-card">'
+   +'<div class="airdrop-head">📲 '+escHtml(p.name)+' wants to share their contact</div>'
+   +'<div class="airdrop-avatar">'+escHtml(initial)+'</div>'
+   +'<div class="airdrop-name">'+escHtml(p.name)+'</div>'
+   +'<div class="airdrop-phone">'+escHtml(fmtPhone(p.phone))+'</div>'
+   +'<div class="airdrop-type">'+escHtml(p.type||"casual")+'</div>'
+   +'<div class="airdrop-btns">'
+   +'<button type="button" class="airdrop-decline" data-act="airdrop-decline">Decline</button>'
+   +'<button type="button" class="airdrop-accept" data-act="airdrop-accept">Accept</button>'
+   +'</div></div>';
+  pop.addEventListener("click",function(e){
+   var act=e.target&&e.target.dataset?e.target.dataset.act:null;
+   if(act==="airdrop-accept")airdropAccept();
+   else if(act==="airdrop-decline")airdropDecline();
+  });
+  root.appendChild(pop);
+ }catch(e){}
+}
+function airdropAccept(){
+ try{
+  var pend=S.pendingContacts||[];
+  if(!pend.length)return;
+  var phone=pend[0].phone, nm=pend[0].name;
+  var pop=root.querySelector(".airdrop-pop");if(pop)pop.remove();
+  activatePendingContact(phone);
+  save();render();
+  var c=document.createElement("div");
+  c.className="airdrop-confirm";
+  c.innerHTML='<div class="airdrop-confirm-card">📇 '+escHtml(nm)+' added to contacts</div>';
+  root.appendChild(c);
+  setTimeout(function(){c.classList.add("fadeout");},1600);
+  setTimeout(function(){if(c.parentNode)c.parentNode.removeChild(c);},2100);
+  setTimeout(function(){showAirdropPopup();},2200);
+ }catch(e){}
+}
+function airdropDecline(){
+ try{
+  var pend=S.pendingContacts||[];
+  if(pend.length)pend.shift();
+  save();
+  var pop=root.querySelector(".airdrop-pop");if(pop)pop.remove();
+  render();
+  setTimeout(function(){showAirdropPopup();},400);
+ }catch(e){}
 }
 function tickContacts(now){
  if(!S.contacts||!S.contacts.length)return;
@@ -4887,10 +5302,10 @@ function doFulfillOrder(nm){
  var o=c.order,have=contactHave(o);
  if(have<o.g){S.msg="You don't have "+contactQtyText(o)+".";save();render();return;}
  if(o.kind==="joint")S.joints[o.k]-=o.g;else S.stash[o.k]-=o.g;
- var rev=o.pu*o.g;
+ var rev=Math.floor(o.pu*o.g*gearPriceMult());
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
  dealTerrHeat(o.g,o.g>=5);
- c.loyalty=Math.min(100,c.loyalty+8);
+ c.loyalty=Math.min(100,c.loyalty+Math.round(8*(1+gearBonus().rep/100)));
  var now=Date.now();
  c.msgs.push({from:"me",text:"got u. "+o.g+"g comin thru.",t:now});
  c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
@@ -4904,12 +5319,19 @@ function doAcceptOrder(nm,variant){
  if(!c||!c.order)return;
  var o=c.order,now=Date.now();
  if(!Array.isArray(S.tasks))S.tasks=[];
- S.tasks.push({name:c.name,k:o.k,kind:o.kind,g:o.g,pu:o.pu,addedAt:now});
+ /* VIP flash order: 10% chance, 1.5x payout, 5-min expiry */
+ var _vip=Math.random()<0.10;
+ var _pu=_vip?Math.round(o.pu*1.5):o.pu;
+ var _exp=_vip?now+5*60*1000:now+20*60*1000;
+ /* regulars: 3+ fulfills = 15% larger quantity */
+ var _g=o.g;
+ if(S.regulars&&S.regulars[c.name]>=3)_g=Math.ceil(o.g*1.15);
+ S.tasks.push({name:c.name,k:o.k,kind:o.kind,g:_g,pu:_pu,addedAt:now,expiresAt:_exp,vip:_vip});
  var txt=variant||"Bet";
  c.msgs.push({from:"me",text:txt,t:now});
- c.msgs.push({from:"them",text:"bet 🙏",t:now});
+ c.msgs.push({from:"them",text:_vip?"you're my VIP rn ⭐":"bet 🙏",t:now});
  c.order=null;c.unread=false;
- S.msg="Order from "+c.name+" added to Tasks.";
+ S.msg=_vip?"⭐ VIP order from "+c.name+" added to Tasks! 5 min to fulfill!":"Order from "+c.name+" added to Tasks.";
  save();render();
 }
 function doDismissOrder(nm,variant){
@@ -4923,11 +5345,11 @@ function doDismissOrder(nm,variant){
  S.msg="Dismissed order request from "+c.name+".";
  save();render();
 }
-function doFulfillTask(i){
+function doFulfillTask(i,silent){
  var t=S.tasks&&S.tasks[i];
- if(!t){S.msg="No such task.";save();render();return;}
+ if(!t){if(!silent){S.msg="No such task.";save();render();}return false;}
  var o={k:t.k,kind:t.kind,g:t.g,pu:t.pu},have=contactHave(o);
- if(have<o.g){S.msg="You don't have "+contactQtyText(o)+".";save();render();return;}
+ if(have<o.g){if(!silent){S.msg="You don't have "+contactQtyText(o)+".";save();render();}return false;}
  /* thief turn check */
  var _tc=getContact(t.name);
  if(_tc&&_tc.isThief&&(_tc.ordersBeforeTurn||0)<=0){
@@ -4935,14 +5357,23 @@ function doFulfillTask(i){
   return;
  }
  if(o.kind==="joint")S.joints[o.k]-=o.g;else S.stash[o.k]-=o.g;
- var rev=o.pu*o.g,now=Date.now();
+ var rev=Math.floor(o.pu*o.g*gearPriceMult()),now=Date.now();
+ /* speed bonus: fulfilled within 5 min = 10% tip */
+ var _tip=0;
+ if(now-t.addedAt<5*60*1000){_tip=Math.floor(rev*0.10);rev+=_tip;}
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
+ /* today's stats */
+ if(S.statsToday&&S.statsToday.date===new Date().toISOString().slice(0,10)){S.statsToday.orders++;S.statsToday.earned+=rev;}
+ else{S.statsToday={orders:1,earned:rev,date:new Date().toISOString().slice(0,10)};}
+ /* regulars tracking */
+ if(!S.regulars||typeof S.regulars!=="object")S.regulars={};
+ S.regulars[t.name]=(S.regulars[t.name]||0)+1;
  dealTerrHeat(o.g,o.g>=5);
  var c=getContact(t.name);
  if(c){
   var _thiefLeadup=c.isThief&&(c.ordersBeforeTurn||0)>0;
   var _obtBefore=c.ordersBeforeTurn||0;
-  c.loyalty=Math.min(100,c.loyalty+8);
+  c.loyalty=Math.min(100,c.loyalty+Math.round(8*(1+gearBonus().rep/100)));
   if(c.isThief&&c.ordersBeforeTurn>0)c.ordersBeforeTurn--;
   c.msgs.push({from:"me",text:"got u. "+o.g+"g comin thru.",t:now});
   /* thief chickens out at the meetup: sketchy in texts, soft in person */
@@ -4959,21 +5390,38 @@ function doFulfillTask(i){
    if(stashTotal()+_tipG<=S.stashCap){
     S.stash[_tipK]=(S.stash[_tipK]||0)+_tipG;
     c.msgs.push({from:"them",text:"yo try this "+PRODUCTS[_tipK].name+" on me 🙏",t:now});
-    S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+". They tipped you "+_tipG+"g "+PRODUCTS[_tipK].name+"!";
+    if(!silent)S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+". They tipped you "+_tipG+"g "+PRODUCTS[_tipK].name+"!";
    }else{
     c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
-    S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+".";
+    if(!silent)S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+".";
    }
   }else{
    c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
-   S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+".";
+   if(!silent)S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+".";
   }
   c.lastFulfilledAt=now;c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
  }
  S.tasks.splice(i,1);
- S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+".";
- battleRoll();save();render();
+ var _tipTxt=_tip>0?" +"+money(_tip)+" speed tip!":"";
+ if(!silent){
+  S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+"."+_tipTxt;
+  /* referral: 25% chance a friend heard about you */
+  if(Math.random()<0.25&&S.tasks.length<50){
+   var _used={};S.contacts.forEach(function(cc){_used[cc.name]=1;});S.tasks.forEach(function(tt){_used[tt.name]=1;});
+   var _pool=CONTACT_NAMES.filter(function(n){return !_used[n];});
+   if(_pool.length){
+    var _rn=_pool[(Math.random()*_pool.length)|0];
+    var _rg=o.kind==="joint"?[1,2,3][(Math.random()*3)|0]:[2,3,5][(Math.random()*3)|0];
+    S.tasks.push({name:_rn,k:o.k,kind:o.kind,g:_rg,pu:o.pu,addedAt:Date.now(),expiresAt:Date.now()+20*60*1000,vip:false,referral:"Heard about you from "+t.name});
+    S.msg+=" "+_rn+" heard about you from "+t.name+" and wants in!";
+   }
+  }
+  battleRoll();save();render();
+ }
+ return true;
 }
+/* silent batch fulfill helper for Fulfill All */
+function doFulfillTaskSilent(i){return doFulfillTask(i,true);}
 function doDismissTask(i){
  var t=S.tasks&&S.tasks[i];
  if(!t)return;
@@ -4982,18 +5430,20 @@ function doDismissTask(i){
  S.msg="Dismissed task for "+t.name+".";
  save();render();
 }
-var _todoTouchX=null;
+var _todoTouch=null;
 function todoSwipeInit(){
  var _pane=q(".pane-tasks");
  if(!_pane||_pane._swipeInit)return;
  _pane._swipeInit=true;
  _pane.addEventListener("touchstart",function(e){
-  if(e.touches.length===1)_todoTouchX=e.touches[0].clientX;
+  if(e.touches.length===1)_todoTouch={x:e.touches[0].clientX,y:e.touches[0].clientY};
  },{passive:true});
  _pane.addEventListener("touchend",function(e){
-  if(_todoTouchX===null)return;
-  var _dx=e.changedTouches[0].clientX-_todoTouchX;
-  _todoTouchX=null;
+  if(!_todoTouch)return;
+  var _dx=e.changedTouches[0].clientX-_todoTouch.x;
+  var _dy=e.changedTouches[0].clientY-_todoTouch.y;
+  _todoTouch=null;
+  if(Math.abs(_dy)>Math.abs(_dx))return; /* vertical scroll wins — ignore */
   if(Math.abs(_dx)<60)return;
   var _tv=S.todoView||"tasks";
   if(_dx<0&&_tv==="tasks"){S.todoView="stash";save();render();}
@@ -5016,12 +5466,34 @@ function todoHTML(){
 function tasksHTML(){
  var h=tabHeader("tasks");
  var ts=(S.tasks&&Array.isArray(S.tasks))?S.tasks:[];
+ /* today's stats line */
+ var _st=S.statsToday||{orders:0,earned:0};
+ /* count fulfillable */
+ var _fulfillable=0;
+ ts.forEach(function(t){var _o={k:t.k,kind:t.kind,g:t.g,pu:t.pu};if(contactHave(_o)>=_o.g)_fulfillable++;});
+ h+='<div class="tk-head"><div><div class="tk-title">📋 Orders ('+ts.length+')</div><div class="tk-today">Today: '+_st.orders+' orders · '+money(_st.earned)+'</div></div>'
+  +'<div class="tk-headbtns"><button type="button" class="tk-abtn tk-prepall" data-act="task-prepall">Prep All</button>'
+  +'<button type="button" class="tk-abtn tk-fulfillall" data-act="task-fulfillall"'+(_fulfillable?"":" disabled")+'>Fulfill All ('+_fulfillable+')</button></div></div>';
  if(!ts.length){
   h+='<div class="tk-empty">📋 No tasks.<br>Accept a customer order in Messages and it lands here.</div>';
   return h;
  }
  ts.forEach(function(t,i){
   var o={k:t.k,kind:t.kind,g:t.g,pu:t.pu},can=contactHave(o)>=o.g;
+  /* status dot: green=ready, gray=needs prep, red=expiring soon */
+  var _now=Date.now(),_msLeft=(t.expiresAt||_now)-_now,_minLeft=Math.max(0,Math.ceil(_msLeft/60000));
+  var _dotCls=!can?"gry":(_minLeft<=5?"r":"g");
+  /* expiry text */
+  var _expTxt=_minLeft<=0?"expiring!":("⏳ "+_minLeft+"m left");
+  var _expCls=_minLeft<=5?"t-soon":"t-left";
+  /* customer tag: repeat vs new, regulars */
+  var _isRepeat=!!getContact(t.name);
+  var _isReg=S.regulars&&S.regulars[t.name]>=3;
+  var _vipBadge=t.vip?'<span class="tk-vipbadge">⭐ VIP</span>':"";
+  var _regTag=_isReg?'<span class="tk-regtag">⭐ Regular</span>':"";
+  var _custTag=_isReg?"⭐ regular":(_isRepeat?"🔥 repeat customer":"new customer");
+  var _refTxt=t.referral?escHtml(t.referral):"";
+  var _metaLine='<div class="tk-meta">'+_custTag+' · <span class="'+_expCls+'">'+_expTxt+'</span>'+(_refTxt?'<br>'+_refTxt:"")+'</div>';
   var when="";try{when=new Date(t.addedAt).toLocaleString();}catch(e){}
   /* production helpers */
   var _prodBtns='';
@@ -5060,8 +5532,9 @@ function tasksHTML(){
     _prodBtns='<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+t.k+'"'+(S.cash>=_sp2?"":" disabled")+'>Buy '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+' Seeds '+money(_sp2)+'</button>';
    }
   }
-  h+='<div class="tk-card"><div class="tk-hd"><b>'+escHtml(t.name)+'</b><span>'+escHtml(when)+'</span></div>'
+  h+='<div class="tk-card'+(t.vip?" vip":"")+'"><div class="tk-dot '+_dotCls+'"></div><div class="tk-hd"><b>'+escHtml(t.name)+_vipBadge+_regTag+'</b><span>'+escHtml(when)+'</span></div>'
    +'<div class="tk-body">'+escHtml(contactQtyText(o))+' · pays <b>'+money(o.pu*o.g)+'</b></div>'
+   +_metaLine
    +(_prodBtns?'<div class="tk-prod">'+_prodBtns+'</div>':'')
    +'<div class="tk-btns"><button type="button" class="tk-fulfill" data-act="task-fulfill" data-i="'+i+'"'+(can?"":" disabled")+'>Fulfill</button>'
    +'<button type="button" class="tk-dismiss" data-act="task-dismiss" data-i="'+i+'">Dismiss</button></div></div>';
@@ -5155,6 +5628,7 @@ function doDeal(di,k,isBuy,isJoint){
   var unit2=ppu(st.price,d.buy[k]*terrPriceMult()*terrPrefMult(k,isJoint));
   if(isJoint)unit2=Math.round(unit2*0.9);
   if(buffActive())unit2=Math.round(unit2*S.buffMult);
+  unit2=Math.round(unit2*gearPriceMult());
   var rev=Math.floor(unit2*g);
   var heldBefore=isJoint?(S.joints[k]||0):(S.stash[k]||0);
   if(isJoint)S.joints[k]-=g;else S.stash[k]-=g;
@@ -5186,6 +5660,7 @@ function doStashSellAll(k,isJoint){
  var unit=ppu(st.price,d.buy[k]*terrPriceMult()*terrPrefMult(k,isJoint));
  if(isJoint)unit=Math.round(unit*0.9);
  if(buffActive())unit=Math.round(unit*S.buffMult);
+ unit=Math.round(unit*gearPriceMult());
  var rev=Math.floor(unit*have);
  if(isJoint)S.joints[k]=0;else S.stash[k]=0;
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
@@ -5603,6 +6078,22 @@ function tick(){
   }
  }
  tickContacts(now);
+ /* task expiry: remove expired orders, customer walks, loyalty hit */
+ if(Array.isArray(S.tasks)&&S.tasks.length){
+  var _expired=[];
+  S.tasks=S.tasks.filter(function(t){
+   if(t.expiresAt&&now>t.expiresAt){_expired.push(t);return false;}
+   return true;
+  });
+  if(_expired.length){
+   _expired.forEach(function(t){
+    var _c=getContact(t.name);
+    if(_c){_c.loyalty=Math.max(0,(_c.loyalty||50)-10);}
+   });
+   var _names=_expired.map(function(t){return t.name;}).join(", ");
+   S.msg=_expired.length===1?_names+" walked away. (order expired)":_expired.length+" customers walked away. (orders expired)";
+  }
+ }
  if(S.job){
   if(S.job.phase==="cooking"&&Date.now()>=S.job.readyAt)settleCooking();
   else if(!S.job.phase)settleJob();
@@ -5743,7 +6234,7 @@ function winThiefBattle(){
  var _t=S.tasks&&S.tasks[b.taskIdx];
  S.thiefBattle=null;
  if(_t){
-  var rev=_o.pu*_o.g;
+  var rev=Math.floor(_o.pu*_o.g*gearPriceMult());
   S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
   S.tasks.splice(b.taskIdx,1);
  }
@@ -6074,29 +6565,6 @@ function chillHTML(){
  }
  return h;
 }
-function notesHTML(){
- var h='<div class="shopsec">NOTES</div>';
- h+='<div class="sdesc">People who left their number. Dial it manually in the Phone keypad to hit them up.</div>';
- var _pend=S.pendingContacts||[];
- if(!_pend.length){
-  h+='<div class="notes-empty" style="margin-top:20px">No numbers yet.<br>Make some deals and people will leave theirs.</div>';
- }else{
-  h+='<div class="set-list" style="margin-top:12px">';
-  _pend.forEach(function(p){
-   h+='<div class="set-row"><span><b>'+escHtml(p.name)+'</b><br><span style="color:#888;font-size:13px">'+fmtPhone(p.phone)+'</span></span></div>';
-  });
-  h+='</div>';
- }
- return h;
-}
-function notesBadge(){
- var _nb=q("#aa-notesbadge");
- if(_nb){
-  var _n=(S.pendingContacts||[]).length;
-  if(_n>0){_nb.textContent=_n>99?"99+":_n;_nb.hidden=false;}
-  else{_nb.hidden=true;}
- }
-}
 function devtoolsHTML(){
  var h='<div class="shopsec">DEV TOOLS</div>';
  h+='<div class="sdesc">Dev mode active. All apps visible.</div>';
@@ -6392,7 +6860,6 @@ root.addEventListener("click",function(e){
  if(!b||b.disabled)return;
  var a=b.dataset.act;
  if(a==="todoview"){var _tv=b.dataset.v;S.todoView=(_tv==="stash")?"stash":"tasks";save();render();return;}
- if(a==="notesview"){var _nv=b.dataset.v;S.notesView=(_nv==="inprogress"||_nv==="stash")?_nv:"folders";NOTESQ="";save();render();return;}
  if(a==="notes-edit"){S.msg="Nothing to edit — your notes manage themselves.";save();render();return;}
  if(a==="notes-sellall"){
   var _sln=Date.now();
@@ -6404,7 +6871,7 @@ root.addEventListener("click",function(e){
    var unit=ppu(PRODUCTS[k].price,_sld.buy[k]*terrPriceMult()*terrPrefMult(k,ij));
    if(ij)unit=Math.round(unit*0.9);
    if(_slb)unit=Math.round(unit*S.buffMult);
-   var r=Math.floor(unit*have);
+   var r=Math.floor(unit*have*gearPriceMult());
    if(ij)S.joints[k]=0;else S.stash[k]=0;
    _slr+=r;_sli+=have;
    dealTerrHeat(have,have>=5);
@@ -6435,12 +6902,26 @@ root.addEventListener("click",function(e){
  }
  if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);ttPushHist();save();render();return;}
  if(a==="openapp"){closeFolder();if(S.battle||S.thiefBattle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";if(b.dataset.mv)S.msgView=b.dataset.mv;navPush(_ap);ttPushHist();var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
- if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle){S.msg="Finish the fight!";save();render();return;}navPop();save();render();return;}
+ if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle){S.msg="Finish the fight!";save();render();return;}if(S.tab==="tasks"){S.view="home";S.tab=null;S.todoView="tasks";navStack=[];save();render();return;}navPop();save();render();return;}
  if(a==="android-home"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
  if(a==="android-recents"){var _rx=q(".android-recents");if(_rx)_rx.hidden=!_rx.hidden;render();return;}
  if(a==="shade-open"){openShade();return;}
  if(a==="shade-close"){closeShade();return;}
- if(a==="shade-clear"){S.notifs=[];shadeListKey=null;save();render();return;}
+ if(a==="power"){
+   if(confirm("Force stop Trap Tycoon?")){
+    try{save();}catch(e){}
+    try{if(window.ApkUpdater&&typeof window.ApkUpdater.forceStop==="function"){window.ApkUpdater.forceStop();return;}}catch(e){}
+    // Fallback: lock the game if native bridge unavailable
+    try{ttLockShow();}catch(e2){}
+   }
+   return;
+  }
+  if(a==="shade-clear"){S.notifs=[];shadeListKey=null;save();render();return;}
+ if(a==="shade-snooze"){S.snoozed=!S.snoozed;save();renderShade();return;}
+ if(a==="shade-phonenotif"){S.phoneNotif=!S.phoneNotif;S.phoneNotifSet=true;save();renderShade();
+  /* if enabling, ask native side to ensure permission */
+  if(S.phoneNotif){try{if(window.ApkUpdater&&window.ApkUpdater.requestNotifPermission)window.ApkUpdater.requestNotifPermission();}catch(e){}}
+  return;}
  if(a==="bw-back"){var _bt=BWT.tabs[BWT.cur];if(_bt&&_bt.hi>0)_bt.hi--;BWT.menu=false;BWT.switcher=false;render();return;}
  if(a==="bw-fwd"){var _bt2=BWT.tabs[BWT.cur];if(_bt2&&_bt2.hi<_bt2.hist.length-1)_bt2.hi++;BWT.menu=false;BWT.switcher=false;render();return;}
  if(a==="bw-goto"){bwNav(b.dataset.url);render();return;}
@@ -6460,11 +6941,11 @@ root.addEventListener("click",function(e){
  if(a==="prop-back"){S.propView=null;S.propSel=null;save();render();return;}
  if(a==="prop-sel-clear"){S.propSel=null;save();render();return;}
  if(a==="prop-plant"){S.propSel={pi:+b.dataset.pi,si:+b.dataset.si};save();render();return;}
- if(a==="prop-waterall"){var _pw=S.props.filter(function(x){return x.id===b.dataset.pid;})[0];if(_pw){_pw.slots.forEach(function(p){if(p)p.water=100;});}S.msg="Everything watered.";save();render();return;}
+ if(a==="prop-waterall"){var _pw=S.props.filter(function(x){return x.id===b.dataset.pid;})[0];if(_pw){_pw.slots.forEach(function(p){if(p)p.water=100;});}S.msg="Everything watered.";save();render();pushGrowToWidget(true);return;}
  if(a==="prop-harvestall"){var _ph=S.props.filter(function(x){return x.id===b.dataset.pid;})[0];if(_ph){var _phi=S.props.indexOf(_ph);_ph.slots.forEach(function(p,si){if(p&&p.growth>=100)doHarvest(_phi,si);});}save();render();return;}
  if(a==="plant"){S.propSel=null;doPlant(+b.dataset.pi,+b.dataset.si,b.dataset.strain);return;}
  if(a==="water"){var p=getPot(+b.dataset.pi,+b.dataset.si);if(p){p.water=100;S.msg="Watered.";}S.propSel=null;save();render();return;}
- if(a==="waterall"){S.props.forEach(function(pr){pr.slots.forEach(function(p){if(p)p.water=100;});});S.msg="Everything watered.";save();render();return;}
+ if(a==="waterall"){S.props.forEach(function(pr){pr.slots.forEach(function(p){if(p)p.water=100;});});S.msg="Everything watered.";save();render();pushGrowToWidget(true);return;}
  if(a==="harvestall"){doHarvestAll();return;}
  if(a==="fert"){var p2=getPot(+b.dataset.pi,+b.dataset.si);if(p2&&S.fert>0&&p2.growth<100){S.fert--;p2.growth=Math.min(100,p2.growth+30);S.msg="Fertilized — growth boosted.";save();render();}return;}
  if(a==="harvest"){S.propSel=null;doHarvest(+b.dataset.pi,+b.dataset.si);return;}
@@ -6518,7 +6999,7 @@ root.addEventListener("click",function(e){
  if(a==="phonetoggle"){S._suppressNotif=true;var _k=b.dataset.k;S[_k]=(b.dataset.v==="1");save();render();return;}
  if(a==="setautolock"){S._suppressNotif=true;S.autoLock=parseInt(b.dataset.v,10);ttResetLockTimer();save();render();return;}
  if(a==="fsdefault"){S._suppressNotif=true;S.fullscreenDefault=(b.dataset.v==="1");save();render();return;}
- if(a==="msg-back"){S.msgView="list";save();render();return;}
+ if(a==="msg-back"){S.msgView="list";save();render();ttMsgListToTop();return;}
  if(a==="msg-reply"){doSendReply(b.dataset.contact,b.dataset.reply);return;}
  if(a==="msg-send"){
   var _input=document.querySelector('.msg-input[data-contact="'+b.dataset.contact+'"]');
@@ -6558,6 +7039,42 @@ root.addEventListener("click",function(e){
  }
  if(a==="task-fulfill"){doFulfillTask(+b.dataset.i||0);return;}
  if(a==="task-dismiss"){doDismissTask(+b.dataset.i||0);return;}
+ if(a==="task-fulfillall"){
+  /* fulfill all ready orders, highest value first */
+  var _ready=[];
+  S.tasks.forEach(function(t,i){var _o={k:t.k,kind:t.kind,g:t.g,pu:t.pu};if(contactHave(_o)>=_o.g)_ready.push({i:i,val:t.pu*t.g});});
+  _ready.sort(function(a,b){return b.val-a.val;});
+  var _n=0;
+  /* fulfill from highest index down so splicing doesn't shift */
+  _ready.sort(function(a,b){return b.i-a.i;}).forEach(function(r){doFulfillTaskSilent(r.i);_n++;});
+  if(_n>0){S.msg="Fulfilled "+_n+" order"+(_n>1?"s":"")+".";save();render();}
+  else{S.msg="No orders ready to fulfill.";save();render();}
+  return;
+ }
+ if(a==="task-prepall"){
+  /* trigger all available prep actions: roll joints, buy seeds */
+  var _did=0;
+  S.tasks.forEach(function(t,i){
+   var _o={k:t.k,kind:t.kind,g:t.g,pu:t.pu};
+   if(contactHave(_o)>=_o.g)return; /* already ready */
+   if(t.kind==="joint"){
+    var _nb=Math.ceil(t.g/2),_haveBud=S.stash[t.k]||0,_havePaper=S.papers||0;
+    if(_haveBud>=_nb&&_havePaper>=t.g*2){doRoll(t.k,_nb);_did++;}
+   }else if(!RECIPES[t.k]){
+    /* raw bud: buy seed only if there's an empty slot AND we don't already hold one */
+    var _sp=PRODUCTS[t.k]?PRODUCTS[t.k].seed:0;
+    var _emptySlots=0;
+    try{(S.props||[]).forEach(function(pr){(pr.slots||[]).forEach(function(s){if(!s)_emptySlots++;});});}catch(e){}
+    var _haveSeed=(S.seeds&&S.seeds[t.k]||0);
+    if(_sp>0&&PRODUCTS[t.k].tier<=pLevel()&&S.cash>=_sp&&_emptySlots>0&&_haveSeed<=0){
+     S.cash-=_sp;if(!S.seeds)S.seeds={};S.seeds[t.k]=(S.seeds[t.k]||0)+1;_did++;
+    }
+   }
+  });
+  S.msg=_did>0?"Prepped "+_did+" order"+(_did>1?"s":"")+".":"Nothing to prep right now.";
+  save();render();
+  return;
+ }
  if(a==="dealcat"){S.dealcat=b.dataset.c;save();render();return;}
  if(a==="chillview"){S.chillview=b.dataset.v;save();render();return;}
  if(a==="chillsel"){S.chillStrain=b.dataset.strain;save();render();return;}
@@ -6577,6 +7094,15 @@ root.addEventListener("click",function(e){
        });
        return;
      }
+     // Android: trigger APK download via native updater
+     try{
+       if(window.ApkUpdater&&typeof window.ApkUpdater.startDownload==="function"){
+         var btn2=document.querySelector('[data-act="reup"]');
+         if(btn2){btn2.textContent='Downloading update...';btn2.disabled=true;}
+         window.ApkUpdater.startDownload();
+         return;
+       }
+     }catch(e){}
      saveOnHide();location.href=location.pathname+"?cb="+Date.now();return;}
  if(a==="roach-view"){S.lastVer=GAME_VER;S.tab="settings";S.settingsView="about";delete S.settingstab;S.view="app";navPush("settings");save();render();return;}
  if(a==="settingstab"){S.settingstab=b.dataset.t;save();render();return;}
@@ -6657,11 +7183,12 @@ root.addEventListener("click",function(e){
  if(a==="stashsellall"){doStashSellAll(b.dataset.strain,false);return;}
  if(a==="stashsellallj"){doStashSellAll(b.dataset.strain,true);return;}
  if(a==="storetab"){S.storetab=b.dataset.sec;save();render();return;}
+ if(a==="storeback"){S.storetab=null;save();render();return;}
   if(a==="setsel"){S.setdrug=b.dataset.key;save();render();return;}
  if(a==="settheme"){S._suppressNotif=true;var _th=b.dataset.theme;S.theme=(_th==="light")?"light":"dark";save();render();return;}
  if(a==="setrows"){S._suppressNotif=true;var _sr=+b.dataset.rows;if(_sr===2||_sr===3||_sr===4){S.homeRows=_sr;save();layoutHome();render();}return;}
  if(a==="seticonstyle"){S._suppressNotif=true;var _ss=+b.dataset.s;if(_ss>=0&&_ss<=4){S.iconStyle=_ss;save();layoutHome();render();}return;}
- if(a==="msg-back"){S.msgView="list";save();render();return;}
+ if(a==="msg-back"){S.msgView="list";save();render();ttMsgListToTop();return;}
  if(a==="setlabelcolor"){S._suppressNotif=true;var _lc2=b.dataset.c;if(_lc2==="white"||_lc2==="black"){S.labelColor=_lc2;save();render();}return;}
  if(a==="gofullscreen"){
   try{
@@ -6708,6 +7235,9 @@ root.addEventListener("click",function(e){
  if(a==="wp-reset"){S.wallpaper="";S.msg="Wallpaper reset.";save();render();return;}
  if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk].tier<=pLevel()&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
  if(a==="buyweapon"){var wkey=b.dataset.w,wu=WEAPONS[wkey];if(wkey&&wkey!=="fists"&&wu&&wu.tier<=pLevel()&&!(S.weapons&&S.weapons[wkey])&&S.cash>=wu.cost){S.cash-=wu.cost;S.weapons[wkey]=true;S.msg=wu.name+" purchased — best weapon is used in fights.";save();render();}return;}
+ if(a==="buygear"){var gk=b.dataset.g,g=GEAR[gk];if(gk&&g&&g.tier<=pLevel()&&S.gear.indexOf(gk)<0&&S.cash>=g.cost){S.cash-=g.cost;S.gear.push(gk);S.equipped[g.slot]=gk;S.msg=g.name+" purchased & equipped.";save();render();}return;}
+ if(a==="equipgear"){var ek=b.dataset.g,eg=GEAR[ek];if(ek&&eg&&S.gear.indexOf(ek)>=0){S.equipped[eg.slot]=ek;var _fs=gearSetEquipped();S.msg=eg.name+" equipped."+(_fs?" "+GEAR_SETS[_fs].name+" set complete — aura active!":"");save();render();}return;}
+ if(a==="unequipgear"){var uk=b.dataset.g,ug=GEAR[uk];if(uk&&ug&&S.equipped[ug.slot]===uk){delete S.equipped[ug.slot];S.msg=ug.name+" unequipped.";save();render();}return;}
  if(a==="tstrike"){thiefStrike();return;}
  if(a==="trun"){thiefRun();return;}
  if(a==="bstrike"){battleStrike();return;}
@@ -7094,6 +7624,31 @@ function hwTrimPages(){
  }
  hwSyncDots();
 }
+/* Auto-compact: pull apps from later pages forward to fill gaps on earlier pages.
+   Preserves relative order — apps keep their positions, just no empty slots. */
+function hwCompactPages(){
+ var grid=q(".hw-appgrid");if(!grid)return;
+ var d=hwDoc();
+ var _rows=(S.homeRows===2||S.homeRows===3)?S.homeRows:4;
+ var _cols=hwWinW()>=900?8:hwWinW()>=600?6:4;
+ var perPage=_rows*_cols;
+ // collect all apps in visual order
+ var all=[],pages=grid.querySelectorAll(".hw-page");
+ for(var p=0;p<pages.length;p++){
+  var btns=pages[p].querySelectorAll(".android-app");
+  for(var i=0;i<btns.length;i++)all.push(btns[i]);
+ }
+ if(!all.length)return;
+ // clear pages
+ for(var q=0;q<pages.length;q++)pages[q].parentNode.removeChild(pages[q]);
+ // redistribute sequentially
+ var page=null;
+ for(var k=0;k<all.length;k++){
+  if(k%perPage===0){page=d.createElement("div");page.className="hw-page";grid.appendChild(page);}
+  page.appendChild(all[k]);
+ }
+ hwSyncDots();
+}
 /* ---------- drag engine (fixed-position lift, FLIP reorder, edge paging, folder hover) ---------- */
 function hwDragStart(el,x,y,pid,fromFid){
  var d0=hwDoc();if(!d0)return;
@@ -7288,7 +7843,7 @@ function hwDragFinish(e,cancelled){
  destEl.style.position="";destEl.style.left="";destEl.style.top="";destEl.style.width="";destEl.style.margin="";destEl.style.pointerEvents="";
  if(ph.parentNode)ph.parentNode.insertBefore(destEl,ph);
  if(ph.parentNode)ph.parentNode.removeChild(ph);
- hwTrimPages();persistIconOrder();save();
+ hwCompactPages();persistIconOrder();save();
  if(_openFid)renderFolderView();
 }
 function bindEditMode(){
@@ -7412,21 +7967,97 @@ try{
 })();
 render();
 tick();
+/* AirDrop migration: show popup for any pending contacts from old saves */
+setTimeout(function(){try{if((S.pendingContacts||[]).length)showAirdropPopup();}catch(e){}},1500);
 setInterval(tick,15000);
 setInterval(tickerTick,50);
 setInterval(pump,150);
+
+/* ---------- Grow widget bridge (Android home screen widget) ---------- */
+var _lastWidgetPush=0;
+function slotByIndex(idx){
+ if(typeof idx!=="number"||idx<0||!Array.isArray(S.props))return null;
+ var n=0;
+ for(var pi=0;pi<S.props.length;pi++){var pr=S.props[pi];
+  if(!pr||!Array.isArray(pr.slots))continue;
+  for(var si=0;si<pr.slots.length;si++){if(n===idx)return{pi:pi,si:si,sl:pr.slots[si]};n++;}}
+ return null;
+}
+function pushGrowToWidget(force){
+ try{
+  if(!window.ApkUpdater||!window.ApkUpdater.pushGrowData)return;
+  var now=Date.now();
+  if(!force&&now-_lastWidgetPush<30000)return;
+  _lastWidgetPush=now;
+  var plants=[],totalSlots=0;
+  if(Array.isArray(S.props))S.props.forEach(function(pr){
+   if(!pr||!Array.isArray(pr.slots))return;
+   pr.slots.forEach(function(sl){
+    totalSlots++;
+    if(!sl||!sl.strain){plants.push({empty:true});return;}
+    var g=typeof sl.growth==="number"?sl.growth:0;
+    var st=stageOf(g);
+    var pname=(typeof PRODUCTS!=="undefined"&&PRODUCTS[sl.strain])?PRODUCTS[sl.strain].name:sl.strain;
+    plants.push({empty:false,strain:sl.strain,name:String(pname).slice(0,14),
+     growth:Math.round(g),stage:st,
+     stageName:(typeof STAGE_NAMES!=="undefined"?STAGE_NAMES[st]:""),
+     water:typeof sl.water==="number"?Math.round(sl.water):0,ready:g>=100});
+   });
+  });
+  var bagUsed=0,bagCap=1;
+  try{bagUsed=stashTotal();bagCap=S.stashCap||1;}catch(e){}
+  window.ApkUpdater.pushGrowData(JSON.stringify({cash:S.cash||0,
+   bagPct:Math.round(100*bagUsed/Math.max(1,bagCap)),
+   stashFull:bagUsed>=bagCap,totalSlots:totalSlots,plants:plants,updated:now}));
+ }catch(e){}
+}
+function checkWidgetActions(){
+ try{
+  if(!window.ApkUpdater||!window.ApkUpdater.getWidgetActions)return;
+  var raw=window.ApkUpdater.getWidgetActions();
+  if(!raw)return;
+  var arr=JSON.parse(raw);
+  if(!Array.isArray(arr)||!arr.length)return;
+  arr.forEach(function(a){
+   if(!a||!a.type)return;
+   try{
+    if(a.type==="water_all"){
+     if(Array.isArray(S.props))S.props.forEach(function(pr){
+      if(pr&&Array.isArray(pr.slots))pr.slots.forEach(function(sl){if(sl)sl.water=100;});});
+     S.msg="Everything watered.";
+    }else if(a.type==="water_slot"){
+     var wpl=slotByIndex(a.slot);
+     if(wpl&&wpl.sl)wpl.sl.water=100;
+    }else if(a.type==="harvest_all"||a.type==="harvest_slot"){
+     var full=false;
+     try{full=stashTotal()>=(S.stashCap||0);}catch(e){}
+     if(full){if(window.ApkUpdater.openGame)window.ApkUpdater.openGame();return;}
+     if(a.type==="harvest_all"){doHarvestAll();}
+     else{var hpl=slotByIndex(a.slot);
+      if(hpl&&hpl.sl&&hpl.sl.growth>=100)doHarvest(hpl.pi,hpl.si);}
+    }
+   }catch(e){}
+  });
+  save();render();pushGrowToWidget(true);
+ }catch(e){}
+}
+/* ---------- end grow widget bridge ---------- */
+
 /* ---------- auto-save (same system as Vegas Forever Homes): every 20s, and whenever
    the page/widget is hidden/closed. Widget persists through the hatch bridge;
    standalone browser persists through the shim injected by build_share.py.
    Export/import stays as the manual cross-device transfer. */
 setInterval(function(){ save(); },20000);
+setInterval(function(){ checkWidgetActions(); },15000);
+setInterval(function(){ pushGrowToWidget(false); },30000);
+setTimeout(function(){ try{ checkWidgetActions(); pushGrowToWidget(true); }catch(e){} },5000);
 function saveOnHide(){ try{ if(typeof S!=="undefined"&&S)S.lastClosedAt=Date.now(); save(); }catch(e){} }
 if(typeof window!=="undefined"&&typeof window.addEventListener==="function"){
  window.addEventListener("pagehide",saveOnHide);
  if(typeof document!=="undefined"&&typeof document.addEventListener==="function")document.addEventListener("visibilitychange",function(){
   if(document.visibilityState==="hidden")saveOnHide();});
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound};
 })();
 </script>
 <style>
@@ -7486,6 +8117,7 @@ function ttIsAtHomeScreen(){
     return S.view==='home'||S.view==='lock';
   }catch(e){return true;}
 }
+function ttMsgListToTop(){try{var p=document.querySelector('.pane-deal');if(p)p.scrollTop=0;}catch(e){}}
 function ttGoBack(){
   try{
     var S=(typeof window.ttGameState==='function')?window.ttGameState():null;
@@ -7496,6 +8128,7 @@ function ttGoBack(){
       S.msgView='list';
       if(typeof window.ttSave==='function')window.ttSave();
       if(typeof window.ttRender==='function')window.ttRender();
+      ttMsgListToTop();
       return;
     }
     // Settings: sub-view -> list

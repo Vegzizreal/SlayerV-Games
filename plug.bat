@@ -1,5 +1,5 @@
 @echo off
-title TERPENE TYCOON // SECURE LINE
+title TRAP TYCOON // SECURE LINE
 color 0a
 echo.
 echo  _____                   ____
