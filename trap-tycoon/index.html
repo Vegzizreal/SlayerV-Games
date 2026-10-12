@@ -1159,6 +1159,7 @@ body.electron-phone #ewin-controls{display:flex}
 .msg-av-roach{background:linear-gradient(135deg,#2d5a27,#4a8f3c)!important}
 .msg-av-street{background:linear-gradient(135deg,#1a73e8,#4285f4)!important}
 .msg-unread{color:#25d366;font-size:14px;flex:none}
+.msg-softdot{color:rgba(255,255,255,.35);font-size:14px;flex:none}
 .msg-unread-count{background:#25d366;color:#fff;font-size:12px;font-weight:700;min-width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;padding:0 6px;flex:none}
 .msg-unanswered{background:#f59e0b;color:#fff;font-size:11px;font-weight:700;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;padding:0 8px;flex:none;letter-spacing:1px}
 .msg-time{font-size:11px;color:rgba(255,255,255,.4);flex:none}
@@ -2696,7 +2697,7 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v139";
+var GAME_VER="v140";
 var ROACH_IMG="data:image/webp;base64,UklGRr4GAABXRUJQVlA4ILIGAADwJACdASqAAIAAPlEijkWjoaETCK4kOAUEtICd6Vxf5LbW38r0oRLsJbuNa8xD5ZzXAGiPFaGBHrJAAEUee7tMBMt9YoYtuKD9d7b/cpjfTSoXgQpp8vZUuIedJjj5xwGN4sDIpDVPgg8k6Fp6jAWhEXUIyrasiUtUEDoxZ6Yv+zRoA36d5LZ28xDACykaidnvIz7IT8dRrjI+cO2AVcx/eD9MPVIHbXGf/4Nmlmwbajr743dcZ4GvGLGm2c1Bystpm2NGr0pU3SoxBBNM8YLxyurkYv/ZvR4Y4DxHQHUV9/D2rW+n1++3ebLqv8kuEV9ygdShMyE3ULou9ksc0xgMMBhv8Sj90TcrL6DkLBv4sjSTsdRxeRZSzZmneTXCE1FCxHo2rD5avzg55qKeyTUgAP7+BtGFzFYxFsdLaFrja39Fq14y/19bA8XfI5H9/mKCzEXQ9n9xDdlDTaaTUF4GFcaXmc4nly+OJfyqe0pQILIamLEwYrGngbqsvtRC4Kjn1S5C6DhkkI4q5rC/+Iavj6Ip6ic0gJou7xf5QFyPvnSnvbfNuxNCNV7lHxssInMLK2T//fCb/Fjn6Srx9y8wGQxL7d4XXFNMWwHKijcYrPrZrKCXi2+mqLhyniEPOKa9BQaC4Y+8TupmjOZiFPmkSHSXYjnd/uglMGAE+x3WnIPMx93p7d/f8/3XwhtKXSnGHHWs/pcY2eKQ+mzQeFzd58Qnu0UqxmVkm/1Jh4hoyN4ruTzzidgdpmiA5o5rnj5OoLTadYGn5bpGYxweQumzsceRzBBRGjXETFB4NeLZCabMzk9eFzjK/MXH/WmwkKNElG+K+tou3N939/0iPs9b8AupGMLHACH8B4Rcsxjx2HVQDovCyBrzcitmVTDZqM7TWsstPaby+b+HquIpE5T3f6z2WLMxJdPwC8TmTgVjczNV8EDN3ah4VJh2jq39vG5Cahe7XM8HOCaDifQZL58i6IdTlEZktr0dUJk2Bppr2efYa7gCdoOKLXl9YKnwBcZxB+kQbGcNgNGknFLkKNwyWWH19YXMA6XsZN/vLsISzTNQQf1hirYYap9QKd9K7cgRu7yrkDJN1g+rfUnAUkm28QJYoPaIQE0cH2co2Y1LDhV9uALHQJwMfJDzRO8J7kaftrRHp2MBDDbrMitwfRaMAo/DCcLqdkGehS8OrlgtMZGmS9PtLzKbeVisbSoKgGl8bjkwSvfJBqGh9gAdqqSahxMG7wFw4pTAbbmFTdb/4r3tm36FecvF6BL8Ix8y+GpPg4h2g2bPJt3N1XTF2ovm7nsgPr6ioROQZfVD7hkYRoZ+aZFFFsxViQBT419x4s/5lt57WO+w6Wdqa/KezDpFFPaLWfAfRkoPU20+n7Kiy3qNxv/sH3pXH2oCdpSZ53P4ouWpQKpQp0MDmrH3ws7HeGFjKCIze9GOB4vVNLGRWawP/YOH4vn4FzO1ZAsz9OTPOq+V5xlaVn4S4dLtXCnMZR33gCCjW39J+37bpaUzd/RjN9/nd8gBLAHju934PXcyqnsm8ZwwlPEKGdUs/+TI0PbXtUHmaJ+D0RejLkrHgl7VExc7u7z6zFa2/h6RAXfKJhM68LopUkUCK/nBQpVGiPZpbJHxmllOn55TdnRGXkp/ZT31VVaSn/grDWkwHrXlKYCZaP1xy2wlTby3HuHIHo90BuJP+7FPtR8GkV6Y+Ys0+uNJce71ke3mGcideMvTpWTyCeJ7ixavjozMw/jgKuEH5Yw4Qi16dcZC+YxrKTgtRH43JQYD1zzsECugRoUpwglmKVVFmj1BAG0c7BzcbuISlCP6NGW5FLgAgc2kWMuMFQNbkInEoENRxiDFjPoetepeuwpDQWC0cwcmlo76iNZPLcIxkPF/lqSgphvUNTheK3MCS5nhv7RMTVeteIAQ1Gi7qbd019GNWiVHToa8zB9r/HFcL+uyjPhSiZdunz7dc0IRI1c6D9YkHrNxgGS1Xosy5//TfsjZkqXhNeYLo8n6xo7xeKU+eBiYxpCE+TXJxnWbg3muCAm+WCHopi5LtSbMuCyiBacqSKYa9kKRq3vUlY+EtWHwD1lRKuFbxs0nZFIqCUeVrgWLptRtEdiJ8mCGkj4VCDvvofTb5bjUdhLoQCrmsoh/fbtyeRLWTDf0x7C3vojL+LCUz2fGsFrVOSLJJq6nY+rLdwvG3IQcZKGuxWy/OrChPCd75CuOzHaux+coDCq3Z33ZYws1AwzCgIjz3OHBb97sM7luVvmNaZxL05XGNMcXlT+LnCQDUAAA";
 var CHANGELOG=[
    {v:"BETA-0.018.11",ts:"Oct 5, 2026 \u00b7 7:30 PM",t:"Terminal launch",d:"PC players can now launch via plug.bat in CMD \u2014 terminal boot sequence, plug code unlock. Mobile untouched."},
@@ -2988,7 +2989,7 @@ function normalize(s,raw){
   var _bun=PKEYS.filter(function(k){return PRODUCTS[k].tier<=_bl;});
   var pr=Array.isArray(c.prefs)?c.prefs.filter(function(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&_bun.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab");}).map(function(p){return {k:p.k,kind:p.kind};}).slice(0,3):[];
   if(!pr.length)pr=contactPrefsFor(tp,_bun);
-  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0};
+  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0};
  });
  if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
@@ -4246,11 +4247,19 @@ function render(){
  q(".pane-stash").innerHTML=stashHTML();
  q(".pane-cook").innerHTML=cookHTML();q(".pane-cook").classList.toggle("has-job",!!S.job);
  function dealChatsList(){
+  /* soft-unread (flavor) clears when the message list is viewed — no per-chat tap needed.
+     Snapshot before clearing so the dot still renders on this pass. */
+  var _sc=false;
+  (S.contacts||[]).forEach(function(c){c._softSeen=!!c.softUnread;if(c.softUnread){c.softUnread=false;_sc=true;}});
+  if(_sc)save();
   var h='<div class="msg-chats">';
   var rl=S.roachMsgs&&S.roachMsgs.length?S.roachMsgs[0].m:"No new messages";
-  h+='<button type="button" class="msg-chat pinned" data-act="msg-open" data-c="__roach__">'
+  var _ru=(typeof S.roachUnread==="number"?S.roachUnread:0);
+  h+='<button type="button" class="msg-chat pinned'+(_ru>0?" unread":"")+'" data-act="msg-open" data-c="__roach__">'
    +'<span class="msg-avatar msg-av-roach">🪳</span>'
-   +'<div class="msg-chat-mid"><b>Roach 📌</b><span>'+escHtml(rl)+'</span></div></button>';
+   +'<div class="msg-chat-mid"><b>Roach 📌</b><span>'+escHtml(rl)+'</span></div>'
+   +(_ru>0?'<span class="msg-unread-count">'+_ru+'</span>':'')
+   +'</button>';
   // Msg sort: unread first, then unanswered requests, then rest (by most recent msg). Roach stays pinned above.
   function _hasUnanswered(c){return !c.unread&&!(c.unreadCount>0)&&!!c.order;}
   var _cs=(S.contacts||[]).slice().sort(function(a,b){
@@ -4273,7 +4282,7 @@ function render(){
    h+='<button type="button" class="msg-chat'+(c.pinned?" pinned":"")+(c.unread?" unread":"")+'" data-act="msg-open" data-c="'+escHtml(c.name)+'">'
     +'<span class="msg-avatar">'+escHtml(c.name.charAt(0).toUpperCase())+'</span>'
     +'<div class="msg-chat-mid"><b>'+escHtml(c.name)+ord+pinTag+'</b><span>'+escHtml(last)+'</span></div>'
-    +((c.unreadCount>0)?'<span class="msg-unread-count">'+c.unreadCount+'</span>':(c.unread?'<span class="msg-unread">\u25CF</span>':(!c.unread&&!(c.unreadCount>0)&&c.order?'<span class="msg-unanswered">(!)</span>':'')))
+    +((c.unreadCount>0)?'<span class="msg-unread-count">'+c.unreadCount+'</span>':(c.unread?'<span class="msg-unread">\u25CF</span>':(!c.unread&&!(c.unreadCount>0)&&c.order?'<span class="msg-unanswered">(!)</span>':(c._softSeen?'<span class="msg-softdot">\u25CF</span>':''))))
     +'<span class="msg-time">'+tm+'</span></button>';
   });
   if(!(S.contacts||[]).length)h+='<div class="msg-empty">No customers yet.<br>Sell on the street — some buyers will hit you up.</div>';
@@ -4567,7 +4576,7 @@ function render(){
   else if(_mv==="phonebook"){q(".pane-deal").innerHTML=tabHeader("deal")+dealPhonebook();}
   else if(_mv==="__roach__"){S.roachRead=true;S.roachUnread=0;q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
   else if(_mv.indexOf("__runner_")===0){var _rr=runnerById(_mv.slice(9));if(_rr){q(".pane-deal").innerHTML=tabHeader("deal")+runnerDetailHTML(_rr);}else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}}
-  else if(getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;_cc.unreadCount=0;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
+  else if(getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;_cc.unreadCount=0;_cc.softUnread=false;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
   else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
  }
  if(S.tab==="street"){q(".pane-street").innerHTML=streetHTML();}
@@ -5648,6 +5657,35 @@ function doDismissOrder(nm,variant){
  S.msg="Dismissed order request from "+c.name+".";
  save();render();
 }
+/* customer intel: build one TRUE tip from live game state, or null if nothing checks out */
+function custIntelText(){
+ var cands=[];
+ /* heat: hottest cop territory (that the player can actually go to), if it's genuinely hot */
+ var hotId=null,hotV=0;
+ TERRITORIES.forEach(function(td){
+  if(!terrUnlocked(td.id))return;
+  var cv=terrZone(td.id).heat.cops;
+  if(cv>hotV){hotV=cv;hotId=td.id;}
+ });
+ if(hotId&&hotV>=50)cands.push("cops been circling "+terrDef(hotId).name+" all day, lay low");
+ /* demand: cooked product customers keep asking for (their prefs), else any unlocked recipe */
+ var wantK=null,wantN=0,want={};
+ (S.contacts||[]).forEach(function(cc){
+  (cc.prefs||[]).forEach(function(p){
+   if(p.kind==="lab"&&PRODUCTS[p.k]&&PRODUCTS[p.k].tier<=pLevel()){
+    want[p.k]=(want[p.k]||0)+1;
+    if(want[p.k]>wantN){wantN=want[p.k];wantK=p.k;}
+   }
+  });
+ });
+ if(!wantK){
+  var _un=RKEYS.filter(function(k){return PRODUCTS[k]&&PRODUCTS[k].tier<=pLevel();});
+  if(_un.length)wantK=_un[0];
+ }
+ if(wantK)cands.push("everybody's asking for "+PRODUCTS[wantK].name+" lately");
+ if(!cands.length)return null;
+ return cands[(Math.random()*cands.length)|0];
+}
 function doFulfillTask(i,silent){
  var t=S.tasks&&S.tasks[i];
  if(!t){if(!silent){S.msg="No such task.";save();render();}return false;}
@@ -5664,6 +5702,7 @@ function doFulfillTask(i,silent){
  /* speed bonus: fulfilled within 5 min = 10% tip */
  var _tip=0;
  if(now-t.addedAt<5*60*1000){_tip=Math.floor(rev*0.10);rev+=_tip;}
+ var _cashTip=0; /* rare random cash tip, rolled in the contact block below */
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
  /* today's stats */
  if(S.statsToday&&S.statsToday.date===new Date().toISOString().slice(0,10)){S.statsToday.orders++;S.statsToday.earned+=rev;}
@@ -5684,28 +5723,26 @@ function doFulfillTask(i,silent){
    c.msgs.push({from:"them",text:thiefChickenOut(_obtBefore),t:Date.now()});
    c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
   }
-  /* tip: if this was their preferred strain, they share some product */
-  var _isPref=(c.prefs||[]).some(function(p){return p.k===t.k&&p.kind===t.kind;});
-  if(_isPref){
-   var _tipPool=GROWKEYS.filter(function(k){return PRODUCTS[k]&&tierVis(PRODUCTS[k].tier)===2;});
-   var _tipK=_tipPool[(Math.random()*_tipPool.length)|0];
-   var _tipG=1+((Math.random()*2)|0);
-   if(stashTotal()+_tipG<=S.stashCap){
-    S.stash[_tipK]=(S.stash[_tipK]||0)+_tipG;
-    c.msgs.push({from:"them",text:"yo try this "+PRODUCTS[_tipK].name+" on me 🙏",t:now});
-    if(!silent)S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+". They tipped you "+_tipG+"g "+PRODUCTS[_tipK].name+"!";
-   }else{
-    c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
-    if(!silent)S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+".";
-   }
-  }else{
-   c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
-   if(!silent)S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+".";
+  /* cash tip: rare random roll — 2% chance they throw in 20% extra cash.
+     (The old preferred-strain product gift is gone: customers don't hand
+     the dealer free product. A preferred-strain sale gets the plain
+     "appreciate u" reply like any other sale.) */
+  var _ct=0;
+  if(Math.random()<0.02){_ct=Math.round(rev*0.20);S.cash+=_ct;S.stats.earned+=_ct;_cashTip=_ct;}
+  c.msgs.push({from:"them",text:_ct>0?"keep the change 🙏":"appreciate u 🙏",t:now});
+  /* intel: 5% chance they pass along something true about the streets */
+  if(Math.random()<0.05){
+   var _intel=custIntelText();
+   if(_intel)c.msgs.push({from:"them",text:_intel,t:now});
   }
-  c.lastFulfilledAt=now;c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
+  c.lastFulfilledAt=now;
+  /* fulfill replies (thanks, cash-tip and intel texts) are flavor: soft highlight only.
+     If the thief leadup set hard unread above, it stays hard. */
+  c.softUnread=true;
  }
  S.tasks.splice(i,1);
  var _tipTxt=_tip>0?" +"+money(_tip)+" speed tip!":"";
+ if(_cashTip>0)_tipTxt+=" +"+money(_cashTip)+" tip!";
  if(!silent){
   S.msg="Sold "+contactQtyText(o)+" to "+t.name+" for "+money(rev)+"."+_tipTxt;
   /* referral: 25% chance a friend heard about you */
@@ -5925,7 +5962,7 @@ function doSendReply(nm,rid){
  var c=getContact(nm),r=rid&&MSG_REPLIES[rid];
  if(!c||!r)return;
  c.msgs.push({from:"me",text:r.text,t:Date.now()});
- c.unread=false;c.unreadCount=0;
+ c.unread=false;c.unreadCount=0;c.softUnread=false;
  save();render();
  setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);
 }
@@ -5983,7 +6020,8 @@ function doStashSellAll(k,isJoint){
  if(isJoint)S.joints[k]=0;else S.stash[k]=0;
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
  dealTerrHeat(have,have>=5);
- var dh3=dealerStreakHeat(sd.di);
+ /* stash sell-all is not a street deal — no dealer streak */
+ var dh3=0;
  var prof2=calcProfit(k+(isJoint?"_j":""),have,have,rev);
  if(!addXP(5))S.msg="Sold "+have+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+"."+(dh3>0?" Same spot too many times — heat +"+dh3+".":"");
  showSalePop(st.name,have+(isJoint?" joints":"g"),rev,prof2);
@@ -7826,7 +7864,8 @@ root.addEventListener("click",function(e){
   GROWKEYS.forEach(function(k){_slk(k,true);});
   if(_sli<1){S.msg="Nothing to sell.";save();render();return;}
   S.cash+=_slr;S.stats.earned+=_slr;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,_slr);
-  var _slh=dealerStreakHeat(_sls.di);
+  /* stash sell-all is not a street deal — no dealer streak */
+  var _slh=0;
   if(!addXP(5))S.msg="Sold the whole stash to "+_sld.name+" for "+money(_slr)+"."+(_slh>0?" Same spot too many times — heat +"+_slh+".":"");
   showSalePop("Entire stash",_sli+" items",_slr,_slp);
   flushTerrMsg();battleRoll();save();render();return;
