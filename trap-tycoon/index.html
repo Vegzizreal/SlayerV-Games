@@ -37,13 +37,26 @@ if('serviceWorker' in navigator){
 (function(){
 "use strict";
 if(window.hatchWidget)return;
-var KEY="terpene-tycoon.pages.save.v1";
+var KEY="trap-tycoon.pages.save.v1";
+var OLDKEY="terpene-tycoon.pages.save.v1"; /* pre-rename key: one-time migration only */
 function ls(){try{return window.localStorage||null;}catch(e){return null;}}
 window.hatchWidget={
  getState:function(def){
   var s=ls(),raw=null;
-  if(s){try{raw=s.getItem(KEY);}catch(e){}}
-  if(raw){try{var o=JSON.parse(raw);if(o&&typeof o==="object"&&!Array.isArray(o))return o;}catch(e){}}
+  if(s){
+   try{raw=s.getItem(KEY);}catch(e){}
+   if(!raw){
+    /* one-time migration: copy the old-key save forward, then use the new key */
+    try{var _old=s.getItem(OLDKEY);if(_old){s.setItem(KEY,_old);raw=_old;}}catch(e){}
+   }
+  }
+  if(raw){
+   try{var o=JSON.parse(raw);if(o&&typeof o==="object"&&!Array.isArray(o))return o;}
+   catch(e){try{s.setItem(KEY+".corrupt",raw);}catch(_e){}}
+   /* raw existed but was corrupt: boot from default in memory WITHOUT
+      overwriting the key (corrupt copy preserved above for recovery). */
+   return JSON.parse(JSON.stringify(def));
+  }
   var d=JSON.parse(JSON.stringify(def));
   if(s){try{s.setItem(KEY,JSON.stringify(d));}catch(e){}}
   return d;
@@ -115,7 +128,7 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="auth" data-hwkeys="authenticator sync code save transfer share"><span class="aa-icon" style="background:linear-gradient(135deg,#10b981,#059669)"><svg viewBox="0 0 48 48" width="36" height="36"><rect x="14" y="6" width="20" height="36" rx="4" fill="#fff"/><circle cx="24" cy="14" r="2.5" fill="#10b981"/><rect x="18" y="20" width="12" height="3" rx="1.5" fill="#10b981"/><rect x="18" y="26" width="12" height="3" rx="1.5" fill="#10b981" opacity=".6"/><rect x="18" y="32" width="8" height="3" rx="1.5" fill="#10b981" opacity=".4"/></svg></span><span class="aa-label">Sync</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="grow" data-hwkeys="grow plants garden"><span class="aa-icon" style="background:linear-gradient(135deg,#a8b0bc,#6b7280)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M17 10h14l3 5h6a3 3 0 0 1 3 3v18a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V18a3 3 0 0 1 3-3h6z" fill="#1f2937"/><circle cx="24" cy="27" r="9" fill="none" stroke="#f3f4f6" stroke-width="3.5"/><circle cx="24" cy="27" r="3.8" fill="#4b5563"/><circle cx="37" cy="21" r="2.2" fill="#f3f4f6"/></svg></span><span class="aa-label">Grow</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="chill" data-hwkeys="chill smoke relax" id="aa-chillapp" hidden><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1e40af)"><svg viewBox="0 0 48 48" width="36" height="36"><circle cx="24" cy="16" r="7.5" fill="none" stroke="#fff" stroke-width="3.6"/><path d="M9 41.5c1.8-7.8 7.6-12 15-12s13.2 4.2 15 12" fill="#fff"/></svg></span><span class="aa-label">Chill</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="cook" data-hwkeys="lab cook products"><span class="aa-icon" style="background:#ffffff"><svg viewBox="0 0 48 48" width="38" height="38"><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#ea4335"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#fbbc05" transform="rotate(60 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#34a853" transform="rotate(120 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#1a73e8" transform="rotate(180 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#a142f4" transform="rotate(240 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#ff6d01" transform="rotate(300 24 24)"/><circle cx="24" cy="24" r="6.5" fill="#fff"/></svg></span><span class="aa-label">Lab</span></button>
+   <button type="button" class="android-app" data-act="openapp" data-app="cook" data-hwkeys="lab cook products"><span class="aa-badge" id="aa-labbadge" hidden>!</span><span class="aa-icon" style="background:#ffffff"><svg viewBox="0 0 48 48" width="38" height="38"><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#ea4335"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#fbbc05" transform="rotate(60 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#34a853" transform="rotate(120 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#1a73e8" transform="rotate(180 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#a142f4" transform="rotate(240 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#ff6d01" transform="rotate(300 24 24)"/><circle cx="24" cy="24" r="6.5" fill="#fff"/></svg></span><span class="aa-label">Lab</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="visor" data-hwkeys="visor ar camera scan"><span class="aa-icon" style="background:linear-gradient(135deg,#0b1e33,#164e7e)"><svg viewBox="0 0 48 48" width="36" height="36"><rect x="6" y="15" width="36" height="17" rx="8.5" fill="none" stroke="#7fd4ff" stroke-width="3"/><circle cx="24" cy="23.5" r="4.2" fill="#7fd4ff"/><path d="M12 23.5h5M31 23.5h5" stroke="#7fd4ff" stroke-width="2.4" stroke-linecap="round"/></svg></span><span class="aa-label">Visor</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="clinic" data-hwkeys="clock events clinic health heal time" id="aa-clockapp" hidden><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><g fill="#fff"><circle cx="24" cy="9.5" r="1.9"/><circle cx="24" cy="38.5" r="1.9"/><circle cx="9.5" cy="24" r="1.9"/><circle cx="38.5" cy="24" r="1.9"/><circle cx="13.8" cy="13.8" r="1.9"/><circle cx="34.2" cy="13.8" r="1.9"/><circle cx="13.8" cy="34.2" r="1.9"/><circle cx="34.2" cy="34.2" r="1.9"/></g><line x1="24" y1="24" x2="24" y2="14.5" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/><line x1="24" y1="24" x2="30.5" y2="29" stroke="#fff" stroke-width="3.2" stroke-linecap="round"/></svg></span><span class="aa-label">Clock</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="settings" data-hwkeys="settings game settings options wallpaper"><span class="aa-icon" style="background:linear-gradient(135deg,#a8b0bc,#6b7280)"><svg viewBox="0 0 48 48" width="36" height="36"><g fill="#fff"><rect x="20.5" y="5" width="7" height="11" rx="2"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(45 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(90 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(135 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(180 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(225 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(270 24 24)"/><rect x="20.5" y="5" width="7" height="11" rx="2" transform="rotate(315 24 24)"/><circle cx="24" cy="24" r="10.5"/></g><circle cx="24" cy="24" r="5" fill="#6b7280"/></svg></span><span class="aa-label">Settings</span></button>
@@ -2532,7 +2545,7 @@ function syncEnter(code){
   var r=JSON.parse(xhr.responseText);
   var newS=JSON.parse(r.payload);
   var keepCode=S._syncCode,keepExp=S._syncExp;
-  S=normalize(Object.assign({},DEF,newS));
+  S=normalize(Object.assign({},DEF,newS),newS);
   S._syncCode=null;S._syncExp=0;
   save();render();
   return null;
@@ -2648,13 +2661,13 @@ var STRAIN_IMGS={
 var GROWKEYS=["sour","og","haze","bluedream","maui","northern","ak47","frost","nebula","ember","ghost"];
 var PROPS=[
  {id:"tent",name:"Grow Tent",cost:0,slots:3,tier:1,desc:"Your closet setup. 3 grow slots."},
- {id:"trap",name:"Trap House",cost:40000,slots:6,tier:2,desc:"6 grow slots. Requires Level 2."},
- {id:"warehouse",name:"Warehouse",cost:135000,slots:10,tier:3,desc:"10 grow slots. Requires Level 3."},
- {id:"mansion",name:"Mansion Lab",cost:400000,slots:16,tier:4,desc:"16 grow slots. Requires Level 4."},
- {id:"bunker",name:"Bunker",cost:1000000,slots:20,tier:5,desc:"20 grow slots. Requires Level 5."},
- {id:"island",name:"Island Compound",cost:2500000,slots:24,tier:6,desc:"24 grow slots. Requires Level 6."},
- {id:"cartel",name:"Cartel Empire",cost:6500000,slots:28,tier:7,desc:"28 grow slots. Requires Level 7."},
- {id:"palace",name:"Emerald Palace",cost:13000000,slots:34,tier:8,desc:"34 grow slots. Requires Level 8."}
+ {id:"trap",name:"Trap House",cost:20000,slots:6,tier:2,desc:"6 grow slots. Requires Level 2."},
+ {id:"warehouse",name:"Warehouse",cost:67500,slots:10,tier:3,desc:"10 grow slots. Requires Level 3."},
+ {id:"mansion",name:"Mansion Lab",cost:200000,slots:16,tier:4,desc:"16 grow slots. Requires Level 4."},
+ {id:"bunker",name:"Bunker",cost:500000,slots:20,tier:5,desc:"20 grow slots. Requires Level 5."},
+ {id:"island",name:"Island Compound",cost:1250000,slots:24,tier:6,desc:"24 grow slots. Requires Level 6."},
+ {id:"cartel",name:"Cartel Empire",cost:3250000,slots:28,tier:7,desc:"28 grow slots. Requires Level 7."},
+ {id:"palace",name:"Emerald Palace",cost:6500000,slots:34,tier:8,desc:"34 grow slots. Requires Level 8."}
 ];
 var KITS={
  butter:{name:"Butter Kit",cost:40,tier:2,desc:"For baking Edibles"},
@@ -2673,18 +2686,17 @@ var RECIPES={
  dragon:{game:"finale",stash:{moonrock:5,dmt:3,acid:2},kits:{royal:1},yield:6,heat:20,hint:"The full gauntlet: press, pull, then the sequence."},
  estack:{game:"tap",taps:30,secs:14,kits:{press:1},yield:8,heat:10,hint:"Tap the press 30 times before time runs out!"},
  edouble:{game:"timing",kits:{press:2},yield:10,heat:14,hint:"Hit PULL when the marker is in the green zone."},
- etriple:{game:"target",kits:{press:3},yield:12,heat:18,hint:"Tap the lit pad — 6 rounds, be quick."}
+ etriple:{game:"target",kits:{press:3},yield:12,heat:18,hint:"Tap the lit pad — 5 rounds, be quick."}
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var WORKERS={
  bunsen:{name:"Bunsen",icon:"🔥",price:300,dur:60,pyield:0.55,blurb:"⚡ 60s cooks · 55% yield",quote:"Forty covers on a Friday night? Please. This is a slow Tuesday, chef."},
  doc:{name:"Doc",icon:"⚗️",price:600,dur:115,pyield:0.75,blurb:"🎯 75% yield · 115s cooks",quote:"Your titration curve is... adequate. The product will be fine."},
  merlin:{name:"Merlin",icon:"🌙",price:300,dur:90,pyield:0.60,blessed:0.20,blurb:"🌙 60% · 20% blessed 100% batch",quote:"The moon's in the right house, man. This batch is gonna sing."},
- squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,grow:true,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
+ squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v138";
-var GAME_UPDATED="Oct 5, 2026 · 7:30 PM";
+var GAME_VER="v139";
 var ROACH_IMG="data:image/webp;base64,UklGRr4GAABXRUJQVlA4ILIGAADwJACdASqAAIAAPlEijkWjoaETCK4kOAUEtICd6Vxf5LbW38r0oRLsJbuNa8xD5ZzXAGiPFaGBHrJAAEUee7tMBMt9YoYtuKD9d7b/cpjfTSoXgQpp8vZUuIedJjj5xwGN4sDIpDVPgg8k6Fp6jAWhEXUIyrasiUtUEDoxZ6Yv+zRoA36d5LZ28xDACykaidnvIz7IT8dRrjI+cO2AVcx/eD9MPVIHbXGf/4Nmlmwbajr743dcZ4GvGLGm2c1Bystpm2NGr0pU3SoxBBNM8YLxyurkYv/ZvR4Y4DxHQHUV9/D2rW+n1++3ebLqv8kuEV9ygdShMyE3ULou9ksc0xgMMBhv8Sj90TcrL6DkLBv4sjSTsdRxeRZSzZmneTXCE1FCxHo2rD5avzg55qKeyTUgAP7+BtGFzFYxFsdLaFrja39Fq14y/19bA8XfI5H9/mKCzEXQ9n9xDdlDTaaTUF4GFcaXmc4nly+OJfyqe0pQILIamLEwYrGngbqsvtRC4Kjn1S5C6DhkkI4q5rC/+Iavj6Ip6ic0gJou7xf5QFyPvnSnvbfNuxNCNV7lHxssInMLK2T//fCb/Fjn6Srx9y8wGQxL7d4XXFNMWwHKijcYrPrZrKCXi2+mqLhyniEPOKa9BQaC4Y+8TupmjOZiFPmkSHSXYjnd/uglMGAE+x3WnIPMx93p7d/f8/3XwhtKXSnGHHWs/pcY2eKQ+mzQeFzd58Qnu0UqxmVkm/1Jh4hoyN4ruTzzidgdpmiA5o5rnj5OoLTadYGn5bpGYxweQumzsceRzBBRGjXETFB4NeLZCabMzk9eFzjK/MXH/WmwkKNElG+K+tou3N939/0iPs9b8AupGMLHACH8B4Rcsxjx2HVQDovCyBrzcitmVTDZqM7TWsstPaby+b+HquIpE5T3f6z2WLMxJdPwC8TmTgVjczNV8EDN3ah4VJh2jq39vG5Cahe7XM8HOCaDifQZL58i6IdTlEZktr0dUJk2Bppr2efYa7gCdoOKLXl9YKnwBcZxB+kQbGcNgNGknFLkKNwyWWH19YXMA6XsZN/vLsISzTNQQf1hirYYap9QKd9K7cgRu7yrkDJN1g+rfUnAUkm28QJYoPaIQE0cH2co2Y1LDhV9uALHQJwMfJDzRO8J7kaftrRHp2MBDDbrMitwfRaMAo/DCcLqdkGehS8OrlgtMZGmS9PtLzKbeVisbSoKgGl8bjkwSvfJBqGh9gAdqqSahxMG7wFw4pTAbbmFTdb/4r3tm36FecvF6BL8Ix8y+GpPg4h2g2bPJt3N1XTF2ovm7nsgPr6ioROQZfVD7hkYRoZ+aZFFFsxViQBT419x4s/5lt57WO+w6Wdqa/KezDpFFPaLWfAfRkoPU20+n7Kiy3qNxv/sH3pXH2oCdpSZ53P4ouWpQKpQp0MDmrH3ws7HeGFjKCIze9GOB4vVNLGRWawP/YOH4vn4FzO1ZAsz9OTPOq+V5xlaVn4S4dLtXCnMZR33gCCjW39J+37bpaUzd/RjN9/nd8gBLAHju934PXcyqnsm8ZwwlPEKGdUs/+TI0PbXtUHmaJ+D0RejLkrHgl7VExc7u7z6zFa2/h6RAXfKJhM68LopUkUCK/nBQpVGiPZpbJHxmllOn55TdnRGXkp/ZT31VVaSn/grDWkwHrXlKYCZaP1xy2wlTby3HuHIHo90BuJP+7FPtR8GkV6Y+Ys0+uNJce71ke3mGcideMvTpWTyCeJ7ixavjozMw/jgKuEH5Yw4Qi16dcZC+YxrKTgtRH43JQYD1zzsECugRoUpwglmKVVFmj1BAG0c7BzcbuISlCP6NGW5FLgAgc2kWMuMFQNbkInEoENRxiDFjPoetepeuwpDQWC0cwcmlo76iNZPLcIxkPF/lqSgphvUNTheK3MCS5nhv7RMTVeteIAQ1Gi7qbd019GNWiVHToa8zB9r/HFcL+uyjPhSiZdunz7dc0IRI1c6D9YkHrNxgGS1Xosy5//TfsjZkqXhNeYLo8n6xo7xeKU+eBiYxpCE+TXJxnWbg3muCAm+WCHopi5LtSbMuCyiBacqSKYa9kKRq3vUlY+EtWHwD1lRKuFbxs0nZFIqCUeVrgWLptRtEdiJ8mCGkj4VCDvvofTb5bjUdhLoQCrmsoh/fbtyeRLWTDf0x7C3vojL+LCUz2fGsFrVOSLJJq6nY+rLdwvG3IQcZKGuxWy/OrChPCd75CuOzHaux+coDCq3Z33ZYws1AwzCgIjz3OHBb97sM7luVvmNaZxL05XGNMcXlT+LnCQDUAAA";
 var CHANGELOG=[
    {v:"BETA-0.018.11",ts:"Oct 5, 2026 \u00b7 7:30 PM",t:"Terminal launch",d:"PC players can now launch via plug.bat in CMD \u2014 terminal boot sequence, plug code unlock. Mobile untouched."},
@@ -2762,8 +2774,8 @@ var GROW_TIMES={sour:30,og:45,haze:60,bluedream:75,maui:90,northern:105,ak47:120
 function growSec(k){if(k&&GROW_TIMES[k])return GROW_TIMES[k];return SPEED_OPTS.indexOf(S.growSpeed)>=0?S.growSpeed:30;}
 function growMinOf(k){return growSec(k)/60;}
 var DEALER_NAMES=["Corner Carl","Rooftop Rita","Alley Al","Deli Dave"];
-var DUFFEL=[40,100,200,400];
-var DUFFEL_COST={100:150,200:400,400:1000};
+var DUFFEL=[40,100,200,400,800,1600];
+var DUFFEL_COST={100:150,200:400,400:1000,800:2500,1600:6000};
 var FERT_COST=25,BRIBE_COST=200,PAPER_COST=10,PAPER_PACK=20;
 var WEAPONS={
  fists:{name:"Fists",cost:0,tier:1,dmg:[5,9]},
@@ -2835,7 +2847,7 @@ function addXP(n){
   var items=[];
   for(var t=before+1;t<=after;t++)items=items.concat(UNLOCKS[t]||[]);
   // Territory unlock notifications (hardcoded levels — keep in sync with TERRITORIES)
-  var _tu={3:"Suburbs",5:"Downtown",8:"Waterfront",12:"Uptown"},_tn=[];
+  var _tu={2:"Industrial",3:"Suburbs",5:"Downtown",7:"Waterfront",8:"Uptown"},_tn=[];
   for(var _tl=before+1;_tl<=after;_tl++)if(_tu[_tl])_tn.push(_tu[_tl]);
   if(!S.announcedTurfs)S.announcedTurfs={};
   _tn.forEach(function(tn){if(!S.announcedTurfs[tn]){S.announcedTurfs[tn]=1;pushRoachMsg("NEW TURF UNLOCKED: "+tn+"! Check the Maps app, yo.");}});
@@ -2858,9 +2870,8 @@ function addXP(n){
   S.msg="LEVEL UP — Level "+after+"! Unlocked: "+items.join(", ")+(_tn.length?"; New territory: "+_tn.join(", "):"")+".";
   /* runner intro: Fixer points out your solid regulars at level 5 */
   if(after>=5&&!S.runnerIntroSeen){
-   S.runnerIntroSeen=true;
    var _fxc=getContact("The Fixer");
-   if(_fxc){_fxc.msgs.push({from:"them",text:"Heard u been building a name. Some of your regulars are asking to work for u — run product, handle their own clients. Say the word and I'll tell u who's solid. Check your contacts.",t:Date.now()});_fxc.unread=true;_fxc.unreadCount=(_fxc.unreadCount||0)+1;}
+   if(_fxc){S.runnerIntroSeen=true;_fxc.msgs.push({from:"them",text:"Heard u been building a name. Some of your regulars are asking to work for u — run product, handle their own clients. Say the word and I'll tell u who's solid. Check your contacts.",t:Date.now()});_fxc.unread=true;_fxc.unreadCount=(_fxc.unreadCount||0)+1;}
   }
   return true;
  }
@@ -2945,15 +2956,16 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],runners:[],call:null,driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:4,
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0,biggestDeal:0,thievesBeaten:0,thievesLost:0,robberiesSurvived:0,playtime:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0,biggestDeal:0,thievesBeaten:0,thievesLost:0,playtime:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
-function normalize(s){
- var oldSave=(typeof s.xp!=="number");
+function normalize(s,raw){
+ var oldSave=raw?(typeof raw.xp!=="number"):(typeof s.xp!=="number");
  if(typeof s.snoozed!=="boolean")s.snoozed=false;
  if(typeof s.phoneNotif!=="boolean")s.phoneNotif=true;
  if(!s.phoneNotifSet&&s.phoneNotif!==false)s.phoneNotif=true;
  /* runners (sub-dealer network): additive, old saves get empty */
  if(!Array.isArray(s.runners))s.runners=[];
+ s.runners=s.runners.filter(function(r){return r&&typeof r==="object"&&typeof r.id==="string";});
  s.call=null; /* never reopen a stale call overlay on boot */
  // Migrate old strain keys to new names
  var keyMap={gsc:"maui",widow:"northern",glue:"ak47"};
@@ -2976,7 +2988,7 @@ function normalize(s){
   var _bun=PKEYS.filter(function(k){return PRODUCTS[k].tier<=_bl;});
   var pr=Array.isArray(c.prefs)?c.prefs.filter(function(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&_bun.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab");}).map(function(p){return {k:p.k,kind:p.kind};}).slice(0,3):[];
   if(!pr.length)pr=contactPrefsFor(tp,_bun);
-  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0};
+  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0};
  });
  if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
@@ -3044,6 +3056,7 @@ function normalize(s){
  if(!s.regulars||typeof s.regulars!=="object")s.regulars={};
  /* today's stats: reset when date changes */
  var _today=new Date().toISOString().slice(0,10);
+ if(s.call&&typeof s.call==="object"&&typeof s.call.startedAt==="number"&&Date.now()-s.call.startedAt>3600000)s.call=null;
  if(!s.statsToday||typeof s.statsToday!=="object"||s.statsToday.date!==_today)s.statsToday={orders:0,earned:0,date:_today};
  /* territory heat */
  var _tids=["home","downtown","suburbs","industrial","waterfront","uptown"];
@@ -3091,9 +3104,10 @@ function normalize(s){
  if(typeof s.dealerStreak!=="number"||s.dealerStreak<0)s.dealerStreak=0;
  if(typeof s.invested!=="object"||!s.invested)s.invested={};
  if(RKEYS.indexOf(s.setdrug)<0)s.setdrug="hash";
- s.stats=Object.assign({earned:0,harvested:0,deals:0,busted:0,cooked:0},s.stats);
+ s.stats=Object.assign({earned:0,harvested:0,deals:0,busted:0,cooked:0,biggestDeal:0},s.stats);
+ ["earned","harvested","deals","busted","cooked","biggestDeal","thievesBeaten","thievesLost","playtime"].forEach(function(k){if(typeof s.stats[k]!=="number"||isNaN(s.stats[k])||s.stats[k]<0)s.stats[k]=0;});
  if(s.seeds.moonrock>0){s.cash+=s.seeds.moonrock*150;s.seeds.moonrock=0;}
- if(!s.job||!RECIPES[s.job.key])s.job=null;
+ if(!s.job||typeof s.job!=="object"||!RECIPES[s.job.key])s.job=null;
  if(!Array.isArray(s.props)||!s.props.length){
   if(Array.isArray(s.pots)&&s.pots.length)s.props=[{id:"tent",name:"Grow Tent",tier:1,slots:s.pots}];
   else s.props=[mkProp("tent")];
@@ -3106,16 +3120,23 @@ function normalize(s){
   s.xp=XP_TH[lv-1]||0;
  }
  if(typeof s.xp!=="number"||isNaN(s.xp)||s.xp<0)s.xp=0;
+ if(typeof s.stashCap!=="number"||isNaN(s.stashCap)||s.stashCap<0)s.stashCap=40;
+ if(DUFFEL.indexOf(s.stashCap)<0){
+  /* snap to nearest tier at or below (old saves + never silently downgrade) */
+  var _nc=40;for(var _bi=0;_bi<DUFFEL.length;_bi++)if(DUFFEL[_bi]<=s.stashCap)_nc=DUFFEL[_bi];
+  s.stashCap=_nc;
+ }
  if(s.buffUntil&&Date.now()>s.buffUntil){s.buffMult=1;s.buffUntil=0;}
  if(SPEED_OPTS.indexOf(s.buffMult)<0&&!(s.buffMult>=1&&s.buffMult<=1.3))s.buffMult=1;
  if(typeof s.buffUntil!=="number")s.buffUntil=0;
- s.props.forEach(function(pr){if(!Array.isArray(pr.slots))pr.slots=[];
+ s.props.forEach(function(pr){if(!pr||typeof pr!=="object")return;if(!Array.isArray(pr.slots))pr.slots=[];
   pr.slots.forEach(function(p){if(p&&GROWKEYS.indexOf(p.strain)<0)p.strain="sour";});});
  if(!Array.isArray(s.dealers)||s.dealers.length!==4)s.dealers=DEALER_NAMES.map(mkDealer);
  if(!Array.isArray(s.cookQueue))s.cookQueue=[];
+ if(s.preJob&&typeof s.preJob==="object"&&s.preJob.recipe){s.cookQueue.unshift({key:s.preJob.recipe,by:s.preJob.by||"player",pre:true});delete s.preJob;}
  if(!s.crew||typeof s.crew!=="object")s.crew={};
  ["bunsen","doc","merlin","squeak"].forEach(function(_cid){if(!s.crew[_cid]||typeof s.crew[_cid]!=="object")s.crew[_cid]={hired:false,resting:false,cooks:0,task:null};});
- s.dealers.forEach(function(d){PKEYS.forEach(function(k){if(typeof d.buy[k]!=="number")d.buy[k]=1;if(typeof d.sell[k]!=="number")d.sell[k]=1;});});
+ s.dealers.forEach(function(d){if(!d||typeof d!=="object")return;if(!d.buy||typeof d.buy!=="object")d.buy={};if(!d.sell||typeof d.sell!=="object")d.sell={};PKEYS.forEach(function(k){if(typeof d.buy[k]!=="number")d.buy[k]=1;if(typeof d.sell[k]!=="number")d.sell[k]=1;});});
  var now=Date.now();
  if(!s.lastTick)s.lastTick=now;
  if(!s.lockNotif||typeof s.lockNotif!=="object")s.lockNotif={messages:true,roach:false,system:false,phone:false};
@@ -3134,7 +3155,6 @@ function normalize(s){
  if(typeof s.visorStashOpen!=="boolean")s.visorStashOpen=false;
  if(!s.geneUnlocked||typeof s.geneUnlocked!=="object")s.geneUnlocked={};
  if(!s.hunt||typeof s.hunt!=="object")s.hunt=null;
- if(typeof s.huntDay!=="string")s.huntDay="";
  if(!s.pullup||typeof s.pullup!=="object")s.pullup=null;
  if(typeof s.pullupDeal!=="boolean")s.pullupDeal=false;
  if(typeof s.pullupCooldownUntil!=="number")s.pullupCooldownUntil=0;
@@ -3146,7 +3166,6 @@ function normalize(s){
  if(!s.raidPending||typeof s.raidPending!=="object")s.raidPending=null;
  if(s.tab==="shop")s.tab="store";
  if(["grow","cook","deal","store","chill","clinic","settings","street","maps","rep","props","bank","tasks"].indexOf(s.tab)<0)s.tab="grow";
- if(["grow","cook","deal","chill","clinic","settings","street","maps","rep","props","bank","tasks"].indexOf(s.backtab)<0)s.backtab="grow";
  if(s.view!=="home"&&s.view!=="app")s.view="home";
  if(["roll","smoke"].indexOf(s.chillview)<0)s.chillview="smoke";
  if(GROWKEYS.indexOf(s.chillStrain)<0)s.chillStrain="sour";
@@ -3177,7 +3196,7 @@ function normalize(s){
  if(!Array.isArray(s.bank.tx))s.bank.tx=[];
  return s;
 }
-var S=normalize(Object.assign({},DEF,bridge?bridge.getState(DEF):{}));
+var _rawBoot=bridge?bridge.getState(DEF):{};var S=normalize(Object.assign({},DEF,_rawBoot),_rawBoot);
 // Android OS shell: nav stack + app metadata
 var navStack=[];
 function navPush(app){if(navStack[navStack.length-1]!==app)navStack.push(app);if(navStack.length>12)navStack.shift();}
@@ -3308,7 +3327,7 @@ function ttLockHide(){
        if(info&&info.tag&&info.updateUrl){
          // Compare release tag with GAME_VER (strip 'v' prefix if present)
          var tag=String(info.tag).replace(/^v/,'');
-         var cur=typeof GAME_VER!=="undefined"?String(GAME_VER):"";
+         var cur=(typeof GAME_VER!=="undefined"?String(GAME_VER):"").replace(/^v/,'');
          if(tag!==cur){window._ttUpdateUrl=info.updateUrl;cb(true);return;}
        }
        cb(false);
@@ -3393,6 +3412,8 @@ function ttShowReup(){
    window.ttGameState=function(){return typeof S!=='undefined'?S:null;};
    window.ttNavStack=function(){return typeof navStack!=='undefined'?navStack:null;};
    window.ttNavPop=function(){if(typeof navPop==='function')navPop();};
+   window.ttCheckUpdate=function(cb){if(typeof ttCheckUpdate==='function')ttCheckUpdate(cb);};
+   window.ttShowReup=function(){if(typeof ttShowReup==='function')ttShowReup();};
    window.ttRender=function(){if(typeof render==='function')render();};
    window.ttSave=function(){if(typeof save==='function')save();};
    window.ttCustTest=function(){return {
@@ -3470,12 +3491,11 @@ document.addEventListener('mousemove',function(e){if(_rdrag&&window.ttDesktop&&t
 document.addEventListener('mouseup',function(e){if(e.button===2)_rdrag=null;});
 return;}
 var _fsDone=false;function _tryFS(){if(_fsDone)return;_fsDone=true;try{if(typeof S!=="undefined"&&S.fullscreenDefault!==false&&!document.fullscreenElement){var el=document.documentElement;if(el.requestFullscreen)el.requestFullscreen().catch(function(){});else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}}catch(e){}}document.addEventListener("touchend",_tryFS,{once:true,passive:true});document.addEventListener("click",_tryFS,{once:true});})();
-function navPop(){navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";}}
+function navPop(){if(S.view==="home")return;navStack.pop();var prev=navStack.length?navStack[navStack.length-1]:null;if(prev){S.tab=prev;S.view="app";}else{S.view="home";S.tab=null;}}
 var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦",tasks:"📋",visor:"🥽"};
 var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
 function appName(a){if(a==="street")return "Street Deal";if(a==="rep")return "Reputation";if(a==="props")return "My Properties";return a.charAt(0).toUpperCase()+a.slice(1);}
-function save(){if(bridge)bridge.setState(S);}
-if(bridge)window.addEventListener("hatch-widget-state",function(e){if(e.detail&&e.detail.state){S=normalize(e.detail.state);}});
+function save(){try{if(bridge)bridge.setState(S);}catch(e){}}
 // Re-layout home grid when viewport crosses fold/tablet breakpoints
 (function(){if(typeof window==="undefined"||typeof window.addEventListener!=="function")return;var _lastW=hwWinW();var _rt=null;function _bp(w){return w>=900?2:w>=600?1:0;}
 window.addEventListener("resize",function(){if(_rt)clearTimeout(_rt);_rt=setTimeout(function(){var w=hwWinW();if(_bp(w)!==_bp(_lastW)){_lastW=w;if(typeof S!=="undefined"&&S&&S.view==="home"&&typeof layoutHome==="function")layoutHome();}},250);});})();
@@ -3603,8 +3623,8 @@ function terrConsequenceCheck(tid,src){
  z.cool=now+10*60000;
  var m;
  if(src==="cops"){
-  var lostG=0;PKEYS.forEach(function(k){lostG+=S.stash[k]||0;S.stash[k]=0;});
-  GROWKEYS.forEach(function(k){lostG+=S.joints[k]||0;S.joints[k]=0;});
+  var lostG=0;PKEYS.forEach(function(k){lostG+=S.stash[k]||0;S.stash[k]=0;S.invested[k]=0;});
+  GROWKEYS.forEach(function(k){lostG+=S.joints[k]||0;S.joints[k]=0;S.invested[k+"_j"]=0;});
   var lostCash=Math.min(S.cash,Math.round(S.cash*0.25));S.cash-=lostCash;S.stats.busted++;
   z.heat.cops=40;
   m="RAID in "+t.name+"! Cops seized "+lostG+"g and "+money(lostCash)+". Heat reset — lay low.";
@@ -4053,6 +4073,12 @@ function render(){
   if(_uc>0){_mb.textContent=_uc>99?"99+":_uc;_mb.hidden=false;}
   else{_mb.hidden=true;}
  }
+ /* Lab badge: nudge first-time cooking when hash is cookable */
+ var _lb=q("#aa-labbadge");
+ if(_lb){
+  var _labReady=(S.stats.cooked||0)===0&&canCook("hash");
+  _lb.hidden=!_labReady;
+ }
  var _sp=q("#sb-prestige");
  if(_sp){
   if(S.prestigeCount>0){_sp.textContent="⭐"+S.prestigeCount;_sp.hidden=false;}
@@ -4367,6 +4393,10 @@ function render(){
   var _pkv=S.phoneView||"contacts";
   if(_pkv==="keypad"){
    h+=keypadHTML();
+  }else if(_pkv==="history"){
+   h+=phoneHistoryHTML();
+  }else if(_pkv==="voicemail"){
+   h+=phoneVoicemailHTML();
   }else{
   h+='<div class="sc-fav"><span class="sc-favstar">★</span><span class="sc-favtxt">Add your favorite contacts</span>'
    +'<span class="sc-favacts"><span class="sc-favbtn">+</span><span class="sc-favbtn">🔍</span><span class="sc-favbtn">⋮</span></span></div>';
@@ -4412,14 +4442,10 @@ function render(){
    h+='<div class="msg-empty">No customers yet.<br>Sell on the street — some buyers will hit you up.</div>';
   }
   } // end phoneView else
-  var _pv=S.phoneView||"contacts";
-  /* call history + voicemail tabs */
-  if(_pv==="history")h+=phoneHistoryHTML();
-  else if(_pv==="voicemail")h+=phoneVoicemailHTML();
   h+='<div class="sc-bottomnav"><div class="sc-pill">'
-   +'<button type="button" class="sc-navbtn'+(_pv==="keypad"?" on":"")+'" data-act="phoneview" data-v="keypad"><span class="sc-navico"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="8" cy="8" r="1.6"/><circle cx="12" cy="8" r="1.6"/><circle cx="16" cy="8" r="1.6"/><circle cx="8" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="16" cy="12" r="1.6"/><circle cx="8" cy="16" r="1.6"/><circle cx="12" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/></svg></span><em>Keypad</em></button>'
-   +'<button type="button" class="sc-navbtn'+(_pv==="history"?" on":"")+'" data-act="phoneview" data-v="history"><span class="sc-navico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 3"/></svg></span><span>Recents</span></button>'
-   +'<button type="button" class=\"sc-navbtn'+(_pv==="contacts"?" on":"")+'" data-act="phoneview" data-v="contacts"><span class="sc-navico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><em>Contacts</em></button>'
+   +'<button type="button" class="sc-navbtn'+(_pkv==="keypad"?" on":"")+'" data-act="phoneview" data-v="keypad"><span class="sc-navico"><svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><circle cx="8" cy="8" r="1.6"/><circle cx="12" cy="8" r="1.6"/><circle cx="16" cy="8" r="1.6"/><circle cx="8" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="16" cy="12" r="1.6"/><circle cx="8" cy="16" r="1.6"/><circle cx="12" cy="16" r="1.6"/><circle cx="16" cy="16" r="1.6"/></svg></span><em>Keypad</em></button>'
+   +'<button type="button" class="sc-navbtn'+(_pkv==="history"?" on":"")+'" data-act="phoneview" data-v="history"><span class="sc-navico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/><path d="M12 7v5l3 3"/></svg></span><span>Recents</span></button>'
+   +'<button type="button" class=\"sc-navbtn'+(_pkv==="contacts"?" on":"")+'" data-act="phoneview" data-v="contacts"><span class="sc-navico"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg></span><em>Contacts</em></button>'
    +'</div></div>';
   h+='</div>';
   return h;
@@ -4480,7 +4506,7 @@ function render(){
     +'<button type="button" data-act="fixer-bribe"'+(S.cash<_fxCost?" disabled":"")+'>Bribe '+money(_fxCost)+'</button></div>';
   }
   /* runner offer: eligible regulars can be promoted */
-  if(runnerAskEligible(c)&&S.runners.length<runnerMax()){
+  if(runnerAskEligible(c)&&!c.order&&S.runners.length<runnerMax()){
    h+='<div class="msg-order"><div class="msg-order-hd">🏃 <b>Bring them on?</b></div>'
     +'<div class="msg-order-body">'+escHtml(c.name)+' is solid — '+(S.regulars[c.name]||0)+' deals, loyal. Make them a runner?</div>'
     +'<button type="button" data-act="runner-promote" data-c="'+escHtml(c.name)+'">Make runner</button></div>';
@@ -4505,10 +4531,9 @@ function render(){
    });
    h+='</div>';
    h+='</div>';
-   /* text composer with fuzzy matching */
-   h+='<div class="msg-composer"><input type="text" class="msg-input" data-contact="'+escHtml(c.name)+'" placeholder="Type a message..." autocomplete="off"><button type="button" class="msg-send" data-act="msg-send" data-contact="'+escHtml(c.name)+'">Send</button></div>';
-   h+='</div>';
   }
+  /* text composer with fuzzy matching — always available, even with no quick replies */
+  h+='<div class="msg-inputbar"><div class="msg-composer"><input type="text" class="msg-input" data-contact="'+escHtml(c.name)+'" placeholder="Type a message..." autocomplete="off"><button type="button" class="msg-send" data-act="msg-send" data-contact="'+escHtml(c.name)+'">Send</button></div></div>';
   h+='</div>';
   return h;
  }
@@ -4553,7 +4578,7 @@ function render(){
  if(S.tab==="auth"){q(".pane-auth").innerHTML=authHTML();}
  if(S.tab!=="visor"&&window._visorLive){visorStop();}
  if(S.tab==="visor"){
-  if(!window._visorLive){visorMaybeSpawn();q(".pane-visor").innerHTML=visorHTML();window._visorLive=true;visorRefresh();visorStartCam();}
+  if(!window._visorLive){visorMaybeSpawn();q(".pane-visor").innerHTML=visorHTML();window._visorLive=true;visorRefresh();visorStartCam();visorOrientStart();}
   else{visorRefresh();}
  }
  if(S.tab==="tasks"){q(".pane-tasks").innerHTML=todoHTML();todoSwipeInit();}
@@ -4900,6 +4925,7 @@ function mapsHTML(){
    _pageHtml+='<div class="srow c"><div><b>Rolling papers</b><div class="sdesc">Pack of '+PAPER_PACK+' — needed to roll joints</div></div>'
     +'<button type="button" data-act="buypapers"'+(S.cash>=PAPER_COST?"":" disabled")+'>'+money(PAPER_COST)+' (&times;'+S.papers+')</button></div>';
    var ti=DUFFEL.indexOf(S.stashCap);
+   if(ti<0)ti=0; /* normalize guarantees a tier; never downgrade */
    if(ti<DUFFEL.length-1){
     var nc=DUFFEL[ti+1];
     _pageHtml+='<div class="srow c"><div><b>Bigger duffel</b><div class="sdesc">Carry '+nc+'g (now '+S.stashCap+'g)</div></div>'
@@ -5004,7 +5030,7 @@ function mapsHTML(){
 function getPot(pi,si){var pr=S.props[pi];return pr?pr.slots[si]:undefined;}
 function doPlant(pi,si,k){
  var pr=S.props[pi];
- if(!pr||pr.slots[si]||S.seeds[k]<=0)return;
+ if(!pr||si<0||si>=pr.slots.length||pr.slots[si]||S.seeds[k]<=0)return;
  if(!strainUnlocked(k))return;
  S.seeds[k]--;
  trackCost(k,PRODUCTS[k].seed);
@@ -5052,9 +5078,12 @@ function doHarvestAll(){
  S.props.forEach(function(pr){pr.slots.forEach(function(p,si){
   if(!p||p.growth<100)return;
   var y=PRODUCTS[p.strain].yld;
-  var grams=Math.round((y[0]+Math.random()*(y[1]-y[0]))*(0.6+0.4*p.water/100));
+  if(!S.strainMastery)S.strainMastery={};
+  var _m2=S.strainMastery[p.strain]||0;
+  var grams=Math.round((y[0]+Math.random()*(y[1]-y[0]))*(0.6+0.4*p.water/100)*(1+Math.min(0.5,_m2*0.02)));
   var take=Math.min(grams,S.stashCap-stashTotal());
   if(take<=0){full=true;return;}
+  S.strainMastery[p.strain]=_m2+1;
   S.stash[p.strain]+=take;pr.slots[si]=null;S.stats.harvested++;ht+=take;hn++;
   addXP(8*PRODUCTS[p.strain].tier);
  });});
@@ -5064,8 +5093,8 @@ function doHarvestAll(){
  save();render();pushGrowToWidget(true);
 }
 function doBust(){
- PKEYS.forEach(function(k){S.stash[k]=0;});
- GROWKEYS.forEach(function(k){S.joints[k]=0;});
+ PKEYS.forEach(function(k){S.stash[k]=0;S.invested[k]=0;});
+ GROWKEYS.forEach(function(k){S.joints[k]=0;S.invested[k+"_j"]=0;});
  var _bi;for(_bi=0;_bi<TERRITORIES.length;_bi++){var _bz=terrZone(TERRITORIES[_bi].id);_bz.heat.cops=45;_bz.heat.gangs=Math.min(_bz.heat.gangs,45);_bz.heat.fam=Math.min(_bz.heat.fam,45);}
  syncGlobalHeat();S.lockedUntil=Date.now()+5*60000;S.stats.busted++;
  S.msg="BUSTED! Cops seized your whole stash. Lay low for 5 minutes.";
@@ -5217,7 +5246,8 @@ function contactOrderPick(c){
  if(!budPool.length)return null;
  var pool=budPool.map(function(k){return {k:k,kind:"bud"};});
  pool.push({k:budPool[(Math.random()*budPool.length)|0],kind:"joint"});
- if(un.indexOf("edibles")>=0)pool.push({k:"edibles",kind:"lab"});
+ /* lab products: every unlocked cooked product gets an order slot, same weight as a bud strain */
+ RKEYS.forEach(function(lk){if(un.indexOf(lk)>=0)pool.push({k:lk,kind:"lab"});});
  return pool[(Math.random()*pool.length)|0];
 }
 function contactBasePrice(p){
@@ -5427,8 +5457,9 @@ var CUST_RETURN1=["oh. it's you. 🙄 heard you got that pack again... aight, ON
 var CUST_RETURN2=["THIRD time?? 😂 you must really need me. aight but this is the last last chance","again?? you lucky I like money 😤 last chance, for real this time"];
 function _custPick(a){return a[(Math.random()*a.length)|0];}
 function custOrderExpired(c,now){
- if(!c||c.fixer)return;
+ if(!c||c.fixer||c.brokenUp)return;
  c.loyalty=Math.max(0,(typeof c.loyalty==="number"?c.loyalty:50)-10);
+ c.lastFlakeAt=now;
  var txt;
  if(c.loyalty<=0){
   c.brokenUp=true;c.brokenUpAt=now;
@@ -5444,7 +5475,6 @@ function custOrderExpired(c,now){
 }
 function tickContacts(now){
  if(!S.contacts||!S.contacts.length)return;
- var changed=false;
  /* auto-delete: broken-up customers vanish 24h after the breakup; their name
     returns to the pool automatically since the name filter only excludes current contacts */
  S.contacts=S.contacts.filter(function(c){
@@ -5454,7 +5484,7 @@ function tickContacts(now){
  S.contacts.forEach(function(c){
   if(c.fixer)return;
   if(c.order&&now>c.order.expires){
-   c.order=null;custOrderExpired(c,now);changed=true;
+   c.order=null;custOrderExpired(c,now);
   }
  });
  /* global order throttle: max 3 new orders per 5 min across all contacts */
@@ -5476,7 +5506,7 @@ function tickContacts(now){
   var perUnit=Math.max(1,Math.round(base*premium));
   /* runner absorb: before the order exists — no half-built state */
   var _ab=tryAbsorb(c,pick,grams,now);
-  if(_ab){c.lastOrderAt=now;S.recentOrderTimes.push(now);_orderBudget--;changed=true;return;}
+  if(_ab){c.lastOrderAt=now;S.recentOrderTimes.push(now);_orderBudget--;return;}
   c.order={k:pick.k,kind:pick.kind,g:grams,pu:perUnit,expires:now+3*3600000,sentAt:now};
   c.lastOrderAt=now;
   S.recentOrderTimes.push(now);_orderBudget--;
@@ -5560,12 +5590,11 @@ function tickContacts(now){
   c.msgs.push({from:"them",text:_txt,t:now});
   c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
   notifyMsgArrived(c,_txt);
-  changed=true;
  });
  /* runner recruitment asks: eligible, orderless contacts */
  S.contacts.forEach(function(c){
   if(c.fixer||c.brokenUp||c.order)return;
-  if(!runnerAskEligible(c))return;
+  if(!runnerAskEligible(c,now))return;
   if(c.runnerAskedAt&&now-c.runnerAskedAt<24*3600000)return;
   if(Math.random()>0.05)return;
   c.runnerAskedAt=now;
@@ -5573,7 +5602,6 @@ function tickContacts(now){
   c.msgs.push({from:"them",text:_rtxt,t:now});
   c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
   notifyMsgArrived(c,_rtxt);
-  changed=true;
  });
 }
 function fmtMsgTime(t){try{var d=new Date(t),h=d.getHours(),m=d.getMinutes(),ap=h>=12?"PM":"AM";h=h%12;if(h===0)h=12;return h+":"+(m<10?"0":"")+m+" "+ap;}catch(e){return "";}}
@@ -5588,27 +5616,10 @@ function fmtPlaytime(sec){
 }
 function fmtDur(ms){var m=Math.max(0,Math.ceil(ms/60000));if(m<60)return m+"m";var h=Math.floor(m/60);return h+"h "+(m%60)+"m";}
 function getContact(nm){if(!S.contacts)return null;for(var i=0;i<S.contacts.length;i++)if(S.contacts[i].name===nm)return S.contacts[i];return null;}
-function doFulfillOrder(nm){
- var c=getContact(nm);
- if(!c||!c.order){S.msg="No active order.";save();render();return;}
- var o=c.order,have=contactHave(o);
- if(have<o.g){S.msg="You don't have "+contactQtyText(o)+".";save();render();return;}
- if(o.kind==="joint")S.joints[o.k]-=o.g;else S.stash[o.k]-=o.g;
- var rev=Math.floor(o.pu*o.g*gearPriceMult());
- S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
- dealTerrHeat(o.g,o.g>=5);
- c.loyalty=Math.min(100,c.loyalty+Math.round(8*(1+gearBonus().rep/100)));
- var now=Date.now();
- c.msgs.push({from:"me",text:"got u. "+o.g+"g comin thru.",t:now});
- c.msgs.push({from:"them",text:"appreciate u 🙏",t:now});
- c.order=null;c.unread=false;c.unreadCount=0;c.lastFulfilledAt=now;
- S.msg="Sold "+contactQtyText(o)+" to "+c.name+" for "+money(rev)+".";
- battleRoll();save();render();
-}
 /* ===== TASKS APP: accepted order requests live here until fulfilled/dismissed ===== */
 function doAcceptOrder(nm,variant){
  var c=getContact(nm);
- if(!c||!c.order)return;
+ if(!c||!c.order){S.msg="That order already expired.";save();render();return;}
  var o=c.order,now=Date.now();
  if(!Array.isArray(S.tasks))S.tasks=[];
  /* VIP flash order: 10% chance, 1.5x payout, 5-min expiry */
@@ -5653,7 +5664,7 @@ function doFulfillTask(i,silent){
  /* speed bonus: fulfilled within 5 min = 10% tip */
  var _tip=0;
  if(now-t.addedAt<5*60*1000){_tip=Math.floor(rev*0.10);rev+=_tip;}
- S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
+ S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
  /* today's stats */
  if(S.statsToday&&S.statsToday.date===new Date().toISOString().slice(0,10)){S.statsToday.orders++;S.statsToday.earned+=rev;}
  else{S.statsToday={orders:1,earned:rev,date:new Date().toISOString().slice(0,10)};}
@@ -5704,7 +5715,7 @@ function doFulfillTask(i,silent){
    if(_pool.length){
     var _rn=_pool[(Math.random()*_pool.length)|0];
     var _rg=o.kind==="joint"?[1,2,3][(Math.random()*3)|0]:[2,3,5][(Math.random()*3)|0];
-    S.tasks.push({name:_rn,k:o.k,kind:o.kind,g:_rg,pu:o.pu,addedAt:Date.now(),expiresAt:Date.now()+20*60*1000,vip:false,referral:"Heard about you from "+t.name});
+    S.tasks.push({name:_rn,k:o.k,kind:o.kind,g:_rg,pu:t.vip?Math.round(o.pu/1.5):o.pu,addedAt:Date.now(),expiresAt:Date.now()+20*60*1000,vip:false,referral:"Heard about you from "+t.name});
     S.msg+=" "+_rn+" heard about you from "+t.name+" and wants in!";
    }
   }
@@ -5794,7 +5805,7 @@ function tasksHTML(){
     /* joints: need bud + papers. 1g bud -> 2 joints */
     var _needBud=Math.ceil(t.g/2),_haveBud=S.stash[t.k]||0,_havePaper=S.papers||0,_needPaper=t.g*2;
     if(_haveBud>=_needBud&&_havePaper>=_needPaper){
-     _prodBtns='<button type="button" class="tk-make" data-act="task-roll" data-i="'+i+'">Roll '+t.g+' Joints</button>';
+     _prodBtns=stashTotal()>=S.stashCap?'<span class="tk-need">Duffel full — sell some first</span>':'<button type="button" class="tk-make" data-act="task-roll" data-i="'+i+'">Roll '+t.g+' Joints</button>';
     }else if(_haveBud<_needBud){
      /* need seeds */
      var _sp=PRODUCTS[t.k]?PRODUCTS[t.k].seed:0;
@@ -5939,7 +5950,7 @@ function doDeal(di,k,isBuy,isJoint){
   var rev=Math.floor(unit2*g);
   var heldBefore=isJoint?(S.joints[k]||0):(S.stash[k]||0);
   if(isJoint)S.joints[k]-=g;else S.stash[k]-=g;
-  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
+  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
   dealTerrHeat(g,g>=5);
   var dh2=dealerStreakHeat(di);
   var prof=calcProfit(k+(isJoint?"_j":""),g,heldBefore,rev);
@@ -5970,7 +5981,7 @@ function doStashSellAll(k,isJoint){
  unit=Math.round(unit*gearPriceMult());
  var rev=Math.floor(unit*have);
  if(isJoint)S.joints[k]=0;else S.stash[k]=0;
- S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
+ S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
  dealTerrHeat(have,have>=5);
  var dh3=dealerStreakHeat(sd.di);
  var prof2=calcProfit(k+(isJoint?"_j":""),have,have,rev);
@@ -6196,25 +6207,10 @@ function tickerHints(){
 }
 var tickerState={x:0,last:0,pausedUntil:0,count:0,fast:false};
 var tickIdx=0;
-function tickerSpeed(){return tickerState.fast?34:18;}
-function tickerTick(){
- var track=q(".ticker-track");
- if(!track||!track.children.length)return;
- var now=Date.now();
- if(!tickerState.last)tickerState.last=now;
- var dt=Math.min(0.5,(now-tickerState.last)/1000);
- tickerState.last=now;
- if(now<tickerState.pausedUntil)return;
- var half=track.scrollWidth/2;
- if(half<=0)return;
- tickerState.x+=dt*tickerSpeed();
- if(tickerState.x>=half)tickerState.x-=half;
- track.style.transform="translateX("+(-tickerState.x)+"px)";
-}
-var tickerTipIdx=0,tickerTipTimer=null;
 function renderTicker(){
  var view=q(".ticker-view");
  if(!view)return;
+ if(typeof tickerHints!=="function")return;
  var hints=tickerHints();
  if(!hints.length)return;
  function showTip(){
@@ -6238,25 +6234,10 @@ function renderTicker(){
  }
  if(typeof tickerTipTimer!=="undefined"&&tickerTipTimer)clearInterval(tickerTipTimer);
  showTip();
- tickerTipTimer=setInterval(showTip,5000);
-}
-function tickGo(i,pauseMs){
- var track=q(".ticker-track");
- if(!track)return;
- var el=track.querySelector('.ticker-chunk[data-i="'+i+'"]');
- if(!el)return;
- tickerState.x=el.offsetLeft;
- tickerState.last=0;
- tickerState.pausedUntil=Date.now()+(pauseMs==null?10000:pauseMs);
- track.style.transform="translateX("+(-tickerState.x)+"px)";
-}
-function tickNext(){
- var n=tickerState.count||1;
- tickIdx=(tickIdx+1)%n;
- tickGo(tickIdx,0);
+ tickerTipTimer=setInterval(showTip,tickerState.fast?2500:5000);
 }
 function tickToggleSpeed(){
- tickerState.fast=!tickerState.fast;
+ tickerState.fast=!tickerState.fast;renderTicker();
 }
 function chillStrain(){
  var ck=S.chillStrain;
@@ -6408,6 +6389,11 @@ function tick(){
   else if(!S.job.phase)settleJob();
  }
  crewTick();queueTick();
+ /* lab onboarding: one-time nudge when hash first becomes cookable */
+ if(!S._labNudged&&(S.stats.cooked||0)===0&&canCook("hash")){
+  S._labNudged=true;
+  S.msg="Your bud can cook into Hash at the Lab — worth 3x! Tap the Lab icon. 🧪";
+ }
  save();render();
 }
 /* ===== COOK LAB (v3) ===== */
@@ -6424,7 +6410,7 @@ function canCook(key){
  if(PRODUCTS[key].tier>pLevel())return false;
  if(budHave()<(r.bud||0))return false;
  for(var k in (r.kits||{}))if((S.kits[k]||0)<r.kits[k])return false;
- for(var s in (r.stash||{}))if(S.stash[s]<r.stash[s])return false;
+ for(var s in (r.stash||{}))if((S.stash[s]||0)<r.stash[s])return false;
  return stashTotal()<S.stashCap;
 }
 function drawBud(g){
@@ -6444,17 +6430,27 @@ function deductCookInputs(key){
  if(stashTotal()>=S.stashCap){S.msg="Duffel is full — sell some first.";save();render();showBagFullWarn();return null;}
  if(budHave()<(r.bud||0)){S.msg="Not enough bud for that recipe.";save();render();return null;}
  for(var k in (r.kits||{}))if((S.kits[k]||0)<r.kits[k]){S.msg="You need a "+KITS[k].name+" — check the Shop.";save();render();return null;}
- for(var s in (r.stash||{}))if(S.stash[s]<r.stash[s]){S.msg="Not enough "+PRODUCTS[s].name+" for that recipe.";save();render();return null;}
+ for(var s in (r.stash||{}))if((S.stash[s]||0)<r.stash[s]){S.msg="Not enough "+PRODUCTS[s].name+" for that recipe.";save();render();return null;}
  var drawn=drawBud(r.bud||0);
  var kk={};for(var k2 in (r.kits||{})){kk[k2]=r.kits[k2];S.kits[k2]-=r.kits[k2];}
  var st={};for(var s2 in (r.stash||{})){st[s2]=r.stash[s2];S.stash[s2]-=r.stash[s2];}
  return {bud:drawn,kits:kk,stash:st};
 }
+function stashAddCapped(k,g){
+ /* adds grams to stash, clamped to cap. returns grams lost to a full bag. */
+ if(!k||!g||g<=0)return 0;
+ var room=S.stashCap-stashTotal();
+ var take=Math.min(g,Math.max(0,room));
+ S.stash[k]=(S.stash[k]||0)+take;
+ return g-take;
+}
 function refundCookInputs(inp){
- if(!inp)return;
- GROWKEYS.forEach(function(k){S.stash[k]=(S.stash[k]||0)+(inp.bud[k]||0);});
+ if(!inp)return 0;
+ var lost=0;
+ GROWKEYS.forEach(function(k){lost+=stashAddCapped(k,inp.bud[k]||0);});
  for(var k in inp.kits)S.kits[k]=(S.kits[k]||0)+inp.kits[k];
- for(var s in inp.stash)S.stash[s]=(S.stash[s]||0)+inp.stash[s];
+ for(var s in inp.stash)lost+=stashAddCapped(s,inp.stash[s]);
+ return lost;
 }
 function makeCookJob(key,inp,pre,qi){
  /* builds the minigame-phase job. pre=true marks a pre-cook for queue entry qi. */
@@ -6496,9 +6492,11 @@ function queueCook(key){
 }
 function unqueueCook(i){
  var e=S.cookQueue[+i];if(!e)return;
- refundCookInputs(e.inputs);
+ if(S.job&&S.job.pre===true&&S.job.qi===+i){S.msg="That one is mid pre-cook — cancel the pre-cook first.";save();render();return;}
+ var _rl=refundCookInputs(e.inputs);
  S.cookQueue.splice(+i,1);
- S.msg=PRODUCTS[e.key].name+" pulled from the queue — inputs refunded.";
+ if(S.job&&S.job.pre===true&&S.job.qi>+i)S.job.qi--;
+ S.msg=PRODUCTS[e.key].name+" pulled from the queue — inputs refunded."+(_rl>0?" ("+_rl+"g lost — Duffel full.)":"");
  save();render();
 }
 /* ===== LAB CREW =====
@@ -6528,18 +6526,20 @@ function toggleWorkerRest(id){
 }
 function settleWorkerTask(id){
  var wd=WORKERS[id],w=S.crew[id];if(!wd||!w||!w.task)return;
- var t=w.task,r=RECIPES[t.key];if(!r){w.task=null;save();render();return;}
+ var t=w.task,r=RECIPES[t.key];if(!r){w.task=null;S.msg=wd.icon+" "+wd.name+"'s batch fizzled — that recipe is gone.";save();render();return;}
  var y=t.blessed?1:workerYield(id,w);
  var g=Math.max(1,Math.floor(r.yield*y));
  var room=S.stashCap-stashTotal();
- if(room<=0){S.msg="Duffel full — "+wd.name+"'s "+PRODUCTS[t.key].name+" is waiting. Sell some.";save();render();return;}
+ if(room<=0){if(S.msg.indexOf("is waiting. Sell some.")<0)S.msg="Duffel full — "+wd.name+"'s "+PRODUCTS[t.key].name+" is waiting. Sell some.";save();render();return;}
  var take=Math.min(g,room);
  S.stash[t.key]=(S.stash[t.key]||0)+take;
  S.stats.cooked=(S.stats.cooked||0)+1;
  addTerrHeat("cops",Math.ceil(r.heat*0.3),null,true);
  addTerrHeat("fam",Math.ceil(r.heat*0.2),null,true);
  w.task=null;w.cooks=(w.cooks||0)+1;
- S.msg=t.blessed?("🌙 Blessed batch! "+wd.name+" nailed "+PRODUCTS[t.key].name+" at full yield."):(""+wd.icon+" "+wd.name+" finished: +"+take+"g "+PRODUCTS[t.key].name+".");
+ var _wx=addXP(10*(RKEYS.indexOf(t.key)+1));
+ var _lost=g-take;
+ if(!_wx)S.msg=t.blessed?("🌙 Blessed batch! "+wd.name+" nailed "+PRODUCTS[t.key].name+" at full yield."):(""+wd.icon+" "+wd.name+" finished: +"+take+"g "+PRODUCTS[t.key].name+"."+(_lost>0?" ("+_lost+"g lost — duffel full.)":""));
  save();render();
 }
 function crewTick(){
@@ -6553,6 +6553,7 @@ function crewTick(){
   var qi=-1;
   for(var i=0;i<S.cookQueue.length;i++){
    if(S.cookQueue[i].pre!=null)continue; /* pre-cooked: the player claimed this one */
+   if(S.preJob&&S.job&&S.job.pre===true&&S.job.qi===i)continue; /* mid pre-cook right now: hands off */
    var ek=S.cookQueue[i].key;
    if(RECIPES[ek]&&RECIPES[ek].game!=="finale"){qi=i;break;}
   }
@@ -6595,17 +6596,14 @@ function cancelCook(){
   S.msg="Pre-cook cancelled — the queued cook keeps its inputs.";
   save();render();return;
  }
- var inp=j.inputs;
- GROWKEYS.forEach(function(k){S.stash[k]+=inp.bud[k]||0;});
- for(var k in inp.kits)S.kits[k]=(S.kits[k]||0)+inp.kits[k];
- for(var s in inp.stash)S.stash[s]+=inp.stash[s];
+ var _cl=refundCookInputs(j.inputs);
  S.job=null;
- S.msg="Job cancelled — inputs refunded.";
+ S.msg="Job cancelled — inputs refunded."+(_cl>0?" ("+_cl+"g lost — Duffel full.)":"");
  save();render();
 }
 function battleRoll(){
  var _bh=activeHeat();
- if(S.battle||_bh<70)return;
+ if(S.battle||S.thiefBattle||_bh<70)return;
  if(_bh>=100||Math.random()<(_bh-70)/30*0.25)startBattle();
 }
 /* thief lead-up: they talk big in texts but chicken out at the meetup.
@@ -6632,7 +6630,7 @@ function startThiefBattle(c,o,taskIdx){
  var _thp=40+Math.round(pLevel()*8);
  /* thief's weapon (not fists) */
  var _tw=["knife","pistol","smg"][(Math.random()*3)|0];
- S.thiefBattle={name:c.name,thiefHp:_thp,thiefMax:_thp,thiefWeapon:_tw,product:{k:o.k,kind:o.kind,g:o.g},taskIdx:taskIdx,log:["😡 "+c.name+" pulls a "+WEAPONS[_tw].name+"! It's a setup!"]};
+ S.thiefBattle={name:c.name,thiefHp:_thp,thiefMax:_thp,thiefWeapon:_tw,product:{k:o.k,kind:o.kind,g:o.g,pu:o.pu},taskIdx:taskIdx,log:["😡 "+c.name+" pulls a "+WEAPONS[_tw].name+"! It's a setup!"]};
  leaveVoicemail(c.name,"You know what time it is. Bring the product, come alone.");
  S.msg="ROBBERY! "+c.name+" is trying to take your product!";
  c.msgs.push({from:"them",text:"give me everything. now.",t:Date.now()});
@@ -6675,12 +6673,12 @@ function winThiefBattle(){
  if(_tw!=="fists"&&!S.weapons[_tw]){S.weapons[_tw]=true;_got=true;}
  /* complete the original task (you keep product, get paid) */
  var _o=b.product;
- var _t=S.tasks&&S.tasks[b.taskIdx];
+ var _ti=(S.tasks||[]).findIndex(function(x){return x&&x.name===b.name&&x.k===_o.k&&x.g===_o.g;});
  S.thiefBattle=null;
- if(_t){
+ if(_ti>=0){
   var rev=Math.floor(_o.pu*_o.g*gearPriceMult());
-  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;
-  S.tasks.splice(b.taskIdx,1);
+  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
+  S.tasks.splice(_ti,1);
  }
  /* remove and block the thief */
  if(!S.blockedNames)S.blockedNames=[];
@@ -6694,9 +6692,10 @@ function loseThiefBattle(){
  var b=S.thiefBattle;if(!b)return;
  var _o=b.product;
  /* thief takes the product, pays nothing */
- /* product was already deducted from stash */
+ if(_o.kind==="joint")S.joints[_o.k]=Math.max(0,(S.joints[_o.k]||0)-_o.g);
+ else S.stash[_o.k]=Math.max(0,(S.stash[_o.k]||0)-_o.g);
  var _t=S.tasks&&S.tasks[b.taskIdx];
- if(_t)S.tasks.splice(b.taskIdx,1);
+ if(_t&&_t.name===b.name)S.tasks.splice(b.taskIdx,1);
  var _c=getContact(b.name);
  if(_c){_c.isThief=false;_c.ordersBeforeTurn=0;_c.loyalty=0;}
  S.thiefBattle=null;
@@ -6711,7 +6710,7 @@ function removeContact(name){
 }
 function startBattle(){
  var cm=50+Math.round(activeHeat());
- S.battle={copHp:cm,copMax:cm,log:["Cops ambush you!"],back:S.tab};
+ S.battle={copHp:cm,copMax:cm,log:["Cops ambush you!"]};
  S.msg="COP AMBUSH! Fight or run!";
  save();render();
 }
@@ -6910,7 +6909,7 @@ function crewHiredCount(){var n=0;for(var id in WORKERS){if(S.crew&&S.crew[id]&&
 function cookHTML(){
  var _th=tabHeader("cook");
  var cv=S.cookview||"lab";
- var j=S.job,h=_th
+ var j=(S.job&&typeof S.job==="object")?S.job:null,h=_th
   +'<div class="dchips">'
   +'<button type="button" class="dchip'+(cv==="lab"?" on":"")+'" data-act="cookview" data-v="lab"><span class="dc-name">🧪 LAB</span></button>'
   +'<button type="button" class="dchip'+(cv==="crew"?" on":"")+'" data-act="cookview" data-v="crew"><span class="dc-name">👥 CREW'+(crewHiredCount()?" "+crewHiredCount()+"/4":"")+'</span></button>'
@@ -6950,10 +6949,11 @@ function crewHTML(){
    var _cw=WORKERS[_cid],_cs=S.crew[_cid];
    if(_cs&&_cs.hired){
     var _st,_sub2;
-    if(_cs.task){
+    if(_cs.resting){_st="Resting"+(_cs.task?" (batch paused)":"");}
+    else if(_cs.task){
      var _rem=Math.max(0,Math.ceil((_cs.task.doneAt-Date.now())/1000));
      _st="Working: "+PRODUCTS[_cs.task.key].name+" · "+fmtT(_rem)+" left";
-    }else if(_cs.resting){_st="Resting";}
+    }
     else{_st="Idle — grabs tickets when you're out of the lab";}
     var _yd=_cid==="squeak"?(" · "+Math.round(squeakYield(_cs)*100)+"% now"):"";
     h+='<div class="crew"><div class="crew-top"><span class="picon sm crew-ic">'+_cw.icon+'</span><div class="crew-mid"><div class="crew-name">'+_cw.name+'</div><div class="crew-bonus">'+_cw.blurb+_yd+'</div></div><span class="chip on">HIRED</span></div>'
@@ -7038,6 +7038,7 @@ function visorStartCam(){
  try{
   if(!navigator.mediaDevices||!navigator.mediaDevices.getUserMedia){sim();return;}
   navigator.mediaDevices.getUserMedia({video:{facingMode:S.visorCam||"environment"},audio:false}).then(function(stream){
+   if(!window._visorLive){stream.getTracks().forEach(function(t){try{t.stop();}catch(e){}});return;}
    window._visorStream=stream;
    var v=document.getElementById("visorVideo");
    if(v){v.srcObject=stream;var pr=v.play();if(pr&&pr.catch)pr.catch(function(){});}
@@ -7047,6 +7048,71 @@ function visorStartCam(){
 function visorStop(){
  try{if(window._visorStream){window._visorStream.getTracks().forEach(function(t){try{t.stop();}catch(e){}});window._visorStream=null;}}catch(e){}
  window._visorLive=false;
+ visorOrientStop();
+}
+/* ---- visor plant anchoring: gyro parallax ----
+   True WebXR hit-test anchoring is not available in the APK's WebView
+   (navigator.xr is absent there) or the widget, so hunt plants are pinned
+   by device orientation instead: each plant is placed at a compass bearing
+   + pitch offset relative to where the phone pointed at spawn, and
+   re-projected to screen space every frame. Panning the phone slides plants
+   against the camera feed like real-world objects. No orientation data ->
+   static markers (legacy behavior). */
+function wrap180(d){d=d%360;if(d>180)d-=360;if(d<-180)d+=360;return d;}
+function huntPlantXY(pl){
+ var o=window._visorOrient,ref=S.hunt&&S.hunt.ref;
+ if(pl.yaw==null)return{x:pl.x==null?50:pl.x,y:pl.y==null?50:pl.y,off:false};
+ if(!o||!o.has||!ref||!ref.has){
+  return{x:Math.max(5,Math.min(95,50+pl.yaw*0.8)),y:Math.max(5,Math.min(95,50-pl.pitch*0.8)),off:false};
+ }
+ var HFOV=62,VFOV=48;
+ var dy=wrap180(o.alpha-ref.alpha),dp=o.beta-ref.beta;
+ var x=50+(pl.yaw-dy)*(100/HFOV);
+ var y=50+(dp-pl.pitch)*(100/VFOV);
+ var off=(x<-12||x>112||y<-12||y>112);
+ return{x:Math.max(-20,Math.min(120,x)),y:Math.max(-20,Math.min(120,y)),off:off};
+}
+function visorOrientStart(){
+ if(window._visorOrientOn)return;
+ window._visorOrientOn=true;
+ window._visorOrient={has:false,alpha:0,beta:0,gamma:0};
+ window._visorOrientH=function(e){
+  if(!e||e.alpha==null||e.beta==null)return;
+  window._visorOrient={has:true,alpha:e.alpha,beta:e.beta,gamma:(e.gamma==null?0:e.gamma)};
+ };
+ try{
+  window.addEventListener("deviceorientationabsolute",window._visorOrientH,true);
+  window.addEventListener("deviceorientation",window._visorOrientH,true);
+ }catch(e){}
+ visorOrientLoop();
+}
+function visorOrientStop(){
+ window._visorOrientOn=false;
+ try{
+  if(window._visorOrientH){
+   window.removeEventListener("deviceorientationabsolute",window._visorOrientH,true);
+   window.removeEventListener("deviceorientation",window._visorOrientH,true);
+  }
+ }catch(e){}
+ window._visorOrientH=null;
+}
+function visorOrientLoop(){
+ if(!window._visorOrientOn||!window._visorLive)return;
+ try{visorOrientApply();}catch(e){}
+ requestAnimationFrame(visorOrientLoop);
+}
+function visorOrientApply(){
+ if((S.visorMode||"scan")!=="scan")return;
+ if(!S.hunt||!S.hunt.plants||!S.hunt.plants.length)return;
+ for(var i=0;i<S.hunt.plants.length;i++){
+  var pl=S.hunt.plants[i];
+  if(pl.yaw==null)continue;
+  var el=document.querySelector('.plant-marker[data-id="'+pl.id+'"]');
+  if(!el)continue;
+  var xy=huntPlantXY(pl);
+  el.style.left=xy.x+"%";el.style.top=xy.y+"%";
+  el.style.visibility=xy.off?"hidden":"visible";
+ }
 }
 function visorRefresh(){
  if(!window._visorLive)return;
@@ -7071,11 +7137,11 @@ function visorCollect(id){
   if(kk.length)for(var i=0;i<d.loot.kits;i++){var k=kk[Math.floor(Math.random()*kk.length)];S.kits[k]=(S.kits[k]||0)+1;}
   msg="+"+d.loot.kits+" grow kits";
  }else if(d.loot.cash){S.cash=(S.cash||0)+d.loot.cash;msg="+$"+d.loot.cash;}
- else{S.visorStash.genetics.push(d.loot.genetics);var _ug=unlockGene(d.loot.genetics),_gk=geneKeyFor(d.loot.genetics);msg=d.loot.genetics+" genetics banked"+(_ug&&_gk?" — NEW STRAIN: "+PRODUCTS[_gk].name+"!":"");}
+ else{if(S.visorStash.genetics.indexOf(d.loot.genetics)<0)S.visorStash.genetics.push(d.loot.genetics);var _ug=unlockGene(d.loot.genetics),_gk=geneKeyFor(d.loot.genetics);msg=d.loot.genetics+" genetics banked"+(_ug&&_gk?" — NEW STRAIN: "+PRODUCTS[_gk].name+"!":"");}
  S.visorStash.drops++;
  window._visorLootMsg="📦 "+msg;
  save();visorRefresh();
- setTimeout(function(){window._visorLootMsg="";if(window._visorLive)visorRefresh();},4000);
+ if(window._visorLootT)clearTimeout(window._visorLootT);window._visorLootT=setTimeout(function(){window._visorLootMsg="";if(window._visorLive)visorRefresh();},4000);
 }
 /* ===== AR v133: Strain Hunt / Pull-ups / Strongholds / Street Fights ===== */
 var GENE2KEY={"Frostbite":"frost","Nebula Haze":"nebula","Ember OG":"ember","Ghost Pepper Kush":"ghost"};
@@ -7087,7 +7153,6 @@ var SH_INCOME=25;
 function geneKeyFor(gene){return GENE2KEY[gene]||null;}
 function unlockGene(gene){var k=geneKeyFor(gene);if(!k)return false;if(!S.geneUnlocked)S.geneUnlocked={};if(S.geneUnlocked[k])return false;S.geneUnlocked[k]=true;return true;}
 function strainUnlocked(k){var p=PRODUCTS[k];if(!p)return false;if(p.gene)return !!(S.geneUnlocked&&S.geneUnlocked[k]);return p.tier<=pLevel();}
-function dayStr(d){d=d||new Date();return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();}
 function arPing(title,body){
  if(!S.snoozed){showHeadsUp(title,body);playMsgSound();}
  if(!Array.isArray(S.notifs))S.notifs=[];
@@ -7099,16 +7164,21 @@ function heatDots(){var h=0;try{h=activeHeat();}catch(e){}var n=Math.max(1,Math.
 /* ---- Strain Hunt (SCAN) ---- */
 function huntStart(){
  var n=1+Math.floor(Math.random()*3),plants=[];
+ var o=window._visorOrient,ref=(o&&o.has)?{has:true,alpha:o.alpha,beta:o.beta}:null;
  for(var i=0;i<n;i++){
   var r=Math.random(),gene,rar;
   if(r<0.60){gene="Frostbite";rar="common";}
   else if(r<0.85){gene="Nebula Haze";rar="uncommon";}
   else if(r<0.97){gene="Ember OG";rar="rare";}
   else{gene="Ghost Pepper Kush";rar="LEGENDARY";}
-  plants.push({id:"h"+Date.now()+"_"+i,gene:gene,rar:rar,x:12+Math.floor(Math.random()*72),y:24+Math.floor(Math.random()*44)});
+  var p={id:"h"+Date.now()+"_"+i,gene:gene,rar:rar};
+  if(ref){p.yaw=-38+Math.random()*76;p.pitch=-12+Math.random()*30;}
+  else{p.x=12+Math.floor(Math.random()*72);p.y=24+Math.floor(Math.random()*44);}
+  plants.push(p);
  }
- S.hunt={plants:plants};
+ S.hunt={plants:plants,ref:ref};
  window._visorLootMsg="\uD83D\uDC3E Hunt on — "+n+" rare "+(n>1?"plants":"plant")+" in view. Tap to collect.";
+ if(window._visorLootT)clearTimeout(window._visorLootT);window._visorLootT=setTimeout(function(){window._visorLootMsg="";if(window._visorLive)visorRefresh();},4000);
  save();visorRefresh();
 }
 function huntCollect(id){
@@ -7130,13 +7200,15 @@ function huntCollect(id){
  }
  window._visorLootMsg=msg;
  save();visorRefresh();
+ if(window._visorLootT)clearTimeout(window._visorLootT);window._visorLootT=setTimeout(function(){window._visorLootMsg="";if(window._visorLive)visorRefresh();},4000);
 }
 function huntMarkersHTML(){
  var h="";
  if((S.visorMode||"scan")!=="scan")return h;
  if(S.hunt&&S.hunt.plants&&S.hunt.plants.length){
   h+=S.hunt.plants.map(function(pl){
-   return '<button type="button" class="plant-marker" style="left:'+pl.x+'%;top:'+pl.y+'%" data-act="hunt-collect" data-id="'+pl.id+'">\uD83C\uDF31</button>';
+   var xy=huntPlantXY(pl);
+   return '<button type="button" class="plant-marker" data-act="hunt-collect" data-id="'+pl.id+'" style="left:'+xy.x+'%;top:'+xy.y+'%'+(xy.off?';visibility:hidden':'')+'">\uD83C\uDF31</button>';
   }).join("");
  }else{
   h+='<button type="button" class="hunt-btn" data-act="hunt-start">\uD83D\uDC3E START STRAIN HUNT</button>';
@@ -7168,7 +7240,7 @@ function pullupServe(){
   window._visorLootMsg="⚠️ It's a setup!";
   save();render();return;
  }
- S.stash[p.k]=have-p.g;S.cash+=p.price;S.stats.earned+=p.price;S.stats.deals++;
+ S.stash[p.k]=have-p.g;S.cash+=p.price;S.stats.earned+=p.price;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,p.price);
  dealTerrHeat(p.g,p.g>=5);
  if(!addXP(5))S.msg="Sold "+p.g+"g to "+p.name+" ("+money(p.price)+")";
  showSalePop(p.name,p.g+"g",p.price,Math.round(p.price*0.6));
@@ -7237,7 +7309,7 @@ function startArFight(kind,o){
  o=o||{};var lvl=pLevel();
  var foe=AR_FOES[Math.floor(Math.random()*AR_FOES.length)];
  var max=kind==="raid"?Math.max(30,Math.round(60+10*lvl-8*(((S.strongholds[o.which]||{}).level)||0))):Math.round(40+8*lvl);
- S.arFight={kind:kind,foe:foe,hp:max,max:max,weak:false,log:["A wild "+foe+" appears!"],k:o.k||null,g:o.g||0,price:o.price||0,which:o.which||null,t:Date.now()};
+ S.arFight={kind:kind,foe:foe,hp:max,max:max,weak:false,log:["A wild "+foe+" appears!"],k:o.k||null,g:o.g||0,price:o.price||0,which:o.which||null};
  save();
 }
 function arFightStrike(zone){
@@ -7246,12 +7318,12 @@ function arFightStrike(zone){
  var dmg=wd.dmg,crit=!!wd.crit;
  if(f.weak&&!crit&&Math.random()<0.35){dmg=Math.round(dmg*1.6);crit=true;}
  f.hp-=dmg;
- f.log.push("You hit "+zone+" for "+dmg+(crit?" CRIT!":""));
+ f.log.push("You hit "+zone+" for "+dmg+(crit?" CRIT!":""));if(f.log.length>24)f.log=f.log.slice(-24);
  if(f.hp<=0){winArFight();return;}
  var ed=Math.round(8+Math.random()*6)+Math.floor(pLevel()/2);
  S.hp-=ed;
  f.log.push(f.foe+" hits you for "+ed+".");
- if(S.hp<=0){S.hp=1;loseArFight();return;}
+ if(S.hp<=0){loseArFight();return;}
  save();visorRefresh();
 }
 function arFightWeak(){var f=S.arFight;if(!f)return;f.weak=!f.weak;save();visorRefresh();}
@@ -7264,14 +7336,14 @@ function arFightRun(){
  }
  var ed=Math.round(8+Math.random()*6);S.hp-=ed;
  f.log.push("Couldn't escape — "+f.foe+" hits for "+ed+".");
- if(S.hp<=0){S.hp=1;loseArFight();return;}
+ if(S.hp<=0){loseArFight();return;}
  save();visorRefresh();
 }
 function winArFight(){
  var f=S.arFight;if(!f)return;var now=Date.now();
  if(f.kind==="ambush"){
   var loot=50+Math.floor(Math.random()*101);S.cash+=loot;S.stats.earned+=loot;
-  window._visorLootMsg="\uD83E\uDD4A Setup smashed! Kept your product + looted "+money(loot)+".";
+  window._visorLootMsg="\uD83E\uDD4A Setup smashed! Kept your product + looted "+money(loot)+".";S.visorMode="serve";
  }else{
   var loot2=100+Math.floor(Math.random()*201);S.cash+=loot2;S.stats.earned+=loot2;
   window._visorLootMsg="\uD83D\uDEE1\uFE0F Raid repelled! Turf holds + looted "+money(loot2)+".";
@@ -7302,7 +7374,7 @@ function arTick(now){
   if(now>=S.nextPullupAt&&now>=(S.pullupCooldownUntil||0))pullupSpawn(now);
  }
  if(S.pullup&&now>S.pullup.expiresAt){S.pullup=null;S.pullupDeal=false;save();}
- if(S.nextRaidAt&&now>=S.nextRaidAt)triggerRaid(now);
+ if(S.nextRaidAt&&now>=S.nextRaidAt&&!S.arFight)triggerRaid(now);
  if(S.raidPending&&now>S.raidPending.expiresAt)raidUnanswered(now);
 }
 /* ---- Visor mode panels ---- */
@@ -7361,7 +7433,7 @@ function arFightHTML(){
 }
 
 function battleHTML(){
- var b=S.battle;
+ var b=S.battle;if(!b)return "";
  var h='<div class="battle"><div class="bt-head">COP AMBUSH</div>';
  h+='<div class="brow"><span>Cops</span><div class="bar"><i class="b-cop" style="width:'+Math.round(Math.max(0,b.copHp)/b.copMax*100)+'%"></i></div><b>'+Math.max(0,Math.round(b.copHp))+'</b></div>';
  h+='<div class="brow"><span>You</span><div class="bar"><i class="b-you" style="width:'+Math.round(Math.max(0,Math.min(100,S.hp)))+'%"></i></div><b>'+Math.max(0,Math.round(S.hp))+'</b></div>';
@@ -7753,7 +7825,7 @@ root.addEventListener("click",function(e){
   PKEYS.forEach(function(k){_slk(k,false);});
   GROWKEYS.forEach(function(k){_slk(k,true);});
   if(_sli<1){S.msg="Nothing to sell.";save();render();return;}
-  S.cash+=_slr;S.stats.earned+=_slr;S.stats.deals++;
+  S.cash+=_slr;S.stats.earned+=_slr;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,_slr);
   var _slh=dealerStreakHeat(_sls.di);
   if(!addXP(5))S.msg="Sold the whole stash to "+_sld.name+" for "+money(_slr)+"."+(_slh>0?" Same spot too many times — heat +"+_slh+".":"");
   showSalePop("Entire stash",_sli+" items",_slr,_slp);
@@ -7773,10 +7845,10 @@ root.addEventListener("click",function(e){
   if(!_pla){S.msg="No seeds to plant.";save();render();}
   return;
  }
- if(a==="tab"){if(S.battle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;if(_nt!=="store")S.backtab=_nt;S.tab=_nt;S.view="app";navPush(_nt);ttPushHist();save();render();return;}
+ if(a==="tab"){if(S.battle||S.thiefBattle){S.msg="Finish the fight!";save();render();return;}var _nt=b.dataset.tab;S.tab=_nt;S.view="app";navPush(_nt);ttPushHist();save();render();return;}
  if(a==="openapp"){closeFolder();if(S.battle||S.thiefBattle){S.msg="Finish the fight!";save();render();return;}var _ap=b.dataset.app;S.tab=_ap;S.view="app";if(b.dataset.mv)S.msgView=b.dataset.mv;navPush(_ap);ttPushHist();var _ro=q(".android-recents");if(_ro)_ro.hidden=true;save();render();return;}
- if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle){S.msg="Finish the fight!";save();render();return;}if(S.tab==="tasks"){S.view="home";S.tab=null;S.todoView="tasks";navStack=[];save();render();return;}navPop();save();render();return;}
- if(a==="android-home"){if(S.battle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
+ if(a==="android-back"){var _fvo=q(".hw-folderview");if(_fvo&&!_fvo.hidden){closeFolder();return;}if(editMode){setEditMode(false);return;}if(S.battle||S.thiefBattle){S.msg="Finish the fight!";save();render();return;}if(S.call&&S.call.runnerId){S.call=null;runnerCallTickStop();save();render();return;}if(S.tab==="tasks"){S.view="home";S.tab=null;S.todoView="tasks";navStack=[];save();render();return;}if(S.tab==="deal"&&S.msgView&&S.msgView!=="list"&&S.msgView!=="phonebook"){S.msgView=(S.msgView.indexOf("__runner_")===0)?"phonebook":"list";save();render();return;}if(S.tab==="settings"&&S.settingsView&&S.settingsView!=="list"){S.settingsView="list";delete S.settingstab;save();render();return;}if(S.tab==="deal"&&S.phoneView&&S.phoneView!=="keypad"){S.phoneView="keypad";save();render();return;}if(S.tab==="tasks"&&S.todoView&&S.todoView!=="tasks"){S.todoView="tasks";save();render();return;}if(S.tab==="props"&&S.propView){S.propView=null;S.propSel=null;save();render();return;}navPop();save();render();return;}
+ if(a==="android-home"){if(S.battle||S.thiefBattle){S.msg="Finish the fight!";save();render();return;}S.view="home";save();render();return;}
  if(a==="android-recents"){var _rx=q(".android-recents");if(_rx)_rx.hidden=!_rx.hidden;render();return;}
  if(a==="shade-open"){openShade();return;}
  if(a==="shade-close"){closeShade();return;}
@@ -7805,7 +7877,7 @@ root.addEventListener("click",function(e){
  if(a==="bw-menu"){BWT.menu=!BWT.menu;BWT.switcher=false;render();return;}
  if(a==="bw-refresh"){BWT.menu=false;render();return;}
  if(a==="bw-home"){bwNav("https://darkweb.home");render();return;}
- if(a==="bw-close"){S.view="home";BWT.menu=false;BWT.switcher=false;save();render();return;}
+ if(a==="bw-close"){S.view="home";S.tab=null;BWT.menu=false;BWT.switcher=false;save();render();return;}
  if(a==="bw-camt"){S.cryptoAmt=Math.max(100,(S.cryptoAmt||100)+(+b.dataset.v||0));save();render();return;}
  if(a==="bw-buycrypto"){var _ca=S.cryptoAmt||100;if(S.cash>=_ca){S.cash-=_ca;S.crypto=(S.crypto||0)+_ca/100;S.msg="Bought "+(_ca/100).toFixed(2)+" TerpCoin.";}else{S.msg="Not enough cash.";}save();render();return;}
  if(a==="bw-sellcrypto"){var _tc=S.crypto||0;if(_tc>0){var _val=Math.floor(_tc*100);S.crypto=0;S.cash+=_val;S.msg="Sold crypto for "+money(_val)+".";}else{S.msg="No crypto to sell.";}save();render();return;}
@@ -7834,13 +7906,13 @@ root.addEventListener("click",function(e){
   }
   return;
  }
- if(a==="buyseed"){var k=b.dataset.strain;if(strainUnlocked(k)&&S.cash>=PRODUCTS[k].seed){S.cash-=PRODUCTS[k].seed;S.seeds[k]++;S.msg="Bought "+PRODUCTS[k].name+" seeds.";save();render();}return;}
+ if(a==="buyseed"){var k=b.dataset.strain;if(strainUnlocked(k)&&S.cash>=PRODUCTS[k].seed){S.cash-=PRODUCTS[k].seed;S.seeds[k]=(S.seeds[k]||0)+1;S.msg="Bought "+PRODUCTS[k].name+" seeds.";save();render();}return;}
  if(a==="autoplant"){doAutoPlant(b.dataset.strain);return;}
  if(a==="buyfert"){if(S.cash>=FERT_COST){S.cash-=FERT_COST;S.fert++;S.msg="Fertilizer stocked.";save();render();}return;}
  if(a==="buypapers"){if(S.cash>=PAPER_COST){S.cash-=PAPER_COST;S.papers+=PAPER_PACK;S.msg="Bought "+PAPER_PACK+" rolling papers.";save();render();}return;}
- if(a==="buyduffel"){var ti=DUFFEL.indexOf(S.stashCap);if(ti<DUFFEL.length-1){var nc=DUFFEL[ti+1];if(S.cash>=DUFFEL_COST[nc]){S.cash-=DUFFEL_COST[nc];S.stashCap=nc;S.msg="Duffel upgraded — carry "+nc+"g now.";save();render();}}return;}
+ if(a==="buyduffel"){var ti=DUFFEL.indexOf(S.stashCap);if(ti<0)ti=0;if(ti<DUFFEL.length-1){var nc=DUFFEL[ti+1];if(S.cash>=DUFFEL_COST[nc]){S.cash-=DUFFEL_COST[nc];S.stashCap=nc;S.msg="Duffel upgraded — carry "+nc+"g now.";save();render();}}return;}
  if(a==="buyprop"){var pr2=PROPS.filter(function(x){return x.id===b.dataset.prop;})[0];var owned=S.props.some(function(x){return x.id===pr2.id;});var _tc=pr2.cost/100;if(pr2&&!owned&&pr2.tier<=pLevel()&&(S.crypto||0)>=_tc){S.crypto-= _tc;S.props.push(mkProp(pr2.id));S.msg="New property: "+pr2.name+"! "+pr2.desc;save();render();}return;}
- if(a==="buyupgrade"){var _ur=parseInt(b.dataset.rows,10)||0;var _uc=_ur===3?2500:(_ur===4?7500:0);var _uo=(S.propUpgrades&&S.propUpgrades.tent)||1;var _unx=_uo===1?3:(_uo===3?4:0);if(_ur===_unx&&_uc>0&&S.cash>=_uc){S.cash-=_uc;S.propUpgrades.tent=_ur;var _up=_ur===3?9:12;S.msg="Grow Tent upgraded to "+_ur+" rows ("+_up+" pots)!";save();render();}return;}
+ if(a==="buyupgrade"){var _ur=parseInt(b.dataset.rows,10)||0;var _uc=_ur===3?2500:(_ur===4?7500:0);var _uo=(S.propUpgrades&&S.propUpgrades.tent)||1;var _unx=_uo===1?3:(_uo===3?4:0);if(_ur===_unx&&_uc>0&&S.cash>=_uc){S.cash-=_uc;S.propUpgrades.tent=_ur;var _up=_ur===3?9:12;var _tp=(S.props||[]).filter(function(x){return x&&x.id==="tent";})[0];if(_tp){while(_tp.slots.length<_up)_tp.slots.push(null);}S.msg="Grow Tent upgraded to "+_ur+" rows ("+_up+" pots)!";save();render();}return;}
  if(a==="bank-amt"){BANKAMT=parseInt(b.dataset.amt,10)||1000;render();return;}
  if(a==="bank-dep"){if(!S.bank)S.bank={bal:0,pendInt:0,tx:[]};var _da=Math.min(BANKAMT,S.cash);_da=Math.floor(_da);if(_da>=1&&S.cash>=_da){S.cash-=_da;S.bank.bal=Math.round((S.bank.bal+_da)*100)/100;pushBankTx("dep",_da);S.msg="Deposited "+money(_da)+" to your savings.";save();render();}else{S.msg="Nothing to deposit.";save();render();}return;}
  if(a==="bank-wd"){if(!S.bank)S.bank={bal:0,pendInt:0,tx:[]};var _bb=S.bank.bal||0;var _wa=Math.min(BANKAMT,_bb);_wa=Math.floor(Math.min(_wa,_bb));if(_wa>=1&&_bb>=_wa){S.bank.bal=Math.round((_bb-_wa)*100)/100;S.cash+=_wa;pushBankTx("wd",_wa);S.msg="Withdrew "+money(_wa)+" from your savings.";save();render();}else{S.msg="Nothing to withdraw.";save();render();}return;}
@@ -7894,7 +7966,7 @@ root.addEventListener("click",function(e){
  if(a==="runner-bail"){bailRunner(b.dataset.id);return;}
  if(a==="runner-confront"){confrontRunner(b.dataset.id);var _rc3=S.call&&runnerById(S.call.runnerId);if(_rc3)_rc3._callLine=null;return;}
  if(a==="msg-open"){var _mc=b.dataset.c;S.msgView=_mc;save();render();setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);return;}
- if(a==="heads-up-open"){hideHeadsUp();var _hn=b.dataset.c;if(_hn){S.tab="deal";S.view="app";S.msgView=_hn;navPush("deal");save();render();setTimeout(function(){var _pp2=document.querySelector(".pane-deal");if(_pp2)_pp2.scrollTop=_pp2.scrollHeight;},100);}return;}
+ if(a==="heads-up-open"){hideHeadsUp();var _hn=b.dataset.c;if(_hn==="🐀 Roach")_hn="__roach__";if(_hn){S.tab="deal";S.view="app";S.msgView=_hn;navPush("deal");save();render();setTimeout(function(){var _pp2=document.querySelector(".pane-deal");if(_pp2)_pp2.scrollTop=_pp2.scrollHeight;},100);}return;}
  if(a==="msgsound"){S._suppressNotif=true;S.msgSound=(b.dataset.v==="1");save();render();return;}
  if(a==="locknotif"){S._suppressNotif=true;if(!S.lockNotif||typeof S.lockNotif!=="object")S.lockNotif={messages:true,roach:false,system:false,phone:false};S.lockNotif[b.dataset.k]=(b.dataset.v==="1");save();render();return;}
  if(a==="phonetoggle"){S._suppressNotif=true;var _k=b.dataset.k;S[_k]=(b.dataset.v==="1");save();render();return;}
@@ -7936,9 +8008,10 @@ root.addEventListener("click",function(e){
   if(!S.job&&!S.cookQueue.length){
    /* lab free: a timed minigame is about to start and it only renders in the
       lab tab — take the player there first (v135 removed this and the minigame
-      ran invisibly at half yield). */
-   S.tab="cook";S.cookview="lab";S.view="app";
-   if(typeof navPush==="function")navPush("cook");
+      ran invisibly at half yield). Only navigate when the cook can actually
+      start; otherwise startCook reports why and we stay put. */
+   if(canCook(_ck)){S.tab="cook";S.cookview="lab";S.view="app";
+    if(typeof navPush==="function")navPush("cook");}
   }
   /* lab busy: startCook queues it; no navigation needed, stay in To Do. */
   startCook(_ck);
@@ -7954,8 +8027,9 @@ root.addEventListener("click",function(e){
   _ready.sort(function(a,b){return b.val-a.val;});
   var _n=0;
   /* fulfill from highest index down so splicing doesn't shift */
-  _ready.sort(function(a,b){return b.i-a.i;}).forEach(function(r){doFulfillTaskSilent(r.i);_n++;});
-  if(_n>0){S.msg="Fulfilled "+_n+" order"+(_n>1?"s":"")+".";save();render();}
+  _ready.sort(function(a,b){return b.i-a.i;}).forEach(function(r){if(S.thiefBattle)return;if(doFulfillTaskSilent(r.i))_n++;});
+  if(S.thiefBattle){save();render();}
+  else if(_n>0){S.msg="Fulfilled "+_n+" order"+(_n>1?"s":"")+".";save();render();}
   else{S.msg="No orders ready to fulfill.";save();render();}
   return;
  }
@@ -7967,7 +8041,7 @@ root.addEventListener("click",function(e){
    if(contactHave(_o)>=_o.g)return; /* already ready */
    if(t.kind==="joint"){
     var _nb=Math.ceil(t.g/2),_haveBud=S.stash[t.k]||0,_havePaper=S.papers||0;
-    if(_haveBud>=_nb&&_havePaper>=t.g*2){doRoll(t.k,_nb);_did++;}
+    if(_haveBud>=_nb&&_havePaper>=t.g*2&&strainUnlocked(t.k)&&stashTotal()+_nb<=S.stashCap){doRoll(t.k,_nb);_did++;}
    }else if(!RECIPES[t.k]){
     /* raw bud: buy seed only if there's an empty slot AND we don't already hold one */
     var _sp=PRODUCTS[t.k]?PRODUCTS[t.k].seed:0;
@@ -8027,7 +8101,7 @@ root.addEventListener("click",function(e){
        }
      }catch(e){}
      saveOnHide();location.href=location.pathname+"?cb="+Date.now();return;}
- if(a==="roach-view"){S.lastVer=GAME_VER;S.tab="settings";S.settingsView="about";delete S.settingstab;S.view="app";navPush("settings");save();render();return;}
+ if(a==="roach-view"){S.tab="settings";S.settingsView="about";delete S.settingstab;S.view="app";navPush("settings");save();render();return;}
  if(a==="settingstab"){S.settingstab=b.dataset.t;save();render();return;}
  if(a==="prestigepick"){S._prestigePick=b.dataset.k;save();render();return;}
  if(a==="prestige-yes"){
@@ -8111,7 +8185,7 @@ root.addEventListener("click",function(e){
  if(a==="settheme"){S._suppressNotif=true;var _th=b.dataset.theme;S.theme=(_th==="light")?"light":"dark";save();render();return;}
  if(a==="setrows"){S._suppressNotif=true;var _sr=+b.dataset.rows;if(_sr===2||_sr===3||_sr===4){S.homeRows=_sr;save();layoutHome();render();}return;}
  if(a==="seticonstyle"){S._suppressNotif=true;var _ss=+b.dataset.s;if(_ss>=0&&_ss<=4){S.iconStyle=_ss;save();layoutHome();render();}return;}
- if(a==="msg-back"){S.msgView=(S.msgView&&S.msgView.indexOf("__runner_")===0)?"phonebook":"list";save();render();ttMsgListToTop();return;}
+ 
  if(a==="setlabelcolor"){S._suppressNotif=true;var _lc2=b.dataset.c;if(_lc2==="white"||_lc2==="black"){S.labelColor=_lc2;save();render();}return;}
  if(a==="gofullscreen"){
   try{
@@ -8156,7 +8230,7 @@ root.addEventListener("click",function(e){
   _wimg.onerror=function(){S.msg="No image found at that URL.";save();render();};
   _wimg.src=_wu;return;}
  if(a==="wp-reset"){S.wallpaper="";S.msg="Wallpaper reset.";save();render();return;}
- if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk].tier<=pLevel()&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
+ if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk]&&KITS[kk].tier<=pLevel()&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
  if(a==="buyweapon"){var wkey=b.dataset.w,wu=WEAPONS[wkey];if(wkey&&wkey!=="fists"&&wu&&wu.tier<=pLevel()&&!(S.weapons&&S.weapons[wkey])&&S.cash>=wu.cost){S.cash-=wu.cost;S.weapons[wkey]=true;S.msg=wu.name+" purchased — best weapon is used in fights.";save();render();}return;}
  if(a==="buygear"){var gk=b.dataset.g,g=GEAR[gk];if(gk&&g&&g.tier<=pLevel()&&S.gear.indexOf(gk)<0&&S.cash>=g.cost){S.cash-=g.cost;S.gear.push(gk);S.equipped[g.slot]=gk;S.msg=g.name+" purchased & equipped.";save();render();}return;}
  if(a==="equipgear"){var ek=b.dataset.g,eg=GEAR[ek];if(ek&&eg&&S.gear.indexOf(ek)>=0){S.equipped[eg.slot]=ek;var _fs=gearSetEquipped();S.msg=eg.name+" equipped."+(_fs?" "+GEAR_SETS[_fs].name+" set complete — aura active!":"");save();render();}return;}
@@ -8167,7 +8241,7 @@ root.addEventListener("click",function(e){
  if(a==="brun"){battleRun();return;}
  if(a==="heal"){
   var ham=b.dataset.amt,miss2=Math.max(0,100-S.hp);
-  var need=ham==="full"?miss2:Math.min(25,miss2),cost=Math.ceil(need*2);
+  var need=ham==="full"?miss2:Math.min(25,miss2),cost=Math.ceil(need*clinicRate());
   if(need>0&&S.cash>=cost){S.cash-=cost;S.hp=Math.min(100,S.hp+need);S.msg="Patched up +"+Math.round(need)+" HP.";save();render();}
   return;
  }
@@ -8893,7 +8967,6 @@ tick();
 /* AirDrop migration: show popup for any pending contacts from old saves */
 setTimeout(function(){try{if((S.pendingContacts||[]).length)showAirdropPopup();}catch(e){}},1500);
 setInterval(tick,15000);
-setInterval(tickerTick,50);
 setInterval(pump,150);
 
 /* ---------- Grow widget bridge (Android home screen widget) ---------- */
@@ -9077,9 +9150,11 @@ function runnerTraitFor(type){
  var all=["networker","ghost","hustler","steady"];
  return all[(Math.random()*all.length)|0];
 }
-function runnerAskEligible(c){
+function runnerAskEligible(c,now){
  if(!c||c.fixer||c.brokenUp||c.isThief)return false;
  if((c.loyalty||0)<70)return false;
+ now=(typeof now==="number")?now:Date.now();
+ if(now-(c.lastFlakeAt||0)<=24*3600000)return false;
  if(!(S.regulars&&S.regulars[c.name]>=8))return false;
  if(S.runners&&S.runners.some(function(r){return r.name===c.name;}))return false;
  return true;
@@ -9167,28 +9242,33 @@ function runnerRobbed(r,now){
  if(r.trust<=0)runnerQuit(r,"Trust hit zero.");
 }
 function runnerQuit(r,reason){
- for(var k in (r.stock||{}))S.stash[k]=(S.stash[k]||0)+(r.stock[k]||0);
+ var _ql=0;
+ for(var k in (r.stock||{}))_ql+=stashAddCapped(k,r.stock[k]||0);
+ (r.sales||[]).forEach(function(s2){_ql+=stashAddCapped(s2.k,s2.g||0);});
+ if(r.holding>0){S.cash+=Math.floor(r.holding);r.holding=0;}
  S.runners=S.runners.filter(function(x){return x.id!==r.id;});
  if(S.call&&S.call.runnerId===r.id)S.call=null;
- pushContactNotif("🚪 "+r.name+" quit. "+(reason||""));
+ pushContactNotif("🚪 "+r.name+" quit. "+(reason||"")+(_ql>0?" ("+_ql+"g lost — Duffel full.)":""));
 }
 function tickRunners(now){
  if(!S.runners||!S.runners.length)return;
- for(var i=0;i<S.runners.length;i++){
-  var r=S.runners[i];
+ var _rl=S.runners.slice();
+ for(var i=0;i<_rl.length;i++){
+  var r=_rl[i];
   if(!r.sales)r.sales=[];
   if(!r.stock)r.stock={};
   if(r.darkUntil&&now>=r.darkUntil){r.darkUntil=0;r.robbedAt=0;}
   var st=runnerState(r,now);
   if(st==="dry"){
-   if(!r.drySince)r.drySince=now;
+   if((r.sales||[]).length)r.drySince=0;
+   else if(!r.drySince)r.drySince=now;
    else if(now-r.drySince>=24*3600000){r.drySince=now;r.trust=Math.max(0,r.trust-5);if(r.trust<=0){runnerQuit(r,"Left dry too long.");continue;}}
   }else r.drySince=0;
   if(r.sales.length){
    r.sales.sort(function(a,b){return a.endsAt-b.endsAt;});
    var done=[],j;
    for(j=r.sales.length-1;j>=0;j--)if(now>=r.sales[j].endsAt)done.unshift(r.sales.splice(j,1)[0]);
-   for(j=0;j<done.length;j++)completeRunnerSale(r,done[j],now);
+   for(j=0;j<done.length;j++){completeRunnerSale(r,done[j],now);if(S.runners.indexOf(r)<0)break;}
   }
  }
 }
@@ -9217,7 +9297,7 @@ function collectRunner(id){
  save();render();
 }
 function restockRunner(id,k,g){
- var r=runnerById(id);if(!r||!PRODUCTS[k])return;
+ var r=runnerById(id);if(!r||!PRODUCTS[k]){S.msg="You need 10g+ of a product in your stash to restock.";save();render();return;}
  g=Math.max(10,Math.floor(g||0));
  var have=(S.stash[k]||0);
  if(have<g){S.msg="Not enough "+PRODUCTS[k].name+" in stash.";save();render();return;}
@@ -9246,10 +9326,12 @@ function toggleRunnerAuto(id){
 }
 function fireRunner(id){
  var r=runnerById(id);if(!r)return;
- for(var k in (r.stock||{}))S.stash[k]=(S.stash[k]||0)+(r.stock[k]||0);
+ var _fl=0;
+ for(var k in (r.stock||{}))_fl+=stashAddCapped(k,r.stock[k]||0);
+ (r.sales||[]).forEach(function(s2){_fl+=stashAddCapped(s2.k,s2.g||0);});
  S.runners=S.runners.filter(function(x){return x.id!==r.id;});
  if(S.call&&S.call.runnerId===r.id)S.call=null;
- S.msg=r.name+" is out. Stock returned to your stash.";
+ S.msg=r.name+" is out. Stock returned to your stash."+(_fl>0?" ("+_fl+"g lost — Duffel full.)":"");
  save();render();
 }
 function bailRunner(id){
@@ -9398,7 +9480,7 @@ function runnerCallHTML(r){
  }
  return h;
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickGo:tickGo,tickNext:tickNext,tickToggleSpeed:tickToggleSpeed,tickerSpeed:tickerSpeed,GAME_VER:GAME_VER,GAME_UPDATED:GAME_UPDATED,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine};
 })();
 </script>
 <style>
@@ -9455,7 +9537,7 @@ function ttIsAtHomeScreen(){
     if(stack&&stack.length>0)return false;
     var S=(typeof window.ttGameState==='function')?window.ttGameState():null;
     if(!S)return true;
-    return S.view==='home'||S.view==='lock';
+    return S.view==='home';
   }catch(e){return true;}
 }
 function ttMsgListToTop(){try{var p=document.querySelector('.pane-deal');if(p)p.scrollTop=0;}catch(e){}}
@@ -9479,44 +9561,38 @@ function ttGoBack(){
     var S=(typeof window.ttGameState==='function')?window.ttGameState():null;
     if(!S)return;
     // First: handle in-app sub-navigation (go back one level within the app)
-    // Messages/Deal: conversation -> list
-    if(S.msgView&&S.msgView!=='list'&&S.msgView!=='phonebook'){
+    // Messages/Deal: conversation -> list (deal tab only)
+    if(S.tab==='deal'&&S.msgView&&S.msgView!=='list'&&S.msgView!=='phonebook'){
       S.msgView=(S.msgView.indexOf('__runner_')===0)?'phonebook':'list';
       if(typeof window.ttSave==='function')window.ttSave();
       if(typeof window.ttRender==='function')window.ttRender();
       ttMsgListToTop();
       return;
     }
-    // Settings: sub-view -> list
-    if(S.settingsView&&S.settingsView!=='list'){
+    // Settings: sub-view -> list (settings tab only)
+    if(S.tab==='settings'&&S.settingsView&&S.settingsView!=='list'){
       S.settingsView='list';
       delete S.settingstab;
       if(typeof window.ttSave==='function')window.ttSave();
       if(typeof window.ttRender==='function')window.ttRender();
       return;
     }
-    // Phone: sub-view -> keypad (default)
-    if(S.phoneView&&S.phoneView!=='keypad'){
+    // Phone: sub-view -> keypad (default, deal tab phonebook only)
+    if(S.tab==='deal'&&S.phoneView&&S.phoneView!=='keypad'){
       S.phoneView='keypad';
       if(typeof window.ttSave==='function')window.ttSave();
       if(typeof window.ttRender==='function')window.ttRender();
       return;
     }
-    // To Do: sub-view -> tasks (default)
-    if(S.todoView&&S.todoView!=='tasks'){
+    // To Do: sub-view -> tasks (default, tasks tab only)
+    if(S.tab==='tasks'&&S.todoView&&S.todoView!=='tasks'){
       S.todoView='tasks';
       if(typeof window.ttSave==='function')window.ttSave();
       if(typeof window.ttRender==='function')window.ttRender();
       return;
     }
-    // Notes: sub-view -> folders (default)
-    if(false){
-      if(typeof window.ttSave==='function')window.ttSave();
-      if(typeof window.ttRender==='function')window.ttRender();
-      return;
-    }
-    // Properties: detail -> list
-    if(S.propView){
+    // Properties: detail -> list (props tab only)
+    if(S.tab==='props'&&S.propView){
       S.propView=null;S.propSel=null;
       if(typeof window.ttSave==='function')window.ttSave();
       if(typeof window.ttRender==='function')window.ttRender();
@@ -9542,6 +9618,7 @@ function ttGoBack(){
     }catch(e){}
     S.view='home';
     try{ S.tab=null; }catch(e){}
+    try{var _ro2=document.querySelector('.android-recents');if(_ro2)_ro2.hidden=true;}catch(e){}
     if(typeof window.ttSave==='function'){try{window.ttSave();}catch(e){}}
     if(typeof window.ttRender==='function'){try{window.ttRender();}catch(e){}}
   }catch(e){}
@@ -9553,9 +9630,10 @@ function ttGoBack(){
 function ttGetNotificationCount(){
   try{
     var uc=0;
-    if(typeof S!=='undefined'&&S.contacts){
-      S.contacts.forEach(function(c){uc+=(c.unreadCount||0);});
-      if(S.roachUnread>0)uc+=S.roachUnread;
+    var G=(typeof window.ttGameState==='function')?window.ttGameState():null;
+    if(G&&G.contacts){
+      G.contacts.forEach(function(c){uc+=(c.unreadCount||0);});
+      if(G.roachUnread>0)uc+=G.roachUnread;
     }
     return uc;
   }catch(e){return 0;}
