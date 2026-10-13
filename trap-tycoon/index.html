@@ -2319,6 +2319,13 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 .clog-head b{font-size:16px;color:#e5484d;letter-spacing:.5px}
 /* phone-style settings list */
 .set-list{background:var(--hatch-widget-surface);border-radius:12px;overflow:hidden;margin:0 2px}
+.sim-card{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:12px;padding:12px 14px;margin:0 2px 10px}
+.sim-card.on{border-color:#34c759}
+.sim-head{display:flex;align-items:center;justify-content:space-between;font-size:16px;margin-bottom:4px}
+.sim-active{font-size:11px;font-weight:800;letter-spacing:1px;color:#34c759}
+.sim-btns{display:flex;gap:8px;margin-top:10px}
+.sim-btns .dchip{flex:1;justify-content:center}
+.sim-danger{background:#ef4444!important;border-color:#ef4444!important;color:#fff!important}
 .set-row{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;background:transparent;border:0;border-bottom:1px solid var(--hatch-widget-border);color:var(--hatch-widget-text);font-size:16px;cursor:pointer;text-align:left}
 .set-row:last-child{border-bottom:0}
 .set-row:active{background:var(--hatch-widget-surface-muted)}
@@ -2662,13 +2669,13 @@ var STRAIN_IMGS={
 var GROWKEYS=["sour","og","haze","bluedream","maui","northern","ak47","frost","nebula","ember","ghost"];
 var PROPS=[
  {id:"tent",name:"Grow Tent",cost:0,slots:3,tier:1,desc:"Your closet setup. 3 grow slots."},
- {id:"trap",name:"Trap House",cost:20000,slots:6,tier:2,desc:"6 grow slots. Requires Level 2."},
- {id:"warehouse",name:"Warehouse",cost:67500,slots:10,tier:3,desc:"10 grow slots. Requires Level 3."},
- {id:"mansion",name:"Mansion Lab",cost:200000,slots:16,tier:4,desc:"16 grow slots. Requires Level 4."},
- {id:"bunker",name:"Bunker",cost:500000,slots:20,tier:5,desc:"20 grow slots. Requires Level 5."},
- {id:"island",name:"Island Compound",cost:1250000,slots:24,tier:6,desc:"24 grow slots. Requires Level 6."},
- {id:"cartel",name:"Cartel Empire",cost:3250000,slots:28,tier:7,desc:"28 grow slots. Requires Level 7."},
- {id:"palace",name:"Emerald Palace",cost:6500000,slots:34,tier:8,desc:"34 grow slots. Requires Level 8."}
+ {id:"trap",name:"Trap House",cost:20000,slots:6,tier:2,desc:"6 grow slots. Requires Level 3."},
+ {id:"warehouse",name:"Warehouse",cost:67500,slots:10,tier:3,desc:"10 grow slots. Requires Level 6."},
+ {id:"mansion",name:"Mansion Lab",cost:200000,slots:16,tier:4,desc:"16 grow slots. Requires Level 8."},
+ {id:"bunker",name:"Bunker",cost:500000,slots:20,tier:5,desc:"20 grow slots. Requires Level 11."},
+ {id:"island",name:"Island Compound",cost:1250000,slots:24,tier:6,desc:"24 grow slots. Requires Level 13."},
+ {id:"cartel",name:"Cartel Empire",cost:3250000,slots:28,tier:7,desc:"28 grow slots. Requires Level 16."},
+ {id:"palace",name:"Emerald Palace",cost:6500000,slots:34,tier:8,desc:"34 grow slots. Requires Level 19."}
 ];
 var KITS={
  butter:{name:"Butter Kit",cost:40,tier:2,desc:"For baking Edibles"},
@@ -2697,7 +2704,7 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v140";
+var GAME_VER="v142";
 var ROACH_IMG="data:image/webp;base64,UklGRr4GAABXRUJQVlA4ILIGAADwJACdASqAAIAAPlEijkWjoaETCK4kOAUEtICd6Vxf5LbW38r0oRLsJbuNa8xD5ZzXAGiPFaGBHrJAAEUee7tMBMt9YoYtuKD9d7b/cpjfTSoXgQpp8vZUuIedJjj5xwGN4sDIpDVPgg8k6Fp6jAWhEXUIyrasiUtUEDoxZ6Yv+zRoA36d5LZ28xDACykaidnvIz7IT8dRrjI+cO2AVcx/eD9MPVIHbXGf/4Nmlmwbajr743dcZ4GvGLGm2c1Bystpm2NGr0pU3SoxBBNM8YLxyurkYv/ZvR4Y4DxHQHUV9/D2rW+n1++3ebLqv8kuEV9ygdShMyE3ULou9ksc0xgMMBhv8Sj90TcrL6DkLBv4sjSTsdRxeRZSzZmneTXCE1FCxHo2rD5avzg55qKeyTUgAP7+BtGFzFYxFsdLaFrja39Fq14y/19bA8XfI5H9/mKCzEXQ9n9xDdlDTaaTUF4GFcaXmc4nly+OJfyqe0pQILIamLEwYrGngbqsvtRC4Kjn1S5C6DhkkI4q5rC/+Iavj6Ip6ic0gJou7xf5QFyPvnSnvbfNuxNCNV7lHxssInMLK2T//fCb/Fjn6Srx9y8wGQxL7d4XXFNMWwHKijcYrPrZrKCXi2+mqLhyniEPOKa9BQaC4Y+8TupmjOZiFPmkSHSXYjnd/uglMGAE+x3WnIPMx93p7d/f8/3XwhtKXSnGHHWs/pcY2eKQ+mzQeFzd58Qnu0UqxmVkm/1Jh4hoyN4ruTzzidgdpmiA5o5rnj5OoLTadYGn5bpGYxweQumzsceRzBBRGjXETFB4NeLZCabMzk9eFzjK/MXH/WmwkKNElG+K+tou3N939/0iPs9b8AupGMLHACH8B4Rcsxjx2HVQDovCyBrzcitmVTDZqM7TWsstPaby+b+HquIpE5T3f6z2WLMxJdPwC8TmTgVjczNV8EDN3ah4VJh2jq39vG5Cahe7XM8HOCaDifQZL58i6IdTlEZktr0dUJk2Bppr2efYa7gCdoOKLXl9YKnwBcZxB+kQbGcNgNGknFLkKNwyWWH19YXMA6XsZN/vLsISzTNQQf1hirYYap9QKd9K7cgRu7yrkDJN1g+rfUnAUkm28QJYoPaIQE0cH2co2Y1LDhV9uALHQJwMfJDzRO8J7kaftrRHp2MBDDbrMitwfRaMAo/DCcLqdkGehS8OrlgtMZGmS9PtLzKbeVisbSoKgGl8bjkwSvfJBqGh9gAdqqSahxMG7wFw4pTAbbmFTdb/4r3tm36FecvF6BL8Ix8y+GpPg4h2g2bPJt3N1XTF2ovm7nsgPr6ioROQZfVD7hkYRoZ+aZFFFsxViQBT419x4s/5lt57WO+w6Wdqa/KezDpFFPaLWfAfRkoPU20+n7Kiy3qNxv/sH3pXH2oCdpSZ53P4ouWpQKpQp0MDmrH3ws7HeGFjKCIze9GOB4vVNLGRWawP/YOH4vn4FzO1ZAsz9OTPOq+V5xlaVn4S4dLtXCnMZR33gCCjW39J+37bpaUzd/RjN9/nd8gBLAHju934PXcyqnsm8ZwwlPEKGdUs/+TI0PbXtUHmaJ+D0RejLkrHgl7VExc7u7z6zFa2/h6RAXfKJhM68LopUkUCK/nBQpVGiPZpbJHxmllOn55TdnRGXkp/ZT31VVaSn/grDWkwHrXlKYCZaP1xy2wlTby3HuHIHo90BuJP+7FPtR8GkV6Y+Ys0+uNJce71ke3mGcideMvTpWTyCeJ7ixavjozMw/jgKuEH5Yw4Qi16dcZC+YxrKTgtRH43JQYD1zzsECugRoUpwglmKVVFmj1BAG0c7BzcbuISlCP6NGW5FLgAgc2kWMuMFQNbkInEoENRxiDFjPoetepeuwpDQWC0cwcmlo76iNZPLcIxkPF/lqSgphvUNTheK3MCS5nhv7RMTVeteIAQ1Gi7qbd019GNWiVHToa8zB9r/HFcL+uyjPhSiZdunz7dc0IRI1c6D9YkHrNxgGS1Xosy5//TfsjZkqXhNeYLo8n6xo7xeKU+eBiYxpCE+TXJxnWbg3muCAm+WCHopi5LtSbMuCyiBacqSKYa9kKRq3vUlY+EtWHwD1lRKuFbxs0nZFIqCUeVrgWLptRtEdiJ8mCGkj4VCDvvofTb5bjUdhLoQCrmsoh/fbtyeRLWTDf0x7C3vojL+LCUz2fGsFrVOSLJJq6nY+rLdwvG3IQcZKGuxWy/OrChPCd75CuOzHaux+coDCq3Z33ZYws1AwzCgIjz3OHBb97sM7luVvmNaZxL05XGNMcXlT+LnCQDUAAA";
 var CHANGELOG=[
    {v:"BETA-0.018.11",ts:"Oct 5, 2026 \u00b7 7:30 PM",t:"Terminal launch",d:"PC players can now launch via plug.bat in CMD \u2014 terminal boot sequence, plug code unlock. Mobile untouched."},
@@ -2760,13 +2767,13 @@ var GAME_FEATURES=[
 ];
 var LEVEL_TIPS={
  1:["Water often — dry plants stall completely","Harvest at 100% for the full yield","Sell Sour D to Corner Carl and build your cash","The Stash tab holds every bag you own"],
- 2:["Roll 1g of bud into 2 joints in the Stash tab","Rooftop Rita pays more — always compare dealers","Buy the Knife before heat gets you ambushed","Trap House doubles your grow slots to 6"],
- 3:["Moonrocks cook up big — try the lab","Warehouse: 10 grow slots","Keep lab kits stocked for every cook job"],
- 4:["Acid is high value, high heat — plan the cook","Check Alley Al's prices before every sale","Mansion Lab: 16 grow slots","The Pistol outclasses the Knife in a fight"],
- 5:["DMT sells premium — guard that stash","Bunker: 20 grow slots","Bribe early when the heat starts climbing"],
- 6:["White Widow is top-shelf bud","Island Compound: 24 grow slots","The SMG handles the worst ambushes","Deli Dave's prices are worth comparing"],
- 7:["Dragon's Breath: the final cook","Cartel Empire: 28 slots of endgame growing","Gorilla Glue is the highest bud tier"],
- 8:["Triple Stack E is the best money in the game","Emerald Palace: 34 grow slots","Stock Pill Press Kits for every Ecstasy cook"]
+ 3:["Roll 1g of bud into 2 joints in the Stash tab","Rooftop Rita pays more — always compare dealers","Buy the Knife before heat gets you ambushed","Trap House doubles your grow slots to 6"],
+ 6:["Moonrocks cook up big — try the lab","Warehouse: 10 grow slots","Keep lab kits stocked for every cook job"],
+ 8:["Acid is high value, high heat — plan the cook","Check Alley Al's prices before every sale","Mansion Lab: 16 grow slots","The Pistol outclasses the Knife in a fight"],
+ 11:["DMT sells premium — guard that stash","Bunker: 20 grow slots","Bribe early when the heat starts climbing"],
+ 13:["White Widow is top-shelf bud","Island Compound: 24 grow slots","The SMG handles the worst ambushes","Deli Dave's prices are worth comparing"],
+ 16:["Dragon's Breath: the final cook","Cartel Empire: 28 slots of endgame growing","Gorilla Glue is the highest bud tier"],
+ 19:["Triple Stack E is the best money in the game","Emerald Palace: 34 grow slots","Stock Pill Press Kits for every Ecstasy cook"]
 };
 var DEF_SPEEDS={hash:50,edibles:80,moonrock:110,acid:110,dmt:110,dragon:110,estack:110,edouble:110,etriple:110};
 function speedOf(k){var v=S.speeds&&S.speeds[k];return SPEED_OPTS.indexOf(v)>=0?v:DEF_SPEEDS[k];}
@@ -2822,33 +2829,60 @@ var GEAR_SETS={
 var GEAR_SLOTS=["head","body","feet","chain"];
 var GKEYS=["cb_head","cb_body","cb_feet","cb_chain","ts_head","ts_body","ts_feet","ts_chain","kp_head","kp_body","kp_feet","kp_chain","ej_head","ej_body","ej_feet","ej_chain"];
 var DEALER_TIER=[1,2,4,6];
-var XP_TH=[0,200,500,900,1400,2000,2700,3500];
+/* ===== PROGRESSION (v142): ONE tier->level map drives every unlock =====
+   Content keeps its `tier` (1-8); TIER_LEVEL says which player level each
+   tier lands on. The climb is elongated to 20 levels; expansions = add a
+   tier (or move a tier's level) HERE, nowhere else. Every gate must go
+   through levelForTier()/tierUnlocked() — never compare tier to pLevel(). */
+var TIER_LEVEL={1:1,2:3,3:6,4:8,5:11,6:13,7:16,8:19};
+var MAX_LEVEL=20;
+var OLD_XP_TH=[0,200,500,900,1400,2000,2700,3500]; /* pre-v142 8-level curve — grandfathering only */
+var XP_TH=[0,60,160,300,510,820,1250,1860,2690,3780,5180,6980,9220,11970,15300,19260,23940,29380,35650,42820];
 function lvl(xp){xp=xp||0;var L=1;for(var i=0;i<XP_TH.length;i++)if(xp>=XP_TH[i])L=i+1;return L;}
+function lvlOn(xp,th){xp=xp||0;var L=1;for(var i=0;i<th.length;i++)if(xp>=th[i])L=i+1;return L;}
+function levelForTier(t){return TIER_LEVEL[t]||1;}
+function tierAtLevel(L){var best=1;for(var t=1;t<=8;t++)if((TIER_LEVEL[t]||1)<=L)best=t;return best;}
 function pLevel(){return lvl(S.xp);}
-function heatGain(base){var L=pLevel(),m=0.5,r;if(L<=2)r=Math.ceil(base*0.25*m);else if(L<=4)r=Math.ceil(base*0.5*m);else if(L<=6)r=Math.ceil(base*0.75*m);else r=Math.ceil(base*m);var gm=1+gearBonus().heat/100;return Math.max(0,Math.ceil(r*gm));}
-function bribeCost(){var L=pLevel();if(L<=2)return 50;if(L<=4)return 100;return 200;}
-function clinicRate(){var L=pLevel();if(L<=2)return 1;if(L<=4)return 1.5;return 2;}
-function tierVis(t){var L=pLevel();return t<=L?2:(t===L+1?1:0);}
-var UNLOCKS={
- 1:["Sour D","Hash","Grow Tent","Fitted Cap","White Tee","Beat Sneakers"],
- 2:["OG Kush","Edibles","Trap House","Knife","Baseball Bat","Brass Knuckles","Rooftop Rita","Fake Gold Chain"],
- 3:["Purple Haze","Moonrock","Warehouse","Revolver","Crowbar","Machete","Designer Beanie","Graphic Hoodie"],
- 4:["Blue Dream","Acid","Mansion Lab","Pistol","Alley Al","Fresh Jordans","Gold Rope Chain"],
- 5:["Maui Wowie","DMT","Bunker","Shotgun","Uzi","Custom Snapback","Designer Jacket"],
- 6:["Northern Lights","Island Compound","SMG","Katana","Deli Dave","Luxe Sneakers","Diamond Tennis Chain"],
- 7:["AK-47","Dragon","Cartel Empire","Rifle","Desert Eagle","Croc Leather Cap","Tailored Suit Jacket"],
- 8:["E-Stacks","Emerald Palace","Pill Press Kit","Ostrich Boots","Cuban Link + Pendant"]
-};
+/* grandfathering: a pre-v142 save keeps the tier its XP unlocked under the
+   old curve (S.peakTier, set in normalize). effTier = the higher of the two. */
+function effTier(){var lt=tierAtLevel(pLevel()),pk=(typeof S!=="undefined"&&S&&typeof S.peakTier==="number")?S.peakTier:0;return Math.max(lt,pk);}
+function tierUnlocked(t){return t<=effTier();}
+function syncPeakTier(){var lt=tierAtLevel(pLevel());if(lt>(S.peakTier||0))S.peakTier=lt;}
+function heatGain(base){var L=pLevel(),m=0.5,r;if(L<=5)r=Math.ceil(base*0.25*m);else if(L<=10)r=Math.ceil(base*0.5*m);else if(L<=15)r=Math.ceil(base*0.75*m);else r=Math.ceil(base*m);var gm=1+gearBonus().heat/100;return Math.max(0,Math.ceil(r*gm));}
+function bribeCost(){var L=pLevel();if(L<=5)return 50;if(L<=10)return 100;return 200;}
+function clinicRate(){var L=pLevel();if(L<=5)return 1;if(L<=10)return 1.5;return 2;}
+function tierVis(t){
+ if(tierUnlocked(t))return 2;
+ /* tease only the NEXT tier to unlock (smallest unlock level still locked) */
+ var nt=0,nl=1e9;
+ for(var x=1;x<=8;x++)if(!tierUnlocked(x)&&(TIER_LEVEL[x]||1)<nl){nl=TIER_LEVEL[x];nt=x;}
+ return t===nt?1:0;
+}
+/* UNLOCKS is GENERATED from the real content data + TIER_LEVEL, so what the
+   game tells the player can never drift from the actual gates. (Gene strains
+   unlock via AR genetics, not level, so they're excluded.) */
+var UNLOCKS=(function(){
+ var u={};
+ function add(L,name){if(!name)return;if(!u[L])u[L]=[];if(u[L].indexOf(name)<0)u[L].push(name);}
+ PKEYS.forEach(function(k){var p=PRODUCTS[k];if(p.gene)return;add(levelForTier(p.tier),p.name);});
+ PROPS.forEach(function(p){add(levelForTier(p.tier),p.name);});
+ KITKEYS.forEach(function(k){add(levelForTier(KITS[k].tier),KITS[k].name);});
+ WKEYS.forEach(function(k){if(k==="fists")return;add(levelForTier(WEAPONS[k].tier),WEAPONS[k].name);});
+ GKEYS.forEach(function(k){add(levelForTier(GEAR[k].tier),GEAR[k].name);});
+ DEALER_TIER.forEach(function(t,i){if(i===0)return;add(levelForTier(t),DEALER_NAMES[i]);});
+ return u;
+})();
 function addXP(n){
  if(!n||n<=0)return false;
  var before=pLevel();
  S.xp=(S.xp||0)+n;
  var after=pLevel();
+ syncPeakTier();
  if(after>before){
   var items=[];
   for(var t=before+1;t<=after;t++)items=items.concat(UNLOCKS[t]||[]);
-  // Territory unlock notifications (hardcoded levels — keep in sync with TERRITORIES)
-  var _tu={2:"Industrial",3:"Suburbs",5:"Downtown",7:"Waterfront",8:"Uptown"},_tn=[];
+  // Territory unlock notifications (keep in sync with TERRITORIES unlock levels)
+  var _tu={3:"Industrial",6:"Suburbs",11:"Downtown",16:"Waterfront",19:"Uptown"},_tn=[];
   for(var _tl=before+1;_tl<=after;_tl++)if(_tu[_tl])_tn.push(_tu[_tl]);
   if(!S.announcedTurfs)S.announcedTurfs={};
   _tn.forEach(function(tn){if(!S.announcedTurfs[tn]){S.announcedTurfs[tn]=1;pushRoachMsg("NEW TURF UNLOCKED: "+tn+"! Check the Maps app, yo.");}});
@@ -2862,15 +2896,15 @@ function addXP(n){
    }
   }
   /* Roach prestige congrats at max level */
-  if(after>=8&&!S._prestigeCongrats){
+  if(after>=MAX_LEVEL&&!S._prestigeCongrats){
    S._prestigeCongrats=true;
-   pushRoachMsg("🎉 YO! LEVEL 8, BITCH! You made it to the top of the game! 🏆");
+   pushRoachMsg("🎉 YO! LEVEL 20, BITCH! You made it to the top of the game! 🏆");
    pushRoachMsg("Listen up — you can PRESTIGE now. Pick a strain, reset everything, and that strain sells for +25% FOREVER. Every prestige stacks it higher. You in?");
    S._prestigeOffer=true;
   }
   S.msg="LEVEL UP — Level "+after+"! Unlocked: "+items.join(", ")+(_tn.length?"; New territory: "+_tn.join(", "):"")+".";
-  /* runner intro: Fixer points out your solid regulars at level 5 */
-  if(after>=5&&!S.runnerIntroSeen){
+  /* runner intro: Fixer points out your solid regulars at tier-5 level (L11) */
+  if(after>=levelForTier(5)&&!S.runnerIntroSeen){
    var _fxc=getContact("The Fixer");
    if(_fxc){S.runnerIntroSeen=true;_fxc.msgs.push({from:"them",text:"Heard u been building a name. Some of your regulars are asking to work for u — run product, handle their own clients. Say the word and I'll tell u who's solid. Check your contacts.",t:Date.now()});_fxc.unread=true;_fxc.unreadCount=(_fxc.unreadCount||0)+1;}
   }
@@ -2957,10 +2991,27 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],runners:[],call:null,driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:4,
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0,biggestDeal:0,thievesBeaten:0,thievesLost:0,playtime:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0,biggestDeal:0,thievesBeaten:0,thievesLost:0,playtime:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0,peakTier:1,peakTerr:[],_progV:2};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s,raw){
  var oldSave=raw?(typeof raw.xp!=="number"):(typeof s.xp!=="number");
+ /* ===== progression v142 grandfathering =====
+    A save written before the 20-level refactor (no _progV) keeps the tier
+    access its XP had under the OLD 8-level curve: peakTier (for tier gates)
+    and peakTerr (territories open under the OLD unlock levels stay open).
+    Nobody loses an unlock. New saves carry _progV and track peaks upward. */
+ if(!raw||typeof raw._progV!=="number"){
+  var _oxp=(typeof s.xp==="number"&&s.xp>0)?s.xp:0;
+  var _ol=lvlOn(_oxp,OLD_XP_TH);
+  if(typeof s.peakTier!=="number"||s.peakTier<Math.min(8,_ol))s.peakTier=Math.min(8,_ol);
+  if(!Array.isArray(s.peakTerr))s.peakTerr=[];
+  var _oldt={industrial:2,suburbs:3,downtown:5,waterfront:7,uptown:8};
+  Object.keys(_oldt).forEach(function(id){if(_ol>=_oldt[id]&&s.peakTerr.indexOf(id)<0)s.peakTerr.push(id);});
+  if(!s.announcedTurfs||typeof s.announcedTurfs!=="object")s.announcedTurfs={};
+  var _otu={2:"Industrial",3:"Suburbs",5:"Downtown",7:"Waterfront",8:"Uptown"};
+  for(var _otl in _otu)if(_ol>=+_otl)s.announcedTurfs[_otu[_otl]]=1;
+ }
+ s._progV=2;
  if(typeof s.snoozed!=="boolean")s.snoozed=false;
  if(typeof s.phoneNotif!=="boolean")s.phoneNotif=true;
  if(!s.phoneNotifSet&&s.phoneNotif!==false)s.phoneNotif=true;
@@ -2986,7 +3037,8 @@ function normalize(s,raw){
   if(c.order&&typeof c.order.k==="string"&&PRODUCTS[c.order.k]&&typeof c.order.g==="number")o={k:c.order.k,kind:(c.order.kind==="joint"||c.order.kind==="lab")?c.order.kind:"bud",g:c.order.g,pu:typeof c.order.pu==="number"?c.order.pu:0,expires:typeof c.order.expires==="number"?c.order.expires:0,sentAt:typeof c.order.sentAt==="number"?c.order.sentAt:0};
   var tp=(c.type==="stoner"||c.type==="party"||c.type==="connoisseur"||c.type==="casual")?c.type:"casual";
   var _bl=(typeof s.xp==="number")?lvl(s.xp):1;
-  var _bun=PKEYS.filter(function(k){return PRODUCTS[k].tier<=_bl;});
+  var _bt=Math.max(tierAtLevel(_bl),(typeof s.peakTier==="number"?s.peakTier:0));
+  var _bun=PKEYS.filter(function(k){return PRODUCTS[k].tier<=_bt;});
   var pr=Array.isArray(c.prefs)?c.prefs.filter(function(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&_bun.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab");}).map(function(p){return {k:p.k,kind:p.kind};}).slice(0,3):[];
   if(!pr.length)pr=contactPrefsFor(tp,_bun);
   return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0};
@@ -3069,9 +3121,10 @@ function normalize(s,raw){
   // Fall back to Home if the saved active territory is now locked by level.
   // NOTE: hardcoded unlock levels here — TERRITORIES is defined AFTER normalize()
   // runs at boot, so terrDef()/terrUnlocked() are NOT safe to call in this function.
-  var _tunlock={home:1,industrial:1,suburbs:3,downtown:5,waterfront:8,uptown:12};
+  // (peakTerr = territories open under the pre-v142 curve stay open.)
+  var _tunlock={home:1,industrial:3,suburbs:6,downtown:11,waterfront:16,uptown:19};
   var _sl=(typeof s.xp==="number")?lvl(s.xp):1;
-  if(_sl<(_tunlock[s.terr.active]||1))s.terr.active="home";
+  if(_sl<(_tunlock[s.terr.active]||1)&&(s.peakTerr||[]).indexOf(s.terr.active)<0)s.terr.active="home";
   Object.keys(s.terr.zones).forEach(function(zid){
    var z=s.terr.zones[zid];
    if(!z||typeof z!=="object"||_tids.indexOf(zid)<0){delete s.terr.zones[zid];return;}
@@ -3117,8 +3170,8 @@ function normalize(s,raw){
  if(oldSave){
   var maxOld=0;
   s.props.forEach(function(pr){maxOld=Math.max(maxOld,pr.tier||0);pr.tier=(pr.tier||0)+1;});
-  var lv=Math.min(7,maxOld+1);
-  s.xp=XP_TH[lv-1]||0;
+  var lv=Math.min(8,maxOld+1);
+  s.xp=XP_TH[levelForTier(lv)-1]||0;
  }
  if(typeof s.xp!=="number"||isNaN(s.xp)||s.xp<0)s.xp=0;
  if(typeof s.stashCap!=="number"||isNaN(s.stashCap)||s.stashCap<0)s.stashCap=40;
@@ -3181,7 +3234,7 @@ function normalize(s,raw){
  if(typeof s.gpage!=="number"||s.gpage<0)s.gpage=0;
  if(typeof s.dealer!=="number"||s.dealer<0||s.dealer>3)s.dealer=0;
  var _lv=lvl(s.xp);
- while(s.dealer>0&&DEALER_TIER[s.dealer]>_lv)s.dealer--;
+ while(s.dealer>0&&levelForTier(DEALER_TIER[s.dealer])>_lv&&DEALER_TIER[s.dealer]>(typeof s.peakTier==="number"?s.peakTier:0))s.dealer--;
  var _secmap={seeds:"seeds",kits:"lab",duffel:"gear",weapons:"guns",props:"upgrades"};
  if(_secmap[s.shopsec])s.storetab=_secmap[s.shopsec];
  delete s.shopsec;
@@ -3195,9 +3248,94 @@ function normalize(s,raw){
  if(typeof s.bank.bal!=="number"||s.bank.bal<0)s.bank.bal=0;
  if(typeof s.bank.pendInt!=="number"||s.bank.pendInt<0)s.bank.pendInt=0;
  if(!Array.isArray(s.bank.tx))s.bank.tx=[];
+ /* progression peaks: never below what the current XP earns */
+ if(typeof s.peakTier!=="number"||s.peakTier<1)s.peakTier=1;
+ var _pt2=tierAtLevel(lvl(s.xp||0));if(_pt2>s.peakTier)s.peakTier=_pt2;
+ if(!Array.isArray(s.peakTerr))s.peakTerr=[];
  return s;
 }
-var _rawBoot=bridge?bridge.getState(DEF):{};var S=normalize(Object.assign({},DEF,_rawBoot),_rawBoot);
+/* ===== SAVE SLOTS (SIM cards) =====
+   The save is wrapped at the bridge boundary: the persisted blob is
+   {__ttwrap:1, activeSlot:N, slots:{1:state|null,2:state|null,3:state|null}, meta:{N:{savedAt:ms}}}.
+   The game only ever sees the active SIM's state. A legacy unwrapped save
+   (the pre-slots format) becomes SIM 1 on first load — no data loss. */
+var TTWRAP={__ttwrap:1,activeSlot:1,slots:{1:null,2:null,3:null},meta:{}};
+var ttWipeArm=0; /* SIM number armed for wipe confirm (transient, never saved) */
+var ttFrozen=false; /* set before a slot-change reload: blocks the pagehide save
+   from writing the outgoing state into the incoming slot */
+function ttIsWrap(o){return !!(o&&typeof o==="object"&&o.__ttwrap===1&&o.slots&&typeof o.slots==="object");}
+function ttSlotState(n){var st=TTWRAP.slots[n];return (st&&typeof st==="object")?st:null;}
+function ttSlotLive(n){return n===TTWRAP.activeSlot?S:ttSlotState(n);}
+function ttPersistRaw(){try{if(bridge)bridge.setState(TTWRAP);}catch(e){}}
+function ttPersist(){
+ try{
+  if(!bridge||ttFrozen)return;
+  TTWRAP.slots[TTWRAP.activeSlot]=S;
+  if(!TTWRAP.meta||typeof TTWRAP.meta!=="object")TTWRAP.meta={};
+  TTWRAP.meta[TTWRAP.activeSlot]={savedAt:Date.now()};
+  bridge.setState(TTWRAP);
+ }catch(e){}
+}
+function ttUnwrapBoot(raw){
+ if(ttIsWrap(raw)){
+  var a=+raw.activeSlot;
+  TTWRAP.activeSlot=(a===2||a===3)?a:1;
+  [1,2,3].forEach(function(n){var st=raw.slots[n];TTWRAP.slots[n]=(st&&typeof st==="object")?st:null;});
+  if(raw.meta&&typeof raw.meta==="object")TTWRAP.meta=raw.meta;
+  var act=ttSlotState(TTWRAP.activeSlot);
+  /* empty SIM -> fresh game via the normal default path (a DEF copy, like
+     bridge.getState(DEF) returns for a brand-new player — NOT {}, which
+     normalize() would mistake for an ancient save and grant XP/tiers) */
+  return act?JSON.parse(JSON.stringify(act)):JSON.parse(JSON.stringify(DEF));
+ }
+ /* legacy single save -> SIM 1 */
+ if(raw&&typeof raw==="object"&&(typeof raw.cash==="number"||typeof raw.xp==="number")){
+  TTWRAP.slots[1]=raw;
+  return raw;
+ }
+ return JSON.parse(JSON.stringify(DEF));
+}
+function ttSwitchSim(n){
+ if(n===TTWRAP.activeSlot)return;
+ save(); /* persist the current SIM before leaving it */
+ TTWRAP.activeSlot=n;
+ ttWipeArm=0;
+ ttPersistRaw();
+ ttFrozen=true; /* the reload's pagehide save must not bleed this state into the new SIM */
+ try{location.reload();}catch(e){}
+}
+function ttWipeSim(n){
+ ttWipeArm=0;
+ if(n===TTWRAP.activeSlot){
+  TTWRAP.slots[n]=null;
+  if(TTWRAP.meta)delete TTWRAP.meta[n];
+  ttPersistRaw();
+  ttFrozen=true; /* the reload's pagehide save must not resurrect the wiped SIM */
+  try{location.reload();}catch(e){}
+  return;
+ }
+ save(); /* refresh the active SIM's copy before rewriting storage */
+ TTWRAP.slots[n]=null;
+ if(TTWRAP.meta)delete TTWRAP.meta[n];
+ ttPersistRaw();
+ render();
+}
+function ttSimMeta(st){
+ if(!st)return "Empty — tap START for a new game";
+ var parts=["Level "+lvl(st.xp||0),money(st.cash||0)];
+ if(st.bornAt)parts.push("Day "+(Math.floor((Date.now()-st.bornAt)/86400000)+1));
+ return parts.join(" · ");
+}
+function ttSimLast(n,st){
+ var t=0;
+ if(TTWRAP.meta&&TTWRAP.meta[n]&&typeof TTWRAP.meta[n].savedAt==="number")t=TTWRAP.meta[n].savedAt;
+ if(!t&&st&&typeof st.lastTick==="number")t=st.lastTick;
+ if(!t&&st&&typeof st.lastClosedAt==="number")t=st.lastClosedAt;
+ if(!t)return "";
+ try{var d=new Date(t);return d.toLocaleDateString()+" "+d.toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});}catch(e){return "";}
+}
+var _rawBoot=ttUnwrapBoot(bridge?bridge.getState(DEF):{});
+var S=normalize(Object.assign({},DEF,_rawBoot),_rawBoot);
 // Android OS shell: nav stack + app metadata
 var navStack=[];
 function navPush(app){if(navStack[navStack.length-1]!==app)navStack.push(app);if(navStack.length>12)navStack.shift();}
@@ -3419,9 +3557,16 @@ function ttShowReup(){
    window.ttSave=function(){if(typeof save==='function')save();};
    window.ttCustTest=function(){return {
     custOrderExpired:typeof custOrderExpired==='function'?custOrderExpired:null,
+    contactOrderPick:typeof contactOrderPick==='function'?contactOrderPick:null,
     tickContacts:typeof tickContacts==='function'?tickContacts:null,
     activatePendingContact:typeof activatePendingContact==='function'?activatePendingContact:null,
     pools:{annoyed:CUST_ANNOYED,warn:CUST_WARN,breakup:CUST_BREAKUP,return1:CUST_RETURN1,return2:CUST_RETURN2}
+   };};
+   window.ttSimTest=function(){return {
+    wrap:(typeof TTWRAP!=='undefined')?TTWRAP:null,
+    switchSim:(typeof ttSwitchSim==='function')?ttSwitchSim:null,
+    wipeSim:(typeof ttWipeSim==='function')?ttWipeSim:null,
+    wipeArm:function(){return (typeof ttWipeArm!=='undefined')?ttWipeArm:-1;}
    };};
    window.ttArTest=function(){return {
     huntStart:typeof huntStart==='function'?huntStart:null,
@@ -3496,7 +3641,7 @@ function navPop(){if(S.view==="home")return;navStack.pop();var prev=navStack.len
 var APP_EMOJI={store:"🏪",grow:"🌱",stash:"🎒",cook:"🧪",deal:"💰",chill:"🛋️",clinic:"🏥",settings:"⚙️",browser:"🌐",street:"🏙️",maps:"🗺️",rep:"⭐",props:"🏠",bank:"🏦",tasks:"📋",visor:"🥽"};
 var APP_GRAD={store:"linear-gradient(135deg,#f59e0b,#d97706)",grow:"linear-gradient(135deg,#22c55e,#16a34a)",stash:"linear-gradient(135deg,#8b5cf6,#7c3aed)",cook:"linear-gradient(135deg,#ef4444,#dc2626)",deal:"linear-gradient(135deg,#3b82f6,#2563eb)",chill:"linear-gradient(135deg,#ec4899,#db2777)",clinic:"linear-gradient(135deg,#14b8a6,#0d9488)",settings:"linear-gradient(135deg,#6b7280,#4b5563)",browser:"linear-gradient(135deg,#7c3aed,#3b82f6)"};
 function appName(a){if(a==="street")return "Street Deal";if(a==="rep")return "Reputation";if(a==="props")return "My Properties";return a.charAt(0).toUpperCase()+a.slice(1);}
-function save(){try{if(bridge)bridge.setState(S);}catch(e){}}
+function save(){ttPersist();}
 // Re-layout home grid when viewport crosses fold/tablet breakpoints
 (function(){if(typeof window==="undefined"||typeof window.addEventListener!=="function")return;var _lastW=hwWinW();var _rt=null;function _bp(w){return w>=900?2:w>=600?1:0;}
 window.addEventListener("resize",function(){if(_rt)clearTimeout(_rt);_rt=setTimeout(function(){var w=hwWinW();if(_bp(w)!==_bp(_lastW)){_lastW=w;if(typeof S!=="undefined"&&S&&S.view==="home"&&typeof layoutHome==="function")layoutHome();}},250);});})();
@@ -3518,16 +3663,16 @@ function heatStars(h){var n=heatTier(h)+1,s="";for(var i=0;i<5;i++)s+=i<n?"\u260
 var TERRITORIES=[
  {id:"home",name:"Home",sub:"Home turf — safe & low heat",price:1.0,heat:0.8,unlock:1,likes:"none",likesTxt:"No preference",
   w:{cops:0.5,gangs:0.5,fam:0.3},color:"#d97706",grad:"linear-gradient(135deg,#92400e,#451a03)",nbors:["suburbs","industrial"]},
- {id:"downtown",name:"Downtown",sub:"High prices, hot streets",price:1.25,heat:1.5,unlock:5,likes:"party",likesTxt:"Joints, Edibles",w:{cops:1.0,gangs:1.5,fam:0.5},color:"#f59e0b",grad:"linear-gradient(135deg,#7c2d12,#431407)",nbors:["uptown","waterfront","industrial"]},
- {id:"suburbs",name:"Suburbs",sub:"Safe & quiet, lower prices",price:0.85,heat:0.6,unlock:3,likes:"lowbud",likesTxt:"Low-tier bud",w:{cops:0.8,gangs:0.4,fam:1.4},color:"#4ade80",grad:"linear-gradient(135deg,#14532d,#052e16)",nbors:["uptown","industrial"]},
- {id:"industrial",name:"Industrial",sub:"Room to move, mid prices",price:1.0,heat:1.0,unlock:2,likes:"none",likesTxt:"No preference",w:{cops:0.7,gangs:1.0,fam:0.4},color:"#60a5fa",grad:"linear-gradient(135deg,#334155,#0f172a)",nbors:["downtown","suburbs","waterfront"]},
- {id:"waterfront",name:"Waterfront",sub:"Tourist cash, watchful eyes",price:1.15,heat:1.25,unlock:7,likes:"midbud",likesTxt:"Mid-tier bud",w:{cops:1.3,gangs:0.8,fam:0.8},color:"#22d3ee",grad:"linear-gradient(135deg,#0e7490,#164e63)",nbors:["downtown","industrial"]},
- {id:"uptown",name:"Uptown",sub:"Big money, big risk",price:1.4,heat:1.75,unlock:8,likes:"highend",likesTxt:"High-tier bud, Lab products",w:{cops:1.5,gangs:1.2,fam:1.0},color:"#a78bfa",grad:"linear-gradient(135deg,#5b21b6,#2e1065)",nbors:["downtown","suburbs"]}
+ {id:"downtown",name:"Downtown",sub:"High prices, hot streets",price:1.25,heat:1.5,unlock:11,likes:"party",likesTxt:"Joints, Edibles",w:{cops:1.0,gangs:1.5,fam:0.5},color:"#f59e0b",grad:"linear-gradient(135deg,#7c2d12,#431407)",nbors:["uptown","waterfront","industrial"]},
+ {id:"suburbs",name:"Suburbs",sub:"Safe & quiet, lower prices",price:0.85,heat:0.6,unlock:6,likes:"lowbud",likesTxt:"Low-tier bud",w:{cops:0.8,gangs:0.4,fam:1.4},color:"#4ade80",grad:"linear-gradient(135deg,#14532d,#052e16)",nbors:["uptown","industrial"]},
+ {id:"industrial",name:"Industrial",sub:"Room to move, mid prices",price:1.0,heat:1.0,unlock:3,likes:"none",likesTxt:"No preference",w:{cops:0.7,gangs:1.0,fam:0.4},color:"#60a5fa",grad:"linear-gradient(135deg,#334155,#0f172a)",nbors:["downtown","suburbs","waterfront"]},
+ {id:"waterfront",name:"Waterfront",sub:"Tourist cash, watchful eyes",price:1.15,heat:1.25,unlock:16,likes:"midbud",likesTxt:"Mid-tier bud",w:{cops:1.3,gangs:0.8,fam:0.8},color:"#22d3ee",grad:"linear-gradient(135deg,#0e7490,#164e63)",nbors:["downtown","industrial"]},
+ {id:"uptown",name:"Uptown",sub:"Big money, big risk",price:1.4,heat:1.75,unlock:19,likes:"highend",likesTxt:"High-tier bud, Lab products",w:{cops:1.5,gangs:1.2,fam:1.0},color:"#a78bfa",grad:"linear-gradient(135deg,#5b21b6,#2e1065)",nbors:["downtown","suburbs"]}
 ];
 var HEAT_SOURCES=["cops","gangs","fam"];
 var HEAT_SRC_META={cops:{icon:"\uD83D\uDE94",name:"Cops"},gangs:{icon:"\uD83D\uDD2B",name:"Gangs"},fam:{icon:"\uD83C\uDFE0",name:"Families"}};
 function terrDef(id){for(var i=0;i<TERRITORIES.length;i++)if(TERRITORIES[i].id===id)return TERRITORIES[i];return TERRITORIES[0];}
-function terrUnlocked(id){var t=terrDef(id);return pLevel()>=(t.unlock||1);}
+function terrUnlocked(id){var t=terrDef(id);if(pLevel()>=(t.unlock||1))return true;/* grandfathered turf: unlocked under the pre-v142 curve */return !!((S&&S.peakTerr)||[]).filter(function(x){return x===id;}).length;}
 function terrZone(id){
  if(!S.terr||typeof S.terr!=="object")S.terr={active:"home",zones:{}};
  if(!S.terr.zones||typeof S.terr.zones!=="object")S.terr.zones={};
@@ -3906,16 +4051,16 @@ function bwTabTitle(url){
 }
 function bwBuyBtn(p){
  var owned=S.props.some(function(x){return x.id===p.id;});
- var locked=p.tier>pLevel();
+ var locked=!tierUnlocked(p.tier);
  if(owned)return '<button type="button" class="bw-btn owned" disabled>&#10003; Owned</button>';
- if(locked)return '<button type="button" class="bw-btn" disabled>Unlocks at Lv '+p.tier+'</button>';
+ if(locked)return '<button type="button" class="bw-btn" disabled>Unlocks at Lv '+levelForTier(p.tier)+'</button>';
  var _tcCost=p.cost/100;return '<button type="button" class="bw-btn" data-act="buyprop" data-prop="'+p.id+'"'+((S.crypto||0)>=_tcCost?"":" disabled")+'>'+(p.cost===0?"Claim FREE":"Buy — "+_tcCost.toLocaleString("en-US")+" TC")+'</button>';
 }
 function bwCardHTML(p){
  var meta=PROP_META[p.id]||{addr:"",bd:1,ba:1,sqft:500,grad:"linear-gradient(135deg,#333,#111)",tag:""};
  var owned=S.props.some(function(x){return x.id===p.id;});
- var locked=p.tier>pLevel();
- var badge=owned?'<span class="bw-badge owned">OWNED</span>':locked?'<span class="bw-badge locked">LV '+p.tier+'+</span>':'<span class="bw-badge forsale">FOR SALE</span>';
+ var locked=!tierUnlocked(p.tier);
+ var badge=owned?'<span class="bw-badge owned">OWNED</span>':locked?'<span class="bw-badge locked">LV '+levelForTier(p.tier)+'+</span>':'<span class="bw-badge forsale">FOR SALE</span>';
  return '<div class="bw-card'+(locked?" locked":"")+'" data-act="bw-goto" data-url="https://www.terpestates.com/homes/'+p.id+'">'
   +'<div class="bw-photo" style="background:'+meta.grad+'"><span class="bw-photoemoji">&#127968;</span>'+badge
   +'<span class="bw-price">'+(p.cost===0?"FREE":(p.cost/100).toLocaleString("en-US")+" TC")+'</span></div>'
@@ -3942,7 +4087,7 @@ function bwDetailHTML(id){
   +'<span class="bw-price big">'+(p.cost===0?"FREE":(p.cost/100).toLocaleString("en-US")+" TC")+'</span></div>'
   +'<div class="bw-dbody"><div class="bw-addr big">'+escHtml(p.name)+'</div><div class="bw-subaddr">'+escHtml(meta.addr)+'</div>'
   +'<div class="bw-dspecs"><div><b>'+meta.bd+'</b><span>beds</span></div><div><b>'+meta.ba+'</b><span>baths</span></div><div><b>'+meta.sqft.toLocaleString("en-US")+'</b><span>sq ft</span></div><div><b>'+p.slots+'</b><span>grow slots</span></div></div>'
-  +'<div class="bw-est">Est. '+mo+' &middot; Requires Level '+p.tier+'</div>'
+  +'<div class="bw-est">Est. '+mo+' &middot; Requires Level '+levelForTier(p.tier)+'</div>'
   +'<div class="bw-desc">'+escHtml(p.desc)+' '+escHtml(meta.tag)+'. Discreet location, cash buyers preferred — no questions asked.</div>'
   +bwBuyBtn(p)
   +'<div class="bw-feats"><div>&#10003; '+p.slots+' climate-controlled grow slots</div><div>&#10003; Low-profile neighborhood</div><div>&#10003; Cash deal — closes instantly</div></div>'
@@ -4223,7 +4368,7 @@ function render(){
  q(".v-hint").textContent=battling?"Win the fight or run — nothing else until it's over.":HINTS[S.tab];
  var gh=tabHeader("grow")+'<div class="growbar"><button type="button" data-act="waterall">Water all</button><button type="button" data-act="harvestall">Harvest all</button></div>';
  var gi=S.gprop||0;if(gi>=S.props.length)gi=0;
- var gguard=0;while(S.props[gi]&&S.props[gi].tier>pLevel()&&gguard<S.props.length){gi=(gi+1)%S.props.length;gguard++;}
+ var gguard=0;while(S.props[gi]&&!tierUnlocked(S.props[gi].tier)&&gguard<S.props.length){gi=(gi+1)%S.props.length;gguard++;}
  var pr=S.props[gi];
  gh+='<div class="ppager"><button type="button" data-act="gprev">\u25C0</button><span class="pp-name">'+pr.name+'</span><span class="prop-tier t'+pr.tier+'">TIER '+pr.tier+'</span><button type="button" data-act="gnext">\u25B6</button></div>';
  gh+='<div class="pots">';
@@ -4549,7 +4694,7 @@ function render(){
  function dealRoachConvo(){
   var h='<div class="msg-convo">';
   /* prestige yes/no prompt */
-  if(S._prestigeOffer&&pLevel()>=8){
+  if(S._prestigeOffer&&pLevel()>=MAX_LEVEL){
    h+='<div class="msg-inputbar"><div class="msg-replies">';
    h+='<button type="button" class="msg-reply" data-act="prestige-yes">Hell yeah, prestige me</button>';
    h+='<button type="button" class="msg-reply" data-act="prestige-no">Nah, not yet</button>';
@@ -4594,7 +4739,7 @@ function render(){
  function bestDealerFor(k,isJoint){
  var best=-1,bestDi=0;
  S.dealers.forEach(function(dd,ii){
-  if(DEALER_TIER[ii]>pLevel())return;
+  if(!tierUnlocked(DEALER_TIER[ii]))return;
   var p=isJoint?Math.round(ppu(PRODUCTS[k].price,dd.buy[k])*0.9):ppu(PRODUCTS[k].price,dd.buy[k]);
   if(p>best){best=p;bestDi=ii;}
  });
@@ -4607,12 +4752,12 @@ function streetHTML(){
  if(locked)dh+='<div class="lock sm">Laying low — heat dies down in '+Math.ceil((S.lockedUntil-now)/60000)+' min.</div>';
  var un=unlocked();
  var di=S.dealer||0;if(di>=S.dealers.length)di=0;
- while(di>0&&DEALER_TIER[di]>pLevel())di--;
+ while(di>0&&!tierUnlocked(DEALER_TIER[di]))di--;
  dh+='<div class="dchips">';
  S.dealers.forEach(function(d,ii){
   var dv=tierVis(DEALER_TIER[ii]);
   if(dv===0)return;
-  if(dv===1){dh+='<button type="button" class="dchip locked" disabled><span class="d-av sm">'+d.name.charAt(0)+'</span><span class="dc-name">'+d.name+'</span><span class="lvtag">Lv '+DEALER_TIER[ii]+'</span></button>';return;}
+  if(dv===1){dh+='<button type="button" class="dchip locked" disabled><span class="d-av sm">'+d.name.charAt(0)+'</span><span class="dc-name">'+d.name+'</span><span class="lvtag">Lv '+levelForTier(DEALER_TIER[ii])+'</span></button>';return;}
   dh+='<button type="button" class="dchip'+(ii===di?" on":"")+'" data-act="dealersel" data-d="'+ii+'"><span class="d-av sm">'+d.name.charAt(0)+'</span><span class="dc-name">'+d.name+'</span></button>';
  });
  dh+='</div>';
@@ -4915,7 +5060,7 @@ function mapsHTML(){
    GROWKEYS.forEach(function(k){
     var v=tierVis(PRODUCTS[k].tier);
     if(v===0)return;
-    if(v===1){_pageHtml+='<div class="srow c tight locked"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></div></div>';return;}
+    if(v===1){_pageHtml+='<div class="srow c tight locked"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+levelForTier(PRODUCTS[k].tier)+'</span></div></div>';return;}
     _pageHtml+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+'</span></div>'
      +'<div style="display:flex;gap:6px">'
      +'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+' (&times;'+S.seeds[k]+')</button></div></div>';
@@ -4924,7 +5069,7 @@ function mapsHTML(){
    KITKEYS.forEach(function(k){
     var v=tierVis(KITS[k].tier);
     if(v===0)return;
-    if(v===1){_pageHtml+='<div class="srow c locked"><div><b>'+KITS[k].name+'</b><div class="sdesc"><span class="lvtag">Lv '+KITS[k].tier+'</span></div></div></div>';return;}
+    if(v===1){_pageHtml+='<div class="srow c locked"><div><b>'+KITS[k].name+'</b><div class="sdesc"><span class="lvtag">Lv '+levelForTier(KITS[k].tier)+'</span></div></div></div>';return;}
     _pageHtml+='<div class="srow c"><div><b>'+KITS[k].name+'</b><div class="sdesc">'+KITS[k].desc+'</div></div>'
      +'<button type="button" data-act="buykit" data-kit="'+k+'"'+(S.cash>=KITS[k].cost?"":" disabled")+'>'+money(KITS[k].cost)+' (&times;'+(S.kits[k]||0)+')</button></div>';
    });
@@ -4946,7 +5091,7 @@ function mapsHTML(){
     if(owned)return; // hide owned weapons (incl. fists — only buyable shown)
     var v=tierVis(w.tier);
     if(v===0)return;
-    if(v===1){_pageHtml+='<div class="srow c locked"><div><b><i class="wicon w-'+wk+'"></i>'+w.name+'</b><div class="sdesc"><span class="lvtag">Lv '+w.tier+'</span></div></div></div>';return;}
+    if(v===1){_pageHtml+='<div class="srow c locked"><div><b><i class="wicon w-'+wk+'"></i>'+w.name+'</b><div class="sdesc"><span class="lvtag">Lv '+levelForTier(w.tier)+'</span></div></div></div>';return;}
     _pageHtml+='<div class="srow c"><div><b><i class="wicon w-'+wk+'"></i>'+w.name+' <span class="sdesc">'+w.dmg[0]+'-'+w.dmg[1]+' dmg'+(wk==="fists"?" &middot; always armed":(owned?" &middot; OWNED":""))+'</span></b></div>'
      +(owned?'<button type="button" disabled>OWNED</button>':'<button type="button" data-act="buyweapon" data-w="'+wk+'"'+(S.cash>=w.cost?"":" disabled")+'>'+money(w.cost)+'</button>')
      +'</div>';
@@ -4964,8 +5109,8 @@ function mapsHTML(){
      var owned=(S.gear||[]).indexOf(gk)>=0,eq=(S.equipped||{})[g.slot]===gk;
      var v=tierVis(g.tier);
      if(v===0)return;
-     if(v===1){_pageHtml+='<div class="srow c tight locked"><div><b>'+g.name+'</b> <span class="sdesc">'+g.slot+' &middot; '+g.desc+'</span><div class="sdesc"><span class="lvtag">Lv '+g.tier+'</span></div></div></div>';return;}
-     _pageHtml+='<div class="srow c tight"><div><b>'+g.name+(eq?' <span style="color:#4ade80">&#10003; WORN</span>':'')+'</b><div class="sdesc">'+g.slot+' &middot; '+g.desc+' &middot; <span class="lvtag">Lv '+g.tier+'</span></div></div>'
+     if(v===1){_pageHtml+='<div class="srow c tight locked"><div><b>'+g.name+'</b> <span class="sdesc">'+g.slot+' &middot; '+g.desc+'</span><div class="sdesc"><span class="lvtag">Lv '+levelForTier(g.tier)+'</span></div></div></div>';return;}
+     _pageHtml+='<div class="srow c tight"><div><b>'+g.name+(eq?' <span style="color:#4ade80">&#10003; WORN</span>':'')+'</b><div class="sdesc">'+g.slot+' &middot; '+g.desc+' &middot; <span class="lvtag">Lv '+levelForTier(g.tier)+'</span></div></div>'
       +'<div style="display:flex;gap:6px">'
       +(owned?(eq?'<button type="button" data-act="unequipgear" data-g="'+gk+'">Unequip</button>':'<button type="button" data-act="equipgear" data-g="'+gk+'">Equip</button>'):'<button type="button" data-act="buygear" data-g="'+gk+'"'+(S.cash>=g.cost?"":" disabled")+'>'+money(g.cost)+'</button>')
       +'</div></div>';
@@ -5248,15 +5393,19 @@ function contactPrefsFor(type,un){
 }
 function contactOrderPick(c){
  var un=unlocked();
- function ok(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&un.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab")&&(p.kind!=="joint"||GROWKEYS.indexOf(p.k)>=0);}
+ /* lab gate: a cooked product is only orderable if the player owns the kit(s)
+    its recipe needs — level unlock alone is not enough (players were getting
+    orders for products they had no way to make). */
+ function labKitOk(k){var r=RECIPES[k];if(!r||!r.kits)return true;for(var kk in r.kits){if(((S.kits||{})[kk]||0)<r.kits[kk])return false;}return true;}
+ function ok(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&un.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab")&&(p.kind!=="joint"||GROWKEYS.indexOf(p.k)>=0)&&(p.kind!=="lab"||labKitOk(p.k));}
  var prefs=((c&&c.prefs)||[]).filter(ok);
  if(prefs.length&&Math.random()<0.7)return prefs[(Math.random()*prefs.length)|0];
  var budPool=GROWKEYS.filter(function(k){return un.indexOf(k)>=0;});
  if(!budPool.length)return null;
  var pool=budPool.map(function(k){return {k:k,kind:"bud"};});
  pool.push({k:budPool[(Math.random()*budPool.length)|0],kind:"joint"});
- /* lab products: every unlocked cooked product gets an order slot, same weight as a bud strain */
- RKEYS.forEach(function(lk){if(un.indexOf(lk)>=0)pool.push({k:lk,kind:"lab"});});
+ /* lab products: every unlocked cooked product the player can actually cook gets an order slot, same weight as a bud strain */
+ RKEYS.forEach(function(lk){if(un.indexOf(lk)>=0&&labKitOk(lk))pool.push({k:lk,kind:"lab"});});
  return pool[(Math.random()*pool.length)|0];
 }
 function contactBasePrice(p){
@@ -5672,14 +5821,14 @@ function custIntelText(){
  var wantK=null,wantN=0,want={};
  (S.contacts||[]).forEach(function(cc){
   (cc.prefs||[]).forEach(function(p){
-   if(p.kind==="lab"&&PRODUCTS[p.k]&&PRODUCTS[p.k].tier<=pLevel()){
+   if(p.kind==="lab"&&PRODUCTS[p.k]&&tierUnlocked(PRODUCTS[p.k].tier)){
     want[p.k]=(want[p.k]||0)+1;
     if(want[p.k]>wantN){wantN=want[p.k];wantK=p.k;}
    }
   });
  });
  if(!wantK){
-  var _un=RKEYS.filter(function(k){return PRODUCTS[k]&&PRODUCTS[k].tier<=pLevel();});
+  var _un=RKEYS.filter(function(k){return PRODUCTS[k]&&tierUnlocked(PRODUCTS[k].tier);});
   if(_un.length)wantK=_un[0];
  }
  if(wantK)cands.push("everybody's asking for "+PRODUCTS[wantK].name+" lately");
@@ -5856,7 +6005,7 @@ function tasksHTML(){
        (v135 checked "any single strain", hiding Cook when split stash sufficed,
        and missed the tier + duffel gates entirely.) */
     var _r=RECIPES[t.k],_miss=[];
-    if(PRODUCTS[t.k].tier>pLevel()){_miss.push({t:"locked"});}
+    if(!tierUnlocked(PRODUCTS[t.k].tier)){_miss.push({t:"locked"});}
     else{
      if(stashTotal()>=S.stashCap)_miss.push({t:"full"});
      if((_r.bud||0)>0&&budHave()<_r.bud)_miss.push({t:"bud"});
@@ -5867,11 +6016,11 @@ function tasksHTML(){
      _prodBtns='<button type="button" class="tk-make" data-act="task-cook" data-i="'+i+'">Cook '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+'</button>';
     }else{
      _prodBtns=_miss.map(function(m){
-      if(m.t==="locked")return '<span class="tk-need">Unlocks at Level '+PRODUCTS[t.k].tier+'</span>';
+      if(m.t==="locked")return '<span class="tk-need">Unlocks at Level '+levelForTier(PRODUCTS[t.k].tier)+'</span>';
       if(m.t==="full")return '<span class="tk-need">Duffel full — sell some first</span>';
       if(m.t==="kit"){
-       var _locked=KITS[m.k].tier>pLevel(),_dis=_locked||S.cash<KITS[m.k].cost;
-       return '<button type="button" class="tk-buykit" data-act="buykit" data-kit="'+m.k+'"'+(_dis?" disabled":"")+'>Buy '+escHtml(KITS[m.k].name)+' '+money(KITS[m.k].cost)+(_locked?" (Lv"+KITS[m.k].tier+")":"")+'</button>';
+       var _locked=!tierUnlocked(KITS[m.k].tier),_dis=_locked||S.cash<KITS[m.k].cost;
+       return '<button type="button" class="tk-buykit" data-act="buykit" data-kit="'+m.k+'"'+(_dis?" disabled":"")+'>Buy '+escHtml(KITS[m.k].name)+' '+money(KITS[m.k].cost)+(_locked?" (Lv"+levelForTier(KITS[m.k].tier)+")":"")+'</button>';
       }
       if(m.t==="stash"){
        return '<button type="button" class="tk-make" data-act="task-cook" data-k="'+m.k+'">Cook '+escHtml(PRODUCTS[m.k]?PRODUCTS[m.k].name:m.k)+' first</button>';
@@ -6002,7 +6151,7 @@ function doDeal(di,k,isBuy,isJoint){
 /* ===== STASH (v19): bag inventory + quick actions ===== */
 function stashDealer(){
  var di=S.dealer||0;if(di>=S.dealers.length)di=0;
- while(di>0&&DEALER_TIER[di]>pLevel())di--;
+ while(di>0&&!tierUnlocked(DEALER_TIER[di]))di--;
  return {d:S.dealers[di],di:di};
 }
 function doStashSellAll(k,isJoint){
@@ -6223,15 +6372,15 @@ function tickerHints(){
  econ.push("Deal prices drift — buy low, sell high");
  if(di<DUFFEL.length-1)econ.push("Duffel cramped? Upgrade at the Supply Depot — carry up to "+DUFFEL[DUFFEL.length-1]+"g");
  var hasW=S.weapons&&Object.keys(S.weapons).some(function(w){return S.weapons[w];});
- if(!hasW&&L>=2)econ.push("No weapon yet — hit the Gun Store before the cops jump you");
- if(S.props.length<2&&L>=2)econ.push("Trap House: 6 grow slots — see My Properties");
+ if(!hasW&&L>=3)econ.push("No weapon yet — hit the Gun Store before the cops jump you");
+ if(S.props.length<2&&L>=3)econ.push("Trap House: 6 grow slots — see My Properties");
  if(L>=3){
   var hasKit=S.kits&&Object.keys(S.kits).some(function(k){return (S.kits[k]||0)>0;});
   if(!hasKit)econ.push("No lab kits — stock up at Lab Supply to start cooking");
  }
  if((S.fert||0)<=0)econ.push("Out of fertilizer — Supply Depot sells instant +30 growth");
  // INFO
- if(L<8&&UNLOCKS[L+1])info.push("Level "+(L+1)+" unlocks: "+UNLOCKS[L+1].join(", "));
+ if(L<MAX_LEVEL&&UNLOCKS[L+1])info.push("Level "+(L+1)+" unlocks: "+UNLOCKS[L+1].join(", "));
  info.push("Stash tab: roll, smoke or sell every bag in one place");
  // STATUS — last
  var thirsty=false;
@@ -6445,7 +6594,7 @@ function recipeDesc(r){
 function budHave(){return GROWKEYS.reduce(function(a,k){return a+(S.stash[k]||0);},0);}
 function canCook(key){
  var r=RECIPES[key];if(!r)return false;
- if(PRODUCTS[key].tier>pLevel())return false;
+ if(!tierUnlocked(PRODUCTS[key].tier))return false;
  if(budHave()<(r.bud||0))return false;
  for(var k in (r.kits||{}))if((S.kits[k]||0)<r.kits[k])return false;
  for(var s in (r.stash||{}))if((S.stash[s]||0)<r.stash[s])return false;
@@ -6464,7 +6613,7 @@ function newMem(round,now){
 function deductCookInputs(key){
  /* validates + deducts inputs. returns inputs obj, or null (msg already set). */
  var r=RECIPES[key];if(!r)return null;
- if(PRODUCTS[key].tier>pLevel()){S.msg="That recipe needs Level "+PRODUCTS[key].tier+".";save();render();return null;}
+ if(!tierUnlocked(PRODUCTS[key].tier)){S.msg="That recipe needs Level "+levelForTier(PRODUCTS[key].tier)+".";save();render();return null;}
  if(stashTotal()>=S.stashCap){S.msg="Duffel is full — sell some first.";save();render();showBagFullWarn();return null;}
  if(budHave()<(r.bud||0)){S.msg="Not enough bud for that recipe.";save();render();return null;}
  for(var k in (r.kits||{}))if((S.kits[k]||0)<r.kits[k]){S.msg="You need a "+KITS[k].name+" — check the Shop.";save();render();return null;}
@@ -7013,8 +7162,8 @@ function crewHTML(){
   var r2=RECIPES[key],pr2=PRODUCTS[key],vv=tierVis(pr2.tier);
   if(vv===0)return;
   var locked=vv===1;
-  h+='<div class="rc2'+(locked?" locked":"")+'"><span class="picon sm picon-'+key+'"></span><div class="rc2-mid"><div class="rc2-name">'+pr2.name+'</div><div class="rc2-sub">'+(locked?'<span class="lvtag">Lv '+pr2.tier+'</span>':recipeDesc(r2)+' &middot; ~'+fmtT(speedOf(key))+' &middot; +'+r2.heat+' heat')+'</div></div>';
-  if(locked)h+='<button type="button" disabled>Lv '+pr2.tier+'</button>';
+  h+='<div class="rc2'+(locked?" locked":"")+'"><span class="picon sm picon-'+key+'"></span><div class="rc2-mid"><div class="rc2-name">'+pr2.name+'</div><div class="rc2-sub">'+(locked?'<span class="lvtag">Lv '+levelForTier(pr2.tier)+'</span>':recipeDesc(r2)+' &middot; ~'+fmtT(speedOf(key))+' &middot; +'+r2.heat+' heat')+'</div></div>';
+  if(locked)h+='<button type="button" disabled>Lv '+levelForTier(pr2.tier)+'</button>';
   else{var _busy=S.job||S.cookQueue.length>0;h+='<button type="button" data-act="cookstart" data-key="'+key+'"'+(!canCook(key)?" disabled":"")+'>'+(_busy?"Queue":"Start")+'</button>';}
   h+='</div>';
  });
@@ -7190,7 +7339,7 @@ var SH_UPGRADE=[0,500,1500,4000,10000];
 var SH_INCOME=25;
 function geneKeyFor(gene){return GENE2KEY[gene]||null;}
 function unlockGene(gene){var k=geneKeyFor(gene);if(!k)return false;if(!S.geneUnlocked)S.geneUnlocked={};if(S.geneUnlocked[k])return false;S.geneUnlocked[k]=true;return true;}
-function strainUnlocked(k){var p=PRODUCTS[k];if(!p)return false;if(p.gene)return !!(S.geneUnlocked&&S.geneUnlocked[k]);return p.tier<=pLevel();}
+function strainUnlocked(k){var p=PRODUCTS[k];if(!p)return false;if(p.gene)return !!(S.geneUnlocked&&S.geneUnlocked[k]);return tierUnlocked(p.tier);}
 function arPing(title,body){
  if(!S.snoozed){showHeadsUp(title,body);playMsgSound();}
  if(!Array.isArray(S.notifs))S.notifs=[];
@@ -7519,7 +7668,7 @@ function chillHTML(){
   GROWKEYS.forEach(function(k){
    var v=tierVis(PRODUCTS[k].tier);
    if(v===0)return;
-   if(v===1){h+='<button type="button" class="dchip locked" disabled><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+'</span><span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></button>';return;}
+   if(v===1){h+='<button type="button" class="dchip locked" disabled><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+'</span><span class="lvtag">Lv '+levelForTier(PRODUCTS[k].tier)+'</span></button>';return;}
    h+='<button type="button" class="dchip'+(k===ck?" on":"")+'" data-act="chillsel" data-strain="'+k+'"><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+' &times;'+(S.stash[k]||0)+'</span></button>';
   });
   h+='</div>';
@@ -7536,7 +7685,7 @@ function chillHTML(){
    if(v===0)return;
    var jc=S.joints[k]||0;
    if(v===2&&jc>0)hasJ=true;
-   if(v===1){h+='<button type="button" class="dchip locked" disabled><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+'</span><span class="lvtag">Lv '+PRODUCTS[k].tier+'</span></button>';return;}
+   if(v===1){h+='<button type="button" class="dchip locked" disabled><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+'</span><span class="lvtag">Lv '+levelForTier(PRODUCTS[k].tier)+'</span></button>';return;}
    if(jc<=0)return;
    h+='<button type="button" class="dchip'+(k===sk?" on":"")+'" data-act="chillsel" data-strain="'+k+'"><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+' &times;'+jc+'</span></button>';
   });
@@ -7591,6 +7740,33 @@ function settingsHTML(){
   h+='</div>';
   h+='<div style="margin-top:16px"><button type="button" class="dchip center" data-act="doprestige"'+(S._prestigePick?"":" disabled")+' style="width:100%;padding:14px;background:#ef4444;border-color:#ef4444"><span class="dc-name">PRESTIGE RESET</span></button></div>';
   h+='<div class="sdesc" style="margin-top:8px;color:#ef4444">This resets level, cash, stash, properties, and contacts. Your prestige bonus is permanent.</div>';
+  return h;
+ }
+ if(sv==="sims"){
+  h+='<div class="shopsec">SIM CARDS</div>';
+  h+='<div class="sdesc" style="margin:0 2px 10px">Three SIMs, three separate games. Switching saves the SIM you are on first — nothing is lost. Wiping erases only that one SIM.</div>';
+  [1,2,3].forEach(function(n){
+   var st=ttSlotLive(n);
+   var act=n===TTWRAP.activeSlot;
+   var last=ttSimLast(n,ttSlotState(n));
+   h+='<div class="sim-card'+(act?" on":"")+'">'
+     +'<div class="sim-head"><b>SIM '+n+'</b>'+(act?'<span class="sim-active">● ACTIVE</span>':'')+'</div>'
+     +'<div class="sdesc">'+ttSimMeta(st)+(last?'<br>Last played: '+escHtml(last):'')+'</div>'
+     +'<div class="sim-btns">';
+   if(act){
+    h+='<button type="button" class="dchip center on" disabled><span class="dc-name">IN USE</span></button>';
+   }else{
+    h+='<button type="button" class="dchip center" data-act="sim-switch" data-sim="'+n+'"><span class="dc-name">'+(st?"SWITCH":"START")+'</span></button>';
+   }
+   if(st){
+    if(ttWipeArm===n){
+     h+='<button type="button" class="dchip center sim-danger" data-act="sim-wipe" data-sim="'+n+'"><span class="dc-name">ARE YOU SURE?</span></button>';
+    }else{
+     h+='<button type="button" class="dchip center" data-act="sim-wipe" data-sim="'+n+'"><span class="dc-name">WIPE</span></button>';
+    }
+   }
+   h+='</div></div>';
+  });
   return h;
  }
  if(sv==="about"){
@@ -7720,6 +7896,7 @@ function settingsHTML(){
  h+='<div class="shopsec">PHONE</div>';
  h+='<div class="set-list">';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="network"><span>📶 Network & Internet</span><span class="set-chev">›</span></button>';
+ h+='<button type="button" class="set-row" data-act="settingsview" data-v="sims"><span>📇 SIM Cards</span><span class="set-chev">›</span></button>';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="display"><span>📱 Display & Lock</span><span class="set-chev">›</span></button>';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="appearance"><span>🎨 Appearance</span><span class="set-chev">›</span></button>';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="notifications"><span>🔔 Notifications</span><span class="set-chev">›</span></button>';
@@ -7729,7 +7906,7 @@ function settingsHTML(){
  h+='<div class="set-list">';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="gameplay"><span>🎮 Gameplay</span><span class="set-chev">›</span></button>';
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="general"><span>⚙️ General</span><span class="set-chev">›</span></button>';
- if(pLevel()>=8){
+ if(pLevel()>=MAX_LEVEL){
   h+='<button type="button" class="set-row" data-act="settingsview" data-v="prestige"><span>⭐ Prestige'+(S.prestigeCount?' ('+S.prestigeCount+')':'')+'</span><span class="set-chev">›</span></button>';
  }
  h+='<button type="button" class="set-row" data-act="settingsview" data-v="stats"><span>📊 Stats</span><span class="set-chev">›</span></button>';
@@ -7950,7 +8127,7 @@ root.addEventListener("click",function(e){
  if(a==="buyfert"){if(S.cash>=FERT_COST){S.cash-=FERT_COST;S.fert++;S.msg="Fertilizer stocked.";save();render();}return;}
  if(a==="buypapers"){if(S.cash>=PAPER_COST){S.cash-=PAPER_COST;S.papers+=PAPER_PACK;S.msg="Bought "+PAPER_PACK+" rolling papers.";save();render();}return;}
  if(a==="buyduffel"){var ti=DUFFEL.indexOf(S.stashCap);if(ti<0)ti=0;if(ti<DUFFEL.length-1){var nc=DUFFEL[ti+1];if(S.cash>=DUFFEL_COST[nc]){S.cash-=DUFFEL_COST[nc];S.stashCap=nc;S.msg="Duffel upgraded — carry "+nc+"g now.";save();render();}}return;}
- if(a==="buyprop"){var pr2=PROPS.filter(function(x){return x.id===b.dataset.prop;})[0];var owned=S.props.some(function(x){return x.id===pr2.id;});var _tc=pr2.cost/100;if(pr2&&!owned&&pr2.tier<=pLevel()&&(S.crypto||0)>=_tc){S.crypto-= _tc;S.props.push(mkProp(pr2.id));S.msg="New property: "+pr2.name+"! "+pr2.desc;save();render();}return;}
+ if(a==="buyprop"){var pr2=PROPS.filter(function(x){return x.id===b.dataset.prop;})[0];var owned=S.props.some(function(x){return x.id===pr2.id;});var _tc=pr2.cost/100;if(pr2&&!owned&&tierUnlocked(pr2.tier)&&(S.crypto||0)>=_tc){S.crypto-= _tc;S.props.push(mkProp(pr2.id));S.msg="New property: "+pr2.name+"! "+pr2.desc;save();render();}return;}
  if(a==="buyupgrade"){var _ur=parseInt(b.dataset.rows,10)||0;var _uc=_ur===3?2500:(_ur===4?7500:0);var _uo=(S.propUpgrades&&S.propUpgrades.tent)||1;var _unx=_uo===1?3:(_uo===3?4:0);if(_ur===_unx&&_uc>0&&S.cash>=_uc){S.cash-=_uc;S.propUpgrades.tent=_ur;var _up=_ur===3?9:12;var _tp=(S.props||[]).filter(function(x){return x&&x.id==="tent";})[0];if(_tp){while(_tp.slots.length<_up)_tp.slots.push(null);}S.msg="Grow Tent upgraded to "+_ur+" rows ("+_up+" pots)!";save();render();}return;}
  if(a==="bank-amt"){BANKAMT=parseInt(b.dataset.amt,10)||1000;render();return;}
  if(a==="bank-dep"){if(!S.bank)S.bank={bal:0,pendInt:0,tx:[]};var _da=Math.min(BANKAMT,S.cash);_da=Math.floor(_da);if(_da>=1&&S.cash>=_da){S.cash-=_da;S.bank.bal=Math.round((S.bank.bal+_da)*100)/100;pushBankTx("dep",_da);S.msg="Deposited "+money(_da)+" to your savings.";save();render();}else{S.msg="Nothing to deposit.";save();render();}return;}
@@ -7984,7 +8161,7 @@ root.addEventListener("click",function(e){
  if(a==="cookpull"){cookPull();return;}
  if(a==="cookpad"){cookPad(+b.dataset.pad);return;}
  if(a==="cookfz"){cookFz();return;}
- if(a==="gprev"||a==="gnext"){var dir=a==="gnext"?1:-1,n=S.props.length,gp=S.gprop||0;for(var gi2=0;gi2<n;gi2++){gp=(gp+dir+n)%n;if(S.props[gp].tier<=pLevel())break;}S.gprop=gp;S.gpage=0;save();render();return;}
+ if(a==="gprev"||a==="gnext"){var dir=a==="gnext"?1:-1,n=S.props.length,gp=S.gprop||0;for(var gi2=0;gi2<n;gi2++){gp=(gp+dir+n)%n;if(tierUnlocked(S.props[gp].tier))break;}S.gprop=gp;S.gpage=0;save();render();return;}
  if(a==="gpage"){var pgp=S.props[S.gprop||0]||S.props[0],npg=Math.max(1,Math.ceil(pgp.slots.length/8));S.gpage=Math.max(0,Math.min(npg-1,(S.gpage||0)+(+b.dataset.p)));save();render();return;}
  if(a==="dealersel"){S.dealer=+b.dataset.d;save();render();return;}
  if(a==="secret-call"){var _scn=b.dataset.c,_sc=null;
@@ -8087,7 +8264,7 @@ root.addEventListener("click",function(e){
     var _emptySlots=0;
     try{(S.props||[]).forEach(function(pr){(pr.slots||[]).forEach(function(s){if(!s)_emptySlots++;});});}catch(e){}
     var _haveSeed=(S.seeds&&S.seeds[t.k]||0);
-    if(_sp>0&&PRODUCTS[t.k].tier<=pLevel()&&S.cash>=_sp&&_emptySlots>0&&_haveSeed<=0){
+    if(_sp>0&&tierUnlocked(PRODUCTS[t.k].tier)&&S.cash>=_sp&&_emptySlots>0&&_haveSeed<=0){
      S.cash-=_sp;if(!S.seeds)S.seeds={};S.seeds[t.k]=(S.seeds[t.k]||0)+1;_did++;
     }
    }
@@ -8213,7 +8390,9 @@ root.addEventListener("click",function(e){
   S.msg="Search your contacts in the Contacts tab.";
   save();render();return;
  }
- if(a==="settingsview"){S.settingsView=b.dataset.v;save();render();return;}
+ if(a==="settingsview"){ttWipeArm=0;S.settingsView=b.dataset.v;save();render();return;}
+ if(a==="sim-switch"){ttSwitchSim(+b.dataset.sim||1);return;}
+ if(a==="sim-wipe"){var _swn=+b.dataset.sim||1;if(ttWipeArm!==_swn){ttWipeArm=_swn;render();return;}ttWipeSim(_swn);return;}
  if(a==="stashsell"){var _sd=stashDealer();doDeal(_sd.di,b.dataset.strain,false,false);return;}
  if(a==="stashsellj"){var _sd2=stashDealer();doDeal(_sd2.di,b.dataset.strain,false,true);return;}
  if(a==="stashsellall"){doStashSellAll(b.dataset.strain,false);return;}
@@ -8269,9 +8448,9 @@ root.addEventListener("click",function(e){
   _wimg.onerror=function(){S.msg="No image found at that URL.";save();render();};
   _wimg.src=_wu;return;}
  if(a==="wp-reset"){S.wallpaper="";S.msg="Wallpaper reset.";save();render();return;}
- if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk]&&KITS[kk].tier<=pLevel()&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
- if(a==="buyweapon"){var wkey=b.dataset.w,wu=WEAPONS[wkey];if(wkey&&wkey!=="fists"&&wu&&wu.tier<=pLevel()&&!(S.weapons&&S.weapons[wkey])&&S.cash>=wu.cost){S.cash-=wu.cost;S.weapons[wkey]=true;S.msg=wu.name+" purchased — best weapon is used in fights.";save();render();}return;}
- if(a==="buygear"){var gk=b.dataset.g,g=GEAR[gk];if(gk&&g&&g.tier<=pLevel()&&S.gear.indexOf(gk)<0&&S.cash>=g.cost){S.cash-=g.cost;S.gear.push(gk);S.equipped[g.slot]=gk;S.msg=g.name+" purchased & equipped.";save();render();}return;}
+ if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk]&&tierUnlocked(KITS[kk].tier)&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
+ if(a==="buyweapon"){var wkey=b.dataset.w,wu=WEAPONS[wkey];if(wkey&&wkey!=="fists"&&wu&&tierUnlocked(wu.tier)&&!(S.weapons&&S.weapons[wkey])&&S.cash>=wu.cost){S.cash-=wu.cost;S.weapons[wkey]=true;S.msg=wu.name+" purchased — best weapon is used in fights.";save();render();}return;}
+ if(a==="buygear"){var gk=b.dataset.g,g=GEAR[gk];if(gk&&g&&tierUnlocked(g.tier)&&S.gear.indexOf(gk)<0&&S.cash>=g.cost){S.cash-=g.cost;S.gear.push(gk);S.equipped[g.slot]=gk;S.msg=g.name+" purchased & equipped.";save();render();}return;}
  if(a==="equipgear"){var ek=b.dataset.g,eg=GEAR[ek];if(ek&&eg&&S.gear.indexOf(ek)>=0){S.equipped[eg.slot]=ek;var _fs=gearSetEquipped();S.msg=eg.name+" equipped."+(_fs?" "+GEAR_SETS[_fs].name+" set complete — aura active!":"");save();render();}return;}
  if(a==="unequipgear"){var uk=b.dataset.g,ug=GEAR[uk];if(uk&&ug&&S.equipped[ug.slot]===uk){delete S.equipped[ug.slot];S.msg=ug.name+" unequipped.";save();render();}return;}
  if(a==="tstrike"){thiefStrike();return;}
@@ -9350,7 +9529,7 @@ function restockRunner(id,k,g){
 function setRunnerTerritory(id,tid){
  var r=runnerById(id);if(!r)return;
  var t=terrDef(tid);if(!t||t.id!==tid)return;
- if(pLevel()<t.unlock){S.msg=t.name+" unlocks at level "+t.unlock+".";save();render();return;}
+ if(!terrUnlocked(t.id)){S.msg=t.name+" unlocks at level "+t.unlock+".";save();render();return;}
  var count=0;S.runners.forEach(function(x){if(x.territory===tid)count++;});
  if(count>=2&&r.territory!==tid){S.msg="Turf's crowded — max 2 runners in "+t.name+".";save();render();return;}
  r.territory=tid;
@@ -9510,7 +9689,7 @@ function runnerCallHTML(r){
  if(S.call&&S.call.show==="terr"){
   h+='<div class="rc-panel"><div class="rc-panelhd">Post up in…</div><div class="rc-terrs">';
   TERRITORIES.forEach(function(t){
-   var locked=pLevel()<t.unlock,n=0;
+   var locked=!terrUnlocked(t.id),n=0;
    S.runners.forEach(function(x){if(x.territory===t.id)n++;});
    h+='<button type="button" data-act="runner-terr" data-id="'+r.id+'" data-t="'+t.id+'"'+(locked||(n>=2&&r.territory!==t.id)?" disabled":"")+' class="'+(r.territory===t.id?"on":"")+'">'
     +escHtml(t.name)+(locked?" 🔒"+t.unlock:"")+(n>=2&&r.territory!==t.id?" (full)":"")+'</button>';
@@ -9519,7 +9698,7 @@ function runnerCallHTML(r){
  }
  return h;
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP};
 })();
 </script>
 <style>
