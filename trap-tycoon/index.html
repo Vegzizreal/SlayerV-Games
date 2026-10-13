@@ -1331,6 +1331,10 @@ body.electron-phone #ewin-controls{display:flex}
 .rn-empty{color:#9aa3b2;font-size:13px;font-style:italic}
 .rn-warn{background:rgba(229,72,77,.15);border:1px solid rgba(229,72,77,.4);border-radius:10px;padding:10px;font-size:13px;color:#f87171}
 .rn-badge{display:inline-block;background:rgba(217,119,6,.2);border-radius:8px;padding:2px 8px;font-size:12px;margin-left:6px}
+.rn-sortrow{display:flex;gap:6px;margin:0 4px 8px}
+.rn-sortbtn{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#9aa3b2;border-radius:999px;padding:6px 4px;font-size:12px;font-weight:700;cursor:pointer}
+.rn-sortbtn.on{background:#2a4a3a;border-color:#4ade80;color:#fff}
+.rn-grouplabel{margin-top:8px}
 .rn-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
 .rn-actions button{background:#2a4a3a;border:none;color:#fff;border-radius:10px;padding:10px 14px;font-size:13px;font-weight:700;cursor:pointer;flex:1;min-width:100px}
 .rn-actions button:disabled{opacity:.4;cursor:not-allowed}
@@ -2673,9 +2677,9 @@ var PROPS=[
  {id:"warehouse",name:"Warehouse",cost:67500,slots:10,tier:3,desc:"10 grow slots. Requires Level 6."},
  {id:"mansion",name:"Mansion Lab",cost:200000,slots:16,tier:4,desc:"16 grow slots. Requires Level 8."},
  {id:"bunker",name:"Bunker",cost:500000,slots:20,tier:5,desc:"20 grow slots. Requires Level 11."},
- {id:"island",name:"Island Compound",cost:1250000,slots:24,tier:6,desc:"24 grow slots. Requires Level 13."},
- {id:"cartel",name:"Cartel Empire",cost:3250000,slots:28,tier:7,desc:"28 grow slots. Requires Level 16."},
- {id:"palace",name:"Emerald Palace",cost:6500000,slots:34,tier:8,desc:"34 grow slots. Requires Level 19."}
+ {id:"island",name:"Island Compound",cost:700000,slots:24,tier:6,desc:"24 grow slots. Requires Level 13."},
+ {id:"cartel",name:"Cartel Empire",cost:800000,slots:28,tier:7,desc:"28 grow slots. Requires Level 16."},
+ {id:"palace",name:"Emerald Palace",cost:1200000,slots:34,tier:8,desc:"34 grow slots. Requires Level 19."}
 ];
 var KITS={
  butter:{name:"Butter Kit",cost:40,tier:2,desc:"For baking Edibles"},
@@ -2704,7 +2708,7 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v142";
+var GAME_VER="v143";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
    {v:"BETA-0.018.11",ts:"Oct 5, 2026 \u00b7 7:30 PM",t:"Terminal launch",d:"PC players can now launch via plug.bat in CMD \u2014 terminal boot sequence, plug code unlock. Mobile untouched."},
@@ -2986,7 +2990,19 @@ function gearAvatarHTML(){
 function weaponDmg(){var w=WEAPONS[bestWeapon()],d=Math.round(w.dmg[0]+Math.random()*(w.dmg[1]-w.dmg[0])),crit=Math.random()<0.15;if(crit)d=Math.round(d*1.6);return {dmg:d,crit:crit};}
 function copDmg(){return Math.round(8+Math.random()*6);}
 var HEAT_TIERS=["CALM","SUSPICIOUS","WATCHED","HUNTED"];
-function mkDealer(name){function m(){return 0.8+Math.random()*0.4;}var d={name:name,buy:{},sell:{}};PKEYS.forEach(function(k){d.buy[k]=m();d.sell[k]=m();});return d;}
+/* Dealer specialties (prices only): for every product one dealer PAYS the
+   most (buy owner) and a DIFFERENT dealer CHARGES the least (sell owner,
+   rotated +1), so a smart player rotates all four dealers across a run.
+   Homes: buy owner 1.28 / sell owner 1.10 / off-slice 0.98;
+          sell owner 1.30 / buy owner 1.45 / off-slice 1.48.
+   Max buy home (1.28) sits below min sell home (1.30): no built-in
+   buy-here-sell-there arbitrage at home prices. */
+var DEALER_BUY_OWNER={sour:0,hash:0,og:0,haze:0,frost:0,edibles:1,moonrock:1,bluedream:1,nebula:1,estack:1,acid:2,maui:2,dmt:2,ember:2,edouble:2,northern:3,ak47:3,dragon:3,ghost:3,etriple:3};
+function dealerHomes(di,k){
+ var bo=DEALER_BUY_OWNER[k],so=(bo+1)%4;
+ return {hb:di===bo?1.28:(di===so?1.10:0.98),hs:di===so?1.30:(di===bo?1.45:1.48)};
+}
+function mkDealer(name){var di=DEALER_NAMES.indexOf(name);if(di<0)di=0;var d={name:name,buy:{},sell:{},hb:{},hs:{}};function jit(){return (Math.random()-0.5)*0.05;}PKEYS.forEach(function(k){var h=dealerHomes(di,k);d.hb[k]=h.hb;d.hs[k]=h.hs;d.buy[k]=h.hb+jit();d.sell[k]=h.hs+jit();});return d;}
 function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
@@ -3018,6 +3034,13 @@ function normalize(s,raw){
  /* runners (sub-dealer network): additive, old saves get empty */
  if(!Array.isArray(s.runners))s.runners=[];
  s.runners=s.runners.filter(function(r){return r&&typeof r==="object"&&typeof r.id==="string";});
+ /* runner overhaul backfill: xp (seeded from lifetime sales), specialties assigned once */
+ s.runners.forEach(function(r){
+  if(typeof r.xp!=="number"||!(r.xp>=0))r.xp=(typeof r.salesDone==="number"&&r.salesDone>0)?r.salesDone*10:0;
+  if(typeof r.specTerr!=="string"||!r.specTerr)r.specTerr=TERRITORIES[(Math.random()*TERRITORIES.length)|0].id;
+  if(typeof r.specType!=="string"||!r.specType)r.specType=CONTACT_TYPES[(Math.random()*CONTACT_TYPES.length)|0];
+ });
+ if(typeof s.runnerSort!=="string"||["type","terr","level"].indexOf(s.runnerSort)<0)s.runnerSort="level";
  s.call=null; /* never reopen a stale call overlay on boot */
  // Migrate old strain keys to new names
  var keyMap={gsc:"maui",widow:"northern",glue:"ak47"};
@@ -3190,7 +3213,7 @@ function normalize(s,raw){
  if(s.preJob&&typeof s.preJob==="object"&&s.preJob.recipe){s.cookQueue.unshift({key:s.preJob.recipe,by:s.preJob.by||"player",pre:true});delete s.preJob;}
  if(!s.crew||typeof s.crew!=="object")s.crew={};
  ["bunsen","doc","merlin","squeak"].forEach(function(_cid){if(!s.crew[_cid]||typeof s.crew[_cid]!=="object")s.crew[_cid]={hired:false,resting:false,cooks:0,task:null};});
- s.dealers.forEach(function(d){if(!d||typeof d!=="object")return;if(!d.buy||typeof d.buy!=="object")d.buy={};if(!d.sell||typeof d.sell!=="object")d.sell={};PKEYS.forEach(function(k){if(typeof d.buy[k]!=="number")d.buy[k]=1;if(typeof d.sell[k]!=="number")d.sell[k]=1;});});
+ s.dealers.forEach(function(d,di){if(!d||typeof d!=="object")return;if(!d.buy||typeof d.buy!=="object")d.buy={};if(!d.sell||typeof d.sell!=="object")d.sell={};if(!d.hb||typeof d.hb!=="object")d.hb={};if(!d.hs||typeof d.hs!=="object")d.hs={};PKEYS.forEach(function(k){if(typeof d.buy[k]!=="number")d.buy[k]=1;if(typeof d.sell[k]!=="number")d.sell[k]=1;var _dh=dealerHomes(di,k);if(typeof d.hb[k]!=="number")d.hb[k]=_dh.hb;if(typeof d.hs[k]!=="number")d.hs[k]=_dh.hs;});});
  var now=Date.now();
  if(!s.lastTick)s.lastTick=now;
  if(!s.lockNotif||typeof s.lockNotif!=="object")s.lockNotif={messages:true,roach:false,system:false,phone:false};
@@ -3664,9 +3687,9 @@ var TERRITORIES=[
  {id:"home",name:"Home",sub:"Home turf — safe & low heat",price:1.0,heat:0.8,unlock:1,likes:"none",likesTxt:"No preference",
   w:{cops:0.5,gangs:0.5,fam:0.3},color:"#d97706",grad:"linear-gradient(135deg,#92400e,#451a03)",nbors:["suburbs","industrial"]},
  {id:"downtown",name:"Downtown",sub:"High prices, hot streets",price:1.25,heat:1.5,unlock:11,likes:"party",likesTxt:"Joints, Edibles",w:{cops:1.0,gangs:1.5,fam:0.5},color:"#f59e0b",grad:"linear-gradient(135deg,#7c2d12,#431407)",nbors:["uptown","waterfront","industrial"]},
- {id:"suburbs",name:"Suburbs",sub:"Safe & quiet, lower prices",price:0.85,heat:0.6,unlock:6,likes:"lowbud",likesTxt:"Low-tier bud",w:{cops:0.8,gangs:0.4,fam:1.4},color:"#4ade80",grad:"linear-gradient(135deg,#14532d,#052e16)",nbors:["uptown","industrial"]},
- {id:"industrial",name:"Industrial",sub:"Room to move, mid prices",price:1.0,heat:1.0,unlock:3,likes:"none",likesTxt:"No preference",w:{cops:0.7,gangs:1.0,fam:0.4},color:"#60a5fa",grad:"linear-gradient(135deg,#334155,#0f172a)",nbors:["downtown","suburbs","waterfront"]},
- {id:"waterfront",name:"Waterfront",sub:"Tourist cash, watchful eyes",price:1.15,heat:1.25,unlock:16,likes:"midbud",likesTxt:"Mid-tier bud",w:{cops:1.3,gangs:0.8,fam:0.8},color:"#22d3ee",grad:"linear-gradient(135deg,#0e7490,#164e63)",nbors:["downtown","industrial"]},
+ {id:"suburbs",name:"Suburbs",sub:"Safe & quiet, lower prices",price:0.9,heat:0.6,unlock:6,likes:"lowbud",likesTxt:"Low-tier bud",w:{cops:0.8,gangs:0.4,fam:1.4},color:"#4ade80",grad:"linear-gradient(135deg,#14532d,#052e16)",nbors:["uptown","industrial"]},
+ {id:"industrial",name:"Industrial",sub:"Room to move, mid prices",price:1.1,heat:1.0,unlock:3,likes:"none",likesTxt:"No preference",w:{cops:0.7,gangs:1.0,fam:0.4},color:"#60a5fa",grad:"linear-gradient(135deg,#334155,#0f172a)",nbors:["downtown","suburbs","waterfront"]},
+ {id:"waterfront",name:"Waterfront",sub:"Tourist cash, watchful eyes",price:1.3,heat:1.25,unlock:16,likes:"midbud",likesTxt:"Mid-tier bud",w:{cops:1.3,gangs:0.8,fam:0.8},color:"#22d3ee",grad:"linear-gradient(135deg,#0e7490,#164e63)",nbors:["downtown","industrial"]},
  {id:"uptown",name:"Uptown",sub:"Big money, big risk",price:1.4,heat:1.75,unlock:19,likes:"highend",likesTxt:"High-tier bud, Lab products",w:{cops:1.5,gangs:1.2,fam:1.0},color:"#a78bfa",grad:"linear-gradient(135deg,#5b21b6,#2e1065)",nbors:["downtown","suburbs"]}
 ];
 var HEAT_SOURCES=["cops","gangs","fam"];
@@ -4637,6 +4660,7 @@ function render(){
   S.voicemails.push({from:from,text:text,t:Date.now(),unread:true});
   if(S.voicemails.length>20)S.voicemails=S.voicemails.slice(-20);
  }
+ window.ttLeaveVoicemail=leaveVoicemail;
  function dealConvo(c){
   var h='<div class="msg-convo">';
   var msgs=c.msgs.slice(-30);
@@ -6497,10 +6521,17 @@ function smokeFX(k){
  }catch(_){}
 }
 function driftDealers(){
- S.dealers.forEach(function(d){
+ /* small random step + a pull back toward each dealer's specialty home
+    prices, so specialties persist while prices still breathe */
+ S.dealers.forEach(function(d,di){
   PKEYS.forEach(function(k){
-   d.buy[k]=Math.max(0.6,Math.min(1.5,d.buy[k]+(Math.random()-0.5)*0.3));
-   d.sell[k]=Math.max(0.6,Math.min(1.5,d.sell[k]+(Math.random()-0.5)*0.3));
+   var hd=dealerHomes(di,k);
+   var thb=(d.hb&&typeof d.hb[k]==="number")?d.hb[k]:hd.hb;
+   var ths=(d.hs&&typeof d.hs[k]==="number")?d.hs[k]:hd.hs;
+   var cb=(typeof d.buy[k]==="number")?d.buy[k]:thb;
+   var cs=(typeof d.sell[k]==="number")?d.sell[k]:ths;
+   d.buy[k]=Math.max(0.6,Math.min(1.5,cb+(Math.random()-0.5)*0.13+(thb-cb)*0.13));
+   d.sell[k]=Math.max(0.6,Math.min(1.5,cs+(Math.random()-0.5)*0.13+(ths-cs)*0.13));
   });
  });
 }
@@ -6818,7 +6849,7 @@ function startThiefBattle(c,o,taskIdx){
  /* thief's weapon (not fists) */
  var _tw=["knife","pistol","smg"][(Math.random()*3)|0];
  S.thiefBattle={name:c.name,thiefHp:_thp,thiefMax:_thp,thiefWeapon:_tw,product:{k:o.k,kind:o.kind,g:o.g,pu:o.pu},taskIdx:taskIdx,log:["😡 "+c.name+" pulls a "+WEAPONS[_tw].name+"! It's a setup!"]};
- leaveVoicemail(c.name,"You know what time it is. Bring the product, come alone.");
+ window.ttLeaveVoicemail(c.name,"You know what time it is. Bring the product, come alone.");
  S.msg="ROBBERY! "+c.name+" is trying to take your product!";
  c.msgs.push({from:"them",text:"give me everything. now.",t:Date.now()});
  c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
@@ -8169,6 +8200,7 @@ root.addEventListener("click",function(e){
  if(_sc){S._dialNum=_sc.phone;S.phoneView="keypad";save();render();}return;}
  /* ===== RUNNERS actions ===== */
  if(a==="runner-open"){S.msgView="__runner_"+b.dataset.id;save();render();return;}
+ if(a==="runner-sort"){S.runnerSort=b.dataset.v;save();render();return;}
  if(a==="runner-promote"){promoteToRunner(b.dataset.c);return;}
  if(a==="runner-call"){var _rco=runnerById(b.dataset.id);if(_rco){S.call={runnerId:_rco.id,startedAt:Date.now(),show:null,restockK:"",restockAmt:10};_rco._callLine=null;save();render();}return;}
  if(a==="runner-call-end"){S.call=null;runnerCallTickStop();save();render();return;}
@@ -9278,9 +9310,24 @@ var RUNNER_TRAITS={
  networker:{name:"Networker",desc:"+50% client pull"},
  ghost:{name:"Ghost",desc:"-40% heat per sale"},
  hustler:{name:"Hustler",desc:"+30% sale speed, skims more"},
- steady:{name:"Steady",desc:"+1 client slot"},
+ steady:{name:"Steady",desc:"+2 client slots"},
  muscle:{name:"Muscle",desc:"-60% robbery chance"}
 };
+/* ===== RUNNER LEVELS / SLOTS (expansion tables — extend by adding rows) ===== */
+var RUNNER_XP_PER_SALE=10;
+var RUNNER_LEVELS=[ /* index = runner level-1: xp = threshold, cap = cumulative bonus client slots, spec = specialty bonus % per match (territory or customer type) */
+ {xp:0,cap:0,spec:10},{xp:50,cap:0,spec:10},{xp:120,cap:1,spec:11},{xp:220,cap:1,spec:11},
+ {xp:350,cap:2,spec:12},{xp:520,cap:2,spec:12},{xp:750,cap:3,spec:13},{xp:1050,cap:3,spec:13},
+ {xp:1450,cap:4,spec:14},{xp:2000,cap:4,spec:15}];
+var RUNNER_SLOTS=[1,2,3,4,5,6,7,8,9,10,12,13,15,16,18,19,21,22,24,25]; /* max runners by player level 1..20 */
+function runnerLevel(r){var x=(r&&typeof r.xp==="number"&&r.xp>0)?r.xp:0,L=1;for(var i=0;i<RUNNER_LEVELS.length;i++)if(x>=RUNNER_LEVELS[i].xp)L=i+1;return L;}
+function runnerSpecBonus(r,terrId,ctype){ /* total specialty % for a sale: spec% per matching specialty (territory and/or customer type) */
+ if(!r)return 0;var m=0;
+ if(r.specTerr&&terrId&&r.specTerr===terrId)m++;
+ if(r.specType&&ctype&&r.specType===ctype)m++;
+ if(!m)return 0;
+ return m*RUNNER_LEVELS[runnerLevel(r)-1].spec;
+}
 var RUNNER_ASK=[
  "Yo... I know like six people who want in. Let me move weight for you?",
  "Real talk — I could move product for u. Got the connects.",
@@ -9332,8 +9379,8 @@ var RUNNER_LINES={
   muscle:["Posted up. All quiet.","Holding it down.","Ready."]}
 };
 function runnerById(id){if(!S.runners)return null;for(var i=0;i<S.runners.length;i++)if(S.runners[i].id===id)return S.runners[i];return null;}
-function runnerMax(){return 1+Math.floor(pLevel()/3);}
-function runnerCapacity(r){return r.trait==="steady"?3:2;}
+function runnerMax(){var L=Math.max(1,Math.min(RUNNER_SLOTS.length,pLevel()));return RUNNER_SLOTS[L-1];}
+function runnerCapacity(r){return (r.trait==="steady"?6:4)+RUNNER_LEVELS[runnerLevel(r)-1].cap;}
 function runnerSaleMs(r){var ms=15*60000;if(r.trait==="hustler")ms=Math.round(ms/1.3);return ms;}
 function runnerCut(r){var c=0.30;if(r.trust>=80)c=0.25;if(r.trait==="hustler")c+=0.05;return Math.min(0.35,Math.max(0.25,c));}
 function runnerStockOf(r,k){return (r.stock&&r.stock[k])||0;}
@@ -9399,6 +9446,7 @@ function tryAbsorb(c,pick,grams,now){
  var scored=cands.map(function(x){
   var w=1;
   if(runnerLikesMult(pick.k,x.territory)>1)w+=2;
+  if(x.specType&&c&&c.type&&x.specType===c.type)w+=2; /* specialty: soft-prefer their customer type */
   w+=(runnerCapacity(x)-(x.sales||[]).length)*0.5;
   if(x.trait==="networker")w*=1.5;
   if(first[x.territory]!==x.id)w*=0.75; /* turf crowding */
@@ -9409,8 +9457,10 @@ function tryAbsorb(c,pick,grams,now){
  for(j=0;j<scored.length;j++){acc+=scored[j].w;if(roll<=acc){chosen=scored[j].r;break;}}
  chosen.stock[pick.k]-=grams; /* deduct at assignment */
  var tid=chosen.territory||"home",t=terrDef(tid);
- var pu=Math.max(1,Math.round(contactBasePrice(pick)*t.price*runnerLikesMult(pick.k,tid)*gearPriceMult()));
- chosen.sales.push({k:pick.k,g:grams,pu:pu,endsAt:now+runnerSaleMs(chosen)});
+ /* price reads the RUNNER's posted-territory table (terrDef(tid).price), then specialty bonus % */
+ var _sb=runnerSpecBonus(chosen,tid,c?c.type:null);
+ var pu=Math.max(1,Math.round(contactBasePrice(pick)*t.price*runnerLikesMult(pick.k,tid)*gearPriceMult()*(1+_sb/100)));
+ chosen.sales.push({k:pick.k,g:grams,pu:pu,endsAt:now+runnerSaleMs(chosen),ctype:(c&&c.type)||null,spec:_sb>0?1:0});
  return chosen;
 }
 /* heat mirror of dealTerrHeat, but for the RUNNER's territory */
@@ -9431,6 +9481,7 @@ function completeRunnerSale(r,sale,now){
  mine=Math.max(0,mine);
  r.holding=(r.holding||0)+mine;
  r.salesDone=(r.salesDone||0)+1;
+ r.xp=(typeof r.xp==="number"&&r.xp>0?r.xp:0)+RUNNER_XP_PER_SALE;
  if(r.salesDone%10===0)r.trust=Math.min(100,r.trust+2);
  runnerDealHeat(r,sale.g);
  var z=terrZone(r.territory||"home");
@@ -9499,6 +9550,9 @@ function promoteToRunner(name){
  var r={id:"r"+Date.now().toString(36)+Math.random().toString(36).slice(2,7),
   name:c.name,type:c.type,trait:runnerTraitFor(c.type),
   territory:(S.terr&&S.terr.active)||"home",
+  specTerr:TERRITORIES[(Math.random()*TERRITORIES.length)|0].id,
+  specType:CONTACT_TYPES[(Math.random()*CONTACT_TYPES.length)|0],
+  xp:0,
   stock:{},holding:0,trust:50,autoTake:true,darkUntil:0,
   sales:[],salesDone:0,lastSkimAt:0,robbedAt:0,drySince:0};
  S.runners.push(r);
@@ -9601,21 +9655,48 @@ function runnerCallLine(r){
  return pick(L.idle[trait]);
 }
 function runnerStatusDot(st){return st==="working"?"🟢":st==="dry"?"🟠":st==="dark"?"🔴":"⚪";}
+var RUNNER_TYPE_PLURAL={stoner:"Stoners",party:"Party People",connoisseur:"Connoisseurs",casual:"Casuals"};
 function runnerPhonebookSection(){
  var rns=S.runners||[];
  if(!rns.length)return "";
- var now=Date.now(),h='<div class="sc-seclabel">🏃 Runners</div><div class="sc-group">';
- rns.forEach(function(r,i){
+ var now=Date.now(),sort=S.runnerSort||"level";
+ var h='<div class="sc-seclabel">🏃 Runners</div>'
+  +'<div class="rn-sortrow">'
+  +'<button type="button" class="rn-sortbtn'+(sort==="type"?" on":"")+'" data-act="runner-sort" data-v="type">Customer Type</button>'
+  +'<button type="button" class="rn-sortbtn'+(sort==="terr"?" on":"")+'" data-act="runner-sort" data-v="terr">Territory</button>'
+  +'<button type="button" class="rn-sortbtn'+(sort==="level"?" on":"")+'" data-act="runner-sort" data-v="level">Level</button></div>';
+ function rowHtml(r,last){
   var st=runnerState(r,now),tr=RUNNER_TRAITS[r.trait]||RUNNER_TRAITS.steady;
-  var sub=runnerStatusDot(st)+" "+tr.name+" · "+escHtml(terrDef(r.territory||"home").name);
+  var sub=runnerStatusDot(st)+" Lv "+runnerLevel(r)+" · "+tr.name+" · "+escHtml(terrDef(r.territory||"home").name);
   if((r.holding||0)>=1000)sub+=" · 💰"+money(Math.floor(r.holding));
   else if(st==="dry")sub+=" · dry";
   else if(st==="dark")sub+=" · dark";
-  h+='<button type="button" class="sc-row'+(i===rns.length-1?" last":"")+'" data-act="runner-open" data-id="'+r.id+'">'
+  if(r.specTerr&&r.specType)sub+="<br>Best in: "+escHtml(terrDef(r.specTerr).name)+" · "+escHtml(RUNNER_TYPE_PLURAL[r.specType]||contactTypeLabel(r.specType));
+  return '<button type="button" class="sc-row'+(last?" last":"")+'" data-act="runner-open" data-id="'+r.id+'">'
    +'<span class="sc-ava" style="background:#2a4a3a">'+escHtml(String(r.name||"?").charAt(0).toUpperCase())+'</span>'
    +'<span class="sc-nm"><b>'+escHtml(r.name)+'</b><i>'+sub+'</i></span></button>';
- });
- return h+'</div>';
+ }
+ function groupHtml(label,list){
+  if(!list.length)return "";
+  var g=(label?'<div class="sc-seclabel rn-grouplabel">'+label+'</div>':"")+'<div class="sc-group">';
+  list.forEach(function(r,i){g+=rowHtml(r,i===list.length-1);});
+  return g+'</div>';
+ }
+ function byLevel(a,b){return runnerLevel(b)-runnerLevel(a)||((b.salesDone||0)-(a.salesDone||0));}
+ if(sort==="type"){
+  CONTACT_TYPES.forEach(function(tp){
+   h+=groupHtml(escHtml(RUNNER_TYPE_PLURAL[tp]||tp),rns.filter(function(r){return r.specType===tp;}).sort(byLevel));
+  });
+  var rest=rns.filter(function(r){return CONTACT_TYPES.indexOf(r.specType)<0;});
+  if(rest.length)h+=groupHtml("Other",rest.sort(byLevel));
+ }else if(sort==="terr"){
+  TERRITORIES.forEach(function(t){
+   h+=groupHtml(escHtml(t.name),rns.filter(function(r){return (r.territory||"home")===t.id;}).sort(byLevel));
+  });
+ }else{
+  h+=groupHtml(null,rns.slice().sort(byLevel));
+ }
+ return h;
 }
 function runnerDetailHTML(r){
  var now=Date.now(),st=runnerState(r,now),tr=RUNNER_TRAITS[r.trait]||RUNNER_TRAITS.steady;
@@ -9625,6 +9706,8 @@ function runnerDetailHTML(r){
   +'<div class="rn-headinfo"><b>'+escHtml(r.name)+'</b><span>'+runnerStatusDot(st)+' '+st+' · '+escHtml(tr.name)+'</span><span class="rn-traitdesc">'+escHtml(tr.desc)+'</span></div></div>';
  /* trust bar */
  h+='<div class="rn-row"><span>Trust</span><div class="rn-bar"><div class="rn-barfill" style="width:'+Math.round(r.trust)+'%"></div></div><b>'+Math.round(r.trust)+'</b></div>';
+ h+='<div class="rn-row"><span>Level</span><b>Lv '+runnerLevel(r)+'</b></div>';
+ if(r.specTerr||r.specType)h+='<div class="rn-row"><span>Best in</span><b>'+(r.specTerr?escHtml(terrDef(r.specTerr).name):"—")+' · '+(r.specType?escHtml(RUNNER_TYPE_PLURAL[r.specType]||contactTypeLabel(r.specType)):"—")+'</b></div>';
  h+='<div class="rn-row"><span>Territory</span><b>'+escHtml(t.name)+'</b></div>';
  h+='<div class="rn-row"><span>Holding (your cut)</span><b>'+money(Math.floor(r.holding||0))+'</b>'+((r.holding||0)>=1000?'<span class="rn-badge">💰 ready</span>':"")+'</div>';
  h+='<div class="rn-row"><span>Clients</span><b>'+(r.sales||[]).length+'/'+runnerCapacity(r)+'</b></div>';
@@ -9698,7 +9781,7 @@ function runnerCallHTML(r){
  }
  return h;
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP,RUNNER_LEVELS:RUNNER_LEVELS,RUNNER_SLOTS:RUNNER_SLOTS,RUNNER_XP_PER_SALE:RUNNER_XP_PER_SALE,runnerLevel:runnerLevel,runnerSpecBonus:runnerSpecBonus,runnerPhonebookSection:runnerPhonebookSection,runnerDetailHTML:runnerDetailHTML};
 })();
 </script>
 <style>
