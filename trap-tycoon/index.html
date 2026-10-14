@@ -2005,7 +2005,8 @@ body.electron-phone #ewin-controls{display:flex}
 .pane-street .amtrow.c button.on{background:#2d5a27;border-color:#7CFC00;color:#7CFC00}
 
 /* ---- Street Deal: dealer chips + category tabs ---- */
-.pane-street .dchips{display:flex;gap:10px;padding:2px 20px 12px;margin-bottom:0;overflow-x:auto}
+.pane-street .dchips{display:flex;gap:10px;padding:2px 20px 12px;margin-bottom:0;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none}
+.pane-street .dchips::-webkit-scrollbar{display:none;width:0;height:0}
 .pane-street .dchip{flex:none;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:16px;border:1px solid #263326;background:#131a13;color:#e8e8e8;font-weight:700;font-size:14px;white-space:nowrap}
 .pane-street .dchip .d-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex:none}
 .pane-street .dchip .dc-name{white-space:nowrap}
@@ -2708,7 +2709,7 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v143";
+var GAME_VER="v144";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
    {v:"BETA-0.018.11",ts:"Oct 5, 2026 \u00b7 7:30 PM",t:"Terminal launch",d:"PC players can now launch via plug.bat in CMD \u2014 terminal boot sequence, plug code unlock. Mobile untouched."},
@@ -3550,6 +3551,7 @@ function ttShowErr(){
 }
 function ttHideErr(){try{var b=document.getElementById("err-bubble");if(b)b.classList.remove("show");}catch(e){}}
 document.addEventListener("click",function(e){var b=document.getElementById("err-bubble");if(b&&b.classList.contains("show")&&!b.contains(e.target))ttHideErr();});
+document.addEventListener("scroll",function(e){var t=e.target;if(!t||!t.classList)return;if(t.classList.contains("dstrip"))window.__dsPos=t.scrollLeft;if(t.classList.contains("cstrip"))window.__csPos=t.scrollLeft;},true);
 function ttShowReup(){
   try{
    var fp=document.getElementById("lock-fp");
@@ -4748,7 +4750,7 @@ function render(){
   else if(getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;_cc.unreadCount=0;_cc.softUnread=false;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
   else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
  }
- if(S.tab==="street"){q(".pane-street").innerHTML=streetHTML();}
+ if(S.tab==="street"){q(".pane-street").innerHTML=streetHTML();var _ds=q(".pane-street .dstrip");if(_ds&&window.__dsPos)_ds.scrollLeft=window.__dsPos;var _cs=q(".pane-street .cstrip");if(_cs&&window.__csPos)_cs.scrollLeft=window.__csPos;}
  if(S.tab==="maps"){q(".pane-maps").innerHTML=mapsHTML();}
  if(S.tab==="rep"){q(".pane-rep").innerHTML=repHTML();}
  if(S.tab==="props"){q(".pane-props").innerHTML=propsHTML();}
@@ -4770,14 +4772,12 @@ function render(){
  return {di:bestDi,price:best};
 }
 function streetHTML(){
- var dh=tabHeader("street")+'<div class="amtrow c"><span>Deal:</span>'
-  +'<button type="button" data-act="amt" data-amt="1"'+(S.amt===1?' class="on"':'')+'>1g</button>'
-  +'<button type="button" data-act="amt" data-amt="5"'+(S.amt===5?' class="on"':'')+'>5g</button></div>';
+ var dh=tabHeader("street");
  if(locked)dh+='<div class="lock sm">Laying low — heat dies down in '+Math.ceil((S.lockedUntil-now)/60000)+' min.</div>';
  var un=unlocked();
  var di=S.dealer||0;if(di>=S.dealers.length)di=0;
  while(di>0&&!tierUnlocked(DEALER_TIER[di]))di--;
- dh+='<div class="dchips">';
+ dh+='<div class="dchips dstrip">';
  S.dealers.forEach(function(d,ii){
   var dv=tierVis(DEALER_TIER[ii]);
   if(dv===0)return;
@@ -4786,10 +4786,20 @@ function streetHTML(){
  });
  dh+='</div>';
  var dcat=S.dealcat||"bud";
- dh+='<div class="dchips">'
-  +'<button type="button" class="dchip'+(dcat==="bud"?" on":"")+'" data-act="dealcat" data-c="bud"><span class="dc-name">Bud</span></button>'
-  +'<button type="button" class="dchip'+(dcat==="joints"?" on":"")+'" data-act="dealcat" data-c="joints"><span class="dc-name">Joints</span></button>'
-  +'<button type="button" class="dchip'+(dcat==="lab"?" on":"")+'" data-act="dealcat" data-c="lab"><span class="dc-name">Lab</span></button>'
+ function qSell(act,di2,k,have,isJ){
+  var b='<span style="display:flex;gap:6px;flex:none">';
+  [1,5,10].forEach(function(a){ if(have>=a)b+='<button type="button" data-act="'+act+'" data-d="'+di2+'" data-strain="'+k+'" data-q="'+a+'"'+(locked?" disabled":"")+'>'+a+(isJ?"":"g")+'</button>'; });
+  return b+'</span>';
+ }
+ function catHas(keys,bag){for(var i=0;i<keys.length;i++){var k=keys[i];var v=tierVis(PRODUCTS[k].tier);if(v===0||v===1)continue;if(PRODUCTS[k].gene&&!strainUnlocked(k))continue;if((bag[k]||0)>0)return true;}return false;}
+ var hasBud=catHas(GROWKEYS,S.stash),hasJoints=catHas(GROWKEYS,S.joints),hasLab=catHas(RKEYS,S.stash);
+ if(dcat==="bud"&&!hasBud)dcat=hasJoints?"joints":(hasLab?"lab":dcat);
+ if(dcat==="joints"&&!hasJoints)dcat=hasBud?"bud":(hasLab?"lab":dcat);
+ if(dcat==="lab"&&!hasLab)dcat=hasBud?"bud":(hasJoints?"joints":dcat);
+ dh+='<div class="dchips cstrip">'
+  +(hasBud?'<button type="button" class="dchip'+(dcat==="bud"?" on":"")+'" data-act="dealcat" data-c="bud"><span class="dc-name">Bud</span></button>':"")
+  +(hasJoints?'<button type="button" class="dchip'+(dcat==="joints"?" on":"")+'" data-act="dealcat" data-c="joints"><span class="dc-name">Joints</span></button>':"")
+  +(hasLab?'<button type="button" class="dchip'+(dcat==="lab"?" on":"")+'" data-act="dealcat" data-c="lab"><span class="dc-name">Lab</span></button>':"")
   +'</div>';
  var d=S.dealers[di];
  var bActive=buffActive(),bpct=buffPct();
@@ -4804,7 +4814,7 @@ function streetHTML(){
    var ju=sellU(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9*prestigeBonus(k)));
    dh+='<div class="drow2"><span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span><div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' joints <b>'+(S.joints[k]||0)+'</b></div>'
     +'<div class="d2-sub">pays '+money(ju)+'/joint'+(bActive?'<span class="bufftag">+'+bpct+'%</span>':"")+'</div></div>'
-    +'<button type="button" data-act="dsellj" data-d="'+di+'" data-strain="'+k+'"'+(locked||(S.joints[k]||0)<S.amt?" disabled":"")+'>Sell</button></div>';
+    +qSell("dsellj",di,k,S.joints[k]||0,true)+'</div>';
   });
  }else{
   var keys=dcat==="lab"?RKEYS:GROWKEYS;
@@ -4820,7 +4830,7 @@ function streetHTML(){
    var pic=GROWKEYS.indexOf(k)>=0?'<span class="picon xs picon-bud" style="--c:'+PRODUCTS[k].c1+'"></span>':'<span class="picon xs picon-'+k+'"></span>';
    dh+='<div class="drow2">'+pic+'<div class="d2-mid"><div class="d2-name">'+PRODUCTS[k].name+' <b>'+S.stash[k]+'g</b></div>'
     +'<div class="d2-sub">sells '+fmtP(su)+(bActive?'<span class="bufftag">+'+bpct+'%</span>':"")+'</div></div>'
-    +'<button type="button" data-act="dsell" data-d="'+di+'" data-strain="'+k+'"'+(locked?" disabled":"")+'>Sell</button></div>';
+    +qSell("dsell",di,k,S.stash[k]||0,false)+'</div>';
   });
  }
  return dh;
@@ -6139,10 +6149,10 @@ function doSendReply(nm,rid){
  save();render();
  setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);
 }
-function doDeal(di,k,isBuy,isJoint){
+function doDeal(di,k,isBuy,isJoint,qty){
  var now=Date.now();
  if(now<S.lockedUntil)return;
- var d=S.dealers[di],g=S.amt,st=PRODUCTS[k];
+ var d=S.dealers[di],g=(typeof qty==="number"&&qty>0)?qty:S.amt,st=PRODUCTS[k];
  if(isBuy){
   var unit=ppu(st.price,d.sell[k]),cost=Math.ceil(unit*g);
   if(S.cash<cost){S.msg="Not enough cash for that.";save();render();return;}
@@ -8170,7 +8180,7 @@ root.addEventListener("click",function(e){
  if(a==="terr-pin"){var _tp=b.dataset.t;if(_tp&&terrDef(_tp)){if(!terrUnlocked(_tp)){S.msg=terrDef(_tp).name+" unlocks at level "+terrDef(_tp).unlock+".";save();render();return;}MAPSEL=_tp;if(!S.terr)S.terr={active:"home",zones:{}};if(S.terr.active!==_tp){S.terr.active=_tp;S.msg="Operating in "+terrDef(_tp).name+" now — prices ×"+terrDef(_tp).price+".";}save();render();}return;}
  if(a==="gps-zoom"){var _gz=b.dataset.z;GPSZOOM=_gz==="in"?Math.min(3,GPSZOOM+1):Math.max(1,GPSZOOM-1);render();return;}
  if(a==="dbuy"){doDeal(+b.dataset.d,b.dataset.strain,true);return;}
- if(a==="dsell"){doDeal(+b.dataset.d,b.dataset.strain,false);return;}
+ if(a==="dsell"){doDeal(+b.dataset.d,b.dataset.strain,false,false,b.dataset.q?+b.dataset.q:undefined);return;}
  if(a==="cookstart"){startCook(b.dataset.key);return;}
  if(a==="cookunqueue"){unqueueCook(b.dataset.i);return;}
  if(a==="cookpre"){
@@ -8325,7 +8335,7 @@ root.addEventListener("click",function(e){
  if(a==="chillsel"){S.chillStrain=b.dataset.strain;save();render();return;}
  if(a==="roll"){doRoll(b.dataset.strain,+b.dataset.n||1);return;}
  if(a==="smoke"){doSmoke(b.dataset.strain);return;}
- if(a==="dsellj"){doDeal(+b.dataset.d,b.dataset.strain,false,true);return;}
+ if(a==="dsellj"){doDeal(+b.dataset.d,b.dataset.strain,false,true,b.dataset.q?+b.dataset.q:undefined);return;}
  if(a==="tickspd"){tickToggleSpeed();return;}
  if(a==="refresh"){location.href=location.pathname+"?cb="+Date.now();return;}
    if(a==="reup"){
