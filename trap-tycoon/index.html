@@ -1718,6 +1718,9 @@ body.electron-phone #ewin-controls{display:flex}
 .hdot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#223;margin-right:3px}
 .hdot.on{background:#ff5d5d;box-shadow:0 0 6px #ff5d5d}
 .plant-marker{position:absolute;font-size:26px;background:none;border:none;z-index:4;filter:drop-shadow(0 0 6px #7dffb0)}
+.bag-marker{position:absolute;background:none;border:none;padding:0;z-index:4;transform:translate(-50%,-50%);line-height:0;cursor:pointer;-webkit-tap-highlight-color:transparent;animation:none!important;opacity:1}
+.bag-marker svg{display:block;width:100%;height:100%}
+.plant-shadow{position:absolute;z-index:3;border-radius:50%;pointer-events:none;background:radial-gradient(ellipse at center,rgba(0,0,0,.55) 0%,rgba(0,0,0,.30) 55%,rgba(0,0,0,0) 74%);transform:translate(-50%,-50%)}
 .hunt-btn{position:absolute;top:64px;left:50%;transform:translateX(-50%);z-index:6;font-size:12px;letter-spacing:1px;padding:10px 18px;border-radius:20px;border:1px solid rgba(125,255,176,.5);color:#d9ffe9;background:rgba(10,30,20,.8)}
 .sh-card{display:flex;justify-content:space-between;align-items:center;gap:8px;margin:8px 0;padding:8px;border:1px solid rgba(127,212,255,.25);border-radius:10px}
 .sh-card b{display:block;font-size:13px}
@@ -2709,7 +2712,7 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v144";
+var GAME_VER="v145";
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
    {v:"BETA-0.018.11",ts:"Oct 5, 2026 \u00b7 7:30 PM",t:"Terminal launch",d:"PC players can now launch via plug.bat in CMD \u2014 terminal boot sequence, plug code unlock. Mobile untouched."},
@@ -7278,34 +7281,88 @@ function visorStop(){
  window._visorLive=false;
  visorOrientStop();
 }
-/* ---- visor plant anchoring: gyro parallax ----
+/* ---- visor SCAN anchoring: floor-plane projection ----
    True WebXR hit-test anchoring is not available in the APK's WebView
-   (navigator.xr is absent there) or the widget, so hunt plants are pinned
-   by device orientation instead: each plant is placed at a compass bearing
-   + pitch offset relative to where the phone pointed at spawn, and
-   re-projected to screen space every frame. Panning the phone slides plants
-   against the camera feed like real-world objects. No orientation data ->
-   static markers (legacy behavior). */
+   (navigator.xr is absent there) or the widget, so SCAN pickups are pinned
+   by device orientation instead: each pickup is a dime bag lying on a floor
+   plane 1.35m below the camera at a fixed room address (a compass bearing
+   locked at spawn + a floor distance), re-projected to screen space every
+   frame. Panning the phone slides bags against the camera feed like
+   real-world objects, and each bag's size comes from perspective (its
+   angular size at its distance). Heading/pitch pass through a low-pass +
+   deadband smoother first, and the render loop only ever transforms
+   existing marker nodes (never recreates them, never animates opacity),
+   so bags sit still instead of flickering. No orientation data -> the
+   same floor math at a nominal pose with bearings compressed into the
+   view: a static floor arrangement that is never empty. */
 function wrap180(d){d=d%360;if(d>180)d-=360;if(d<-180)d+=360;return d;}
+function visorOrientSmooth(o){
+ var sm=window._visorOrientSm;
+ if(!sm){window._visorOrientSm={alpha:o.alpha,beta:o.beta};return window._visorOrientSm;}
+ var f=0.12;
+ var daS=wrap180(o.alpha-sm.alpha),dbS=o.beta-sm.beta;
+ if(Math.abs(daS)<0.15)daS=0;
+ if(Math.abs(dbS)<0.15)dbS=0;
+ sm.alpha=sm.alpha+daS*f;
+ sm.beta=sm.beta+dbS*f;
+ return sm;
+}
+/* Per-pickup floor distance / bag rotation. New hunts set both at spawn;
+   hunts saved by older builds lack the fields, so they are hashed from the
+   plant id instead — deterministic, hence identical on every frame. */
+function bagDist(pl){
+ if(pl.dist!=null)return pl.dist;
+ var h=7;for(var i=0;i<pl.id.length;i++)h=(h*31+pl.id.charCodeAt(i))>>>0;
+ return 1.5+(h%300)/100;
+}
+function bagRot(pl){
+ if(pl.rot!=null)return pl.rot;
+ var h=13;for(var i=0;i<pl.id.length;i++)h=(h*37+pl.id.charCodeAt(i))>>>0;
+ return (h%25)-12;
+}
+function bagMetrics(pl){
+ var vis=document.querySelector(".pane-visor .visor");
+ var vhPx=vis?vis.clientHeight:760;
+ var bw=Math.max(30,Math.min(118,Math.round(Math.atan2(0.15,bagDist(pl))*180/Math.PI/48*vhPx)));
+ return{bw:bw,bh:Math.round(bw*0.42),sw:Math.round(bw*1.18),sh:Math.max(6,Math.round(bw*0.30))};
+}
 function huntPlantXY(pl){
  var o=window._visorOrient,ref=S.hunt&&S.hunt.ref;
- if(pl.yaw==null)return{x:pl.x==null?50:pl.x,y:pl.y==null?50:pl.y,off:false};
- if(!o||!o.has||!ref||!ref.has){
-  return{x:Math.max(5,Math.min(95,50+pl.yaw*0.8)),y:Math.max(5,Math.min(95,50-pl.pitch*0.8)),off:false};
+ var HFOV=62,VFOV=48,CAMH=1.35;
+ var d=bagDist(pl),m=bagMetrics(pl);
+ function out(x,y,off){return{x:x,y:y,off:off,fp:true,bw:m.bw,bh:m.bh,sw:m.sw,sh:m.sh};}
+ if(pl.yaw==null){
+  /* static spawn (orientation never granted): saved x/y, shown as a floor bag */
+  return out(pl.x==null?50:pl.x,pl.y==null?62:pl.y,false);
  }
- var HFOV=62,VFOV=48;
- var dy=wrap180(o.alpha-ref.alpha),dp=o.beta-ref.beta;
+ if(!o||!o.has||!ref||!ref.has){
+  /* no live orientation: nominal pose, bearings compressed into the view */
+  var dyaw=Math.max(-26,Math.min(26,pl.yaw));
+  var fbEl=-Math.atan2(CAMH,d)*180/Math.PI;
+  return out(50+dyaw*(100/HFOV),50+(-26-fbEl)*(100/VFOV),false);
+ }
+ var sm=visorOrientSmooth(o);
+ var dy=wrap180(sm.alpha-ref.alpha);
+ var axisEl=sm.beta-90;                              /* view axis elevation above horizontal */
+ var baseEl=-Math.atan2(CAMH,d)*180/Math.PI;         /* bag base elevation (below horizontal) */
  var x=50+(pl.yaw-dy)*(100/HFOV);
- var y=50+(dp-pl.pitch)*(100/VFOV);
- var off=(x<-12||x>112||y<-12||y>112);
- return{x:Math.max(-20,Math.min(120,x)),y:Math.max(-20,Math.min(120,y)),off:off};
+ var y=50+(axisEl-baseEl)*(100/VFOV);
+ var off=(x<-15||x>115||y<-15||y>135);
+ return out(Math.max(-25,Math.min(125,x)),Math.max(-25,Math.min(140,y)),off);
 }
 function visorOrientStart(){
  if(window._visorOrientOn)return;
  window._visorOrientOn=true;
  window._visorOrient={has:false,alpha:0,beta:0,gamma:0};
+ window._visorOrientSm=null;
+ window._visorOrientAbs=false;
  window._visorOrientH=function(e){
   if(!e||e.alpha==null||e.beta==null)return;
+  /* deviceorientationabsolute and deviceorientation can report alpha in
+     different reference frames; once absolute readings arrive, relative
+     ones are ignored so the two sources stop fighting over this state. */
+  if(e.absolute)window._visorOrientAbs=true;
+  else if(window._visorOrientAbs)return;
   window._visorOrient={has:true,alpha:e.alpha,beta:e.beta,gamma:(e.gamma==null?0:e.gamma)};
  };
  try{
@@ -7332,14 +7389,25 @@ function visorOrientLoop(){
 function visorOrientApply(){
  if((S.visorMode||"scan")!=="scan")return;
  if(!S.hunt||!S.hunt.plants||!S.hunt.plants.length)return;
+ var vis=document.querySelector(".pane-visor .visor");
+ if(!vis)return;
+ var W=vis.clientWidth||480,H=vis.clientHeight||760;
  for(var i=0;i<S.hunt.plants.length;i++){
   var pl=S.hunt.plants[i];
   if(pl.yaw==null)continue;
-  var el=document.querySelector('.plant-marker[data-id="'+pl.id+'"]');
+  var el=document.querySelector('.bag-marker[data-id="'+pl.id+'"]');
   if(!el)continue;
   var xy=huntPlantXY(pl);
-  el.style.left=xy.x+"%";el.style.top=xy.y+"%";
+  var px=(xy.x/100*W).toFixed(1),py=(xy.y/100*H).toFixed(1);
+  if(!el.dataset.tz){el.dataset.tz="1";el.style.left="0px";el.style.top="0px";}
+  el.style.transform="translate("+px+"px,"+py+"px) translate(-50%,-50%) rotate("+bagRot(pl)+"deg)";
   el.style.visibility=xy.off?"hidden":"visible";
+  var sh=document.querySelector('.plant-shadow[data-id="'+pl.id+'"]');
+  if(sh){
+   if(!sh.dataset.tz){sh.dataset.tz="1";sh.style.left="0px";sh.style.top="0px";}
+   sh.style.transform="translate("+px+"px,"+py+"px) translate(-50%,-32%)";
+   sh.style.visibility=xy.off?"hidden":"visible";
+  }
  }
 }
 function visorRefresh(){
@@ -7400,11 +7468,26 @@ function huntStart(){
   else if(r<0.97){gene="Ember OG";rar="rare";}
   else{gene="Ghost Pepper Kush";rar="LEGENDARY";}
   var p={id:"h"+Date.now()+"_"+i,gene:gene,rar:rar};
-  if(ref){p.yaw=-38+Math.random()*76;p.pitch=-12+Math.random()*30;}
-  else{p.x=12+Math.floor(Math.random()*72);p.y=24+Math.floor(Math.random()*44);}
+  p.dist=Math.round((1.5+Math.random()*3)*10)/10;
+  p.rot=Math.floor(Math.random()*25)-12;
+  if(ref){
+   /* fixed room address: bearing spread wide around the current heading
+      (min ~35 deg between pickups), locked for the whole hunt */
+   var yaw=null,bestYaw=0,bestSep=-1;
+   for(var t=0;t<40&&yaw==null;t++){
+    var cand=-150+Math.random()*300,sep=360;
+    for(var jj=0;jj<plants.length;jj++){var dd=Math.abs(wrap180(cand-plants[jj].yaw));if(dd<sep)sep=dd;}
+    if(sep>=35)yaw=cand;
+    else if(sep>bestSep){bestSep=sep;bestYaw=cand;}
+   }
+   p.yaw=Math.round((yaw==null?bestYaw:yaw)*10)/10;
+   p.pitch=0;
+  }
+  else{p.x=12+Math.floor(Math.random()*72);p.y=40+Math.floor(Math.random()*34);}
   plants.push(p);
  }
  S.hunt={plants:plants,ref:ref};
+ if(ref&&o&&o.has)window._visorOrientSm={alpha:o.alpha,beta:o.beta};
  window._visorLootMsg="\uD83D\uDC3E Hunt on — "+n+" rare "+(n>1?"plants":"plant")+" in view. Tap to collect.";
  if(window._visorLootT)clearTimeout(window._visorLootT);window._visorLootT=setTimeout(function(){window._visorLootMsg="";if(window._visorLive)visorRefresh();},4000);
  save();visorRefresh();
@@ -7430,13 +7513,91 @@ function huntCollect(id){
  save();visorRefresh();
  if(window._visorLootT)clearTimeout(window._visorLootT);window._visorLootT=setTimeout(function(){window._visorLootMsg="";if(window._visorLive)visorRefresh();},4000);
 }
+/* ---- DIME BAG pickup art: a composed SVG baggie (translucent plastic,
+   zip seal, seeds + a little bud inside, crinkle sheen), drawn ONCE per
+   marker; the orient loop only ever moves it via transform. ---- */
+function bagSVG(pl){
+ var suf=String(pl.id).replace(/[^a-zA-Z0-9]/g,"");
+ var seed=7;for(var i=0;i<pl.id.length;i++)seed+=pl.id.charCodeAt(i)*(i+3);
+ function rnd(){seed=(seed*1103515245+12345)&0x7fffffff;return (seed%1000)/1000;}
+ function R(a,b){return a+rnd()*(b-a);}
+ var outline="M22 14 Q58 8 92 12 Q106 13 108 24 L106 88 Q107 104 91 105 L30 107 Q14 106 14 90 L13 34 Q12 20 22 14 Z";
+ var s='<svg viewBox="0 0 120 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">';
+ s+='<defs>'
+  +'<linearGradient id="pg'+suf+'" x1="0" y1="0" x2="1" y2="1">'
+  +'<stop offset="0" stop-color="#ffffff" stop-opacity=".13"/><stop offset=".35" stop-color="#f4f8f8" stop-opacity=".03"/><stop offset=".7" stop-color="#e2eaee" stop-opacity=".05"/><stop offset="1" stop-color="#c3ced4" stop-opacity=".10"/></linearGradient>'
+  +'<radialGradient id="ish'+suf+'" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#33300f" stop-opacity=".38"/><stop offset="1" stop-color="#33300f" stop-opacity="0"/></radialGradient>'
+  +'<radialGradient id="ng'+suf+'" cx=".38" cy=".32" r=".85"><stop offset="0" stop-color="#5f843f"/><stop offset=".55" stop-color="#3e5c26"/><stop offset="1" stop-color="#223812"/></radialGradient>'
+  +'<linearGradient id="bsh'+suf+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#50432a" stop-opacity="0"/><stop offset="1" stop-color="#50432a" stop-opacity=".18"/></linearGradient>'
+  +'<clipPath id="bc'+suf+'"><path d="'+outline+'"/></clipPath>'
+  +'<filter id="sf'+suf+'" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="0.7"/></filter>'
+  +'</defs>';
+ s+='<g clip-path="url(#bc'+suf+')">';
+ /* faint milky body so the plastic itself registers against the floor */
+ s+='<rect x="0" y="0" width="120" height="120" fill="#f4f7f2" fill-opacity=".10"/>';
+ /* contents settle shadow */
+ s+='<ellipse cx="60" cy="92" rx="41" ry="13" fill="url(#ish'+suf+')"/>';
+ /* BUD: individual shaded nugs, deep greens, nothing neon */
+ var bx=57+R(-6,6),by=54+R(-4,4);
+ s+='<ellipse cx="'+bx+'" cy="'+(by+3)+'" rx="30" ry="15" fill="#1e330f" fill-opacity=".5"/>';
+ var nug=[[0,0,13],[15,-4,10],[-14,-3,10],[8,8,9],[-9,7,8],[1,-10,9]];
+ for(var b=0;b<nug.length;b++){
+  s+='<circle cx="'+(bx+nug[b][0]).toFixed(1)+'" cy="'+(by+nug[b][1]).toFixed(1)+'" r="'+nug[b][2]+'" fill="url(#ng'+suf+')"/>';
+ }
+ /* nug crevice shading + a few leaf highlights + pistils */
+ for(var c=0;c<5;c++){
+  s+='<circle cx="'+(bx+R(-13,13)).toFixed(1)+'" cy="'+(by+R(-6,7)).toFixed(1)+'" r="'+R(2.2,3.6).toFixed(1)+'" fill="#223812" fill-opacity=".35"/>';
+ }
+ for(var h=0;h<6;h++){
+  s+='<circle cx="'+(bx+R(-14,14)).toFixed(1)+'" cy="'+(by+R(-8,6)).toFixed(1)+'" r="'+R(1.5,2.5).toFixed(1)+'" fill="#759751" fill-opacity=".6"/>';
+ }
+ for(var p=0;p<4;p++){
+  s+='<circle cx="'+(bx+R(-11,11)).toFixed(1)+'" cy="'+(by+R(-6,6)).toFixed(1)+'" r="1.1" fill="#c07f2e"/>';
+ }
+ /* SEEDS: bigger, browner, pale ridge stripe, a couple up by the bud */
+ var scols=["#a87f45","#97713c","#8a6533","#b28a4c","#7d5c2e"];
+ var seedpos=[[34,84],[48,93],[70,90],[86,82],[95,94],[40,68],[78,70],[58,99]];
+ for(var k=0;k<seedpos.length;k++){
+  var cx2=seedpos[k][0]+R(-3,3),cy2=seedpos[k][1]+R(-2,2),rx=R(5.6,7.4),ry=rx*0.58,rt=Math.floor(R(0,180));
+  s+='<g transform="rotate('+rt+' '+cx2.toFixed(1)+' '+cy2.toFixed(1)+')">'
+   +'<ellipse cx="'+cx2.toFixed(1)+'" cy="'+cy2.toFixed(1)+'" rx="'+rx.toFixed(1)+'" ry="'+ry.toFixed(1)+'" fill="'+scols[k%scols.length]+'"/>'
+   +'<path d="M '+(cx2-rx*0.7).toFixed(1)+' '+cy2.toFixed(1)+' Q '+cx2.toFixed(1)+' '+(cy2-ry*0.85).toFixed(1)+' '+(cx2+rx*0.7).toFixed(1)+' '+cy2.toFixed(1)+'" stroke="#eedcae" stroke-opacity=".65" stroke-width="1.1" fill="none"/></g>';
+ }
+ /* plastic tint over contents (kept light so contents stay readable) */
+ s+='<rect x="0" y="0" width="120" height="120" fill="url(#pg'+suf+')"/>';
+ s+='<rect x="0" y="84" width="120" height="36" fill="url(#bsh'+suf+')"/>';
+ /* crinkle sheen + corner wrinkle fans */
+ s+='<g filter="url(#sf'+suf+')" stroke="#ffffff" fill="none" stroke-linecap="round">'
+  +'<path d="M24 96 Q52 58 96 30" stroke-opacity=".22" stroke-width="2.4"/>'
+  +'<path d="M30 106 Q66 76 102 58" stroke-opacity=".13" stroke-width="3.2"/>'
+  +'<path d="M40 30 Q62 22 88 28" stroke-opacity=".5" stroke-width="1.3"/>'
+  +'<path d="M22 55 Q34 50 44 54" stroke-opacity=".16" stroke-width="1.6"/>'
+  +'<path d="M16 20 L38 44 M14 34 L32 52" stroke-opacity=".20" stroke-width="1.1"/>'
+  +'<path d="M104 96 L84 74 M106 82 L90 64" stroke-opacity=".16" stroke-width="1.1"/>'
+  +'</g>';
+ /* zip seal band across the far edge */
+ s+='<rect x="10" y="19" width="102" height="14" fill="#ffffff" fill-opacity=".09"/>';
+ s+='<line x1="15" y1="25.5" x2="105" y2="24.5" stroke="#c8452c" stroke-opacity=".35" stroke-width="1.5"/>';
+ s+='<line x1="15" y1="29.5" x2="105" y2="28.5" stroke="#3f6fb5" stroke-opacity=".32" stroke-width="1.5"/>';
+ for(var t=0;t<15;t++){var tx=19+t*5.8;s+='<line x1="'+tx.toFixed(1)+'" y1="20.5" x2="'+tx.toFixed(1)+'" y2="32.5" stroke="#ffffff" stroke-opacity=".13" stroke-width="1"/>';}
+ s+='</g>';
+ /* folded corner: small flap at the top-right with its own highlight */
+ s+='<path d="M92 12 L108 15 L99 27 Z" fill="#ffffff" fill-opacity=".13" stroke="#ffffff" stroke-opacity=".30" stroke-width=".8"/>';
+ /* edges: darker underlap first (plastic thickness), then the light rim */
+ s+='<path d="'+outline+'" fill="none" stroke="#7d929b" stroke-opacity=".30" stroke-width="2.6" transform="translate(0 1.0)"/>';
+ s+='<path d="'+outline+'" fill="none" stroke="#ffffff" stroke-opacity=".55" stroke-width="1.1"/>';
+ s+='</svg>';
+ return s;
+}
+
 function huntMarkersHTML(){
  var h="";
  if((S.visorMode||"scan")!=="scan")return h;
  if(S.hunt&&S.hunt.plants&&S.hunt.plants.length){
   h+=S.hunt.plants.map(function(pl){
    var xy=huntPlantXY(pl);
-   return '<button type="button" class="plant-marker" data-act="hunt-collect" data-id="'+pl.id+'" style="left:'+xy.x+'%;top:'+xy.y+'%'+(xy.off?';visibility:hidden':'')+'">\uD83C\uDF31</button>';
+   var sh='<span class="plant-shadow" data-id="'+pl.id+'" style="left:'+xy.x+'%;top:'+xy.y+'%;width:'+xy.sw+'px;height:'+xy.sh+'px'+(xy.off?';visibility:hidden':'')+'"></span>';
+   return sh+'<button type="button" class="bag-marker" data-act="hunt-collect" data-id="'+pl.id+'" style="left:'+xy.x+'%;top:'+xy.y+'%;width:'+xy.bw+'px;height:'+xy.bh+'px;transform:translate(-50%,-50%) rotate('+bagRot(pl)+'deg)'+(xy.off?';visibility:hidden':'')+'">'+bagSVG(pl)+'</button>';
   }).join("");
  }else{
   h+='<button type="button" class="hunt-btn" data-act="hunt-start">\uD83D\uDC3E START STRAIN HUNT</button>';
