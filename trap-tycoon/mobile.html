@@ -117,16 +117,6 @@
   <div class="lock-notifs" id="lock-notifs"></div>
   <button type="button" class="lock-reup" id="lock-reup" data-act="reup" hidden>&#10227; Update available &mdash; tap to re-up</button>
 <div class="err-bubble" id="err-bubble" onclick="ttHideErr()"><b>Download failed</b><br><span id="err-reason">Unknown error</span><span class="err-hint">Tap this bubble to dismiss. Tap ? to show again.</span></div>
-  <div class="lock-fp" id="lock-fp">
-   <svg viewBox="0 0 48 48" width="56" height="56" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round">
-    <path d="M12 20c0-6 5-10 12-10s12 4 12 10c0 8-2 14-4 20"/>
-    <path d="M18 20c0-3.5 2.5-6 6-6s6 2.5 6 6c0 6-1.5 11-3 16"/>
-    <path d="M24 20v12c0 3-.5 6-1.5 9"/>
-    <path d="M9 24c0 7 1.5 12 4 17"/>
-    <path d="M39 24c0 7-1.5 12-4 17"/>
-   </svg>
-  </div>
-  <div class="lock-hint">Tap fingerprint to unlock</div>
   <div class="lock-ver" id="lock-ver" style="position:absolute;bottom:12px;right:14px;color:#e5484d;font-size:11px;font-weight:700;opacity:.9"></div>
   <div class="lock-pin" id="lock-pin">
    <div class="lock-pin-label" id="lock-pin-label">Enter PIN</div>
@@ -147,6 +137,16 @@
     <button type="button" class="lock-key" data-act="lock-pin-del" aria-label="Delete">&#9003;</button>
    </div>
   </div>
+  <div class="lock-fp" id="lock-fp">
+   <svg viewBox="0 0 48 48" width="56" height="56" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round">
+    <path d="M12 20c0-6 5-10 12-10s12 4 12 10c0 8-2 14-4 20"/>
+    <path d="M18 20c0-3.5 2.5-6 6-6s6 2.5 6 6c0 6-1.5 11-3 16"/>
+    <path d="M24 20v12c0 3-.5 6-1.5 9"/>
+    <path d="M9 24c0 7 1.5 12 4 17"/>
+    <path d="M39 24c0 7-1.5 12-4 17"/>
+   </svg>
+  </div>
+  <div class="lock-hint">Tap fingerprint to unlock</div>
   <button type="button" class="lock-move" id="lock-move" data-act="lock-move">&#128190; Move save</button>
   <div class="lock-transfer" id="lock-transfer" hidden>
    <div class="lt-title">Move your save</div>
@@ -578,10 +578,10 @@ body.electron-phone #ewin-controls{display:flex}
 .err-bubble b{color:#f87171}
 .err-bubble .err-hint{display:block;margin-top:8px;color:#6b7280;font-size:11px}
 .lock-notif{background:rgba(255,255,255,.08);border-radius:10px;padding:8px 12px;font-size:12px;color:#ddd;backdrop-filter:blur(10px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lock-fp{position:absolute;bottom:96px;width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;animation:lockPulse 2.5s infinite}
+.lock-fp{margin:18px auto 0;flex:none;width:72px;height:72px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;cursor:pointer;animation:lockPulse 2.5s infinite}
 .lock-fp:active{background:rgba(74,143,247,.25);border-color:#4a8ff7;transform:scale(.95)}
 .lock-fp svg{opacity:.8}
-.lock-hint{position:absolute;bottom:52px;font-size:13px;color:#888;animation:lockPulse 2s infinite}
+.lock-hint{margin-top:10px;font-size:13px;color:#888;animation:lockPulse 2s infinite}
 .lock-pin{margin-top:18px;display:flex;flex-direction:column;align-items:center}
 .lock-pin-label{font-size:14px;color:#ccc;letter-spacing:.4px}
 .lock-pin-dots{display:flex;gap:12px;margin-top:10px;min-height:13px}
@@ -2634,10 +2634,11 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v150";
+var GAME_VER="v151";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"v151",ts:"Oct 14, 2026",t:"Lock screen layout fix",d:"The fingerprint circle no longer overlaps the PIN pad on the lock screen. It now sits in line below the pad, where it belongs, on every screen size."},
    {v:"v150",ts:"Oct 14, 2026",t:"PIN lock + move your save",d:"The lock screen is now a real PIN pad — set your own 4-6 digit PIN, fingerprint still works too. A new Move save button on the lock screen exports your whole save (all 3 SIM cards) as copyable text and loads an exported save back in, no server involved. Settings > About Phone now shows a plain system status: game version, app version, whether updates are paired, AR readiness and your current SIM. The old Sync app and its relay codes are gone — the lock screen transfer replaces them."},
    {v:"BETA-0.018.11",ts:"Oct 5, 2026 \u00b7 7:30 PM",t:"Terminal launch",d:"PC players can now launch via plug.bat in CMD \u2014 terminal boot sequence, plug code unlock. Mobile untouched."},
    {v:"BETA-0.018.10",ts:"Oct 5, 2026 \u00b7 6:40 PM",t:"Secret contacts",d:"Eric Cizan joins the secret contact list. Unique names and numbers never repeat on any list."},
