@@ -1704,6 +1704,7 @@ body.electron-phone #ewin-controls{display:flex}
 .vmode{font-size:11px;letter-spacing:2px;padding:8px 18px;border-radius:20px;border:1px solid rgba(127,212,255,.4);color:#8fb8d8;background:rgba(10,20,35,.65)}
 .vmode.on{border-color:#7fd4ff;color:#dff4ff;background:rgba(127,212,255,.16);box-shadow:0 0 12px rgba(127,212,255,.3)}
 .visor-hint{text-align:center;font-size:10px;letter-spacing:1px;color:#6e8aa5}
+.visor-arnote{position:absolute;top:64px;left:50%;transform:translateX(-50%);z-index:6;font-size:11px;letter-spacing:1px;color:#9fb6c9;background:rgba(8,14,20,.65);padding:6px 12px;border-radius:14px;white-space:nowrap}
 .visor-panel{position:absolute;top:64px;left:12px;right:12px;background:rgba(6,14,26,.88);border:1px solid rgba(127,212,255,.4);border-radius:14px;padding:12px;z-index:6;color:#dcecff}
 .vp-title{font-size:12px;letter-spacing:2px;color:#7fd4ff;margin-bottom:8px}
 .vp-sub{font-size:12px;color:#8aa4c0;line-height:1.5;text-align:center;padding:8px}
@@ -2712,7 +2713,8 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v148";
+var GAME_VER="v149";
+var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
    {v:"BETA-0.018.11",ts:"Oct 5, 2026 \u00b7 7:30 PM",t:"Terminal launch",d:"PC players can now launch via plug.bat in CMD \u2014 terminal boot sequence, plug code unlock. Mobile untouched."},
@@ -3487,6 +3489,10 @@ function ttLockHide(){
     The pill only shows when a newer build is actually available. */
  function ttCheckUpdate(cb){
   try{
+   // Inside the app shell the shell owns game updates (paired releases):
+   // never self-check against the web build — the shell swaps the game
+   // itself and gates it on GAME_MIN_SHELL.
+   if(window.TTNative){cb(false);return;}
    // Electron desktop: check GitHub releases
    if(window.ttDesktop&&ttDesktop.checkUpdate){
      ttDesktop.checkUpdate().then(function(info){
@@ -4413,7 +4419,7 @@ function render(){
   gh+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">&times;'+sc+'</span></div>'
    +'<div style="display:flex;gap:6px">'
    +'<button type="button" data-act="autoplant" data-strain="'+k+'"'+(sc>0?"":" disabled")+'>AUTO PLANT</button>'
-   +'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+'</button>'
+   +(PRODUCTS[k].gene?'':'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+'</button>')
    +'</div></div>';
  });
  q(".pane-grow").innerHTML=gh;
@@ -5101,7 +5107,7 @@ function mapsHTML(){
     if(v===1){_pageHtml+='<div class="srow c tight locked"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+levelForTier(PRODUCTS[k].tier)+'</span></div></div>';return;}
     _pageHtml+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+'</span></div>'
      +'<div style="display:flex;gap:6px">'
-     +'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+' (&times;'+S.seeds[k]+')</button></div></div>';
+     +(PRODUCTS[k].gene?'<span class="sdesc">HUNT ONLY (&times;'+(S.seeds[k]||0)+')</span></div></div>':'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+' (&times;'+S.seeds[k]+')</button></div></div>');
    });
   }else if(st==="lab"){
    KITKEYS.forEach(function(k){
@@ -5347,7 +5353,9 @@ function showSenorVPackage(){
   var cashGift=100+Math.floor(Math.random()*100);
   var fertGift=2+Math.floor(Math.random()*3);
   S.cash+=cashGift;S.fert+=fertGift;
-  var gk=GROWKEYS[Math.floor(Math.random()*GROWKEYS.length)];
+  var giftPool=GROWKEYS.filter(function(k){return !PRODUCTS[k].gene;});
+  if(!giftPool.length)giftPool=GROWKEYS;
+  var gk=giftPool[Math.floor(Math.random()*giftPool.length)];
   var seedGift=1+Math.floor(Math.random()*2);
   S.seeds[gk]=(S.seeds[gk]||0)+seedGift;
   var pop=document.createElement("div");
@@ -6032,7 +6040,7 @@ function tasksHTML(){
     }else if(_haveBud<_needBud){
      /* need seeds */
      var _sp=PRODUCTS[t.k]?PRODUCTS[t.k].seed:0;
-     _prodBtns='<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+t.k+'"'+(S.cash>=_sp?"":" disabled")+'>Buy '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+' Seeds '+money(_sp)+'</button>';
+     _prodBtns=(PRODUCTS[t.k]&&PRODUCTS[t.k].gene)?'<span class="tk-need">Hunt-only strain — seeds come from SCAN hunts</span>':'<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+t.k+'"'+(S.cash>=_sp?"":" disabled")+'>Buy '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+' Seeds '+money(_sp)+'</button>';
     }else{
      _prodBtns='<span class="tk-need">Need '+_needPaper+' papers</span>';
     }
@@ -6062,7 +6070,7 @@ function tasksHTML(){
       if(m.t==="stash"){
        return '<button type="button" class="tk-make" data-act="task-cook" data-k="'+m.k+'">Cook '+escHtml(PRODUCTS[m.k]?PRODUCTS[m.k].name:m.k)+' first</button>';
       }
-      var _cheapK=PKEYS.filter(function(pk){return PRODUCTS[pk]&&tierVis(PRODUCTS[pk].tier)===2;}).sort(function(a,b){return PRODUCTS[a].seed-PRODUCTS[b].seed;})[0];
+      var _cheapK=PKEYS.filter(function(pk){return PRODUCTS[pk]&&!PRODUCTS[pk].gene&&tierVis(PRODUCTS[pk].tier)===2;}).sort(function(a,b){return PRODUCTS[a].seed-PRODUCTS[b].seed;})[0];
       if(_cheapK)return '<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+_cheapK+'"'+(S.cash>=PRODUCTS[_cheapK].seed?"":" disabled")+'>Buy '+escHtml(PRODUCTS[_cheapK].name)+' Seeds '+money(PRODUCTS[_cheapK].seed)+'</button>';
       return '<span class="tk-need">Need bud</span>';
      }).join("");
@@ -6070,7 +6078,7 @@ function tasksHTML(){
    }else{
     /* raw bud: need seeds */
     var _sp2=PRODUCTS[t.k]?PRODUCTS[t.k].seed:0;
-    _prodBtns='<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+t.k+'"'+(S.cash>=_sp2?"":" disabled")+'>Buy '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+' Seeds '+money(_sp2)+'</button>';
+    _prodBtns=(PRODUCTS[t.k]&&PRODUCTS[t.k].gene)?'<span class="tk-need">Hunt-only strain — seeds come from SCAN hunts</span>':'<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+t.k+'"'+(S.cash>=_sp2?"":" disabled")+'>Buy '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+' Seeds '+money(_sp2)+'</button>';
    }
   }
   h+='<div class="tk-card'+(t.vip?" vip":"")+'"><div class="tk-dot '+_dotCls+'"></div><div class="tk-hd"><b>'+escHtml(t.name)+_vipBadge+_regTag+'</b><span>'+escHtml(when)+'</span></div>'
@@ -6291,7 +6299,7 @@ function notesSeedCards(){
     var _lbl=_needByTask?("Plant for "+(_taskNames[0]||"Tasks")):"Plant";
     _act='<button type="button" class="go-plant" data-act="autoplant" data-strain="'+k+'">'+escHtml(_lbl)+'</button>';
    }
-   else if(_needByTask){_act='<button type="button" class="go-plant" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>BUY '+money(PRODUCTS[k].seed)+'</button>';}
+   else if(_needByTask&&!PRODUCTS[k].gene){_act='<button type="button" class="go-plant" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>BUY '+money(PRODUCTS[k].seed)+'</button>';}
    cards.push({k:k,nameLine:PRODUCTS[k].name+' seeds <b>'+sc+'</b>',subLine:'Plant in empty pots'+(_needByTask&&sc===0?' · needed for task':''),search:PRODUCTS[k].name+" seeds",
    action:_act});
  });
@@ -7538,9 +7546,18 @@ function ttArWarm(on){
  }catch(e){}
 }
 function huntArButtonHTML(){
- if((S.visorMode||"scan")!=="scan"||!ttArAvailable())return "";
- var n=(S.hunt&&S.hunt.plants)?S.hunt.plants.length:0;
- return '<button type="button" class="hunt-btn" data-act="hunt-ar">\uD83D\uDCF7 '+(n?("OPEN AR SCAN \u00B7 "+n+" BAG"+(n>1?"S":"")):"AR STRAIN HUNT")+'</button>';
+ if((S.visorMode||"scan")!=="scan")return "";
+ if(ttArAvailable()){
+  var n=(S.hunt&&S.hunt.plants)?S.hunt.plants.length:0;
+  return '<button type="button" class="hunt-btn" data-act="hunt-ar">\uD83D\uDCF7 '+(n?("OPEN AR SCAN \u00B7 "+n+" BAG"+(n>1?"S":"")):"AR STRAIN HUNT")+'</button>';
+ }
+ // In the app but ARCore reports unavailable: say so in one plain line
+ // instead of the button silently vanishing. Availability is re-checked
+ // live on every render (ttArAvailable is never cached), so if ARCore
+ // recovers, the next render swaps this note back to the button.
+ // No bridge at all (web / widget) -> render nothing, as before.
+ if(window.TTNative&&window.TTNative.arAvailable)return '<div class="visor-arnote">AR unavailable on this device</div>';
+ return "";
 }
 function huntArLaunch(){
  if(!ttArAvailable())return;
@@ -8371,7 +8388,7 @@ root.addEventListener("click",function(e){
   }
   return;
  }
- if(a==="buyseed"){var k=b.dataset.strain;if(strainUnlocked(k)&&S.cash>=PRODUCTS[k].seed){S.cash-=PRODUCTS[k].seed;S.seeds[k]=(S.seeds[k]||0)+1;S.msg="Bought "+PRODUCTS[k].name+" seeds.";save();render();}return;}
+ if(a==="buyseed"){var k=b.dataset.strain;var _bp=PRODUCTS[k];if(_bp&&!_bp.gene&&strainUnlocked(k)&&S.cash>=_bp.seed){S.cash-=_bp.seed;S.seeds[k]=(S.seeds[k]||0)+1;S.msg="Bought "+_bp.name+" seeds.";save();render();}return;}
  if(a==="autoplant"){doAutoPlant(b.dataset.strain);return;}
  if(a==="buyfert"){if(S.cash>=FERT_COST){S.cash-=FERT_COST;S.fert++;S.msg="Fertilizer stocked.";save();render();}return;}
  if(a==="buypapers"){if(S.cash>=PAPER_COST){S.cash-=PAPER_COST;S.papers+=PAPER_PACK;S.msg="Bought "+PAPER_PACK+" rolling papers.";save();render();}return;}
