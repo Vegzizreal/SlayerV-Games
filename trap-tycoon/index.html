@@ -125,7 +125,6 @@ window.hatchWidget={
    <button type="button" class="android-app" data-act="openapp" data-app="bank" data-hwkeys="bank money cash savings account finance deposit withdraw interest"><span class="aa-icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M24 5L5 16h38z" fill="#fff"/><rect x="9" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="17" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="26.5" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="34.5" y="18" width="4.5" height="15" rx="1" fill="#fff"/><rect x="5" y="35" width="38" height="4" rx="1.5" fill="#fff"/><rect x="9" y="41" width="30" height="3" rx="1.5" fill="#bfdbfe"/></svg></span><span class="aa-label">Bank</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="props" data-hwkeys="properties my properties houses grow locations"><span class="aa-icon" style="background:linear-gradient(135deg,#a78bfa,#7c3aed)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M8 22L24 8l16 14v16a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3z" fill="#fff"/><path d="M19 41V28h10v13" fill="#a78bfa"/></svg></span><span class="aa-label">My Properties</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="browser" data-hwkeys="onion darkweb tor browser internet web realtor"><span class="aa-icon" style="background:#0a0a0a;border:1px solid #00ff4133"><svg viewBox="0 0 48 48" width="38" height="38"><ellipse cx="24" cy="26" rx="14" ry="16" fill="none" stroke="#00ff41" stroke-width="2.5"/><ellipse cx="24" cy="26" rx="9" ry="11" fill="none" stroke="#00ff41" stroke-width="2" opacity=".7"/><ellipse cx="24" cy="26" rx="4" ry="6" fill="#00ff41" opacity=".9"/><path d="M24 10c0-3 2-5 4-6" stroke="#00ff41" stroke-width="2" fill="none" stroke-linecap="round"/></svg></span><span class="aa-label">Onion</span></button>
-   <button type="button" class="android-app" data-act="openapp" data-app="auth" data-hwkeys="authenticator sync code save transfer share"><span class="aa-icon" style="background:linear-gradient(135deg,#10b981,#059669)"><svg viewBox="0 0 48 48" width="36" height="36"><rect x="14" y="6" width="20" height="36" rx="4" fill="#fff"/><circle cx="24" cy="14" r="2.5" fill="#10b981"/><rect x="18" y="20" width="12" height="3" rx="1.5" fill="#10b981"/><rect x="18" y="26" width="12" height="3" rx="1.5" fill="#10b981" opacity=".6"/><rect x="18" y="32" width="8" height="3" rx="1.5" fill="#10b981" opacity=".4"/></svg></span><span class="aa-label">Sync</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="grow" data-hwkeys="grow plants garden"><span class="aa-icon" style="background:linear-gradient(135deg,#a8b0bc,#6b7280)"><svg viewBox="0 0 48 48" width="36" height="36"><path d="M17 10h14l3 5h6a3 3 0 0 1 3 3v18a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3V18a3 3 0 0 1 3-3h6z" fill="#1f2937"/><circle cx="24" cy="27" r="9" fill="none" stroke="#f3f4f6" stroke-width="3.5"/><circle cx="24" cy="27" r="3.8" fill="#4b5563"/><circle cx="37" cy="21" r="2.2" fill="#f3f4f6"/></svg></span><span class="aa-label">Grow</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="chill" data-hwkeys="chill smoke relax" id="aa-chillapp" hidden><span class="aa-icon" style="background:linear-gradient(135deg,#4a8ff7,#1e40af)"><svg viewBox="0 0 48 48" width="36" height="36"><circle cx="24" cy="16" r="7.5" fill="none" stroke="#fff" stroke-width="3.6"/><path d="M9 41.5c1.8-7.8 7.6-12 15-12s13.2 4.2 15 12" fill="#fff"/></svg></span><span class="aa-label">Chill</span></button>
    <button type="button" class="android-app" data-act="openapp" data-app="cook" data-hwkeys="lab cook products"><span class="aa-badge" id="aa-labbadge" hidden>!</span><span class="aa-icon" style="background:#ffffff"><svg viewBox="0 0 48 48" width="38" height="38"><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#ea4335"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#fbbc05" transform="rotate(60 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#34a853" transform="rotate(120 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#1a73e8" transform="rotate(180 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#a142f4" transform="rotate(240 24 24)"/><ellipse cx="24" cy="13" rx="5.5" ry="9.5" fill="#ff6d01" transform="rotate(300 24 24)"/><circle cx="24" cy="24" r="6.5" fill="#fff"/></svg></span><span class="aa-label">Lab</span></button>
@@ -178,7 +177,6 @@ window.hatchWidget={
  <div class="pg-pane pane-props" hidden></div>
 <div class="pg-pane pane-bank" hidden></div>
 <div class="pg-pane pane-tasks" hidden></div>
-<div class="pg-pane pane-auth" hidden></div>
 <div class="pg-pane pane-visor" hidden></div>
  <div class="pg-pane pane-battle" hidden></div>
  <div class="pg-hint v-hint"></div>
@@ -200,12 +198,35 @@ window.hatchWidget={
   </div>
   <div class="lock-hint">Tap fingerprint to unlock</div>
   <div class="lock-ver" id="lock-ver" style="position:absolute;bottom:12px;right:14px;color:#e5484d;font-size:11px;font-weight:700;opacity:.9"></div>
-  <div class="lock-sync" style="margin-top:12px;width:80%;max-width:260px">
-   <input id="lock-synccode" maxlength="6" placeholder="SYNC CODE" autocomplete="off"
-    style="width:100%;padding:9px;font-size:15px;text-align:center;letter-spacing:5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;box-sizing:border-box;font-family:monospace;text-transform:uppercase">
-   <button type="button" id="lock-syncbtn" data-act="lock-sync"
-    style="width:100%;margin-top:6px;padding:9px;background:linear-gradient(180deg,#10b981,#059669);color:#fff;border:0;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer">Load Save From Code</button>
-   <div id="lock-syncstatus" style="text-align:center;font-size:12px;min-height:1.4em;margin-top:6px;color:#e5484d"></div>
+  <div class="lock-pin" id="lock-pin">
+   <div class="lock-pin-label" id="lock-pin-label">Enter PIN</div>
+   <div class="lock-pin-dots" id="lock-pin-dots"></div>
+   <div class="lock-pin-err" id="lock-pin-err"></div>
+   <div class="lock-pad" id="lock-pad">
+    <button type="button" class="lock-key" data-act="lock-pin" data-d="1">1</button>
+    <button type="button" class="lock-key" data-act="lock-pin" data-d="2">2</button>
+    <button type="button" class="lock-key" data-act="lock-pin" data-d="3">3</button>
+    <button type="button" class="lock-key" data-act="lock-pin" data-d="4">4</button>
+    <button type="button" class="lock-key" data-act="lock-pin" data-d="5">5</button>
+    <button type="button" class="lock-key" data-act="lock-pin" data-d="6">6</button>
+    <button type="button" class="lock-key" data-act="lock-pin" data-d="7">7</button>
+    <button type="button" class="lock-key" data-act="lock-pin" data-d="8">8</button>
+    <button type="button" class="lock-key" data-act="lock-pin" data-d="9">9</button>
+    <button type="button" class="lock-key" data-act="lock-pin-ok" aria-label="OK">&#10003;</button>
+    <button type="button" class="lock-key" data-act="lock-pin" data-d="0">0</button>
+    <button type="button" class="lock-key" data-act="lock-pin-del" aria-label="Delete">&#9003;</button>
+   </div>
+  </div>
+  <button type="button" class="lock-move" id="lock-move" data-act="lock-move">&#128190; Move save</button>
+  <div class="lock-transfer" id="lock-transfer" hidden>
+   <div class="lt-title">Move your save</div>
+   <button type="button" class="lt-btn" data-act="lock-export">Export This Save &mdash; Copy as Text</button>
+   <div class="lt-note">The text IS your save &mdash; treat it like a password.</div>
+   <textarea id="lock-export-text" readonly placeholder="Your exported save text will appear here"></textarea>
+   <textarea id="lock-import-text" placeholder="Paste an exported save here to load it into this app"></textarea>
+   <button type="button" class="lt-btn lt-imp" data-act="lock-import">Load Save From Text</button>
+   <div class="lt-status" id="lock-transfer-status"></div>
+   <button type="button" class="lt-btn lt-close" data-act="lock-move-close">Close</button>
   </div>
  </div>
  <div class="android-gesturenav" id="tt-gesturenav"><div class="gesture-pill"></div></div>
@@ -631,6 +652,27 @@ body.electron-phone #ewin-controls{display:flex}
 .lock-fp:active{background:rgba(74,143,247,.25);border-color:#4a8ff7;transform:scale(.95)}
 .lock-fp svg{opacity:.8}
 .lock-hint{position:absolute;bottom:52px;font-size:13px;color:#888;animation:lockPulse 2s infinite}
+.lock-pin{margin-top:18px;display:flex;flex-direction:column;align-items:center}
+.lock-pin-label{font-size:14px;color:#ccc;letter-spacing:.4px}
+.lock-pin-dots{display:flex;gap:12px;margin-top:10px;min-height:13px}
+.lock-pin-dot{width:13px;height:13px;border-radius:50%;border:1.5px solid rgba(255,255,255,.55)}
+.lock-pin-dot.on{background:#fff;border-color:#fff}
+.lock-pin-err{font-size:12.5px;color:#e5484d;min-height:1.4em;margin-top:7px;text-align:center}
+.lock-pad{display:grid;grid-template-columns:repeat(3,64px);gap:8px 14px;margin-top:6px;justify-content:center}
+.lock-key{width:64px;height:64px;border-radius:50%;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);color:#fff;font-size:24px;font-weight:300;cursor:pointer;padding:0}
+.lock-key:active{background:rgba(74,143,247,.3);border-color:#4a8ff7}
+.lock-move{position:absolute;bottom:14px;left:14px;padding:8px 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#fff;font-size:13px;font-weight:700;cursor:pointer}
+.lock-move:active{background:rgba(74,143,247,.3)}
+.lock-transfer{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:88%;max-width:340px;max-height:88%;overflow-y:auto;background:#15151f;border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:18px;z-index:5;box-shadow:0 18px 50px rgba(0,0,0,.6)}
+.lock-transfer[hidden]{display:none}
+.lt-title{font-size:16px;font-weight:800;color:#fff;margin-bottom:12px;text-align:center}
+.lt-btn{display:block;width:100%;padding:12px;margin-top:10px;background:linear-gradient(180deg,#10b981,#059669);color:#fff;border:0;border-radius:10px;font-weight:800;font-size:14px;cursor:pointer}
+.lt-btn.lt-imp{background:linear-gradient(180deg,#4a8ff7,#2f6fd0)}
+.lt-btn.lt-close{background:#26262e;border:1px solid rgba(255,255,255,.15)}
+.lt-note{font-size:12px;color:#9a97a3;text-align:center;margin-top:8px;line-height:1.45}
+.lock-transfer textarea{width:100%;box-sizing:border-box;margin-top:10px;padding:9px;min-height:64px;resize:vertical;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.2);color:#fff;border-radius:10px;font-family:monospace;font-size:11px}
+.lt-status{text-align:center;font-size:12.5px;min-height:1.4em;margin-top:8px;color:#e5484d}
+.lt-status.ok{color:#10b981}
 @keyframes lockPulse{0%,100%{opacity:.5}50%{opacity:1}}
 .android-gesturenav{flex:none;order:9;display:flex;justify-content:center;align-items:center;padding:8px 0 10px;background:transparent;position:relative;z-index:50}
 .gesture-pill{width:120px;height:4px;border-radius:2px;background:rgba(255,255,255,.85);box-shadow:0 1px 4px rgba(0,0,0,.4)}
@@ -1795,22 +1837,6 @@ body.electron-phone #ewin-controls{display:flex}
 /* Bank app — real banking app look (always light, clean blue/white) */
 .pane-bank{background:#f1f5f9;border-radius:12px;padding:0 0 16px;position:relative;overflow-y:auto;touch-action:pan-y;color:#0f172a}
 .pane-bank button{touch-action:manipulation}
-.pane-auth{background:#0a0f0d;border-radius:12px;padding:0 0 16px;position:relative;overflow-y:auto;touch-action:pan-y;color:#ece9e2}
-.pane-auth button{touch-action:manipulation}
-.au-head{background:linear-gradient(135deg,#059669,#065f46);color:#fff;padding:18px;border-radius:12px 12px 0 0;text-align:center}
-.au-head h2{margin:0;font-size:18px;letter-spacing:1px}
-.au-head p{margin:6px 0 0;font-size:12px;opacity:.8}
-.au-body{padding:16px}
-.au-codebox{background:#141417;border:2px dashed #10b981;border-radius:12px;padding:20px;text-align:center;margin-bottom:16px}
-.au-code{font-size:36px;font-weight:900;letter-spacing:8px;color:#10b981;font-family:monospace}
-.au-timer{font-size:12px;color:#8f8f99;margin-top:8px}
-.au-btn{display:block;width:100%;padding:14px;margin-bottom:10px;border:0;border-radius:10px;font-weight:800;font-size:15px;cursor:pointer}
-.au-btn-gen{background:linear-gradient(180deg,#10b981,#059669);color:#fff}
-.au-btn-scan{background:#1f2937;color:#ece9e2;border:1px solid #374151}
-.au-input{width:100%;padding:14px;font-size:20px;text-align:center;letter-spacing:6px;background:#141417;border:1px solid #2b2b32;color:#ece9e2;border-radius:10px;box-sizing:border-box;margin-bottom:10px;font-family:monospace;text-transform:uppercase}
-.au-status{text-align:center;font-size:13px;min-height:1.5em;margin-top:8px}
-.au-status.ok{color:#10b981}
-.au-status.err{color:#e5484d}
 .bk-head{background:linear-gradient(135deg,#1d4ed8,#1e3a8a);color:#fff;padding:18px 18px 22px;border-radius:12px 12px 0 0}
 .bk-head .bk-bankname{font-size:13px;font-weight:600;letter-spacing:2.5px;opacity:.85;text-transform:uppercase}
 .bk-head .bk-welcome{font-size:15px;margin-top:6px;opacity:.9}
@@ -2514,60 +2540,6 @@ function bankTxTime(t){
  return (d.getMonth()+1)+"/"+d.getDate()+" "+hm;
 }
 function bankHTML(){
-/* Sync Authenticator app: generate/enter/scan save sync codes */
-var SYNC_RELAY = (typeof window!=='undefined'&&window.TT_SYNC_RELAY)||'http://localhost:8787';
-function authHTML(){
- var code=S._syncCode||'';
- var exp=S._syncExp||0;
- var remain=Math.max(0,Math.ceil((exp-Date.now())/1000));
- var h='<div class="au-head"><h2>🔐 SYNC</h2><p>Share your save across devices</p></div>';
- h+='<div class="au-body">';
- if(code&&remain>0){
-  h+='<div class="au-codebox"><div class="au-code">'+code+'</div><div class="au-timer">Expires in '+Math.floor(remain/60)+':'+String(remain%60).padStart(2,'0')+'</div></div>';
-  h+='<button type="button" class="au-btn au-btn-scan" data-act="sync-cancel">Cancel Code</button>';
- }else{
-  h+='<button type="button" class="au-btn au-btn-gen" data-act="sync-gen">Generate Sync Code</button>';
- }
- h+='<div style="text-align:center;margin:14px 0;font-size:12px;color:#8f8f99">— or —</div>';
- h+='<input class="au-input" id="au-codein" maxlength="6" placeholder="ENTER CODE" autocomplete="off">';
- h+='<button type="button" class="au-btn au-btn-gen" data-act="sync-enter">Load Save From Code</button>';
- h+='<button type="button" class="au-btn au-btn-scan" data-act="sync-scan">📷 Scan QR Code</button>';
- h+='<div class="au-status" id="au-status"></div>';
- h+='</div>';
- return h;
-}
-function syncGen(){
- var payload='';
- try{ payload=JSON.stringify(S); }catch(e){ return 'Failed to serialize save'; }
- if(payload.length>400*1024) return 'Save too large for sync';
- var xhr=new XMLHttpRequest();
- xhr.open('POST',SYNC_RELAY+'/store',false);
- xhr.setRequestHeader('Content-Type','application/json');
- try{ xhr.send(JSON.stringify({payload:payload})); }catch(e){ return 'Relay unreachable'; }
- if(xhr.status!==200) return 'Relay error';
- try{
-  var r=JSON.parse(xhr.responseText);
-  S._syncCode=r.code; S._syncExp=Date.now()+r.expiresIn*1000; save();
-  return null;
- }catch(e){ return 'Bad relay response'; }
-}
-function syncEnter(code){
- code=(code||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
- if(code.length!==6) return 'Enter a 6-character code';
- var xhr=new XMLHttpRequest();
- xhr.open('GET',SYNC_RELAY+'/get/'+code,false);
- try{ xhr.send(); }catch(e){ return 'Relay unreachable'; }
- if(xhr.status!==200) return 'Code not found or expired';
- try{
-  var r=JSON.parse(xhr.responseText);
-  var newS=JSON.parse(r.payload);
-  var keepCode=S._syncCode,keepExp=S._syncExp;
-  S=normalize(Object.assign({},DEF,newS),newS);
-  S._syncCode=null;S._syncExp=0;
-  save();render();
-  return null;
- }catch(e){ return 'Bad save data'; }
-}
  var bk=(S.bank&&typeof S.bank==="object")?S.bank:{bal:0,tx:[]};
  var bal=Math.max(0,bk.bal||0);
  var chips=[1000,5000,10000,50000,100000];
@@ -2713,10 +2685,11 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v149";
+var GAME_VER="v150";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"v150",ts:"Oct 14, 2026",t:"PIN lock + move your save",d:"The lock screen is now a real PIN pad — set your own 4-6 digit PIN, fingerprint still works too. A new Move save button on the lock screen exports your whole save (all 3 SIM cards) as copyable text and loads an exported save back in, no server involved. Settings > About Phone now shows a plain system status: game version, app version, whether updates are paired, AR readiness and your current SIM. The old Sync app and its relay codes are gone — the lock screen transfer replaces them."},
    {v:"BETA-0.018.11",ts:"Oct 5, 2026 \u00b7 7:30 PM",t:"Terminal launch",d:"PC players can now launch via plug.bat in CMD \u2014 terminal boot sequence, plug code unlock. Mobile untouched."},
    {v:"BETA-0.018.10",ts:"Oct 5, 2026 \u00b7 6:40 PM",t:"Secret contacts",d:"Eric Cizan joins the secret contact list. Unique names and numbers never repeat on any list."},
    {v:"BETA-0.018.9",ts:"Oct 5, 2026 \u00B7 6:35 PM",t:"Secret contacts",d:"New secret contact list in Phone contacts. Fozzie and Mike Jones are in — their names and numbers can never repeat on any other list."},
@@ -3267,6 +3240,8 @@ function normalize(s,raw){
  var _secmap={seeds:"seeds",kits:"lab",duffel:"gear",weapons:"guns",props:"upgrades"};
  if(_secmap[s.shopsec])s.storetab=_secmap[s.shopsec];
  delete s.shopsec;
+ delete s._syncCode;delete s._syncExp; /* v150: relay sync codes removed */
+ if(s.tab==="auth")s.tab=null; /* v150: Sync app removed — stale tab lands home */
  if(["seeds","guns","lab","gear","style","upgrades"].indexOf(s.storetab)<0)s.storetab=null;
  if(!s.propUpgrades||typeof s.propUpgrades!=="object")s.propUpgrades={tent:1};
  if([1,3,4].indexOf(s.propUpgrades.tent)<0)s.propUpgrades.tent=1;
@@ -3285,10 +3260,11 @@ function normalize(s,raw){
 }
 /* ===== SAVE SLOTS (SIM cards) =====
    The save is wrapped at the bridge boundary: the persisted blob is
-   {__ttwrap:1, activeSlot:N, slots:{1:state|null,2:state|null,3:state|null}, meta:{N:{savedAt:ms}}}.
+   {__ttwrap:1, activeSlot:N, slots:{1:state|null,2:state|null,3:state|null}, meta:{N:{savedAt:ms}},
+   pin:<hash string|null> — the phone-level lock PIN (v150), shared by all SIMs}. 
    The game only ever sees the active SIM's state. A legacy unwrapped save
    (the pre-slots format) becomes SIM 1 on first load — no data loss. */
-var TTWRAP={__ttwrap:1,activeSlot:1,slots:{1:null,2:null,3:null},meta:{}};
+var TTWRAP={__ttwrap:1,activeSlot:1,slots:{1:null,2:null,3:null},meta:{},pin:null};
 var ttWipeArm=0; /* SIM number armed for wipe confirm (transient, never saved) */
 var ttFrozen=false; /* set before a slot-change reload: blocks the pagehide save
    from writing the outgoing state into the incoming slot */
@@ -3311,6 +3287,7 @@ function ttUnwrapBoot(raw){
   TTWRAP.activeSlot=(a===2||a===3)?a:1;
   [1,2,3].forEach(function(n){var st=raw.slots[n];TTWRAP.slots[n]=(st&&typeof st==="object")?st:null;});
   if(raw.meta&&typeof raw.meta==="object")TTWRAP.meta=raw.meta;
+  TTWRAP.pin=(typeof raw.pin==="string"&&raw.pin)?raw.pin:null;
   var act=ttSlotState(TTWRAP.activeSlot);
   /* empty SIM -> fresh game via the normal default path (a DEF copy, like
      bridge.getState(DEF) returns for a brand-new player — NOT {}, which
@@ -3401,6 +3378,9 @@ function ttLockShow(){
  var ls=document.getElementById("tt-lockscreen");
  if(!ls)return;
  ls.hidden=false;
+ /* v150: every lock starts with a fresh PIN entry and the transfer panel shut */
+ try{_pinBuf="";_pinStage=0;_pinFirst="";ttPinErr("");ttPinRefresh();}catch(e){}
+ try{ttTransferShow(false);}catch(e){}
  ttLockTick();
  try{var rp=document.getElementById("lock-reup");if(rp)rp.hidden=true;}catch(e){}
  try{var fpe=document.getElementById("lock-fp");if(fpe){fpe.style.background="";fpe.style.borderColor="";fpe.style.boxShadow="";}}catch(e2){}
@@ -3448,6 +3428,221 @@ function ttLockHide(){
  try{ttLockTick._t&&clearInterval(ttLockTick._t);}catch(e){}
  try{var fpe2=document.getElementById("lock-fp");if(fpe2){fpe2.style.background="";fpe2.style.borderColor="";fpe2.style.boxShadow="";}}catch(e2){}
 }
+/* ===== v150: lock PIN pad + save transfer (replaces the relay sync codes) =====
+   The PIN is phone-level: its hash lives in the TTWRAP wrapper (TTWRAP.pin),
+   never in a SIM state, never as plaintext digits. The entry buffer, the
+   set-flow stage and the first entry are transient module state only. */
+var _pinBuf="",_pinStage=0,_pinFirst=""; /* stage: 0=enter/set-1st, 1=set-confirm */
+var TT_PIN_MIN=4,TT_PIN_MAX=6;
+function ttPinHash(pin){
+ var h1=0x811c9dc5,h2=0x01000193;
+ var str="tt-pin:"+String(pin);
+ for(var i=0;i<str.length;i++){
+  var c=str.charCodeAt(i);
+  h1=Math.imul(h1^c,0x01000193)>>>0;
+  h2=(Math.imul(h2,31)+c)>>>0;
+ }
+ return "h"+h1.toString(36)+"."+h2.toString(36)+"."+str.length;
+}
+function ttPinHas(){return !!(typeof TTWRAP!=="undefined"&&typeof TTWRAP.pin==="string"&&TTWRAP.pin);}
+function ttPinRefresh(){
+ var lab=document.getElementById("lock-pin-label");
+ var dots=document.getElementById("lock-pin-dots");
+ if(lab){
+  if(!ttPinHas())lab.textContent=(_pinStage===1)?"Enter it again to confirm":"Set a PIN";
+  else lab.textContent="Enter PIN";
+ }
+ if(dots){
+  var dh="";
+  for(var i=0;i<TT_PIN_MAX;i++)dh+='<span class="lock-pin-dot'+(i<_pinBuf.length?" on":"")+'"></span>';
+  dots.innerHTML=dh;
+ }
+}
+function ttPinErr(msg){
+ var err=document.getElementById("lock-pin-err");
+ if(err)err.textContent=msg||"";
+}
+function ttPinSet(pin){
+ TTWRAP.pin=ttPinHash(pin);
+ try{ttPersist();}catch(e){}
+}
+function ttPinDigit(d){
+ var ls=document.getElementById("tt-lockscreen");
+ if(!ls||ls.hidden)return;
+ if(typeof d!=="string"||d.length!==1||d<"0"||d>"9")return;
+ if(_pinBuf.length>=TT_PIN_MAX)return;
+ _pinBuf+=d;
+ ttPinErr("");
+ ttPinRefresh();
+ /* unlock flow: a stored PIN can be 4-6 digits, so check for a match as
+    soon as the entry is long enough */
+ if(ttPinHas()&&_pinBuf.length>=TT_PIN_MIN&&ttPinHash(_pinBuf)===TTWRAP.pin){
+  _pinBuf="";ttPinErr("");
+  ttLockHide();
+  return;
+ }
+ /* auto-submit: at 6 digits, or in the confirm step once the entry is as
+    long as the first one. Shorter PINs are confirmed with the OK key. */
+ if(_pinBuf.length>=TT_PIN_MAX)setTimeout(function(){ttPinSubmit(false);},120);
+ else if(_pinStage===1&&_pinFirst&&_pinBuf.length===_pinFirst.length)setTimeout(function(){ttPinSubmit(false);},120);
+}
+function ttPinOk(){ ttPinSubmit(true); }
+function ttPinDel(){
+ if(_pinBuf.length===0&&_pinStage===1){_pinStage=0;_pinFirst="";ttPinErr("");ttPinRefresh();return;}
+ _pinBuf=_pinBuf.slice(0,-1);
+ ttPinErr("");
+ ttPinRefresh();
+}
+function ttPinSubmit(force){
+ var pin=_pinBuf;
+ if(!ttPinHas()){
+  /* set flow: first entry (4-6 digits), then confirm */
+  if(_pinStage===0){
+   if(pin.length<TT_PIN_MIN){if(force){ttPinErr("PIN must be 4 to 6 digits.");}return;}
+   _pinFirst=pin;_pinBuf="";_pinStage=1;ttPinErr("");ttPinRefresh();return;
+  }
+  if(pin===_pinFirst){
+   ttPinSet(pin);
+   _pinBuf="";_pinFirst="";_pinStage=0;ttPinErr("");
+   ttLockHide();
+  }else if(force||pin.length>=_pinFirst.length){
+   _pinBuf="";_pinFirst="";_pinStage=0;
+   ttPinErr("PINs didn't match — set it again.");
+   ttPinRefresh();
+  }
+  return;
+ }
+ /* unlock flow: the stored PIN may be 4-6 digits, so a match is checked at
+    every length; a wrong entry only fails at full length or on OK */
+ if(pin.length>=TT_PIN_MIN&&ttPinHash(pin)===TTWRAP.pin){
+  _pinBuf="";ttPinErr("");
+  ttLockHide();
+  return;
+ }
+ if(force||pin.length>=TT_PIN_MAX){
+  _pinBuf="";
+  ttPinErr("Wrong PIN.");
+  ttPinRefresh();
+ }
+}
+/* ===== lock-screen save transfer: the whole wrapper as text ===== */
+function ttTransferShow(open){
+ var p=document.getElementById("lock-transfer");
+ if(p)p.hidden=!open;
+ if(open){var st=document.getElementById("lock-transfer-status");if(st){st.textContent="";st.className="lt-status";}}
+}
+function ttB64Encode(str){
+ return btoa(unescape(encodeURIComponent(str)));
+}
+function ttB64Decode(b64){
+ return decodeURIComponent(escape(atob(b64)));
+}
+function ttTransferStatus(msg,ok){
+ var st=document.getElementById("lock-transfer-status");
+ if(st){st.textContent=msg||"";st.className="lt-status"+(ok?" ok":"");}
+}
+function ttExportSave(){
+ try{
+  save(); /* flush the live SIM into the wrapper + persist (game's own path) */
+  var raw=bridge?bridge.getState(DEF):null;
+  var wrap=ttIsWrap(raw)?raw:TTWRAP;
+  if(!ttIsWrap(wrap)){ttTransferStatus("Could not read the save.",false);return;}
+  var text=ttB64Encode(JSON.stringify(wrap));
+  var box=document.getElementById("lock-export-text");
+  if(box){box.value=text;try{box.focus();box.select();}catch(e){}}
+  var done=function(){ttTransferStatus("Save copied — the text above is your whole save (all 3 SIMs).",true);};
+  if(navigator.clipboard&&typeof navigator.clipboard.writeText==="function"){
+   navigator.clipboard.writeText(text).then(done,function(){ttTransferStatus("Copy it from the box above — the text is your whole save (all 3 SIMs).",true);});
+  }else done();
+ }catch(e){ ttTransferStatus("Export failed — nothing was changed.",false); }
+}
+function ttImportSave(){
+ var inp=document.getElementById("lock-import-text");
+ var text=inp?String(inp.value||"").replace(/\s+/g,""):"";
+ if(!text){ttTransferStatus("Paste an exported save first.",false);return;}
+ var wrap=null;
+ try{ wrap=JSON.parse(ttB64Decode(text)); }catch(e){ wrap=null; }
+ if(!ttIsWrap(wrap)){ttTransferStatus("That text is not a Trap Tycoon save — nothing was changed.",false);return;}
+ try{
+  if(bridge)bridge.setState(wrap); /* game's own storage write (synchronous) */
+ }catch(e){ ttTransferStatus("Could not write the save — nothing was changed.",false); return; }
+ var back=null;
+ try{ back=bridge?bridge.getState(DEF):null; }catch(e){}
+ if(!ttIsWrap(back)){ttTransferStatus("Save did not stick — nothing was changed.",false);return;}
+ ttFrozen=true; /* the reload's pagehide save must not overwrite the import */
+ ttTransferStatus("Save loaded — restarting…",true);
+ setTimeout(function(){ try{location.reload();}catch(e){} },350);
+}
+/* ===== About Phone system status (v150) ===== */
+function ttShellVersionInfo(){
+ var out={code:null,name:null};
+ try{
+  if(window.TTNative&&typeof window.TTNative.shellVersion==="function"){
+   var sv=window.TTNative.shellVersion();
+   if(typeof sv==="number"){out.code=sv;}
+   else if(typeof sv==="string"){
+    var n=parseInt(sv,10); if(!isNaN(n))out.code=n;
+    try{var o=JSON.parse(sv);if(o&&typeof o==="object"){sv=o;}}catch(e){}
+   }
+   if(sv&&typeof sv==="object"){
+    if(typeof sv.code==="number")out.code=sv.code;
+    else if(typeof sv.versionCode==="number")out.code=sv.versionCode;
+    if(typeof sv.versionName==="string"&&sv.versionName)out.name=sv.versionName;
+    else if(typeof sv.name==="string"&&sv.name)out.name=sv.name;
+   }
+  }
+ }catch(e){}
+ return out;
+}
+function ttSystemStatus(){
+ var app,paired,pairedSub="";
+ if(window.TTNative){
+  var vi=ttShellVersionInfo();
+  app="Trap Tycoon"+(vi.name?(" "+vi.name):(vi.code!=null?(" (app code "+vi.code+")"):""));
+  if(vi.code==null){paired="—";pairedSub="app version unknown";}
+  else if(vi.code>=GAME_MIN_SHELL){paired="✓ Yes";}
+  else{
+   var needName={108:"1.0.13"}[GAME_MIN_SHELL];
+   paired="✗ No";
+   pairedSub="app is "+(vi.name||("code "+vi.code))+", this game needs "+(needName?("app "+needName+" or newer"):"a newer app");
+  }
+ }else if(window.ApkUpdater){
+  app="Trap Tycoon (standalone build)";
+  paired="✓ Yes";pairedSub="updates with the game";
+ }else{
+  app="Web / widget";
+  paired="—";pairedSub="no app";
+ }
+ var ar;
+ if(!window.TTNative)ar="Not in this app";
+ else ar=ttArAvailable()?"✓ Ready":"Unavailable";
+ var day=1;
+ try{ if(S&&S.bornAt)day=Math.floor((Date.now()-S.bornAt)/86400000)+1; }catch(e){}
+ var savedTxt="not saved yet";
+ try{
+  var m=(typeof TTWRAP!=="undefined"&&TTWRAP.meta)?TTWRAP.meta[TTWRAP.activeSlot]:null;
+  if(m&&typeof m.savedAt==="number"&&m.savedAt>0)savedTxt="last saved "+new Date(m.savedAt).toLocaleTimeString([],{hour:"2-digit",minute:"2-digit"});
+ }catch(e){}
+ return {
+  game:(typeof GAME_VER!=="undefined"?GAME_VER:""),
+  app:app,paired:paired,pairedSub:pairedSub,ar:ar,
+  save:"SIM "+((typeof TTWRAP!=="undefined")?TTWRAP.activeSlot:1)+" · Day "+day,
+  saved:savedTxt
+ };
+}
+function ttSystemStatusHTML(){
+ var st=ttSystemStatus();
+ function row(k,v,sub){
+  return '<div class="set-row" style="cursor:default"><span>'+k+'</span><span style="text-align:right"><b>'+v+'</b>'+(sub?'<div style="font-size:12px;opacity:.65;font-weight:400">'+sub+'</div>':"")+'</span></div>';
+ }
+ var h='<div class="shopsec">SYSTEM</div>';
+ h+=row("Game",escHtml(st.game),"");
+ h+=row("App",escHtml(st.app),"");
+ h+=row("Updates paired",escHtml(st.paired),escHtml(st.pairedSub));
+ h+=row("AR",escHtml(st.ar),"");
+ h+=row("Save",escHtml(st.save),escHtml(st.saved));
+ return h;
+}
 (function(){
  var _sy=null;
  document.addEventListener("touchstart",function(e){
@@ -3472,15 +3667,7 @@ function ttLockHide(){
      ttShowReup();
     }else{
      try{fp.style.background="";}catch(e3){}
-     /* warn if skipping sync: no code was entered */
-     var sc=document.getElementById("lock-synccode");
-     var noSync=!sc||!sc.value.trim();
-     setTimeout(function(){
-      ttLockHide();
-      if(noSync&&typeof showHeadsUp==="function"){
-       setTimeout(function(){showHeadsUp("Sync","No sync code entered — using local save. Open the Sync app to transfer saves.");},600);
-      }
-     },250);
+     setTimeout(function(){ ttLockHide(); },250);
     }
    });
   }
@@ -3587,6 +3774,8 @@ function ttShowReup(){
    window.ttNavPop=function(){if(typeof navPop==='function')navPop();};
    window.ttCheckUpdate=function(cb){if(typeof ttCheckUpdate==='function')ttCheckUpdate(cb);};
    window.ttShowReup=function(){if(typeof ttShowReup==='function')ttShowReup();};
+  window.ttLockShow=function(){if(typeof ttLockShow==='function')ttLockShow();};
+  window.ttLockHide=function(){if(typeof ttLockHide==='function')ttLockHide();};
    window.ttRender=function(){if(typeof render==='function')render();};
    window.ttSave=function(){if(typeof save==='function')save();};
    window.ttCustTest=function(){return {
@@ -4764,7 +4953,6 @@ function render(){
  if(S.tab==="rep"){q(".pane-rep").innerHTML=repHTML();}
  if(S.tab==="props"){q(".pane-props").innerHTML=propsHTML();}
  if(S.tab==="bank"){q(".pane-bank").innerHTML=bankHTML();}
- if(S.tab==="auth"){q(".pane-auth").innerHTML=authHTML();}
  if(S.tab!=="visor"&&window._visorLive){visorStop();ttArWarm(false);}
  if(S.tab==="visor"&&!window._ttArOpen){
   if(!window._visorLive){visorMaybeSpawn();q(".pane-visor").innerHTML=visorHTML();window._visorLive=true;visorRefresh();visorStartCam();visorOrientStart();}
@@ -8036,8 +8224,9 @@ function settingsHTML(){
   return h;
  }
  if(sv==="about"){
+  h+=ttSystemStatusHTML();
   h+='<div class="shopsec">FEATURES</div>';
-  h+='<div class="sdesc" style="margin:0 2px 8px">Everything in the game. Current version: <b style="color:var(--hatch-widget-text)">'+GAME_VER+'</b></div>';
+  h+='<div class="sdesc" style="margin:0 2px 8px">Everything in the game.</div>';
   var _lastCat="";
   GAME_FEATURES.forEach(function(f){
    if(f.c!==_lastCat){h+='<div class="shopsec" style="margin-top:10px">'+f.c.toUpperCase()+'</div>';_lastCat=f.c;}
@@ -8255,15 +8444,13 @@ root.addEventListener("click",function(e){
   return;
  }
  var b=e.target.closest?e.target.closest("[data-act]"):null;
- if(b&&b.dataset.act==="lock-sync"){
-  var inp=document.getElementById("lock-synccode");
-  var code=inp?inp.value:'';
-  var st=document.getElementById("lock-syncstatus");
-  var err=syncEnter(code);
-  if(err){if(st)st.textContent=err;}
-  else{if(st){st.textContent='';st.style.color='#10b981';}ttLockHide();}
-  return;
- }
+ if(b&&b.dataset.act==="lock-pin"){ttPinDigit(b.dataset.d);return;}
+ if(b&&b.dataset.act==="lock-pin-del"){ttPinDel();return;}
+ if(b&&b.dataset.act==="lock-pin-ok"){ttPinOk();return;}
+ if(b&&b.dataset.act==="lock-move"){ttTransferShow(true);return;}
+ if(b&&b.dataset.act==="lock-move-close"){ttTransferShow(false);return;}
+ if(b&&b.dataset.act==="lock-export"){ttExportSave();return;}
+ if(b&&b.dataset.act==="lock-import"){ttImportSave();return;}
  if(b&&b.dataset.act==="edit-done"){setEditMode(false);return;}
  if(b&&b.dataset.act==="folder-open"){openFolder(b.dataset.fid);return;}
  if(b&&b.dataset.act==="folder-close"){closeFolder();return;}
@@ -8680,28 +8867,6 @@ root.addEventListener("click",function(e){
    else if(el.requestFullscreen){el.requestFullscreen();}
    else if(el.webkitRequestFullscreen){el.webkitRequestFullscreen();}
   }catch(e){}
-  return;
- }
- /* Sync authenticator actions */
- if(a==="sync-gen"){
-  var err=syncGen();
-  var st=q("#au-status");
-  if(st){st.textContent=err||'';st.className='au-status '+(err?'err':'ok');}
-  render();return;
- }
- if(a==="sync-cancel"){
-  S._syncCode=null;S._syncExp=0;save();render();return;
- }
- if(a==="sync-enter"){
-  var inp=q("#au-codein");var code=inp?inp.value:'';
-  var err2=syncEnter(code);
-  var st2=q("#au-status");
-  if(err2){if(st2){st2.textContent=err2;st2.className='au-status err';}return;}
-  return;
- }
- if(a==="sync-scan"){
-  var st3=q("#au-status");
-  if(st3){st3.textContent='QR scanning coming soon — use code entry for now';st3.className='au-status err';}
   return;
  }
  if(a==="wp-apply"){var _wi=q(".wp-url"),_wu=_wi?_wi.value.trim():"";
@@ -10017,7 +10182,7 @@ function runnerCallHTML(r){
  }
  return h;
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP,RUNNER_LEVELS:RUNNER_LEVELS,RUNNER_SLOTS:RUNNER_SLOTS,RUNNER_XP_PER_SALE:RUNNER_XP_PER_SALE,runnerLevel:runnerLevel,runnerSpecBonus:runnerSpecBonus,runnerPhonebookSection:runnerPhonebookSection,runnerDetailHTML:runnerDetailHTML};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP,RUNNER_LEVELS:RUNNER_LEVELS,RUNNER_SLOTS:RUNNER_SLOTS,RUNNER_XP_PER_SALE:RUNNER_XP_PER_SALE,runnerLevel:runnerLevel,runnerSpecBonus:runnerSpecBonus,runnerPhonebookSection:runnerPhonebookSection,runnerDetailHTML:runnerDetailHTML,ttPinHash:ttPinHash,ttSystemStatus:ttSystemStatus,ttExportSave:ttExportSave,ttImportSave:ttImportSave,ttB64Encode:ttB64Encode,ttB64Decode:ttB64Decode,TTWRAP_REF:function(){return TTWRAP;}};
 })();
 </script>
 <style>
