@@ -1762,6 +1762,18 @@ body.electron-phone #ewin-controls{display:flex}
 .vp-max{font-size:11px;color:#7dffb0;letter-spacing:1px}
 .sil{font-size:44px;text-align:center}
 .order-bubble{display:block;width:100%;margin:8px 0;padding:10px;border-radius:12px;border:1px solid rgba(127,212,255,.5);background:rgba(127,212,255,.1);color:#dff4ff;font-size:13px}
+.order-bubble.gene-opt{border-color:rgba(74,222,128,.65);background:rgba(34,197,94,.14);color:#dcfce7;text-align:left;cursor:pointer}
+.order-bubble.gene-opt small{opacity:.75}
+.dwant{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 12px;padding:9px 12px;border:1px solid rgba(251,191,36,.45);background:rgba(251,191,36,.08);border-radius:10px;font-size:13px}
+.dwant button{flex:none;background:#d97706;border:none;color:#fff;border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer}
+.dwant button:disabled{opacity:.4;cursor:not-allowed}
+.dwant.done{color:#4ade80;border-color:rgba(74,222,128,.4);background:rgba(34,197,94,.07)}
+.gps-pinlv{display:inline-block;margin-left:5px;padding:0 4px;border:1px solid rgba(251,191,36,.65);border-radius:6px;background:rgba(251,191,36,.14);color:#fbbf24;font-size:8.5px;font-weight:800;vertical-align:1px}
+.rep-xp{margin-top:8px;font-size:12px;color:#d1d5db}
+.rep-xpbar{height:6px;background:rgba(255,255,255,.12);border-radius:3px;margin:4px 0;overflow:hidden}
+.rep-xpbar i{display:block;height:100%;background:linear-gradient(90deg,#22c55e,#4ade80);border-radius:3px}
+.rep-next{color:#9ca3af}
+.crew-thru{font-size:12px;color:#4ade80;margin-top:4px}
 .deal-panel{margin-top:8px;border-top:1px solid rgba(127,212,255,.25);padding-top:8px}
 .dp-row{display:flex;justify-content:space-between;font-size:12px;margin:4px 0}
 .pu-mult{font-size:10px;color:#7dffb0}
@@ -1813,6 +1825,23 @@ body.electron-phone #ewin-controls{display:flex}
 .gps-pinbtn.sel .gps-pinlabel{border-color:#fff}
 .gps-pinheat{position:absolute;left:50%;top:74px;transform:translateX(-50%);width:44px;height:4px;background:rgba(0,0,0,.6);border-radius:2px;overflow:hidden;pointer-events:none;border:1px solid rgba(255,255,255,.15)}
 .gps-pinheat i{display:block;height:100%;border-radius:2px;transition:width .3s}
+/* landmark chips — round icon + one-line tag (tap opens the detail sheet) */
+.gps-lm{position:absolute;z-index:9;display:flex;align-items:center;background:none;border:none;padding:0;cursor:pointer;transform:translate(-11px,-50%);-webkit-tap-highlight-color:transparent}
+.gps-lm.flip{flex-direction:row-reverse;transform:translate(calc(-100% + 11px),-50%)}
+.gps-lm-ic{width:22px;height:22px;flex:none;border-radius:50%;background:rgba(6,10,6,.88);border:1.5px solid rgba(255,255,255,.35);color:#e8e8e8;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.5)}
+.gps-lm.sel .gps-lm-ic{border-color:#fff;box-shadow:0 0 0 2px #fff,0 1px 4px rgba(0,0,0,.5)}
+.gps-lm-tx{margin:0 5px;background:rgba(6,10,6,.85);border:1px solid rgba(255,255,255,.2);color:#e8e8e8;font-size:9.5px;font-weight:700;padding:2.5px 7px;border-radius:7px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.4);pointer-events:none}
+/* landmark detail sheet (below the GPS map) */
+.gps-lmsh{margin:0 12px 12px;background:#10160f;border:1px solid #2d4a2a;border-radius:14px;padding:12px 14px;color:#e8e8e8}
+.gps-lmsh-head{display:flex;align-items:center;gap:9px}
+.gps-lmsh-head .gps-lm-ic{border-color:rgba(201,180,88,.8);color:#e9d98a}
+.gps-lmsh-title{flex:1;min-width:0}
+.gps-lmsh-title b{display:block;font-size:14px}
+.gps-lmsh-title span{font-size:11px;color:rgba(232,232,232,.6)}
+.gps-lmsh-tag{flex:none;font-size:9px;font-weight:800;letter-spacing:1px;color:#c9b458;border:1px solid rgba(201,180,88,.55);border-radius:6px;padding:3px 6px}
+.gps-lmsh-x{flex:none;background:none;border:1px solid rgba(255,255,255,.2);color:#e8e8e8;border-radius:8px;width:26px;height:26px;font-size:14px;line-height:1;cursor:pointer}
+.gps-lmsh-flavor{margin-top:9px;font-size:12.5px;line-height:1.45;color:rgba(232,232,232,.85)}
+.gps-lmsh-note{margin-top:8px;font-size:11.5px;color:rgba(232,232,232,.55)}
 .gps-you{position:absolute;left:50%;top:82px;transform:translateX(-50%);width:14px;height:14px;pointer-events:none;display:block}
 .gps-you .you-dot{position:absolute;inset:0;border-radius:50%;background:#3b82f6;border:2.5px solid #fff}
 .gps-you .you-pulse{position:absolute;inset:0;border-radius:50%;background:#3b82f6;animation:gps-pulse 2s ease-out infinite}
@@ -2487,6 +2516,16 @@ input[type=range].sld{width:100%;margin:2px 0 0;padding:0;height:22px;background
 <script>
 (function(){
 var root=(document.currentScript&&document.currentScript.parentElement)||document;
+/* Map selection state — declared HERE, at the top of the game IIFE, on
+   purpose: the click dispatcher and the map renderers sit in different
+   nested scopes below, and the old `var MAPSEL` declared down by the map
+   builders never bound to the dispatcher's writes (they leaked to window,
+   so the selected-pin highlight never rendered — verified by driver).
+   One shared declaration in this common scope is the fix. UI-only, not
+   saved. Do NOT redeclare MAPSEL / LMSEL / GPSZOOM anywhere below. */
+var MAPSEL=null;
+var LMSEL=null;
+var GPSZOOM=1;
 /* real phone battery display */
 function updatePhoneBattery(){
  try{
@@ -2530,7 +2569,7 @@ function qa(s){return Array.prototype.slice.call(root.querySelectorAll(s));}
 var bridge=window.hatchWidget||null;
 
 var BANKAMT=1000;
-var BANK_APY=0.10; // % per day — super small
+var BANK_APY=1; // % per day (v158: was 0.10; daily interest capped at $500 in the tick)
 function bankAPYPerMin(){return (BANK_APY/100)/1440;}
 function pushBankTx(k,a){
  if(!S.bank) S.bank={bal:0,pendInt:0,tx:[]};
@@ -2584,26 +2623,26 @@ function bankHTML(){
 }
 
 var PRODUCTS={
- sour:{name:"Sour D",price:8,seed:15,yld:[6,10],tier:1,c1:"#5be37a",tag:"SD"},
- og:{name:"OG Kush",price:12,seed:30,yld:[9,13],tier:2,c1:"#7CFC9a",tag:"OG"},
- haze:{name:"Purple Haze",price:18,seed:50,yld:[12,17],tier:3,c1:"#d8a6ff",tag:"PH"},
- bluedream:{name:"Blue Dream",price:60,seed:350,yld:[14,20],tier:4,c1:"#7fd4c1",tag:"BD"},
- maui:{name:"Maui Wowie",price:95,seed:600,yld:[16,24],tier:5,c1:"#d4e157",tag:"MW"},
- northern:{name:"Northern Lights",price:150,seed:1000,yld:[18,28],tier:6,c1:"#4dd0e1",tag:"NL"},
- ak47:{name:"AK-47",price:230,seed:1600,yld:[22,34],tier:7,c1:"#ff8a65",tag:"AK"},
- frost:{name:"Frostbite",price:320,seed:320,yld:[14,20],tier:8,c1:"#a5f3fc",tag:"FR",gene:"Frostbite"},
- nebula:{name:"Nebula Haze",price:380,seed:380,yld:[14,22],tier:8,c1:"#c4b5fd",tag:"NB",gene:"Nebula Haze"},
- ember:{name:"Ember OG",price:450,seed:450,yld:[12,20],tier:8,c1:"#fb923c",tag:"EO",gene:"Ember OG"},
- ghost:{name:"Ghost Pepper Kush",price:600,seed:600,yld:[12,18],tier:8,c1:"#f87171",tag:"GK",gene:"Ghost Pepper Kush"},
+ sour:{name:"Sour D",price:8,seed:15,yld:[6,10],grow:30,seedBack:0,tier:1,c1:"#5be37a",tag:"SD"},
+ og:{name:"OG Kush",price:12,seed:30,yld:[9,13],grow:45,seedBack:0.05,tier:2,c1:"#7CFC9a",tag:"OG"},
+ haze:{name:"Purple Haze",price:18,seed:50,yld:[12,17],grow:60,seedBack:0.08,tier:3,c1:"#d8a6ff",tag:"PH"},
+ bluedream:{name:"Blue Dream",price:60,seed:350,yld:[14,20],grow:75,seedBack:0.10,tier:4,c1:"#7fd4c1",tag:"BD"},
+ maui:{name:"Maui Wowie",price:95,seed:600,yld:[16,24],grow:90,seedBack:0.12,tier:5,c1:"#d4e157",tag:"MW"},
+ northern:{name:"Northern Lights",price:150,seed:1000,yld:[18,28],grow:105,seedBack:0.15,tier:6,c1:"#4dd0e1",tag:"NL"},
+ ak47:{name:"AK-47",price:230,seed:1600,yld:[22,34],grow:120,seedBack:0.20,tier:7,c1:"#ff8a65",tag:"AK"},
+ frost:{name:"Frostbite",price:320,seed:320,yld:[20,28],grow:45,seedBack:0.25,tier:8,c1:"#a5f3fc",tag:"FR",gene:"Frostbite"},
+ nebula:{name:"Nebula Haze",price:380,seed:380,yld:[14,22],grow:60,seedBack:0.25,tier:8,c1:"#c4b5fd",tag:"NB",gene:"Nebula Haze"},
+ ember:{name:"Ember OG",price:450,seed:450,yld:[12,20],grow:75,seedBack:0.25,tier:8,c1:"#fb923c",tag:"EO",gene:"Ember OG"},
+ ghost:{name:"Ghost Pepper Kush",price:600,seed:600,yld:[16,24],grow:90,seedBack:0.25,tier:8,c1:"#f87171",tag:"GK",gene:"Ghost Pepper Kush"},
  hash:{name:"Hash",price:50,tier:1,c1:"#d4a373"},
  edibles:{name:"Edibles",price:40,tier:2,c1:"#fbbf24"},
  moonrock:{name:"Moonrock",price:140,tier:3,c1:"#e9d5ff"},
- acid:{name:"Acid",price:110,tier:4,c1:"#ff2fb3"},
- dmt:{name:"DMT",price:200,tier:5,c1:"#bfe6ff"},
+ acid:{name:"Acid",price:138,tier:4,c1:"#ff2fb3"},
+ dmt:{name:"DMT",price:250,tier:5,c1:"#bfe6ff"},
  dragon:{name:"Dragon",price:600,tier:7,c1:"#ff6a00"},
  estack:{name:"E Single Stack",price:180,tier:8,c1:"#ff7ad9"},
  edouble:{name:"E Double Stack",price:320,tier:8,c1:"#ff4dc8"},
- etriple:{name:"E Triple Stack",price:500,tier:8,c1:"#ff1fb0"}
+ etriple:{name:"E Triple Stack",price:500,tier:8,lv:18,c1:"#ff1fb0"}
 };
 var PKEYS=["sour","og","haze","bluedream","maui","northern","ak47","frost","nebula","ember","ghost","hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var PROP_IMGS={
@@ -2657,6 +2696,8 @@ var STRAIN_IMGS={
 };
 
 var GROWKEYS=["sour","og","haze","bluedream","maui","northern","ak47","frost","nebula","ember","ghost"];
+var GENE_LV_BAND=[11,12,13,14,15,16,17,18,19];
+var GENE_LV_KEYS=["frost","nebula","ember","ghost"];
 var PROPS=[
  {id:"tent",name:"Grow Tent",cost:0,slots:3,tier:1,desc:"Your closet setup. 3 grow slots."},
  {id:"trap",name:"Trap House",cost:20000,slots:6,tier:2,desc:"6 grow slots. Requires Level 3."},
@@ -2672,7 +2713,7 @@ var KITS={
  oil:{name:"Hash Oil Kit",cost:80,tier:3,desc:"For infusing Moonrocks"},
  chem:{name:"Chem Kit",cost:150,tier:4,desc:"For cooking Acid & DMT"},
  royal:{name:"Royal Kit",cost:500,tier:7,desc:"For Dragon's Breath"},
- press:{name:"Pill Press Kit",cost:300,tier:8,desc:"For pressing Ecstasy stacks"}
+ press:{name:"Pill Press Kit",cost:300,tier:8,lv:18,desc:"For pressing Ecstasy stacks"}
 };
 var KITKEYS=["butter","oil","chem","royal","press"];
 var RECIPES={
@@ -2688,16 +2729,17 @@ var RECIPES={
 };
 var RKEYS=["hash","edibles","moonrock","acid","dmt","dragon","estack","edouble","etriple"];
 var WORKERS={
- bunsen:{name:"Bunsen",icon:"🔥",price:300,dur:60,pyield:0.55,blurb:"⚡ 60s cooks · 55% yield",quote:"Forty covers on a Friday night? Please. This is a slow Tuesday, chef."},
- doc:{name:"Doc",icon:"⚗️",price:600,dur:115,pyield:0.75,blurb:"🎯 75% yield · 115s cooks",quote:"Your titration curve is... adequate. The product will be fine."},
- merlin:{name:"Merlin",icon:"🌙",price:300,dur:90,pyield:0.60,blessed:0.20,blurb:"🌙 60% · 20% blessed 100% batch",quote:"The moon's in the right house, man. This batch is gonna sing."},
- squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
+ bunsen:{name:"Bunsen",icon:"🔥",price:100,dur:60,pyield:0.55,blurb:"⚡ 60s cooks · 55% yield",quote:"Forty covers on a Friday night? Please. This is a slow Tuesday, chef."},
+ doc:{name:"Doc",icon:"⚗️",price:400,dur:90,pyield:0.75,blurb:"🎯 75% yield · 90s cooks",quote:"Your titration curve is... adequate. The product will be fine."},
+ merlin:{name:"Merlin",icon:"🌙",price:200,dur:90,pyield:0.60,blessed:0.20,blurb:"🌙 60% · 20% blessed 100% batch",quote:"The moon's in the right house, man. This batch is gonna sing."},
+ squeak:{name:"Squeak",icon:"😰",price:25,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v157";
+var GAME_VER="v158";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,UklGRr4GAABXRUJQVlA4ILIGAADwJACdASqAAIAAPlEijkWjoaETCK4kOAUEtICd6Vxf5LbW38r0oRLsJbuNa8xD5ZzXAGiPFaGBHrJAAEUee7tMBMt9YoYtuKD9d7b/cpjfTSoXgQpp8vZUuIedJjj5xwGN4sDIpDVPgg8k6Fp6jAWhEXUIyrasiUtUEDoxZ6Yv+zRoA36d5LZ28xDACykaidnvIz7IT8dRrjI+cO2AVcx/eD9MPVIHbXGf/4Nmlmwbajr743dcZ4GvGLGm2c1Bystpm2NGr0pU3SoxBBNM8YLxyurkYv/ZvR4Y4DxHQHUV9/D2rW+n1++3ebLqv8kuEV9ygdShMyE3ULou9ksc0xgMMBhv8Sj90TcrL6DkLBv4sjSTsdRxeRZSzZmneTXCE1FCxHo2rD5avzg55qKeyTUgAP7+BtGFzFYxFsdLaFrja39Fq14y/19bA8XfI5H9/mKCzEXQ9n9xDdlDTaaTUF4GFcaXmc4nly+OJfyqe0pQILIamLEwYrGngbqsvtRC4Kjn1S5C6DhkkI4q5rC/+Iavj6Ip6ic0gJou7xf5QFyPvnSnvbfNuxNCNV7lHxssInMLK2T//fCb/Fjn6Srx9y8wGQxL7d4XXFNMWwHKijcYrPrZrKCXi2+mqLhyniEPOKa9BQaC4Y+8TupmjOZiFPmkSHSXYjnd/uglMGAE+x3WnIPMx93p7d/f8/3XwhtKXSnGHHWs/pcY2eKQ+mzQeFzd58Qnu0UqxmVkm/1Jh4hoyN4ruTzzidgdpmiA5o5rnj5OoLTadYGn5bpGYxweQumzsceRzBBRGjXETFB4NeLZCabMzk9eFzjK/MXH/WmwkKNElG+K+tou3N939/0iPs9b8AupGMLHACH8B4Rcsxjx2HVQDovCyBrzcitmVTDZqM7TWsstPaby+b+HquIpE5T3f6z2WLMxJdPwC8TmTgVjczNV8EDN3ah4VJh2jq39vG5Cahe7XM8HOCaDifQZL58i6IdTlEZktr0dUJk2Bppr2efYa7gCdoOKLXl9YKnwBcZxB+kQbGcNgNGknFLkKNwyWWH19YXMA6XsZN/vLsISzTNQQf1hirYYap9QKd9K7cgRu7yrkDJN1g+rfUnAUkm28QJYoPaIQE0cH2co2Y1LDhV9uALHQJwMfJDzRO8J7kaftrRHp2MBDDbrMitwfRaMAo/DCcLqdkGehS8OrlgtMZGmS9PtLzKbeVisbSoKgGl8bjkwSvfJBqGh9gAdqqSahxMG7wFw4pTAbbmFTdb/4r3tm36FecvF6BL8Ix8y+GpPg4h2g2bPJt3N1XTF2ovm7nsgPr6ioROQZfVD7hkYRoZ+aZFFFsxViQBT419x4s/5lt57WO+w6Wdqa/KezDpFFPaLWfAfRkoPU20+n7Kiy3qNxv/sH3pXH2oCdpSZ53P4ouWpQKpQp0MDmrH3ws7HeGFjKCIze9GOB4vVNLGRWawP/YOH4vn4FzO1ZAsz9OTPOq+V5xlaVn4S4dLtXCnMZR33gCCjW39J+37bpaUzd/RjN9/nd8gBLAHju934PXcyqnsm8ZwwlPEKGdUs/+TI0PbXtUHmaJ+D0RejLkrHgl7VExc7u7z6zFa2/h6RAXfKJhM68LopUkUCK/nBQpVGiPZpbJHxmllOn55TdnRGXkp/ZT31VVaSn/grDWkwHrXlKYCZaP1xy2wlTby3HuHIHo90BuJP+7FPtR8GkV6Y+Ys0+uNJce71ke3mGcideMvTpWTyCeJ7ixavjozMw/jgKuEH5Yw4Qi16dcZC+YxrKTgtRH43JQYD1zzsECugRoUpwglmKVVFmj1BAG0c7BzcbuISlCP6NGW5FLgAgc2kWMuMFQNbkInEoENRxiDFjPoetepeuwpDQWC0cwcmlo76iNZPLcIxkPF/lqSgphvUNTheK3MCS5nhv7RMTVeteIAQ1Gi7qbd019GNWiVHToa8zB9r/HFcL+uyjPhSiZdunz7dc0IRI1c6D9YkHrNxgGS1Xosy5//TfsjZkqXhNeYLo8n6xo7xeKU+eBiYxpCE+TXJxnWbg3muCAm+WCHopi5LtSbMuCyiBacqSKYa9kKRq3vUlY+EtWHwD1lRKuFbxs0nZFIqCUeVrgWLptRtEdiJ8mCGkj4VCDvvofTb5bjUdhLoQCrmsoh/fbtyeRLWTDf0x7C3vojL+LCUz2fGsFrVOSLJJq6nY+rLdwvG3IQcZKGuxWy/OrChPCd75CuOzHaux+coDCq3Z33ZYws1AwzCgIjz3OHBb97sM7luVvmNaZxL05XGNMcXlT+LnCQDUAAA";
 var CHANGELOG=[
+   {v:"v158",ts:"Oct 16, 2026",t:"Territory levels + balance pass",d:"Territories level up as you work them: better prices, a bigger order budget, room for another runner, faster heat cooldown. Crew costs less and shows its speed in numbers. Dealers post daily bulk wants. Every strain now grows, yields and gives seeds back at its own rate, and rare SCAN strains appear as optional premium requests from customers \u2014 never a requirement."},
    {v:"v151",ts:"Oct 14, 2026",t:"Lock screen layout fix",d:"The fingerprint circle no longer overlaps the PIN pad on the lock screen. It now sits in line below the pad, where it belongs, on every screen size."},
    {v:"v150",ts:"Oct 14, 2026",t:"PIN lock + move your save",d:"The lock screen is now a real PIN pad — set your own 4-6 digit PIN, fingerprint still works too. A new Move save button on the lock screen exports your whole save (all 3 SIM cards) as copyable text and loads an exported save back in, no server involved. Settings > About Phone now shows a plain system status: game version, app version, whether updates are paired, AR readiness and your current SIM. The old Sync app and its relay codes are gone — the lock screen transfer replaces them."},
    {v:"BETA-0.018.11",ts:"Oct 5, 2026 \u00b7 7:30 PM",t:"Terminal launch",d:"PC players can now launch via plug.bat in CMD \u2014 terminal boot sequence, plug code unlock. Mobile untouched."},
@@ -2771,8 +2813,8 @@ var LEVEL_TIPS={
 var DEF_SPEEDS={hash:50,edibles:80,moonrock:110,acid:110,dmt:110,dragon:110,estack:110,edouble:110,etriple:110};
 function speedOf(k){var v=S.speeds&&S.speeds[k];return SPEED_OPTS.indexOf(v)>=0?v:DEF_SPEEDS[k];}
 function fmtT(s){s=Math.max(0,Math.round(s));var m=Math.floor(s/60),r=s%60;return m+":"+(r<10?"0":"")+r;}
-var GROW_TIMES={sour:30,og:45,haze:60,bluedream:75,maui:90,northern:105,ak47:120};
-function growSec(k){if(k&&GROW_TIMES[k])return GROW_TIMES[k];return SPEED_OPTS.indexOf(S.growSpeed)>=0?S.growSpeed:30;}
+var GROW_TIMES={sour:30,og:45,haze:60,bluedream:75,maui:90,northern:105,ak47:120,frost:45,nebula:60,ember:75,ghost:90};
+function growSec(k){if(k&&GROW_TIMES[k])return GROW_TIMES[k];if(k&&PRODUCTS[k]&&PRODUCTS[k].grow)return PRODUCTS[k].grow;return SPEED_OPTS.indexOf(S.growSpeed)>=0?S.growSpeed:30;}
 function growMinOf(k){return growSec(k)/60;}
 var DEALER_NAMES=["Corner Carl","Rooftop Rita","Alley Al","Deli Dave"];
 var DUFFEL=[40,100,200,400,800,1600];
@@ -2842,7 +2884,7 @@ function effTier(){var lt=tierAtLevel(pLevel()),pk=(typeof S!=="undefined"&&S&&t
 function tierUnlocked(t){return t<=effTier();}
 function syncPeakTier(){var lt=tierAtLevel(pLevel());if(lt>(S.peakTier||0))S.peakTier=lt;}
 function heatGain(base){var L=pLevel(),m=0.5,r;if(L<=5)r=Math.ceil(base*0.25*m);else if(L<=10)r=Math.ceil(base*0.5*m);else if(L<=15)r=Math.ceil(base*0.75*m);else r=Math.ceil(base*m);var gm=1+gearBonus().heat/100;return Math.max(0,Math.ceil(r*gm));}
-function bribeCost(){var L=pLevel();if(L<=5)return 50;if(L<=10)return 100;return 200;}
+function bribeCost(){var L=pLevel();if(L<=5)return 50;if(L<=10)return 100;if(L>=16)return 500;return 200;}
 function clinicRate(){var L=pLevel();if(L<=5)return 1;if(L<=10)return 1.5;return 2;}
 function tierVis(t){
  if(tierUnlocked(t))return 2;
@@ -2857,9 +2899,9 @@ function tierVis(t){
 var UNLOCKS=(function(){
  var u={};
  function add(L,name){if(!name)return;if(!u[L])u[L]=[];if(u[L].indexOf(name)<0)u[L].push(name);}
- PKEYS.forEach(function(k){var p=PRODUCTS[k];if(p.gene)return;add(levelForTier(p.tier),p.name);});
+ PKEYS.forEach(function(k){var p=PRODUCTS[k];if(p.gene)return;add(p.lv||levelForTier(p.tier),p.name);});
  PROPS.forEach(function(p){add(levelForTier(p.tier),p.name);});
- KITKEYS.forEach(function(k){add(levelForTier(KITS[k].tier),KITS[k].name);});
+ KITKEYS.forEach(function(k){add(KITS[k].lv||levelForTier(KITS[k].tier),KITS[k].name);});
  WKEYS.forEach(function(k){if(k==="fists")return;add(levelForTier(WEAPONS[k].tier),WEAPONS[k].name);});
  GKEYS.forEach(function(k){add(levelForTier(GEAR[k].tier),GEAR[k].name);});
  DEALER_TIER.forEach(function(t,i){if(i===0)return;add(levelForTier(t),DEALER_NAMES[i]);});
@@ -2875,7 +2917,7 @@ function addXP(n){
   var items=[];
   for(var t=before+1;t<=after;t++)items=items.concat(UNLOCKS[t]||[]);
   // Territory unlock notifications (keep in sync with TERRITORIES unlock levels)
-  var _tu={3:"Industrial",6:"Suburbs",11:"Downtown",16:"Waterfront",19:"Uptown"},_tn=[];
+  var _tu={3:"Industrial",6:"Suburbs",10:"Downtown",16:"Waterfront",19:"Uptown"},_tn=[];
   for(var _tl=before+1;_tl<=after;_tl++)if(_tu[_tl])_tn.push(_tu[_tl]);
   if(!S.announcedTurfs)S.announcedTurfs={};
   _tn.forEach(function(tn){if(!S.announcedTurfs[tn]){S.announcedTurfs[tn]=1;pushRoachMsg("NEW TURF UNLOCKED: "+tn+"! Check the Maps app, yo.");}});
@@ -2996,7 +3038,7 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],runners:[],call:null,driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:4,
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0,biggestDeal:0,thievesBeaten:0,thievesLost:0,playtime:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0,peakTier:1,peakTerr:[],_progV:2,arProbeLast:""};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0,biggestDeal:0,thievesBeaten:0,thievesLost:0,playtime:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0,peakTier:1,peakTerr:[],_progV:2,arProbeLast:"",dealerWants:{},geneCollected:{}};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s,raw){
  var oldSave=raw?(typeof raw.xp!=="number"):(typeof s.xp!=="number");
@@ -3046,14 +3088,14 @@ function normalize(s,raw){
  if(!Array.isArray(s.contacts))s.contacts=[];
  s.contacts=s.contacts.filter(function(c){return c&&typeof c.name==="string";}).map(function(c){
   var o=null;
-  if(c.order&&typeof c.order.k==="string"&&PRODUCTS[c.order.k]&&typeof c.order.g==="number")o={k:c.order.k,kind:(c.order.kind==="joint"||c.order.kind==="lab")?c.order.kind:"bud",g:c.order.g,pu:typeof c.order.pu==="number"?c.order.pu:0,expires:typeof c.order.expires==="number"?c.order.expires:0,sentAt:typeof c.order.sentAt==="number"?c.order.sentAt:0,stage:(typeof c.order.stage==="number"&&isFinite(c.order.stage))?Math.max(0,Math.min(2,Math.floor(c.order.stage))):0,nudgeAt:typeof c.order.nudgeAt==="number"?c.order.nudgeAt:0,escAt:typeof c.order.escAt==="number"?c.order.escAt:0};
+  if(c.order&&typeof c.order.k==="string"&&PRODUCTS[c.order.k]&&typeof c.order.g==="number")o={k:c.order.k,kind:(c.order.kind==="joint"||c.order.kind==="lab")?c.order.kind:"bud",g:c.order.g,pu:typeof c.order.pu==="number"?c.order.pu:0,expires:typeof c.order.expires==="number"?c.order.expires:0,sentAt:typeof c.order.sentAt==="number"?c.order.sentAt:0,stage:(typeof c.order.stage==="number"&&isFinite(c.order.stage))?Math.max(0,Math.min(2,Math.floor(c.order.stage))):0,nudgeAt:typeof c.order.nudgeAt==="number"?c.order.nudgeAt:0,escAt:typeof c.order.escAt==="number"?c.order.escAt:0,geneOpt:(c.order.geneOpt&&PRODUCTS[c.order.geneOpt.k]&&PRODUCTS[c.order.geneOpt.k].gene&&typeof c.order.geneOpt.g==="number"&&typeof c.order.geneOpt.pu==="number")?{k:c.order.geneOpt.k,g:c.order.geneOpt.g,pu:c.order.geneOpt.pu,expires:typeof c.order.geneOpt.expires==="number"?c.order.geneOpt.expires:0}:null};
   var tp=(c.type==="stoner"||c.type==="party"||c.type==="connoisseur"||c.type==="casual")?c.type:"casual";
   var _bl=(typeof s.xp==="number")?lvl(s.xp):1;
   var _bt=Math.max(tierAtLevel(_bl),(typeof s.peakTier==="number"?s.peakTier:0));
   var _bun=PKEYS.filter(function(k){return PRODUCTS[k].tier<=_bt;});
   var pr=Array.isArray(c.prefs)?c.prefs.filter(function(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&_bun.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab");}).map(function(p){return {k:p.k,kind:p.kind};}).slice(0,3):[];
   if(!pr.length)pr=contactPrefsFor(tp,_bun);
-  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0,refGiven:!!c.refGiven,phaseMin:(typeof c.phaseMin==="number"&&isFinite(c.phaseMin)&&c.phaseMin>=0)?(Math.floor(c.phaseMin)%30):undefined,patienceMul:(typeof c.patienceMul==="number"&&c.patienceMul>0)?c.patienceMul:1,firstOrderAt:typeof c.firstOrderAt==="number"?c.firstOrderAt:0,lastFlakeAt:typeof c.lastFlakeAt==="number"?c.lastFlakeAt:0};
+  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0,askEligSince:typeof c.askEligSince==="number"?c.askEligSince:0,refGiven:!!c.refGiven,phaseMin:(typeof c.phaseMin==="number"&&isFinite(c.phaseMin)&&c.phaseMin>=0)?(Math.floor(c.phaseMin)%30):undefined,patienceMul:(typeof c.patienceMul==="number"&&c.patienceMul>0)?c.patienceMul:1,firstOrderAt:typeof c.firstOrderAt==="number"?c.firstOrderAt:0,lastFlakeAt:typeof c.lastFlakeAt==="number"?c.lastFlakeAt:0};
  });
  if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
@@ -3116,7 +3158,7 @@ function normalize(s,raw){
  if(!Array.isArray(s.tasks))s.tasks=[];
  s.tasks=s.tasks.filter(function(t){return t&&typeof t.name==="string"&&typeof t.k==="string"&&PRODUCTS[t.k]&&typeof t.g==="number"&&t.g>0;}).map(function(t){
   var _added=typeof t.addedAt==="number"?t.addedAt:Date.now();
-  return {name:String(t.name).slice(0,24),k:t.k,kind:(t.kind==="joint"||t.kind==="lab")?t.kind:"bud",g:t.g,pu:typeof t.pu==="number"?t.pu:0,addedAt:_added,expiresAt:typeof t.expiresAt==="number"?t.expiresAt:(_added+20*60*1000),vip:t.vip===true,referral:typeof t.referral==="string"?t.referral.slice(0,60):"",enRoute:t.enRoute!==false,replyAt:typeof t.replyAt==="number"?t.replyAt:_added,nudged:!!t.nudged,nudgeAt:typeof t.nudgeAt==="number"?t.nudgeAt:0};
+  return {name:String(t.name).slice(0,24),k:t.k,kind:(t.kind==="joint"||t.kind==="lab")?t.kind:"bud",g:t.g,pu:typeof t.pu==="number"?t.pu:0,addedAt:_added,expiresAt:typeof t.expiresAt==="number"?t.expiresAt:(_added+20*60*1000),vip:t.vip===true,referral:typeof t.referral==="string"?t.referral.slice(0,60):"",enRoute:t.enRoute!==false,replyAt:typeof t.replyAt==="number"?t.replyAt:_added,nudged:!!t.nudged,nudgeAt:typeof t.nudgeAt==="number"?t.nudgeAt:0,geneOpt:(t.geneOpt&&PRODUCTS[t.geneOpt.k]&&PRODUCTS[t.geneOpt.k].gene&&typeof t.geneOpt.g==="number"&&typeof t.geneOpt.pu==="number")?{k:t.geneOpt.k,g:t.geneOpt.g,pu:t.geneOpt.pu,expires:typeof t.geneOpt.expires==="number"?t.geneOpt.expires:0}:null};
  }).slice(0,50);
  /* regulars: fulfill count per customer name */
  if(!s.regulars||typeof s.regulars!=="object")s.regulars={};
@@ -3135,7 +3177,7 @@ function normalize(s,raw){
   // NOTE: hardcoded unlock levels here — TERRITORIES is defined AFTER normalize()
   // runs at boot, so terrDef()/terrUnlocked() are NOT safe to call in this function.
   // (peakTerr = territories open under the pre-v142 curve stay open.)
-  var _tunlock={home:1,industrial:3,suburbs:6,downtown:11,waterfront:16,uptown:19};
+  var _tunlock={home:1,industrial:3,suburbs:6,downtown:10,waterfront:16,uptown:19};
   var _sl=(typeof s.xp==="number")?lvl(s.xp):1;
   if(_sl<(_tunlock[s.terr.active]||1)&&(s.peakTerr||[]).indexOf(s.terr.active)<0)s.terr.active="home";
   Object.keys(s.terr.zones).forEach(function(zid){
@@ -3221,6 +3263,12 @@ function normalize(s,raw){
  if(typeof s.visorCam!=="string")s.visorCam="environment";
  if(typeof s.visorStashOpen!=="boolean")s.visorStashOpen=false;
  if(!s.geneUnlocked||typeof s.geneUnlocked!=="object")s.geneUnlocked={};
+ if(!s.geneLv||typeof s.geneLv!=="object")s.geneLv={};
+ if(typeof s.geneSeed!=="number"||!(s.geneSeed>0))s.geneSeed=0;
+ if(!s.geneGrand||typeof s.geneGrand!=="object")s.geneGrand={};
+ assignGeneLevels(s);
+ if(!s.dealerWants||typeof s.dealerWants!=="object")s.dealerWants={};
+ if(!s.geneCollected||typeof s.geneCollected!=="object")s.geneCollected={};
  if(!s.hunt||typeof s.hunt!=="object")s.hunt=null;
  if(!s.pullup||typeof s.pullup!=="object")s.pullup=null;
  if(typeof s.pullupDeal!=="boolean")s.pullupDeal=false;
@@ -3937,7 +3985,7 @@ function heatStars(h){var n=heatTier(h)+1,s="";for(var i=0;i<5;i++)s+=i<n?"\u260
 var TERRITORIES=[
  {id:"home",name:"Home",sub:"Home turf — safe & low heat",price:1.0,heat:0.8,unlock:1,likes:"none",likesTxt:"No preference",
   w:{cops:0.5,gangs:0.5,fam:0.3},color:"#d97706",grad:"linear-gradient(135deg,#92400e,#451a03)",nbors:["suburbs","industrial"]},
- {id:"downtown",name:"Downtown",sub:"High prices, hot streets",price:1.25,heat:1.5,unlock:11,likes:"party",likesTxt:"Joints, Edibles",w:{cops:1.0,gangs:1.5,fam:0.5},color:"#f59e0b",grad:"linear-gradient(135deg,#7c2d12,#431407)",nbors:["uptown","waterfront","industrial"]},
+ {id:"downtown",name:"Downtown",sub:"High prices, hot streets",price:1.25,heat:1.5,unlock:10,likes:"party",likesTxt:"Joints, Edibles",w:{cops:1.0,gangs:1.5,fam:0.5},color:"#f59e0b",grad:"linear-gradient(135deg,#7c2d12,#431407)",nbors:["uptown","waterfront","industrial"]},
  {id:"suburbs",name:"Suburbs",sub:"Safe & quiet, lower prices",price:0.9,heat:0.6,unlock:6,likes:"lowbud",likesTxt:"Low-tier bud",w:{cops:0.8,gangs:0.4,fam:1.4},color:"#4ade80",grad:"linear-gradient(135deg,#14532d,#052e16)",nbors:["uptown","industrial"]},
  {id:"industrial",name:"Industrial",sub:"Room to move, mid prices",price:1.1,heat:1.0,unlock:3,likes:"none",likesTxt:"No preference",w:{cops:0.7,gangs:1.0,fam:0.4},color:"#60a5fa",grad:"linear-gradient(135deg,#334155,#0f172a)",nbors:["downtown","suburbs","waterfront"]},
  {id:"waterfront",name:"Waterfront",sub:"Tourist cash, watchful eyes",price:1.3,heat:1.25,unlock:16,likes:"midbud",likesTxt:"Mid-tier bud",w:{cops:1.3,gangs:0.8,fam:0.8},color:"#22d3ee",grad:"linear-gradient(135deg,#0e7490,#164e63)",nbors:["downtown","industrial"]},
@@ -3951,11 +3999,12 @@ function terrZone(id){
  if(!S.terr||typeof S.terr!=="object")S.terr={active:"home",zones:{}};
  if(!S.terr.zones||typeof S.terr.zones!=="object")S.terr.zones={};
  var z=S.terr.zones[id];
- if(!z||typeof z!=="object"){z={heat:{cops:0,gangs:0,fam:0},warned:{},cool:0};S.terr.zones[id]=z;}
+ if(!z||typeof z!=="object"){z={heat:{cops:0,gangs:0,fam:0},warned:{},cool:0,xp:0};S.terr.zones[id]=z;}
  if(!z.heat||typeof z.heat!=="object")z.heat={cops:0,gangs:0,fam:0};
  if(!z.warned||typeof z.warned!=="object")z.warned={};
  var k;for(k=0;k<3;k++){var s=HEAT_SOURCES[k];if(typeof z.heat[s]!=="number"||isNaN(z.heat[s]))z.heat[s]=0;z.heat[s]=Math.max(0,Math.min(100,z.heat[s]));}
  if(typeof z.cool!=="number")z.cool=0;
+ if(typeof z.xp!=="number"||isNaN(z.xp)||z.xp<0)z.xp=0;
  return z;
 }
 function terrTotal(id){var z=terrZone(id);return Math.max(z.heat.cops,z.heat.gangs,z.heat.fam);}
@@ -4064,7 +4113,7 @@ function terrConsequenceCheck(tid,src){
  if(!S.fixerUnlocked)unlockFixer();
 }
 function flushTerrMsg(){if(S._terrMsg){S.msg=S._terrMsg;S._terrMsg=null;}}
-function terrPriceMult(){return terrDef((S.terr&&S.terr.active)||"home").price;}
+function terrPriceMult(){return terrPriceMultFor(activeTerrId());}
 function terrPrefMult(k,isJoint){
  // Territory product preference: +15% for preferred products, -10% otherwise.
  // Only called during sales (never at boot), so terrDef() is safe here.
@@ -4082,6 +4131,132 @@ function reduceTerrHeat(terrId,amt){
  var z=terrZone(terrId||(S.terr&&S.terr.active)||"home");
  var i;for(i=0;i<3;i++)z.heat[HEAT_SOURCES[i]]=Math.max(0,z.heat[HEAT_SOURCES[i]]-amt);
  syncGlobalHeat();
+}
+/* ===== v158 systems: territory levels (K.4), dealer bulk wants (K.5),
+   gene-strain order options (2026-10-15 design: AR strains are OPTIONAL) ===== */
+var TERRITORY_LEVELS=[0,150,400,900,1800]; /* XP to reach Lv1..5, per territory, on S.terrZone[key].xp */
+var TERR_GRANT_TXT={2:"+0.05 prices here",3:"+1 order budget (4 per 10 min)",4:"+0.05 prices here + 1 runner spot on this turf",5:"+1 order budget (5 per 10 min) + heat cools 2x as fast here"};
+function visOfP(k){var p=PRODUCTS[k];if(!p)return 0;if(p.lv)return pLevel()>=p.lv?2:(pLevel()>=p.lv-3?1:0);return tierVis(p.tier);}
+function kitVis(kk){var kt=KITS[kk];if(!kt)return 0;if(kt.lv)return pLevel()>=kt.lv?2:(pLevel()>=kt.lv-3?1:0);return tierVis(kt.tier);}
+function kitUnlocked(kk){return kitVis(kk)===2;}
+function terrLevelOf(id){var xp=(terrZone(id).xp||0),L=1,i;for(i=0;i<TERRITORY_LEVELS.length;i++)if(xp>=TERRITORY_LEVELS[i])L=i+1;return L;}
+function terrLevelPriceFactor(lv){return 1+(lv>=2?0.05:0)+(lv>=4?0.05:0);}
+function terrPriceMultFor(id){return terrDef(id).price*terrLevelPriceFactor(terrLevelOf(id));}
+function terrNextGrantTxt(id){var lv=terrLevelOf(id);if(lv>=5)return "Max level \u2014 this turf is yours.";var need=TERRITORY_LEVELS[lv]-(terrZone(id).xp||0);return "Lv "+(lv+1)+" in "+need+" XP: "+TERR_GRANT_TXT[lv+1];}
+function addTerrXP(n){
+ if(!n||n<=0)return;
+ var id=activeTerrId(),z=terrZone(id),before=terrLevelOf(id);
+ z.xp=(z.xp||0)+n;
+ var after=terrLevelOf(id);
+ if(after>before)pushContactNotif("\uD83D\uDDFA\uFE0F "+terrDef(id).name+" hit Lv "+after+" \u2014 "+TERR_GRANT_TXT[after]);
+}
+function orderBudgetNow(){var lv=terrLevelOf(activeTerrId());return CONTACT_TUNING.orderBudget+(lv>=3?1:0)+(lv>=5?1:0);}
+/* display-only estimate of what a contact order pays per unit for k right now
+   (mid-loyalty premium, territory composed, capped like real orders) */
+function stashOrderUnit(k,isJoint){
+ var base=contactBasePrice({k:k,kind:isJoint?"joint":"bud"});
+ var terrF=Math.min(1.6,terrPriceMult()*terrPrefMult(k,!!isJoint));
+ return Math.max(1,Math.round(base*1.225*terrF));
+}
+/* ---- dealer bulk wants (K.5): standing daily want per dealer ----
+   Product: the dealer's specialty (their 1.28 buy-owner products),
+   rotating daily by date hash. Gene strains are excluded (they are the
+   optional premium channel, never a bulk obligation). Price: the
+   dealer's owner base (hb) x 1.08. Fulfilling grants +5 player XP and
+   NO contact roll. */
+var DEALER_WANT_MULT=1.08;
+function dealerWantDayStr(){return new Date().toISOString().slice(0,10);}
+function dealerWantSpec(di){
+ var out=[];
+ for(var k in DEALER_BUY_OWNER){if(DEALER_BUY_OWNER[k]===di&&PRODUCTS[k]&&!PRODUCTS[k].gene&&strainUnlocked(k))out.push(k);}
+ return out.length?out:["sour"];
+}
+function dealerWantFor(di){
+ if(!tierUnlocked(DEALER_TIER[di]))return null;
+ if(!S.dealerWants||typeof S.dealerWants!=="object")S.dealerWants={};
+ var day=dealerWantDayStr(),w=S.dealerWants[di];
+ if(w&&w.day===day&&PRODUCTS[w.k]&&typeof w.left==="number"&&typeof w.qty==="number")return w;
+ var spec=dealerWantSpec(di),h=0,seed=day+":"+di,i;
+ for(i=0;i<seed.length;i++)h=(h*31+seed.charCodeAt(i))>>>0;
+ var qty=Math.min(100,10+2*((S.contacts||[]).length));
+ w={day:day,k:spec[h%spec.length],qty:qty,left:qty};
+ S.dealerWants[di]=w;
+ return w;
+}
+function dealerWantUnit(di,k){var d=S.dealers[di];if(!d)return 0;return ppu(PRODUCTS[k].price,(d.hb[k]||1)*DEALER_WANT_MULT);}
+function doDealerWant(di){
+ var w=dealerWantFor(di);
+ if(!w){S.msg="That dealer is not around yet.";save();render();return;}
+ if(w.left<=0){S.msg=S.dealers[di].name+"'s bulk want is already filled today.";save();render();return;}
+ var have=S.stash[w.k]||0,sell=Math.min(have,w.left);
+ if(sell<=0){S.msg="You have no "+PRODUCTS[w.k].name+" for that bulk want.";save();render();return;}
+ var unit=dealerWantUnit(di,w.k),rev=Math.floor(unit*sell);
+ S.stash[w.k]-=sell;w.left-=sell;
+ S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
+ S.statsToday&&S.statsToday.date===dealerWantDayStr()&&(S.statsToday.earned+=rev);
+ addXP(5);
+ S.msg="Bulk sale: "+sell+"g "+PRODUCTS[w.k].name+" to "+S.dealers[di].name+" for "+money(rev)+"."+(w.left>0?" They still want "+w.left+"g today.":" Bulk want filled for today.");
+ save();render();
+}
+function dealerWantHTML(di){
+ var w=dealerWantFor(di);if(!w)return "";
+ var d=S.dealers[di];
+ if(w.left<=0)return '<div class="dwant done">\uD83D\uDCE6 <b>'+d.name+'</b> bulk want filled today \u2713</div>';
+ var have=S.stash[w.k]||0,unit=dealerWantUnit(di,w.k);
+ return '<div class="dwant"><span>\uD83D\uDCE6 <b>'+d.name+' wants</b> '+w.left+'g '+PRODUCTS[w.k].name+' today \u2014 pays '+money(unit)+'/g ('+money(Math.floor(unit*w.left))+' total) \u00B7 you have '+have+'g</span>'
+  +'<button type="button" data-act="dealerwant" data-d="'+di+'"'+(have>0?"":" disabled")+'>Sell '+Math.min(have,w.left)+'g</button></div>';
+}
+/* ---- gene-strain order options (2026-10-15 design) ----
+   Gene strains gate NOTHING and never enter the base order pool. When a
+   gene strain is unlocked AND in stock, a normal order can carry an
+   optional premium add-on for it, shown in the thread as a green
+   order-bubble + reply pill. Ignoring or expiring it costs nothing. */
+var GENE_KEYS=["frost","nebula","ember","ghost"];
+var GENE_OPT_CHANCE=0.5,GENE_OPT_PREMIUM=1.25;
+function geneOptFor(c,o){
+ if(!c||!o||!PRODUCTS[o.k]||PRODUCTS[o.k].gene)return null;
+ var elig=[];
+ GENE_KEYS.forEach(function(k){if(S.geneUnlocked&&S.geneUnlocked[k]&&(S.stash[k]||0)>=2&&(geneLevelReached(k)||(S.geneGrand&&S.geneGrand[k])))elig.push(k);});
+ if(!elig.length)return null;
+ if(Math.random()>GENE_OPT_CHANCE)return null;
+ var k=elig[(Math.random()*elig.length)|0];
+ var g=Math.min([2,3,5][(Math.random()*3)|0],S.stash[k]||0);
+ if(g<2)return null;
+ var base=contactBasePrice({k:k,kind:"bud"});
+ var premium=1.15+(c.loyalty/100)*0.15;
+ var terrF=Math.min(1.6,terrPriceMult()*terrPrefMult(k,false));
+ var pu=Math.max(1,Math.round(base*premium*terrF*GENE_OPT_PREMIUM));
+ return {k:k,g:g,pu:pu,expires:(o.expires||0)};
+}
+function geneOptText(opt){return "\u2728 Premium option: "+opt.g+"g "+PRODUCTS[opt.k].name+" \u2014 "+money(opt.pu*opt.g)+" ("+money(opt.pu)+"/g)";}
+function geneOptPay(c,opt){
+ var have=S.stash[opt.k]||0;
+ if(have<opt.g){S.msg="You are short on "+PRODUCTS[opt.k].name+" for that option now.";return false;}
+ S.stash[opt.k]-=opt.g;
+ var rev=Math.floor(opt.pu*opt.g*gearPriceMult()),now=Date.now();
+ S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
+ if(c){
+  c.loyalty=Math.min(100,c.loyalty+Math.round(8*(1+gearBonus().rep/100)));
+  c.lastFulfilledAt=now;
+  c.msgs.push({from:"me",text:"brought the "+PRODUCTS[opt.k].name+" too \uD83D\uDD25",t:now});
+  c.msgs.push({from:"them",text:"yooo the "+PRODUCTS[opt.k].name+"?! appreciate u \uD83D\uDE4F",t:now});
+  c.softUnread=true;
+ }
+ dealTerrHeat(opt.g,opt.g>=5);
+ S.msg="Premium sale: "+opt.g+"g "+PRODUCTS[opt.k].name+" to "+(c?c.name:"a customer")+" for "+money(rev)+".";
+ return true;
+}
+function doGeneOptSell(nm){
+ var c=getContact(nm);
+ if(!c||!c.order||!c.order.geneOpt){S.msg="That option is gone.";save();render();return;}
+ if(geneOptPay(c,c.order.geneOpt))c.order.geneOpt=null;
+ save();render();
+}
+function doGeneOptTaskSell(i){
+ var t=S.tasks&&S.tasks[i];
+ if(!t||!t.geneOpt){S.msg="That option is gone.";save();render();return;}
+ if(geneOptPay(getContact(t.name),t.geneOpt))t.geneOpt=null;
+ save();render();
 }
 function bar(label,v,cls){return '<div class="brow"><span>'+label+'</span><div class="bar"><i class="b-'+cls+'" style="width:'+Math.round(Math.max(0,Math.min(100,v)))+'%"></i></div><b>'+Math.round(v)+'</b></div>';}
 function stageOf(g){return g>=100?6:g>=75?5:g>=55?4:g>=35?3:g>=20?2:g>=8?1:0;}
@@ -4328,7 +4503,7 @@ function bwBuyBtn(p){
  var locked=!tierUnlocked(p.tier);
  if(owned)return '<button type="button" class="bw-btn owned" disabled>&#10003; Owned</button>';
  if(locked)return '<button type="button" class="bw-btn" disabled>Unlocks at Lv '+levelForTier(p.tier)+'</button>';
- var _tcCost=p.cost/100;return '<button type="button" class="bw-btn" data-act="buyprop" data-prop="'+p.id+'"'+((S.crypto||0)>=_tcCost?"":" disabled")+'>'+(p.cost===0?"Claim FREE":"Buy — "+_tcCost.toLocaleString("en-US")+" TC")+'</button>';
+ var _tcCost=p.cost/100;return '<button type="button" class="bw-btn" data-act="buyprop" data-prop="'+p.id+'"'+((S.crypto||0)>=_tcCost?"":" disabled")+'>'+(p.cost===0?"Claim FREE":"Buy — "+_tcCost.toLocaleString("en-US")+" TC \u00B7 "+money(p.cost))+'</button>';
 }
 function bwCardHTML(p){
  var meta=PROP_META[p.id]||{addr:"",bd:1,ba:1,sqft:500,grad:"linear-gradient(135deg,#333,#111)",tag:""};
@@ -4337,7 +4512,7 @@ function bwCardHTML(p){
  var badge=owned?'<span class="bw-badge owned">OWNED</span>':locked?'<span class="bw-badge locked">LV '+levelForTier(p.tier)+'+</span>':'<span class="bw-badge forsale">FOR SALE</span>';
  return '<div class="bw-card'+(locked?" locked":"")+'" data-act="bw-goto" data-url="https://www.terpestates.com/homes/'+p.id+'">'
   +'<div class="bw-photo" style="background:'+meta.grad+'"><span class="bw-photoemoji">&#127968;</span>'+badge
-  +'<span class="bw-price">'+(p.cost===0?"FREE":(p.cost/100).toLocaleString("en-US")+" TC")+'</span></div>'
+  +'<span class="bw-price">'+(p.cost===0?"FREE":(p.cost/100).toLocaleString("en-US")+" TC \u00B7 "+money(p.cost))+'</span></div>'
   +'<div class="bw-cardbody"><div class="bw-specs"><b>'+meta.bd+'</b> bd &nbsp;<b>'+meta.ba+'</b> ba &nbsp;<b>'+meta.sqft.toLocaleString("en-US")+'</b> sqft</div>'
   +'<div class="bw-addr">'+escHtml(p.name)+'</div><div class="bw-subaddr">'+escHtml(meta.addr)+'</div>'
   +'<div class="bw-slots">&#127793; '+p.slots+' grow slots &middot; '+escHtml(meta.tag)+'</div>'
@@ -4358,7 +4533,7 @@ function bwDetailHTML(id){
  var mo=p.cost===0?"—":money(Math.round(p.cost/360*1.15))+"/mo";
  return '<div class="bw-page"><div class="bw-dphoto" style="background:'+meta.grad+'"><span class="bw-photoemoji big">&#127968;</span>'
   +'<button type="button" class="bw-dback" data-act="bw-back" aria-label="Back">&#8592;</button>'
-  +'<span class="bw-price big">'+(p.cost===0?"FREE":(p.cost/100).toLocaleString("en-US")+" TC")+'</span></div>'
+  +'<span class="bw-price big">'+(p.cost===0?"FREE":(p.cost/100).toLocaleString("en-US")+" TC \u00B7 "+money(p.cost))+'</span></div>'
   +'<div class="bw-dbody"><div class="bw-addr big">'+escHtml(p.name)+'</div><div class="bw-subaddr">'+escHtml(meta.addr)+'</div>'
   +'<div class="bw-dspecs"><div><b>'+meta.bd+'</b><span>beds</span></div><div><b>'+meta.ba+'</b><span>baths</span></div><div><b>'+meta.sqft.toLocaleString("en-US")+'</b><span>sq ft</span></div><div><b>'+p.slots+'</b><span>grow slots</span></div></div>'
   +'<div class="bw-est">Est. '+mo+' &middot; Requires Level '+levelForTier(p.tier)+'</div>'
@@ -4404,7 +4579,7 @@ function bwCryptoHTML(){
   +'<div class="bw-crypto">'
   +'<div class="bw-crate">1 TerpCoin = '+money(rate)+'</div>'
   +'<div class="bw-cbals"><div><span>Cash</span><b>'+money(S.cash)+'</b></div><div><span>TerpCoin</span><b>'+tc.toFixed(2)+' TC</b></div></div>'
-  +'<div class="bw-camt"><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="-100">-100</button><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="-1000">-1K</button><span class="bw-camtval">'+money(S.cryptoAmt||100)+'</span><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="100">+100</button><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="1000">+1K</button></div>'
+  +'<div class="bw-camt"><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="-100">-100</button><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="-1000">-1K</button><span class="bw-camtval">'+money(S.cryptoAmt||100)+'</span><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="100">+100</button><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="1000">+1K</button><button type="button" class="bw-camtbtn" data-act="bw-camt" data-v="10000">+10K</button><button type="button" class="bw-camtbtn" data-act="bw-camtmax">MAX</button></div>'
   +'<div class="bw-cbtns"><button type="button" class="bw-btn" data-act="bw-buycrypto">Buy '+(tc>0?(S.cryptoAmt||100)/rate: (S.cryptoAmt||100)/rate).toFixed(2)+' TC</button>'
   +'<button type="button" class="bw-btn ghost" data-act="bw-sellcrypto">Sell Crypto</button></div>'
   +'<div class="bw-cnote">Convert cash to TerpCoin for discreet transactions.</div>'
@@ -4654,7 +4829,10 @@ function render(){
  // seeds quick-buy + auto-plant in Grow tab
  gh+='<div class="shopsec">SEEDS</div>';
  GROWKEYS.forEach(function(k){
-  if(!strainUnlocked(k))return;
+  if(!strainUnlocked(k)){
+   if(PRODUCTS[k].gene&&geneHuntAware()){gh+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">Unlocks Lv '+geneLevelFor(k)+' &middot; seeds: SCAN hunts only</span></div><div style="display:flex;gap:6px"><button type="button" disabled>AUTO PLANT</button></div></div>';}
+   return;
+  }
   var sc=S.seeds[k]||0;
   gh+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">&times;'+sc+'</span></div>'
    +'<div style="display:flex;gap:6px">'
@@ -4934,6 +5112,16 @@ function render(){
     +'<div class="msg-order-body">I can make the heat disappear in '+escHtml(_fxT.name)+'. Cops, gangs, Karens — I know people.</div>'
     +'<button type="button" data-act="fixer-bribe"'+(S.cash<_fxCost?" disabled":"")+'>Bribe '+money(_fxCost)+'</button></div>';
   }
+  /* v158 gene option: the customer's optional premium add-on, presented
+     as a green order-bubble in the thread (same component as order asks) */
+  if(c.order&&c.order.geneOpt){
+   h+='<button type="button" class="order-bubble gene-opt" data-act="geneopt" data-c="'+escHtml(c.name)+'">'+geneOptText(c.order.geneOpt)+'<br><small>Optional add-on \u2014 tap to sell it now. Ignoring it costs nothing.</small></button>';
+  }
+  var _gts=(S.tasks||[]).filter(function(t){return t.name===c.name&&t.geneOpt;});
+  if(_gts.length){
+   var _gti=S.tasks.indexOf(_gts[0]);
+   h+='<button type="button" class="order-bubble gene-opt" data-act="geneopttask" data-i="'+_gti+'">'+geneOptText(_gts[0].geneOpt)+'<br><small>Optional add-on for the meetup \u2014 tap to sell it now.</small></button>';
+  }
   /* runner offer: eligible regulars can be promoted */
   if(runnerAskEligible(c)&&!c.order&&S.runners.length<runnerMax()){
    h+='<div class="msg-order"><div class="msg-order-hd">🏃 <b>Bring them on?</b></div>'
@@ -5034,13 +5222,14 @@ function streetHTML(){
   dh+='<button type="button" class="dchip'+(ii===di?" on":"")+'" data-act="dealersel" data-d="'+ii+'"><span class="d-av sm">'+d.name.charAt(0)+'</span><span class="dc-name">'+d.name+'</span></button>';
  });
  dh+='</div>';
+ dh+=dealerWantHTML(di);
  var dcat=S.dealcat||"bud";
  function qSell(act,di2,k,have,isJ){
   var b='<span style="display:flex;gap:6px;flex:none">';
   [1,5,10].forEach(function(a){ if(have>=a)b+='<button type="button" data-act="'+act+'" data-d="'+di2+'" data-strain="'+k+'" data-q="'+a+'"'+(locked?" disabled":"")+'>'+a+(isJ?"":"g")+'</button>'; });
   return b+'</span>';
  }
- function catHas(keys,bag){for(var i=0;i<keys.length;i++){var k=keys[i];var v=tierVis(PRODUCTS[k].tier);if(v===0||v===1)continue;if(PRODUCTS[k].gene&&!strainUnlocked(k))continue;if((bag[k]||0)>0)return true;}return false;}
+ function catHas(keys,bag){for(var i=0;i<keys.length;i++){var k=keys[i];var v=visOfP(k);if(v===0||v===1)continue;if(PRODUCTS[k].gene&&!strainUnlocked(k))continue;if((bag[k]||0)>0)return true;}return false;}
  var hasBud=catHas(GROWKEYS,S.stash),hasJoints=catHas(GROWKEYS,S.joints),hasLab=catHas(RKEYS,S.stash);
  if(dcat==="bud"&&!hasBud)dcat=hasJoints?"joints":(hasLab?"lab":dcat);
  if(dcat==="joints"&&!hasJoints)dcat=hasBud?"bud":(hasLab?"lab":dcat);
@@ -5055,7 +5244,7 @@ function streetHTML(){
  function sellU(k,base){var u=base;if(bActive)u=Math.round(u*S.buffMult);return u;}
  if(dcat==="joints"){
   GROWKEYS.forEach(function(k){
-   var v=tierVis(PRODUCTS[k].tier);
+   var v=visOfP(k);
    if(PRODUCTS[k].gene&&!strainUnlocked(k))return;
    if(v===0)return;
    if(v===1)return;
@@ -5068,7 +5257,7 @@ function streetHTML(){
  }else{
   var keys=dcat==="lab"?RKEYS:GROWKEYS;
   keys.forEach(function(k){
-   var v=tierVis(PRODUCTS[k].tier);
+   var v=visOfP(k);
    if(PRODUCTS[k].gene&&!strainUnlocked(k))return;
    if(v===0)return;
    if(v===1)return;
@@ -5084,6 +5273,21 @@ function streetHTML(){
  }
  return dh;
  }
+/* ===== LANDMARKS — scenery with a face: icon chip + one-line tag on the
+   map, full card in the sheet on tap. No mechanics yet (the sheet says
+   so); the table is the extensible part: add a row to grow the city.
+   Sited on the CURRENT layout (water = east edge): shore landmarks on
+   the east, Crown Tower at Downtown, Founders Green by Home/Downtown,
+   Civic Stadium NW. flip=true extends the tag left (east-edge chips). */
+function lmList(){return [
+ {id:"crown",terr:"downtown",name:"Crown Tower",desc:"the tallest tower",tag:"tallest",icon:"tower",x:71,y:33,flip:false,flavor:"Sixty floors of glass looking down on the downtown grid. Everyone pretends not to look up."},
+ {id:"green",terr:"downtown",name:"Founders Green",desc:"central park",tag:"park",icon:"tree",x:63,y:56,flip:false,flavor:"The one square of grass the developers never got. Deals, naps and arguments all happen here."},
+ {id:"stadium",terr:"suburbs",name:"Civic Stadium",desc:"arena bowl",tag:"arena",icon:"stadium",x:10,y:16,flip:false,flavor:"Game nights flood the west side for a few hours. The rest of the week it just looms over the suburbs."},
+ {id:"light",terr:"waterfront",name:"Harbor Light",desc:"harbor point",icon:"lighthouse",x:90,y:22,flip:true,flavor:"Guiding boats into the bay since before the city had a name worth saying."},
+ {id:"marina",terr:"waterfront",name:"Slip Marina",desc:"boat docks",icon:"anchor",x:88,y:64,flip:true,flavor:"A forest of masts. Rich people's boats, bobbing quietly over other people's business."},
+ {id:"bridge",terr:"waterfront",name:"Eastbank Bridge",desc:"harbor span",icon:"bridge",x:90,y:90,flip:true,flavor:"The only road east that doesn't get your feet wet. The city ends; the bridge doesn't care."}
+];}
+function lmIcon(name,sz){var p={tower:'<path d="M9 21V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v16"/><path d="M12 4V2"/><path d="M6 21h12"/><path d="M10.5 8h.01M13.5 8h.01M10.5 12h.01M13.5 12h.01M10.5 16h.01M13.5 16h.01"/>',tree:'<circle cx="12" cy="8.5" r="4.5"/><path d="M12 13v7M8.5 20h7"/>',stadium:'<path d="M4 9.5h16"/><path d="M5.5 9.5a6.5 4.8 0 0 0 13 0"/><path d="M12 14.5v3.5M8.5 21h7M12 18v3"/>',lighthouse:'<path d="M9.8 21l.9-8.5h2.6l.9 8.5z"/><circle cx="12" cy="6" r="2"/><path d="M7 4.5L5.4 3.2M17 4.5l1.6-1.3M12 1.8v1"/>',anchor:'<circle cx="12" cy="5" r="2.2"/><path d="M12 7.2V21M8 11h8"/><path d="M5 15c0 3.5 3 6 7 6s7-2.5 7-6"/><path d="M3.6 13.4L5 15l1.7-1.1M20.4 13.4L19 15l-1.7-1.1"/>',bridge:'<path d="M3 19h18"/><path d="M4 19c2.5-6 5.5-9 8-9s5.5 3 8 9"/><path d="M8 13.6V19M12 10.9V19M16 13.6V19"/>'};return '<svg viewBox="0 0 24 24" width="'+sz+'" height="'+sz+'" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(p[name]||p.tree)+'</svg>';}
  function terrMapHTML(active){
   // GPS night-mode street map, pure HTML/CSS (no SVG — reliable mobile taps).
   // Pin positions as % of map area (converted from old 400x320 SVG coords).
@@ -5111,15 +5315,21 @@ function streetHTML(){
   h+='<span class="gps-stlabel" style="left:59%;top:25%;transform:rotate(-90deg)">5TH AVE</span>';
   h+='<span class="gps-stlabel" style="left:70%;top:72%">PIER RD</span>';
   h+='<span class="gps-stlabel" style="left:27%;top:89%">DEPOT LN</span>';
+  // landmarks: round icon chip + ONE-line name tag beside it (tap = sheet)
+  lmList().forEach(function(lm){
+   h+='<button type="button" class="gps-lm'+(lm.flip?' flip':'')+(LMSEL===lm.id?' sel':'')+'" style="left:'+lm.x+'%;top:'+lm.y+'%" data-act="lm" data-lm="'+lm.id+'" aria-label="'+lm.name+' — '+lm.desc+'">'
+    +'<span class="gps-lm-ic">'+lmIcon(lm.icon,13)+'</span>'
+    +'<span class="gps-lm-tx">'+lm.name+' · '+(lm.tag||lm.desc)+'</span></button>';
+  });
   // pins — real <button> elements for bulletproof touch
   pins.forEach(function(p){
    var t=terrDef(p.id),locked=!terrUnlocked(p.id),tot=Math.round(terrTotal(p.id)),hc=heatColor(tot),isA=p.id===active,isS=p.id===MAPSEL;
    var pinC=locked?"#1a1a1a":(isA?"#7CFC00":t.color);
-   h+='<button type="button" class="gps-pinbtn'+(isS?' sel':'')+(locked?' locked':'')+'" style="left:'+p.x+'%;top:'+p.y+'%" data-act="terr-pin" data-t="'+p.id+'" aria-label="'+t.name+(locked?' (locked)':'')+'">';
+   h+='<button type="button" class="gps-pinbtn'+(isS?' sel':'')+(locked?' locked':'')+'" style="left:'+p.x+'%;top:'+p.y+'%" data-act="terr-pin" data-t="'+p.id+'" aria-label="'+t.name+(locked?' (locked, unlocks at level '+t.unlock+')':'')+'">';
    if(!locked)h+='<span class="gps-halo" style="background:radial-gradient(circle,'+hc+'55 0%,transparent 70%)"></span>';
    h+='<span class="gps-pindrop" style="background:'+pinC+';border-color:'+(isS?'#fff':'rgba(0,0,0,.55)')+'"><span>'+(locked?'?':t.name.charAt(0))+'</span></span>';
-   h+='<span class="gps-pinlabel"'+(isA?' style="color:#7CFC00;font-weight:800"':'')+'>'+t.name+(locked?'<br><small style="color:#888">Unlocks Lv '+t.unlock+'</small>':'')+'</span>';
-   if(!locked)h+='<span class="gps-pinheat"><i style="width:'+tot+'%;background:'+hc+'"></i></span>'+(tot>0?'<span class="gps-pincool">'+heatCooldownTxt(tot)+'</span>':'');
+   h+='<span class="gps-pinlabel"'+(isA?' style="color:#7CFC00;font-weight:800"':'')+'>'+t.name+(locked?'':'<span class="gps-pinlv">Lv '+terrLevelOf(p.id)+'</span>')+'</span>';
+   if(!locked)h+='<span class="gps-pinheat"><i style="width:'+tot+'%;background:'+hc+'"></i></span>';
    // you-are-here blue dot under the active territory pin
    if(isA)h+='<span class="gps-you"><i class="you-pulse"></i><i class="you-dot"></i></span>';
    h+='</button>';
@@ -5128,9 +5338,10 @@ function streetHTML(){
   h+='</div>'; // .gps-maphtml
   return h;
  }
- // UI-only selection for the bottom sheet (not saved game state)
- var MAPSEL=null;
- var GPSZOOM=1;
+ // MAPSEL / LMSEL / GPSZOOM are declared ONCE at the top of the IIFE
+ // (shared scope — see the note by `var root`). Do not redeclare them
+ // here: the old local declaration below the map builders is exactly
+ // what kept the dispatcher's selection writes from ever binding.
  function terrStreetView(t){
   // Ground-level "on foot" perspective scene tinted per territory
   var tot=Math.round(terrTotal(t.id)),hc=heatColor(tot);
@@ -5221,10 +5432,13 @@ function propsHTML(){
   if(!sp){
    h+='<div class="pa-title">Empty pot — plant a seed:</div><div class="pa-strains">';
    GROWKEYS.forEach(function(k){
-    if(!strainUnlocked(k))return;
+    if(!strainUnlocked(k)){
+     if(PRODUCTS[k].gene&&geneHuntAware()){h+='<button type="button" disabled style="opacity:.45">'+PRODUCTS[k].name+'<span class="mast-tag">Unlocks Lv '+geneLevelFor(k)+'</span><span class="mast-tag">seeds: SCAN hunts only</span></button>';}
+     return;
+    }
     var sc=S.seeds[k]||0;
     var _m=S.strainMastery[k]||0,_mb=Math.min(50,_m*2);
-    h+='<button type="button" data-act="plant" data-pi="'+pi+'" data-si="'+sel.si+'" data-strain="'+k+'"'+(sc>0?"":" disabled")+'>'+PRODUCTS[k].name+' ('+sc+')'+(_m>0?'<span class="mast-tag">Lv'+Math.min(25,_m)+' +'+_mb+'%</span>':'')+'</button>';
+    h+='<button type="button" data-act="plant" data-pi="'+pi+'" data-si="'+sel.si+'" data-strain="'+k+'"'+(sc>0?"":" disabled")+'>'+PRODUCTS[k].name+' ('+sc+')'+'<span class="mast-tag">'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtT(growSec(k))+' grow</span>'+(_m>0?'<span class="mast-tag">Lv'+Math.min(25,_m)+' +'+_mb+'%</span>':'')+(PRODUCTS[k].gene?'<span class="mast-tag">seeds: SCAN hunts only</span>':'')+'</button>';
    });
    h+='</div>';
   }else{
@@ -5246,6 +5460,23 @@ function propsHTML(){
  return h;
 }
 
+function lmSheetHTML(){
+ // Landmark detail card — the sheet pattern, below the GPS map.
+ // Name, what it is, one flavor line — and an honest "no mechanics yet"
+ // row, exactly where a future mechanic's UI slots in when one exists.
+ var lm=null; lmList().forEach(function(x){if(x.id===LMSEL)lm=x;});
+ if(!lm)return '';
+ var t=terrDef(lm.terr);
+ var h='<div class="gps-lmsh">';
+ h+='<div class="gps-lmsh-head"><span class="gps-lm-ic">'+lmIcon(lm.icon,14)+'</span>'
+  +'<div class="gps-lmsh-title"><b>'+lm.name+'</b><span>'+lm.desc+' · '+(t?t.name:lm.terr)+'</span></div>'
+  +'<span class="gps-lmsh-tag">LANDMARK</span>'
+  +'<button type="button" class="gps-lmsh-x" data-act="lm-close" aria-label="Close">&times;</button></div>';
+ h+='<div class="gps-lmsh-flavor">'+lm.flavor+'</div>';
+ h+='<div class="gps-lmsh-note">Nothing runs here yet — it\'s scenery. If this spot ever opens for business, it\'ll say so right here.</div>';
+ h+='</div>';
+ return h;
+}
 function mapsHTML(){
   var active=(S.terr&&S.terr.active)||"home";
   var h=tabHeader("maps");
@@ -5253,7 +5484,7 @@ function mapsHTML(){
   h+='<div class="gps-wrap gps-full">'+terrMapHTML(active)
    +'<div class="gps-compass"><b>N</b><span>GPS</span></div>'
    +'<div class="gps-zoom"><button type="button" data-act="gps-zoom" data-z="in" aria-label="Zoom in">+</button><button type="button" data-act="gps-zoom" data-z="out" aria-label="Zoom out">&minus;</button></div>'
-   +'<div class="gps-scale">500 ft</div></div>';
+   +'<div class="gps-scale">500 ft</div></div>'+lmSheetHTML();
   return h;
  }
  function repHTML(){
@@ -5276,10 +5507,12 @@ function mapsHTML(){
    h+='<div class="rep-head"><span class="rep-dot" style="background:'+t.color+';box-shadow:0 0 8px '+t.color+'"></span>'
     +'<div class="rep-title"><b>'+t.name+'</b><span>'+t.sub+'</span></div>'
     +(isA?'<span class="rep-active">ACTIVE</span>':'')+'</div>';
-   h+='<div class="rep-meta"><span>Prices <b class="rep-price">&times;'+t.price+'</b></span>'
+   h+='<div class="rep-meta"><span>Prices <b class="rep-price">&times;'+terrPriceMultFor(t.id).toFixed(2)+'</b> <span style="opacity:.6">(base &times;'+t.price+')</span></span>'
     +'<span>Heat <b style="color:'+hc+'">'+tot+'%'+(tot>0?' <i style="font-style:normal;opacity:.7">('+heatCooldownTxt(tot)+')</i>':'')+'</b></span>'
     +'<span>Risk <b>&times;'+t.heat+'</b></span></div>';
    h+='<div class="rep-likes">Likes: <b>'+t.likesTxt+'</b></div>';
+   var _tlv=terrLevelOf(t.id),_zxp=terrZone(t.id).xp||0,_lo=TERRITORY_LEVELS[_tlv-1]||0,_hi=_tlv>=5?_lo:(TERRITORY_LEVELS[_tlv]||_lo),_tpct=_tlv>=5?100:Math.min(100,Math.round(100*(_zxp-_lo)/Math.max(1,_hi-_lo)));
+   h+='<div class="rep-xp"><span>Territory Lv '+_tlv+' &middot; '+_zxp+' XP</span><div class="rep-xpbar"><i style="width:'+_tpct+'%"></i></div><span class="rep-next">'+terrNextGrantTxt(t.id)+'</span></div>';
    h+='<div class="rep-heatbar"><i style="width:'+tot+'%;background:'+hc+'"></i></div>';
    h+='<div class="rep-srcs">';
    HEAT_SOURCES.forEach(function(s){
@@ -5341,18 +5574,18 @@ function mapsHTML(){
   if(st==="seeds"){
    _pageHtml+='<div class="sdesc" style="margin:0 2px 6px">Grow times: 30s-2min by strain (faster strains earn less).</div>';
    GROWKEYS.forEach(function(k){
-    var v=tierVis(PRODUCTS[k].tier);
+    var v=visOfP(k);
     if(v===0)return;
     if(v===1){_pageHtml+='<div class="srow c tight locked"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+levelForTier(PRODUCTS[k].tier)+'</span></div></div>';return;}
     _pageHtml+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+'</span></div>'
      +'<div style="display:flex;gap:6px">'
-     +(PRODUCTS[k].gene?'<span class="sdesc">HUNT ONLY (&times;'+(S.seeds[k]||0)+')</span></div></div>':'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+' (&times;'+S.seeds[k]+')</button></div></div>');
+     +(PRODUCTS[k].gene?'<span class="sdesc">HUNT ONLY (&times;'+(S.seeds[k]||0)+')</span></div></div>':'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+' (&times;'+S.seeds[k]+')</button><button type="button" data-act="buyseed" data-q="10" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed*10?"":" disabled")+'>&times;10 '+money(PRODUCTS[k].seed*10)+'</button><button type="button" data-act="buyseed" data-q="50" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed*50?"":" disabled")+'>&times;50 '+money(PRODUCTS[k].seed*50)+'</button></div></div>');
    });
   }else if(st==="lab"){
    KITKEYS.forEach(function(k){
-    var v=tierVis(KITS[k].tier);
+    var v=kitVis(k);
     if(v===0)return;
-    if(v===1){_pageHtml+='<div class="srow c locked"><div><b>'+KITS[k].name+'</b><div class="sdesc"><span class="lvtag">Lv '+levelForTier(KITS[k].tier)+'</span></div></div></div>';return;}
+    if(v===1){_pageHtml+='<div class="srow c locked"><div><b>'+KITS[k].name+'</b><div class="sdesc"><span class="lvtag">Lv '+(KITS[k].lv||levelForTier(KITS[k].tier))+'</span></div></div></div>';return;}
     _pageHtml+='<div class="srow c"><div><b>'+KITS[k].name+'</b><div class="sdesc">'+KITS[k].desc+'</div></div>'
      +'<button type="button" data-act="buykit" data-kit="'+k+'"'+(S.cash>=KITS[k].cost?"":" disabled")+'>'+money(KITS[k].cost)+' (&times;'+(S.kits[k]||0)+')</button></div>';
    });
@@ -5504,14 +5737,17 @@ function doHarvest(pi,si){
  var take=Math.min(grams,S.stashCap-stashTotal());
  if(take<=0){S.msg="Duffel is full — sell some or upgrade it.";save();render();showBagFullWarn();return;}
  S.stash[p.strain]+=take;
+ var _sbNote="";
+ if(Math.random()<(PRODUCTS[p.strain].seedBack||0)){S.seeds[p.strain]=(S.seeds[p.strain]||0)+1;_sbNote=" +1 "+PRODUCTS[p.strain].name+" seed back!";}
  pr.slots[si]=null;
  S.stats.harvested++;
  var _hx=addXP(8*PRODUCTS[p.strain].tier);
  if(!_hx)S.msg="Harvested "+take+"g of "+PRODUCTS[p.strain].name+".";
+ if(_sbNote)S.msg+=_sbNote;
  save();render();pushGrowToWidget(true);
 }
 function doHarvestAll(){
- var hn=0,ht=0,full=false,lv0=pLevel();
+ var hn=0,ht=0,full=false,lv0=pLevel(),_sbN=0;
  S.props.forEach(function(pr){pr.slots.forEach(function(p,si){
   if(!p||p.growth<100)return;
   var y=PRODUCTS[p.strain].yld;
@@ -5521,12 +5757,12 @@ function doHarvestAll(){
   var take=Math.min(grams,S.stashCap-stashTotal());
   if(take<=0){full=true;return;}
   S.strainMastery[p.strain]=_m2+1;
-  S.stash[p.strain]+=take;pr.slots[si]=null;S.stats.harvested++;ht+=take;hn++;
+  S.stash[p.strain]+=take;pr.slots[si]=null;S.stats.harvested++;ht+=take;hn++;if(Math.random()<(PRODUCTS[p.strain].seedBack||0)){S.seeds[p.strain]=(S.seeds[p.strain]||0)+1;_sbN++;}
   addXP(8*PRODUCTS[p.strain].tier);
  });});
  var lv1=pLevel();
  if(hn===0){S.msg=full?"Duffel is full — sell some or upgrade it.":"Nothing ready to harvest yet.";if(full)showBagFullWarn();}
- else{S.msg="Harvested "+ht+"g from "+hn+" plant"+(hn>1?"s":"")+".";if(full)S.msg+=" Duffel is full — sell some or upgrade it.";if(lv1>lv0)S.msg+=" Reached level "+lv1+"!";}
+ else{S.msg="Harvested "+ht+"g from "+hn+" plant"+(hn>1?"s":"")+"."+(_sbN>0?" (+"+_sbN+" seed"+(_sbN>1?"s":"")+" back)":"");if(full)S.msg+=" Duffel is full — sell some or upgrade it.";if(lv1>lv0)S.msg+=" Reached level "+lv1+"!";}
  save();render();pushGrowToWidget(true);
 }
 function doBust(){
@@ -5641,7 +5877,7 @@ function contactTypeLabel(t){return {stoner:"Stoner",party:"Party",connoisseur:"
 function contactCap(){return Math.min(200,pLevel()*10);}
 function contactPrefsFor(type,un){
  un=un||unlocked();
- var budPool=GROWKEYS.filter(function(k){return un.indexOf(k)>=0;});
+ var budPool=GROWKEYS.filter(function(k){return un.indexOf(k)>=0&&!PRODUCTS[k].gene;});
  var cand=[];
  function shuf(a){for(var i=a.length-1;i>0;i--){var j=(Math.random()*(i+1))|0;var t=a[i];a[i]=a[j];a[j]=t;}return a;}
  if(type==="party"){
@@ -5663,10 +5899,10 @@ function contactOrderPick(c){
     its recipe needs — level unlock alone is not enough (players were getting
     orders for products they had no way to make). */
  function labKitOk(k){var r=RECIPES[k];if(!r||!r.kits)return true;for(var kk in r.kits){if(((S.kits||{})[kk]||0)<r.kits[kk])return false;}return true;}
- function ok(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&un.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab")&&(p.kind!=="joint"||GROWKEYS.indexOf(p.k)>=0)&&(p.kind!=="lab"||labKitOk(p.k));}
+ function ok(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&!PRODUCTS[p.k].gene&&un.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab")&&(p.kind!=="joint"||GROWKEYS.indexOf(p.k)>=0)&&(p.kind!=="lab"||labKitOk(p.k));}
  var prefs=((c&&c.prefs)||[]).filter(ok);
  if(prefs.length&&Math.random()<0.7)return prefs[(Math.random()*prefs.length)|0];
- var budPool=GROWKEYS.filter(function(k){return un.indexOf(k)>=0;});
+ var budPool=GROWKEYS.filter(function(k){return un.indexOf(k)>=0&&!PRODUCTS[k].gene;});
  if(!budPool.length)return null;
  var pool=budPool.map(function(k){return {k:k,kind:"bud"};});
  pool.push({k:budPool[(Math.random()*budPool.length)|0],kind:"joint"});
@@ -6023,7 +6259,7 @@ function tickContacts(now){
  /* global order throttle: max CONTACT_TUNING.orderBudget new orders per window across all contacts */
  if(!Array.isArray(S.recentOrderTimes))S.recentOrderTimes=[];
  S.recentOrderTimes=S.recentOrderTimes.filter(function(t){return now-t<CONTACT_TUNING.orderBudgetWindowMin*60000;});
- var _orderBudget=Math.max(0,CONTACT_TUNING.orderBudget-S.recentOrderTimes.length);
+ var _orderBudget=Math.max(0,orderBudgetNow()-S.recentOrderTimes.length);
  /* v157 referral first orders: an intro is followed by the contact's
     first order inside the tuned window (3-8 min), not whenever the
     generic roll gets around to it (Baby Ivy waited ~2h). Bypasses the
@@ -6069,9 +6305,11 @@ function tickContacts(now){
  /* runner recruitment asks: eligible, orderless contacts */
  S.contacts.forEach(function(c){
   if(c.fixer||c.brokenUp||c.order)return;
-  if(!runnerAskEligible(c,now))return;
+  if(!runnerAskEligible(c,now)){if(c.askEligSince)c.askEligSince=0;return;}
+  if(!c.askEligSince)c.askEligSince=now;
   if(c.runnerAskedAt&&now-c.runnerAskedAt<24*3600000)return;
-  if(Math.random()>0.05)return;
+  var _pity=(!S.runners||!S.runners.length)&&!c.runnerAskedAt&&(now-c.askEligSince>=48*3600000);
+  if(!_pity&&Math.random()>0.05)return;
   c.runnerAskedAt=now;
   var _rtxt=RUNNER_ASK[(Math.random()*RUNNER_ASK.length)|0];
   c.msgs.push({from:"them",text:_rtxt,t:now});
@@ -6086,7 +6324,10 @@ function tickContacts(now){
 function createContactOrder(c,pick,grams,sentAt,now){
  var base=contactBasePrice(pick);
  var premium=1.15+(c.loyalty/100)*0.15;
- var perUnit=Math.max(1,Math.round(base*premium));
+ /* v158 (K.4): orders compose the active territory multiplier
+    (base price x level bonus x likes), hard-capped at 1.6 */
+ var _terrF=Math.min(1.6,terrPriceMult()*terrPrefMult(pick.k,pick.kind==="joint"));
+ var perUnit=Math.max(1,Math.round(base*premium*_terrF));
  var _ct=msgChainTimes(c,sentAt);
  var o={k:pick.k,kind:pick.kind,g:grams,pu:perUnit,sentAt:sentAt,stage:0,nudgeAt:_ct.nudgeAt,escAt:_ct.escAt,expires:_ct.expires};
  msgChainFix(o,now);
@@ -6170,7 +6411,10 @@ function createContactOrder(c,pick,grams,sentAt,now){
   }
   var _txt=texts[(Math.random()*texts.length)|0];
   pushContactMsg(c,_txt,sentAt);
-  return o;
+ /* v158: optional gene-strain premium add-on rides this order (never required) */
+ var _go=geneOptFor(c,o);
+ if(_go){o.geneOpt=_go;pushContactMsg(c,"\u2728 psst \u2014 if u got any "+PRODUCTS[_go.k].name+" i'll pay extra: "+_go.g+"g for "+money(_go.pu*_go.g)+"? no pressure",sentAt);}
+ return o;
 }
 function fmtMsgTime(t){try{var d=new Date(t),h=d.getHours(),m=d.getMinutes(),ap=h>=12?"PM":"AM";h=h%12;if(h===0)h=12;return h+":"+(m<10?"0":"")+m+" "+ap;}catch(e){return "";}}
 function fmtMsgDay(t){try{var d=new Date(t),now=new Date();if(d.toDateString()===now.toDateString())return "Today";var y=new Date(now);y.setDate(y.getDate()-1);if(d.toDateString()===y.toDateString())return "Yesterday";return (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();}catch(e){return "";}}
@@ -6190,20 +6434,21 @@ function doAcceptOrder(nm,variant){
  if(!c||!c.order){S.msg="That order already expired.";save();render();return;}
  var o=c.order,now=Date.now();
  if(!Array.isArray(S.tasks))S.tasks=[];
- /* VIP flash order: 10% chance, 1.5x payout, 5-min expiry */
+ /* VIP flash order: 10% chance, 1.5x payout, 15-min expiry (v158) */
  var _vip=Math.random()<0.10;
  var _pu=_vip?Math.round(o.pu*1.5):o.pu;
  /* v157 reply-aware patience: a normal accept puts the order EN
     ROUTE — the customer knows you're coming, so the cancel clock is
     replyGrace + the en-route window (from CONTACT_TUNING), not the
     old flat 20 minutes, and the mid-window follow-up is an en-route
-    nudge. The VIP flash keeps its hard 5-minute rush clock. */
- var _exp=_vip?now+5*60*1000:now+(CONTACT_TUNING.replyGraceMin+CONTACT_TUNING.enRouteWindowMin)*60000;
+    nudge. The VIP flash keeps its hard rush clock (15 min, v158). */
+ var _exp=_vip?now+15*60*1000:now+(CONTACT_TUNING.replyGraceMin+CONTACT_TUNING.enRouteWindowMin)*60000;
  /* regulars: 3+ fulfills = 15% larger quantity */
  var _g=o.g;
  if(S.regulars&&S.regulars[c.name]>=3)_g=Math.ceil(o.g*1.15);
  S.tasks.push({name:c.name,k:o.k,kind:o.kind,g:_g,pu:_pu,addedAt:now,expiresAt:_exp,vip:_vip,
   enRoute:!_vip,replyAt:now,nudged:false,nudgeAt:_vip?0:now+CONTACT_TUNING.replyGraceMin*60000});
+ if(o.geneOpt)S.tasks[S.tasks.length-1].geneOpt=o.geneOpt;
  var txt=variant||"Bet";
  c.msgs.push({from:"me",text:txt,t:now});
  /* v157 wording gate: the VIP sentiment line is EARNED — it only
@@ -6213,7 +6458,7 @@ function doAcceptOrder(nm,variant){
  var _deliv=(S.regulars&&S.regulars[c.name])||0;
  c.msgs.push({from:"them",text:(_vip&&_deliv>=2)?"you're my VIP rn ⭐":"bet 🙏",t:now});
  c.order=null;c.unread=false;
- S.msg=_vip?"⭐ VIP order from "+c.name+" added to Tasks! 5 min to fulfill!":"Order from "+c.name+" added to Tasks.";
+ S.msg=_vip?"⭐ VIP order from "+c.name+" added to Tasks! 15 min to fulfill!":"Order from "+c.name+" added to Tasks.";
  save();render();
 }
 function doDismissOrder(nm,variant){
@@ -6281,6 +6526,7 @@ function doFulfillTask(i,silent){
  if(!S.regulars||typeof S.regulars!=="object")S.regulars={};
  S.regulars[t.name]=(S.regulars[t.name]||0)+1;
  dealTerrHeat(o.g,o.g>=5);
+ addTerrXP(8);
  var c=getContact(t.name);
  if(c){
   var _thiefLeadup=c.isThief&&(c.ordersBeforeTurn||0)>0;
@@ -6435,7 +6681,7 @@ function tasksHTML(){
        (v135 checked "any single strain", hiding Cook when split stash sufficed,
        and missed the tier + duffel gates entirely.) */
     var _r=RECIPES[t.k],_miss=[];
-    if(!tierUnlocked(PRODUCTS[t.k].tier)){_miss.push({t:"locked"});}
+    if(!strainUnlocked(t.k)){_miss.push({t:"locked"});}
     else{
      if(stashTotal()>=S.stashCap)_miss.push({t:"full"});
      if((_r.bud||0)>0&&budHave()<_r.bud)_miss.push({t:"bud"});
@@ -6446,16 +6692,16 @@ function tasksHTML(){
      _prodBtns='<button type="button" class="tk-make" data-act="task-cook" data-i="'+i+'">Cook '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+'</button>';
     }else{
      _prodBtns=_miss.map(function(m){
-      if(m.t==="locked")return '<span class="tk-need">Unlocks at Level '+levelForTier(PRODUCTS[t.k].tier)+'</span>';
+      if(m.t==="locked")return '<span class="tk-need">Unlocks at Level '+(PRODUCTS[t.k].lv||levelForTier(PRODUCTS[t.k].tier))+'</span>';
       if(m.t==="full")return '<span class="tk-need">Duffel full — sell some first</span>';
       if(m.t==="kit"){
-       var _locked=!tierUnlocked(KITS[m.k].tier),_dis=_locked||S.cash<KITS[m.k].cost;
+       var _locked=!kitUnlocked(m.k),_dis=_locked||S.cash<KITS[m.k].cost;
        return '<button type="button" class="tk-buykit" data-act="buykit" data-kit="'+m.k+'"'+(_dis?" disabled":"")+'>Buy '+escHtml(KITS[m.k].name)+' '+money(KITS[m.k].cost)+(_locked?" (Lv"+levelForTier(KITS[m.k].tier)+")":"")+'</button>';
       }
       if(m.t==="stash"){
        return '<button type="button" class="tk-make" data-act="task-cook" data-k="'+m.k+'">Cook '+escHtml(PRODUCTS[m.k]?PRODUCTS[m.k].name:m.k)+' first</button>';
       }
-      var _cheapK=PKEYS.filter(function(pk){return PRODUCTS[pk]&&!PRODUCTS[pk].gene&&tierVis(PRODUCTS[pk].tier)===2;}).sort(function(a,b){return PRODUCTS[a].seed-PRODUCTS[b].seed;})[0];
+      var _cheapK=PKEYS.filter(function(pk){return PRODUCTS[pk]&&!PRODUCTS[pk].gene&&visOfP(pk)===2;}).sort(function(a,b){return PRODUCTS[a].seed-PRODUCTS[b].seed;})[0];
       if(_cheapK)return '<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+_cheapK+'"'+(S.cash>=PRODUCTS[_cheapK].seed?"":" disabled")+'>Buy '+escHtml(PRODUCTS[_cheapK].name)+' Seeds '+money(PRODUCTS[_cheapK].seed)+'</button>';
       return '<span class="tk-need">Need bud</span>';
      }).join("");
@@ -6470,6 +6716,7 @@ function tasksHTML(){
    +'<div class="tk-body">'+escHtml(contactQtyText(o))+' · pays <b>'+money(o.pu*o.g)+'</b></div>'
    +_metaLine
    +(_prodBtns?'<div class="tk-prod">'+_prodBtns+'</div>':'')
+   +(t.geneOpt?'<button type="button" class="order-bubble gene-opt" data-act="geneopttask" data-i="'+i+'">'+geneOptText(t.geneOpt)+'<br><small>Optional add-on \u2014 tap to sell it now.</small></button>':'')
    +'<div class="tk-btns"><button type="button" class="tk-fulfill" data-act="task-fulfill" data-i="'+i+'"'+(can?"":" disabled")+'>Fulfill</button>'
    +'<button type="button" class="tk-dismiss" data-act="task-dismiss" data-i="'+i+'">Dismiss</button></div></div>';
  });
@@ -6528,6 +6775,7 @@ function msgRepliesFor(c){
  if(st==="idle")return out; /* idle prompts hidden until mechanics added */
  if(c&&c.order){
   /* order request: reply pills are the accept/dismiss actions */
+  if(c.order.geneOpt)out.push({id:"gene-opt",text:"\u2728 Sell the "+PRODUCTS[c.order.geneOpt.k].name+" too ("+money(c.order.geneOpt.pu*c.order.geneOpt.g)+")",act:"geneopt",variant:""});
   ORDER_ACCEPT_VARIANTS.forEach(function(v){out.push({id:"order-accept",text:v,act:"order-accept",variant:v});});
   ORDER_DENY_VARIANTS.forEach(function(v){out.push({id:"order-dismiss",text:v,act:"order-dismiss",variant:v});});
   return out;
@@ -6568,6 +6816,7 @@ function doDeal(di,k,isBuy,isJoint,qty){
   if(isJoint)S.joints[k]-=g;else S.stash[k]-=g;
   S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
   dealTerrHeat(g,g>=5);
+  addTerrXP(5);
   var dh2=dealerStreakHeat(di);
   var prof=calcProfit(k+(isJoint?"_j":""),g,heldBefore,rev);
   if(!addXP(5))S.msg="Sold "+g+(isJoint?" joints":"g")+" of "+st.name+" to "+d.name+" for "+money(rev)+"."+(dh2>0?" Same spot too many times — heat +"+dh2+".":"");
@@ -6588,6 +6837,8 @@ function doStashSellAll(k,isJoint){
  var now=Date.now();
  if(now<S.lockedUntil)return;
  var sd=stashDealer(),d=sd.d;
+ /* v158 (K.7): Sell All prices this product at its OWN best unlocked dealer */
+ S.dealers.forEach(function(dd,ii){if(tierUnlocked(DEALER_TIER[ii])&&(dd.buy[k]||0)>(d.buy[k]||0))d=dd;});
  var have=isJoint?(S.joints[k]||0):(S.stash[k]||0);
  if(have<1){S.msg="Nothing to sell.";save();render();return;}
  var st=PRODUCTS[k];
@@ -6599,6 +6850,7 @@ function doStashSellAll(k,isJoint){
  if(isJoint)S.joints[k]=0;else S.stash[k]=0;
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
  dealTerrHeat(have,have>=5);
+ addTerrXP(5);
  /* stash sell-all is not a street deal — no dealer streak */
  var dh3=0;
  var prof2=calcProfit(k+(isJoint?"_j":""),have,have,rev);
@@ -6658,16 +6910,16 @@ function notesStashCards(d,su){
  PKEYS.forEach(function(k){
   var g=S.stash[k]||0;
   if(g<=0)return;
-  if(tierVis(PRODUCTS[k].tier)===0)return;
+  if(visOfP(k)===0)return;
   var unit=su(k,ppu(PRODUCTS[k].price,d.buy[k]));
-  cards.push({k:k,nameLine:PRODUCTS[k].name+' <b>'+g+'g</b>',subLine:money(unit)+'/g &middot; '+money(Math.floor(unit*g))+' total',search:PRODUCTS[k].name,action:""});
+  cards.push({k:k,nameLine:PRODUCTS[k].name+' <b>'+g+'g</b>',subLine:'orders \u2248 '+money(stashOrderUnit(k,false))+'/g \u00B7 '+d.name+' \u2248 '+money(unit)+'/g \u00B7 '+money(Math.floor(unit*g))+' total',search:PRODUCTS[k].name,action:""});
  });
  GROWKEYS.forEach(function(k){
   var j=S.joints[k]||0;
   if(j<=0)return;
-  if(tierVis(PRODUCTS[k].tier)===0)return;
+  if(visOfP(k)===0)return;
   var ju=su(k,Math.round(ppu(PRODUCTS[k].price,d.buy[k])*0.9));
-  cards.push({k:k,nameLine:PRODUCTS[k].name+' joints <b>'+j+'</b>',subLine:money(ju)+'/joint &middot; '+money(Math.floor(ju*j))+' total',search:PRODUCTS[k].name+" joints",action:""});
+  cards.push({k:k,nameLine:PRODUCTS[k].name+' joints <b>'+j+'</b>',subLine:'orders \u2248 '+money(stashOrderUnit(k,true))+'/joint \u00B7 '+d.name+' \u2248 '+money(ju)+'/joint \u00B7 '+money(Math.floor(ju*j))+' total',search:PRODUCTS[k].name+" joints",action:""});
  });
  return cards;
 }
@@ -6676,7 +6928,7 @@ function notesSeedCards(){
  GROWKEYS.forEach(function(k){
   var sc=S.seeds[k]||0;
   if(sc<=0)return;
-  if(tierVis(PRODUCTS[k].tier)===0)return;
+  if(visOfP(k)===0)return;
   var _needByTask=(S.tasks||[]).some(function(t){return t&&t.k===k;});
    var _act='';
    if(sc>0){
@@ -6785,6 +7037,7 @@ function stashHTML(){
   var fc=cards.filter(function(c){return match(c.search);});
   h+=fc.length?fc.map(notesCardHTML).join(""):'<div class="notes-empty">'+(q?"No matches.":"Nothing stashed yet — harvest some bud first.")+'</div>';
   h+='<div class="sdesc" style="margin:10px 18px 0">Sell uses your deal amount ('+S.amt+'g) at '+d.name+'\'s prices. Roll: 1g &rarr; 2 joints.</div>';
+  h+=dealerWantHTML(sd.di);
   h+=notesSearchBar();
  }
  return h+'</div>';
@@ -6976,13 +7229,19 @@ function tick(){
   var _tm=0,_ti;for(_ti=0;_ti<TERRITORIES.length;_ti++)_tm=Math.max(_tm,terrTotal(TERRITORIES[_ti].id));
   if(S.heat>_tm){var _az=terrZone((S.terr&&S.terr.active)||"home");_az.heat.cops=Math.min(100,_az.heat.cops+(S.heat-_tm));}
   var _hd=dtm*2.5;if(S.buffUntil&&now<S.buffUntil)_hd+=dtm*0.5;
-  for(_ti=0;_ti<TERRITORIES.length;_ti++){var _tz=terrZone(TERRITORIES[_ti].id);var _si;for(_si=0;_si<3;_si++){var _ss=HEAT_SOURCES[_si];if(_tz.heat[_ss]>0)_tz.heat[_ss]=Math.max(0,_tz.heat[_ss]-_hd);}roachPanicCheck(TERRITORIES[_ti].id,"cops");roachPanicCheck(TERRITORIES[_ti].id,"gangs");roachPanicCheck(TERRITORIES[_ti].id,"fam");}
+  for(_ti=0;_ti<TERRITORIES.length;_ti++){var _tz=terrZone(TERRITORIES[_ti].id);var _si;for(_si=0;_si<3;_si++){var _ss=HEAT_SOURCES[_si];if(_tz.heat[_ss]>0)_tz.heat[_ss]=Math.max(0,_tz.heat[_ss]-((TERRITORIES[_ti].id===((S.terr&&S.terr.active)||"home")&&terrLevelOf(TERRITORIES[_ti].id)>=5)?_hd*2:_hd));}roachPanicCheck(TERRITORIES[_ti].id,"cops");roachPanicCheck(TERRITORIES[_ti].id,"gangs");roachPanicCheck(TERRITORIES[_ti].id,"fam");}
   syncGlobalHeat();
   if(S.hp<100)S.hp=Math.min(100,S.hp+dtm/2);
   // Bank interest — super small rate, accrues continuously on savings balance
   if(S.bank&&S.bank.bal>0){
    var _bi=S.bank.bal*bankAPYPerMin()*dtm;
+   /* v158 (K.7): interest capped at $500/day */
+   var _bday=new Date().toISOString().slice(0,10);
+   if(S.bank.intDay!==_bday){S.bank.intDay=_bday;S.bank.intToday=0;}
+   if(typeof S.bank.intToday!=="number"||isNaN(S.bank.intToday))S.bank.intToday=0;
+   _bi=Math.min(_bi,Math.max(0,500-S.bank.intToday));
    if(_bi>0){
+    S.bank.intToday=Math.round((S.bank.intToday+_bi)*100)/100;
     S.bank.bal=Math.round((S.bank.bal+_bi)*100)/100;
     S.bank.pendInt=Math.round(((S.bank.pendInt||0)+_bi)*100)/100;
     if(S.bank.pendInt>=1){pushBankTx("int",S.bank.pendInt);S.bank.pendInt=0;}
@@ -6999,7 +7258,7 @@ function tick(){
     contact to custOrderExpired stamped at the task's DUE expiry,
     with the "enroute" context for non-VIP tasks, so the cancel line
     admits the player said they were coming. VIP rush tasks keep the
-    old behavior: hard 5-minute clock, no nudge, plain cancel. */
+    old behavior: hard 15-minute clock (v158), no nudge, plain cancel. */
  if(Array.isArray(S.tasks)&&S.tasks.length){
   var _expired=[];
   S.tasks=S.tasks.filter(function(t){
@@ -7043,7 +7302,7 @@ function recipeDesc(r){
 function budHave(){return GROWKEYS.reduce(function(a,k){return a+(S.stash[k]||0);},0);}
 function canCook(key){
  var r=RECIPES[key];if(!r)return false;
- if(!tierUnlocked(PRODUCTS[key].tier))return false;
+ if(!strainUnlocked(key))return false;
  if(budHave()<(r.bud||0))return false;
  for(var k in (r.kits||{}))if((S.kits[k]||0)<r.kits[k])return false;
  for(var s in (r.stash||{}))if((S.stash[s]||0)<r.stash[s])return false;
@@ -7173,6 +7432,7 @@ function settleWorkerTask(id){
  addTerrHeat("cops",Math.ceil(r.heat*0.3),null,true);
  addTerrHeat("fam",Math.ceil(r.heat*0.2),null,true);
  w.task=null;w.cooks=(w.cooks||0)+1;
+ addTerrXP(2);
  var _wx=addXP(10*(RKEYS.indexOf(t.key)+1));
  var _lost=g-take;
  if(!_wx)S.msg=t.blessed?("🌙 Blessed batch! "+wd.name+" nailed "+PRODUCTS[t.key].name+" at full yield."):(""+wd.icon+" "+wd.name+" finished: +"+take+"g "+PRODUCTS[t.key].name+"."+(_lost>0?" ("+_lost+"g lost — duffel full.)":""));
@@ -7413,6 +7673,7 @@ function settleCooking(){
  addTerrHeat("cops",Math.ceil(j.heat*0.3),null,true);
  addTerrHeat("fam",Math.ceil(j.heat*0.2),null,true);
  S.job=null;
+ addTerrXP(2);
  var _cx=addXP(10*(RKEYS.indexOf(j.key)+1));
  if(!_cx)S.msg="Batch ready: +"+take+"g "+PRODUCTS[j.key].name+".";
  if(take<j.yield)S.msg+=" ("+(j.yield-take)+"g lost — duffel full.)";
@@ -7430,6 +7691,7 @@ function collectCook(){
  addTerrHeat("cops",Math.ceil(j.heat*0.3),null,true);
  addTerrHeat("fam",Math.ceil(j.heat*0.2),null,true);
  S.job=null;
+ addTerrXP(2);
  var _cx=addXP(10*(RKEYS.indexOf(j.key)+1));
  if(!_cx)S.msg="Collected +"+take+"g "+PRODUCTS[j.key].name+".";
  flushTerrMsg();
@@ -7578,6 +7840,13 @@ function cookHTML(){
   });
  }
 
+function crewThroughput(id){
+ var wd=WORKERS[id];if(!wd)return "";
+ var perHr=Math.floor(3600/wd.dur),best=null,bestV=0;
+ RKEYS.forEach(function(k){if(!strainUnlocked(k))return;var v=RECIPES[k].yield*PRODUCTS[k].price*workerYield(id,(S.crew&&S.crew[id])||{cooks:0});if(v>bestV){bestV=v;best=k;}});
+ if(!best)return "\u2248"+perHr+" batches/hr";
+ return "\u2248"+perHr+" batches/hr \u00B7 \u2248"+money(Math.round(perHr*bestV))+"/hr at "+PRODUCTS[best].name;
+}
 function crewHTML(){
  var h='<div class="shopsec">CREW</div>';
  for(var _cid in WORKERS){
@@ -7594,12 +7863,14 @@ function crewHTML(){
     var _yd=_cid==="squeak"?(" · "+Math.round(squeakYield(_cs)*100)+"% now"):"";
     h+='<div class="crew"><div class="crew-top"><span class="picon sm crew-ic">'+_cw.icon+'</span><div class="crew-mid"><div class="crew-name">'+_cw.name+'</div><div class="crew-bonus">'+_cw.blurb+_yd+'</div></div><span class="chip on">HIRED</span></div>'
      +'<div class="crew-quote">“'+_cw.quote+'”</div>'
+     +'<div class="crew-thru">'+crewThroughput(_cid)+'</div>'
      +'<div class="crew-status">'+_st+'</div>'
      +'<div class="crew-row"><button type="button" class="chip'+(_cs.resting?"":" on")+'" data-act="workerrest" data-id="'+_cid+'">'+(_cs.resting?"Back to work":"Rest")+'</button></div></div>';
    }else{
     var _afford=(S.crypto||0)>=_cw.price;
-    h+='<div class="crew"><div class="crew-top"><span class="picon sm crew-ic">'+_cw.icon+'</span><div class="crew-mid"><div class="crew-name">'+_cw.name+'</div><div class="crew-bonus">'+_cw.blurb+'</div></div><span class="price">'+_cw.price+' TC</span></div>'
+    h+='<div class="crew"><div class="crew-top"><span class="picon sm crew-ic">'+_cw.icon+'</span><div class="crew-mid"><div class="crew-name">'+_cw.name+'</div><div class="crew-bonus">'+_cw.blurb+'</div></div><span class="price">'+_cw.price+' TC &middot; '+money(_cw.price*100)+'</span></div>'
      +'<div class="crew-quote">“'+_cw.quote+'”</div>'
+     +'<div class="crew-thru">'+crewThroughput(_cid)+'</div>'
      +'<div class="crew-row"><button type="button" class="btn go" style="flex:1" data-act="hireworker" data-id="'+_cid+'"'+(_afford?"":" disabled")+'>Hire '+_cw.name+'</button></div></div>';
    }
   })(_cid);
@@ -7608,11 +7879,11 @@ function crewHTML(){
 }
  h+='<div class="rc2wrap">';
  RKEYS.forEach(function(key){
-  var r2=RECIPES[key],pr2=PRODUCTS[key],vv=tierVis(pr2.tier);
+  var r2=RECIPES[key],pr2=PRODUCTS[key],vv=visOfP(key),_ulv=pr2.lv||(TIER_LEVEL[pr2.tier]||1);
   if(vv===0)return;
   var locked=vv===1;
-  h+='<div class="rc2'+(locked?" locked":"")+'"><span class="picon sm picon-'+key+'"></span><div class="rc2-mid"><div class="rc2-name">'+pr2.name+'</div><div class="rc2-sub">'+(locked?'<span class="lvtag">Lv '+levelForTier(pr2.tier)+'</span>':recipeDesc(r2)+' &middot; ~'+fmtT(speedOf(key))+' &middot; +'+r2.heat+' heat')+'</div></div>';
-  if(locked)h+='<button type="button" disabled>Lv '+levelForTier(pr2.tier)+'</button>';
+  h+='<div class="rc2'+(locked?" locked":"")+'"><span class="picon sm picon-'+key+'"></span><div class="rc2-mid"><div class="rc2-name">'+pr2.name+'</div><div class="rc2-sub">'+(locked?'<span class="lvtag">Lv '+_ulv+'</span>':recipeDesc(r2)+' &middot; ~'+fmtT(speedOf(key))+' &middot; +'+r2.heat+' heat')+'</div></div>';
+  if(locked)h+='<button type="button" disabled>Lv '+_ulv+'</button>';
   else{var _busy=S.job||S.cookQueue.length>0;h+='<button type="button" data-act="cookstart" data-key="'+key+'"'+(!canCook(key)?" disabled":"")+'>'+(_busy?"Queue":"Start")+'</button>';}
   h+='</div>';
  });
@@ -7669,7 +7940,9 @@ function visorMaybeSpawn(){
  var r=Math.random(),loot;
  if(r<0.6)loot={kits:2};
  else if(r<0.9)loot={cash:50+Math.floor(Math.random()*101)};
- else loot={genetics:["Frostbite","Nebula Haze","Ember OG"][Math.floor(Math.random()*3)]};
+ else{var _eg=["Frostbite","Nebula Haze","Ember OG"].filter(function(nm){var kk=geneKeyFor(nm);return kk&&geneLevelReached(kk);});
+  if(_eg.length)loot={genetics:_eg[Math.floor(Math.random()*_eg.length)]};
+  else loot={cash:50+Math.floor(Math.random()*101)};}
  S.visorDrops.push({id:"d"+now,kind:loot.kits?"supplies":(loot.cash?"cash":"genetics"),loot:loot,dist:5+Math.floor(Math.random()*16)});
  save();
 }
@@ -7842,7 +8115,9 @@ function visorCollect(id){
   if(kk.length)for(var i=0;i<d.loot.kits;i++){var k=kk[Math.floor(Math.random()*kk.length)];S.kits[k]=(S.kits[k]||0)+1;}
   msg="+"+d.loot.kits+" grow kits";
  }else if(d.loot.cash){S.cash=(S.cash||0)+d.loot.cash;msg="+$"+d.loot.cash;}
- else{if(S.visorStash.genetics.indexOf(d.loot.genetics)<0)S.visorStash.genetics.push(d.loot.genetics);var _ug=unlockGene(d.loot.genetics),_gk=geneKeyFor(d.loot.genetics);msg=d.loot.genetics+" genetics banked"+(_ug&&_gk?" — NEW STRAIN: "+PRODUCTS[_gk].name+"!":"");}
+ else{var _gk=geneKeyFor(d.loot.genetics);if(S.visorStash.genetics.indexOf(d.loot.genetics)<0)S.visorStash.genetics.push(d.loot.genetics);
+  if(_gk&&!geneLevelReached(_gk)&&!(S.geneUnlocked&&S.geneUnlocked[_gk])){msg=d.loot.genetics+" genetics banked — strain unlocks at Lv "+geneLevelFor(_gk);}
+  else{var _ug=unlockGene(d.loot.genetics);msg=d.loot.genetics+" genetics banked"+(_ug&&_gk?" — NEW STRAIN: "+PRODUCTS[_gk].name+"!":"");}}
  S.visorStash.drops++;
  window._visorLootMsg="📦 "+msg;
  save();visorRefresh();
@@ -7857,7 +8132,52 @@ var SH_UPGRADE=[0,500,1500,4000,10000];
 var SH_INCOME=25;
 function geneKeyFor(gene){return GENE2KEY[gene]||null;}
 function unlockGene(gene){var k=geneKeyFor(gene);if(!k)return false;if(!S.geneUnlocked)S.geneUnlocked={};if(S.geneUnlocked[k])return false;S.geneUnlocked[k]=true;return true;}
-function strainUnlocked(k){var p=PRODUCTS[k];if(!p)return false;if(p.gene)return !!(S.geneUnlocked&&S.geneUnlocked[k]);return tierUnlocked(p.tier);}
+/* ---- gene-strain level gates (v158 amendment, 2026-10-16 design) ----
+   Each gene strain is tied to a random later player level (band 11-19),
+   drawn once per save from S.geneSeed and persisted in S.geneLv: four
+   distinct levels, min gap 2, common strains earlier than rarer ones.
+   Before its level a gene strain is invisible: no hunt drops, no visor
+   genetics drops, no Grow-picker entry, no order options. Ownership
+   grandfathers: a strain collected before this gate existed (flagged in
+   S.geneGrand at assignment time) stays owned and usable at any level.
+   NOTE: GENE_LV_BAND / GENE_LV_KEYS are declared with the top-of-file
+   tables (near GROWKEYS) — normalize() calls assignGeneLevels during the
+   boot assignment of S, long before execution reaches this block, so the
+   vars must already hold their values by then. */
+function _geneRand(seed){var a=(seed>>>0)||1;return function(){a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function assignGeneLevels(s){
+ if(!s||typeof s!=="object")return null;
+ if(!s.geneLv||typeof s.geneLv!=="object")s.geneLv={};
+ var used={},missing=[];
+ GENE_LV_KEYS.forEach(function(k){
+  var v=s.geneLv[k];
+  if(typeof v==="number"&&v>=11&&v<=19&&!used[v])used[v]=k;
+  else{delete s.geneLv[k];missing.push(k);}
+ });
+ if(!missing.length)return s.geneLv;
+ if(typeof s.geneSeed!=="number"||!(s.geneSeed>0))s.geneSeed=(Math.floor(Math.random()*4294967295)+1)>>>0;
+ var rnd=_geneRand(s.geneSeed);
+ var pool=[0,1,2,3,4,5];
+ for(var i=pool.length-1;i>0;i--){var j=Math.floor(rnd()*(i+1));var tmp=pool[i];pool[i]=pool[j];pool[j]=tmp;}
+ var picks=pool.slice(0,4).sort(function(a,b){return a-b;});
+ var spread=picks.map(function(p,idx){return 11+p+idx;});
+ var free=spread.filter(function(L){return !used[L];});
+ if(free.length<missing.length){GENE_LV_BAND.forEach(function(L){if(!used[L]&&free.indexOf(L)<0)free.push(L);});free.sort(function(a,b){return a-b;});}
+ missing.forEach(function(k,idx){s.geneLv[k]=free[idx];});
+ if(!s.geneGrand||typeof s.geneGrand!=="object")s.geneGrand={};
+ GENE_LV_KEYS.forEach(function(k){if(s.geneUnlocked&&s.geneUnlocked[k])s.geneGrand[k]=true;});
+ return s.geneLv;
+}
+function geneLevelFor(k){var v=(typeof S!=="undefined"&&S&&S.geneLv)?S.geneLv[k]:null;return (typeof v==="number"&&v>=11&&v<=19)?v:99;}
+function geneLevelReached(k){return pLevel()>=geneLevelFor(k);}
+function geneHuntAware(){
+ if(S.visorSeen)return true;
+ if(S.visorStash&&((S.visorStash.drops||0)>0||(S.visorStash.genetics&&S.visorStash.genetics.length)))return true;
+ if(S.geneCollected&&Object.keys(S.geneCollected).length)return true;
+ if(S.geneUnlocked&&Object.keys(S.geneUnlocked).length)return true;
+ return false;
+}
+function strainUnlocked(k){var p=PRODUCTS[k];if(!p)return false;if(p.gene)return !!((S.geneUnlocked&&S.geneUnlocked[k])||geneLevelReached(k));if(p.lv)return pLevel()>=p.lv;return tierUnlocked(p.tier);}
 function arPing(title,body){
  if(!S.snoozed){showHeadsUp(title,body);playMsgSound();}
  if(!Array.isArray(S.notifs))S.notifs=[];
@@ -7870,12 +8190,23 @@ function heatDots(){var h=0;try{h=activeHeat();}catch(e){}var n=Math.max(1,Math.
 function huntStart(){
  var n=1+Math.floor(Math.random()*3),plants=[];
  var o=window._visorOrient,ref=(o&&o.has)?{has:true,alpha:o.alpha,beta:o.beta}:null;
+ /* v158 amendment: the drop pool holds only gene strains whose assigned
+    level the player has reached (weights renormalize over the eligible
+    set). None eligible -> no plants, and the visor says when genetics
+    start riding in. */
+ var _huntPool=[["Frostbite",0.60,"common"],["Nebula Haze",0.25,"uncommon"],["Ember OG",0.12,"rare"],["Ghost Pepper Kush",0.03,"LEGENDARY"]].filter(function(e){return geneLevelReached(geneKeyFor(e[0]));});
+ var _huntTot=0;_huntPool.forEach(function(e){_huntTot+=e[1];});
+ if(!_huntPool.length){
+  S.hunt={plants:[],ref:ref};
+  var _minLv=99;GENE_KEYS.forEach(function(k){_minLv=Math.min(_minLv,geneLevelFor(k));});
+  window._visorLootMsg="📡 No rare plants in range — hunt genetics start riding in at Lv "+_minLv+".";
+  if(window._visorLootT)clearTimeout(window._visorLootT);window._visorLootT=setTimeout(function(){window._visorLootMsg="";if(window._visorLive)visorRefresh();},4000);
+  save();visorRefresh();return;
+ }
  for(var i=0;i<n;i++){
-  var r=Math.random(),gene,rar;
-  if(r<0.60){gene="Frostbite";rar="common";}
-  else if(r<0.85){gene="Nebula Haze";rar="uncommon";}
-  else if(r<0.97){gene="Ember OG";rar="rare";}
-  else{gene="Ghost Pepper Kush";rar="LEGENDARY";}
+  var _roll=Math.random()*_huntTot,_acc=0,gene=null,rar=null;
+  for(var _hi=0;_hi<_huntPool.length;_hi++){_acc+=_huntPool[_hi][1];if(_roll<_acc){gene=_huntPool[_hi][0];rar=_huntPool[_hi][2];break;}}
+  if(gene===null){gene=_huntPool[_huntPool.length-1][0];rar=_huntPool[_huntPool.length-1][2];}
   var p={id:"h"+Date.now()+"_"+i,gene:gene,rar:rar};
   p.dist=Math.round((1.5+Math.random()*3)*10)/10;
   p.rot=Math.floor(Math.random()*25)-12;
@@ -7907,16 +8238,24 @@ function huntCollect(id){
  if(!pl)return;
  S.hunt.plants=S.hunt.plants.filter(function(p){return p.id!==id;});
  var gk=geneKeyFor(pl.gene),msg="";
- if(Math.random()<0.45){
-  var amt=20+Math.floor(Math.random()*61);
+ /* v158 (K.1): dud 30%, consolation $40-120, seed bags +3 seeds, and a
+       per-gene pity -- the first collect of any gene is guaranteed seeds */
+ if(!S.geneCollected||typeof S.geneCollected!=="object")S.geneCollected={};
+ var _pity=gk&&!S.geneCollected[gk];
+ if(!_pity&&Math.random()<0.30){
+  var amt=40+Math.floor(Math.random()*81);
   S.cash+=amt;
-  msg="\uD83D\uDCB5 Found $"+amt+" in small bills — no seeds this time.";
+  msg="\uD83D\uDCB5 Found $"+amt+" in small bills \u2014 no seeds this time.";
  }else{
+  if(gk)S.geneCollected[gk]=1;
   if(!Array.isArray(S.visorStash.genetics))S.visorStash.genetics=[];
   S.visorStash.genetics.push(pl.gene);
+  var _anyGeneBefore=GENE_KEYS.some(function(k){return k!==gk&&S.geneUnlocked&&S.geneUnlocked[k];});
   var isNew=unlockGene(pl.gene);
-  if(gk){S.seeds[gk]=(S.seeds[gk]||0)+2;}
-  msg="\uD83E\uDD2C "+pl.gene+" ("+pl.rar+") +2 seeds"+(isNew&&gk?" — NEW STRAIN UNLOCKED: "+PRODUCTS[gk].name+"!":"");
+  if(gk){S.seeds[gk]=(S.seeds[gk]||0)+3;}
+  msg="\uD83E\uDD2C "+pl.gene+" ("+pl.rar+") +3 seeds"+(isNew&&gk?" \u2014 NEW STRAIN UNLOCKED: "+PRODUCTS[gk].name+"!":"");
+  /* K.1.6: Roach points at the hunt door on the first-ever gene unlock */
+  if(isNew&&!_anyGeneBefore)pushRoachMsg("yo that "+pl.gene+" u just found? that's SCAN-hunt genetics \u2014 can't buy those seeds anywhere. grow it, and customers will pay stupid money for it \uD83E\uDD2C");
  }
  window._visorLootMsg=msg;
  save();visorRefresh();
@@ -8198,6 +8537,7 @@ function pullupServe(){
  }
  S.stash[p.k]=have-p.g;S.cash+=p.price;S.stats.earned+=p.price;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,p.price);
  dealTerrHeat(p.g,p.g>=5);
+ addTerrXP(10);
  if(!addXP(5))S.msg="Sold "+p.g+"g to "+p.name+" ("+money(p.price)+")";
  showSalePop(p.name,p.g+"g",p.price,Math.round(p.price*0.6));
  try{battleRoll();}catch(e){}
@@ -8435,7 +8775,7 @@ function chillHTML(){
   var ck=chillStrain();
   h+='<div class="dchips">';
   GROWKEYS.forEach(function(k){
-   var v=tierVis(PRODUCTS[k].tier);
+   var v=visOfP(k);
    if(v===0)return;
    if(v===1){h+='<button type="button" class="dchip locked" disabled><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+'</span><span class="lvtag">Lv '+levelForTier(PRODUCTS[k].tier)+'</span></button>';return;}
    h+='<button type="button" class="dchip'+(k===ck?" on":"")+'" data-act="chillsel" data-strain="'+k+'"><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i><span class="dc-name">'+PRODUCTS[k].name+' &times;'+(S.stash[k]||0)+'</span></button>';
@@ -8450,7 +8790,7 @@ function chillHTML(){
   var sk=chillStrain(),hasJ=false;
   h+='<div class="dchips">';
   GROWKEYS.forEach(function(k){
-   var v=tierVis(PRODUCTS[k].tier);
+   var v=visOfP(k);
    if(v===0)return;
    var jc=S.joints[k]||0;
    if(v===2&&jc>0)hasJ=true;
@@ -8863,6 +9203,7 @@ root.addEventListener("click",function(e){
  if(a==="bw-home"){bwNav("https://darkweb.home");render();return;}
  if(a==="bw-close"){S.view="home";S.tab=null;BWT.menu=false;BWT.switcher=false;save();render();return;}
  if(a==="bw-camt"){S.cryptoAmt=Math.max(100,(S.cryptoAmt||100)+(+b.dataset.v||0));save();render();return;}
+ if(a==="bw-camtmax"){S.cryptoAmt=Math.max(100,Math.floor(S.cash/100)*100);save();render();return;}
  if(a==="bw-buycrypto"){var _ca=S.cryptoAmt||100;if(S.cash>=_ca){S.cash-=_ca;S.crypto=(S.crypto||0)+_ca/100;S.msg="Bought "+(_ca/100).toFixed(2)+" TerpCoin.";}else{S.msg="Not enough cash.";}save();render();return;}
  if(a==="bw-sellcrypto"){var _tc=S.crypto||0;if(_tc>0){var _val=Math.floor(_tc*100);S.crypto=0;S.cash+=_val;S.msg="Sold crypto for "+money(_val)+".";}else{S.msg="No crypto to sell.";}save();render();return;}
  if(a==="amt"){S.amt=+b.dataset.amt;save();render();return;}
@@ -8890,7 +9231,7 @@ root.addEventListener("click",function(e){
   }
   return;
  }
- if(a==="buyseed"){var k=b.dataset.strain;var _bp=PRODUCTS[k];if(_bp&&!_bp.gene&&strainUnlocked(k)&&S.cash>=_bp.seed){S.cash-=_bp.seed;S.seeds[k]=(S.seeds[k]||0)+1;S.msg="Bought "+_bp.name+" seeds.";save();render();}return;}
+ if(a==="buyseed"){var k=b.dataset.strain;var _bp=PRODUCTS[k];var _q=Math.max(1,parseInt(b.dataset.q||"1",10)||1);if(_bp&&!_bp.gene&&strainUnlocked(k)&&S.cash>=_bp.seed*_q){S.cash-=_bp.seed*_q;S.seeds[k]=(S.seeds[k]||0)+_q;S.msg="Bought "+_q+" "+_bp.name+" seed"+(_q>1?"s":"")+".";save();render();}return;}
  if(a==="autoplant"){doAutoPlant(b.dataset.strain);return;}
  if(a==="buyfert"){if(S.cash>=FERT_COST){S.cash-=FERT_COST;S.fert++;S.msg="Fertilizer stocked.";save();render();}return;}
  if(a==="buypapers"){if(S.cash>=PAPER_COST){S.cash-=PAPER_COST;S.papers+=PAPER_PACK;S.msg="Bought "+PAPER_PACK+" rolling papers.";save();render();}return;}
@@ -8904,7 +9245,9 @@ root.addEventListener("click",function(e){
  if(a==="terr-select"){var _ts=b.dataset.t;if(_ts&&terrDef(_ts)){if(!terrUnlocked(_ts)){S.msg="Locked \u2014 unlocks at level "+terrDef(_ts).unlock+".";save();render();return;}if(!S.terr)S.terr={active:"home",zones:{}};S.terr.active=_ts;S.msg="Operating in "+terrDef(_ts).name+" now — prices \u00D7"+terrDef(_ts).price+".";save();render();}return;}
  if(a==="terr-bribe"){var _tbb=b.dataset.t,_tbd=terrDef(_tbb),_bcb=bribeCost();if(S.cash>=_bcb&&terrTotal(_tbb)>0&&Date.now()>=S.lockedUntil){S.cash-=_bcb;var _zbb=terrZone(_tbb);var _bj;for(_bj=0;_bj<3;_bj++)_zbb.heat[HEAT_SOURCES[_bj]]=Math.max(0,_zbb.heat[HEAT_SOURCES[_bj]]-50);syncGlobalHeat();S.msg="Paid off the right people in "+_tbd.name+". Heat dropped.";save();render();}else if(S.cash<_bcb){S.msg="Not enough cash for that.";save();render();}return;}
  if(a==="fixer-bribe"){var _fxb=(S.terr&&S.terr.active)||"home",_fxd=terrDef(_fxb),_fxc=bribeCost();if(S.cash>=_fxc&&Date.now()>=S.lockedUntil){S.cash-=_fxc;var _fxz=terrZone(_fxb);var _fk;for(_fk=0;_fk<3;_fk++)_fxz.heat[HEAT_SOURCES[_fk]]=Math.max(0,_fxz.heat[HEAT_SOURCES[_fk]]-50);syncGlobalHeat();var _fxm=getContact("The Fixer");if(_fxm){_fxm.msgs.push({from:"them",text:"Done. Heat in "+_fxd.name+" is handled. You didn't hear it from me.",t:Date.now()});_fxm.msgs.push({from:"me",text:"Bribe paid — "+money(_fxc),t:Date.now()});}S.msg="The Fixer made some calls. Heat dropped in "+_fxd.name+".";save();render();setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);}else if(S.cash<_fxc){S.msg="Not enough cash for that.";save();render();}return;}
- if(a==="terr-pin"){var _tp=b.dataset.t;if(_tp&&terrDef(_tp)){if(!terrUnlocked(_tp)){S.msg=terrDef(_tp).name+" unlocks at level "+terrDef(_tp).unlock+".";save();render();return;}MAPSEL=_tp;if(!S.terr)S.terr={active:"home",zones:{}};if(S.terr.active!==_tp){S.terr.active=_tp;S.msg="Operating in "+terrDef(_tp).name+" now — prices ×"+terrDef(_tp).price+".";}save();render();}return;}
+ if(a==="terr-pin"){var _tp=b.dataset.t;if(_tp&&terrDef(_tp)){if(!terrUnlocked(_tp)){S.msg=terrDef(_tp).name+" unlocks at level "+terrDef(_tp).unlock+".";save();render();return;}MAPSEL=_tp;LMSEL=null;if(!S.terr)S.terr={active:"home",zones:{}};if(S.terr.active!==_tp){S.terr.active=_tp;S.msg="Operating in "+terrDef(_tp).name+" now — prices ×"+terrDef(_tp).price+".";}save();render();}return;}
+ if(a==="lm"){var _lmid=b.dataset.lm;if(_lmid){LMSEL=_lmid;MAPSEL=null;render();}return;}
+ if(a==="lm-close"){LMSEL=null;render();return;}
  if(a==="gps-zoom"){var _gz=b.dataset.z;GPSZOOM=_gz==="in"?Math.min(3,GPSZOOM+1):Math.max(1,GPSZOOM-1);render();return;}
  if(a==="dbuy"){doDeal(+b.dataset.d,b.dataset.strain,true);return;}
  if(a==="dsell"){doDeal(+b.dataset.d,b.dataset.strain,false,false,b.dataset.q?+b.dataset.q:undefined);return;}
@@ -8980,6 +9323,9 @@ root.addEventListener("click",function(e){
   return;
  }
  if(a==="order-accept"){doAcceptOrder(b.dataset.contact,b.dataset.variant);return;}
+ if(a==="geneopt"){doGeneOptSell(b.dataset.contact);return;}
+ if(a==="geneopttask"){doGeneOptTaskSell(+b.dataset.i);return;}
+ if(a==="dealerwant"){doDealerWant(+b.dataset.d);return;}
  if(a==="order-dismiss"){doDismissOrder(b.dataset.contact,b.dataset.variant);return;}
  if(a==="task-roll"){
   var _t=S.tasks[+b.dataset.i||0];if(!_t)return;
@@ -9199,7 +9545,7 @@ root.addEventListener("click",function(e){
   _wimg.onerror=function(){S.msg="No image found at that URL.";save();render();};
   _wimg.src=_wu;return;}
  if(a==="wp-reset"){S.wallpaper="";S.msg="Wallpaper reset.";save();render();return;}
- if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk]&&tierUnlocked(KITS[kk].tier)&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
+ if(a==="buykit"){var kk=b.dataset.kit;if(KITS[kk]&&kitUnlocked(kk)&&S.cash>=KITS[kk].cost){S.cash-=KITS[kk].cost;S.kits[kk]=(S.kits[kk]||0)+1;S.msg=KITS[kk].name+" stocked.";save();render();}return;}
  if(a==="buyweapon"){var wkey=b.dataset.w,wu=WEAPONS[wkey];if(wkey&&wkey!=="fists"&&wu&&tierUnlocked(wu.tier)&&!(S.weapons&&S.weapons[wkey])&&S.cash>=wu.cost){S.cash-=wu.cost;S.weapons[wkey]=true;S.msg=wu.name+" purchased — best weapon is used in fights.";save();render();}return;}
  if(a==="buygear"){var gk=b.dataset.g,g=GEAR[gk];if(gk&&g&&tierUnlocked(g.tier)&&S.gear.indexOf(gk)<0&&S.cash>=g.cost){S.cash-=g.cost;S.gear.push(gk);S.equipped[g.slot]=gk;S.msg=g.name+" purchased & equipped.";save();render();}return;}
  if(a==="equipgear"){var ek=b.dataset.g,eg=GEAR[ek];if(ek&&eg&&S.gear.indexOf(ek)>=0){S.equipped[eg.slot]=ek;var _fs=gearSetEquipped();S.msg=eg.name+" equipped."+(_fs?" "+GEAR_SETS[_fs].name+" set complete — aura active!":"");save();render();}return;}
@@ -10136,10 +10482,10 @@ function runnerTraitFor(type){
 }
 function runnerAskEligible(c,now){
  if(!c||c.fixer||c.brokenUp||c.isThief)return false;
- if((c.loyalty||0)<70)return false;
+ if((c.loyalty||0)<60)return false;
  now=(typeof now==="number")?now:Date.now();
  if(now-(c.lastFlakeAt||0)<=24*3600000)return false;
- if(!(S.regulars&&S.regulars[c.name]>=8))return false;
+ if(!(S.regulars&&S.regulars[c.name]>=5))return false;
  if(S.runners&&S.runners.some(function(r){return r.name===c.name;}))return false;
  return true;
 }
@@ -10304,7 +10650,8 @@ function setRunnerTerritory(id,tid){
  var t=terrDef(tid);if(!t||t.id!==tid)return;
  if(!terrUnlocked(t.id)){S.msg=t.name+" unlocks at level "+t.unlock+".";save();render();return;}
  var count=0;S.runners.forEach(function(x){if(x.territory===tid)count++;});
- if(count>=2&&r.territory!==tid){S.msg="Turf's crowded — max 2 runners in "+t.name+".";save();render();return;}
+ var _rcap=terrLevelOf(tid)>=4?3:2;
+ if(count>=_rcap&&r.territory!==tid){S.msg="Turf's crowded \u2014 max "+_rcap+" runners in "+t.name+(_rcap<3?" (a Lv 4 turf fits 3).":".");save();render();return;}
  r.territory=tid;
  S.msg=r.name+" posted up in "+t.name+".";
  save();render();
@@ -10493,14 +10840,14 @@ function runnerCallHTML(r){
   TERRITORIES.forEach(function(t){
    var locked=!terrUnlocked(t.id),n=0;
    S.runners.forEach(function(x){if(x.territory===t.id)n++;});
-   h+='<button type="button" data-act="runner-terr" data-id="'+r.id+'" data-t="'+t.id+'"'+(locked||(n>=2&&r.territory!==t.id)?" disabled":"")+' class="'+(r.territory===t.id?"on":"")+'">'
-    +escHtml(t.name)+(locked?" 🔒"+t.unlock:"")+(n>=2&&r.territory!==t.id?" (full)":"")+'</button>';
+   h+='<button type="button" data-act="runner-terr" data-id="'+r.id+'" data-t="'+t.id+'"'+(locked||(n>=(terrLevelOf(t.id)>=4?3:2)&&r.territory!==t.id)?" disabled":"")+' class="'+(r.territory===t.id?"on":"")+'">'
+    +escHtml(t.name)+(locked?" 🔒"+t.unlock:"")+(n>=(terrLevelOf(t.id)>=4?3:2)&&r.territory!==t.id?" (full)":"")+'</button>';
   });
   h+='</div></div>';
  }
  return h;
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP,RUNNER_LEVELS:RUNNER_LEVELS,RUNNER_SLOTS:RUNNER_SLOTS,RUNNER_XP_PER_SALE:RUNNER_XP_PER_SALE,runnerLevel:runnerLevel,runnerSpecBonus:runnerSpecBonus,runnerPhonebookSection:runnerPhonebookSection,runnerDetailHTML:runnerDetailHTML,ttPinHash:ttPinHash,ttSystemStatus:ttSystemStatus,ttExportSave:ttExportSave,ttImportSave:ttImportSave,ttB64Encode:ttB64Encode,ttB64Decode:ttB64Decode,TTWRAP_REF:function(){return TTWRAP;}};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,doStashSellAll:doStashSellAll,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP,RUNNER_LEVELS:RUNNER_LEVELS,RUNNER_SLOTS:RUNNER_SLOTS,RUNNER_XP_PER_SALE:RUNNER_XP_PER_SALE,runnerLevel:runnerLevel,runnerSpecBonus:runnerSpecBonus,runnerPhonebookSection:runnerPhonebookSection,runnerDetailHTML:runnerDetailHTML,ttPinHash:ttPinHash,ttSystemStatus:ttSystemStatus,ttExportSave:ttExportSave,ttImportSave:ttImportSave,ttB64Encode:ttB64Encode,ttB64Decode:ttB64Decode,TERRITORY_LEVELS:TERRITORY_LEVELS,terrLevelOf:terrLevelOf,terrPriceMultFor:terrPriceMultFor,terrNextGrantTxt:terrNextGrantTxt,addTerrXP:addTerrXP,orderBudgetNow:orderBudgetNow,dealerWantFor:dealerWantFor,dealerWantUnit:dealerWantUnit,doDealerWant:doDealerWant,DEALER_BUY_OWNER:DEALER_BUY_OWNER,geneOptFor:geneOptFor,geneLevelFor:geneLevelFor,geneLevelReached:geneLevelReached,geneAssign:assignGeneLevels,geneHuntAware:geneHuntAware,GENE_LV_BAND:GENE_LV_BAND,visorMaybeSpawn:visorMaybeSpawn,visorCollect:visorCollect,doGeneOptSell:doGeneOptSell,doGeneOptTaskSell:doGeneOptTaskSell,contactBasePrice:contactBasePrice,terrPrefMult:terrPrefMult,visOfP:visOfP,strainUnlocked:strainUnlocked,kitVis:kitVis,kitUnlocked:kitUnlocked,stashOrderUnit:stashOrderUnit,huntCollect:huntCollect,huntStart:huntStart,settleWorkerTask:settleWorkerTask,settleCooking:settleCooking,collectCook:collectCook,pullupServe:pullupServe,CONTACT_TUNING:CONTACT_TUNING,createContactOrder:createContactOrder,tickContacts:tickContacts,GENE_KEYS:GENE_KEYS,GENE_OPT_PREMIUM:GENE_OPT_PREMIUM,TERR_GRANT_TXT:TERR_GRANT_TXT,bribeCost:bribeCost,TTWRAP_REF:function(){return TTWRAP;}};
 })();
 </script>
 <style>
