@@ -1747,6 +1747,15 @@ body.electron-phone #ewin-controls{display:flex}
 .vmode.on{border-color:#7fd4ff;color:#dff4ff;background:rgba(127,212,255,.16);box-shadow:0 0 12px rgba(127,212,255,.3)}
 .visor-hint{text-align:center;font-size:10px;letter-spacing:1px;color:#6e8aa5}
 .visor-arnote{position:absolute;top:64px;left:50%;transform:translateX(-50%);z-index:6;font-size:11px;letter-spacing:1px;color:#9fb6c9;background:rgba(8,14,20,.65);padding:6px 12px;border-radius:14px;white-space:nowrap}
+/* v157: the AR note/button area is a stacked column in normal flow —
+   the old absolute top:64px on BOTH .visor-arnote and .hunt-btn put the
+   probe result and its button on the exact same spot, and nowrap forced
+   the long result into one clipped line (the v156 visor screenshot). Only
+   the stack container is positioned; children flow and wrap. */
+.visor-arstack{position:absolute;top:64px;left:50%;transform:translateX(-50%);width:min(440px,92%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:6px}
+.visor-arstack .visor-arnote{position:static;transform:none;white-space:normal;word-break:break-word;overflow-wrap:anywhere;text-align:center;max-width:100%}
+.visor-arstack .visor-arnote.probe{font-size:10.5px;letter-spacing:.3px;color:#c8d9a8;background:rgba(10,18,10,.78);text-align:left;line-height:1.45}
+.visor-arstack .hunt-btn{position:static;transform:none;flex:none}
 .visor-panel{position:absolute;top:64px;left:12px;right:12px;background:rgba(6,14,26,.88);border:1px solid rgba(127,212,255,.4);border-radius:14px;padding:12px;z-index:6;color:#dcecff}
 .vp-title{font-size:12px;letter-spacing:2px;color:#7fd4ff;margin-bottom:8px}
 .vp-sub{font-size:12px;color:#8aa4c0;line-height:1.5;text-align:center;padding:8px}
@@ -2685,7 +2694,7 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:150,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v156";
+var GAME_VER="v157";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
@@ -2987,7 +2996,7 @@ function emptyMaps(){var o={};PKEYS.forEach(function(k){o[k]=0;});return o;}
 function growMaps(){var o={};GROWKEYS.forEach(function(k){o[k]=0;});return o;}
 var DEF={cash:200,stashCap:40,stash:emptyMaps(),joints:{},seeds:{sour:3},fert:1,kits:{butter:0,oil:0,chem:0,royal:0},job:null,speeds:{hash:60,edibles:90,moonrock:150,acid:180,dmt:240,dragon:300},growSpeed:30,papers:0,lastDealer:-1,dealerStreak:0,invested:{},setdrug:"hash",xp:0,chillview:"smoke",chillStrain:"sour",dealcat:"bud",buffMult:1,buffUntil:0,buffStart:0,lastVer:"",lastSenorV:0,
  props:[],dealers:[],runners:[],call:null,driftAt:0,heat:0,hp:100,weapons:{knife:false,pistol:false,smg:false},battle:null,lockedUntil:0,lastTick:0,bornAt:0,tab:"grow",amt:1,theme:"dark",homeRows:4,
- msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0,biggestDeal:0,thievesBeaten:0,thievesLost:0,playtime:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0,peakTier:1,peakTerr:[],_progV:2};
+ msg:"Welcome to the grow op. Plant a seed.",stats:{earned:0,harvested:0,deals:0,busted:0,cooked:0,biggestDeal:0,thievesBeaten:0,thievesLost:0,playtime:0},view:"home",notifs:[],wallpaper:"",iconOrder:[],hiddenApps:[],folders:{},contacts:[],msgView:"list",msgSound:true,tasks:[],bank:{bal:0,pendInt:0,tx:[]},crypto:0,peakTier:1,peakTerr:[],_progV:2,arProbeLast:""};
 function mkProp(id){var p=PROPS.filter(function(x){return x.id===id;})[0];var slots=[];for(var i=0;i<p.slots;i++)slots.push(null);return {id:p.id,name:p.name,tier:p.tier,slots:slots};}
 function normalize(s,raw){
  var oldSave=raw?(typeof raw.xp!=="number"):(typeof s.xp!=="number");
@@ -3037,14 +3046,14 @@ function normalize(s,raw){
  if(!Array.isArray(s.contacts))s.contacts=[];
  s.contacts=s.contacts.filter(function(c){return c&&typeof c.name==="string";}).map(function(c){
   var o=null;
-  if(c.order&&typeof c.order.k==="string"&&PRODUCTS[c.order.k]&&typeof c.order.g==="number")o={k:c.order.k,kind:(c.order.kind==="joint"||c.order.kind==="lab")?c.order.kind:"bud",g:c.order.g,pu:typeof c.order.pu==="number"?c.order.pu:0,expires:typeof c.order.expires==="number"?c.order.expires:0,sentAt:typeof c.order.sentAt==="number"?c.order.sentAt:0};
+  if(c.order&&typeof c.order.k==="string"&&PRODUCTS[c.order.k]&&typeof c.order.g==="number")o={k:c.order.k,kind:(c.order.kind==="joint"||c.order.kind==="lab")?c.order.kind:"bud",g:c.order.g,pu:typeof c.order.pu==="number"?c.order.pu:0,expires:typeof c.order.expires==="number"?c.order.expires:0,sentAt:typeof c.order.sentAt==="number"?c.order.sentAt:0,stage:(typeof c.order.stage==="number"&&isFinite(c.order.stage))?Math.max(0,Math.min(2,Math.floor(c.order.stage))):0,nudgeAt:typeof c.order.nudgeAt==="number"?c.order.nudgeAt:0,escAt:typeof c.order.escAt==="number"?c.order.escAt:0};
   var tp=(c.type==="stoner"||c.type==="party"||c.type==="connoisseur"||c.type==="casual")?c.type:"casual";
   var _bl=(typeof s.xp==="number")?lvl(s.xp):1;
   var _bt=Math.max(tierAtLevel(_bl),(typeof s.peakTier==="number"?s.peakTier:0));
   var _bun=PKEYS.filter(function(k){return PRODUCTS[k].tier<=_bt;});
   var pr=Array.isArray(c.prefs)?c.prefs.filter(function(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&_bun.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab");}).map(function(p){return {k:p.k,kind:p.kind};}).slice(0,3):[];
   if(!pr.length)pr=contactPrefsFor(tp,_bun);
-  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0,refGiven:!!c.refGiven};
+  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0,refGiven:!!c.refGiven,phaseMin:(typeof c.phaseMin==="number"&&isFinite(c.phaseMin)&&c.phaseMin>=0)?(Math.floor(c.phaseMin)%30):undefined,patienceMul:(typeof c.patienceMul==="number"&&c.patienceMul>0)?c.patienceMul:1,firstOrderAt:typeof c.firstOrderAt==="number"?c.firstOrderAt:0,lastFlakeAt:typeof c.lastFlakeAt==="number"?c.lastFlakeAt:0};
  });
  if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
@@ -3084,6 +3093,7 @@ function normalize(s,raw){
  });
  if(typeof s.prestigeStrain!=="string")s.prestigeStrain="";
  if(typeof s.wallpaper!=="string")s.wallpaper="";
+ if(typeof s.arProbeLast!=="string")s.arProbeLast="";
  if(s.homeRows===3||s.homeRows==null)s.homeRows=4;
  if(s.homeRows!==2&&s.homeRows!==4)s.homeRows=4;
  if(!Array.isArray(s.iconOrder))s.iconOrder=[];
@@ -3106,7 +3116,7 @@ function normalize(s,raw){
  if(!Array.isArray(s.tasks))s.tasks=[];
  s.tasks=s.tasks.filter(function(t){return t&&typeof t.name==="string"&&typeof t.k==="string"&&PRODUCTS[t.k]&&typeof t.g==="number"&&t.g>0;}).map(function(t){
   var _added=typeof t.addedAt==="number"?t.addedAt:Date.now();
-  return {name:String(t.name).slice(0,24),k:t.k,kind:(t.kind==="joint"||t.kind==="lab")?t.kind:"bud",g:t.g,pu:typeof t.pu==="number"?t.pu:0,addedAt:_added,expiresAt:typeof t.expiresAt==="number"?t.expiresAt:(_added+20*60*1000),vip:t.vip===true,referral:typeof t.referral==="string"?t.referral.slice(0,60):""};
+  return {name:String(t.name).slice(0,24),k:t.k,kind:(t.kind==="joint"||t.kind==="lab")?t.kind:"bud",g:t.g,pu:typeof t.pu==="number"?t.pu:0,addedAt:_added,expiresAt:typeof t.expiresAt==="number"?t.expiresAt:(_added+20*60*1000),vip:t.vip===true,referral:typeof t.referral==="string"?t.referral.slice(0,60):"",enRoute:t.enRoute!==false,replyAt:typeof t.replyAt==="number"?t.replyAt:_added,nudged:!!t.nudged,nudgeAt:typeof t.nudgeAt==="number"?t.nudgeAt:0};
  }).slice(0,50);
  /* regulars: fulfill count per customer name */
  if(!s.regulars||typeof s.regulars!=="object")s.regulars={};
@@ -3665,6 +3675,14 @@ function ttSystemStatusHTML(){
  h+=row("App",escHtml(st.app),"");
  h+=row("Updates paired",escHtml(st.paired),escHtml(st.pairedSub));
  h+=row("AR",escHtml(st.ar),"");
+ // v157: the last deep-probe verdict, mirrored here in full (wrapped,
+ // never clipped) — plus a RUN AR CHECK button in this same block, so
+ // the probe can run somewhere the visor camera is off (camera
+ // contention is one of the suspects for the FatalException). The
+ // verdict survives relaunch via the save (see ttArProbeStored).
+ var _pr=(typeof window.ttArProbeStored==="function")?window.ttArProbeStored():null;
+ if(_pr)h+='<div class="set-row" style="cursor:default"><span></span><span style="text-align:right;max-width:72%"><div style="font-size:12px;opacity:.85;font-weight:400;word-break:break-word;overflow-wrap:anywhere;line-height:1.45">Last AR check: '+escHtml(_pr)+'</div></span></div>';
+ if(window.TTNative)h+='<div class="set-row"><span>AR deep check</span><button type="button" class="chip" data-act="ar-probe-about">\uD83D\uDD0D RUN AR CHECK</button></div>';
  h+=row("Save",escHtml(st.save),escHtml(st.saved));
  return h;
 }
@@ -3811,7 +3829,12 @@ function ttShowReup(){
     contactOrderPick:typeof contactOrderPick==='function'?contactOrderPick:null,
     tickContacts:typeof tickContacts==='function'?tickContacts:null,
     activatePendingContact:typeof activatePendingContact==='function'?activatePendingContact:null,
-    pools:{annoyed:CUST_ANNOYED,warn:CUST_WARN,breakup:CUST_BREAKUP,return1:CUST_RETURN1,return2:CUST_RETURN2}
+    createContactOrder:typeof createContactOrder==='function'?createContactOrder:null,
+    contactPhaseMin:typeof contactPhaseMin==='function'?contactPhaseMin:null,
+    msgChainTimes:typeof msgChainTimes==='function'?msgChainTimes:null,
+    contactQtyText:typeof contactQtyText==='function'?contactQtyText:null,
+    tuning:(typeof CONTACT_TUNING!=='undefined')?CONTACT_TUNING:null,
+    pools:{annoyed:CUST_ANNOYED,warn:CUST_WARN,breakup:CUST_BREAKUP,return1:CUST_RETURN1,return2:CUST_RETURN2,nudge:CUST_NUDGE,enrouteNudge:CUST_ENROUTE_NUDGE,annoyedEnroute:CUST_ANNOYED_ENROUTE}
    };};
    window.ttSimTest=function(){return {
     wrap:(typeof TTWRAP!=='undefined')?TTWRAP:null,
@@ -5661,8 +5684,10 @@ function contactHave(o){
  return S.stash[o.k]||0;
 }
 function contactQtyText(o){
+ /* v157 grammar: countable units singularize at qty 1 ("1 Nebula Haze
+    joint", never "1 joints"); weight forms ("2g") are unchanged. */
  var pn=PRODUCTS[o.k].name;
- return o.kind==="joint"?o.g+" "+pn+" joints":o.g+"g "+pn;
+ return o.kind==="joint"?(o.g===1?("1 "+pn+" joint"):(o.g+" "+pn+" joints")):(o.g+"g "+pn);
 }
 function pushContactNotif(m,isE,app){S.notifs.unshift({m:m,e:isE?1:0,app:app||"phone",t:Date.now()});if(S.notifs.length>10)S.notifs.length=10;}
 /* ===== Heads-up message banner + notification chime (Android style) ===== */
@@ -5753,12 +5778,80 @@ function fmtPhone(p){
  return "("+p.slice(0,3)+") "+p.slice(3,6)+"-"+p.slice(6);
 }
 /* CONTACT_TUNING (v147): one table for how fast the book grows and how often
-   customers hit you up — balance changes are one-line edits here. */
+   customers hit you up — balance changes are one-line edits here.
+   v157 adds the MESSAGE PATIENCE model to the same table: every contact's
+   order chain runs firstNudge -> escalation -> cancel on these windows.
+   A stable per-contact phase (0-29 min, hashed from the contact's name)
+   shifts the whole chain, and a small hash jitter breaks up the rest, so
+   two contacts never fire on the same minute by construction. A contact's
+   patienceMul (default 1) scales the three windows per archetype. */
 var CONTACT_TUNING={
  referralChance:0.40,
  streetContactBase:0.02,streetContactTier:0.02,streetQtyRate:0.01,streetQtyCap:0.08,streetContactCap:0.25,
- orderCooldownMin:10,orderRoll:0.12,orderBudget:3,orderBudgetWindowMin:10
+ orderCooldownMin:10,orderRoll:0.12,orderBudget:3,orderBudgetWindowMin:10,
+ firstNudgeMin:45,escalateMin:120,cancelMin:180,jitterMaxMin:2,createJitterMaxMin:4,
+ replyGraceMin:45,enRouteWindowMin:75,
+ referralFirstOrderMin:3,referralFirstOrderMax:8
 };
+/* v157: stable per-contact phase offset (minutes) for message timing.
+   Stored on the contact (c.phaseMin) once computed; the hash fallback
+   keeps it identical across sessions even before it's stored. */
+function contactPhaseMin(c){
+ if(c&&typeof c.phaseMin==="number"&&isFinite(c.phaseMin)&&c.phaseMin>=0)return Math.floor(c.phaseMin)%30;
+ var key=(c&&c.name)?String(c.name):"",h=0;
+ for(var i=0;i<key.length;i++)h=(h*31+key.charCodeAt(i))>>>0;
+ return h%30;
+}
+/* v157: deterministic hash jitter (minutes) — same inputs, same offset,
+   every session, so due times never drift between saves/reloads the
+   way a Math.random roll at processing time would. */
+function msgJitter(key,range){
+ if(!(range>0))return 0;
+ var h=0;key=String(key);
+ for(var i=0;i<key.length;i++)h=(h*33+key.charCodeAt(i))>>>0;
+ return h%range;
+}
+/* v157: one order chain's due times, derived from its send time. */
+function msgChainTimes(c,sentAt){
+ var T=CONTACT_TUNING;
+ var mul=(c&&typeof c.patienceMul==="number"&&c.patienceMul>0)?c.patienceMul:1;
+ var ph=contactPhaseMin(c),jr=T.jitterMaxMin+1;
+ return {
+  nudgeAt:sentAt+(T.firstNudgeMin*mul+ph+msgJitter(c.name+":n:"+sentAt,jr))*60000,
+  escAt:sentAt+(T.escalateMin*mul+ph+msgJitter(c.name+":e:"+sentAt,jr))*60000,
+  expires:sentAt+(T.cancelMin*mul+ph+msgJitter(c.name+":c:"+sentAt,jr))*60000
+ };
+}
+/* v157: keep a chain strictly ordered (sent < nudge < esc < cancel) and
+   guarantee a real chance to act when a stale backlog chain is first
+   processed long after it was due: the cancel moves to at least one
+   nudge window past the processing moment. No-op for live chains. */
+function msgChainFix(o,now){
+ if(!(o.nudgeAt>o.sentAt))o.nudgeAt=o.sentAt+60000;
+ if(!(o.escAt>o.nudgeAt))o.escAt=o.nudgeAt+60000;
+ if(!(o.expires>o.escAt))o.expires=o.escAt+60000;
+ if(now&&o.expires<=now){
+  o.expires=now+CONTACT_TUNING.firstNudgeMin*60000;
+  if(o.escAt>=o.expires)o.escAt=o.expires-60000;
+  if(o.nudgeAt>=o.escAt)o.nudgeAt=o.escAt-60000;
+  if(o.nudgeAt<=o.sentAt){o.nudgeAt=o.sentAt+60000;o.escAt=o.nudgeAt+60000;if(o.expires<=o.escAt)o.expires=o.escAt+60000;}
+ }
+}
+/* v157: the pitch's due time — when this contact's turn actually came
+   up (last order + cooldown + half their phase + a hash jitter),
+   clamped to the processing moment. On catch-up it sits in the past
+   and the pitch is stamped with it: "sent while you were away". */
+function orderDueAt(c,now){
+ if(!c||!(c.lastOrderAt>0))return now;
+ var due=c.lastOrderAt+(CONTACT_TUNING.orderCooldownMin+contactPhaseMin(c)/2+msgJitter(c.name+":due:"+c.lastOrderAt,CONTACT_TUNING.createJitterMaxMin+1))*60000;
+ return Math.min(due,now);
+}
+/* v157: one place for "a message from them lands" — unread + notify. */
+function pushContactMsg(c,text,t){
+ c.msgs.push({from:"them",text:text,t:t});
+ c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
+ notifyMsgArrived(c,text);
+}
 function maybeAddContact(tier,qty){
  if(!S.contacts)S.contacts=[];
  if(S.contacts.length>=contactCap())return;
@@ -5797,8 +5890,14 @@ function activatePendingContact(phone){
  var _intro=_returning?_custPick(_grudge.n>=2?CUST_RETURN2:CUST_RETURN1):"yo it's "+p.name+". good lookin on that last one 🤝";
  if(p.via==="referral")_intro="yo it's "+p.name+" — "+(p.from||"someone")+" gave me your number 🤝 said you're the plug";
  if(!S.contacts)S.contacts=[];
- S.contacts.push({name:p.name,type:p.type,prefs:p.prefs,phone:p.phone,loyalty:_returning?30:50,order:null,unread:true,unreadCount:1,lastOrderAt:0,lastFulfilledAt:0,isThief:!!p.isThief,ordersBeforeTurn:p.ordersBeforeTurn||0,
-  msgs:[{from:"them",text:_intro,t:Date.now()}]});
+ /* v157: a referral's first order is SCHEDULED at activation —
+    intro + 3-8 min (CONTACT_TUNING) — and tickContacts' referral
+    path fires it then. Street contacts keep firstOrderAt 0 (the
+    generic roll owns their timing). */
+ var _nowA=Date.now();
+ var _fo=p.via==="referral"?_nowA+(CONTACT_TUNING.referralFirstOrderMin+Math.random()*(CONTACT_TUNING.referralFirstOrderMax-CONTACT_TUNING.referralFirstOrderMin))*60000:0;
+ S.contacts.push({name:p.name,type:p.type,prefs:p.prefs,phone:p.phone,loyalty:_returning?30:50,order:null,unread:true,unreadCount:1,lastOrderAt:0,lastFulfilledAt:0,isThief:!!p.isThief,ordersBeforeTurn:p.ordersBeforeTurn||0,patienceMul:1,firstOrderAt:_fo,
+  msgs:[{from:"them",text:_intro,t:_nowA}]});
  pushContactNotif("📱 New contact: "+p.name);
  notifyMsgArrived({name:p.name},_intro);
  return true;
@@ -5865,9 +5964,17 @@ var CUST_WARN=["last chance fr, I'm finding a new plug","one more time and I'm o
 var CUST_BREAKUP=["I'm done. deleting your number.","we're done here. don't hit me up","found a new plug, stay blessed 🚶"];
 var CUST_RETURN1=["oh. it's you. 🙄 heard you got that pack again... aight, ONE more chance. don't make me regret this","back for more? last time you left me hanging fr. I'm watching you 👀","my boy said you fell off. I told him nah, give em one more shot. don't embarrass me","you got some nerve hitting me back up 😤 ...fine. but you flake once and I'm gone for good","round two, huh? I remember last time. be better"];
 var CUST_RETURN2=["THIRD time?? 😂 you must really need me. aight but this is the last last chance","again?? you lucky I like money 😤 last chance, for real this time"];
+/* v157 staged patience: the first follow-up on an unanswered order is a
+   nudge, not an accusation; escalation reuses CUST_ANNOYED; the lines
+   below are for ACCEPTED orders (en route) — the customer knows the
+   player answered, so the wording has to know it too. */
+var CUST_NUDGE=["u still good? lmk either way 🙏","yo, u around? still want this?","no rush, just checkin in","u good? lmk when u want it"];
+var CUST_ENROUTE_NUDGE=["take ur time, just lmk when ur close","aight bet, I'm around — pull up when ur ready","no rush fr, just don't forget me 😅","u said u was comin thru, I'm here waitin"];
+var CUST_ANNOYED_ENROUTE=["u said u was on ur way 👀 still waitin","thought u was pullin up??","u comin thru or what, been standing here","on ur way since forever huh 😒"];
 function _custPick(a){return a[(Math.random()*a.length)|0];}
-function custOrderExpired(c,now){
+function custOrderExpired(c,now,ctx){
  if(!c||c.fixer||c.brokenUp)return;
+ if(typeof now!=="number"||!(now>0))now=Date.now();
  c.loyalty=Math.max(0,(typeof c.loyalty==="number"?c.loyalty:50)-10);
  c.lastFlakeAt=now;
  var txt;
@@ -5877,8 +5984,8 @@ function custOrderExpired(c,now){
   var _g=S.grudges[c.name]||{n:0};_g.n++;_g.t=now;S.grudges[c.name]=_g;
   txt=_custPick(CUST_BREAKUP);
  }else if(c.loyalty<=10){txt=_custPick(CUST_WARN);}
- else if(c.loyalty<=30){txt=_custPick(CUST_ANNOYED);}
- else{txt="nvm, found someone else.";}
+ else if(c.loyalty<=30){txt=_custPick(ctx==="enroute"?CUST_ANNOYED_ENROUTE:CUST_ANNOYED);}
+ else{txt=ctx==="enroute"?"aight, u said u was comin thru... found someone else tho.":"nvm, found someone else.";}
  c.msgs.push({from:"them",text:txt,t:now});
  c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
  notifyMsgArrived(c,txt);
@@ -5891,37 +5998,102 @@ function tickContacts(now){
   if(c.brokenUp&&now-(c.brokenUpAt||0)>24*3600000)return false;
   return true;
  });
+ /* v157 staged patience: each live order walks its chain — first
+    nudge, escalation, cancel — and every step is stamped with its DUE
+    time, never the processing time. A backlog processed on app open
+    reads as messages sent while you were away, on their own timeline,
+    instead of ten messages all stamped with the open minute. */
  S.contacts.forEach(function(c){
-  if(c.fixer)return;
-  if(c.order&&now>c.order.expires){
-   c.order=null;custOrderExpired(c,now);
+  if(c.fixer||c.brokenUp)return;
+  var o=c.order;if(!o)return;
+  if(typeof c.phaseMin!=="number")c.phaseMin=contactPhaseMin(c);
+  if(!(o.nudgeAt>0)||!(o.escAt>0)||!(o.expires>0)){
+   /* legacy order (pre-v157 save): derive its chain from its send
+      time so it migrates onto the same model with nothing lost. */
+   var _ct=msgChainTimes(c,o.sentAt||now);
+   if(!(o.nudgeAt>0))o.nudgeAt=_ct.nudgeAt;
+   if(!(o.escAt>0))o.escAt=_ct.escAt;
+   if(!(o.expires>0))o.expires=_ct.expires;
+   msgChainFix(o,now);
   }
+  if((o.stage|0)<1&&now>=o.nudgeAt){o.stage=1;pushContactMsg(c,_custPick(CUST_NUDGE),o.nudgeAt);}
+  if((o.stage|0)<2&&now>=o.escAt){o.stage=2;pushContactMsg(c,_custPick(CUST_ANNOYED),o.escAt);}
+  if(now>=o.expires){c.order=null;custOrderExpired(c,o.expires);}
  });
  /* global order throttle: max CONTACT_TUNING.orderBudget new orders per window across all contacts */
  if(!Array.isArray(S.recentOrderTimes))S.recentOrderTimes=[];
  S.recentOrderTimes=S.recentOrderTimes.filter(function(t){return now-t<CONTACT_TUNING.orderBudgetWindowMin*60000;});
  var _orderBudget=Math.max(0,CONTACT_TUNING.orderBudget-S.recentOrderTimes.length);
+ /* v157 referral first orders: an intro is followed by the contact's
+    first order inside the tuned window (3-8 min), not whenever the
+    generic roll gets around to it (Baby Ivy waited ~2h). Bypasses the
+    global budget — it's a beat the player caused by fulfilling — but
+    still records the timestamp so the budget can see it. */
+ S.contacts.forEach(function(c){
+  if(c.fixer||c.brokenUp||c.order)return;
+  if(!(c.firstOrderAt>0)||now<c.firstOrderAt)return;
+  var pick=contactOrderPick(c);
+  if(!pick)return;
+  var grams=pick.kind==="joint"?[1,2,2,3,4,5][(Math.random()*6)|0]:[2,3,5,5,7,10][(Math.random()*6)|0];
+  var _ab=tryAbsorb(c,pick,grams,now);
+  var _due=c.firstOrderAt;
+  c.firstOrderAt=0;
+  c.lastOrderAt=now;
+  S.recentOrderTimes.push(now);
+  if(_ab)return;
+  createContactOrder(c,pick,grams,_due,now);
+ });
  S.contacts.forEach(function(c){
   if(c.fixer)return;
   if(c.brokenUp)return;
   if(c.order)return;
-  if(now-(c.lastOrderAt||0)<CONTACT_TUNING.orderCooldownMin*60000)return;
+  if(typeof c.phaseMin!=="number")c.phaseMin=contactPhaseMin(c);
+  /* a referral whose first order is still scheduled stays quiet —
+     the generic roll doesn't jump the queue */
+  if(c.firstOrderAt&&now<c.firstOrderAt)return;
+  /* cadence gate: cooldown + half the contact's phase, so eligibility
+     itself is staggered per contact instead of opening for everyone
+     on the same minute */
+  if(now-(c.lastOrderAt||0)<(CONTACT_TUNING.orderCooldownMin+c.phaseMin/2)*60000)return;
   if(_orderBudget<=0)return;
   if(Math.random()>CONTACT_TUNING.orderRoll)return;
   var pick=contactOrderPick(c);
   if(!pick)return;
   var grams=pick.kind==="joint"?[1,2,2,3,4,5][(Math.random()*6)|0]:[2,3,5,5,7,10][(Math.random()*6)|0];
-  var base=contactBasePrice(pick);
-  var premium=1.15+(c.loyalty/100)*0.15;
-  var perUnit=Math.max(1,Math.round(base*premium));
   /* runner absorb: before the order exists — no half-built state */
   var _ab=tryAbsorb(c,pick,grams,now);
   if(_ab){c.lastOrderAt=now;S.recentOrderTimes.push(now);_orderBudget--;return;}
-  c.order={k:pick.k,kind:pick.kind,g:grams,pu:perUnit,expires:now+3*3600000,sentAt:now};
-  c.lastOrderAt=now;
+  createContactOrder(c,pick,grams,orderDueAt(c,now),now);
   S.recentOrderTimes.push(now);_orderBudget--;
-  var pn=PRODUCTS[pick.k].name;
-  var qty=pick.kind==="joint"?grams+" "+pn+" joints":grams+"g "+pn;
+ });
+ /* runner recruitment asks: eligible, orderless contacts */
+ S.contacts.forEach(function(c){
+  if(c.fixer||c.brokenUp||c.order)return;
+  if(!runnerAskEligible(c,now))return;
+  if(c.runnerAskedAt&&now-c.runnerAskedAt<24*3600000)return;
+  if(Math.random()>0.05)return;
+  c.runnerAskedAt=now;
+  var _rtxt=RUNNER_ASK[(Math.random()*RUNNER_ASK.length)|0];
+  c.msgs.push({from:"them",text:_rtxt,t:now});
+  c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
+  notifyMsgArrived(c,_rtxt);
+ });
+}
+/* v157: order creation, factored out of tickContacts so the referral
+   path and the generic roll share ONE builder. The order is placed on
+   the patience chain (msgChainTimes) and the pitch is stamped with its
+   DUE time (sentAt), never the processing time. Returns the order. */
+function createContactOrder(c,pick,grams,sentAt,now){
+ var base=contactBasePrice(pick);
+ var premium=1.15+(c.loyalty/100)*0.15;
+ var perUnit=Math.max(1,Math.round(base*premium));
+ var _ct=msgChainTimes(c,sentAt);
+ var o={k:pick.k,kind:pick.kind,g:grams,pu:perUnit,sentAt:sentAt,stage:0,nudgeAt:_ct.nudgeAt,escAt:_ct.escAt,expires:_ct.expires};
+ msgChainFix(o,now);
+ c.order=o;
+ c.lastOrderAt=now;
+ var pn=PRODUCTS[pick.k].name;
+ var qty=contactQtyText(o);
   var texts=["yo u got any "+pn+"? need "+qty,
    "aye need "+qty+" asap \uD83D\uDE4F",
    "u holdin "+pn+"? tryna grab "+qty,
@@ -5997,22 +6169,8 @@ function tickContacts(now){
    }
   }
   var _txt=texts[(Math.random()*texts.length)|0];
-  c.msgs.push({from:"them",text:_txt,t:now});
-  c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
-  notifyMsgArrived(c,_txt);
- });
- /* runner recruitment asks: eligible, orderless contacts */
- S.contacts.forEach(function(c){
-  if(c.fixer||c.brokenUp||c.order)return;
-  if(!runnerAskEligible(c,now))return;
-  if(c.runnerAskedAt&&now-c.runnerAskedAt<24*3600000)return;
-  if(Math.random()>0.05)return;
-  c.runnerAskedAt=now;
-  var _rtxt=RUNNER_ASK[(Math.random()*RUNNER_ASK.length)|0];
-  c.msgs.push({from:"them",text:_rtxt,t:now});
-  c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
-  notifyMsgArrived(c,_rtxt);
- });
+  pushContactMsg(c,_txt,sentAt);
+  return o;
 }
 function fmtMsgTime(t){try{var d=new Date(t),h=d.getHours(),m=d.getMinutes(),ap=h>=12?"PM":"AM";h=h%12;if(h===0)h=12;return h+":"+(m<10?"0":"")+m+" "+ap;}catch(e){return "";}}
 function fmtMsgDay(t){try{var d=new Date(t),now=new Date();if(d.toDateString()===now.toDateString())return "Today";var y=new Date(now);y.setDate(y.getDate()-1);if(d.toDateString()===y.toDateString())return "Yesterday";return (d.getMonth()+1)+"/"+d.getDate()+"/"+d.getFullYear();}catch(e){return "";}}
@@ -6035,14 +6193,25 @@ function doAcceptOrder(nm,variant){
  /* VIP flash order: 10% chance, 1.5x payout, 5-min expiry */
  var _vip=Math.random()<0.10;
  var _pu=_vip?Math.round(o.pu*1.5):o.pu;
- var _exp=_vip?now+5*60*1000:now+20*60*1000;
+ /* v157 reply-aware patience: a normal accept puts the order EN
+    ROUTE — the customer knows you're coming, so the cancel clock is
+    replyGrace + the en-route window (from CONTACT_TUNING), not the
+    old flat 20 minutes, and the mid-window follow-up is an en-route
+    nudge. The VIP flash keeps its hard 5-minute rush clock. */
+ var _exp=_vip?now+5*60*1000:now+(CONTACT_TUNING.replyGraceMin+CONTACT_TUNING.enRouteWindowMin)*60000;
  /* regulars: 3+ fulfills = 15% larger quantity */
  var _g=o.g;
  if(S.regulars&&S.regulars[c.name]>=3)_g=Math.ceil(o.g*1.15);
- S.tasks.push({name:c.name,k:o.k,kind:o.kind,g:_g,pu:_pu,addedAt:now,expiresAt:_exp,vip:_vip});
+ S.tasks.push({name:c.name,k:o.k,kind:o.kind,g:_g,pu:_pu,addedAt:now,expiresAt:_exp,vip:_vip,
+  enRoute:!_vip,replyAt:now,nudged:false,nudgeAt:_vip?0:now+CONTACT_TUNING.replyGraceMin*60000});
  var txt=variant||"Bet";
  c.msgs.push({from:"me",text:txt,t:now});
- c.msgs.push({from:"them",text:_vip?"you're my VIP rn ⭐":"bet 🙏",t:now});
+ /* v157 wording gate: the VIP sentiment line is EARNED — it only
+    fires when this contact already has 2+ completed deliveries
+    (S.regulars). The flash itself (1.5x rush task) still rolls as
+    before; a flash for a newer customer gets the plain line. */
+ var _deliv=(S.regulars&&S.regulars[c.name])||0;
+ c.msgs.push({from:"them",text:(_vip&&_deliv>=2)?"you're my VIP rn ⭐":"bet 🙏",t:now});
  c.order=null;c.unread=false;
  S.msg=_vip?"⭐ VIP order from "+c.name+" added to Tasks! 5 min to fulfill!":"Order from "+c.name+" added to Tasks.";
  save();render();
@@ -6823,17 +6992,29 @@ function tick(){
  tickRunners(now); /* complete sales first — freed capacity is reusable */
  tickContacts(now);
  arTick(now);
- /* task expiry: remove expired orders, customer walks, loyalty hit */
+ /* task expiry (v157): accepted orders are EN ROUTE — the customer
+    knows you answered. En-route tasks get ONE gentle nudge at
+    replyAt + replyGrace, stamped at its due time and worded like
+    someone waiting on a person who replied. The expiry hands the
+    contact to custOrderExpired stamped at the task's DUE expiry,
+    with the "enroute" context for non-VIP tasks, so the cancel line
+    admits the player said they were coming. VIP rush tasks keep the
+    old behavior: hard 5-minute clock, no nudge, plain cancel. */
  if(Array.isArray(S.tasks)&&S.tasks.length){
   var _expired=[];
   S.tasks=S.tasks.filter(function(t){
+   var _tc=getContact(t.name);
+   if(_tc&&t.enRoute&&!t.vip&&!t.nudged){
+    if(!(t.nudgeAt>0))t.nudgeAt=(t.replyAt||t.addedAt||now)+CONTACT_TUNING.replyGraceMin*60000;
+    if(now>=t.nudgeAt){t.nudged=true;pushContactMsg(_tc,_custPick(CUST_ENROUTE_NUDGE),t.nudgeAt);}
+   }
    if(t.expiresAt&&now>t.expiresAt){_expired.push(t);return false;}
    return true;
   });
   if(_expired.length){
    _expired.forEach(function(t){
     var _c=getContact(t.name);
-    if(_c)custOrderExpired(_c,now);
+    if(_c)custOrderExpired(_c,t.expiresAt||now,(t.enRoute&&!t.vip)?"enroute":null);
    });
    var _names=_expired.map(function(t){return t.name;}).join(", ");
    S.msg=_expired.length===1?_names+" walked away. (order expired)":_expired.length+" customers walked away. (orders expired)";
@@ -7449,7 +7630,10 @@ function visorHudHTML(){
   +'<div class="visor-reticle"></div>'
   +'<div class="visor-markers" id="visorMarkers"></div>'
   +huntMarkersHTML()
+  +'<div class="visor-arstack">'
+  +huntStartButtonHTML()
   +huntArButtonHTML()
+  +'</div>'
   +'<div class="visor-lootmsg" id="visorLoot">'+(window._visorLootMsg||"")+'</div>'
   +visorModePanelHTML(mode)
   +'<div class="visor-stashpanel"'+(S.visorStashOpen?"":" hidden")+'>'+visorStashHTML()+'</div>'
@@ -7773,18 +7957,53 @@ function ttArState(){
   return st;
  }catch(e){return null;}
 }
+/* v157: the last deep-probe verdict persists in the game save
+   (S.arProbeLast, stamped through the normal save path — the same
+   pattern as S.lastClosedAt) so it survives a relaunch and can be
+   read in BOTH the visor and Settings → About. Display-only:
+   nothing in gameplay reads it. */
+function ttArProbeStored(){
+ try{var v=(typeof S!=="undefined"&&S)?S.arProbeLast:null;return (typeof v==="string"&&v)?v:null;}catch(e){return null;}
+}
+window.ttArProbeStored=ttArProbeStored;
+function ttArProbeMsg(){
+ if(window._ttArProbeMsg)return window._ttArProbeMsg;
+ var v=ttArProbeStored();
+ return v?("AR check: "+v+" \u2014 tell V this"):null;
+}
+/* v157: ONE probe path, shared by the visor's RUN AR CHECK button and
+   the Settings → About one. typeof-guarded like every other bridge
+   call; a bridge without arProbe gets the plain fallback line. The
+   verdict is stored, mirrored into the visor's window vars, and
+   whichever UI is live gets refreshed. */
+function ttRunArProbe(){
+ var out;
+ try{
+  if(!window.TTNative||typeof window.TTNative.arProbe!=="function")out="probe not in this build";
+  else out=String(window.TTNative.arProbe());
+ }catch(e){out="EXCEPTION:"+((e&&e.name)?e.name:"Error");}
+ if(out==="SESSION_OK")window._ttArProbeOk=true;
+ window._ttArProbeMsg="AR check: "+out+" \u2014 tell V this";
+ try{if(typeof S!=="undefined"&&S){S.arProbeLast=out;save();}}catch(e){}
+ try{if(window._visorLive)visorRefresh();else render();}catch(e){}
+ return out;
+}
+window.ttRunArProbe=ttRunArProbe;
 function huntArButtonHTML(){
  if((S.visorMode||"scan")!=="scan")return "";
  var st=ttArState();
+ var _pm=ttArProbeMsg();
  if(st){
   // v156 probe override: if the deep probe already created a real AR
   // Session on this phone, the advisory check was lying — trust the
   // session and show the normal SCAN button (probe line stays above it
-  // so the verdict remains readable).
-  if(window._ttArProbeOk){
+  // so the verdict remains readable). v157: the stored verdict counts
+  // too, so the trust survives a relaunch.
+  if(window._ttArProbeOk||ttArProbeStored()==="SESSION_OK"){
    var n0=(S.hunt&&S.hunt.plants)?S.hunt.plants.length:0;
-   return (window._ttArProbeMsg?'<div class="visor-arnote">'+escHtml(window._ttArProbeMsg)+'</div>':"")
-    +'<button type="button" class="hunt-btn" data-act="hunt-ar">\uD83D\uDCF7 '+(n0?("OPEN AR SCAN \u00B7 "+n0+" BAG"+(n0>1?"S":"")):"AR STRAIN HUNT")+'</button>';
+   return (_pm?'<div class="visor-arnote probe">'+escHtml(_pm)+'</div>':"")
+    +'<button type="button" class="hunt-btn" data-act="hunt-ar">\uD83D\uDCF7 '+(n0?("OPEN AR SCAN \u00B7 "+n0+" BAG"+(n0>1?"S":"")):"AR STRAIN HUNT")+'</button>'
+    +'<button type="button" class="hunt-btn" data-act="hunt-ar-probe">\uD83D\uDD0D RUN AR CHECK</button>';
   }
   // Name-first branching: SUPPORTED_NOT_INSTALLED and
   // SUPPORTED_APK_TOO_OLD both report isSupported()=true natively, so
@@ -7804,7 +8023,7 @@ function huntArButtonHTML(){
    return '<div class="visor-arnote">This phone isn\u2019t on Google\u2019s AR list yet</div>';
   if(st.availability==="UNKNOWN_ERROR"||st.availability.indexOf("EXCEPTION")===0){
    var eh='<div class="visor-arnote">AR hit an error ('+escHtml(st.availability)+') \u2014 tell V this code</div>';
-   if(window._ttArProbeMsg)eh+='<div class="visor-arnote">'+escHtml(window._ttArProbeMsg)+'</div>';
+   if(_pm)eh+='<div class="visor-arnote probe">'+escHtml(_pm)+'</div>';
    eh+='<button type="button" class="hunt-btn" data-act="hunt-ar-probe">\uD83D\uDD0D RUN AR CHECK</button>';
    return eh;
   }
@@ -7832,20 +8051,10 @@ function huntArInstall(){
  try{visorRefresh();}catch(e){}
 }
 function huntArProbe(){
- // v156 deep probe: instead of trusting the advisory availability
- // check again, ask the bridge to actually create an AR Session and
- // show its verbatim verdict in the note area. SESSION_OK means AR
- // really works here — flag it so the refresh swaps the note for the
- // normal SCAN button. A bridge without arProbe (older builds) just
- // gets the plain "probe not in this build" line, never a crash.
- var out;
- try{
-  if(!window.TTNative||typeof window.TTNative.arProbe!=="function")out="probe not in this build";
-  else out=String(window.TTNative.arProbe());
- }catch(e){out="EXCEPTION:"+((e&&e.name)?e.name:"Error");}
- if(out==="SESSION_OK")window._ttArProbeOk=true;
- window._ttArProbeMsg="AR check: "+out+" \u2014 tell V this";
- try{if(window._visorLive)visorRefresh();else render();}catch(e){}
+ // v157: the visor button and the Settings → About button share the
+ // one probe path (ttRunArProbe above) — verdict, persistence and
+ // refresh live there now.
+ ttRunArProbe();
 }
 function huntArLaunch(){
  if(!ttArAvailable())return;
@@ -7951,10 +8160,16 @@ function huntMarkersHTML(){
    var sh='<span class="plant-shadow" data-id="'+pl.id+'" style="left:'+xy.x+'%;top:'+xy.y+'%;width:'+xy.sw+'px;height:'+xy.sh+'px'+(xy.off?';visibility:hidden':'')+'"></span>';
    return sh+'<button type="button" class="bag-marker" data-act="hunt-collect" data-id="'+pl.id+'" style="left:'+xy.x+'%;top:'+xy.y+'%;width:'+xy.bw+'px;height:'+xy.bh+'px;transform:translate(-50%,-50%) rotate('+bagRot(pl)+'deg)'+(xy.off?';visibility:hidden':'')+'">'+bagSVG(pl)+'</button>';
   }).join("");
- }else{
-  h+='<button type="button" class="hunt-btn" data-act="hunt-start">\uD83D\uDC3E START STRAIN HUNT</button>';
  }
  return h;
+}
+/* v157: START STRAIN HUNT moved out of the markers layer into the
+   visor AR stack (flow layout in visorHudHTML), so it can never render
+   on top of the AR note/probe block again. */
+function huntStartButtonHTML(){
+ if((S.visorMode||"scan")!=="scan")return "";
+ if(S.hunt&&S.hunt.plants&&S.hunt.plants.length)return "";
+ return '<button type="button" class="hunt-btn" data-act="hunt-start">\uD83D\uDC3E START STRAIN HUNT</button>';
 }
 /* ---- Pull-ups (SERVE) ---- */
 function pullupSpawn(now){
@@ -8841,6 +9056,7 @@ root.addEventListener("click",function(e){
  if(a==="hunt-ar"){huntArLaunch();return;}
  if(a==="hunt-ar-install"){huntArInstall();return;}
  if(a==="hunt-ar-probe"){huntArProbe();return;}
+ if(a==="ar-probe-about"){ttRunArProbe();return;}
  if(a==="sh-tag"){claimStronghold(b.dataset.w);return;}
  if(a==="sh-upg"){upgradeStronghold(b.dataset.w);return;}
  if(a==="raid-fight"){raidFight();return;}
