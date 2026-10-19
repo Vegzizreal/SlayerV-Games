@@ -1765,6 +1765,7 @@ body.electron-phone #ewin-controls{display:flex}
 .order-bubble{display:block;width:100%;margin:8px 0;padding:10px;border-radius:12px;border:1px solid rgba(127,212,255,.5);background:rgba(127,212,255,.1);color:#dff4ff;font-size:13px}
 .order-bubble.gene-opt{border-color:rgba(74,222,128,.65);background:rgba(34,197,94,.14);color:#dcfce7;text-align:left;cursor:pointer}
 .order-bubble.gene-opt small{opacity:.75}
+.order-bubble.vip-rush{border-color:rgba(250,204,21,.65);background:rgba(234,179,8,.14);color:#fef9c3;text-align:left}
 .dwant{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 12px;padding:9px 12px;border:1px solid rgba(251,191,36,.45);background:rgba(251,191,36,.08);border-radius:10px;font-size:13px}
 .dwant button{flex:none;background:#d97706;border:none;color:#fff;border-radius:8px;padding:8px 12px;font-weight:700;cursor:pointer}
 .dwant button:disabled{opacity:.4;cursor:not-allowed}
@@ -2791,10 +2792,11 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:25,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v168";
+var GAME_VER="v169";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"v169",ts:"Oct 18, 2026",t:"Walking away has a price",d:"Bailing on an accepted order now costs the same as letting it expire — 10 loyalty, and the customer tells you about it. Saying no to an order costs a little loyalty too (3) instead of nothing. Coming back after hours away no longer dumps a whole missed conversation on you at once — each customer picks the chat back up one step at a time. And a VIP rush order now says so right on the offer, before you accept: 1.5x pay, 15 minutes to deliver."},
    {v:"v168",ts:"Oct 17, 2026",t:"Heat sticks around",d:"Heat cools six times slower now — a territory at 100% takes about 4 hours to fully cool instead of 40 minutes, so hot turf stays risky long enough to matter. A level 5 territory still cools its heat twice as fast, and smoking still speeds cooling up a touch."},
    {v:"v167",ts:"Oct 17, 2026",t:"To Do Cook button always opens the Lab",d:"Tapping Cook on an order in To Do now always takes you to the Lab — whether a batch is already cooking, a cook is already queued, or nobody is hired. Before, if anything was queued the tap just added another queue entry in silence, and a queued cook can only start in the Lab — so with no cook hired the button looked dead. In the Lab the cook starts on the spot or queues where you can see it."},
    {v:"v166",ts:"Oct 17, 2026",t:"Premium add-on stays in the chat",d:"The premium SCAN-strain add-on is picked in the customer chat — tap it there and it sells on the spot. Just accept the order instead and the add-on is gone for good: accepted orders are base-only, so the add-on box no longer shows up on order cards."},
@@ -3149,7 +3151,7 @@ function normalize(s,raw){
  if(!Array.isArray(s.contacts))s.contacts=[];
  s.contacts=s.contacts.filter(function(c){return c&&typeof c.name==="string";}).map(function(c){
   var o=null;
-  if(c.order&&typeof c.order.k==="string"&&PRODUCTS[c.order.k]&&typeof c.order.g==="number")o={k:c.order.k,kind:(c.order.kind==="joint"||c.order.kind==="lab")?c.order.kind:"bud",g:c.order.g,pu:typeof c.order.pu==="number"?c.order.pu:0,expires:typeof c.order.expires==="number"?c.order.expires:0,sentAt:typeof c.order.sentAt==="number"?c.order.sentAt:0,stage:(typeof c.order.stage==="number"&&isFinite(c.order.stage))?Math.max(0,Math.min(2,Math.floor(c.order.stage))):0,nudgeAt:typeof c.order.nudgeAt==="number"?c.order.nudgeAt:0,escAt:typeof c.order.escAt==="number"?c.order.escAt:0,geneOpt:(c.order.geneOpt&&PRODUCTS[c.order.geneOpt.k]&&PRODUCTS[c.order.geneOpt.k].gene&&typeof c.order.geneOpt.g==="number"&&typeof c.order.geneOpt.pu==="number")?{k:c.order.geneOpt.k,g:c.order.geneOpt.g,pu:c.order.geneOpt.pu,expires:typeof c.order.geneOpt.expires==="number"?c.order.geneOpt.expires:0}:null};
+  if(c.order&&typeof c.order.k==="string"&&PRODUCTS[c.order.k]&&typeof c.order.g==="number")o={k:c.order.k,kind:(c.order.kind==="joint"||c.order.kind==="lab")?c.order.kind:"bud",g:c.order.g,pu:typeof c.order.pu==="number"?c.order.pu:0,expires:typeof c.order.expires==="number"?c.order.expires:0,sentAt:typeof c.order.sentAt==="number"?c.order.sentAt:0,stage:(typeof c.order.stage==="number"&&isFinite(c.order.stage))?Math.max(0,Math.min(2,Math.floor(c.order.stage))):0,nudgeAt:typeof c.order.nudgeAt==="number"?c.order.nudgeAt:0,escAt:typeof c.order.escAt==="number"?c.order.escAt:0,vip:c.order.vip===true,geneOpt:(c.order.geneOpt&&PRODUCTS[c.order.geneOpt.k]&&PRODUCTS[c.order.geneOpt.k].gene&&typeof c.order.geneOpt.g==="number"&&typeof c.order.geneOpt.pu==="number")?{k:c.order.geneOpt.k,g:c.order.geneOpt.g,pu:c.order.geneOpt.pu,expires:typeof c.order.geneOpt.expires==="number"?c.order.geneOpt.expires:0}:null};
   var tp=(c.type==="stoner"||c.type==="party"||c.type==="connoisseur"||c.type==="casual")?c.type:"casual";
   var _bl=(typeof s.xp==="number")?lvl(s.xp):1;
   var _bt=Math.max(tierAtLevel(_bl),(typeof s.peakTier==="number"?s.peakTier:0));
@@ -5177,6 +5179,12 @@ function render(){
   if(c.order&&c.order.geneOpt){
    h+='<button type="button" class="order-bubble gene-opt" data-act="geneopt" data-contact="'+escHtml(c.name)+'">'+geneOptText(c.order.geneOpt)+'<br><small>Optional add-on \u2014 tap to sell it now. Ignoring it costs nothing.</small></button>';
   }
+  /* v169: a flash-flagged order (o.vip, rolled at pitch time) shows
+     the rush on the offer BEFORE the player accepts — accepting it
+     creates the 15-minute 1.5x task, no surprises. */
+  if(c.order&&c.order.vip){
+   h+='<div class="order-bubble vip-rush">\u26A1 VIP rush: 1.5\u00D7 pay \u00B7 15 min to deliver if you accept</div>';
+  }
   /* runner offer: eligible regulars can be promoted */
   if(runnerAskEligible(c)&&!c.order&&S.runners.length<runnerMax()){
    h+='<div class="msg-order"><div class="msg-order-hd">🏃 <b>Bring them on?</b></div>'
@@ -6448,9 +6456,25 @@ function tickContacts(now){
    if(!(o.expires>0))o.expires=_ct.expires;
    msgChainFix(o,now);
   }
-  if((o.stage|0)<1&&now>=o.nudgeAt){o.stage=1;pushContactMsg(c,_custPick(CUST_NUDGE),o.nudgeAt);}
-  if((o.stage|0)<2&&now>=o.escAt){o.stage=2;pushContactMsg(c,_custPick(CUST_ANNOYED),o.escAt);}
-  if(now>=o.expires){c.order=null;custOrderExpired(c,o.expires);}
+  /* v169: at most ONE ladder stage advances per pass. Live ticking
+     never has two stages due at once (they sit 60-75 min apart), so
+     the else-if only bites on a catch-up pass (boot / long-closed
+     gap): when a stage fires and the NEXT stage is already past due,
+     the remaining deadlines re-base — next stage due at now + its
+     original inter-stage gap (nudge->escalate 75 min, escalate->
+     walk-away 60 min, scaled by the same patience multiplier
+     msgChainTimes uses). A returning player gets pressure, not an
+     avalanche of nudge + escalation + walk-away in one tick. */
+  var _mul=(typeof c.patienceMul==="number"&&c.patienceMul>0)?c.patienceMul:1;
+  var _gapNE=(CONTACT_TUNING.escalateMin-CONTACT_TUNING.firstNudgeMin)*_mul*60000;
+  var _gapEW=(CONTACT_TUNING.cancelMin-CONTACT_TUNING.escalateMin)*_mul*60000;
+  if((o.stage|0)<1&&now>=o.nudgeAt){
+   o.stage=1;pushContactMsg(c,_custPick(CUST_NUDGE),o.nudgeAt);
+   if(o.escAt<=now){o.escAt=now+_gapNE;o.expires=o.escAt+_gapEW;}
+  }else if((o.stage|0)<2&&now>=o.escAt){
+   o.stage=2;pushContactMsg(c,_custPick(CUST_ANNOYED),o.escAt);
+   if(o.expires<=now)o.expires=now+_gapEW;
+  }else if(now>=o.expires){c.order=null;custOrderExpired(c,o.expires);}
  });
  /* global order throttle: max CONTACT_TUNING.orderBudget new orders per window across all contacts */
  if(!Array.isArray(S.recentOrderTimes))S.recentOrderTimes=[];
@@ -6525,7 +6549,11 @@ function createContactOrder(c,pick,grams,sentAt,now){
  var _terrF=Math.min(1.6,terrPriceMult()*terrPrefMult(pick.k,pick.kind==="joint"));
  var perUnit=Math.max(1,Math.round(base*premium*_terrF));
  var _ct=msgChainTimes(c,sentAt);
- var o={k:pick.k,kind:pick.kind,g:grams,pu:perUnit,sentAt:sentAt,stage:0,nudgeAt:_ct.nudgeAt,escAt:_ct.escAt,expires:_ct.expires};
+ /* v169: the VIP flash roll happens HERE, at pitch time, and is
+    stamped on the order — the thread offer discloses it before the
+    player accepts, and doAcceptOrder consumes this flag instead of
+    rolling invisibly at accept time. */
+ var o={k:pick.k,kind:pick.kind,g:grams,pu:perUnit,sentAt:sentAt,stage:0,nudgeAt:_ct.nudgeAt,escAt:_ct.escAt,expires:_ct.expires,vip:Math.random()<0.10};
  msgChainFix(o,now);
  c.order=o;
  c.lastOrderAt=now;
@@ -6630,8 +6658,10 @@ function doAcceptOrder(nm,variant){
  if(!c||!c.order){S.msg="That order already expired.";save();render();return;}
  var o=c.order,now=Date.now();
  if(!Array.isArray(S.tasks))S.tasks=[];
- /* VIP flash order: 10% chance, 1.5x payout, 15-min expiry (v158) */
- var _vip=Math.random()<0.10;
+ /* VIP flash order: the 10% roll happened at pitch time and is
+    stamped on the order (o.vip, v169) so the offer disclosed it —
+    accept just consumes the flag: 1.5x payout, 15-min expiry. */
+ var _vip=o.vip===true;
  var _pu=_vip?Math.round(o.pu*1.5):o.pu;
  /* v157 reply-aware patience: a normal accept puts the order EN
     ROUTE — the customer knows you're coming, so the cancel clock is
@@ -6662,7 +6692,20 @@ function doDismissOrder(nm,variant){
  var now=Date.now();
  var txt=variant||"Nah";
  c.msgs.push({from:"me",text:txt,t:now});
- c.msgs.push({from:"them",text:"all good, hmu later",t:now});
+ /* v169: a flat no costs a little loyalty (-3) — ignoring the same
+    order all the way to expiry still costs more (-10). If the -3
+    lands the contact on 0 it breaks up, with the same breakup
+    bookkeeping custOrderExpired does (flag, timestamp, grudge) and
+    the breakup line instead of the breezy sign-off. */
+ c.loyalty=Math.max(0,(typeof c.loyalty==="number"?c.loyalty:50)-3);
+ var _reply="all good, hmu later";
+ if(c.loyalty<=0&&!c.brokenUp){
+  c.brokenUp=true;c.brokenUpAt=now;
+  if(!S.grudges)S.grudges={};
+  var _gr=S.grudges[c.name]||{n:0};_gr.n++;_gr.t=now;S.grudges[c.name]=_gr;
+  _reply=_custPick(CUST_BREAKUP);
+ }
+ c.msgs.push({from:"them",text:_reply,t:now});
  c.order=null;c.unread=false;
  S.msg="Dismissed order request from "+c.name+".";
  save();render();
@@ -6787,6 +6830,13 @@ function doDismissTask(i){
  if(!t)return;
  if(!confirm("Dismiss this order from "+t.name+"?"))return;
  S.tasks.splice(i,1);
+ /* v169: dismissing an accepted order is a walk-away, not a free
+    escape — it hands the contact to custOrderExpired exactly like
+    the tick() task-expiry sweep does (same stamp rule, same
+    en-route context for non-VIP tasks): -10 loyalty, breakup at 0,
+    and their reaction lands in the thread. */
+ var _dc=getContact(t.name);
+ if(_dc)custOrderExpired(_dc,Date.now(),(t.enRoute&&!t.vip)?"enroute":null);
  S.msg="Dismissed task for "+t.name+".";
  save();render();
 }
