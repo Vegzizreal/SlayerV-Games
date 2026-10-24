@@ -1024,6 +1024,12 @@ body.electron-phone #ewin-controls{display:flex}
 .roach-msg{font-size:20px;font-weight:700;color:#ece9e2;line-height:1.5;margin-bottom:16px;font-style:italic}
 .roach-msg b{color:#e5484d}
 .roach-card button{background:linear-gradient(180deg,#e5484d,#a92e33);color:#fff;font-weight:900;border:0;border-radius:10px;padding:12px 32px;font-size:19px;cursor:pointer}
+/* v172: Roach bag-full card — closes ONLY via its upgrade button or the X.
+   Own overlay class (not .roach-pop) so the timed Roach pops can't remove
+   it and it can't remove them; no backdrop dismiss, no auto-dismiss. */
+.bag-pop{position:fixed;inset:0;z-index:10001;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.72);animation:spFade .25s ease-out}
+.bag-card{position:relative}
+.bag-card .bag-pop-x{position:absolute;top:6px;right:8px;background:none;color:#b9b4a8;font-size:26px;font-weight:400;line-height:1;padding:6px 10px;border-radius:8px}
 /* AirDrop contact popup */
 .airdrop-pop{position:fixed;inset:0;z-index:10000;display:flex;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.6);animation:spFade .25s ease-out}
 .airdrop-card{background:linear-gradient(180deg,#1e1e24,#16161a);border:1px solid #3a3a5a;border-bottom:0;border-radius:20px 20px 0 0;padding:24px 20px 28px;width:100%;max-width:340px;text-align:center;animation:adSlideUp .4s cubic-bezier(.2,1.2,.4,1);box-shadow:0 -8px 40px rgba(0,0,0,.5)}
@@ -2792,10 +2798,12 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:25,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v171";
+var GAME_VER="v173";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"v173",ts:"Oct 24, 2026",t:"Badges clear, days roll at your midnight, tips are back",d:"Message badges no longer stick after you accept, decline or deliver an order. Daily stuff — the dealer want, Today stats and the bank interest cap — now rolls at your midnight instead of 8pm. Customer types wait different lengths: party kids bail fast, stoners give you nearly four hours. Pull-ups that drive off and finished runner sales now notify you. Idle chats get quick replies, gene strains get their own smoke lines, and the lockscreen tips rotate again."},
+   {v:"v172",ts:"Oct 21, 2026",t:"Roach points you at a bigger bag",d:"When your duffel fills up, Roach no longer yells and vanishes — he leaves a card that stays put until you deal with it: one quick line about the bigger duffel at the Supply Depot, an Upgrade Bag button that takes you straight to it, or an X to close. No more tapping past it by accident, and it only pops once per full bag."},
    {v:"v171",ts:"Oct 20, 2026",t:"Tap the phone icon itself",d:"The little phone icon in your status bar is the button now — tap the icon itself to open the game, just like the battle bubble in PokeBattle FX. The invisible tappable space that used to hang under the icon is gone: miss the icon and your tap lands on whatever is underneath, like it should."},
    {v:"v170",ts:"Oct 19, 2026",t:"Update button keeps its size",d:"The lock screen's update button no longer gets squashed into a thin strip when the lock screen fills up with notifications and the PIN pad — it always shows at full size, ready to tap."},
    {v:"v169",ts:"Oct 18, 2026",t:"Walking away has a price",d:"Bailing on an accepted order now costs the same as letting it expire — 10 loyalty, and the customer tells you about it. Saying no to an order costs a little loyalty too (3) instead of nothing. Coming back after hours away no longer dumps a whole missed conversation on you at once — each customer picks the chat back up one step at a time. And a VIP rush order now says so right on the offer, before you accept: 1.5x pay, 15 minutes to deliver."},
@@ -3019,7 +3027,11 @@ var SMOKE_MSG={
  bluedream:"Creative vibes.",
  maui:"Tropical vibes. Maui Wowie lifts you up.",
  northern:"Deep and dreamy. Northern Lights knocks you out.",
- ak47:"One hit wonder. AK-47 does not play."
+ ak47:"One hit wonder. AK-47 does not play.",
+ frost:"Brain freeze. Frostbite coats everything in ice.",
+ nebula:"Head in the stars. Nebula Haze drifts you into deep space.",
+ ember:"Slow burn. Ember OG glows warm and heavy.",
+ ghost:"It creeps up, then it burns. Ghost Pepper Kush hits like fire."
 };
 var SMOKE_COL={
  sour:{c:["#a3e635"],o:.34},
@@ -3028,7 +3040,11 @@ var SMOKE_COL={
  bluedream:{c:["#7dd3fc"],o:.34},
  maui:{c:["#9ccc65","#d4e157"],o:.36},
  northern:{c:["#4dd0e1"],o:.5},
- ak47:{c:["#ff8a65"],o:.55}
+ ak47:{c:["#ff8a65"],o:.55},
+ frost:{c:["#a5f3fc"],o:.36},
+ nebula:{c:["#c4b5fd"],o:.36},
+ ember:{c:["#fb923c"],o:.36},
+ ghost:{c:["#f87171"],o:.36}
 };
 function bestWeapon(){var b="fists",bd=-1;WKEYS.forEach(function(k){var owned=(k==="fists")||(S.weapons&&S.weapons[k]);if(!owned)return;var d=WEAPONS[k].dmg[1];if(d>bd){bd=d;b=k;}});return b;}
 function gearBonus(){
@@ -3153,14 +3169,14 @@ function normalize(s,raw){
  if(!Array.isArray(s.contacts))s.contacts=[];
  s.contacts=s.contacts.filter(function(c){return c&&typeof c.name==="string";}).map(function(c){
   var o=null;
-  if(c.order&&typeof c.order.k==="string"&&PRODUCTS[c.order.k]&&typeof c.order.g==="number")o={k:c.order.k,kind:(c.order.kind==="joint"||c.order.kind==="lab")?c.order.kind:"bud",g:c.order.g,pu:typeof c.order.pu==="number"?c.order.pu:0,expires:typeof c.order.expires==="number"?c.order.expires:0,sentAt:typeof c.order.sentAt==="number"?c.order.sentAt:0,stage:(typeof c.order.stage==="number"&&isFinite(c.order.stage))?Math.max(0,Math.min(2,Math.floor(c.order.stage))):0,nudgeAt:typeof c.order.nudgeAt==="number"?c.order.nudgeAt:0,escAt:typeof c.order.escAt==="number"?c.order.escAt:0,vip:c.order.vip===true,geneOpt:(c.order.geneOpt&&PRODUCTS[c.order.geneOpt.k]&&PRODUCTS[c.order.geneOpt.k].gene&&typeof c.order.geneOpt.g==="number"&&typeof c.order.geneOpt.pu==="number")?{k:c.order.geneOpt.k,g:c.order.geneOpt.g,pu:c.order.geneOpt.pu,expires:typeof c.order.geneOpt.expires==="number"?c.order.geneOpt.expires:0}:null};
+  if(c.order&&typeof c.order.k==="string"&&PRODUCTS[c.order.k]&&typeof c.order.g==="number")o={k:c.order.k,kind:(c.order.kind==="joint"||c.order.kind==="lab")?c.order.kind:"bud",g:c.order.g,pu:typeof c.order.pu==="number"?c.order.pu:0,expires:typeof c.order.expires==="number"?c.order.expires:0,sentAt:typeof c.order.sentAt==="number"?c.order.sentAt:0,stage:(typeof c.order.stage==="number"&&isFinite(c.order.stage))?Math.max(0,Math.min(2,Math.floor(c.order.stage))):0,nudgeAt:typeof c.order.nudgeAt==="number"?c.order.nudgeAt:0,escAt:typeof c.order.escAt==="number"?c.order.escAt:0,vip:c.order.vip===true,geneOpt:(c.order.geneOpt&&PRODUCTS[c.order.geneOpt.k]&&PRODUCTS[c.order.geneOpt.k].gene&&typeof c.order.geneOpt.g==="number"&&typeof c.order.geneOpt.pu==="number")?{k:c.order.geneOpt.k,g:c.order.geneOpt.g,pu:c.order.geneOpt.pu}:null};
   var tp=(c.type==="stoner"||c.type==="party"||c.type==="connoisseur"||c.type==="casual")?c.type:"casual";
   var _bl=(typeof s.xp==="number")?lvl(s.xp):1;
   var _bt=Math.max(tierAtLevel(_bl),(typeof s.peakTier==="number"?s.peakTier:0));
   var _bun=PKEYS.filter(function(k){return PRODUCTS[k].tier<=_bt;});
   var pr=Array.isArray(c.prefs)?c.prefs.filter(function(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&_bun.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab");}).map(function(p){return {k:p.k,kind:p.kind};}).slice(0,3):[];
   if(!pr.length)pr=contactPrefsFor(tp,_bun);
-  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0,askEligSince:typeof c.askEligSince==="number"?c.askEligSince:0,refGiven:!!c.refGiven,phaseMin:(typeof c.phaseMin==="number"&&isFinite(c.phaseMin)&&c.phaseMin>=0)?(Math.floor(c.phaseMin)%30):undefined,patienceMul:(typeof c.patienceMul==="number"&&c.patienceMul>0)?c.patienceMul:1,firstOrderAt:typeof c.firstOrderAt==="number"?c.firstOrderAt:0,lastFlakeAt:typeof c.lastFlakeAt==="number"?c.lastFlakeAt:0};
+  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0,askEligSince:typeof c.askEligSince==="number"?c.askEligSince:0,refGiven:!!c.refGiven,phaseMin:(typeof c.phaseMin==="number"&&isFinite(c.phaseMin)&&c.phaseMin>=0)?(Math.floor(c.phaseMin)%30):undefined,patienceMul:(typeof c.patienceMul==="number"&&c.patienceMul>0&&c.patienceMul!==1)?c.patienceMul:(CONTACT_TUNING.patienceByType[tp]||1),firstOrderAt:typeof c.firstOrderAt==="number"?c.firstOrderAt:0,lastFlakeAt:typeof c.lastFlakeAt==="number"?c.lastFlakeAt:0};
  });
  if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
@@ -3228,7 +3244,7 @@ function normalize(s,raw){
  /* regulars: fulfill count per customer name */
  if(!s.regulars||typeof s.regulars!=="object")s.regulars={};
  /* today's stats: reset when date changes */
- var _today=new Date().toISOString().slice(0,10);
+ var _today=localDayStr(); /* v173: local day, not UTC */
  if(s.call&&typeof s.call==="object"&&typeof s.call.startedAt==="number"&&Date.now()-s.call.startedAt>3600000)s.call=null;
  if(!s.statsToday||typeof s.statsToday!=="object"||s.statsToday.date!==_today)s.statsToday={orders:0,earned:0,date:_today};
  /* territory heat */
@@ -4231,7 +4247,9 @@ function stashOrderUnit(k,isJoint){
    dealer's owner base (hb) x 1.08. Fulfilling grants +5 player XP and
    NO contact roll. */
 var DEALER_WANT_MULT=1.08;
-function dealerWantDayStr(){return new Date().toISOString().slice(0,10);}
+/* v173: local-day key — daily rolls happen at the player's midnight, not UTC midnight */
+function localDayStr(){var d=new Date(),m=d.getMonth()+1,dd=d.getDate();return d.getFullYear()+"-"+(m<10?"0"+m:""+m)+"-"+(dd<10?"0"+dd:""+dd);}
+function dealerWantDayStr(){return localDayStr();}
 function dealerWantSpec(di){
  var out=[];
  for(var k in DEALER_BUY_OWNER){if(DEALER_BUY_OWNER[k]===di&&PRODUCTS[k]&&!PRODUCTS[k].gene&&strainUnlocked(k))out.push(k);}
@@ -4292,7 +4310,7 @@ function geneOptFor(c,o){
  var premium=1.15+(c.loyalty/100)*0.15;
  var terrF=Math.min(1.6,terrPriceMult()*terrPrefMult(k,false));
  var pu=Math.max(1,Math.round(base*premium*terrF*GENE_OPT_PREMIUM));
- return {k:k,g:g,pu:pu,expires:(o.expires||0)};
+ return {k:k,g:g,pu:pu}; /* v173: gene option lives and dies with the order — no separate expires */
 }
 function geneOptText(opt){return "\u2728 Premium option: "+opt.g+"g "+PRODUCTS[opt.k].name+" \u2014 "+money(opt.pu*opt.g)+" ("+money(opt.pu)+"/g)";}
 function geneOptPay(c,opt){
@@ -4720,6 +4738,9 @@ function ttEnsureNotifPerm(){
 }
 function render(){
  ttEnsureNotifPerm();
+ /* v172: a bag-full episode ends the moment the duffel has room again —
+    re-arm Roach's bag card so the next full bag can show it once more */
+ if(stashTotal()<S.stashCap)_bagWarned=false;
  if(root&&root.dataset){root.dataset.theme=(S.theme==="light")?"light":"dark";root.dataset.labelcolor=S.labelColor||"white";}
  var _pg=q(".pg");if(_pg&&_pg.dataset)_pg.dataset.labelcolor=S.labelColor||"white";
  /* update Messages badge */
@@ -5249,7 +5270,7 @@ function render(){
   else if(_mv==="phonebook"){q(".pane-deal").innerHTML=tabHeader("deal")+dealPhonebook();}
   else if(_mv==="__roach__"){S.roachRead=true;S.roachUnread=0;q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
   else if(_mv.indexOf("__runner_")===0){var _rr=runnerById(_mv.slice(9));if(_rr){q(".pane-deal").innerHTML=tabHeader("deal")+runnerDetailHTML(_rr);}else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}}
-  else if(getContact(_mv)){var _cc=getContact(_mv);_cc.unread=false;_cc.unreadCount=0;_cc.softUnread=false;q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
+  else if(getContact(_mv)){var _cc=getContact(_mv);closeOutOrder(_cc);q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
   else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
  }
  if(S.tab==="street"){q(".pane-street").innerHTML=streetHTML();var _ds=q(".pane-street .dstrip");if(_ds&&window.__dsPos)_ds.scrollLeft=window.__dsPos;var _cs=q(".pane-street .cstrip");if(_cs&&window.__csPos)_cs.scrollLeft=window.__csPos;}
@@ -6007,22 +6028,53 @@ function showSalePop(strainName,qtyLabel,revenue,profit){
   setTimeout(function(){var p=root.querySelector(".sale-pop");if(p)p.remove();},6000);
  }catch(e){}
 }
+/* v172 — Roach bag-full card (2026-10-21): replaces the old yell
+   pop (all-caps line, backdrop-tap dismiss, 5s auto-vanish). This card:
+   - one quick line: bag's full + the store sells a bigger duffel
+   - an UPGRADE BAG button: closes the card, lands on Store > Supply
+     Depot (gear), the screen with the Bigger duffel row
+   - closes ONLY via that button or the ✕ — backdrop taps, other taps
+     and time passing all leave it up; it never stacks a duplicate
+   - fires at most once per bag-full episode: _bagWarned latches here
+     and render() clears it the moment the duffel has room again.
+   Trigger points are unchanged (the same five callers as the old yell:
+   doHarvest, doHarvestAll, doDeal buy, doRoll, deductCookInputs).
+   No Roach thread message — the old yell never posted one either; the
+   callers' S.msg status line is untouched. */
+var _bagWarned=false;
+function closeBagPop(){
+ var p=root.querySelector(".bag-pop");if(p)p.remove();
+}
 function showBagFullWarn(){
  try{
   if(typeof document==="undefined"||!document.createElement||!root)return;
-  var old=root.querySelector(".roach-pop");if(old)old.remove();
-  var src=ROACH_IMG;
+  if(root.querySelector(".bag-pop"))return;
+  if(_bagWarned)return;
+  _bagWarned=true;
+  var ti=DUFFEL.indexOf(S.stashCap);if(ti<0)ti=0;
+  var maxed=ti>=DUFFEL.length-1;
   var pop=document.createElement("div");
-  pop.className="roach-pop";
-  pop.innerHTML='<div class="roach-card">'
-   +(src?'<img src="'+src+'" alt="Roach">':'')
-   +'<div class="roach-msg">damn yo, you can\'t fit no more in there! move that product or upgrade, bitch!<br><b>— Roach</b></div>'
-   +'<button type="button" data-act="roachpop-ok">HEARD YOU</button></div>';
+  pop.className="bag-pop";
+  pop.innerHTML='<div class="roach-card bag-card">'
+   +'<button type="button" class="bag-pop-x" data-act="bagpop-close" aria-label="Close">&times;</button>'
+   +(ROACH_IMG?'<img src="'+ROACH_IMG+'" alt="Roach">':'')
+   +'<div class="roach-msg">'
+   +(maxed
+     ?'bag\'s full, yo — and that duffel\'s already the biggest one they sell. move some product.'
+     :'bag\'s full, yo. the Supply Depot sells a bigger duffel — carry '+DUFFEL[ti+1]+'g instead of '+S.stashCap+'g.')
+   +'<br><b>— Roach</b></div>'
+   +'<button type="button" class="bag-pop-go" data-act="bagpop-upgrade">'+(maxed?'OPEN THE STORE':'UPGRADE BAG')+'</button></div>';
   pop.addEventListener("click",function(e){
-   if(e.target===pop||e.target.dataset.act==="roachpop-ok"){pop.remove();}
+   var bt=e.target&&e.target.closest?e.target.closest("[data-act]"):null;
+   var a=bt?bt.dataset.act:"";
+   if(a==="bagpop-close"){closeBagPop();}
+   else if(a==="bagpop-upgrade"){
+    closeBagPop();
+    S.tab="store";S.view="app";S.storetab="gear";navPush("store");ttPushHist();save();render();
+   }
+   /* every other tap — the backdrop included — does nothing */
   });
   root.appendChild(pop);
-  setTimeout(function(){var p=root.querySelector(".roach-pop");if(p)p.remove();},5000);
  }catch(e){}
 }
 function showSenorVPackage(){
@@ -6233,6 +6285,7 @@ var CONTACT_TUNING={
  orderCooldownMin:10,orderRoll:0.12,orderBudget:3,orderBudgetWindowMin:10,
  firstNudgeMin:45,escalateMin:120,cancelMin:180,jitterMaxMin:2,createJitterMaxMin:4,
  replyGraceMin:45,enRouteWindowMin:75,
+ patienceByType:{stoner:1.3,party:0.75,connoisseur:1.15,casual:1}, /* v173: per-archetype patience */
  referralFirstOrderMin:3,referralFirstOrderMax:8
 };
 /* v157: stable per-contact phase offset (minutes) for message timing.
@@ -6338,7 +6391,7 @@ function activatePendingContact(phone){
     generic roll owns their timing). */
  var _nowA=Date.now();
  var _fo=p.via==="referral"?_nowA+(CONTACT_TUNING.referralFirstOrderMin+Math.random()*(CONTACT_TUNING.referralFirstOrderMax-CONTACT_TUNING.referralFirstOrderMin))*60000:0;
- S.contacts.push({name:p.name,type:p.type,prefs:p.prefs,phone:p.phone,loyalty:_returning?30:50,order:null,unread:true,unreadCount:1,lastOrderAt:0,lastFulfilledAt:0,isThief:!!p.isThief,ordersBeforeTurn:p.ordersBeforeTurn||0,patienceMul:1,firstOrderAt:_fo,
+ S.contacts.push({name:p.name,type:p.type,prefs:p.prefs,phone:p.phone,loyalty:_returning?30:50,order:null,unread:true,unreadCount:1,lastOrderAt:0,lastFulfilledAt:0,isThief:!!p.isThief,ordersBeforeTurn:p.ordersBeforeTurn||0,patienceMul:CONTACT_TUNING.patienceByType[p.type]||1,firstOrderAt:_fo,
   msgs:[{from:"them",text:_intro,t:_nowA}]});
  pushContactNotif("📱 New contact: "+p.name);
  notifyMsgArrived({name:p.name},_intro);
@@ -6414,6 +6467,12 @@ var CUST_NUDGE=["u still good? lmk either way 🙏","yo, u around? still want th
 var CUST_ENROUTE_NUDGE=["take ur time, just lmk when ur close","aight bet, I'm around — pull up when ur ready","no rush fr, just don't forget me 😅","u said u was comin thru, I'm here waitin"];
 var CUST_ANNOYED_ENROUTE=["u said u was on ur way 👀 still waitin","thought u was pullin up??","u comin thru or what, been standing here","on ur way since forever huh 😒"];
 function _custPick(a){return a[(Math.random()*a.length)|0];}
+/* v173: one close-out — every path that ends an order leaves the contact's
+   notification flags exactly like opening the thread does */
+function closeOutOrder(c){
+ if(!c)return;
+ c.unread=false;c.unreadCount=0;c.softUnread=false;
+}
 function custOrderExpired(c,now,ctx){
  if(!c||c.fixer||c.brokenUp)return;
  if(typeof now!=="number"||!(now>0))now=Date.now();
@@ -6428,8 +6487,9 @@ function custOrderExpired(c,now,ctx){
  }else if(c.loyalty<=10){txt=_custPick(CUST_WARN);}
  else if(c.loyalty<=30){txt=_custPick(ctx==="enroute"?CUST_ANNOYED_ENROUTE:CUST_ANNOYED);}
  else{txt=ctx==="enroute"?"aight, u said u was comin thru... found someone else tho.":"nvm, found someone else.";}
+ closeOutOrder(c);
  c.msgs.push({from:"them",text:txt,t:now});
- c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
+ c.unread=true;c.unreadCount=1;
  notifyMsgArrived(c,txt);
 }
 function tickContacts(now){
@@ -6684,7 +6744,7 @@ function doAcceptOrder(nm,variant){
     before; a flash for a newer customer gets the plain line. */
  var _deliv=(S.regulars&&S.regulars[c.name])||0;
  c.msgs.push({from:"them",text:(_vip&&_deliv>=2)?"you're my VIP rn ⭐":"bet 🙏",t:now});
- c.order=null;c.unread=false;
+ c.order=null;closeOutOrder(c);
  S.msg=_vip?"⭐ VIP order from "+c.name+" added to Tasks! 15 min to fulfill!":"Order from "+c.name+" added to Tasks.";
  save();render();
 }
@@ -6708,7 +6768,7 @@ function doDismissOrder(nm,variant){
   _reply=_custPick(CUST_BREAKUP);
  }
  c.msgs.push({from:"them",text:_reply,t:now});
- c.order=null;c.unread=false;
+ c.order=null;closeOutOrder(c);
  S.msg="Dismissed order request from "+c.name+".";
  save();render();
 }
@@ -6760,8 +6820,8 @@ function doFulfillTask(i,silent){
  var _cashTip=0; /* rare random cash tip, rolled in the contact block below */
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
  /* today's stats */
- if(S.statsToday&&S.statsToday.date===new Date().toISOString().slice(0,10)){S.statsToday.orders++;S.statsToday.earned+=rev;}
- else{S.statsToday={orders:1,earned:rev,date:new Date().toISOString().slice(0,10)};}
+ if(S.statsToday&&S.statsToday.date===localDayStr()){S.statsToday.orders++;S.statsToday.earned+=rev;}
+ else{S.statsToday={orders:1,earned:rev,date:localDayStr()};}
  /* regulars tracking */
  if(!S.regulars||typeof S.regulars!=="object")S.regulars={};
  S.regulars[t.name]=(S.regulars[t.name]||0)+1;
@@ -6769,6 +6829,7 @@ function doFulfillTask(i,silent){
  addTerrXP(8);
  var c=getContact(t.name);
  if(c){
+  closeOutOrder(c); /* v173: delivered — clear the badge before flavor flags land */
   var _thiefLeadup=c.isThief&&(c.ordersBeforeTurn||0)>0;
   var _obtBefore=c.ordersBeforeTurn||0;
   c.loyalty=Math.min(100,c.loyalty+Math.round(8*(1+gearBonus().rep/100)));
@@ -6975,9 +7036,6 @@ function randomDenyVariant(){return ORDER_DENY_VARIANTS[Math.floor(Math.random()
 /* ===== MESSAGE REPLY BUBBLES (player quick replies, contextual) =====
    data-reply ids are stable mechanic hooks — future game logic can key off them. */
 var MSG_REPLIES={
- "accept-order":{text:"Deal 🤝",st:"order"},
- "decline-order":{text:"Can't do it rn",st:"order"},
- "negotiate-order":{text:"How much you need?",st:"order"},
  "thanks-business":{text:"Pleasure doin business 🤝",st:"done"},
  "open-door":{text:"You know where to find me",st:"done"},
  "checkin":{text:"Yo, need anything?",st:"idle"},
@@ -7032,14 +7090,13 @@ function clearAllTargets(){
 function doClearAll(){
  var t=clearAllTargets();
  if(!t.length)return;
- t.forEach(function(c){c.unread=false;c.unreadCount=0;c.softUnread=false;});
+ t.forEach(function(c){closeOutOrder(c);});
  S.msg="\uD83E\uDDF9 Cleared notifications for "+t.length+" conversation"+(t.length===1?"":"s")+".";
  save();render();
 }
 function msgRepliesFor(c){
  var st=msgReplyState(c),out=[];
  if(c&&c.fixer)return out;
- if(st==="idle")return out; /* idle prompts hidden until mechanics added */
  if(c&&c.order){
   /* order request: reply pills are the accept/dismiss actions */
   if(c.order.geneOpt)out.push({id:"gene-opt",text:"\u2728 Sell the "+PRODUCTS[c.order.geneOpt.k].name+" too ("+money(c.order.geneOpt.pu*c.order.geneOpt.g)+")",act:"geneopt",variant:""});
@@ -7056,7 +7113,7 @@ function doSendReply(nm,rid){
  var c=getContact(nm),r=rid&&MSG_REPLIES[rid];
  if(!c||!r)return;
  c.msgs.push({from:"me",text:r.text,t:Date.now()});
- c.unread=false;c.unreadCount=0;c.softUnread=false;
+ closeOutOrder(c);
  save();render();
  setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);
 }
@@ -7343,7 +7400,7 @@ function tickerHints(){
  return econ.concat(info,status);
 }
 var tickerState={x:0,last:0,pausedUntil:0,count:0,fast:false};
-var tickIdx=0;
+var tickerTipIdx=0; /* v173: renamed declaration — the name renderTicker actually reads */
 function renderTicker(){
  var view=q(".ticker-view");
  if(!view)return;
@@ -7503,7 +7560,7 @@ function tick(){
   if(S.bank&&S.bank.bal>0){
    var _bi=S.bank.bal*bankAPYPerMin()*dtm;
    /* v158 (K.7): interest capped at $500/day */
-   var _bday=new Date().toISOString().slice(0,10);
+   var _bday=localDayStr();
    if(S.bank.intDay!==_bday){S.bank.intDay=_bday;S.bank.intToday=0;}
    if(typeof S.bank.intToday!=="number"||isNaN(S.bank.intToday))S.bank.intToday=0;
    _bi=Math.min(_bi,Math.max(0,500-S.bank.intToday));
@@ -8936,7 +8993,7 @@ function arTick(now){
   if(!S.nextPullupAt)S.nextPullupAt=now+(30+Math.random()*60)*60000;
   if(now>=S.nextPullupAt&&now>=(S.pullupCooldownUntil||0))pullupSpawn(now);
  }
- if(S.pullup&&now>S.pullup.expiresAt){S.pullup=null;S.pullupDeal=false;save();}
+ if(S.pullup&&now>S.pullup.expiresAt){var _px=S.pullup;S.pullup=null;S.pullupDeal=false;arPing("📍 Pull-up missed",_px.name+" drove off — the "+_px.g+"g "+PRODUCTS[_px.k].name+" deal is gone.");save();}
  if(S.nextRaidAt&&now>=S.nextRaidAt&&!S.arFight)triggerRaid(now);
  if(S.raidPending&&now>S.raidPending.expiresAt)raidUnanswered(now);
 }
@@ -10815,6 +10872,7 @@ function completeRunnerSale(r,sale,now){
  }
  mine=Math.max(0,mine);
  r.holding=(r.holding||0)+mine;
+ pushContactNotif("💰 "+r.name+" sold "+sale.g+"g "+PRODUCTS[sale.k].name+" — "+money(mine)+" waiting."); /* v173: runner sales notify */
  r.salesDone=(r.salesDone||0)+1;
  r.xp=(typeof r.xp==="number"&&r.xp>0?r.xp:0)+RUNNER_XP_PER_SALE;
  if(r.salesDone%10===0)r.trust=Math.min(100,r.trust+2);
@@ -10825,7 +10883,7 @@ function completeRunnerSale(r,sale,now){
  if(r.trait==="muscle")robCh*=0.4;
  if(Math.random()<robCh)runnerRobbed(r,now);
  if(S.stats)S.stats.deals=(S.stats.deals||0)+1;
- if(S.statsToday&&S.statsToday.date===new Date().toISOString().slice(0,10))S.statsToday.orders=(S.statsToday.orders||0)+1;
+ if(S.statsToday&&S.statsToday.date===localDayStr())S.statsToday.orders=(S.statsToday.orders||0)+1;
 }
 function runnerBusted(r,now){
  r.darkUntil=now+(4+Math.random()*4)*3600000;
@@ -10899,7 +10957,7 @@ function collectRunner(id){
  var amt=Math.floor(r.holding);r.holding=0;r.lastCollectAt=Date.now();
  S.cash+=amt;
  if(S.stats)S.stats.earned=(S.stats.earned||0)+amt;
- if(S.statsToday&&S.statsToday.date===new Date().toISOString().slice(0,10))S.statsToday.earned=(S.statsToday.earned||0)+amt;
+ if(S.statsToday&&S.statsToday.date===localDayStr())S.statsToday.earned=(S.statsToday.earned||0)+amt;
  S.msg="Collected "+money(amt)+" from "+r.name+".";
  save();render();
 }
