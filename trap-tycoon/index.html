@@ -1289,6 +1289,9 @@ body.electron-phone #ewin-controls{display:flex}
 .tk-buykit{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
 .tk-buykit:disabled{opacity:.4;cursor:not-allowed}
 .tk-need{color:#f59e0b;font-size:13px;font-weight:600}
+.tk-gostore{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
+.tk-gostore.sm{width:auto;margin-top:0;padding:8px 14px}
+.tk-bagbar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#20180e;border:1px solid #926818;border-radius:12px;padding:10px 12px;margin:8px 2px;color:#fef3c7;font-size:13px;font-weight:600}
 .tk-empty{text-align:center;color:rgba(255,255,255,.92);padding:48px 20px;font-size:17px;line-height:1.7;font-weight:600}
 .tk-card{background:rgba(251,191,36,.08);border:1px solid rgba(251,191,36,.3);border-radius:12px;padding:10px;margin:6px 2px;position:relative}
 .tk-card.vip{border-color:rgba(251,191,36,.7);box-shadow:0 0 12px rgba(251,191,36,.15)}
@@ -1333,6 +1336,9 @@ body.electron-phone #ewin-controls{display:flex}
 .tk-buykit{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
 .tk-buykit:disabled{opacity:.4;cursor:not-allowed}
 .tk-need{color:#f59e0b;font-size:13px;font-weight:600}
+.tk-gostore{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
+.tk-gostore.sm{width:auto;margin-top:0;padding:8px 14px}
+.tk-bagbar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#20180e;border:1px solid #926818;border-radius:12px;padding:10px 12px;margin:8px 2px;color:#fef3c7;font-size:13px;font-weight:600}
 .pg[data-theme="light"] .tk-empty{color:rgba(0,0,0,.5)}
 .pg[data-theme="light"] .tk-hd{color:#111}
 .pg[data-theme="light"] .tk-hd span{color:rgba(0,0,0,.45)}
@@ -2789,7 +2795,7 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:25,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v174";
+var GAME_VER="v175";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,UklGRr4GAABXRUJQVlA4ILIGAADwJACdASqAAIAAPlEijkWjoaETCK4kOAUEtICd6Vxf5LbW38r0oRLsJbuNa8xD5ZzXAGiPFaGBHrJAAEUee7tMBMt9YoYtuKD9d7b/cpjfTSoXgQpp8vZUuIedJjj5xwGN4sDIpDVPgg8k6Fp6jAWhEXUIyrasiUtUEDoxZ6Yv+zRoA36d5LZ28xDACykaidnvIz7IT8dRrjI+cO2AVcx/eD9MPVIHbXGf/4Nmlmwbajr743dcZ4GvGLGm2c1Bystpm2NGr0pU3SoxBBNM8YLxyurkYv/ZvR4Y4DxHQHUV9/D2rW+n1++3ebLqv8kuEV9ygdShMyE3ULou9ksc0xgMMBhv8Sj90TcrL6DkLBv4sjSTsdRxeRZSzZmneTXCE1FCxHo2rD5avzg55qKeyTUgAP7+BtGFzFYxFsdLaFrja39Fq14y/19bA8XfI5H9/mKCzEXQ9n9xDdlDTaaTUF4GFcaXmc4nly+OJfyqe0pQILIamLEwYrGngbqsvtRC4Kjn1S5C6DhkkI4q5rC/+Iavj6Ip6ic0gJou7xf5QFyPvnSnvbfNuxNCNV7lHxssInMLK2T//fCb/Fjn6Srx9y8wGQxL7d4XXFNMWwHKijcYrPrZrKCXi2+mqLhyniEPOKa9BQaC4Y+8TupmjOZiFPmkSHSXYjnd/uglMGAE+x3WnIPMx93p7d/f8/3XwhtKXSnGHHWs/pcY2eKQ+mzQeFzd58Qnu0UqxmVkm/1Jh4hoyN4ruTzzidgdpmiA5o5rnj5OoLTadYGn5bpGYxweQumzsceRzBBRGjXETFB4NeLZCabMzk9eFzjK/MXH/WmwkKNElG+K+tou3N939/0iPs9b8AupGMLHACH8B4Rcsxjx2HVQDovCyBrzcitmVTDZqM7TWsstPaby+b+HquIpE5T3f6z2WLMxJdPwC8TmTgVjczNV8EDN3ah4VJh2jq39vG5Cahe7XM8HOCaDifQZL58i6IdTlEZktr0dUJk2Bppr2efYa7gCdoOKLXl9YKnwBcZxB+kQbGcNgNGknFLkKNwyWWH19YXMA6XsZN/vLsISzTNQQf1hirYYap9QKd9K7cgRu7yrkDJN1g+rfUnAUkm28QJYoPaIQE0cH2co2Y1LDhV9uALHQJwMfJDzRO8J7kaftrRHp2MBDDbrMitwfRaMAo/DCcLqdkGehS8OrlgtMZGmS9PtLzKbeVisbSoKgGl8bjkwSvfJBqGh9gAdqqSahxMG7wFw4pTAbbmFTdb/4r3tm36FecvF6BL8Ix8y+GpPg4h2g2bPJt3N1XTF2ovm7nsgPr6ioROQZfVD7hkYRoZ+aZFFFsxViQBT419x4s/5lt57WO+w6Wdqa/KezDpFFPaLWfAfRkoPU20+n7Kiy3qNxv/sH3pXH2oCdpSZ53P4ouWpQKpQp0MDmrH3ws7HeGFjKCIze9GOB4vVNLGRWawP/YOH4vn4FzO1ZAsz9OTPOq+V5xlaVn4S4dLtXCnMZR33gCCjW39J+37bpaUzd/RjN9/nd8gBLAHju934PXcyqnsm8ZwwlPEKGdUs/+TI0PbXtUHmaJ+D0RejLkrHgl7VExc7u7z6zFa2/h6RAXfKJhM68LopUkUCK/nBQpVGiPZpbJHxmllOn55TdnRGXkp/ZT31VVaSn/grDWkwHrXlKYCZaP1xy2wlTby3HuHIHo90BuJP+7FPtR8GkV6Y+Ys0+uNJce71ke3mGcideMvTpWTyCeJ7ixavjozMw/jgKuEH5Yw4Qi16dcZC+YxrKTgtRH43JQYD1zzsECugRoUpwglmKVVFmj1BAG0c7BzcbuISlCP6NGW5FLgAgc2kWMuMFQNbkInEoENRxiDFjPoetepeuwpDQWC0cwcmlo76iNZPLcIxkPF/lqSgphvUNTheK3MCS5nhv7RMTVeteIAQ1Gi7qbd019GNWiVHToa8zB9r/HFcL+uyjPhSiZdunz7dc0IRI1c6D9YkHrNxgGS1Xosy5//TfsjZkqXhNeYLo8n6xo7xeKU+eBiYxpCE+TXJxnWbg3muCAm+WCHopi5LtSbMuCyiBacqSKYa9kKRq3vUlY+EtWHwD1lRKuFbxs0nZFIqCUeVrgWLptRtEdiJ8mCGkj4VCDvvofTb5bjUdhLoQCrmsoh/fbtyeRLWTDf0x7C3vojL+LCUz2fGsFrVOSLJJq6nY+rLdwvG3IQcZKGuxWy/OrChPCd75CuOzHaux+coDCq3Z33ZYws1AwzCgIjz3OHBb97sM7luVvmNaZxL05XGNMcXlT+LnCQDUAAA";
 var CHANGELOG=[
@@ -6862,6 +6868,7 @@ function tasksHTML(){
  h+='<div class="tk-head"><div><div class="tk-title">📋 Orders ('+ts.length+')</div><div class="tk-today">Today: '+_st.orders+' orders · '+money(_st.earned)+'</div></div>'
   +'<div class="tk-headbtns"><button type="button" class="tk-abtn tk-prepall" data-act="task-prepall">Prep All</button>'
   +'<button type="button" class="tk-abtn tk-fulfillall" data-act="task-fulfillall"'+(_fulfillable?"":" disabled")+'>Fulfill All ('+_fulfillable+')</button></div></div>';
+ if(stashTotal()>=S.stashCap)h+='<div class="tk-bagbar"><span>🧳 Bag full — a bigger duffel fixes it.</span><button type="button" class="tk-gostore sm" data-act="gostore" data-ch="gear">Go to Store</button></div>';
  if(!ts.length){
   h+='<div class="tk-empty">📋 No tasks.<br>Accept a customer order in Messages and it lands here.</div>';
   return h;
@@ -6890,13 +6897,13 @@ function tasksHTML(){
     /* joints: need bud + papers. 1g bud -> 2 joints */
     var _needBud=Math.ceil(t.g/2),_haveBud=S.stash[t.k]||0,_havePaper=S.papers||0,_needPaper=t.g*2;
     if(_haveBud>=_needBud&&_havePaper>=_needPaper){
-     _prodBtns=stashTotal()>=S.stashCap?'<span class="tk-need">Duffel full — sell some first</span>':'<button type="button" class="tk-make" data-act="task-roll" data-i="'+i+'">Roll '+t.g+' Joints</button>';
+     _prodBtns=stashTotal()>=S.stashCap?'<span class="tk-need">Duffel full — sell some first</span><button type="button" class="tk-gostore" data-act="gostore" data-ch="gear">Go to Store</button>':'<button type="button" class="tk-make" data-act="task-roll" data-i="'+i+'">Roll '+t.g+' Joints</button>';
     }else if(_haveBud<_needBud){
      /* need seeds */
      var _sp=PRODUCTS[t.k]?PRODUCTS[t.k].seed:0;
-     _prodBtns=(PRODUCTS[t.k]&&PRODUCTS[t.k].gene)?'<span class="tk-need">Hunt-only strain — seeds come from SCAN hunts</span>':'<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+t.k+'"'+(S.cash>=_sp?"":" disabled")+'>Buy '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+' Seeds '+money(_sp)+'</button>';
+     _prodBtns=(PRODUCTS[t.k]&&PRODUCTS[t.k].gene)?'<span class="tk-need">Hunt-only strain — seeds come from SCAN hunts</span>':'<span class="tk-need">Need seeds</span><button type="button" class="tk-gostore" data-act="gostore" data-ch="seeds">Go to Store</button>';
     }else{
-     _prodBtns='<span class="tk-need">Need '+_needPaper+' papers</span>';
+     _prodBtns='<span class="tk-need">Need '+_needPaper+' papers</span><button type="button" class="tk-gostore" data-act="gostore" data-ch="gear">Go to Store</button>';
     }
    }else if(RECIPES[t.k]){
     /* lab product: mirror canCook()/deductCookInputs() exactly — tier gate,
@@ -6916,7 +6923,7 @@ function tasksHTML(){
     }else{
      _prodBtns=_miss.map(function(m){
       if(m.t==="locked")return '<span class="tk-need">Unlocks at Level '+(PRODUCTS[t.k].lv||levelForTier(PRODUCTS[t.k].tier))+'</span>';
-      if(m.t==="full")return '<span class="tk-need">Duffel full — sell some first</span>';
+      if(m.t==="full")return '<span class="tk-need">Duffel full — sell some first</span><button type="button" class="tk-gostore" data-act="gostore" data-ch="gear">Go to Store</button>';
       if(m.t==="kit"){
        var _locked=!kitUnlocked(m.k),_dis=_locked||S.cash<KITS[m.k].cost;
        return '<button type="button" class="tk-buykit" data-act="buykit" data-kit="'+m.k+'"'+(_dis?" disabled":"")+'>Buy '+escHtml(KITS[m.k].name)+' '+money(KITS[m.k].cost)+(_locked?" (Lv"+levelForTier(KITS[m.k].tier)+")":"")+'</button>';
@@ -6925,14 +6932,14 @@ function tasksHTML(){
        return '<button type="button" class="tk-make" data-act="task-cook" data-k="'+m.k+'">Cook '+escHtml(PRODUCTS[m.k]?PRODUCTS[m.k].name:m.k)+' first</button>';
       }
       var _cheapK=PKEYS.filter(function(pk){return PRODUCTS[pk]&&!PRODUCTS[pk].gene&&visOfP(pk)===2;}).sort(function(a,b){return PRODUCTS[a].seed-PRODUCTS[b].seed;})[0];
-      if(_cheapK)return '<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+_cheapK+'"'+(S.cash>=PRODUCTS[_cheapK].seed?"":" disabled")+'>Buy '+escHtml(PRODUCTS[_cheapK].name)+' Seeds '+money(PRODUCTS[_cheapK].seed)+'</button>';
+      if(_cheapK)return '<span class="tk-need">Need bud</span><button type="button" class="tk-gostore" data-act="gostore" data-ch="seeds">Go to Store</button>';
       return '<span class="tk-need">Need bud</span>';
      }).join("");
     }
    }else{
     /* raw bud: need seeds */
     var _sp2=PRODUCTS[t.k]?PRODUCTS[t.k].seed:0;
-    _prodBtns=(PRODUCTS[t.k]&&PRODUCTS[t.k].gene)?'<span class="tk-need">Hunt-only strain — seeds come from SCAN hunts</span>':'<button type="button" class="tk-buyseed" data-act="buyseed" data-strain="'+t.k+'"'+(S.cash>=_sp2?"":" disabled")+'>Buy '+escHtml(PRODUCTS[t.k]?PRODUCTS[t.k].name:t.k)+' Seeds '+money(_sp2)+'</button>';
+    _prodBtns=(PRODUCTS[t.k]&&PRODUCTS[t.k].gene)?'<span class="tk-need">Hunt-only strain — seeds come from SCAN hunts</span>':'<span class="tk-need">Need seeds</span><button type="button" class="tk-gostore" data-act="gostore" data-ch="seeds">Go to Store</button>';
    }
   }
   h+='<div class="tk-card'+(t.vip?" vip":"")+'"><div class="tk-dot '+_dotCls+'"></div><div class="tk-hd"><b>'+escHtml(t.name)+_vipBadge+_regTag+'</b><span>'+escHtml(when)+'</span></div>'
@@ -9692,6 +9699,7 @@ root.addEventListener("click",function(e){
  if(a==="stashsell"){var _sd=stashDealer();doDeal(_sd.di,b.dataset.strain,false,false);return;}
  if(a==="stashsellj"){var _sd2=stashDealer();doDeal(_sd2.di,b.dataset.strain,false,true);return;}
  if(a==="storetab"){S.storetab=b.dataset.sec;save();render();return;}
+ if(a==="gostore"){var _gch=b.dataset.ch;if(["seeds","guns","lab","gear","style","upgrades"].indexOf(_gch)<0)_gch="seeds";S.tab="store";S.view="app";S.storetab=_gch;navPush("store");ttPushHist();save();render();return;}
  if(a==="storeback"){S.storetab=null;save();render();return;}
   if(a==="setsel"){S.setdrug=b.dataset.key;save();render();return;}
  if(a==="settheme"){S._suppressNotif=true;var _th=b.dataset.theme;S.theme=(_th==="light")?"light":"dark";save();render();return;}
