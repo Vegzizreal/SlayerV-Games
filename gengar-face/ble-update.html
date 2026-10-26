@@ -60,8 +60,11 @@ const INFO_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c02";
 const CTRL_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c03";
 const DATA_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c04";
 const STATUS_UUID = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c05";
-const BIN_URL = "gengar-face-app-v6.bin";   /* same folder as this page */
-const META_URL = "ble.json";                /* {"version":"1.5"}        */
+const META_URL = "ble.json";   /* {"version":"1.6","file":"gengar-face-app-v7.bin"} */
+/* The app-bin filename is NOT hardcoded (v1.6+): ble.json names
+ * it, so a future BLE release is just a new bin + a new ble.json
+ * — this page never changes again. binUrl is set by loadPayload. */
+let binUrl = null;
 
 /* Adaptive DATA chunk sizes: start at the big one, step down on
  * error, remember what worked. 509 = MTU 512 minus ATT overhead. */
@@ -109,8 +112,13 @@ if (!navigator.bluetooth) {
 async function loadPayload() {
   const meta = await (await fetch(META_URL)).json();
   newVersion = meta.version;
-  const resp = await fetch(BIN_URL);
-  if (!resp.ok) throw new Error("could not fetch " + BIN_URL);
+  binUrl = meta.file;
+  if (!binUrl) {
+    throw new Error("ble.json does not name an update file " +
+                    "(missing \"file\" field) — nothing can be sent");
+  }
+  const resp = await fetch(binUrl);
+  if (!resp.ok) throw new Error("could not fetch " + binUrl);
   binBuf = await resp.arrayBuffer();
   const digest = await crypto.subtle.digest("SHA-256", binBuf);
   binSha = new Uint8Array(digest);
