@@ -1,1 +1,1 @@
-{"builds":[{"chipFamily":"ESP32-S3","parts":[{"offset":0,"path":"gengar-face-v4.bin"}]}],"name":"Gengar Face","new_install_prompt_erase":true,"version":"1.3"}
+{"builds":[{"chipFamily":"ESP32-S3","parts":[{"offset":0,"path":"gengar-face-v6.bin"}]}],"name":"Gengar Face","new_install_prompt_erase":true,"version":"1.5"}
