@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gengar Face · Installer</title>
+<style>
+  body { font-family: system-ui, sans-serif; background:#0e0d12; color:#f2f0eb; margin:0; padding:32px 20px; }
+  main { max-width:560px; margin:0 auto; }
+  h1 { font-size:26px; margin:0 0 6px; }
+  p { line-height:1.55; color:#cfccc4; }
+  .card { background:#191721; border:1px solid #2c2a38; border-radius:14px; padding:20px; margin:20px 0; }
+  esp-web-install-button { --esp-tools-button-color:#7c5cff; }
+  .warn { color:#ffb454; }
+  code { background:#26232f; padding:1px 6px; border-radius:6px; }
+</style>
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+</head>
+<body>
+<main>
+  <h1>👻 Gengar Face · Installer</h1>
+  <p>The living Gengar face for the Waveshare ESP32-S3-Touch-AMOLED-1.75C. Install it from your browser — no drivers, no command line.</p>
+  <div class="card">
+    <p><strong>1.</strong> Plug the board in via USB-C (a data cable, not charge-only).</p>
+    <p><strong>2.</strong> Press <strong>Install</strong> and pick the board's port (<code>USB JTAG/serial debug unit</code>).</p>
+    <p><strong>3.</strong> When it offers to erase, say yes — first install should start clean.</p>
+    <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
+    <p class="warn">⚠️ Needs Chrome or Edge on a computer (Web Serial). If the board won't connect: hold BOOT, tap power, release BOOT, try again.</p>
+  </div>
+  <p>After it finishes, press PWR — the face wakes up.</p>
+</main>
+</body>
+</html>
