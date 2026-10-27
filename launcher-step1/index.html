@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Charm Launcher · Step 1 (toy proof)</title>
+<style>
+  body { font-family: system-ui, sans-serif; background:#0e0d12; color:#f2f0eb; margin:0; padding:32px 20px; }
+  main { max-width:560px; margin:0 auto; }
+  h1 { font-size:26px; margin:0 0 6px; }
+  p { line-height:1.55; color:#cfccc4; }
+  .card { background:#191721; border:1px solid #2c2a38; border-radius:14px; padding:20px; margin:20px 0; }
+  esp-web-install-button { --esp-tools-button-color:#7c5cff; }
+  .warn { color:#ffb454; }
+  code { background:#26232f; padding:1px 6px; border-radius:6px; }
+</style>
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+</head>
+<body>
+<main>
+  <h1>🧪 Charm Launcher · Step 1</h1>
+  <p>The one-shot bootloader proof: two toy firmwares on the unified
+  16&nbsp;MB partition map. TOY-HOME boots by default, asks for the guest
+  once (clean exit), once more (guest crash) — and the board must come
+  home by itself both times. Full script: <code>STEP1-REPORT.md</code>
+  in this folder's source staging.</p>
+  <div class="card">
+    <p><strong>1.</strong> Plug the board in via USB-C (a data cable, not charge-only).</p>
+    <p><strong>2.</strong> Press <strong>Install</strong> and pick the board's port (<code>USB JTAG/serial debug unit</code>).</p>
+    <p><strong>3.</strong> When it offers to erase, say yes — this image replaces everything on the chip.</p>
+    <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
+    <p class="warn">⚠️ Needs Chrome or Edge on a computer (Web Serial). No buttons are
+    needed to flash: the installer resets the board into download mode in
+    software — the BOOT button is never used (it is unreachable in the
+    case, by design). After flashing, watch the boot log from the
+    installer's “Logs &amp; Console” view: no button presses are needed
+    for the whole test, it runs itself.</p>
+  </div>
+  <p>This is a bench proof, not the pet. It writes the whole 16&nbsp;MB
+  image (bootloader + unified table + both toys); the real face build is
+  a separate installer.</p>
+</main>
+</body>
+</html>

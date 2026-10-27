@@ -1,0 +1,1 @@
+{"builds":[{"chipFamily":"ESP32-S3","parts":[{"offset":0,"path":"step1-merged.bin"}]}],"name":"Charm Launcher Step 1 (toy proof)","new_install_prompt_erase":true,"version":"step1"}
