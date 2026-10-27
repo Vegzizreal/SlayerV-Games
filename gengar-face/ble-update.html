@@ -34,7 +34,7 @@
        5 seconds. The face shows <code>update code</code> and a 6-digit
        number.</p>
     <p><strong>2.</strong> Tap <strong>Connect</strong> and pick
-       <strong>Gengar</strong>. Your phone will ask for that 6-digit
+       <strong>VBALL</strong>. Your phone will ask for that 6-digit
        code — type the one on the face.</p>
     <p><strong>3.</strong> When the versions look right, tap
        <strong>Send update</strong> and keep this page open until it
@@ -60,7 +60,7 @@ const INFO_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c02";
 const CTRL_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c03";
 const DATA_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c04";
 const STATUS_UUID = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c05";
-const META_URL = "ble.json";   /* {"version":"1.6","file":"gengar-face-app-v7.bin"} */
+const META_URL = "ble.json";   /* {"version":"1.7","file":"gengar-face-app-v8.bin"} */
 /* The app-bin filename is NOT hardcoded (v1.6+): ble.json names
  * it, so a future BLE release is just a new bin + a new ble.json
  * — this page never changes again. binUrl is set by loadPayload. */
@@ -153,13 +153,17 @@ function onDisconnected() {
 connectBtn.addEventListener("click", async () => {
   note("");
   try {
-    say("Pick “Gengar” in the list…");
+    say("Pick “VBALL” in the list…");
     device = await navigator.bluetooth.requestDevice({
-      filters: [{ services: [SVC_UUID] }, { name: "Gengar" }]
+      /* The service-UUID filter is the real key — only the charm
+       * advertises that UUID, so this keeps working even if the
+       * device is renamed again. The name entry is a convenience
+       * second chance, nothing more. */
+      filters: [{ services: [SVC_UUID] }, { name: "VBALL" }]
     });
   } catch (e) {
     say("No device picked.");
-    note("If Gengar wasn't listed: is the face showing an update code? " +
+    note("If VBALL wasn't listed: is the face showing an update code? " +
          "Update mode lasts about 5 minutes from boot.");
     return;
   }
