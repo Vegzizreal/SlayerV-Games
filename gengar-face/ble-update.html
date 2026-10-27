@@ -3,16 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gengar · Bluetooth Update</title>
+<title>VBALL — Update</title>
 <style>
   body { font-family: system-ui, sans-serif; background:#0e0d12; color:#f2f0eb; margin:0; padding:32px 20px; }
   main { max-width:560px; margin:0 auto; }
   h1 { font-size:26px; margin:0 0 6px; }
   p { line-height:1.55; color:#cfccc4; }
-  .card { background:#191721; border:1px solid #2c2a38; border-radius:14px; padding:20px; margin:20px 0; }
+  .door { background:#191721; border:1px solid #2c2a38; border-radius:14px; margin:20px 0; overflow:hidden; }
+  .door.lit { border-color:#7c5cff; box-shadow:0 0 0 1px #7c5cff; }
+  .doorHead { display:flex; justify-content:space-between; align-items:center;
+              padding:16px 20px; font-size:20px; color:#f2f0eb; cursor:pointer;
+              user-select:none; -webkit-user-select:none; }
+  .doorHead .chev { color:#9a97a8; transition:transform .15s; }
+  .door.closed .doorHead .chev { transform:rotate(-90deg); }
+  .doorBody { padding:0 20px 20px; }
+  .door.closed .doorBody { display:none; }
+  .hint { margin:0; padding:0 20px 14px; font-size:15px; }
+  .door:not(.closed) .hint { display:none; }
   button { display:block; width:100%; font-size:20px; padding:16px; margin:14px 0;
            border:0; border-radius:12px; background:#7c5cff; color:#fff; }
   button:disabled { background:#3a3750; color:#9a97a8; }
+  esp-web-install-button { --esp-tools-button-color:#7c5cff; }
   .bar { height:18px; background:#26232f; border-radius:9px; overflow:hidden; margin:12px 0; }
   .bar > div { height:100%; width:0%; background:#7c5cff; transition:width .15s; }
   .big { font-size:19px; color:#f2f0eb; }
@@ -21,40 +32,105 @@
   .ok { color:#8be28b; }
   code { background:#26232f; padding:1px 6px; border-radius:6px; }
 </style>
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
 </head>
 <body>
 <main>
-  <h1>👻 Gengar · Bluetooth Update</h1>
-  <p>Send a new face to the charm over Bluetooth. No Wi-Fi, no cable —
-     the file travels phone → charm, directly.</p>
+  <h1>👻 VBALL — Update</h1>
+  <p id="offeredLine">One page, two doors — pick whichever fits the
+     device you're holding.</p>
 
-  <div class="card">
-    <p><strong>1.</strong> Wake the charm in update mode: hold the
-       <strong>PWR</strong> button while it boots, keep holding about
-       5 seconds. The face shows <code>update code</code> and a 6-digit
-       number.</p>
-    <p><strong>2.</strong> Tap <strong>Connect</strong> and pick
-       <strong>VBALL</strong>. Your phone will ask for that 6-digit
-       code — type the one on the face.</p>
-    <p><strong>3.</strong> When the versions look right, tap
-       <strong>Send update</strong> and keep this page open until it
-       finishes. The charm restarts itself into the new version.</p>
-    <button id="connectBtn">Connect</button>
-    <button id="sendBtn" disabled>Send update</button>
-    <div class="bar"><div id="fill"></div></div>
-    <p class="big" id="status">Not connected.</p>
-    <p id="versions"></p>
-    <p class="warn" id="note"></p>
-  </div>
+  <section class="door" id="doorA">
+    <div class="doorHead" id="headA"><span>Bluetooth update (phone)</span><span class="chev">▾</span></div>
+    <p class="hint" id="hintA"></p>
+    <div class="doorBody" id="bodyA">
+      <p>Send a new face to the charm over Bluetooth. No Wi-Fi, no cable —
+         the file travels phone → charm, directly.</p>
+      <p><strong>1.</strong> Wake the charm in update mode: while he is
+         awake, press a finger on his face and hold about 5 seconds,
+         until the purple ring appears. The face shows
+         <code>update code</code> and a 6-digit number. (From off, the
+         other door is holding the <strong>PWR</strong> button while he
+         boots, about 5 seconds.)</p>
+      <p><strong>2.</strong> Tap <strong>Connect</strong> and pick
+         <strong>VBALL</strong>. Your phone will ask for that 6-digit
+         code — type the one on the face.</p>
+      <p><strong>3.</strong> When the versions look right, tap
+         <strong>Send update</strong> and keep this page open until it
+         finishes. The charm restarts itself into the new version.</p>
+      <button id="connectBtn">Connect</button>
+      <button id="sendBtn" disabled>Send update</button>
+      <div class="bar"><div id="fill"></div></div>
+      <p class="big" id="status">Not connected.</p>
+      <p id="versions"></p>
+      <p class="warn" id="note"></p>
+      <p>Update mode only lasts about 5 minutes — if the charm drops off
+         the list, put him in update mode again (hold a finger on his
+         face for about 5 seconds). A failed send changes nothing:
+         the charm keeps running the version it already has.</p>
+    </div>
+  </section>
 
-  <p>Update mode only lasts about 5 minutes — if the charm drops off
-     the list, hold PWR at boot again. A failed send changes nothing:
-     the charm keeps running the version it already has.</p>
+  <section class="door" id="doorB">
+    <div class="doorHead" id="headB"><span>Cable update (PC)</span><span class="chev">▾</span></div>
+    <p class="hint" id="hintB"></p>
+    <div class="doorBody" id="bodyB">
+      <p>The full wired install, straight from your browser — no drivers,
+         no command line. Use it for a first install or to recover a
+         charm that won't update any other way.</p>
+      <p><strong>1.</strong> Plug the board in via USB-C (a data cable, not charge-only).</p>
+      <p><strong>2.</strong> Press <strong>Install</strong> and pick the board's port (<code>USB JTAG/serial debug unit</code>).</p>
+      <p><strong>3.</strong> When it offers to erase, say yes — first install should start clean.</p>
+      <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
+      <p class="warn">⚠️ A cable install erases the charm and resets his memory — a Bluetooth update doesn't.</p>
+      <p class="warn">⚠️ Needs Chrome or Edge on a computer (Web Serial). No buttons are needed to flash: the installer resets the board into download mode in software. If the board won't connect, unplug USB, close any other tab or app that might hold the port, plug back in and try again.</p>
+      <p>After it finishes, press PWR — the face wakes up.</p>
+    </div>
+  </section>
 </main>
 
 <script>
 "use strict";
-/* GATT map — must match app/pet_ota.c / BLE-NOTES.md. */
+/* ==== Doors: capability lighting =====================================
+ * On load, light the door that can work on THIS device and collapse
+ * the other (still openable). Neither door ever blocks the other. */
+const hasBt = !!navigator.bluetooth;
+const hasSerial = "serial" in navigator;
+
+const doorA = document.getElementById("doorA"), doorB = document.getElementById("doorB");
+const hintA = document.getElementById("hintA"), hintB = document.getElementById("hintB");
+
+function setDoor(door, open) { door.classList.toggle("closed", !open); }
+function toggleDoor(door) {
+  const opening = door.classList.contains("closed");
+  setDoor(door, opening);
+  if (opening && door === doorA) bleDoorOpened();
+}
+document.getElementById("headA").addEventListener("click", () => toggleDoor(doorA));
+document.getElementById("headB").addEventListener("click", () => toggleDoor(doorB));
+
+hintA.textContent = hasBt ? "" :
+  "No Bluetooth here — open this page on your phone.";
+hintB.textContent = hasSerial ? "" :
+  "No USB serial here — use a PC with Chrome/Edge.";
+
+if (hasBt) doorA.classList.add("lit");
+if (hasSerial) doorB.classList.add("lit");
+setDoor(doorA, hasBt);
+setDoor(doorB, hasSerial && !hasBt);
+if (hasBt) bleDoorOpened();
+
+/* Offered version in the header, from the same ble.json Door A uses. */
+fetch("ble.json").then(r => r.json()).then(meta => {
+  if (meta && meta.version) {
+    document.getElementById("offeredLine").textContent =
+      "Version " + meta.version + " is the current update. One page, " +
+      "two doors — pick whichever fits the device you're holding.";
+  }
+}).catch(() => { /* header line just stays generic */ });
+
+/* ==== Door A: Bluetooth update =======================================
+ * GATT map — must match app/pet_ota.c / BLE-NOTES.md. */
 const SVC_UUID    = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c01";
 const INFO_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c02";
 const CTRL_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c03";
@@ -101,12 +177,19 @@ function verCmp(a, b) {
   return 0;
 }
 
-if (!navigator.bluetooth) {
-  say("This browser has no Web Bluetooth.", "bad");
-  note("Use Chrome on an Android phone (or Chrome/Edge on a computer " +
-       "with Bluetooth). Safari and Firefox phones can't do this — " +
-       "the cable installer still works.");
-  connectBtn.disabled = true;
+/* The no-Web-Bluetooth message belongs to Door A and only shows
+ * when that door is actually opened on such a browser. */
+let bleDoorSeen = false;
+function bleDoorOpened() {
+  if (bleDoorSeen) return;
+  bleDoorSeen = true;
+  if (!navigator.bluetooth) {
+    say("This browser has no Web Bluetooth.", "bad");
+    note("Use Chrome on an Android phone (or Chrome/Edge on a computer " +
+         "with Bluetooth). Safari and Firefox phones can't do this — " +
+         "the cable installer still works.");
+    connectBtn.disabled = true;
+  }
 }
 
 async function loadPayload() {
