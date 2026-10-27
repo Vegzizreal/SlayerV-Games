@@ -15,6 +15,7 @@
               padding:16px 20px; font-size:20px; color:#f2f0eb; cursor:pointer;
               user-select:none; -webkit-user-select:none; }
   .doorHead .chev { color:#9a97a8; transition:transform .15s; }
+  .ver { color:#b7a6ff; font-weight:600; white-space:nowrap; }
   .door.closed .doorHead .chev { transform:rotate(-90deg); }
   .doorBody { padding:0 20px 20px; }
   .door.closed .doorBody { display:none; }
@@ -41,7 +42,7 @@
      device you're holding.</p>
 
   <section class="door" id="doorA">
-    <div class="doorHead" id="headA"><span>Bluetooth update (phone)</span><span class="chev">▾</span></div>
+    <div class="doorHead" id="headA"><span>Bluetooth update (phone) <span class="ver" id="verA"></span></span><span class="chev">▾</span></div>
     <p class="hint" id="hintA"></p>
     <div class="doorBody" id="bodyA">
       <p>Send a new face to the charm over Bluetooth. No Wi-Fi, no cable —
@@ -79,7 +80,7 @@
   </section>
 
   <section class="door" id="doorB">
-    <div class="doorHead" id="headB"><span>Cable update (PC)</span><span class="chev">▾</span></div>
+    <div class="doorHead" id="headB"><span>Cable update (PC) <span class="ver" id="verB"></span></span><span class="chev">▾</span></div>
     <p class="hint" id="hintB"></p>
     <div class="doorBody" id="bodyB">
       <p>The full wired install, straight from your browser — no drivers,
@@ -133,8 +134,19 @@ fetch("ble.json").then(r => r.json()).then(meta => {
     document.getElementById("offeredLine").textContent =
       "Version " + meta.version + " is the current update. One page, " +
       "two doors — pick whichever fits the device you're holding.";
+    /* Each door states the version IT serves (Tyler's rule, 2026-10-27):
+     * the badges are read from the same files the doors install from,
+     * so a label can never promise a version the door doesn't carry. */
+    document.getElementById("verA").textContent = "— v" + meta.version;
   }
 }).catch(() => { /* header line just stays generic */ });
+
+/* Door B's badge, from the same manifest.json the installer uses. */
+fetch("manifest.json").then(r => r.json()).then(mani => {
+  if (mani && mani.version) {
+    document.getElementById("verB").textContent = "— v" + mani.version;
+  }
+}).catch(() => { /* badge just stays blank */ });
 
 /* ==== Door A: Bluetooth update =======================================
  * GATT map — must match app/pet_ota.c / BLE-NOTES.md. */
