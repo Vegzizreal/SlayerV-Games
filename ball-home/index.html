@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VBALL — Update</title>
+<style>
+  body { font-family: system-ui, sans-serif; background:#0e0d12; color:#f2f0eb; margin:0; padding:32px 20px; }
+  main { max-width:560px; margin:0 auto; }
+  h1 { font-size:26px; margin:0 0 6px; }
+  p { line-height:1.55; color:#cfccc4; }
+  .door { background:#191721; border:1px solid #2c2a38; border-radius:14px; margin:20px 0; overflow:hidden; }
+  .door.lit { border-color:#7c5cff; box-shadow:0 0 0 1px #7c5cff; }
+  .doorHead { display:flex; justify-content:space-between; align-items:center;
+              padding:16px 20px; font-size:20px; color:#f2f0eb; cursor:pointer;
+              user-select:none; -webkit-user-select:none; }
+  .doorHead .chev { color:#9a97a8; transition:transform .15s; }
+  .door.closed .doorHead .chev { transform:rotate(-90deg); }
+  .doorBody { padding:0 20px 20px; }
+  .door.closed .doorBody { display:none; }
+  .hint { margin:0; padding:0 20px 14px; font-size:15px; }
+  .door:not(.closed) .hint { display:none; }
+  button { display:block; width:100%; font-size:20px; padding:16px; margin:14px 0;
+           border:0; border-radius:12px; background:#7c5cff; color:#fff; }
+  button:disabled { background:#3a3750; color:#9a97a8; }
+  esp-web-install-button { --esp-tools-button-color:#7c5cff; }
+  .bar { height:18px; background:#26232f; border-radius:9px; overflow:hidden; margin:12px 0; }
+  .bar > div { height:100%; width:0%; background:#7c5cff; transition:width .15s; }
+  .big { font-size:19px; color:#f2f0eb; }
+  .warn { color:#ffb454; }
+  .bad { color:#ff7a7a; }
+  .ok { color:#8be28b; }
+  code { background:#26232f; padding:1px 6px; border-radius:6px; }
+</style>
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+</head>
+<body>
+<main>
+  <h1>👻 VBALL — Update</h1>
+  <p id="offeredLine">One page, two doors — pick whichever fits the
+     device you're holding.</p>
+
+  <section class="door" id="doorA">
+    <div class="doorHead" id="headA"><span>Bluetooth update (phone)</span><span class="chev">▾</span></div>
+    <p class="hint" id="hintA"></p>
+    <div class="doorBody" id="bodyA">
+      <p>Send a new face to the charm over Bluetooth. No Wi-Fi, no cable —
+         the file travels phone → charm, directly.</p>
+      <p><strong>1.</strong> Wake the charm in update mode: on Gengar,
+         swipe left to the app page, tap <strong>UPDATE</strong>, then
+         tap <strong>YES</strong>. The purple ring appears and the face
+         shows <code>update code</code> and a 6-digit number. (From
+         off, the other door is holding the <strong>PWR</strong>
+         button while he boots, about 5 seconds.)</p>
+      <p><strong>2.</strong> Tap <strong>Connect</strong> and pick
+         <strong>VBALL</strong>. Your phone will ask for that 6-digit
+         code — type the one on the face.</p>
+      <p><strong>3.</strong> When the versions look right, tap
+         <strong>Send update</strong> and keep this page open until it
+         finishes. The charm restarts itself into the new version.</p>
+      <button id="connectBtn">Connect</button>
+      <button id="sendBtn" disabled>Send update</button>
+      <div class="bar"><div id="fill"></div></div>
+      <p class="big" id="status">Not connected.</p>
+      <p id="versions"></p>
+      <p class="warn" id="note"></p>
+      <p>Update mode only lasts about 5 minutes — if the charm drops off
+         the list, put him in update mode again (swipe left, UPDATE, YES).
+         A failed send changes nothing: the charm keeps running the
+         version it already has.</p>
+      <p>Connecting also sets his clock from your phone — that is how
+         he knows the time. On this build, Bluetooth sends of new
+         home firmware are paused (the launcher map has no spare
+         slot for them): new home builds arrive by the cable door
+         below, and this door returns for updates when the two-hop
+         updater lands.</p>
+    </div>
+  </section>
+
+  <section class="door" id="doorB">
+    <div class="doorHead" id="headB"><span>Cable update (PC)</span><span class="chev">▾</span></div>
+    <p class="hint" id="hintB"></p>
+    <div class="doorBody" id="bodyB">
+      <p>The full wired install, straight from your browser — no drivers,
+         no command line. Use it for a first install or to recover a
+         charm that won't update any other way.</p>
+      <p><strong>1.</strong> Plug the board in via USB-C (a data cable, not charge-only).</p>
+      <p><strong>2.</strong> Press <strong>Install</strong> and pick the board's port (<code>USB JTAG/serial debug unit</code>).</p>
+      <p><strong>3.</strong> When it offers to erase, say yes — first install should start clean.</p>
+      <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
+      <p class="warn">⚠️ A cable install erases the charm and resets his memory — a Bluetooth update doesn't.</p>
+      <p class="warn">⚠️ Needs Chrome or Edge on a computer (Web Serial). No buttons are needed to flash: the installer resets the board into download mode in software. If the board won't connect, unplug USB, close any other tab or app that might hold the port, plug back in and try again.</p>
+      <p>After it finishes, press PWR — the face wakes up.</p>
+    </div>
+  </section>
+</main>
+
+<script>
+"use strict";
+/* ==== Doors: capability lighting =====================================
+ * On load, light the door that can work on THIS device and collapse
+ * the other (still openable). Neither door ever blocks the other. */
+const hasBt = !!navigator.bluetooth;
+const hasSerial = "serial" in navigator;
+
+const doorA = document.getElementById("doorA"), doorB = document.getElementById("doorB");
+const hintA = document.getElementById("hintA"), hintB = document.getElementById("hintB");
+
+function setDoor(door, open) { door.classList.toggle("closed", !open); }
+function toggleDoor(door) {
+  const opening = door.classList.contains("closed");
+  setDoor(door, opening);
+  if (opening && door === doorA) bleDoorOpened();
+}
+document.getElementById("headA").addEventListener("click", () => toggleDoor(doorA));
+document.getElementById("headB").addEventListener("click", () => toggleDoor(doorB));
+
+hintA.textContent = hasBt ? "" :
+  "No Bluetooth here — open this page on your phone.";
+hintB.textContent = hasSerial ? "" :
+  "No USB serial here — use a PC with Chrome/Edge.";
+
+if (hasBt) doorA.classList.add("lit");
+if (hasSerial) doorB.classList.add("lit");
+setDoor(doorA, hasBt);
+setDoor(doorB, hasSerial && !hasBt);
+if (hasBt) bleDoorOpened();
+
+/* Offered version in the header, from the same ble.json Door A uses. */
+fetch("ble.json").then(r => r.json()).then(meta => {
+  if (meta && meta.version) {
+    document.getElementById("offeredLine").textContent =
+      "Version " + meta.version + " is the current update. One page, " +
+      "two doors — pick whichever fits the device you're holding.";
+  }
+}).catch(() => { /* header line just stays generic */ });
+
+/* ==== Door A: Bluetooth update =======================================
+ * GATT map — must match app/pet_ota.c / BLE-NOTES.md. */
+const SVC_UUID    = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c01";
+const INFO_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c02";
+const CTRL_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c03";
+const DATA_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c04";
+const STATUS_UUID = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c05";
+const TIME_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c06";
+const META_URL = "ble.json";   /* {"version":"1.7","file":"gengar-face-app-v8.bin"} */
+/* The app-bin filename is NOT hardcoded (v1.6+): ble.json names
+ * it, so a future BLE release is just a new bin + a new ble.json
+ * — this page never changes again. binUrl is set by loadPayload. */
+let binUrl = null;
+
+/* Adaptive DATA chunk sizes: start at the big one, step down on
+ * error, remember what worked. 509 = MTU 512 minus ATT overhead. */
+const CHUNK_SIZES = [509, 244, 128, 20];
+const STATE_NAMES = ["idle", "receiving", "done", "failed"];
+
+const $ = id => document.getElementById(id);
+const statusEl = $("status"), noteEl = $("note"), fillEl = $("fill");
+const connectBtn = $("connectBtn"), sendBtn = $("sendBtn");
+
+let device = null, server = null;
+let chInfo = null, chCtrl = null, chData = null, chStatus = null;
+let binBuf = null, binSha = null, newVersion = null, curVersion = null;
+let chunkIdx = 0, sending = false, finishConfirmed = false;
+
+function say(t, cls) { statusEl.textContent = t; statusEl.className = "big " + (cls || ""); }
+function note(t, cls) { noteEl.textContent = t; noteEl.className = cls || "warn"; }
+function progress(sent, total) {
+  const pct = total ? Math.floor(sent * 100 / total) : 0;
+  fillEl.style.width = pct + "%";
+  if (sending) say("Sending… " + pct + "% (" + sent + " / " + total + " bytes)");
+}
+
+/* Version grammar mirrors the firmware's (pet_ble_proto.c):
+ * MAJOR.MINOR[.PATCH], digits only. Returns null when unparseable. */
+function parseVer(s) {
+  if (typeof s !== "string" || !/^\d+\.\d+(\.\d+)?$/.test(s)) return null;
+  const p = s.split(".").map(Number);
+  if (p.some(v => v > 9999)) return null;
+  return [p[0], p[1], p.length > 2 ? p[2] : 0];
+}
+function verCmp(a, b) {
+  for (let i = 0; i < 3; i++) { if (a[i] !== b[i]) return a[i] < b[i] ? -1 : 1; }
+  return 0;
+}
+
+/* The no-Web-Bluetooth message belongs to Door A and only shows
+ * when that door is actually opened on such a browser. */
+let bleDoorSeen = false;
+function bleDoorOpened() {
+  if (bleDoorSeen) return;
+  bleDoorSeen = true;
+  if (!navigator.bluetooth) {
+    say("This browser has no Web Bluetooth.", "bad");
+    note("Use Chrome on an Android phone (or Chrome/Edge on a computer " +
+         "with Bluetooth). Safari and Firefox phones can't do this — " +
+         "the cable installer still works.");
+    connectBtn.disabled = true;
+  }
+}
+
+async function loadPayload() {
+  const meta = await (await fetch(META_URL)).json();
+  newVersion = meta.version;
+  binUrl = meta.file;
+  if (!binUrl) {
+    throw new Error("ble.json does not name an update file " +
+                    "(missing \"file\" field) — nothing can be sent");
+  }
+  const resp = await fetch(binUrl);
+  if (!resp.ok) throw new Error("could not fetch " + binUrl);
+  binBuf = await resp.arrayBuffer();
+  const digest = await crypto.subtle.digest("SHA-256", binBuf);
+  binSha = new Uint8Array(digest);
+}
+
+function onStatusNotify(ev) {
+  const v = ev.target.value;
+  const st = v.getUint8(0), err = v.getUint8(1), recv = v.getUint32(4, true);
+  if (st === 2) { finishConfirmed = true; }
+  if (st === 3 && sending) {
+    note("The charm refused the update (state: failed, error " + err +
+         ", received " + recv + "). It is still running its old version.");
+  }
+}
+
+function onDisconnected() {
+  server = null;
+  if (sending && !finishConfirmed) {
+    say("Connection dropped mid-send.", "bad");
+    note("Nothing was changed on the charm. Tap Connect and send again — " +
+         "transfers always restart from the beginning.");
+  } else if (finishConfirmed) {
+    say("Done — the charm is restarting into the new version. Watch the face.", "ok");
+  } else {
+    say("Disconnected.");
+  }
+  sending = false;
+  sendBtn.disabled = true;
+  connectBtn.disabled = false;
+}
+
+connectBtn.addEventListener("click", async () => {
+  note("");
+  try {
+    say("Pick “VBALL” in the list…");
+    device = await navigator.bluetooth.requestDevice({
+      /* The service-UUID filter is the real key — only the charm
+       * advertises that UUID, so this keeps working even if the
+       * device is renamed again. The name entry is a convenience
+       * second chance, nothing more. */
+      filters: [{ services: [SVC_UUID] }, { name: "VBALL" }]
+    });
+  } catch (e) {
+    say("No device picked.");
+    note("If VBALL wasn't listed: is the face showing an update code? " +
+         "Update mode lasts about 5 minutes from boot.");
+    return;
+  }
+  device.addEventListener("gattserverdisconnected", onDisconnected);
+  try {
+    say("Connecting… your phone may ask for the 6-digit code on the face.");
+    server = await device.gatt.connect();
+    const svc = await server.getPrimaryService(SVC_UUID);
+    chInfo = await svc.getCharacteristic(INFO_UUID);
+    chCtrl = await svc.getCharacteristic(CTRL_UUID);
+    chData = await svc.getCharacteristic(DATA_UUID);
+    chStatus = await svc.getCharacteristic(STATUS_UUID);
+    await chStatus.startNotifications();
+    chStatus.addEventListener("characteristicvaluechanged", onStatusNotify);
+
+    /* INFO: [0]=proto [1]=verlen [2..]=version, then u16 LE max chunk. */
+    const info = await chInfo.readValue();
+    const vl = info.getUint8(1);
+    let ver = "";
+    for (let i = 0; i < vl; i++) ver += String.fromCharCode(info.getUint8(2 + i));
+    curVersion = ver;
+
+    /* Clock sync (v1.9+): the phone is the clock. Send the current
+     * UTC epoch + this phone's tz offset to the TIME characteristic;
+     * older firmware simply doesn't have it, so failure is silent. */
+    try {
+      const chTime = await svc.getCharacteristic(TIME_UUID);
+      const frame = new DataView(new ArrayBuffer(6));
+      frame.setUint32(0, Math.floor(Date.now() / 1000), true);
+      frame.setInt16(4, -new Date().getTimezoneOffset(), true);
+      await chTime.writeValueWithResponse(frame);
+    } catch (e) { /* no TIME characteristic on this firmware */ }
+
+    say("Loading the update file…");
+    await loadPayload();
+    $("versions").textContent =
+      "Charm is running " + curVersion + " · this page offers " + newVersion +
+      " (" + binBuf.byteLength + " bytes).";
+    const a = parseVer(newVersion), b = parseVer(curVersion);
+    if (!a || !b || verCmp(a, b) <= 0) {
+      say("Already up to date.", "ok");
+      note("The offered version is not newer than what's on the charm, " +
+           "so there's nothing to send (the charm enforces this too).");
+      connectBtn.disabled = false;
+      return;
+    }
+    say("Connected. Ready to send.");
+    connectBtn.disabled = true;
+    sendBtn.disabled = false;
+  } catch (e) {
+    say("Connection failed.", "bad");
+    note(String(e && e.message ? e.message : e));
+    connectBtn.disabled = false;
+  }
+});
+
+sendBtn.addEventListener("click", async () => {
+  if (!server || !binBuf || sending) return;
+  sending = true; finishConfirmed = false; chunkIdx = 0;
+  sendBtn.disabled = true;
+  note("");
+  try {
+    /* START: op=1, u32 size LE, 32-byte sha256, u8 verlen, version. */
+    const vb = new TextEncoder().encode(newVersion);
+    const start = new Uint8Array(38 + vb.length);
+    start[0] = 1;
+    new DataView(start.buffer).setUint32(1, binBuf.byteLength, true);
+    start.set(binSha, 5);
+    start[37] = vb.length;
+    start.set(vb, 38);
+    say("Starting…");
+    await chCtrl.writeValueWithResponse(start);
+
+    const bytes = new Uint8Array(binBuf);
+    let off = 0;
+    while (off < bytes.length) {
+      const n = Math.min(CHUNK_SIZES[chunkIdx], bytes.length - off);
+      try {
+        await chData.writeValueWithResponse(bytes.subarray(off, off + n));
+        off += n;
+        progress(off, bytes.length);
+      } catch (e) {
+        if (chunkIdx < CHUNK_SIZES.length - 1) {
+          chunkIdx++;   /* step down and retry the same bytes */
+          note("Chunk too big for this link — stepping down to " +
+               CHUNK_SIZES[chunkIdx] + " bytes and continuing.");
+          continue;
+        }
+        throw e;
+      }
+    }
+
+    say("Verifying on the charm…");
+    await chCtrl.writeValueWithResponse(new Uint8Array([2]));   /* FINISH */
+    /* The charm confirms over STATUS (and then reboots itself). */
+    try {
+      const st = await chStatus.readValue();
+      if (st.getUint8(0) === 2) finishConfirmed = true;
+      if (st.getUint8(0) === 3) throw new Error("charm reported failure");
+    } catch (e) {
+      if (finishConfirmed) { /* reboot disconnect raced the read */ }
+      else if (e && e.message === "charm reported failure") throw e;
+    }
+    sending = false;
+    say("Done — the charm is restarting into version " + newVersion +
+        ". Watch the face.", "ok");
+    fillEl.style.width = "100%";
+  } catch (e) {
+    sending = false;
+    if (server) { sendBtn.disabled = false; }
+    say("Send failed.", "bad");
+    note("The charm is unchanged and still on version " + curVersion +
+         ". You can tap Send update to try again from the start. (" +
+         (e && e.message ? e.message : e) + ")");
+  }
+});
+</script>
+</body>
+</html>
