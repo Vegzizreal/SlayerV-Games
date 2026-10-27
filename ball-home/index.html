@@ -37,7 +37,7 @@
 </head>
 <body>
 <main>
-  <h1>👻 VBALL — Update</h1>
+  <h1>👻 VBALL — Update <span class="ver" id="verTitle"></span></h1>
   <p id="offeredLine">One page, two doors — pick whichever fits the
      device you're holding.</p>
 
@@ -138,6 +138,10 @@ fetch("ble.json").then(r => r.json()).then(meta => {
      * the badges are read from the same files the doors install from,
      * so a label can never promise a version the door doesn't carry. */
     document.getElementById("verA").textContent = "— v" + meta.version;
+    /* The titles carry it too (Tyler, 2026-10-27): the page heading and
+     * the browser tab name the current update, from the same source. */
+    document.getElementById("verTitle").textContent = "v" + meta.version;
+    document.title = "VBALL — Update v" + meta.version;
   }
 }).catch(() => { /* header line just stays generic */ });
 
