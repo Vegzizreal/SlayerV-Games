@@ -274,11 +274,15 @@ connectBtn.addEventListener("click", async () => {
   try {
     say("Pick “VBALL” in the list…");
     device = await navigator.bluetooth.requestDevice({
-      /* The service-UUID filter is the real key — only the charm
-       * advertises that UUID, so this keeps working even if the
-       * device is renamed again. The name entry is a convenience
-       * second chance, nothing more. */
-      filters: [{ services: [SVC_UUID] }, { name: "VBALL" }]
+      /* No filters: Chrome's filtered picker kept hiding VBALL even
+       * though Chrome's own scanner sees him (name + RSSI proven on
+       * the bluetooth-internals page, 2026-10-28) — the service
+       * UUID was not being surfaced to the filter after the old
+       * pairing record was forgotten. acceptAllDevices lists every
+       * nearby BLE device; Tyler picks VBALL by name. The service
+       * is declared optional so GATT access is granted after. */
+      acceptAllDevices: true,
+      optionalServices: [SVC_UUID]
     });
   } catch (e) {
     say("No device picked.");
