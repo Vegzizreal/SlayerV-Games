@@ -118,6 +118,7 @@ const hasBt = !!navigator.bluetooth;
 const hasSerial = "serial" in navigator;
 
 const doorA = document.getElementById("doorA"), doorB = document.getElementById("doorB");
+let bleDoorSeen = false;   /* declared here: the load path below calls bleDoorOpened() before the Door A section runs (TDZ fix, 2026-10-28) */
 const hintA = document.getElementById("hintA"), hintB = document.getElementById("hintB");
 
 function setDoor(door, open) { door.classList.toggle("closed", !open); }
@@ -215,7 +216,6 @@ function verCmp(a, b) {
 
 /* The no-Web-Bluetooth message belongs to Door A and only shows
  * when that door is actually opened on such a browser. */
-let bleDoorSeen = false;
 function bleDoorOpened() {
   if (bleDoorSeen) return;
   bleDoorSeen = true;
