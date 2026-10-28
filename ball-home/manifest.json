@@ -1,1 +1,1 @@
-{"builds": [{"chipFamily": "ESP32-S3", "parts": [{"offset": 0, "path": "ball-home-merged.bin"}]}], "name": "VBALL Ball Home (launcher)", "new_install_prompt_erase": true, "version": "4.0.1"}
+{"builds": [{"chipFamily": "ESP32-S3", "parts": [{"offset": 0, "path": "ball-home-merged.bin"}]}], "name": "VBALL Ball Home (launcher)", "new_install_prompt_erase": true, "version": "4.1"}
