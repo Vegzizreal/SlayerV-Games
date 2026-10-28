@@ -1283,6 +1283,11 @@ body.electron-phone #ewin-controls{display:flex}
 .msg-row.them{justify-content:flex-start}
 .msg-row.me{justify-content:flex-end}
 .msg-bub{max-width:78%;padding:9px 13px;border-radius:16px;font-size:14.5px;line-height:1.45;position:relative;color:#fff}
+.msg-bub{position:relative}
+.msg-react{position:absolute;left:-4px;bottom:-11px;background:#2b2b34;border:1px solid rgba(255,255,255,.16);border-radius:999px;font-size:11px;line-height:1.4;padding:0 6px;box-shadow:0 2px 6px rgba(0,0,0,.45);z-index:2}
+.msg-row.has-react{margin-bottom:14px}
+.msg-burn{display:block;font-size:10px;font-weight:700;color:#fb923c;margin-top:3px}
+.msg-gone{opacity:.55;font-style:italic}
 .msg-row.them .msg-bub{background:#2d2d2d;border-radius:20px;color:#fff}
 .msg-row.me .msg-bub{background:#1a73e8;border-radius:20px;color:#fff}
 .msg-read{color:#8ab4f8;font-size:11px;margin-left:4px}
@@ -2826,10 +2831,11 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:25,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v183";
+var GAME_VER="v185";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"v185",ts:"Oct 28, 2026",t:"Living messages",d:"Customers feel alive in the chat now: they react to your texts with tapback emojis, and the paranoid ones (about 1 in 5) send deal texts that burn 45 seconds after you read them - the order stays on the table, the words don\u2019t."},
    {v:"v183",ts:"Oct 28, 2026",t:"Same deal, smaller card",d:"The live-deal card at the bottom of a chat is slimmed down to a compact bar - what they want, what it pays, and the clock, without the big box. A running deal keeps its Open Tasks button, small and on the same line now. Every countdown in the game also reads in hours and minutes now (2h 14m) instead of stopwatch minutes and seconds."},
    {v:"v182",ts:"Oct 27, 2026",t:"The order stays on the table",d:"A live order is no longer just a text buried in the scrollback: every thread now anchors the current deal at the bottom — what they want, what it pays, how long is left — and a running delivery shows there too, with a shortcut to Tasks. Delivery lines in chat now name the strain and amount they belong to, so two deals in one thread stop reading as one mixed-up conversation. And the green quick answers now only appear when there is actually something to answer — once you have the last word in a thread, they clear out."},
    {v:"v181",ts:"Oct 27, 2026",t:"Chat cleanup",d:"One conversation per customer: no new pitch while a pitch or an accepted order is open — the order builder itself now refuses a second live chain, so follow-ups cannot interleave in one thread. Revived order chains keep real gaps between steps instead of squeezing follow-ups a minute apart. And a customer who walks away, or gets declined or dismissed, now waits out the normal cooldown before pitching again — no re-pitch minutes after found someone else."},
@@ -3221,7 +3227,7 @@ function normalize(s,raw){
   var _bun=PKEYS.filter(function(k){return PRODUCTS[k].tier<=_bt;});
   var pr=Array.isArray(c.prefs)?c.prefs.filter(function(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&_bun.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab");}).map(function(p){return {k:p.k,kind:p.kind};}).slice(0,3):[];
   if(!pr.length)pr=contactPrefsFor(tp,_bun);
-  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0,askEligSince:typeof c.askEligSince==="number"?c.askEligSince:0,refGiven:!!c.refGiven,phaseMin:(typeof c.phaseMin==="number"&&isFinite(c.phaseMin)&&c.phaseMin>=0)?(Math.floor(c.phaseMin)%30):undefined,patienceMul:(typeof c.patienceMul==="number"&&c.patienceMul>0&&c.patienceMul!==1)?c.patienceMul:(ttPatienceTable()[tp]||1),firstOrderAt:typeof c.firstOrderAt==="number"?c.firstOrderAt:0,lastFlakeAt:typeof c.lastFlakeAt==="number"?c.lastFlakeAt:0};
+  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0,askEligSince:typeof c.askEligSince==="number"?c.askEligSince:0,refGiven:!!c.refGiven,phaseMin:(typeof c.phaseMin==="number"&&isFinite(c.phaseMin)&&c.phaseMin>=0)?(Math.floor(c.phaseMin)%30):undefined,patienceMul:(typeof c.patienceMul==="number"&&c.patienceMul>0&&c.patienceMul!==1)?c.patienceMul:(ttPatienceTable()[tp]||1),paranoid:typeof c.paranoid==="boolean"?c.paranoid:(msgJitter(String(c.name||"")+":paranoid",100)<22),firstOrderAt:typeof c.firstOrderAt==="number"?c.firstOrderAt:0,lastFlakeAt:typeof c.lastFlakeAt==="number"?c.lastFlakeAt:0};
  });
  if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
@@ -4960,7 +4966,8 @@ function render(){
    return an<bn?-1:(an>bn?1:0);
   });
   _cs.forEach(function(c){
-   var last=c.msgs.length?c.msgs[c.msgs.length-1].text:"New contact — say hi";
+   var _lmo=c.msgs.length?c.msgs[c.msgs.length-1]:null;
+   var last=_lmo?(_lmo.deleted?"\uD83D\uDEAB Message deleted":_lmo.text):"New contact — say hi";
    var tm=c.msgs.length?fmtMsgTime(c.msgs[c.msgs.length-1].t):"";
    var ord=c.order?' <span class="msg-ordtag">📦 order</span>':"";
    var pinTag=c.pinned?' 📌':"";
@@ -5193,8 +5200,16 @@ function render(){
     var _d="";try{_d=new Date(m.t).toDateString();}catch(e){}
     if(_d!==_lastDay){_lastDay=_d;h+='<div class="msg-daydiv">'+fmtMsgDay(m.t)+' &bull; '+fmtMsgTime(m.t)+'</div>';if(_firstDiv){_firstDiv=false;h+='<div class="msg-rcs">RCS chat with '+escHtml(c.name)+_rph+'</div>';}}
     var _me=m.from==="me";
-    h+='<div class="msg-row '+(_me?"me":"them")+'"><div class="msg-bub">'+escHtml(m.text)
-     +'<span class="msg-bub-t">'+fmtMsgTime(m.t)+(_me?'<span class="msg-read">&#10003;&#10003;</span>':'')+'</span></div></div>';
+    if(m.deleted){
+     h+='<div class="msg-row them"><div class="msg-bub msg-gone">\uD83D\uDEAB This message was deleted<span class="msg-bub-t">'+fmtMsgTime(m.t)+'</span></div></div>';
+     return;
+    }
+    if(m.burn&&!m.seenAt)m.seenAt=Date.now();
+    h+='<div class="msg-row '+(_me?"me":"them")+(m.react?" has-react":"")+'"><div class="msg-bub">'+escHtml(m.text)
+     +(m.burn?'<span class="msg-burn">\uD83D\uDD25 burns after reading</span>':'')
+     +'<span class="msg-bub-t">'+fmtMsgTime(m.t)+(_me?'<span class="msg-read">&#10003;&#10003;</span>':'')+'</span>'
+     +(m.react?'<span class="msg-react">'+m.react+'</span>':'')
+     +'</div></div>';
    });
   }
   /* accept/dismiss live on the reply pills; the live-deal strip below
@@ -6357,9 +6372,57 @@ function orderDueAt(c,now){
 }
 /* v157: one place for "a message from them lands" — unread + notify. */
 function pushContactMsg(c,text,t){
- c.msgs.push({from:"them",text:text,t:t});
+ var _m={from:"them",text:text,t:t};
+ if(isParanoid(c))_m.burn=true;
+ c.msgs.push(_m);
  c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
  notifyMsgArrived(c,text);
+}
+/* v185 living messages (1): paranoid contacts. About 1 in 5 contacts
+   (stable per name) sends deal texts that burn after being read:
+   the fuse starts when the thread renders the message, and burnTick
+   replaces it with a tombstone 45s later. The order itself lives on
+   in the deal strip / Tasks even after the text is gone. */
+function isParanoid(c){
+ if(!c)return false;
+ if(typeof c.paranoid!=="boolean")c.paranoid=msgJitter(String(c.name||"")+":paranoid",100)<22;
+ return c.paranoid;
+}
+var BURN_FUSE_MS=45000;
+function burnTick(){
+ if(!S||!S.contacts)return;
+ var now=Date.now(),hit=false,openHit=false;
+ S.contacts.forEach(function(c){
+  if(!c||!c.msgs)return;
+  for(var i=0;i<c.msgs.length;i++){var m=c.msgs[i];
+   if(m.burn&&m.seenAt&&!m.deleted&&now-m.seenAt>=BURN_FUSE_MS){m.deleted=true;hit=true;if(S.msgView===c.name)openHit=true;}
+  }
+ });
+ if(hit){save();if(openHit)render();}
+}
+/* v185 living messages (2): customers react to YOUR texts. A delayed
+   tapback-style emoji lands on the message you just sent. */
+function reactEmojiFor(txt){
+ var t=String(txt||"").toLowerCase();
+ if(/on my way|comin|otw|pull up|outside/.test(t))return _custPick(["\uD83D\uDC4D","\uD83D\uDD25","\uD83D\uDCAF"]);
+ if(/sorry|can.t|busy|later|nah/.test(t))return _custPick(["\uD83D\uDE2E","\uD83D\uDC4C","\uD83D\uDE4F"]);
+ return _custPick(["\u2764\uFE0F","\uD83D\uDD25","\uD83D\uDC4D","\uD83D\uDE4F","\uD83D\uDE02","\uD83D\uDCAF"]);
+}
+function scheduleReaction(c,msg,delay,emoji){
+ if(!c||!msg||msg.react)return;
+ setTimeout(function(){
+  if(msg.react)return;
+  msg.react=emoji||reactEmojiFor(msg.text);
+  save();
+  if(S.msgView===c.name)render();
+ },Math.max(0,delay||0));
+}
+function maybeReact(c,msg){
+ if(!c||!msg||msg.react||c.brokenUp)return;
+ var reg=(S.regulars&&S.regulars[c.name])||0;
+ var chance=reg>=3?0.7:0.45;
+ if(Math.random()>=chance)return;
+ scheduleReaction(c,msg,1800+Math.random()*3200,reactEmojiFor(msg.text));
 }
 function maybeAddContact(tier,qty){
  if(!S.contacts)S.contacts=[];
@@ -7197,6 +7260,7 @@ function doSendReply(nm,rid){
  var _lm=c.msgs&&c.msgs[c.msgs.length-1];
  if(_lm&&_lm.from==="me"&&_lm.text===r.text){S.msg="Already sent that — give them a chance to reply.";save();render();return;}
  c.msgs.push({from:"me",text:r.text,t:Date.now()});
+ maybeReact(c,c.msgs[c.msgs.length-1]);
  closeOutOrder(c);
  save();render();
  setTimeout(function(){var _pp=document.querySelector(".pane-deal");if(_pp)_pp.scrollTop=_pp.scrollHeight;},100);
@@ -9798,7 +9862,7 @@ root.addEventListener("click",function(e){
       no-repeat rule as the chips. */
    var _lm2=_c.msgs&&_c.msgs[_c.msgs.length-1];
    if(_lm2&&_lm2.from==="me"&&_lm2.text===_text){S.msg="Already sent that — give them a chance to reply.";save();render();}
-   else{_c.msgs.push({from:"me",text:_text,t:Date.now()});_c.unread=false;save();render();}
+   else{_c.msgs.push({from:"me",text:_text,t:Date.now()});maybeReact(_c,_c.msgs[_c.msgs.length-1]);_c.unread=false;save();render();}
   }
   return;
  }
@@ -10770,6 +10834,7 @@ setTimeout(tick,0);
 /* AirDrop migration: show popup for any pending contacts from old saves */
 setTimeout(function(){try{if((S.pendingContacts||[]).length)showAirdropPopup();}catch(e){}},1500);
 setInterval(tick,15000);
+setInterval(burnTick,2000);
 setInterval(pump,150);
 
 /* ---------- Grow widget bridge (Android home screen widget) ---------- */
@@ -11336,7 +11401,7 @@ function runnerCallHTML(r){
  }
  return h;
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP,RUNNER_LEVELS:RUNNER_LEVELS,RUNNER_SLOTS:RUNNER_SLOTS,RUNNER_XP_PER_SALE:RUNNER_XP_PER_SALE,runnerLevel:runnerLevel,runnerSpecBonus:runnerSpecBonus,runnerPhonebookSection:runnerPhonebookSection,runnerDetailHTML:runnerDetailHTML,ttPinHash:ttPinHash,ttSystemStatus:ttSystemStatus,ttExportSave:ttExportSave,ttImportSave:ttImportSave,ttB64Encode:ttB64Encode,ttB64Decode:ttB64Decode,TERRITORY_LEVELS:TERRITORY_LEVELS,terrLevelOf:terrLevelOf,terrPriceMultFor:terrPriceMultFor,terrNextGrantTxt:terrNextGrantTxt,addTerrXP:addTerrXP,orderBudgetNow:orderBudgetNow,dealerWantFor:dealerWantFor,dealerWantUnit:dealerWantUnit,doDealerWant:doDealerWant,DEALER_BUY_OWNER:DEALER_BUY_OWNER,geneOptFor:geneOptFor,geneLevelFor:geneLevelFor,geneLevelReached:geneLevelReached,geneAssign:assignGeneLevels,geneHuntAware:geneHuntAware,GENE_LV_BAND:GENE_LV_BAND,visorMaybeSpawn:visorMaybeSpawn,visorCollect:visorCollect,doGeneOptSell:doGeneOptSell,contactBasePrice:contactBasePrice,terrPrefMult:terrPrefMult,visOfP:visOfP,strainUnlocked:strainUnlocked,kitVis:kitVis,kitUnlocked:kitUnlocked,stashOrderUnit:stashOrderUnit,huntCollect:huntCollect,huntStart:huntStart,settleWorkerTask:settleWorkerTask,settleCooking:settleCooking,collectCook:collectCook,pullupServe:pullupServe,CONTACT_TUNING:CONTACT_TUNING,createContactOrder:createContactOrder,tickContacts:tickContacts,GENE_KEYS:GENE_KEYS,GENE_OPT_PREMIUM:GENE_OPT_PREMIUM,TERR_GRANT_TXT:TERR_GRANT_TXT,bribeCost:bribeCost,TTWRAP_REF:function(){return TTWRAP;}};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP,RUNNER_LEVELS:RUNNER_LEVELS,RUNNER_SLOTS:RUNNER_SLOTS,RUNNER_XP_PER_SALE:RUNNER_XP_PER_SALE,runnerLevel:runnerLevel,runnerSpecBonus:runnerSpecBonus,runnerPhonebookSection:runnerPhonebookSection,runnerDetailHTML:runnerDetailHTML,ttPinHash:ttPinHash,ttSystemStatus:ttSystemStatus,ttExportSave:ttExportSave,ttImportSave:ttImportSave,ttB64Encode:ttB64Encode,ttB64Decode:ttB64Decode,TERRITORY_LEVELS:TERRITORY_LEVELS,terrLevelOf:terrLevelOf,terrPriceMultFor:terrPriceMultFor,terrNextGrantTxt:terrNextGrantTxt,addTerrXP:addTerrXP,orderBudgetNow:orderBudgetNow,dealerWantFor:dealerWantFor,dealerWantUnit:dealerWantUnit,doDealerWant:doDealerWant,DEALER_BUY_OWNER:DEALER_BUY_OWNER,geneOptFor:geneOptFor,geneLevelFor:geneLevelFor,geneLevelReached:geneLevelReached,geneAssign:assignGeneLevels,geneHuntAware:geneHuntAware,GENE_LV_BAND:GENE_LV_BAND,visorMaybeSpawn:visorMaybeSpawn,visorCollect:visorCollect,doGeneOptSell:doGeneOptSell,contactBasePrice:contactBasePrice,terrPrefMult:terrPrefMult,visOfP:visOfP,strainUnlocked:strainUnlocked,kitVis:kitVis,kitUnlocked:kitUnlocked,stashOrderUnit:stashOrderUnit,huntCollect:huntCollect,huntStart:huntStart,settleWorkerTask:settleWorkerTask,settleCooking:settleCooking,collectCook:collectCook,pullupServe:pullupServe,CONTACT_TUNING:CONTACT_TUNING,createContactOrder:createContactOrder,tickContacts:tickContacts,scheduleReaction:scheduleReaction,maybeReact:maybeReact,burnTick:burnTick,isParanoid:isParanoid,pushContactMsg:pushContactMsg,GENE_KEYS:GENE_KEYS,GENE_OPT_PREMIUM:GENE_OPT_PREMIUM,TERR_GRANT_TXT:TERR_GRANT_TXT,bribeCost:bribeCost,TTWRAP_REF:function(){return TTWRAP;}};
 })();
 </script>
 <style>
