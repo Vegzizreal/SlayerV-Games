@@ -1,73 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#0a0a0c">
-<link rel="manifest" href="manifest.json">
-<link rel="apple-touch-icon" href="icon-192.png">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<title>Trap Tycoon</title>
-<style>
-html,body{margin:0;padding:0;background:#0a0a0c;}
-body{padding:0;margin:0;height:100dvh;overflow:hidden;-webkit-tap-highlight-color:transparent;}
-html{height:100dvh;overflow:hidden;}
-</style>
-</head>
-<body>
-<script>
-if('serviceWorker' in navigator){
-  window.addEventListener('load',function(){
-    navigator.serviceWorker.register('sw.js').catch(function(){});
-  });
-}
-</script>
-<body>
-<script>
-/* Trap Tycoon -- Pages-only save shim (single local slot).
- * This file is included ONLY in the GitHub Pages build. The widget build
- * persists via the hatch bridge instead, and the widget validator rejects
- * localStorage outright. The game calls window.hatchWidget only when the
- * bridge is absent, so this never activates inside the widget. */
-(function(){
-"use strict";
-if(window.hatchWidget)return;
-var KEY="trap-tycoon.pages.save.v1";
-var OLDKEY="terpene-tycoon.pages.save.v1"; /* pre-rename key: one-time migration only */
-function ls(){try{return window.localStorage||null;}catch(e){return null;}}
-window.hatchWidget={
- getState:function(def){
-  var s=ls(),raw=null;
-  if(s){
-   try{raw=s.getItem(KEY);}catch(e){}
-   if(!raw){
-    /* one-time migration: copy the old-key save forward, then use the new key */
-    try{var _old=s.getItem(OLDKEY);if(_old){s.setItem(KEY,_old);raw=_old;}}catch(e){}
-   }
-  }
-  if(raw){
-   try{var o=JSON.parse(raw);if(o&&typeof o==="object"&&!Array.isArray(o))return o;}
-   catch(e){try{s.setItem(KEY+".corrupt",raw);}catch(_e){}}
-   /* raw existed but was corrupt: boot from default in memory WITHOUT
-      overwriting the key (corrupt copy preserved above for recovery). */
-   return JSON.parse(JSON.stringify(def));
-  }
-  var d=JSON.parse(JSON.stringify(def));
-  if(s){try{s.setItem(KEY,JSON.stringify(d));}catch(e){}}
-  return d;
- },
- setState:function(st){
-  var s=ls();if(!s)return;
-  try{s.setItem(KEY,JSON.stringify(st));}catch(e){/* quota/private mode: ignore */}
- }
-};
-})();
-</script>
 <div class="pg">
  <div class="android-statusbar"><span class="sb-group sb-left"><span class="android-clock">--:--</span><span class="sb-qcash">$200</span><span class="sb-qstash">0/40g</span><span class="sb-qhp">HP 100</span></span><span class="sb-notch"></span><span class="sb-group sb-right"><span class="sb-qday">Day 1</span><span class="sb-prestige" id="sb-prestige" hidden></span><span class="sb-qheat">🔥 Home 0%</span></span><span class="android-sicons"><svg id="sb-cellbars" viewBox="0 0 24 24" width="14" height="14" fill="#fff" style="display:none"><path d="M3 17h3v4H3zM8.5 13h3v8h-3zM14 9h3v12h-3zM19.5 4h3v17h-3z"/></svg><svg id="sb-wifi" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M4 10a12 12 0 0 1 16 0"/><path d="M7.5 13.5a7 7 0 0 1 9 0"/><circle cx="12" cy="17.5" r="1.6" fill="#fff" stroke="none"/></svg><svg viewBox="0 0 28 24" width="18" height="14" fill="none" stroke="#fff" stroke-width="1.6"><rect x="2" y="7" width="21" height="10" rx="2.5"/><rect id="sb-battfill" x="4" y="9" width="14" height="6" rx="1" fill="#4ade80" stroke="none"/><path d="M25.5 10.5v3" stroke-linecap="round"/></svg></span></div>
  <div class="shade-scrim" hidden data-act="shade-close"></div>
@@ -888,6 +818,9 @@ body.electron-phone #ewin-controls{display:flex}
 .srow.c.tight{padding:1px 10px;margin-bottom:2px}
 .srow.c.tight button{padding:3px 8px;font-size:14px}
 .srow.c.tight b{font-size:15px}
+.srow.seedrow{flex-direction:column;align-items:stretch;gap:4px}
+.seedbtns{display:flex;gap:6px}
+.seedbtns button{flex:1}
 .acc-h{padding:3px 10px !important;margin-bottom:2px !important;font-size:14px}
 .srow button:disabled{opacity:.35}
 .srow.locked{opacity:.55}
@@ -2833,10 +2766,11 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:25,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v188";
+var GAME_VER="v189";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"v189",ts:"Oct 29, 2026",t:"Seed Bank, readable",d:"Seed rows now say it plainly: the strain line shows yield, price and how many seeds you hold, and the three buy buttons all read the same way - x1, x10, x50 with the total price. No more (x25) glued onto a price."},
    {v:"v188",ts:"Oct 29, 2026",t:"Replies that fit",d:"Your quick replies now match what the customer actually said: waiting customers get ETAs (On my way / 10 mins / I\u2019m outside), a walk-away or a tip gets no reply buttons at all, and the cash-only accept line is gone - it never made sense."},
    {v:"v187",ts:"Oct 29, 2026",t:"Just a few answers",d:"A live order now shows only 3 random yes answers and 2 random no answers in the bar, rolled fresh per order - not the whole list at once. The gene add-on offer still always shows."},
    {v:"v186",ts:"Oct 29, 2026",t:"One bar, split right",d:"The answer bar under a chat is now one bar split down the middle: green answers on the left, red passes on the right, both visible at once, each side scrolling with a soft fade at the edge instead of chopped pills."},
@@ -5835,9 +5769,14 @@ function mapsHTML(){
     var v=visOfP(k);
     if(v===0)return;
     if(v===1){_pageHtml+='<div class="srow c tight locked"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+levelForTier(PRODUCTS[k].tier)+'</span></div></div>';return;}
-    _pageHtml+='<div class="srow c tight"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+'</span></div>'
-     +'<div style="display:flex;gap:6px">'
-     +(PRODUCTS[k].gene?'<span class="sdesc">HUNT ONLY (&times;'+(S.seeds[k]||0)+')</span></div></div>':'<button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>'+money(PRODUCTS[k].seed)+' (&times;'+S.seeds[k]+')</button><button type="button" data-act="buyseed" data-q="10" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed*10?"":" disabled")+'>&times;10 '+money(PRODUCTS[k].seed*10)+'</button><button type="button" data-act="buyseed" data-q="50" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed*50?"":" disabled")+'>&times;50 '+money(PRODUCTS[k].seed*50)+'</button></div></div>');
+    /* v189: two-line seed row. Line 1 says what it is and what you
+       hold (yield, sell price, seeds in stock as plain words). Line 2
+       is three equal buy buttons, ALL in the same format - quantity
+       first, then the total price. The old row glued the owned count
+       onto the single-buy price ("$15 (x25)"), which read as "buy 25
+       for $15", and the buttons crushed the yield text off screen. */
+    _pageHtml+='<div class="srow c tight seedrow"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+' &middot; '+(S.seeds[k]||0)+' in stock</span></div>'
+     +(PRODUCTS[k].gene?'<div class="sdesc">HUNT ONLY</div></div>':'<div class="seedbtns"><button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>&times;1 &middot; '+money(PRODUCTS[k].seed)+'</button><button type="button" data-act="buyseed" data-q="10" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed*10?"":" disabled")+'>&times;10 &middot; '+money(PRODUCTS[k].seed*10)+'</button><button type="button" data-act="buyseed" data-q="50" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed*50?"":" disabled")+'>&times;50 &middot; '+money(PRODUCTS[k].seed*50)+'</button></div></div>');
    });
   }else if(st==="lab"){
    KITKEYS.forEach(function(k){
@@ -11604,6 +11543,3 @@ function ttGetNotificationCount(){
 }
 </script>
 
-
-</body>
-</html>
