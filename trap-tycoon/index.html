@@ -1531,6 +1531,44 @@ body.electron-phone #ewin-controls{display:flex}
 .drow2 button{background:#25d366;color:#fff;border:none;border-radius:18px;padding:8px 18px;font-weight:700}
 /* Plant care app (Grow) */
 .pane-grow .growbar{display:flex;gap:8px;padding:0 4px 10px}
+/* v193: Street sub-tabs + The Corner */
+.st-tabs{display:flex;gap:8px;margin:10px 12px 2px;grid-column:1/-1}
+.st-tab{flex:1;background:#171c22;color:#e8f0e9;font-weight:700;border:1px solid #3a4550;border-radius:999px;padding:9px 0;font-size:14px;cursor:pointer}
+.st-tab.on{background:#2fbf71;color:#04160b;border-color:transparent;font-weight:800}
+.corner-wrap{grid-column:1/-1;color:#e8f0e9;padding:0 12px}
+.corner-hero{margin:10px 0 0;border-radius:18px;padding:16px;border:1px solid #2a3542;background:radial-gradient(120px 90px at 82% -10%,rgba(255,196,86,.55),rgba(255,196,86,0) 70%),linear-gradient(160deg,#1b2735 0%,#10161d 55%,#0b0f13 100%)}
+.corner-title{font-size:22px;font-weight:900;letter-spacing:.5px}
+.corner-sub{font-size:13px;color:#9fb3a4;margin-top:2px}
+.corner-status{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:13px;gap:8px}
+.corner-heat{color:#ffb340;font-size:12px;white-space:nowrap}
+.corner-heatbar{height:6px;background:#232a31;border-radius:3px;margin-top:6px;overflow:hidden}
+.corner-heatbar i{display:block;height:100%;background:linear-gradient(90deg,#ffb340,#ff7847)}
+.corner-note{font-size:11px;color:#7d8fa0;margin-top:5px}
+.dot-on{color:#7ee787}
+.wu-card{margin:10px 0 0;background:#171c22;border:1.5px solid #2fbf71;border-radius:16px;padding:12px 14px;box-shadow:0 6px 24px rgba(0,0,0,.5)}
+.wu-head{display:flex;align-items:center;gap:10px}
+.wu-av{width:44px;height:44px;border-radius:50%;background:#31435a;display:flex;align-items:center;justify-content:center;font-size:22px;flex:none}
+.wu-name{font-weight:700;font-size:16px}
+.wu-want{font-size:13px;color:#9fb3a4}
+.wu-mood{font-size:11px;color:#9fb3a4;font-weight:700;white-space:nowrap}
+.wu-line{margin:10px 0 4px;font-size:14px}
+.wu-trow{display:flex;align-items:center;gap:8px;margin:6px 0 2px;font-size:12px;color:#9fb3a4}
+.wu-tbar{flex:1;height:8px;background:#232a31;border-radius:4px;overflow:hidden}
+.wu-tbar i{display:block;height:100%;background:linear-gradient(90deg,#ffb340,#ff7847)}
+.wu-warn{font-size:12px;color:#9fb3a4}
+.wu-btns{display:flex;gap:8px;margin-top:10px}
+.wu-accept{flex:1.2;background:#2fbf71;color:#04160b;font-weight:800;border:0;border-radius:10px;padding:11px 0;font-size:14px;cursor:pointer}
+.wu-push{flex:1;background:#232a31;color:#ffd166;font-weight:700;border:1px solid #3a4550;border-radius:10px;padding:11px 0;font-size:14px;cursor:pointer}
+.wu-walk{flex:.8;background:transparent;color:#9fb3a4;font-weight:600;border:1px solid #2a323b;border-radius:10px;padding:11px 0;font-size:14px;cursor:pointer}
+.wu-foot{font-size:12px;color:#9fb3a4;margin-top:9px}
+.corner-feed{margin:10px 0 0;background:#12161b;border:1px solid #232a31;border-radius:14px;padding:10px 14px}
+.corner-feed-h{font-size:11px;font-weight:800;color:#7d8fa0;letter-spacing:1px}
+.corner-feed div{font-size:13px;margin-top:6px}
+.corner-stats{display:flex;gap:14px;font-size:12px;color:#9fb3a4;margin-top:9px}
+.corner-stats b{color:#fff}
+.corner-post{display:block;width:100%;margin:10px 0 14px;background:#2fbf71;color:#04160b;font-weight:800;border:0;border-radius:12px;padding:12px 0;font-size:14px;cursor:pointer}
+.corner-off{display:block;width:100%;margin:10px 0 14px;background:transparent;color:#ff9d9d;font-weight:700;border:1px solid #4a2f2f;border-radius:12px;padding:11px 0;font-size:14px;cursor:pointer}
+.corner-quiet{margin:10px 0 0;background:#12161b;border:1px dashed #2a323b;border-radius:14px;padding:14px;font-size:13px;color:#9fb3a4;text-align:center}
 .pane-grow .growbar button{flex:1;background:#e8f5e9;color:#1b5e20;border:none;border-radius:12px;padding:10px;font-weight:700;font-size:14px}
 .potc{background:#fff;border-radius:16px;box-shadow:0 2px 8px rgba(0,0,0,.12);overflow:hidden}
 .pg:not([data-theme="light"]) .potc{background:#1e2a1e}
@@ -2836,10 +2874,11 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:25,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v192";
+var GAME_VER="v193";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"v193",ts:"Oct 29, 2026",t:"The Corner",d:"The Street is two corners now. Swipe sideways on the Dealers tab to flip between dealers and check prices. The Corner tab is your own post: stand it and walk-ups roll in at random - haggle with Accept, Push or Walk. Easy deals earn numbers, greedy ones earn tension, and standing there builds heat slow."},
    {v:"v192",ts:"Oct 29, 2026",t:"Deals you can see",d:"Street deals land as moments: when a runner sells or a dealer bulk want fills, a popup shows where it happened, what moved, the money, and the heat it made. Your own street sales keep their collect card."},
    {v:"v191",ts:"Oct 29, 2026",t:"Hidden until close",d:"Unlocks now stay hidden until you are close - within a level of a level gate, or holding about 3/4 of a cash or TC price. Stores, Estates, the crew, reputation and Settings all follow the same rule, and anything added later inherits it automatically. What you own is never hidden."},
    {v:"v190",ts:"Oct 29, 2026",t:"Long game",d:"The ticker no longer pushes the next property the moment it unlocks. Properties stay on the horizon as long-term goals, and the game only mentions buying once you hold about 3/4 of the price - close enough to taste it. How sales come in is untouched."},
@@ -3425,6 +3464,8 @@ function normalize(s,raw){
  if(!s.geneGrand||typeof s.geneGrand!=="object")s.geneGrand={};
  assignGeneLevels(s);
  if(!s.dealerWants||typeof s.dealerWants!=="object")s.dealerWants={};
+ if(!s.corner||typeof s.corner!=="object")s.corner={posted:false,nextAt:0,wu:null,day:"",sold:0,numbers:0,robbed:0,log:[],lastDrip:0,lastMood:""};
+ if(typeof s.streetTab!=="string")s.streetTab="dealers";
  if(!s.geneCollected||typeof s.geneCollected!=="object")s.geneCollected={};
  if(!s.hunt||typeof s.hunt!=="object")s.hunt=null;
  if(!s.pullup||typeof s.pullup!=="object")s.pullup=null;
@@ -4348,6 +4389,7 @@ function doDealerWant(di){
  var w=dealerWantFor(di);
  if(!w){S.msg="That dealer is not around yet.";save();render();return;}
  if(w.left<=0){S.msg=S.dealers[di].name+"'s bulk want is already filled today.";save();render();return;}
+ var _u=GROWKEYS.indexOf(w.k)>=0?"g":"";
  var have=S.stash[w.k]||0,sell=Math.min(have,w.left);
  if(sell<=0){S.msg="You have no "+PRODUCTS[w.k].name+" for that bulk want.";save();render();return;}
  var unit=dealerWantUnit(di,w.k),rev=Math.floor(unit*sell);
@@ -4355,17 +4397,17 @@ function doDealerWant(di){
  S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
  S.statsToday&&S.statsToday.date===dealerWantDayStr()&&(S.statsToday.earned+=rev);
  addXP(5);
- dealMoment(null,"Bulk sale: "+sell+"g "+PRODUCTS[w.k].name+" to "+S.dealers[di].name+" \u00B7 +"+money(rev));
- S.msg="Bulk sale: "+sell+"g "+PRODUCTS[w.k].name+" to "+S.dealers[di].name+" for "+money(rev)+"."+(w.left>0?" They still want "+w.left+"g today.":" Bulk want filled for today.");
+ dealMoment(null,"Bulk sale: "+sell+_u+" "+PRODUCTS[w.k].name+" to "+S.dealers[di].name+" \u00B7 +"+money(rev));
+ S.msg="Bulk sale: "+sell+_u+" "+PRODUCTS[w.k].name+" to "+S.dealers[di].name+" for "+money(rev)+"."+(w.left>0?" They still want "+w.left+_u+" today.":" Bulk want filled for today.");
  save();render();
 }
 function dealerWantHTML(di){
  var w=dealerWantFor(di);if(!w)return "";
  var d=S.dealers[di];
  if(w.left<=0)return '<div class="dwant done">\uD83D\uDCE6 <b>'+d.name+'</b> bulk want filled today \u2713</div>';
- var have=S.stash[w.k]||0,unit=dealerWantUnit(di,w.k);
- return '<div class="dwant"><span>\uD83D\uDCE6 <b>'+d.name+' wants</b> '+w.left+'g '+PRODUCTS[w.k].name+' today \u2014 pays '+money(unit)+'/g ('+money(Math.floor(unit*w.left))+' total) \u00B7 you have '+have+'g</span>'
-  +'<button type="button" data-act="dealerwant" data-d="'+di+'"'+(have>0?"":" disabled")+'>Sell '+Math.min(have,w.left)+'g</button></div>';
+ var have=S.stash[w.k]||0,unit=dealerWantUnit(di,w.k),_u=GROWKEYS.indexOf(w.k)>=0?"g":"";
+ return '<div class="dwant"><span>\uD83D\uDCE6 <b>'+d.name+' wants</b> '+w.left+_u+' '+PRODUCTS[w.k].name+' today \u2014 pays '+money(unit)+(_u?'/g':' each')+' ('+money(Math.floor(unit*w.left))+' total) \u00B7 you have '+have+_u+'</span>'
+  +'<button type="button" data-act="dealerwant" data-d="'+di+'"'+(have>0?"":" disabled")+'>Sell '+Math.min(have,w.left)+_u+'</button></div>';
 }
 /* ---- gene-strain order options (2026-10-15 design) ----
    Gene strains gate NOTHING and never enter the base order pool. When a
@@ -5364,7 +5406,7 @@ function render(){
   else if(getContact(_mv)){var _cc=getContact(_mv);closeOutOrder(_cc);q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
   else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
  }
- if(S.tab==="street"){q(".pane-street").innerHTML=streetHTML();var _ds=q(".pane-street .dstrip");if(_ds&&window.__dsPos)_ds.scrollLeft=window.__dsPos;var _cs=q(".pane-street .cstrip");if(_cs&&window.__csPos)_cs.scrollLeft=window.__csPos;}
+ if(S.tab==="street"){q(".pane-street").innerHTML=streetHTML();streetSwipeInit();var _ds=q(".pane-street .dstrip");if(_ds&&window.__dsPos)_ds.scrollLeft=window.__dsPos;var _cs=q(".pane-street .cstrip");if(_cs&&window.__csPos)_cs.scrollLeft=window.__csPos;}
  if(S.tab==="maps"){q(".pane-maps").innerHTML=mapsHTML();}
  if(S.tab==="rep"){q(".pane-rep").innerHTML=repHTML();}
  if(S.tab==="props"){q(".pane-props").innerHTML=propsHTML();}
@@ -5380,6 +5422,12 @@ function render(){
  if(S.tab==="tasks"){q(".pane-tasks").innerHTML=todoHTML();todoSwipeInit();}
 function streetHTML(){
  var dh=tabHeader("street");
+ dh+='<div class="st-tabs"><button type="button" class="st-tab'+(S.streetTab!=="corner"?" on":"")+'" data-act="sttab" data-v="dealers">\uD83E\uDD1D Dealers</button><button type="button" class="st-tab'+(S.streetTab==="corner"?" on":"")+'" data-act="sttab" data-v="corner">\uD83D\uDE8F The Corner</button></div>';
+ if(S.streetTab==="corner")return dh+cornerHTML();
+ return dh+streetDealersHTML();
+}
+function streetDealersHTML(){
+ var dh="";
  if(locked)dh+='<div class="lock sm">Laying low — heat dies down in '+Math.ceil((S.lockedUntil-now)/60000)+' min.</div>';
  var un=unlocked();
  var di=S.dealer||0;if(di>=S.dealers.length)di=0;
@@ -6516,13 +6564,14 @@ function maybeReact(c,msg){
  if(Math.random()>=chance)return;
  scheduleReaction(c,msg,1800+Math.random()*3200,reactEmojiFor(msg.text));
 }
-function maybeAddContact(tier,qty){
+function maybeAddContact(tier,qty,mult,forcedName){
  if(!S.contacts)S.contacts=[];
  if(S.contacts.length>=contactCap())return;
  // Contact chance scales with product tier and quantity sold in one deal.
  // (v147: slowed way down — referrals are now the main way the book grows.)
  var t=Math.max(1,parseInt(tier,10)||1),q=Math.max(1,parseInt(qty,10)||1);
  var chance=Math.min(CONTACT_TUNING.streetContactCap,CONTACT_TUNING.streetContactBase+CONTACT_TUNING.streetContactTier*t+Math.min(CONTACT_TUNING.streetQtyCap,CONTACT_TUNING.streetQtyRate*q));
+ if(typeof mult==="number")chance*=mult;
  if(Math.random()>chance)return;
  var used={};S.contacts.forEach(function(c){used[c.name]=1;});
  (S.runners||[]).forEach(function(r){used[r.name]=1;}); /* runner names never recycled */
@@ -6531,7 +6580,9 @@ function maybeAddContact(tier,qty){
  (S.secretContacts||[]).forEach(function(c){if(c.unique)used[c.name]=1;});
  var pool=CONTACT_NAMES.filter(function(n){return !used[n]&&!_blocked[n];});
  if(!pool.length)return;
- var nm=pool[(Math.random()*pool.length)|0];
+ var nm;
+ if(forcedName&&!used[forcedName]&&!_blocked[forcedName])nm=forcedName;
+ else{if(!pool.length)return;nm=pool[(Math.random()*pool.length)|0];}
  var tp=CONTACT_TYPES[(Math.random()*CONTACT_TYPES.length)|0];
  var _isThief=Math.random()<0.12;
  var _phone=genPhoneNumber(nm);
@@ -7408,6 +7459,258 @@ function doDeal(di,k,isBuy,isJoint,qty){
  save();render();
 }
 /* ===== STASH (v19): bag inventory + quick actions ===== */
+/* ===== THE CORNER (v193) — your post on Home turf. Post up and
+   walk-ups roll in at random (Oct 8 design: 45-90s gaps, max one
+   waiting, no timers shown — patience reads as mood). Haggle:
+   Accept / Push / Walk. Push adds ~10-15% price and tension and
+   cuts the number chance; tension maxed means he snatches the
+   bag or swings. Standing posted drips zone heat slowly. ===== */
+var CORNER_TERR="home";
+function cornerState(){
+ if(!S.corner||typeof S.corner!=="object")S.corner={posted:false,nextAt:0,wu:null,day:"",sold:0,numbers:0,robbed:0,log:[],lastDrip:0,lastMood:""};
+ var c=S.corner,day=localDayStr();
+ if(c.day!==day){c.day=day;c.sold=0;c.numbers=0;c.robbed=0;c.log=[];}
+ if(!Array.isArray(c.log))c.log=[];
+ return c;
+}
+function cornerLog(txt){var c=cornerState();c.log.unshift(txt);if(c.log.length>6)c.log.length=6;}
+function cornerHeatSale(g){
+ var base=2+g;
+ addTerrHeat("cops",Math.ceil(base*0.6*(g>=5?1.5:1)),CORNER_TERR);
+ addTerrHeat("gangs",Math.ceil(base*0.5),CORNER_TERR);
+ addTerrHeat("fam",Math.ceil(base*0.35),CORNER_TERR);
+}
+function pickWalkupName(){
+ var used={};(S.contacts||[]).forEach(function(c){used[c.name]=1;});
+ (S.runners||[]).forEach(function(r){used[r.name]=1;});
+ (S.tasks||[]).forEach(function(t){used[t.name]=1;});
+ (S.pendingContacts||[]).forEach(function(p){used[p.name]=1;});
+ (S.blockedNames||[]).forEach(function(n){used[n]=1;});
+ (S.secretContacts||[]).forEach(function(c){if(c.unique)used[c.name]=1;});
+ var pool=CONTACT_NAMES.filter(function(n){return !used[n];});
+ return pool.length?pool[(Math.random()*pool.length)|0]:null;
+}
+function cornerStockKeys(){
+ return GROWKEYS.filter(function(k){return visOfP(k)===2&&strainUnlocked(k)&&(S.stash[k]||0)>0;});
+}
+function cornerPool(){
+ var out=[],un=unlocked();
+ GROWKEYS.forEach(function(k){
+  if(PRODUCTS[k].gene)return;
+  if(visOfP(k)!==2||!strainUnlocked(k))return;
+  if((S.stash[k]||0)>0)out.push({k:k,kind:"bud"});
+  if((S.joints[k]||0)>0)out.push({k:k,kind:"joint"});
+ });
+ RKEYS.forEach(function(k){if(un.indexOf(k)>=0&&(S.stash[k]||0)>0)out.push({k:k,kind:"lab"});});
+ return out;
+}
+function cornerWantLabel(wu){
+ var st=PRODUCTS[wu.k];if(!st)return "";
+ if(wu.kind==="joint")return wu.g+" "+st.name+" joint"+(wu.g===1?"":"s");
+ if(wu.kind==="lab")return wu.g+" "+st.name;
+ return wu.g+"g "+st.name;
+}
+function cornerQtyLabel(wu){
+ if(wu.kind==="joint")return wu.g+(wu.g===1?" joint":" joints");
+ if(wu.kind==="lab")return ""+wu.g;
+ return wu.g+"g";
+}
+function cornerStreetUnit(k){
+ var sd=stashDealer();
+ var u=ppu(PRODUCTS[k].price,sd.d.buy[k]*terrPriceMult()*terrPrefMult(k,false));
+ return Math.round(u*gearPriceMult());
+}
+function cornerSpawn(now){
+ var c=cornerState();
+ var pool=cornerPool();if(!pool.length)return false;
+ var name=pickWalkupName();var anon=false;
+ if(!name){name="Some dude";anon=true;}
+ var pick=pool[(Math.random()*pool.length)|0];
+ var k=pick.k,kind=pick.kind,g,unit;
+ if(kind==="joint"){g=Math.min(S.joints[k]||0,[1,2,2,3,4,5][(Math.random()*6)|0]);unit=Math.max(1,Math.round(cornerStreetUnit(k)*0.9));}
+ else if(kind==="lab"){g=Math.min(S.stash[k]||0,1+((Math.random()*3)|0));unit=cornerStreetUnit(k);}
+ else{g=Math.min(S.stash[k]||0,3+((Math.random()*8)|0));unit=cornerStreetUnit(k);}
+ if(g<1)return false;
+ var street=unit*g;
+ var offer=Math.max(1,Math.round(street*(0.85+Math.random()*0.08)));
+ var pat=45000+((Math.random()*45000)|0);
+ c.wu={name:name,k:k,kind:kind,g:g,street:street,price:offer,offer0:offer,pushes:0,tension:0,endsAt:now+pat,patMs:pat,anon:anon?1:0};
+ c.lastMood="chill \uD83D\uDE0E";
+ return true;
+}
+function cornerMood(now){
+ var c=cornerState();if(!c.wu)return "";
+ var left=(c.wu.endsAt-now)/c.wu.patMs;
+ return left>0.5?"chill \uD83D\uDE0E":left>0.25?"antsy \uD83D\uDE10":"heated \uD83D\uDE24";
+}
+function cornerTick(now){
+ var c=cornerState();var changed=false;
+ if(c.posted&&now>=(S.lockedUntil||0)){
+  if(!c.lastDrip)c.lastDrip=now;
+  if(now-c.lastDrip>=45000){c.lastDrip=now;addTerrHeat("cops",10,CORNER_TERR);}
+  if(c.wu){
+   if(now>=c.wu.endsAt){cornerLog("\uD83D\uDEB6 "+c.wu.name+" wandered off.");c.wu=null;c.nextAt=now+45000+((Math.random()*45000)|0);changed=true;}
+   else{var m=cornerMood(now);if(m!==c.lastMood){c.lastMood=m;changed=true;}}
+  }else if(now>=c.nextAt){
+   if(cornerSpawn(now))changed=true;else c.nextAt=now+15000;
+  }
+ }
+ if(changed){save();if(S.tab==="street")render();}
+}
+function cornerPost(on){
+ var c=cornerState();
+ c.posted=!!on;
+ if(on){c.nextAt=Date.now()+8000+((Math.random()*20000)|0);c.lastDrip=Date.now();cornerLog("\uD83D\uDE8F You posted up on the corner.");}
+ else{c.wu=null;cornerLog("\uD83D\uDE8F You stepped off the corner.");}
+ save();render();
+}
+function cornerPush(){
+ var c=cornerState(),wu=c.wu;if(!wu)return;
+ var add=Math.max(1,Math.round(wu.street*(0.10+Math.random()*0.05)));
+ wu.price+=add;wu.pushes++;
+ wu.tension=Math.min(100,wu.tension+18+((Math.random()*13)|0));
+ if(wu.tension>=100){cornerBlowup();return;}
+ save();render();
+}
+function cornerBlowup(){
+ var c=cornerState(),wu=c.wu;if(!wu)return;
+ var st=PRODUCTS[wu.k];
+ /* A named walk-up who snaps starts the game's real thief battle: he becomes a
+    contact on the spot (the battle writes to his thread) and the grams he asked
+    for are the product at stake, exactly like a meetup robbery. */
+ if(!wu.anon&&!S.battle&&!S.thiefBattle&&(S.contacts||[]).length<contactCap()){
+  var tc=getContact(wu.name);
+  if(!tc){
+   var _tp=CONTACT_TYPES[(Math.random()*CONTACT_TYPES.length)|0];
+   tc={name:wu.name,type:_tp,prefs:contactPrefsFor(_tp),phone:genPhoneNumber(wu.name),loyalty:10,order:null,unread:false,unreadCount:0,msgs:[],lastOrderAt:0,lastFulfilledAt:0,isThief:true,ordersBeforeTurn:0,patienceMul:1,firstOrderAt:Date.now()};
+   S.contacts.push(tc);
+  }
+  c.robbed++;cornerLog("\uD83E\uDD77 "+wu.name+" pulled a weapon on you!");
+  cornerHeatSale(wu.g);
+  c.wu=null;c.nextAt=Date.now()+45000+((Math.random()*45000)|0);
+  startThiefBattle(tc,{k:wu.k,kind:wu.kind||"bud",g:wu.g,pu:Math.max(1,Math.round(wu.street/Math.max(1,wu.g)))},-1);
+  save();return;
+ }
+ if(Math.random()<0.55){
+  var _kind=wu.kind||"bud";
+  var lost=Math.min(_kind==="joint"?(S.joints[wu.k]||0):(S.stash[wu.k]||0),wu.g);
+  if(_kind==="joint")S.joints[wu.k]-=lost;else S.stash[wu.k]-=lost;
+  c.robbed++;cornerLog("\uD83E\uDD77 "+wu.name+" snatched "+cornerWantLabel({k:wu.k,kind:_kind,g:lost})+" and bolted!");
+  S.msg=wu.name+" snatched the bag and ran!";
+  cornerHeatSale(wu.g);
+ }else{
+  var dmg=Math.min(Math.max(1,(S.hp||100)-1),Math.round(5+Math.random()*8+pLevel()*1.5));
+  S.hp-=dmg;
+  c.robbed++;cornerLog("\uD83D\uDC4A "+wu.name+" swung on you (-"+dmg+" HP) and ran!");
+  S.msg=wu.name+" swung on you! -"+dmg+" HP.";
+ }
+ c.wu=null;c.nextAt=Date.now()+45000+((Math.random()*45000)|0);
+ battleRoll();save();render();
+}
+function cornerAccept(){
+ var c=cornerState(),wu=c.wu;if(!wu)return;
+ var now=Date.now();if(now<(S.lockedUntil||0))return;
+ var st=PRODUCTS[wu.k],kind=wu.kind||"bud",have=kind==="joint"?(S.joints[wu.k]||0):(S.stash[wu.k]||0);
+ if(have<wu.g){S.msg="You don't have "+cornerWantLabel(wu)+" anymore.";c.wu=null;c.nextAt=now+30000;save();render();return;}
+ var heldBefore=have;
+ if(kind==="joint")S.joints[wu.k]-=wu.g;else S.stash[wu.k]-=wu.g;
+ var rev=wu.price;
+ S.cash+=rev;S.stats.earned+=rev;S.stats.deals++;S.stats.biggestDeal=Math.max(S.stats.biggestDeal||0,rev);
+ cornerHeatSale(wu.g);
+ addTerrXP(5);
+ if(!addXP(5))S.msg="Sold "+cornerWantLabel(wu)+" to "+wu.name+" for "+money(rev)+".";
+ var prof=calcProfit(wu.k,wu.g,heldBefore,rev);
+ showSalePop(st.name,cornerQtyLabel(wu),rev,prof);
+ c.sold++;
+ cornerLog("\uD83D\uDE97 "+wu.name+" bought "+cornerWantLabel(wu)+" \u00B7 +"+money(rev)+(wu.pushes?" \u00B7 pushed x"+wu.pushes:""));
+ if(!wu.anon){
+  var _before=(S.pendingContacts||[]).length;
+  maybeAddContact(st.tier,wu.g,Math.max(0.15,1-0.3*wu.pushes),wu.name);
+  if((S.pendingContacts||[]).length>_before){c.numbers++;cornerLog("\uD83D\uDCF1 "+wu.name+" gave you their number.");}
+ }
+ c.wu=null;c.nextAt=now+45000+((Math.random()*45000)|0);
+ battleRoll();save();render();
+}
+function cornerWalk(){
+ var c=cornerState(),wu=c.wu;if(!wu)return;
+ cornerLog("\uD83D\uDEB6 You waved off "+wu.name+".");
+ c.wu=null;c.nextAt=Date.now()+45000+((Math.random()*45000)|0);
+ save();render();
+}
+function cornerHTML(){
+ var c=cornerState(),now=Date.now();
+ var heat=Math.round(terrTotal(CORNER_TERR));
+ var h='<div class="corner-wrap">';
+ h+='<div class="corner-hero"><div class="corner-title">\uD83D\uDE8F THE CORNER</div>'
+  +'<div class="corner-sub">Home turf \u00B7 5th &amp; Main \u2014 your block, your post</div>';
+ if(c.posted){
+  h+='<div class="corner-status"><span><span class="dot-on">\u25CF</span> Posted up \u00B7 they roll in when they roll in</span><span class="corner-heat">Corner heat \uD83D\uDD25 '+heat+'%</span></div>'
+   +'<div class="corner-heatbar"><i style="width:'+heat+'%"></i></div>'
+   +'<div class="corner-note">Standing here builds heat slow. Too hot and patrols start rolling by.</div>';
+ }else{
+  h+='<div class="corner-status"><span>You\u2019re not on the corner. Post up and the block comes to you.</span></div>';
+ }
+ h+='</div>';
+ if(now<(S.lockedUntil||0))h+='<div class="lock sm">Laying low \u2014 heat dies down in '+Math.ceil(((S.lockedUntil||0)-now)/60000)+' min. No walk-ups while you hide.</div>';
+ if(c.posted&&c.wu){
+  var wu=c.wu,st=PRODUCTS[wu.k];
+  h+='<div class="wu-card"><div class="wu-head"><div class="wu-av">\uD83D\uDEB6</div>'
+   +'<div style="flex:1"><div class="wu-name">'+escHtml(wu.name)+' just walked up</div>'
+   +'<div class="wu-want">Wants <b style="color:#fff">'+cornerWantLabel(wu)+'</b> \u00B7 street price '+money(wu.street)+'</div></div>'
+   +'<div class="wu-mood">mood: '+cornerMood(now)+'</div></div>'
+   +'<div class="wu-line">'+(wu.pushes?('He offered '+money(wu.offer0)+' \u2014 you pushed: <b style="color:#7ee787">'+money(wu.price)+'</b>'):('He\u2019s offering <b>'+money(wu.price)+'</b>'))+'</div>'
+   +'<div class="wu-trow"><span>Tension</span><div class="wu-tbar"><i style="width:'+wu.tension+'%"></i></div><span style="color:#ffb340">'+wu.tension+'%</span></div>'
+   +'<div class="wu-warn">Push too far and he pulls a weapon on you.</div>'
+   +'<div class="wu-btns"><button type="button" class="wu-accept" data-act="wu-accept">Accept '+money(wu.price)+'</button>'
+   +'<button type="button" class="wu-push" data-act="wu-push">Push</button>'
+   +'<button type="button" class="wu-walk" data-act="wu-walk">Walk</button></div>'
+   +'<div class="wu-foot">\uD83D\uDCF1 Easy deals earn numbers. Greedy ones don\u2019t.</div></div>';
+ }else if(c.posted){
+  h+='<div class="corner-quiet">'+(cornerStockKeys().length?'Quiet right now\u2026 stay posted.':'Your bag\u2019s empty \u2014 nothing to sell. Stock up and stay posted.')+'</div>';
+ }
+ if(c.log.length||c.sold||c.numbers||c.robbed){
+  h+='<div class="corner-feed"><div class="corner-feed-h">ON THE CORNER TODAY</div>';
+  c.log.forEach(function(l){h+='<div>'+l+'</div>';});
+  h+='<div class="corner-stats"><span>Sold here: <b>'+c.sold+'</b></span><span>Numbers: <b>'+c.numbers+'</b></span><span>Robbed: <b>'+c.robbed+'</b></span></div></div>';
+ }
+ h+=c.posted
+  ?'<button type="button" class="corner-off" data-act="corner-off">Step off the corner</button>'
+  :'<button type="button" class="corner-post" data-act="corner-post">Post up on the corner</button>';
+ return h+'</div>';
+}
+/* Street pager (v193): sideways swipe flips between the dealers'
+   corners and finally The Corner tab. Vertical always scrolls. */
+var _streetTouch=null;
+function streetSwipeInit(){
+ var _pane=q(".pane-street");
+ if(!_pane||_pane._swipeInit)return;
+ _pane._swipeInit=true;
+ _pane.addEventListener("touchstart",function(e){
+  if(e.touches.length===1)_streetTouch={x:e.touches[0].clientX,y:e.touches[0].clientY};
+ },{passive:true});
+ _pane.addEventListener("touchend",function(e){
+  if(!_streetTouch)return;
+  var _dx=e.changedTouches[0].clientX-_streetTouch.x;
+  var _dy=e.changedTouches[0].clientY-_streetTouch.y;
+  _streetTouch=null;
+  if(Math.abs(_dy)>Math.abs(_dx))return;
+  if(Math.abs(_dx)<60)return;
+  streetPager(_dx<0?1:-1);
+ },{passive:true});
+}
+function streetPager(dir){
+ var vis=[];S.dealers.forEach(function(d,ii){if(tierVis(DEALER_TIER[ii])===2&&tierUnlocked(DEALER_TIER[ii]))vis.push(ii);});
+ if(!vis.length)return;
+ if(S.streetTab==="corner"){
+  if(dir<0){S.streetTab="dealers";S.dealer=vis[vis.length-1];save();render();}
+  return;
+ }
+ var cur=vis.indexOf(S.dealer);if(cur<0)cur=0;
+ var nx=cur+dir;
+ if(nx>=vis.length){S.streetTab="corner";save();render();return;}
+ if(nx<0)return;
+ S.dealer=vis[nx];save();render();
+}
 function stashDealer(){
  var di=S.dealer||0;if(di>=S.dealers.length)di=0;
  while(di>0&&!tierUnlocked(DEALER_TIER[di]))di--;
@@ -7827,6 +8130,7 @@ function tick(){
  }
  tickRunners(now); /* complete sales first — freed capacity is reusable */
  tickContacts(now);
+ cornerTick(now);
  arTick(now);
  /* task expiry (v157): accepted orders are EN ROUTE — the customer
     knows you answered. En-route tasks get ONE gentle nudge at
@@ -9336,10 +9640,12 @@ function battleHTML(){
 function thiefBattleHTML(){
  var b=S.thiefBattle;
  if(!b)return "";
+ var _pk=b.product&&PRODUCTS[b.product.k]?PRODUCTS[b.product.k].name:"";
+ var _stake=b.product?(b.product.kind==="joint"?(b.product.g+" "+_pk+" joint"+(b.product.g===1?"":"s")):b.product.kind==="lab"?(b.product.g+" "+_pk):(b.product.g+"g "+_pk)):"";
  var h='<div class="battle"><div class="bt-head">😡 ROBBERY — '+escHtml(b.name)+'</div>';
  h+='<div class="brow"><span>'+escHtml(b.name)+'</span><div class="bar"><i class="b-cop" style="width:'+Math.round(Math.max(0,b.thiefHp)/b.thiefMax*100)+'%"></i></div><b>'+Math.max(0,Math.round(b.thiefHp))+'</b></div>';
  h+='<div class="brow"><span>You</span><div class="bar"><i class="b-you" style="width:'+Math.round(Math.max(0,Math.min(100,S.hp)))+'%"></i></div><b>'+Math.round(Math.max(0,Math.min(100,S.hp)))+'</b></div>';
- h+='<div class="sdesc">At stake: '+b.product.g+'g '+escHtml(PRODUCTS[b.product.k].name)+'. Win and take their '+escHtml(WEAPONS[b.thiefWeapon].name)+'!</div>';
+ h+='<div class="sdesc">At stake: '+_stake+'. Win and take their '+escHtml(WEAPONS[b.thiefWeapon].name)+'!</div>';
  h+='<div class="blog">'+b.log.map(function(l){return '<div>'+l+'</div>';}).join("")+'</div>';
  h+='<div class="btns"><button type="button" class="go" data-act="tstrike">STRIKE ('+WEAPONS[bestWeapon()].name.toUpperCase()+')</button><button type="button" data-act="trun">RUN</button></div></div>';
  return h;
@@ -9962,6 +10268,12 @@ root.addEventListener("click",function(e){
  if(a==="gprev"||a==="gnext"){var dir=a==="gnext"?1:-1,n=S.props.length,gp=S.gprop||0;for(var gi2=0;gi2<n;gi2++){gp=(gp+dir+n)%n;if(tierUnlocked(S.props[gp].tier))break;}S.gprop=gp;S.gpage=0;save();render();return;}
  if(a==="gpage"){var pgp=S.props[S.gprop||0]||S.props[0],npg=Math.max(1,Math.ceil(pgp.slots.length/8));S.gpage=Math.max(0,Math.min(npg-1,(S.gpage||0)+(+b.dataset.p)));save();render();return;}
  if(a==="dealersel"){S.dealer=+b.dataset.d;save();render();return;}
+ if(a==="sttab"){S.streetTab=b.dataset.v;save();render();return;}
+ if(a==="corner-post"){cornerPost(true);return;}
+ if(a==="corner-off"){cornerPost(false);return;}
+ if(a==="wu-accept"){cornerAccept();return;}
+ if(a==="wu-push"){cornerPush();return;}
+ if(a==="wu-walk"){cornerWalk();return;}
  if(a==="secret-call"){var _scn=b.dataset.c,_sc=null;
  (S.secretContacts||[]).forEach(function(c){if(c.name===_scn)_sc=c;});
  if(_sc){S._dialNum=_sc.phone;S.phoneView="keypad";save();render();}return;}
@@ -11550,7 +11862,7 @@ function runnerCallHTML(r){
  }
  return h;
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP,RUNNER_LEVELS:RUNNER_LEVELS,RUNNER_SLOTS:RUNNER_SLOTS,RUNNER_XP_PER_SALE:RUNNER_XP_PER_SALE,runnerLevel:runnerLevel,runnerSpecBonus:runnerSpecBonus,runnerPhonebookSection:runnerPhonebookSection,runnerDetailHTML:runnerDetailHTML,ttPinHash:ttPinHash,ttSystemStatus:ttSystemStatus,ttExportSave:ttExportSave,ttImportSave:ttImportSave,ttB64Encode:ttB64Encode,ttB64Decode:ttB64Decode,TERRITORY_LEVELS:TERRITORY_LEVELS,terrLevelOf:terrLevelOf,terrPriceMultFor:terrPriceMultFor,terrNextGrantTxt:terrNextGrantTxt,addTerrXP:addTerrXP,orderBudgetNow:orderBudgetNow,dealerWantFor:dealerWantFor,dealerWantUnit:dealerWantUnit,doDealerWant:doDealerWant,DEALER_BUY_OWNER:DEALER_BUY_OWNER,geneOptFor:geneOptFor,geneLevelFor:geneLevelFor,geneLevelReached:geneLevelReached,geneAssign:assignGeneLevels,geneHuntAware:geneHuntAware,GENE_LV_BAND:GENE_LV_BAND,visorMaybeSpawn:visorMaybeSpawn,visorCollect:visorCollect,doGeneOptSell:doGeneOptSell,contactBasePrice:contactBasePrice,terrPrefMult:terrPrefMult,visOfP:visOfP,strainUnlocked:strainUnlocked,kitVis:kitVis,lvClose:lvClose,cashClose:cashClose,cryptoClose:cryptoClose,dealMoment:dealMoment,zoneHeatTotal:zoneHeatTotal,kitUnlocked:kitUnlocked,stashOrderUnit:stashOrderUnit,huntCollect:huntCollect,huntStart:huntStart,settleWorkerTask:settleWorkerTask,settleCooking:settleCooking,collectCook:collectCook,pullupServe:pullupServe,CONTACT_TUNING:CONTACT_TUNING,createContactOrder:createContactOrder,tickContacts:tickContacts,scheduleReaction:scheduleReaction,maybeReact:maybeReact,burnTick:burnTick,isParanoid:isParanoid,pushContactMsg:pushContactMsg,GENE_KEYS:GENE_KEYS,GENE_OPT_PREMIUM:GENE_OPT_PREMIUM,TERR_GRANT_TXT:TERR_GRANT_TXT,bribeCost:bribeCost,TTWRAP_REF:function(){return TTWRAP;}};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP,RUNNER_LEVELS:RUNNER_LEVELS,RUNNER_SLOTS:RUNNER_SLOTS,RUNNER_XP_PER_SALE:RUNNER_XP_PER_SALE,runnerLevel:runnerLevel,runnerSpecBonus:runnerSpecBonus,runnerPhonebookSection:runnerPhonebookSection,runnerDetailHTML:runnerDetailHTML,ttPinHash:ttPinHash,ttSystemStatus:ttSystemStatus,ttExportSave:ttExportSave,ttImportSave:ttImportSave,ttB64Encode:ttB64Encode,ttB64Decode:ttB64Decode,TERRITORY_LEVELS:TERRITORY_LEVELS,terrLevelOf:terrLevelOf,terrPriceMultFor:terrPriceMultFor,terrNextGrantTxt:terrNextGrantTxt,addTerrXP:addTerrXP,orderBudgetNow:orderBudgetNow,dealerWantFor:dealerWantFor,dealerWantUnit:dealerWantUnit,doDealerWant:doDealerWant,DEALER_BUY_OWNER:DEALER_BUY_OWNER,geneOptFor:geneOptFor,geneLevelFor:geneLevelFor,geneLevelReached:geneLevelReached,geneAssign:assignGeneLevels,geneHuntAware:geneHuntAware,GENE_LV_BAND:GENE_LV_BAND,visorMaybeSpawn:visorMaybeSpawn,visorCollect:visorCollect,doGeneOptSell:doGeneOptSell,contactBasePrice:contactBasePrice,terrPrefMult:terrPrefMult,visOfP:visOfP,strainUnlocked:strainUnlocked,kitVis:kitVis,lvClose:lvClose,cashClose:cashClose,cryptoClose:cryptoClose,dealMoment:dealMoment,cornerTick:cornerTick,cornerState:cornerState,cornerSpawn:cornerSpawn,cornerPost:cornerPost,streetPager:streetPager,zoneHeatTotal:zoneHeatTotal,kitUnlocked:kitUnlocked,stashOrderUnit:stashOrderUnit,huntCollect:huntCollect,huntStart:huntStart,settleWorkerTask:settleWorkerTask,settleCooking:settleCooking,collectCook:collectCook,pullupServe:pullupServe,CONTACT_TUNING:CONTACT_TUNING,createContactOrder:createContactOrder,tickContacts:tickContacts,scheduleReaction:scheduleReaction,maybeReact:maybeReact,burnTick:burnTick,isParanoid:isParanoid,pushContactMsg:pushContactMsg,GENE_KEYS:GENE_KEYS,GENE_OPT_PREMIUM:GENE_OPT_PREMIUM,TERR_GRANT_TXT:TERR_GRANT_TXT,bribeCost:bribeCost,TTWRAP_REF:function(){return TTWRAP;}};
 })();
 </script>
 <style>
