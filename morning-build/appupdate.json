@@ -1,8 +1,8 @@
 {
-  "version_code": 7,
-  "version_name": "7.0",
+  "version_code": 8,
+  "version_name": "8.0",
   "apk_url": "https://vegzizreal.github.io/SlayerV-Games/morning-build/app.apk",
-  "notes": "Reader fix: stories that fit now stay on one page.",
-  "apk_sha256": "2de6ddfed8c449fc733946de4a458c2564cf7a3451826a9c608af6ad8a178505",
-  "apk_size": 742001
+  "notes": "Version shown up top; errors now surface in a bubble.",
+  "apk_sha256": "8aebb0f2fb5c24acf831eb766ff5034516541422950c03d2bc09d9518c6181c9",
+  "apk_size": 746097
 }
