@@ -1684,6 +1684,31 @@ body.electron-phone #ewin-controls{display:flex}
 .pg:not([data-theme="light"]) .pane-cook .cookcard{background:#2a2416}
 /* Wellness app (Chill) */
 .pane-chill{background:linear-gradient(180deg,#1a1a2e,#16213e);border-radius:16px;padding:12px}
+.growtodo{display:flex;padding:2px 0 8px}
+.growtodo button{flex:1;padding:11px 0;border-radius:12px;border:1px solid #4c3a8f;background:#1a1430;color:#c4b5fd;font-size:16px;font-weight:700;cursor:pointer}
+.gsummary{display:flex;gap:7px;flex-wrap:wrap;padding:0 2px 4px}
+.gchip{background:var(--hatch-widget-surface-muted);border:1px solid var(--hatch-widget-border);border-radius:999px;padding:4px 11px;font-size:12.5px;color:var(--hatch-widget-text-muted)}
+.gchip.ok{color:#4ade80}.gchip.bad{color:#f87171}
+.gsect{font-size:12px;font-weight:800;letter-spacing:1.6px;color:var(--hatch-widget-text-muted);padding:10px 2px 6px}
+.growrow{display:flex;gap:11px;align-items:center;background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-radius:14px;padding:9px 11px;margin-bottom:9px;cursor:pointer;box-shadow:0 1px 4px var(--hatch-widget-shadow)}
+.growrow:active{transform:scale(.985)}
+.growrow.ready{border-color:#22c55e;box-shadow:0 0 10px rgba(34,197,94,.35)}
+.growrow.dry{border-color:#991b1b}
+.gr-th{width:60px;height:60px;border-radius:10px;overflow:hidden;flex:0 0 60px;background:#101a10;display:flex;align-items:center;justify-content:center}
+.gr-th img{width:100%;height:100%;object-fit:cover}
+.gr-th.plus{font-size:28px;color:#5f7a5f}
+.gr-mid{flex:1;min-width:0}
+.gr-nm{display:flex;justify-content:space-between;font-weight:700;font-size:16px}
+.gr-pct{color:#4ade80}
+.gr-st{font-size:12.5px;color:var(--hatch-widget-text-muted);margin:1px 0 3px}
+.growrow.dry .gr-st{color:#fca5a5}
+.gr-bars{height:7px;border-radius:99px;background:rgba(127,127,127,.18);overflow:hidden;margin-top:4px}
+.gr-bars i{display:block;height:100%;border-radius:99px}
+.gr-bars .g{background:#4ade80}.gr-bars .w{background:#38bdf8}.gr-bars .w.low{background:#ef4444}
+.gr-fert{flex:0 0 auto;padding:9px 10px;border-radius:10px;border:1px solid #2c4a2c;background:#12240f;color:#a3e635;font-size:13px;font-weight:700;cursor:pointer}
+.gpick{display:flex;flex-wrap:wrap;gap:7px;margin:-3px 0 10px}
+.gseed{padding:9px 12px;border-radius:999px;border:1px solid #2c4a2c;background:#12240f;color:#e8f5e9;font-size:13.5px;font-weight:600;cursor:pointer}
+.gseed .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
 .pot-img.fill{height:100%;min-height:120px;border-radius:10px}.potc.empty{padding:0;overflow:hidden}.potc{background:linear-gradient(180deg,var(--hatch-widget-surface),var(--hatch-widget-surface-muted));border:1px solid var(--hatch-widget-border);border-radius:10px;padding:5px;position:relative;overflow:hidden;box-shadow:0 1px 4px var(--hatch-widget-shadow)}
 .plantart{position:relative;width:100%;height:220px;overflow:hidden;border-radius:12px}
 .zoom56{position:absolute;left:0;right:0;bottom:0;height:100px;transform:scale(.56);transform-origin:50% 100%}
@@ -2874,10 +2899,11 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:25,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v195";
+var GAME_VER="v196";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"v196",ts:"Oct 29, 2026",t:"Grow, rebuilt around your hands",d:"The Grow screen is rows now, sorted needs-you-first: ripe and dry plants rise to the top. There are no Water all / Harvest all buttons anymore - tap a plant's row and it does what the plant needs. Water when it is thirsty; a ripe plant gets watered first if it is dry, because a watered plant yields more, then the next tap harvests it. Tap an empty pot to pick a seed. A To Do button at the top jumps straight to your list."},
    {v:"v195",ts:"Oct 29, 2026",t:"Clear all, like a real phone",d:"Clear all in Messages now wipes every notification badge and dot in one tap, the way a real phone clears notifications - except conversations holding an order you have not accepted yet. Those keep their badges until you decide. Nothing is deleted; every conversation stays exactly as it was."},
    {v:"v194",ts:"Oct 29, 2026",t:"Cleaner shop shelves",d:"Bought gear leaves the shop shelves. Owned clothing and gear now live in a YOUR GEAR list at the top of the Style tab, where you still equip and unequip - the shelves only show what is left to buy. Weapons already vanished once bought; duffels and tent rows already showed only the next one."},
    {v:"v193",ts:"Oct 29, 2026",t:"The Corner",d:"The Street is two corners now. Swipe sideways on the Dealers tab to flip between dealers and check prices. The Corner tab is your own post: stand it and walk-ups roll in at random - haggle with Accept, Push or Walk. Easy deals earn numbers, greedy ones earn tension, and standing there builds heat slow."},
@@ -4485,6 +4511,29 @@ var STRAIN_ART={
  northern:{stemH:[0,6,20,40,54,62,68],perNode:[0,0,1,2,2,2,2],nl:[0,0,3,5,7,7,7],spread:36,lw:10,lh:22,bud1:"#ffffff",bud2:"#dfeedf",bud3:"#8fae8f",glow:"#ffffff"},
  ak47:{stemH:[0,5,16,32,44,52,58],perNode:[0,0,1,2,2,2,2],nl:[0,0,3,5,7,7,7],spread:48,lw:12,lh:20,bud1:"#dcefe0",bud2:"#4caf7d",bud3:"#1d4d33",glow:"#4caf7d"}
 };
+function growRowHTML(p,pi,si){
+ if(!p){
+  var eh='<div class="growrow" data-act="growrow" data-pi="'+pi+'" data-si="'+si+'"><div class="gr-th plus">\uFF0B</div><div class="gr-mid"><div class="gr-nm"><span>Empty pot</span></div><div class="gr-st">Tap to plant</div></div></div>';
+  if(S.gpick&&S.gpick.pi===pi&&S.gpick.si===si){
+   var chips="",any=false;
+   GROWKEYS.forEach(function(k){if(!strainUnlocked(k))return;var n=S.seeds[k]||0;if(n<=0)return;any=true;chips+='<button type="button" class="gseed" data-act="growplant" data-pi="'+pi+'" data-si="'+si+'" data-strain="'+k+'"><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+' \u00D7'+n+'</button>';});
+   eh+='<div class="gpick">'+(any?chips:'<span class="gr-st">No seeds on hand \u2014 buy some in the Seeds list below.</span>')+'</div>';
+  }
+  return eh;
+ }
+ var st=stageOf(p.growth),pd=PRODUCTS[p.strain];
+ var imgSrc=(st===6)?(STRAIN_IMGS[p.strain]||STRAIN_IMGS.sour):STAGE_IMGS[st];
+ var ready=p.growth>=100,dry=p.water<25;
+ var status=ready?(p.water>=50?"Mature \u00B7 tap to harvest":"Mature \u00B7 water first \u2014 a watered plant yields more"):(dry?"Dry \u2014 growth stalled \u00B7 tap to water":STAGE_NAMES[st]+" \u00B7 tap to water");
+ return '<div class="growrow'+(ready?" ready":dry?" dry":"")+'" data-act="growrow" data-pi="'+pi+'" data-si="'+si+'">'
+  +'<div class="gr-th"><img src="'+imgSrc+'" alt="'+pd.name+'"></div>'
+  +'<div class="gr-mid"><div class="gr-nm"><span>'+pd.name+'</span><span class="gr-pct">'+Math.round(p.growth)+'%</span></div>'
+  +'<div class="gr-st">'+status+'</div>'
+  +'<div class="gr-bars"><i class="g" style="width:'+Math.round(p.growth)+'%"></i></div>'
+  +'<div class="gr-bars"><i class="w'+(dry?" low":"")+'" style="width:'+Math.round(p.water)+'%"></i></div></div>'
+  +((S.fert>0&&p.growth<100)?'<button type="button" class="gr-fert" data-act="fert" data-pi="'+pi+'" data-si="'+si+'">\uD83C\uDF3F Fert \u00D7'+S.fert+'</button>':'')
+  +'</div>';
+}
 function plantHTML(p,pi,si){
  if(!p){
   return '<div class="potc empty"><img src="'+EMPTY_POT_IMG+'" class="pot-img fill" alt="Empty pot"></div>';
@@ -5004,17 +5053,19 @@ function render(){
   _rl.innerHTML=_items.length?_items.map(function(a){return '<button type="button" class="recent-item" data-act="openapp" data-app="'+a+'">'+APP_EMOJI[a]+" "+appName(a)+'</button>';}).join(""):'<div class="recents-empty">No recent apps</div>';}
  if(S.thiefBattle)q(".pane-battle").innerHTML=thiefBattleHTML();else if(battling)q(".pane-battle").innerHTML=battleHTML();
  q(".v-hint").textContent=battling?"Win the fight or run — nothing else until it's over.":HINTS[S.tab];
- var gh=tabHeader("grow")+'<div class="growbar"><button type="button" data-act="waterall">Water all</button><button type="button" data-act="harvestall">Harvest all</button></div>';
+ var gh=tabHeader("grow")+'<div class="growtodo"><button type="button" data-act="openapp" data-app="tasks">\uD83D\uDCCB To Do</button></div>';
  var gi=S.gprop||0;if(gi>=S.props.length)gi=0;
  var gguard=0;while(S.props[gi]&&!tierUnlocked(S.props[gi].tier)&&gguard<S.props.length){gi=(gi+1)%S.props.length;gguard++;}
  var pr=S.props[gi];
  gh+='<div class="ppager"><button type="button" data-act="gprev">\u25C0</button><span class="pp-name">'+pr.name+'</span><span class="prop-tier t'+pr.tier+'">TIER '+pr.tier+'</span><button type="button" data-act="gnext">\u25B6</button></div>';
- gh+='<div class="pots">';
- var perPage=4,pages=Math.max(1,Math.ceil(pr.slots.length/perPage));
- var pgm=Math.min(S.gpage||0,pages-1);
- for(var si2=pgm*perPage;si2<Math.min(pr.slots.length,(pgm+1)*perPage);si2++)gh+=plantHTML(pr.slots[si2],gi,si2);
- gh+='</div>';
- if(pages>1)gh+='<div class="ppager sm"><button type="button" data-act="gpage" data-p="'+(pgm-1)+'">\u25C0</button><span>'+(pgm*perPage+1)+'\u2013'+Math.min(pr.slots.length,(pgm+1)*perPage)+' of '+pr.slots.length+'</span><button type="button" data-act="gpage" data-p="'+(pgm+1)+'">\u25B6</button></div>';
+ var _need=[],_grow=[],_emp=[];
+ pr.slots.forEach(function(p,si){if(!p){_emp.push(si);return;}if(p.growth>=100||p.water<25)_need.push(si);else _grow.push(si);});
+ _need.sort(function(a,b){var ra=pr.slots[a].growth>=100?0:1,rb=pr.slots[b].growth>=100?0:1;if(ra!==rb)return ra-rb;return pr.slots[a].water-pr.slots[b].water;});
+ _grow.sort(function(a,b){return pr.slots[b].growth-pr.slots[a].growth;});
+ var _nR=pr.slots.filter(function(p){return p&&p.growth>=100;}).length,_nD=pr.slots.filter(function(p){return p&&p.water<25;}).length;
+ gh+='<div class="gsummary"><span class="gchip">'+pr.slots.length+' pots</span>'+(_nR?'<span class="gchip ok">\u25CF '+_nR+' ready</span>':'')+(_nD?'<span class="gchip bad">\u25CF '+_nD+' dry</span>':'')+(_emp.length?'<span class="gchip">'+_emp.length+' empty</span>':'')+'</div>';
+ var _sec=function(tt,arr){if(!arr.length)return "";var o='<div class="gsect">'+tt+'</div>';arr.forEach(function(si){o+=growRowHTML(pr.slots[si],gi,si);});return o;};
+ gh+=_sec("NEEDS YOU FIRST",_need)+_sec("GROWING",_grow)+_sec("EMPTY",_emp);
  // seeds quick-buy + auto-plant in Grow tab
  gh+='<div class="shopsec">SEEDS</div>';
  GROWKEYS.forEach(function(k){
@@ -10221,6 +10272,12 @@ root.addEventListener("click",function(e){
  if(a==="prop-harvestall"){var _ph=S.props.filter(function(x){return x.id===b.dataset.pid;})[0];if(_ph){var _phi=S.props.indexOf(_ph);_ph.slots.forEach(function(p,si){if(p&&p.growth>=100)doHarvest(_phi,si);});}save();render();return;}
  if(a==="plant"){S.propSel=null;doPlant(+b.dataset.pi,+b.dataset.si,b.dataset.strain);return;}
  if(a==="water"){var p=getPot(+b.dataset.pi,+b.dataset.si);if(p){p.water=100;S.msg="Watered.";}S.propSel=null;save();render();return;}
+ if(a==="growrow"){var _gpr=S.props[+b.dataset.pi];if(!_gpr)return;var _gs=_gpr.slots[+b.dataset.si];
+  if(!_gs){S.gpick=(S.gpick&&S.gpick.pi===+b.dataset.pi&&S.gpick.si===+b.dataset.si)?null:{pi:+b.dataset.pi,si:+b.dataset.si};save();render();return;}
+  S.gpick=null;
+  if(_gs.growth>=100&&_gs.water>=50){doHarvest(+b.dataset.pi,+b.dataset.si);return;}
+  _gs.water=100;S.msg="Watered.";save();render();return;}
+ if(a==="growplant"){S.gpick=null;doPlant(+b.dataset.pi,+b.dataset.si,b.dataset.strain);return;}
  if(a==="waterall"){S.props.forEach(function(pr){pr.slots.forEach(function(p){if(p)p.water=100;});});S.msg="Everything watered.";save();render();pushGrowToWidget(true);return;}
  if(a==="harvestall"){doHarvestAll();return;}
  if(a==="fert"){var p2=getPot(+b.dataset.pi,+b.dataset.si);if(p2&&S.fert>0&&p2.growth<100){S.fert--;p2.growth=Math.min(100,p2.growth+30);S.msg="Fertilized — growth boosted.";save();render();}return;}
