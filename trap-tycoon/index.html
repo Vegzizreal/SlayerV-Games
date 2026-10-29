@@ -458,6 +458,39 @@ body.electron-phone #ewin-controls{display:flex}
  .pane-street>.appnav,.pane-street>.amtrow,.pane-street>.dchips,.pane-street>.lock{grid-column:1/-1}
  .pane-street>.drow2{margin:0 0 10px}
 }
+/* ===== v199: inner-screen scaling pass ===== */
+@media(min-width:600px){
+ .pg .hw-appgrid .aa-icon{width:80px;height:80px}
+ .pg .hw-appgrid .aa-label{font-size:14.5px}
+ .pg .oneui-dock .aa-icon{width:62px;height:62px}
+}
+@media(min-width:900px){
+ /* home: icons and labels grow, grid fills the height, dock at the bottom */
+ .pg .hw-appgrid .aa-icon{width:94px;height:94px}
+ .pg .hw-appgrid .aa-label{font-size:16px}
+ .pg .hw-wloc{font-size:17px}
+ .pg .hw-wcond{font-size:15px}
+ .pg .aa-badge{font-size:14px;padding:3px 9px}
+ .pg .oneui-dock .aa-icon{width:72px;height:72px}
+ .pg .hw-appgrid{flex:1;display:flex;flex-direction:column}
+ .pg .hw-page{flex:1;align-content:space-evenly;row-gap:34px}
+ .pg .hw-weather{font-size:17px}
+ .pg .shopsec,.pg .gsect{font-size:14px}
+ /* street: the Corner pieces span full width in the 2-col pane */
+ .pane-street>.street-tabs,.pane-street>.corner-hero,.pane-street>.corner-stats,.pane-street>.corner-feed,.pane-street>.corner-post,.pane-street>.corner-heat,.pane-street>.corner-note,.pane-street>.corner-quiet,.pane-street>.corner-off,.pane-street>.wu-card{grid-column:1/-1}
+ /* two-column card flow for the busy list screens */
+ .pg .pane-grow,.pg .pane-store,.pg .pane-cook,.pg .pane-props{display:grid;grid-template-columns:1fr 1fr;gap:0 12px;align-content:start}
+ .pg .pane-grow>.appnav,.pg .pane-grow>.growtodo,.pg .pane-grow>.ppager,.pg .pane-grow>.gsummary,.pg .pane-grow>.gsect,.pg .pane-grow>.shopsec,.pg .pane-grow>.srow,
+ .pg .pane-stash>.appnav,.pg .pane-stash>.shopsec,
+ .pg .pane-store>.appnav,.pg .pane-store>.dchips,.pg .pane-store>.shopsec,
+ .pg .pane-cook>.appnav,.pg .pane-cook>.dchips,.pg .pane-cook>.shopsec,
+ .pg .pane-tasks>.appnav,.pg .pane-tasks>.dchips,.pg .pane-tasks>.shopsec,
+ .pg .pane-props>.appnav,.pg .pane-props>.shopsec{grid-column:1/-1}
+ /* reading screens sit in a centered column instead of stretching */
+ .pg .pane-deal .msg-chats,.pg .pane-deal .msg-thread{max-width:840px;margin:0 auto;width:100%}
+ .pg .pane-settings,.pg .pane-clinic,.pg .pane-chill,.pg .pane-bank,.pg .pane-rep,.pg .pane-stash,.pg .pane-tasks{max-width:840px;margin:0 auto;width:100%}
+ .pg .pane-battle{max-width:780px;margin:0 auto;width:100%}
+}
 .hw-dots span{cursor:pointer}
 .hw-dots{display:none!important}
 .hw-vertag{position:absolute;right:10px;bottom:6px;font-size:10px;font-weight:600;color:#9aa3b2;opacity:.65;pointer-events:none;user-select:none;letter-spacing:.3px}
@@ -1316,6 +1349,23 @@ body.electron-phone #ewin-controls{display:flex}
 .live-deal-row .msg-order-body{flex:1}
 .live-deal button{width:auto;padding:5px 12px;font-size:12.5px;border-radius:14px;flex:0 0 auto}
 /* Tasks app */
+.hire-row{display:flex;align-items:center;gap:10px;border:1.5px solid rgba(74,222,128,.55);background:rgba(34,197,94,.07);border-radius:12px;padding:9px 11px;margin:0 12px 9px}
+.hire-row.amber{border-color:rgba(251,191,36,.5);background:rgba(251,191,36,.05)}
+.hire-info{flex:1;min-width:0}
+.hire-name{font-size:15.5px;font-weight:800;color:#e7edf3}
+.hire-tag{font-size:10px;background:#14532d;color:#bbf7d0;border-radius:6px;padding:2px 7px;letter-spacing:.06em;vertical-align:2px;margin-left:5px}
+.hire-row.amber .hire-tag{background:#713f12;color:#fde68a}
+.hire-facts{font-size:12px;color:#9fb2c1;margin-top:2px}
+.hire-btns{display:flex;gap:7px;flex:none}
+.hire-btns button{border:none;border-radius:9px;padding:9px 13px;font-size:13.5px;font-weight:800;cursor:pointer}
+.hire-btns .go{background:#22c55e;color:#04160a}
+.hire-btns .pass{background:#26313d;color:#c6d3de;padding:9px 11px}
+.hire-btns button:disabled{opacity:.4;cursor:default}
+.crew-sect{font-size:12px;letter-spacing:.13em;color:#8fa3b5;margin:16px 14px 8px}
+.crewtab-empty{color:#8fa3b5;font-size:13.5px;margin:2px 14px 10px;line-height:1.5}
+.crew-mrow{display:flex;align-items:center;gap:10px;background:#10161d;border:1px solid #223041;border-radius:12px;padding:9px 11px;margin:0 12px 9px}
+.crew-mrow.dim{opacity:.72}
+.todo-tab .tbadge{background:#22c55e;color:#04160a;border-radius:999px;font-size:11px;padding:1px 7px;margin-left:6px;font-weight:800;vertical-align:1px}
 .todo-tabs{display:flex;gap:8px;padding:12px 16px 8px;position:sticky;top:0;z-index:50;background:var(--hatch-widget-bg,#000)}
 .todo-tab{flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);color:#fff;border-radius:12px;padding:10px;font-size:14px;font-weight:600;cursor:pointer}
 .todo-tab.on{background:#8b5cf6;border-color:#8b5cf6}
@@ -2899,10 +2949,13 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:25,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v198";
+var GAME_VER="v201";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"v201",ts:"Oct 29, 2026",t:"Conversations land at the latest",d:"Opening a chat now always lands on the newest messages - and stays there. If you are reading back through a thread, your spot is kept exactly where you left it; if you are at the latest, new messages keep you pinned to the latest. Includes everything from v200: the Crew tab hiring decisions and the inner-screen scaling."},
+   {v:"v200",ts:"Oct 29, 2026",t:"Hiring is your call",d:"Runner offers and lab crew are not chat talk anymore - they are decisions that wait for you in To Do, in the new Crew tab (Stash / Orders / Crew): who they are, what they bring, what they cost, Hire or Pass. A pass is final. The crew screen left the Lab and runners left the phonebook - your people live in the Crew tab now. Includes the inner-screen scaling pass."},
+   {v:"v199",ts:"Oct 29, 2026",t:"Inner screen, scaled right",d:"On the big unfolded screen the whole game now scales up to meet it: home icons and labels grow, the app grid spreads to fill the height, the dock rides the bottom, and the busy screens (Grow, Stash, Store, Lab, To Do, Properties) flow into two columns instead of stretching one long list across the glass. Messages and the form screens sit in a comfortable centered column. The folded cover screen is unchanged."},
    {v:"v198",ts:"Oct 29, 2026",t:"Every line, more ways to say it",d:"The rest of the customer lines got the same treatment: nudges, escalations, warnings, breakups, comebacks, the thief's robbery lines and the gene-strain thank-you all have more versions now, all in the same voice, and the high-traffic ones use the no-repeat memory too."},
    {v:"v197",ts:"Oct 29, 2026",t:"No more copy-paste customers",d:"Customers were repeating themselves word for word: the walk-away line and the thank-you line each had exactly one version written in. Both are proper pools now, and the game remembers the last line it used so two customers in a row never say the identical thing."},
    {v:"v196",ts:"Oct 29, 2026",t:"Grow, rebuilt around your hands",d:"The Grow screen is rows now, sorted needs-you-first: ripe and dry plants rise to the top. There are no Water all / Harvest all buttons anymore - tap a plant's row and it does what the plant needs. Water when it is thirsty; a ripe plant gets watered first if it is dry, because a watered plant yields more, then the next tap harvests it. Tap an empty pot to pick a seed. A To Do button at the top jumps straight to your list."},
@@ -3331,7 +3384,7 @@ function normalize(s,raw){
   var _bun=PKEYS.filter(function(k){return PRODUCTS[k].tier<=_bt;});
   var pr=Array.isArray(c.prefs)?c.prefs.filter(function(p){return p&&typeof p.k==="string"&&PRODUCTS[p.k]&&_bun.indexOf(p.k)>=0&&(p.kind==="bud"||p.kind==="joint"||p.kind==="lab");}).map(function(p){return {k:p.k,kind:p.kind};}).slice(0,3):[];
   if(!pr.length)pr=contactPrefsFor(tp,_bun);
-  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0,askEligSince:typeof c.askEligSince==="number"?c.askEligSince:0,refGiven:!!c.refGiven,phaseMin:(typeof c.phaseMin==="number"&&isFinite(c.phaseMin)&&c.phaseMin>=0)?(Math.floor(c.phaseMin)%30):undefined,patienceMul:(typeof c.patienceMul==="number"&&c.patienceMul>0&&c.patienceMul!==1)?c.patienceMul:(ttPatienceTable()[tp]||1),paranoid:typeof c.paranoid==="boolean"?c.paranoid:(msgJitter(String(c.name||"")+":paranoid",100)<22),firstOrderAt:typeof c.firstOrderAt==="number"?c.firstOrderAt:0,lastFlakeAt:typeof c.lastFlakeAt==="number"?c.lastFlakeAt:0};
+  return {name:String(c.name).slice(0,24),type:tp,prefs:pr,loyalty:typeof c.loyalty==="number"?Math.max(0,Math.min(100,c.loyalty)):50,order:o,unread:!!c.unread,softUnread:!!c.softUnread,fixer:!!c.fixer,pinned:!!c.pinned||c.name==="The Fixer",unreadCount:(typeof c.unreadCount==="number"?c.unreadCount:(c.unread?1:0)),msgs:Array.isArray(c.msgs)?c.msgs.filter(function(m){return m&&typeof m.text==="string";}).slice(-30):[],lastOrderAt:typeof c.lastOrderAt==="number"?c.lastOrderAt:0,lastFulfilledAt:typeof c.lastFulfilledAt==="number"?c.lastFulfilledAt:0,brokenUp:!!c.brokenUp,brokenUpAt:typeof c.brokenUpAt==="number"?c.brokenUpAt:0,isThief:!!c.isThief,ordersBeforeTurn:typeof c.ordersBeforeTurn==="number"?c.ordersBeforeTurn:0,phone:typeof c.phone==="string"?c.phone:"",hirePassed:!!c.hirePassed,runnerAskedAt:typeof c.runnerAskedAt==="number"?c.runnerAskedAt:0,askEligSince:typeof c.askEligSince==="number"?c.askEligSince:0,refGiven:!!c.refGiven,phaseMin:(typeof c.phaseMin==="number"&&isFinite(c.phaseMin)&&c.phaseMin>=0)?(Math.floor(c.phaseMin)%30):undefined,patienceMul:(typeof c.patienceMul==="number"&&c.patienceMul>0&&c.patienceMul!==1)?c.patienceMul:(ttPatienceTable()[tp]||1),paranoid:typeof c.paranoid==="boolean"?c.paranoid:(msgJitter(String(c.name||"")+":paranoid",100)<22),firstOrderAt:typeof c.firstOrderAt==="number"?c.firstOrderAt:0,lastFlakeAt:typeof c.lastFlakeAt==="number"?c.lastFlakeAt:0};
  });
  if(typeof s.msgView!=="string")s.msgView="list";
  if(typeof s.msgSound!=="boolean")s.msgSound=true;
@@ -4880,6 +4933,7 @@ function ttEnsureNotifPerm(){
   if(S&&S.phoneNotif&&window.ApkUpdater&&window.ApkUpdater.requestNotifPermission)window.ApkUpdater.requestNotifPermission();
  }catch(e){}
 }
+var _dealThreadKey=null; /* v201: thread the deal pane last rendered (scroll pinning) */
 function render(){
  ttEnsureNotifPerm();
  /* v172: a bag-full episode ends the moment the duffel has room again —
@@ -4927,7 +4981,7 @@ function render(){
  /* To Do badge */
  var _tb=q("#aa-todobadge");
  if(_tb){
-  var _tc=(S.tasks||[]).length;
+  var _tc=(S.tasks||[]).length+hireDecisions().count;
   if(_tc>0){_tb.textContent=_tc>99?"99+":_tc;_tb.hidden=false;}
   else{_tb.hidden=true;}
  }
@@ -5260,8 +5314,7 @@ function render(){
    });
    h+='</div>';
   }
-  /* runners section */
-  h+=runnerPhonebookSection();
+  /* v200: runners live in the To Do Crew tab now, not the phonebook. */
   h+='<div class="sc-seclabel">My profile</div>';
   h+=scRow("Roach","Your plug · always online",'<span class="sc-ava sc-ava-roach">🪳</span>',"__roach__",true);
   var cs=(S.contacts||[]).slice().sort(function(a,b){
@@ -5398,11 +5451,7 @@ function render(){
    }
   }
   /* runner offer: eligible regulars can be promoted */
-  if(runnerAskEligible(c)&&!c.order&&S.runners.length<runnerMax()){
-   h+='<div class="msg-order"><div class="msg-order-hd">🏃 <b>Bring them on?</b></div>'
-    +'<div class="msg-order-body">'+escHtml(c.name)+' is solid — '+(S.regulars[c.name]||0)+' deals, loyal. Make them a runner?</div>'
-    +'<button type="button" data-act="runner-promote" data-c="'+escHtml(c.name)+'">Make runner</button></div>';
-  }
+  /* v200: no hiring in chat - runner offers are decisions in the To Do Crew tab. */
   var _mreps=msgRepliesFor(c);
   if(_mreps.length){
    /* split: accept prompts (green, scrolling) vs dismiss (red, pinned) */
@@ -5466,6 +5515,17 @@ function render(){
  if(S.tab==="deal"){
   try{if(window.ApkUpdater&&window.ApkUpdater.cancelPhoneNotif)window.ApkUpdater.cancelPhoneNotif();}catch(e){}
   var _mv=S.msgView||"list";
+  /* v201: chat scroll pinning. The +100ms click jump was the only thing
+     that ever put a thread at its newest messages, and any entry path
+     without a click (app restored into a thread, widget/shade routes)
+     opened at the very top - and engines that drop scroll position on
+     an innerHTML rebuild lost it at the next render too. So render()
+     itself now owns the invariant: a thread that was not the one on
+     screen, or one the reader left pinned to the bottom, renders at
+     the bottom; a re-render of the same thread restores the reader's
+     exact position. */
+  var _dkey=null;if(_mv==="__roach__")_dkey="__roach__";else if(_mv.indexOf("__runner_")===0)_dkey=_mv;else if(_mv!=="list"&&_mv!=="phonebook"&&getContact(_mv))_dkey="c:"+_mv;
+  var _dpn=q(".pane-deal"),_pTop=_dpn?_dpn.scrollTop:0,_pBot=_dpn?((_dpn.scrollHeight-_dpn.clientHeight-_pTop)<=48):true;
   if(_mv==="list"){q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
   else if(_mv==="phonebook"){q(".pane-deal").innerHTML=tabHeader("deal")+dealPhonebook();}
   else if(_mv==="__roach__"){S.roachRead=true;S.roachUnread=0;q(".pane-deal").innerHTML=tabHeader("deal")+dealRoachConvo();}
@@ -5473,6 +5533,7 @@ function render(){
   else if(getContact(_mv)){var _cc=getContact(_mv);closeOutOrder(_cc);q(".pane-deal").innerHTML=tabHeader("deal")+dealConvo(_cc);}
   else{S.msgView="list";q(".pane-deal").innerHTML=tabHeader("deal")+dealChatsList();}
  }
+ if(_dkey&&_dpn){if(_dkey!==_dealThreadKey||_pBot)_dpn.scrollTop=_dpn.scrollHeight;else _dpn.scrollTop=_pTop;_dealThreadKey=_dkey;}else _dealThreadKey=null;
  if(S.tab==="street"){q(".pane-street").innerHTML=streetHTML();streetSwipeInit();var _ds=q(".pane-street .dstrip");if(_ds&&window.__dsPos)_ds.scrollLeft=window.__dsPos;var _cs=q(".pane-street .cstrip");if(_cs&&window.__csPos)_cs.scrollLeft=window.__csPos;}
  if(S.tab==="maps"){q(".pane-maps").innerHTML=mapsHTML();}
  if(S.tab==="rep"){q(".pane-rep").innerHTML=repHTML();}
@@ -6889,20 +6950,7 @@ function tickContacts(now){
   createContactOrder(c,pick,grams,orderDueAt(c,now),now);
   S.recentOrderTimes.push(now);_orderBudget--;
  });
- /* runner recruitment asks: eligible, orderless contacts */
- S.contacts.forEach(function(c){
-  if(c.fixer||c.brokenUp||c.order)return;
-  if(!runnerAskEligible(c,now)){if(c.askEligSince)c.askEligSince=0;return;}
-  if(!c.askEligSince)c.askEligSince=now;
-  if(c.runnerAskedAt&&now-c.runnerAskedAt<24*3600000)return;
-  var _pity=(!S.runners||!S.runners.length)&&!c.runnerAskedAt&&(now-c.askEligSince>=48*3600000);
-  if(!_pity&&Math.random()>0.05)return;
-  c.runnerAskedAt=now;
-  var _rtxt=RUNNER_ASK[(Math.random()*RUNNER_ASK.length)|0];
-  c.msgs.push({from:"them",text:_rtxt,t:now});
-  c.unread=true;c.unreadCount=(c.unreadCount||0)+1;
-  notifyMsgArrived(c,_rtxt);
- });
+ /* v200: runner recruitment asks removed - eligibility now surfaces as a hiring decision in the To Do Crew tab (hireDecisions). Contacts never pitch jobs in chat. */
 }
 /* v157: order creation, factored out of tickContacts so the referral
    path and the generic roll share ONE builder. The order is placed on
@@ -7233,22 +7281,94 @@ function todoSwipeInit(){
   _todoTouch=null;
   if(Math.abs(_dy)>Math.abs(_dx))return; /* vertical scroll wins — ignore */
   if(Math.abs(_dx)<60)return;
-  var _tv=S.todoView||"tasks";
-  if(_dx<0&&_tv==="tasks"){S.todoView="stash";save();render();}
-  else if(_dx>0&&_tv==="stash"){S.todoView="tasks";save();render();}
+  var _ord=["stash","tasks","crew"],_tvi=_ord.indexOf(S.todoView||"tasks");if(_tvi<0)_tvi=1;
+  if(_dx<0&&_tvi>0){S.todoView=_ord[_tvi-1];save();render();}
+  else if(_dx>0&&_tvi<_ord.length-1){S.todoView=_ord[_tvi+1];save();render();}
  },{passive:true});
 }
 function todoHTML(){
  var tv=S.todoView||"tasks";
- var h='<div class="todo-tabs"><button type="button" class="todo-tab'+(tv==="stash"?" on":"")+'" data-act="todoview" data-v="stash">Stash</button><button type="button" class="todo-tab'+(tv==="tasks"?" on":"")+'" data-act="todoview" data-v="tasks">Orders</button></div>';
+ var _hdn=hireDecisions().count;
+ var h='<div class="todo-tabs"><button type="button" class="todo-tab'+(tv==="stash"?" on":"")+'" data-act="todoview" data-v="stash">Stash</button><button type="button" class="todo-tab'+(tv==="tasks"?" on":"")+'" data-act="todoview" data-v="tasks">Orders</button><button type="button" class="todo-tab'+(tv==="crew"?" on":"")+'" data-act="todoview" data-v="crew">Crew'+(_hdn?'<span class="tbadge">'+_hdn+'</span>':"")+'</button></div>';
  if(tv==="stash"){
   /* render stash content without its own header */
   var _sh=stashHTML();
   /* strip the tabHeader (empty anyway) - just return content */
   h+=_sh;
+ }else if(tv==="crew"){
+  h+=crewTabHTML();
  }else{
   h+=tasksHTML();
  }
+ return h;
+}
+
+/* v200: hiring decisions. A decision exists while its conditions hold:
+   runner candidates are derived live from eligibility (lose eligibility
+   and the game withdraws the decision itself); a pass is the player's
+   word and is permanent (hirePassed / crew passed). Crew specialists
+   surface one at a time, cheapest first, when the TC stack is close -
+   the v191 rule, moved here from the Lab. */
+function hireDecisions(){
+ var out={runners:[],crew:null,count:0};
+ if(typeof RUNNER_SLOTS==="undefined")return out; /* boot chrome renders before the runner tables initialise */
+ if((S.runners||[]).length<runnerMax()){
+  (S.contacts||[]).forEach(function(c){if(runnerAskEligible(c)&&!c.hirePassed)out.runners.push(c);});
+ }
+ var best=null;
+ for(var _hid in WORKERS){var _hw=WORKERS[_hid],_hs=(S.crew&&S.crew[_hid])||null;
+  if(_hs&&_hs.hired)continue; if(_hs&&_hs.passed)continue;
+  if(!best||_hw.price<WORKERS[best].price)best=_hid;}
+ if(best&&cryptoClose(WORKERS[best].price))out.crew=best;
+ out.count=out.runners.length+(out.crew?1:0);
+ return out;
+}
+function crewRosterHTML(){
+ var h='';
+ var _decId=hireDecisions().crew;
+ for(var _rid in WORKERS){
+  if(_rid===_decId)continue; /* the pending decision already shows this specialist up top */
+  var _rw=WORKERS[_rid],_rs=(S.crew&&S.crew[_rid])||null;
+  if(_rs&&_rs.hired){
+   var _st;
+   if(_rs.resting)_st="Resting"+(_rs.task?" (batch paused)":"");
+   else if(_rs.task){var _rem=Math.max(0,Math.ceil((_rs.task.doneAt-Date.now())/1000));_st="Working: "+(PRODUCTS[_rs.task.key]?PRODUCTS[_rs.task.key].name:_rs.task.key)+" \u00B7 "+fmtT(_rem)+" left";}
+   else _st="Idle \u2014 grabs tickets when you're out of the lab";
+   var _yd=(_rid==="squeak")?Math.round(squeakYield(_rs)*100):Math.round(workerYield(_rid,_rs)*100);
+   h+='<div class="crew-mrow"><span class="picon sm crew-ic">'+_rw.icon+'</span><div class="hire-info"><div class="hire-name">'+_rw.name+'<span class="hire-tag">HIRED</span></div><div class="hire-facts">'+_st+' \u00B7 '+(_rs.cooks||0)+' cooks \u00B7 '+_yd+'% yield</div></div>'
+    +'<div class="hire-btns"><button type="button" class="pass" data-act="workerrest" data-id="'+_rid+'">'+(_rs.resting?"Back to work":"Rest")+'</button></div></div>';
+  }else if(_rs&&_rs.passed){
+   h+='<div class="crew-mrow dim"><span class="picon sm crew-ic">'+_rw.icon+'</span><div class="hire-info"><div class="hire-name">'+_rw.name+'<span class="hire-tag" style="background:#374151;color:#d1d5db">PASSED</span></div><div class="hire-facts">'+_rw.blurb+' \u00B7 '+_rw.price+' TC</div></div></div>';
+  }else{
+   h+='<div class="crew-mrow dim"><span class="picon sm crew-ic">'+_rw.icon+'</span><div class="hire-info"><div class="hire-name">'+_rw.name+'<span class="hire-tag" style="background:#1f2937;color:#9ca3af">NOT HIRED</span></div><div class="hire-facts">'+_rw.blurb+' \u00B7 '+_rw.price+' TC \u2014 surfaces as a decision when your TC is close</div></div></div>';
+  }
+ }
+ return h;
+}
+function crewTabHTML(){
+ var h=tabHeader("tasks");
+ var d=hireDecisions();
+ h+='<div class="crew-sect">\uD83C\uDFC3 HIRING \u2014 WAITING ON YOU ('+d.count+')</div>';
+ if(!d.count)h+='<div class="crewtab-empty">Nobody waiting. When a customer has proven themselves \u2014 or a crew specialist is within reach \u2014 the decision lands here, and it waits for your word.</div>';
+ d.runners.forEach(function(c){
+  var _tr=RUNNER_TRAITS[runnerTraitFor(c.type)]||RUNNER_TRAITS.steady;
+  h+='<div class="hire-row"><div class="hire-info"><div class="hire-name">'+escHtml(c.name)+'<span class="hire-tag">RUNNER</span></div>'
+   +'<div class="hire-facts">'+(S.regulars[c.name]||0)+' deals \u00B7 Loyalty '+Math.round(c.loyalty||0)+' \u00B7 '+escHtml(_tr.name)+' \u2014 '+escHtml(_tr.desc)+'</div></div>'
+   +'<div class="hire-btns"><button type="button" class="go" data-act="runner-promote" data-c="'+escHtml(c.name)+'">Hire</button>'
+   +'<button type="button" class="pass" data-act="hire-pass-runner" data-c="'+escHtml(c.name)+'">Pass</button></div></div>';
+ });
+ if(d.crew){
+  var _cw2=WORKERS[d.crew],_aff=(S.crypto||0)>=_cw2.price;
+  h+='<div class="hire-row amber"><div class="hire-info"><div class="hire-name">'+_cw2.icon+' '+_cw2.name+'<span class="hire-tag">LAB CREW</span></div>'
+   +'<div class="hire-facts">'+_cw2.blurb+'</div></div>'
+   +'<div class="hire-btns"><button type="button" class="go" data-act="hireworker" data-id="'+d.crew+'"'+(_aff?"":" disabled")+'>Hire \u00B7 '+_cw2.price+' TC</button>'
+   +'<button type="button" class="pass" data-act="hire-pass-crew" data-id="'+d.crew+'">Pass</button></div></div>';
+ }
+ h+='<div class="crew-sect">\uD83C\uDFC3 YOUR RUNNERS ('+(S.runners||[]).length+'/'+runnerMax()+')</div>';
+ var _rp=runnerPhonebookSection("crew-runner-open");
+ h+=_rp?_rp:'<div class="crewtab-empty">No runners yet.</div>';
+ h+='<div class="crew-sect">\u2697\uFE0F LAB CREW ('+crewHiredCount()+'/4)</div>';
+ h+=crewRosterHTML();
  return h;
 }
 /* v180: the grow chain behind every bud shortage. The order card used
@@ -8772,13 +8892,11 @@ function gameHTML(j){
 function crewHiredCount(){var n=0;for(var id in WORKERS){if(S.crew&&S.crew[id]&&S.crew[id].hired)n++;}return n;}
 function cookHTML(){
  var _th=tabHeader("cook");
- var cv=S.cookview||"lab";
+ var cv=S.cookview||"lab";if(cv==="crew")cv="lab";
  var j=(S.job&&typeof S.job==="object")?S.job:null,h=_th
   +'<div class="dchips">'
   +'<button type="button" class="dchip'+(cv==="lab"?" on":"")+'" data-act="cookview" data-v="lab"><span class="dc-name">🧪 LAB</span></button>'
-  +'<button type="button" class="dchip'+(cv==="crew"?" on":"")+'" data-act="cookview" data-v="crew"><span class="dc-name">👥 CREW'+(crewHiredCount()?" "+crewHiredCount()+"/4":"")+'</span></button>'
   +'</div>';
- if(cv==="crew"){h+=crewHTML();return h;}
  if(j){
   var r=RECIPES[j.key],pr=PRODUCTS[j.key];
   if(j.phase==="cooking"){
@@ -10227,7 +10345,7 @@ root.addEventListener("click",function(e){
  }
  if(!b||b.disabled)return;
  var a=b.dataset.act;
- if(a==="todoview"){var _tv=b.dataset.v;S.todoView=(_tv==="stash")?"stash":"tasks";save();render();return;}
+ if(a==="todoview"){var _tv=b.dataset.v;S.todoView=(_tv==="stash"||_tv==="crew")?_tv:"tasks";save();render();return;}
  if(a==="notes-planttasks"){
   var _ts={};
   (S.tasks||[]).forEach(function(t){if(t&&t.k&&PRODUCTS[t.k])_ts[t.k]=1;});
@@ -10362,6 +10480,9 @@ root.addEventListener("click",function(e){
  if(a==="runner-open"){S.msgView="__runner_"+b.dataset.id;save();render();return;}
  if(a==="runner-sort"){S.runnerSort=b.dataset.v;save();render();return;}
  if(a==="runner-promote"){promoteToRunner(b.dataset.c);return;}
+ if(a==="hire-pass-runner"){var _hpc=getContact(b.dataset.c);if(_hpc){_hpc.hirePassed=true;S.msg="Passed on "+_hpc.name+" \u2014 settled. They stay a customer.";save();render();}return;}
+ if(a==="hire-pass-crew"){var _hpi=b.dataset.id;if(WORKERS[_hpi]){if(!S.crew||typeof S.crew!=="object")S.crew={};var _hpw=S.crew[_hpi]||(S.crew[_hpi]={hired:false,resting:false,cooks:0,task:null});_hpw.passed=true;S.msg="Passed on "+WORKERS[_hpi].name+" \u2014 settled.";save();render();}return;}
+ if(a==="crew-runner-open"){S.tab="deal";S.view="app";S.msgView="__runner_"+b.dataset.id;navPush("deal");save();render();return;}
  if(a==="runner-call"){var _rco=runnerById(b.dataset.id);if(_rco){S.call={runnerId:_rco.id,startedAt:Date.now(),show:null,restockK:"",restockAmt:10};_rco._callLine=null;save();render();}return;}
  if(a==="runner-call-end"){S.call=null;runnerCallTickStop();save();render();return;}
  if(a==="runner-call-show"){if(S.call&&S.call.runnerId===b.dataset.id){S.call.show=S.call.show===b.dataset.v?null:b.dataset.v;if(S.call.show==="restock"&&!S.call.restockK){var _rk="";PKEYS.forEach(function(k){if(!_rk&&PRODUCTS[k]&&(S.stash[k]||0)>=10)_rk=k;});S.call.restockK=_rk;S.call.restockAmt=10;}save();render();}return;}
@@ -11717,7 +11838,7 @@ function promoteToRunner(name){
   stock:{},holding:0,trust:50,autoTake:true,darkUntil:0,
   sales:[],salesDone:0,lastSkimAt:0,robbedAt:0,drySince:0};
  S.runners.push(r);
- S.msg=c.name+" runs for you now. Stock them up in Contacts.";
+ S.msg=c.name+" runs for you now. Manage them from the Crew tab in To Do.";
  save();render();
 }
 function collectRunner(id){
@@ -11818,7 +11939,7 @@ function runnerCallLine(r){
 }
 function runnerStatusDot(st){return st==="working"?"🟢":st==="dry"?"🟠":st==="dark"?"🔴":"⚪";}
 var RUNNER_TYPE_PLURAL={stoner:"Stoners",party:"Party People",connoisseur:"Connoisseurs",casual:"Casuals"};
-function runnerPhonebookSection(){
+function runnerPhonebookSection(actName){
  var rns=S.runners||[];
  if(!rns.length)return "";
  var now=Date.now(),sort=S.runnerSort||"level";
@@ -11834,7 +11955,7 @@ function runnerPhonebookSection(){
   else if(st==="dry")sub+=" · dry";
   else if(st==="dark")sub+=" · dark";
   if(r.specTerr&&r.specType)sub+="<br>Best in: "+escHtml(terrDef(r.specTerr).name)+" · "+escHtml(RUNNER_TYPE_PLURAL[r.specType]||contactTypeLabel(r.specType));
-  return '<button type="button" class="sc-row'+(last?" last":"")+'" data-act="runner-open" data-id="'+r.id+'">'
+  return '<button type="button" class="sc-row'+(last?" last":"")+'" data-act="'+(actName||"runner-open")+'" data-id="'+r.id+'">'
    +'<span class="sc-ava" style="background:#2a4a3a">'+escHtml(String(r.name||"?").charAt(0).toUpperCase())+'</span>'
    +'<span class="sc-nm"><b>'+escHtml(r.name)+'</b><i>'+sub+'</i></span></button>';
  }
@@ -11943,7 +12064,7 @@ function runnerCallHTML(r){
  }
  return h;
 }
-window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP,RUNNER_LEVELS:RUNNER_LEVELS,RUNNER_SLOTS:RUNNER_SLOTS,RUNNER_XP_PER_SALE:RUNNER_XP_PER_SALE,runnerLevel:runnerLevel,runnerSpecBonus:runnerSpecBonus,runnerPhonebookSection:runnerPhonebookSection,runnerDetailHTML:runnerDetailHTML,ttPinHash:ttPinHash,ttSystemStatus:ttSystemStatus,ttExportSave:ttExportSave,ttImportSave:ttImportSave,ttB64Encode:ttB64Encode,ttB64Decode:ttB64Decode,TERRITORY_LEVELS:TERRITORY_LEVELS,terrLevelOf:terrLevelOf,terrPriceMultFor:terrPriceMultFor,terrNextGrantTxt:terrNextGrantTxt,addTerrXP:addTerrXP,orderBudgetNow:orderBudgetNow,dealerWantFor:dealerWantFor,dealerWantUnit:dealerWantUnit,doDealerWant:doDealerWant,DEALER_BUY_OWNER:DEALER_BUY_OWNER,geneOptFor:geneOptFor,geneLevelFor:geneLevelFor,geneLevelReached:geneLevelReached,custLine:custLine,CUST_GONE:CUST_GONE,CUST_GONE_ENROUTE:CUST_GONE_ENROUTE,CUST_THANKS:CUST_THANKS,CUST_NUDGE:CUST_NUDGE,CUST_ENROUTE_NUDGE:CUST_ENROUTE_NUDGE,CUST_ANNOYED:CUST_ANNOYED,CUST_ANNOYED_ENROUTE:CUST_ANNOYED_ENROUTE,CUST_WARN:CUST_WARN,CUST_BREAKUP:CUST_BREAKUP,CUST_RETURN2:CUST_RETURN2,geneAssign:assignGeneLevels,geneHuntAware:geneHuntAware,GENE_LV_BAND:GENE_LV_BAND,visorMaybeSpawn:visorMaybeSpawn,visorCollect:visorCollect,doGeneOptSell:doGeneOptSell,contactBasePrice:contactBasePrice,terrPrefMult:terrPrefMult,visOfP:visOfP,strainUnlocked:strainUnlocked,kitVis:kitVis,lvClose:lvClose,cashClose:cashClose,cryptoClose:cryptoClose,dealMoment:dealMoment,cornerTick:cornerTick,cornerState:cornerState,cornerSpawn:cornerSpawn,cornerPost:cornerPost,streetPager:streetPager,zoneHeatTotal:zoneHeatTotal,kitUnlocked:kitUnlocked,stashOrderUnit:stashOrderUnit,huntCollect:huntCollect,huntStart:huntStart,settleWorkerTask:settleWorkerTask,settleCooking:settleCooking,collectCook:collectCook,pullupServe:pullupServe,CONTACT_TUNING:CONTACT_TUNING,createContactOrder:createContactOrder,tickContacts:tickContacts,scheduleReaction:scheduleReaction,maybeReact:maybeReact,burnTick:burnTick,isParanoid:isParanoid,pushContactMsg:pushContactMsg,GENE_KEYS:GENE_KEYS,GENE_OPT_PREMIUM:GENE_OPT_PREMIUM,TERR_GRANT_TXT:TERR_GRANT_TXT,bribeCost:bribeCost,TTWRAP_REF:function(){return TTWRAP;}};
+window.__pg={pump:pump,get:function(){return S;},set:function(s){S=s;},render:render,stageOf:stageOf,PRODUCTS:PRODUCTS,RECIPES:RECIPES,PROPS:PROPS,KITS:KITS,tick:tick,normalize:normalize,growMinOf:growMinOf,growSec:growSec,speedOf:speedOf,fmtT:fmtT,settingsHTML:settingsHTML,chillHTML:chillHTML,clinicHTML:clinicHTML,battleHTML:battleHTML,pLevel:pLevel,lvl:lvl,tierVis:tierVis,addXP:addXP,chillStrain:chillStrain,doRoll:doRoll,doSmoke:doSmoke,doDeal:doDeal,smokeFX:smokeFX,buffActive:buffActive,buffPct:buffPct,stashTotal:stashTotal,budHave:budHave,drawBud:drawBud,UNLOCKS:UNLOCKS,XP_TH:XP_TH,DEALER_TIER:DEALER_TIER,SMOKE_MSG:SMOKE_MSG,SMOKE_COL:SMOKE_COL,GROWKEYS:GROWKEYS,PKEYS:PKEYS,RKEYS:RKEYS,WKEYS:WKEYS,battleRoll:battleRoll,startBattle:startBattle,battleStrike:battleStrike,battleRun:battleRun,winBattle:winBattle,loseBattle:loseBattle,WEAPONS:WEAPONS,bestWeapon:bestWeapon,weaponDmg:weaponDmg,GEAR:GEAR,GEAR_SETS:GEAR_SETS,GEAR_SLOTS:GEAR_SLOTS,GKEYS:GKEYS,gearBonus:gearBonus,gearSetEquipped:gearSetEquipped,gearPriceMult:gearPriceMult,gearAvatarHTML:gearAvatarHTML,copDmg:copDmg,doBust:doBust,doPlant:doPlant,doHarvest:doHarvest,doHarvestAll:doHarvestAll,stashHTML:stashHTML,stashDealer:stashDealer,bankHTML:bankHTML,pushBankTx:pushBankTx,bankAPYPerMin:bankAPYPerMin,tickerHints:tickerHints,renderTicker:renderTicker,tickToggleSpeed:tickToggleSpeed,GAME_VER:GAME_VER,CHANGELOG:CHANGELOG,LEVEL_TIPS:LEVEL_TIPS,startCook:startCook,queueCook:queueCook,unqueueCook:unqueueCook,hireWorker:hireWorker,toggleWorkerRest:toggleWorkerRest,crewTick:crewTick,queueTick:queueTick,WORKERS:WORKERS,beginCookJob:beginCookJob,layoutHome:layoutHome,openFolder:openFolder,closeFolder:closeFolder,hwUngroup:hwUngroup,hwFolderRemove:hwFolderRemove,hwSlotKey:hwSlotKey,hwValidOrder:hwValidOrder,hwLabel:hwLabel,setEditMode:setEditMode,TERRITORIES:TERRITORIES,terrDef:terrDef,terrZone:terrZone,terrTotal:terrTotal,syncGlobalHeat:syncGlobalHeat,addTerrHeat:addTerrHeat,dealTerrHeat:dealTerrHeat,terrPriceMult:terrPriceMult,maybeAddContact:maybeAddContact,notifyMsgArrived:notifyMsgArrived,showHeadsUp:showHeadsUp,hideHeadsUp:hideHeadsUp,playMsgSound:playMsgSound,RUNNER_TRAITS:RUNNER_TRAITS,runnerById:runnerById,runnerMax:runnerMax,runnerCapacity:runnerCapacity,runnerCut:runnerCut,runnerState:runnerState,runnerLikesMult:runnerLikesMult,tryAbsorb:tryAbsorb,tickRunners:tickRunners,completeRunnerSale:completeRunnerSale,promoteToRunner:promoteToRunner,collectRunner:collectRunner,restockRunner:restockRunner,setRunnerTerritory:setRunnerTerritory,toggleRunnerAuto:toggleRunnerAuto,fireRunner:fireRunner,bailRunner:bailRunner,confrontRunner:confrontRunner,runnerAskEligible:runnerAskEligible,runnerTraitFor:runnerTraitFor,runnerCallLine:runnerCallLine,levelForTier:levelForTier,tierUnlocked:tierUnlocked,tierAtLevel:tierAtLevel,effTier:effTier,DEALER_NAMES:DEALER_NAMES,TIER_LEVEL:TIER_LEVEL,OLD_XP_TH:OLD_XP_TH,MAX_LEVEL:MAX_LEVEL,terrUnlocked:terrUnlocked,canCook:canCook,cookToTimed:cookToTimed,doAcceptOrder:doAcceptOrder,doFulfillTask:doFulfillTask,contactOrderPick:contactOrderPick,mkProp:mkProp,tick:tick,doPlant:doPlant,doHarvestAll:doHarvestAll,doDeal:doDeal,deductCookInputs:deductCookInputs,drawBud:drawBud,budHave:budHave,stashTotal:stashTotal,doAutoPlant:doAutoPlant,addXP:addXP,RUNNER_LEVELS:RUNNER_LEVELS,RUNNER_SLOTS:RUNNER_SLOTS,RUNNER_XP_PER_SALE:RUNNER_XP_PER_SALE,runnerLevel:runnerLevel,runnerSpecBonus:runnerSpecBonus,runnerPhonebookSection:runnerPhonebookSection,runnerDetailHTML:runnerDetailHTML,ttPinHash:ttPinHash,ttSystemStatus:ttSystemStatus,ttExportSave:ttExportSave,ttImportSave:ttImportSave,ttB64Encode:ttB64Encode,ttB64Decode:ttB64Decode,TERRITORY_LEVELS:TERRITORY_LEVELS,terrLevelOf:terrLevelOf,terrPriceMultFor:terrPriceMultFor,terrNextGrantTxt:terrNextGrantTxt,addTerrXP:addTerrXP,orderBudgetNow:orderBudgetNow,dealerWantFor:dealerWantFor,dealerWantUnit:dealerWantUnit,doDealerWant:doDealerWant,DEALER_BUY_OWNER:DEALER_BUY_OWNER,geneOptFor:geneOptFor,geneLevelFor:geneLevelFor,geneLevelReached:geneLevelReached,custLine:custLine,hireDecisions:hireDecisions,crewTabHTML:crewTabHTML,CUST_GONE:CUST_GONE,CUST_GONE_ENROUTE:CUST_GONE_ENROUTE,CUST_THANKS:CUST_THANKS,CUST_NUDGE:CUST_NUDGE,CUST_ENROUTE_NUDGE:CUST_ENROUTE_NUDGE,CUST_ANNOYED:CUST_ANNOYED,CUST_ANNOYED_ENROUTE:CUST_ANNOYED_ENROUTE,CUST_WARN:CUST_WARN,CUST_BREAKUP:CUST_BREAKUP,CUST_RETURN2:CUST_RETURN2,geneAssign:assignGeneLevels,geneHuntAware:geneHuntAware,GENE_LV_BAND:GENE_LV_BAND,visorMaybeSpawn:visorMaybeSpawn,visorCollect:visorCollect,doGeneOptSell:doGeneOptSell,contactBasePrice:contactBasePrice,terrPrefMult:terrPrefMult,visOfP:visOfP,strainUnlocked:strainUnlocked,kitVis:kitVis,lvClose:lvClose,cashClose:cashClose,cryptoClose:cryptoClose,dealMoment:dealMoment,cornerTick:cornerTick,cornerState:cornerState,cornerSpawn:cornerSpawn,cornerPost:cornerPost,streetPager:streetPager,zoneHeatTotal:zoneHeatTotal,kitUnlocked:kitUnlocked,stashOrderUnit:stashOrderUnit,huntCollect:huntCollect,huntStart:huntStart,settleWorkerTask:settleWorkerTask,settleCooking:settleCooking,collectCook:collectCook,pullupServe:pullupServe,CONTACT_TUNING:CONTACT_TUNING,createContactOrder:createContactOrder,tickContacts:tickContacts,scheduleReaction:scheduleReaction,maybeReact:maybeReact,burnTick:burnTick,isParanoid:isParanoid,pushContactMsg:pushContactMsg,GENE_KEYS:GENE_KEYS,GENE_OPT_PREMIUM:GENE_OPT_PREMIUM,TERR_GRANT_TXT:TERR_GRANT_TXT,bribeCost:bribeCost,TTWRAP_REF:function(){return TTWRAP;}};
 })();
 </script>
 <style>
