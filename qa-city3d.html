@@ -176,72 +176,11 @@ function paintWindows(c, x, y, w, h, cols_, rows, night, litRatio, warm){
   }
 }
 function paintAtlas(night){
-  seed = 7;
-  const cv = document.createElement('canvas'); cv.width = cv.height = 1024; const c = cv.getContext('2d');
-  const D = (day, ngt)=> night ? ngt : day;
-  // facadeA — warm brick apartments
-  let r = REG.facadeA; c.fillStyle = D('#8a5643','#3d2c33'); c.fillRect(r[0],r[1],r[2],r[3]);
-  speckle(c, r[0],r[1],r[2],r[3], D(['#7a4a38','#9c6a50','#6e4232'],['#33242c','#47323a']), 500, 2, 5);
-  c.fillStyle = D('rgba(0,0,0,0.16)','rgba(0,0,0,0.3)'); for (let y=0;y<8;y++) c.fillRect(r[0], r[1]+y*32, r[2], 2);
-  paintWindows(c, r[0], r[1], r[2], r[3], 4, 5, night, 0.42);
-  // facadeB — cream stucco
-  r = REG.facadeB; c.fillStyle = D('#cdb894','#4a4152'); c.fillRect(r[0],r[1],r[2],r[3]);
-  speckle(c, r[0],r[1],r[2],r[3], D(['#bfa87f','#dccaa6'],['#3e3646','#574c60']), 350, 2, 6);
-  paintWindows(c, r[0], r[1], r[2], r[3], 4, 5, night, 0.38);
-  // facadeC — slate panels
-  r = REG.facadeC; c.fillStyle = D('#5f7185','#2c3145'); c.fillRect(r[0],r[1],r[2],r[3]);
-  c.fillStyle = D('rgba(255,255,255,0.10)','rgba(255,255,255,0.05)'); for (let x=0;x<4;x++) c.fillRect(r[0]+x*64, r[1], 2, r[3]);
-  paintWindows(c, r[0], r[1], r[2], r[3], 5, 5, night, 0.45);
-  // house — pale siding with shutters
-  r = REG.house; c.fillStyle = D('#d8cfb8','#4c4550'); c.fillRect(r[0],r[1],r[2],r[3]);
-  c.fillStyle = D('rgba(0,0,0,0.10)','rgba(0,0,0,0.25)'); for (let y=0;y<10;y++) c.fillRect(r[0], r[1]+y*26, r[2], 2);
-  paintWindows(c, r[0]+10, r[1]+18, r[2]-20, 120, 2, 1, night, 0.6);
-  paintWindows(c, r[0]+10, r[1]+150, r[2]-20, 90, 2, 1, night, 0.5);
-  // store — storefront glass
-  r = REG.store; c.fillStyle = D('#37424a','#232a35'); c.fillRect(r[0],r[1],r[2],r[3]);
-  c.fillStyle = D('#20262b','#151a21'); c.fillRect(r[0], r[1], r[2], 44);
-  const gx = r[0]+14, gy = r[1]+58, gw = r[2]-28, gh = 150;
-  if (night){ const g = c.createLinearGradient(0,gy,0,gy+gh); g.addColorStop(0,'#ffdf9e'); g.addColorStop(1,'#e8a34e');
-    c.fillStyle = g; c.fillRect(gx,gy,gw,gh);
-    c.fillStyle = 'rgba(70,40,10,0.5)'; c.fillRect(gx+18, gy+gh-52, 44, 52); c.fillRect(gx+gw-70, gy+gh-40, 52, 40); c.fillRect(gx+gw/2-30, gy+gh-64, 60, 64);
-  } else { const g = c.createLinearGradient(0,gy,0,gy+gh); g.addColorStop(0,'#a8c8d8'); g.addColorStop(0.5,'#5f8296'); g.addColorStop(1,'#39586a');
-    c.fillStyle = g; c.fillRect(gx,gy,gw,gh);
-    c.fillStyle = 'rgba(255,255,255,0.20)'; c.beginPath(); c.moveTo(gx+20,gy+gh); c.lineTo(gx+90,gy); c.lineTo(gx+130,gy); c.lineTo(gx+60,gy+gh); c.fill(); }
-  c.strokeStyle = D('#12181c','#0a0e12'); c.lineWidth = 6; c.strokeRect(gx,gy,gw,gh);
-  c.beginPath(); c.moveTo(gx+gw/3,gy); c.lineTo(gx+gw/3,gy+gh); c.moveTo(gx+2*gw/3,gy); c.lineTo(gx+2*gw/3,gy+gh); c.stroke();
-  c.fillStyle = D('#4a5a52','#2c3833'); c.fillRect(r[0], r[1]+222, r[2], 34);
-  // warehouse
-  r = REG.ware; c.fillStyle = D('#7d7f7c','#3a3f45'); c.fillRect(r[0],r[1],r[2],r[3]);
-  c.fillStyle = D('rgba(0,0,0,0.13)','rgba(0,0,0,0.3)'); for (let x=0;x<8;x++) c.fillRect(r[0]+x*32, r[1], 3, r[3]);
-  c.fillStyle = D('#5c5e5c','#2e3236'); c.fillRect(r[0]+58, r[1]+96, 140, 160);
-  c.fillStyle = D('rgba(255,255,255,0.10)','rgba(0,0,0,0.2)'); for (let y=0;y<6;y++) c.fillRect(r[0]+58, r[1]+96+y*27, 140, 3);
-  paintWindows(c, r[0]+16, r[1]+14, r[2]-32, 56, 5, 1, night, 0.3);
-  // roofs
-  r = REG.roofD; c.fillStyle = D('#3d3a38','#232228'); c.fillRect(r[0],r[1],r[2],r[3]); speckle(c,r[0],r[1],r[2],r[3],D(['#4c4744','#2f2c2a'],['#2c2a30','#1a191f']),380,2,5);
-  r = REG.roofR; c.fillStyle = D('#96543c','#4a2f30'); c.fillRect(r[0],r[1],r[2],r[3]); speckle(c,r[0],r[1],r[2],r[3],D(['#a86548','#84482f'],['#573636','#3c2729']),380,2,5);
-  r = REG.roofG; c.fillStyle = D('#6a6d6b','#33373b'); c.fillRect(r[0],r[1],r[2],r[3]); speckle(c,r[0],r[1],r[2],r[3],D(['#7a7d7a','#585b58'],['#3e4247','#282c30']),500,1,4);
-  // road
-  r = REG.road; c.fillStyle = D('#33373c','#1d2026'); c.fillRect(r[0],r[1],r[2],r[3]); speckle(c,r[0],r[1],r[2],r[3],D(['#3f444a','#2a2e33','#484e55'],['#262a30','#171a1f']),700,1,3);
-  // door
-  r = REG.door; c.fillStyle = D('#5d4030','#33241f'); c.fillRect(r[0],r[1],r[2],r[3]);
-  c.strokeStyle = D('rgba(0,0,0,0.4)','rgba(0,0,0,0.6)'); c.lineWidth = 4; c.strokeRect(r[0]+8,r[1]+10,r[2]-16,62); c.strokeRect(r[0]+8,r[1]+84,r[2]-16,62);
-  c.fillStyle = '#d8b34a'; c.beginPath(); c.arc(r[0]+r[2]-16, r[1]+80, 5, 0, 7); c.fill();
-  // glass (car windows)
-  r = REG.glass; const gg = c.createLinearGradient(0,r[1],0,r[1]+r[3]); gg.addColorStop(0, D('#7fa8bd','#141c2c')); gg.addColorStop(0.45, D('#2e4a5c','#0d1420')); gg.addColorStop(1, D('#1c303e','#0a0f18'));
-  c.fillStyle = gg; c.fillRect(r[0],r[1],r[2],r[3]);
-  // sidewalk
-  r = REG.walk; c.fillStyle = D('#9aa0a2','#454a52'); c.fillRect(r[0],r[1],r[2],r[3]); speckle(c,r[0],r[1],r[2],r[3],D(['#8b9092','#aab0b2'],['#3c4148','#51565e']),420,1,4);
-  c.fillStyle = D('rgba(0,0,0,0.22)','rgba(0,0,0,0.4)'); c.fillRect(r[0],r[1],r[2],3); c.fillRect(r[0],r[1],3,r[3]); c.fillRect(r[0]+128,r[1],3,r[3]); c.fillRect(r[0],r[1]+128,r[2],3);
-  // grass
-  r = REG.grass; c.fillStyle = D('#4d7c3a','#1e3325'); c.fillRect(r[0],r[1],r[2],r[3]); speckle(c,r[0],r[1],r[2],r[3],D(['#5d8c46','#406c30','#6b9a50'],['#274434','#17291d']),900,2,6);
-  // gravel
-  r = REG.gravel; c.fillStyle = D('#8d8578','#3f3d3c'); c.fillRect(r[0],r[1],r[2],r[3]); speckle(c,r[0],r[1],r[2],r[3],D(['#9c9484','#7a7264'],['#4c4a48','#333131']),600,1,3);
-  // white / bark / foliage / awning
-  r = REG.white; c.fillStyle = '#ffffff'; c.fillRect(r[0],r[1],r[2],r[3]);
-  r = REG.bark; c.fillStyle = D('#5a4632','#2e2620'); c.fillRect(r[0],r[1],r[2],r[3]); speckle(c,r[0],r[1],r[2],r[3],D(['#4a3826','#6b563e'],['#241d18']),160,1,4);
-  r = REG.foliage; c.fillStyle = D('#3e6b2f','#1b3020'); c.fillRect(r[0],r[1],r[2],r[3]); speckle(c,r[0],r[1],r[2],r[3],D(['#4d7f3a','#2f5923','#5c9046'],['#23402a','#12241a']),700,2,7);
-  r = REG.awning; c.fillStyle = D('#1f7a4d','#17573a'); c.fillRect(r[0],r[1],r[2],r[3]);
-  c.fillStyle = D('#f2ead2','#c9bfa4'); for (let x=0;x<4;x++) c.fillRect(r[0]+x*32+8, r[1], 16, r[3]);
+  const cv = document.createElement('canvas'); cv.width = cv.height = 1024;
+  const c = cv.getContext('2d');
+  c.fillStyle = '#000000'; c.fillRect(0,0,1024,1024);
+  const cols = { facadeA:'#ff00ff', facadeB:'#ff8800', facadeC:'#0088ff', house:'#00ffff', store:'#00ff88', ware:'#888888', roofD:'#ff0000', roofR:'#aa0000', roofG:'#555555', road:'#333333', door:'#884400', glass:'#aaddff', walk:'#eeeeee', grass:'#22cc22', gravel:'#cccccc', white:'#ffff00', bark:'#663300', foliage:'#006600', awning:'#00ff00' };
+  for (const k in REG){ const r = REG[k]; c.fillStyle = cols[k] || '#ffffff'; c.fillRect(r[0], r[1], r[2], r[3]); }
   return cv;
 }
 const atlasDay = texFromCanvas(paintAtlas(false));
