@@ -1986,7 +1986,7 @@ window.__sim = {
 };
 
 /* ================= FULL VERSION — PART E: light, camera, touch, collisions, density ================= */
-/* ---- brighter world (Tyler: way too dark) ---- */
+/* ---- brighter world (way too dark before) ---- */
 const baseApplyTime = applyTime;
 applyTime = function(h){
   baseApplyTime(h);
@@ -2444,7 +2444,7 @@ render = function(t){
 };
 window.__gfx3 = { slabs: ()=> slabCount, sets: ()=> groundSets.length };
 
-/* ================= QA HOOK (QA copy only — never in Tyler's build) ================= */
+/* ================= QA HOOK (QA copy only — never in the shipped build) ================= */
 (function(){
   const q = new URLSearchParams(location.search);
   if (!q.has('qa')) return;
