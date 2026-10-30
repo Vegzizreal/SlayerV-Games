@@ -2369,8 +2369,14 @@ window.__audit = {
       const total = daCount;
       let out = 'HUNT total=' + total + ' (values = max RGB at bottom-center/bottom-left/bottom-right/center; low = black)\n';
       out += 'skip none: ' + test(-1, -1) + '\n';
-      const STEP = 8;
-      for (let a = 0; a < total; a += STEP) out += `skip ${a}-${Math.min(a + STEP - 1, total - 1)}: ` + test(a, Math.min(a + STEP - 1, total - 1)) + '\n';
+      const hr = q.get('hr');
+      if (hr){
+        const [ha, hb] = hr.split('-').map(Number);
+        for (let a = ha; a <= hb; a++) out += `skip ${a}: ` + test(a, a) + '\n';
+      } else {
+        const STEP = 8;
+        for (let a = 0; a < total; a += STEP) out += `skip ${a}-${Math.min(a + STEP - 1, total - 1)}: ` + test(a, Math.min(a + STEP - 1, total - 1)) + '\n';
+      }
       skipA = skipB = -1;
       pre.textContent = out;
     } catch(e){ pre.textContent = 'HUNT ERROR ' + e.message; }
