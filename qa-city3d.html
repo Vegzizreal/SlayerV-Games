@@ -2298,6 +2298,15 @@ window.__audit = {
    pixels inside the frame and print a coarse color map as DOM text ==== */
 (function(){
   const q = new URLSearchParams(location.search);
+  if (q.has('noaniso')){
+    try {
+      const ax = gl.getExtension('EXT_texture_filter_anisotropic');
+      if (ax) for (const tx of [atlasDay, atlasNight]){
+        gl.bindTexture(gl.TEXTURE_2D, tx);
+        gl.texParameteri(gl.TEXTURE_2D, ax.TEXTURE_MAX_ANISOTROPY_EXT, 1);
+      }
+    } catch(e){}
+  }
   if (q.has('mag')){
     const prevR2 = render;
     render = function(t){
