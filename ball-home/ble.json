@@ -1,11 +1,11 @@
 {
-  "version": "4.5.1",
+  "version": "4.5.2",
   "file": "ball-home-app.bin",
-  "sha256": "9a1bd2fafec01fb1f29d45e835e3737cb8a0bbaef9d6852eed8a649ea2148bdc",
+  "sha256": "6db183dc0bae2c590142c999aababd27299358c1a2b348ef795a331416f64014",
   "patches": {
-    "ee787458d6019b201ce0eb5df3da6ae602fb6e3470030aeacdce8e38a5f37c4e": {
-      "file": "patch-4.5-to-4.5.1.bin",
-      "sha256": "9a1bd2fafec01fb1f29d45e835e3737cb8a0bbaef9d6852eed8a649ea2148bdc"
+    "9a1bd2fafec01fb1f29d45e835e3737cb8a0bbaef9d6852eed8a649ea2148bdc": {
+      "file": "patch-4.5.1-to-4.5.2.bin",
+      "sha256": "6db183dc0bae2c590142c999aababd27299358c1a2b348ef795a331416f64014"
     }
   }
 }
