@@ -2314,6 +2314,31 @@ window.__audit = {
       prevR2(t);
     };
   }
+  if (q.has('nomip') || q.has('remip')){
+    try {
+      for (const tx of [atlasDay, atlasNight]){
+        gl.bindTexture(gl.TEXTURE_2D, tx);
+        if (q.has('nomip')) gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        if (q.has('remip')) gl.generateMipmap(gl.TEXTURE_2D);
+      }
+    } catch(e){}
+  }
+  if (q.has('redtex')){
+    try {
+      const cv = document.createElement('canvas'); cv.width = 4; cv.height = 4;
+      const cx = cv.getContext('2d'); cx.fillStyle = '#ff0000'; cx.fillRect(0, 0, 4, 4);
+      const redTex = texFromCanvas(cv);
+      let dlN = 0;
+      const prevRR = render;
+      render = function(t){ dlN = 0; prevRR(t); };
+      const origDL = drawLit;
+      drawLit = function(g, m, td, tn){
+        if (dlN === 0){ td = redTex; tn = redTex; }
+        dlN++;
+        return origDL(g, m, td, tn);
+      };
+    } catch(e){}
+  }
   if (!q.has('probe')) return;
   const pre = document.createElement('pre');
   pre.id = 'probeOut';
