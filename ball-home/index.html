@@ -42,104 +42,28 @@
 <body>
 <main>
   <h1>👻 VBALL — Update <span class="ver" id="verTitle">v4.3</span></h1>
-  <p id="offeredLine">One page, two doors — pick whichever fits the
-     device you're holding.</p>
-  <p>New in 4.3 — the LAB build: a test-only release that checks
-     the charm's unused hardware before the next app is built on
-     it. The app page gains a fourth tile, LAB TESTS: tap it and
-     the charm walks its own hardware — memory, temperature,
-     clock chip, battery gauge (twice, ten seconds apart), the
-     button expander, the motion chip's gyroscope (turn the
-     charm when it asks), the GPS (it needs open sky), nearby
-     Bluetooth devices (counted, never named, never saved), a
-     test chirp and the microphone's ears (clap when it asks),
-     and the SD card, which receives the results file. The
-     results also come back over this page: connect below and
-     tap <strong>Read LAB results</strong> — no cable, no card
-     swap, and it works whatever version the charm is running.
-     Everything outside the LAB screen is 4.2.1, unchanged.
-     This build — EVERYTHING: Gengar is home as the sprite body,
-     and the whole rescue line is included — the v2.7 rescue fixes
-     (pages, screen geometry, sampler-polled button), the
-     touch-sleep fix (touch survives screen-off instead of sleeping
-     forever), and the expander power-button support: on this board
-     the physical PWR button now sleeps, wakes, and double-tap-exits
-     the way it should. New in 4.0, the board's remaining hardware
-     wakes up: the real-time clock chip is read at boot and written
-     on every phone sync, so his clock keeps the time even across a
-     full power cut; the SD card slot is live (Settings → SD CARD
-     turns it off and on); and the home census gains a gauges line —
-     battery %, chip temperature, and the card's size. New in
-     4.0.1: the update window re-advertises after a dropped or
-     aborted connection — in 4.0 one dropped link left him
-     invisible for the rest of his own window, face still
-     claiming update mode; now he comes back on the air while
-     the window is open. New in 4.1 — the convicted-fix roll-up:
-     the idle-brick cures (on 4.0 he could fall asleep after a
-     minute or two and never answer again — the wake path is
-     rebuilt so a tap, a shake, or the 10-minute backstop timer
-     brings the screen back) and a boot splash — Gengar with
-     "VBALL v4.1" under him — so power-on is visible from the
-     first seconds. The SD slot moves to its own bus (in 4.0 it
-     fought the screen for the same bus and the card never
-     mounted) and the census now says which failure it is —
-     NOCARD, NOFS, ERR — instead of a flat ABSENT. And the
-     battery gauge's enables are finally set at boot, so the
-     BATT line can start telling the truth. New in 4.2.1 \u2014 a rescue fix, nothing else changes: 4.2 could not finish booting (the power-on splash drew his first picture in a corner of the system whose desk was too small for the picture's unpacking, so he restarted forever, screens flashing). The splash now draws where every other picture draws, and a new runtime test draws all twelve of his animations on a computer before any future release is allowed out, so this class of failure is caught before it ships. New in 4.2 \u2014 the
-     whole animation set re-made: all twelve of his clips
-     re-baked in the new staging (the glass is a window into
-     the ball \u2014 he stands on the ball's inner floor, seen
-     from slightly above, a little further in), his arms held
-     out to his sides exactly as the original model holds
-     them, unmoving, and his body rigid \u2014 no stretching, no
-     flex. And every screen now fits inside the round glass:
-     the APPS tiles, the SETTINGS table (whose last row used
-     to fall off the edge entirely), the confirm buttons and
-     the update text were all re-laid inside the circle's
-     safe area, so nothing is clipped any more.</p>
 
   <section class="door" id="doorA">
     <div class="doorHead" id="headA"><span>Bluetooth update (phone) <span class="ver" id="verA"></span></span><span class="chev">▾</span></div>
     <p class="hint" id="hintA"></p>
     <div class="doorBody" id="bodyA">
-      <p>Send a new face to the charm over Bluetooth. No Wi-Fi, no cable —
-         the file travels phone → charm, directly.</p>
-      <p><strong>1.</strong> Wake the charm in update mode: on Gengar,
-         swipe left to the app page (or tap the <strong>APPS</strong>
-         tab at the bottom of his ball), tap <strong>UPDATE</strong>,
-         then tap <strong>YES</strong>. The purple ring appears and
-         the face shows <code>update code</code> and a 6-digit
-         number. Update mode is only ever opened from that screen —
-         just turning him on never starts it.</p>
-      <p><strong>2.</strong> Tap <strong>Connect</strong> and pick
-         <strong>VBALL</strong>. Your phone will ask for that 6-digit
-         code — type the one on the face.</p>
-      <p><strong>3.</strong> When the versions look right, tap
-         <strong>Send update</strong> and keep this page open until it
-         finishes. The charm restarts itself into the new version.</p>
+      
+      
+      
+      
       <button id="connectBtn">Connect</button>
       <button id="sendBtn" disabled>Send update</button>
-      <p><strong>LAB results (v4.3 test build):</strong> after running
-         LAB TESTS on the charm, connect here the same way and pull
-         the results back over Bluetooth. Reading is not an update —
-         it works whatever version the charm is running.</p>
+      
       <button id="labBtn" disabled>Read LAB results</button>
       <pre id="labOut" hidden></pre>
       <p><a id="labDl" download="lab-results.txt">Download lab-results.txt</a></p>
       <div class="bar"><div id="fill"></div></div>
       <p class="big" id="status">Not connected.</p>
+      
       <p id="versions"></p>
       <p class="warn" id="note"></p>
-      <p>Update mode only lasts about 5 minutes — if the charm drops off
-         the list, put him in update mode again (swipe left, UPDATE, YES).
-         A failed send changes nothing: the charm keeps running the
-         version it already has.</p>
-      <p>Connecting also sets his clock from your phone — that is how
-         he knows the time. Since 1.10 this door is how home
-         firmware updates: the new build lands in his spare slot
-         and he restarts into it, and if it ever fails to boot he
-         rolls back to the version that worked. The cable door
-         below is for a first install or a rescue.</p>
+      
+      
     </div>
   </section>
 
@@ -147,16 +71,14 @@
     <div class="doorHead" id="headB"><span>Cable update (PC) <span class="ver" id="verB"></span></span><span class="chev">▾</span></div>
     <p class="hint" id="hintB"></p>
     <div class="doorBody" id="bodyB">
-      <p>The full wired install, straight from your browser — no drivers,
-         no command line. Use it for a first install or to recover a
-         charm that won't update any other way.</p>
-      <p><strong>1.</strong> Plug the board in via USB-C (a data cable, not charge-only).</p>
-      <p><strong>2.</strong> Press <strong>Install</strong> and pick the board's port (<code>USB JTAG/serial debug unit</code>).</p>
-      <p><strong>3.</strong> When it offers to erase, say yes — first install should start clean.</p>
+      
+      
+      
+      
       <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
-      <p class="warn">⚠️ A cable install erases the charm and resets his memory — a Bluetooth update doesn't.</p>
-      <p class="warn">⚠️ Needs Chrome or Edge on a computer (Web Serial). No buttons are needed to flash: the installer resets the board into download mode in software. If the board won't connect, unplug USB, close any other tab or app that might hold the port, plug back in and try again.</p>
-      <p>After it finishes, press PWR — the face wakes up.</p>
+      
+      
+      
     </div>
   </section>
 </main>
@@ -183,9 +105,9 @@ document.getElementById("headA").addEventListener("click", () => toggleDoor(door
 document.getElementById("headB").addEventListener("click", () => toggleDoor(doorB));
 
 hintA.textContent = hasBt ? "" :
-  "No Bluetooth here — open this page on your phone.";
+  "No Bluetooth here.";
 hintB.textContent = hasSerial ? "" :
-  "No USB serial here — use a PC with Chrome/Edge.";
+  "No USB serial here.";
 
 if (hasBt) doorA.classList.add("lit");
 if (hasSerial) doorB.classList.add("lit");
@@ -196,9 +118,6 @@ if (hasBt) bleDoorOpened();
 /* Offered version in the header, from the same ble.json Door A uses. */
 fetch("ble.json").then(r => r.json()).then(meta => {
   if (meta && meta.version) {
-    document.getElementById("offeredLine").textContent =
-      "Version " + meta.version + " is the current update. One page, " +
-      "two doors — pick whichever fits the device you're holding.";
     /* Each door states the version IT serves (Tyler's rule, 2026-10-27):
      * the badges are read from the same files the doors install from,
      * so a label can never promise a version the door doesn't carry. */
