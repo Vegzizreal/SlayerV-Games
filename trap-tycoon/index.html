@@ -1381,6 +1381,7 @@ body.electron-phone #ewin-controls{display:flex}
 .tk-buykit:disabled{opacity:.4;cursor:not-allowed}
 .tk-need{color:#f59e0b;font-size:13px;font-weight:600}
 .tk-gostore{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
+.srow.hl{outline:2px solid #4ade80;outline-offset:-2px;background:rgba(74,222,128,.16)}
 .tk-gostore.sm{width:auto;margin-top:0;padding:8px 14px}
 .tk-bagbar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#20180e;border:1px solid #926818;border-radius:12px;padding:10px 12px;margin:8px 2px;color:#fef3c7;font-size:13px;font-weight:600}
 .tk-empty{text-align:center;color:rgba(255,255,255,.92);padding:48px 20px;font-size:17px;line-height:1.7;font-weight:600}
@@ -1428,6 +1429,7 @@ body.electron-phone #ewin-controls{display:flex}
 .tk-buykit:disabled{opacity:.4;cursor:not-allowed}
 .tk-need{color:#f59e0b;font-size:13px;font-weight:600}
 .tk-gostore{background:#d97706;border:none;color:#fff;border-radius:10px;padding:10px 16px;font-size:13px;font-weight:700;cursor:pointer;width:100%;margin-top:6px}
+.srow.hl{outline:2px solid #4ade80;outline-offset:-2px;background:rgba(74,222,128,.16)}
 .tk-gostore.sm{width:auto;margin-top:0;padding:8px 14px}
 .tk-bagbar{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#20180e;border:1px solid #926818;border-radius:12px;padding:10px 12px;margin:8px 2px;color:#fef3c7;font-size:13px;font-weight:600}
 .pg[data-theme="light"] .tk-empty{color:rgba(0,0,0,.5)}
@@ -1635,9 +1637,9 @@ body.electron-phone #ewin-controls{display:flex}
 .scard b{display:block;font-size:15px;margin-bottom:6px}
 .scard span{font-size:12px;color:var(--hatch-widget-muted);line-height:1.45}
 /* booklet swipe */
-.store-book-dots{display:flex;gap:10px;justify-content:center;padding:8px 0 12px;grid-column:1/-1;position:sticky;top:0;z-index:5;background:var(--hatch-widget-bg,#0a0a0f)}
-.bk-dot{width:10px;height:10px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;padding:0;transition:transform .15s}
-.bk-dot.on{transform:scale(1.3);border-color:transparent}
+.store-book-dots{display:flex;gap:8px;justify-content:center;padding:8px 0 12px;grid-column:1/-1;position:sticky;top:0;z-index:5;background:var(--hatch-widget-bg,#0a0a0f)}
+.bk-dot{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.07);cursor:pointer;padding:0;transition:transform .15s;font-size:18px;line-height:1;display:flex;align-items:center;justify-content:center;opacity:.5}
+.bk-dot.on{transform:scale(1.15);opacity:1;background:rgba(255,255,255,.13)}
 .store-book{display:flex;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;grid-column:1/-1;scrollbar-width:none}
 .store-book::-webkit-scrollbar{display:none}
 .store-page{flex:0 0 100%;scroll-snap-align:start;scroll-snap-stop:always;padding:0 2px;min-width:0}
@@ -2949,10 +2951,11 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:25,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v201";
+var GAME_VER="v202";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
+   {v:"v202",ts:"Oct 29, 2026",t:"The Store points the way",d:"When a To Do task sends you to the Store for seeds, the Seed Bank now opens scrolled to the strain you came for with its row lit up green - and it stays lit while you buy. The little chapter dots are now icon chips: every shop wears its own icon, and the one you are in pops with its color ring."},
    {v:"v201",ts:"Oct 29, 2026",t:"Conversations land at the latest",d:"Opening a chat now always lands on the newest messages - and stays there. If you are reading back through a thread, your spot is kept exactly where you left it; if you are at the latest, new messages keep you pinned to the latest. Includes everything from v200: the Crew tab hiring decisions and the inner-screen scaling."},
    {v:"v200",ts:"Oct 29, 2026",t:"Hiring is your call",d:"Runner offers and lab crew are not chat talk anymore - they are decisions that wait for you in To Do, in the new Crew tab (Stash / Orders / Crew): who they are, what they bring, what they cost, Hire or Pass. A pass is final. The crew screen left the Lab and runners left the phonebook - your people live in the Crew tab now. Includes the inner-screen scaling pass."},
    {v:"v199",ts:"Oct 29, 2026",t:"Inner screen, scaled right",d:"On the big unfolded screen the whole game now scales up to meet it: home icons and labels grow, the app grid spreads to fill the height, the dock rides the bottom, and the busy screens (Grow, Stash, Store, Lab, To Do, Properties) flow into two columns instead of stretching one long list across the glass. Messages and the form screens sit in a comfortable centered column. The folded cover screen is unchanged."},
@@ -4933,8 +4936,9 @@ function ttEnsureNotifPerm(){
   if(S&&S.phoneNotif&&window.ApkUpdater&&window.ApkUpdater.requestNotifPermission)window.ApkUpdater.requestNotifPermission();
  }catch(e){}
 }
-var _dealThreadKey=null; /* v201: thread the deal pane last rendered (scroll pinning) */
+var _dealThreadKey=null;var _storeHL=null; /* strain a task sent the player to the Store for - the Seed Bank highlights its row until they leave the seeds chapter */ /* v201: thread the deal pane last rendered (scroll pinning) */
 function render(){
+ if(S.tab!=="store"||S.storetab!=="seeds")_storeHL=null;
  ttEnsureNotifPerm();
  /* v172: a bag-full episode ends the moment the duffel has room again —
     re-arm Roach's bag card so the next full bag can show it once more */
@@ -6025,7 +6029,7 @@ function mapsHTML(){
  stores.forEach(function(sc,i){if(sc[0]===st)_sidx=i;});
  sh+='<div class="store-book-dots">';
  stores.forEach(function(sc,i){
-  sh+='<button type="button" data-act="storetab" data-sec="'+sc[0]+'" class="bk-dot'+(i===_sidx?' on':'')+'" style="'+(i===_sidx?'background:'+sc[4]+';':'')+'" title="'+sc[2]+'"></button>';
+  sh+='<button type="button" data-act="storetab" data-sec="'+sc[0]+'" class="bk-dot'+(i===_sidx?' on':'')+'" style="'+(i===_sidx?'border:2px solid '+sc[4]+';':'')+'" title="'+sc[2]+'">'+sc[5]+'</button>';
  });
  sh+='</div><div class="store-book" id="store-book">';
  /* triple the pages for seamless infinite scroll */
@@ -6055,14 +6059,14 @@ function mapsHTML(){
      else return;
     }
     if(v===0)return;
-    if(v===1){_pageHtml+='<div class="srow c tight locked"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+levelForTier(PRODUCTS[k].tier)+'</span></div></div>';return;}
+    if(v===1){_pageHtml+='<div class="srow c tight locked'+(k===_storeHL?" hl":"")+'" data-seedrow="'+k+'"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b> <span class="lvtag">Lv '+levelForTier(PRODUCTS[k].tier)+'</span></div></div>';return;}
     /* v189: two-line seed row. Line 1 says what it is and what you
        hold (yield, sell price, seeds in stock as plain words). Line 2
        is three equal buy buttons, ALL in the same format - quantity
        first, then the total price. The old row glued the owned count
        onto the single-buy price ("$15 (x25)"), which read as "buy 25
        for $15", and the buttons crushed the yield text off screen. */
-    _pageHtml+='<div class="srow c tight seedrow"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+' &middot; '+(S.seeds[k]||0)+' in stock</span></div>'
+    _pageHtml+='<div class="srow c tight seedrow'+(k===_storeHL?" hl":"")+'" data-seedrow="'+k+'"><div class="seedline"><b><i class="dot" style="background:'+PRODUCTS[k].c1+'"></i>'+PRODUCTS[k].name+'</b><span class="sdesc">~'+PRODUCTS[k].yld[0]+'-'+PRODUCTS[k].yld[1]+'g &middot; '+fmtP(PRODUCTS[k].price)+' &middot; '+(S.seeds[k]||0)+' in stock</span></div>'
      +(PRODUCTS[k].gene?'<div class="sdesc">HUNT ONLY</div></div>':'<div class="seedbtns"><button type="button" data-act="buyseed" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed?"":" disabled")+'>&times;1 &middot; '+money(PRODUCTS[k].seed)+'</button><button type="button" data-act="buyseed" data-q="10" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed*10?"":" disabled")+'>&times;10 &middot; '+money(PRODUCTS[k].seed*10)+'</button><button type="button" data-act="buyseed" data-q="50" data-strain="'+k+'"'+(S.cash>=PRODUCTS[k].seed*50?"":" disabled")+'>&times;50 &middot; '+money(PRODUCTS[k].seed*50)+'</button></div></div>');
    });
   }else if(st==="lab"){
@@ -6153,6 +6157,7 @@ function mapsHTML(){
    var _pages=_book.querySelectorAll(".store-page");
    var _n6=stores.length,_mid=_n6+_sidx;
    _book.scrollLeft=_mid*_book.clientWidth;
+   if(_storeHL){var _hlr=document.querySelector('.store-page-body[data-pagebody="seeds-1"] [data-seedrow="'+_storeHL+'"]');if(_hlr)setTimeout(function(){var _pn=q(".pane-store");if(_pn&&_hlr&&document.contains(_hlr)){var _pr=_pn.getBoundingClientRect(),_rr=_hlr.getBoundingClientRect();_pn.scrollTop+=(_rr.top-_pr.top)-Math.round(_pn.clientHeight/3);}},80);}
    /* v176: the book is only as tall as the chapter you're reading — the
       pane below can no longer scroll down into dead space under a short
       chapter (the book used to take the TALLEST chapter's height). */
@@ -7395,7 +7400,7 @@ function growChainBtns(k){
   if(c.empty>0)return '<span class="tk-need">You have '+c.n+' '+nm+' seed'+(c.n>1?"s":"")+'</span><button type="button" class="tk-make" data-act="task-plant" data-k="'+k+'">🌱 Plant '+nm+'</button>';
   return '<span class="tk-need">You have '+nm+' seeds but no empty pots</span><button type="button" class="tk-gostore" data-act="goapp" data-app="grow">Go to Grow</button>';
  }
- return (PRODUCTS[k]&&PRODUCTS[k].gene)?'<span class="tk-need">Hunt-only strain — seeds come from SCAN hunts</span>':'<span class="tk-need">Need seeds</span><button type="button" class="tk-gostore" data-act="gostore" data-ch="seeds">Go to Store</button>';
+ return (PRODUCTS[k]&&PRODUCTS[k].gene)?'<span class="tk-need">Hunt-only strain — seeds come from SCAN hunts</span>':'<span class="tk-need">Need seeds</span><button type="button" class="tk-gostore" data-act="gostore" data-ch="seeds" data-k="'+k+'">Go to Store</button>';
 }
 function tasksHTML(){
  var h=tabHeader("tasks");
@@ -10732,7 +10737,7 @@ root.addEventListener("click",function(e){
  if(a==="task-plant"){doAutoPlant(b.dataset.k);return;}
  if(a==="goapp"){if(b.dataset.app==="grow"){S.tab="grow";S.view="app";navPush("grow");ttPushHist();save();render();}return;}
  if(a==="thread-tasks"){S.tab="tasks";S.view="app";navPush("tasks");ttPushHist();save();render();return;}
- if(a==="gostore"){var _gch=b.dataset.ch;if(["seeds","guns","lab","gear","style","upgrades"].indexOf(_gch)<0)_gch="seeds";S.tab="store";S.view="app";S.storetab=_gch;navPush("store");ttPushHist();save();render();return;}
+ if(a==="gostore"){var _gch=b.dataset.ch;if(["seeds","guns","lab","gear","style","upgrades"].indexOf(_gch)<0)_gch="seeds";_storeHL=(_gch==="seeds"&&b.dataset.k)?b.dataset.k:null;S.tab="store";S.view="app";S.storetab=_gch;navPush("store");ttPushHist();save();render();return;}
  if(a==="storeback"){S.storetab=null;save();render();return;}
   if(a==="setsel"){S.setdrug=b.dataset.key;save();render();return;}
  if(a==="settheme"){S._suppressNotif=true;var _th=b.dataset.theme;S.theme=(_th==="light")?"light":"dark";save();render();return;}
