@@ -242,14 +242,6 @@ function paintAtlas(night){
   r = REG.foliage; c.fillStyle = D('#3e6b2f','#1b3020'); c.fillRect(r[0],r[1],r[2],r[3]); speckle(c,r[0],r[1],r[2],r[3],D(['#4d7f3a','#2f5923','#5c9046'],['#23402a','#12241a']),700,2,7);
   r = REG.awning; c.fillStyle = D('#1f7a4d','#17573a'); c.fillRect(r[0],r[1],r[2],r[3]);
   c.fillStyle = D('#f2ead2','#c9bfa4'); for (let x=0;x<4;x++) c.fillRect(r[0]+x*32+8, r[1], 16, r[3]);
-  // grime & weather streaks on the building skins
-  for (const rr of [REG.facadeA, REG.facadeB, REG.facadeC, REG.house, REG.store, REG.ware]){
-    const g = c.createLinearGradient(0, rr[1]+rr[3]*0.55, 0, rr[1]+rr[3]);
-    g.addColorStop(0, 'rgba(0,0,0,0)'); g.addColorStop(1, night ? 'rgba(0,0,0,0.4)' : 'rgba(20,16,10,0.30)');
-    c.fillStyle = g; c.fillRect(rr[0], rr[1]+rr[3]*0.55, rr[2], rr[3]*0.45);
-    for (let i=0;i<26;i++){ c.fillStyle = night ? 'rgba(0,0,0,0.20)' : 'rgba(30,25,18,0.10)';
-      const sx = rr[0] + rnd()*rr[2]; c.fillRect(sx, rr[1] + rnd()*rr[3]*0.4, 1.5 + rnd()*3, rr[3]*(0.3 + rnd()*0.5)); }
-  }
   return cv;
 }
 const atlasDay = texFromCanvas(paintAtlas(false));
@@ -2340,109 +2332,6 @@ window.__audit = {
     .filter(x => x.stand > x.r),
   spotCount: ()=> SPOTS.length
 };
-
-/* ================= FULL VERSION — PART H: the skin — realistic ground ================= */
-function groundCanvas(kind, night){
-  const cv = document.createElement('canvas'); cv.width = cv.height = 512;
-  const c = cv.getContext('2d');
-  const D = (d, n)=> night ? n : d;
-  let s = kind === 'asphalt' ? 1234 : kind === 'concrete' ? 777 : 31337;
-  const R = ()=>{ s = (s*16807) % 2147483647; return (s-1)/2147483646; };
-  const speck = (cols, n, s0, s1, a0, a1)=>{
-    for (let i=0;i<n;i++){ c.fillStyle = cols[(R()*cols.length)|0]; c.globalAlpha = a0 + R()*(a1-a0);
-      const sz = s0 + R()*(s1-s0); c.fillRect(R()*512, R()*512, sz, sz); }
-    c.globalAlpha = 1;
-  };
-  const blob = (cols, n, r0, r1, a)=>{
-    for (let i=0;i<n;i++){
-      const x = R()*512, y = R()*512, r = r0 + R()*(r1-r0);
-      const g = c.createRadialGradient(x, y, 0, x, y, r);
-      g.addColorStop(0, cols[(R()*cols.length)|0]); g.addColorStop(1, 'rgba(0,0,0,0)');
-      c.globalAlpha = a; c.fillStyle = g;
-      c.beginPath(); c.arc(x, y, r, 0, 7); c.fill();
-    }
-    c.globalAlpha = 1;
-  };
-  if (kind === 'asphalt'){
-    c.fillStyle = D('#333336', '#1e1f24'); c.fillRect(0, 0, 512, 512);
-    blob(['#2a2a2d','#3d3d42','#26262a'], 26, 30, 120, 0.16);
-    speck(['#414146','#2b2b2e','#4a4a50','#232326','#55555c'], 10000, 1, 2.4, 0.05, 0.22);
-    speck(['#19191b'], 500, 1, 2, 0.1, 0.25);
-    c.strokeStyle = D('rgba(12,12,14,0.55)', 'rgba(0,0,0,0.6)');
-    for (let i=0;i<7;i++){
-      c.lineWidth = 0.8 + R()*1.4; c.beginPath();
-      let x = R()*512, y = R()*512; c.moveTo(x, y);
-      for (let k=0;k<5;k++){ x += (R()-0.5)*90; y += (R()-0.5)*90; c.lineTo(x, y); }
-      c.stroke();
-    }
-    blob(['#101012'], 8, 14, 46, 0.13);
-  } else if (kind === 'concrete'){
-    c.fillStyle = D('#a8a296', '#565a60'); c.fillRect(0, 0, 512, 512);
-    blob(['#97917f','#bcb6a6','#8a8578'], 20, 40, 130, 0.14);
-    speck(['#b5b0a1','#98927f','#c2bcab','#7e7a6c'], 8000, 1, 2.2, 0.05, 0.2);
-    speck(['#3f3d38'], 260, 1, 2, 0.08, 0.2);
-    c.fillStyle = D('rgba(52,50,45,0.6)', 'rgba(20,20,22,0.65)');
-    for (let i=0;i<=4;i++){ c.fillRect(i*128 - 1, 0, 2.5, 512); c.fillRect(0, i*128 - 1, 512, 2.5); }
-    c.fillStyle = D('rgba(255,255,255,0.16)', 'rgba(255,255,255,0.05)');
-    for (let i=0;i<=4;i++){ c.fillRect(i*128 + 1.5, 0, 1, 512); c.fillRect(0, i*128 + 1.5, 512, 1); }
-    blob(['#6d675a','#4c463c'], 10, 10, 42, 0.10);
-  } else {
-    c.fillStyle = D('#4e7434', '#24381f'); c.fillRect(0, 0, 512, 512);
-    blob(['#42652b','#5d8a3e','#385423'], 24, 30, 110, 0.18);
-    speck(['#5d8a3e','#42652b','#6f9c4c','#2f4c1e'], 12000, 1, 3, 0.06, 0.24);
-    speck(['#7a9c58'], 2600, 1, 1.6, 0.1, 0.3);
-    blob(['#5a4a30'], 6, 12, 40, 0.10);
-  }
-  return cv;
-}
-function buildWithTex(kind, buildFn){
-  const texD = texFromCanvas(groundCanvas(kind, false));
-  const texN = texFromCanvas(groundCanvas(kind, true));
-  REG.__tmp = [0, 0, 1024, 1024];
-  const b = Bucket();
-  buildFn(b);
-  delete REG.__tmp;
-  return { gl: makeGL(b), texD, texN };
-}
-const ALLR7 = [-160, -80, -60, 0, 60, 80, 160];
-let slabCount = 0;
-const groundSets = [];
-groundSets.push(buildWithTex('asphalt', b => {
-  for (const r of ALLR7){
-    quadUp(b, r, 0, 10, 500, 0.028, '__tmp', 1.25, 62);
-    quadUp(b, 0, r, 500, 10, 0.028, '__tmp', 62, 1.25);
-  }
-}));
-groundSets.push(buildWithTex('concrete', b => {
-  const segs = [];
-  let prev = -250;
-  for (const cRoad of ALLR7){
-    if (cRoad - 8.8 - prev > 2.5) segs.push([prev, cRoad - 8.8]);
-    prev = Math.max(prev, cRoad + 8.8);
-  }
-  if (250 - prev > 2.5) segs.push([prev, 250]);
-  const slab = (x, z, w, l)=>{
-    box(b, mTRS(x, 0.0525, z, 0,0,0), w, 0.105, l, {rect:'__tmp', col:[0.5,0.5,0.52]});
-    quadUp(b, x, z, w, l, 0.112, '__tmp', w/4, l/4);
-    slabCount++;
-  };
-  for (const r of ALLR7) for (const [s0, s1] of segs){
-    const len = s1 - s0, zc = (s0 + s1)/2;
-    slab(r - 6.5, zc, 3, len);
-    slab(r + 6.5, zc, 3, len);
-    slab(zc, r - 6.5, len, 3);
-    slab(zc, r + 6.5, len, 3);
-  }
-}));
-groundSets.push(buildWithTex('grass', b => {
-  quadUp(b, 0, 0, 540, 540, -0.002, '__tmp', 135, 135);
-}));
-const prevRender5 = render;
-render = function(t){
-  prevRender5(t);
-  for (const g of groundSets) drawLit(g.gl, IDENT, g.texD, g.texN);
-};
-window.__gfx3 = { slabs: ()=> slabCount, sets: ()=> groundSets.length };
 
 /* ================= QA HOOK (QA copy only — never in the shipped build) ================= */
 (function(){
