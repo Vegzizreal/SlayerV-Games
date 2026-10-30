@@ -2359,7 +2359,18 @@ window.__audit = {
   if (!q.has('hunt')) return;
   const origDA = gl.drawArrays.bind(gl);
   let skipA = -1, skipB = -1, daCount = 0;
-  gl.drawArrays = function(m, f, c){ const i = daCount++; if (i >= skipA && i <= skipB) return; origDA(m, f, c); };
+  let huntCall = -1, huntSlice = -1, huntSlices = 8;
+  gl.drawArrays = function(m, f, c){
+    const i = daCount++;
+    if (huntCall >= 0 && i === huntCall){
+      const per = Math.ceil(c / huntSlices);
+      const a = huntSlice * per;
+      if (a < c) origDA(m, f + a, Math.min(per, c - a));
+      return;
+    }
+    if (i >= skipA && i <= skipB) return;
+    origDA(m, f, c);
+  };
   setTimeout(()=>{
     const pre = document.createElement('pre');
     pre.id = 'huntOut';
@@ -2379,7 +2390,17 @@ window.__audit = {
       let out = 'HUNT total=' + total + ' (values = max RGB at bottom-center/bottom-left/bottom-right/center; low = black)\n';
       out += 'skip none: ' + test(-1, -1) + '\n';
       const hr = q.get('hr');
-      if (hr){
+      if (q.has('hunt2')){
+        const hc = parseInt(q.get('hc') || '1', 10);
+        huntSlices = parseInt(q.get('hs') || '8', 10);
+        for (let s = 0; s < huntSlices; s++){
+          huntCall = hc; huntSlice = s; daCount = 0;
+          render(performance.now());
+          const vals = pts.map(([fx, fy])=>{ gl.readPixels((fx * W)|0, ((1 - fy) * H)|0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, cell); return Math.max(cell[0], cell[1], cell[2]); }).join('/');
+          out += `call${hc} slice ${s}/${huntSlices}: ` + vals + '\n';
+        }
+        huntCall = -1;
+      } else if (hr){
         const [ha, hb] = hr.split('-').map(Number);
         for (let a = ha; a <= hb; a++) out += `skip ${a}: ` + test(a, a) + '\n';
       } else {
