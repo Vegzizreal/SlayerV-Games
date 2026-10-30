@@ -2342,4 +2342,38 @@ window.__audit = {
     } catch(e){ pre.textContent = 'PROBE ERROR ' + e.message; }
   };
 })();
+
+/* ================= DRAW HUNT (QA copy only): skip ranges of draw calls,
+   find which call paints the black foreground ================= */
+(function(){
+  const q = new URLSearchParams(location.search);
+  if (!q.has('hunt')) return;
+  const origDA = gl.drawArrays.bind(gl);
+  let skipA = -1, skipB = -1, daCount = 0;
+  gl.drawArrays = function(m, f, c){ const i = daCount++; if (i >= skipA && i <= skipB) return; origDA(m, f, c); };
+  setTimeout(()=>{
+    const pre = document.createElement('pre');
+    pre.id = 'huntOut';
+    pre.style.cssText = 'position:fixed;left:0;top:140px;z-index:99;background:#000;color:#0f0;font-size:11px;padding:4px;white-space:pre';
+    document.body.appendChild(pre);
+    try {
+      const cell = new Uint8Array(4);
+      const W = gl.drawingBufferWidth, H = gl.drawingBufferHeight;
+      const pts = [[0.5, 0.85], [0.2, 0.9], [0.85, 0.9], [0.5, 0.5]];
+      const test = (a, b)=>{
+        skipA = a; skipB = b; daCount = 0;
+        render(performance.now());
+        return pts.map(([fx, fy])=>{ gl.readPixels((fx * W)|0, ((1 - fy) * H)|0, 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, cell); return Math.max(cell[0], cell[1], cell[2]); }).join('/');
+      };
+      daCount = 0; skipA = skipB = -1; render(performance.now());
+      const total = daCount;
+      let out = 'HUNT total=' + total + ' (values = max RGB at bottom-center/bottom-left/bottom-right/center; low = black)\n';
+      out += 'skip none: ' + test(-1, -1) + '\n';
+      const STEP = 8;
+      for (let a = 0; a < total; a += STEP) out += `skip ${a}-${Math.min(a + STEP - 1, total - 1)}: ` + test(a, Math.min(a + STEP - 1, total - 1)) + '\n';
+      skipA = skipB = -1;
+      pre.textContent = out;
+    } catch(e){ pre.textContent = 'HUNT ERROR ' + e.message; }
+  }, 2500);
+})();
 </script></body></html>
