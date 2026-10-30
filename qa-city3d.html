@@ -2298,6 +2298,13 @@ window.__audit = {
    pixels inside the frame and print a coarse color map as DOM text ==== */
 (function(){
   const q = new URLSearchParams(location.search);
+  if (q.has('mag')){
+    const prevR2 = render;
+    render = function(t){
+      try { SKY.hor = [1, 0, 1]; SKY.zen = [1, 0, 1]; SUN.fog = [1, 0, 1]; } catch(e){}
+      prevR2(t);
+    };
+  }
   if (!q.has('probe')) return;
   const pre = document.createElement('pre');
   pre.id = 'probeOut';
