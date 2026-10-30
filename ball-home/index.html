@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VBALL — Update v4.2.1</title>
+<title>VBALL — Update v4.3</title>
 <style>
   body { font-family: system-ui, sans-serif; background:#0e0d12; color:#f2f0eb; margin:0; padding:32px 20px; }
   main { max-width:560px; margin:0 auto; }
@@ -32,15 +32,33 @@
   .bad { color:#ff7a7a; }
   .ok { color:#8be28b; }
   code { background:#26232f; padding:1px 6px; border-radius:6px; }
+  pre { background:#14121c; border:1px solid #2c2a38; border-radius:10px;
+        padding:12px; font-size:12.5px; line-height:1.45;
+        white-space:pre-wrap; word-break:break-word; color:#cfccc4; }
+  #labDl { display:none; color:#b7a6ff; font-size:16px; }
 </style>
 <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
 </head>
 <body>
 <main>
-  <h1>👻 VBALL — Update <span class="ver" id="verTitle">v4.2.1</span></h1>
+  <h1>👻 VBALL — Update <span class="ver" id="verTitle">v4.3</span></h1>
   <p id="offeredLine">One page, two doors — pick whichever fits the
      device you're holding.</p>
-  <p>This build — EVERYTHING: Gengar is home as the sprite body,
+  <p>New in 4.3 — the LAB build: a test-only release that checks
+     the charm's unused hardware before the next app is built on
+     it. The app page gains a fourth tile, LAB TESTS: tap it and
+     the charm walks its own hardware — memory, temperature,
+     clock chip, battery gauge (twice, ten seconds apart), the
+     button expander, the motion chip's gyroscope (turn the
+     charm when it asks), the GPS (it needs open sky), nearby
+     Bluetooth devices (counted, never named, never saved), a
+     test chirp and the microphone's ears (clap when it asks),
+     and the SD card, which receives the results file. The
+     results also come back over this page: connect below and
+     tap <strong>Read LAB results</strong> — no cable, no card
+     swap, and it works whatever version the charm is running.
+     Everything outside the LAB screen is 4.2.1, unchanged.
+     This build — EVERYTHING: Gengar is home as the sprite body,
      and the whole rescue line is included — the v2.7 rescue fixes
      (pages, screen geometry, sampler-polled button), the
      touch-sleep fix (touch survives screen-off instead of sleeping
@@ -101,6 +119,13 @@
          finishes. The charm restarts itself into the new version.</p>
       <button id="connectBtn">Connect</button>
       <button id="sendBtn" disabled>Send update</button>
+      <p><strong>LAB results (v4.3 test build):</strong> after running
+         LAB TESTS on the charm, connect here the same way and pull
+         the results back over Bluetooth. Reading is not an update —
+         it works whatever version the charm is running.</p>
+      <button id="labBtn" disabled>Read LAB results</button>
+      <pre id="labOut" hidden></pre>
+      <p><a id="labDl" download="lab-results.txt">Download lab-results.txt</a></p>
       <div class="bar"><div id="fill"></div></div>
       <p class="big" id="status">Not connected.</p>
       <p id="versions"></p>
@@ -200,6 +225,13 @@ const CTRL_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c03";
 const DATA_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c04";
 const STATUS_UUID = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c05";
 const TIME_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c06";
+/* LABRES (v4.3): read-back of the LAB results blob. Protocol:
+ * write 5 bytes [0x01][u32 LE offset] to set a cursor, then read:
+ * [u32 LE total][u32 LE offset][up to 200 data bytes]. Loop until
+ * the whole blob is held. Serves ONLY the lab results — there is
+ * no filename and no other file reachable through it. Reading is
+ * deliberately NOT version-gated. */
+const LABRES_UUID = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c07";
 const META_URL = "ble.json";   /* {"version":"1.7","file":"gengar-face-app-v8.bin"} */
 /* The app-bin filename is NOT hardcoded (v1.6+): ble.json names
  * it, so a future BLE release is just a new bin + a new ble.json
@@ -214,8 +246,9 @@ const STATE_NAMES = ["idle", "receiving", "done", "failed"];
 const $ = id => document.getElementById(id);
 const statusEl = $("status"), noteEl = $("note"), fillEl = $("fill");
 const connectBtn = $("connectBtn"), sendBtn = $("sendBtn");
+const labBtn = $("labBtn"), labOut = $("labOut"), labDl = $("labDl");
 
-let device = null, server = null;
+let device = null, server = null, svcSvc = null;
 let chInfo = null, chCtrl = null, chData = null, chStatus = null;
 let binBuf = null, binSha = null, newVersion = null, curVersion = null;
 let chunkIdx = 0, sending = false, finishConfirmed = false;
@@ -293,6 +326,8 @@ function onDisconnected() {
   }
   sending = false;
   sendBtn.disabled = true;
+  labBtn.disabled = true;
+  svcSvc = null;
   connectBtn.disabled = false;
 }
 
@@ -322,6 +357,7 @@ connectBtn.addEventListener("click", async () => {
     say("Connecting… your phone may ask for the 6-digit code on the face.");
     server = await device.gatt.connect();
     const svc = await server.getPrimaryService(SVC_UUID);
+    svcSvc = svc;
     chInfo = await svc.getCharacteristic(INFO_UUID);
     chCtrl = await svc.getCharacteristic(CTRL_UUID);
     chData = await svc.getCharacteristic(DATA_UUID);
@@ -352,6 +388,10 @@ connectBtn.addEventListener("click", async () => {
     $("versions").textContent =
       "Charm is running " + curVersion + " · this page offers " + newVersion +
       " (" + binBuf.byteLength + " bytes).";
+    /* LAB read-back is enabled on connect, BEFORE the version
+     * gate below: reading results is not an update and must work
+     * even when the charm is already on (or past) this version. */
+    labBtn.disabled = false;
     const a = parseVer(newVersion), b = parseVer(curVersion);
     if (!a || !b || verCmp(a, b) <= 0) {
       say("Already up to date.", "ok");
@@ -429,6 +469,69 @@ sendBtn.addEventListener("click", async () => {
          ". You can tap Send update to try again from the start. (" +
          (e && e.message ? e.message : e) + ")");
   }
+});
+
+/* ==== LAB results read-back (v4.3) ===================================
+ * Chunked pull of the one blob the LABRES characteristic serves.
+ * See LABRES_UUID for the protocol. Any failure is reported in the
+ * results box; nothing here touches the update path. */
+labBtn.addEventListener("click", async () => {
+  if (!svcSvc) return;
+  labBtn.disabled = true;
+  labOut.hidden = false;
+  labOut.textContent = "Reading LAB results…";
+  try {
+    const ch = await svcSvc.getCharacteristic(LABRES_UUID);
+    const chunks = [];
+    let total = -1, off = 0, guard = 0;
+    while (total < 0 || off < total) {
+      if (++guard > 600) throw new Error("read-back made no progress");
+      const req = new Uint8Array(5);
+      req[0] = 1;
+      new DataView(req.buffer).setUint32(1, off, true);
+      await ch.writeValueWithResponse(req);
+      const v = await ch.readValue();
+      if (v.byteLength < 8) throw new Error("short read-back header");
+      const t = v.getUint32(0, true), o = v.getUint32(4, true);
+      if (total < 0) {
+        total = t;
+        if (total === 0) {
+          labOut.textContent =
+            "No LAB results on the charm yet — run LAB TESTS first " +
+            "(app page → LAB TESTS), then read again.";
+          labBtn.disabled = false;
+          return;
+        }
+      }
+      if (o !== off) throw new Error("read-back offset mismatch");
+      const n = v.byteLength - 8;
+      if (n > 0) {
+        chunks.push(new Uint8Array(v.buffer, v.byteOffset + 8, n));
+        off += n;
+      } else if (off < total) {
+        throw new Error("read-back stalled at " + off + " of " + total);
+      }
+      labOut.textContent = "Reading LAB results… " + off + " / " + total;
+    }
+    const blob = new Uint8Array(total);
+    let p = 0;
+    for (const c of chunks) { blob.set(c, p); p += c.length; }
+    const text = new TextDecoder().decode(blob);
+    labOut.textContent = text;
+    const url = URL.createObjectURL(
+      new Blob([text], { type: "text/plain" }));
+    labDl.href = url;
+    labDl.style.display = "inline";
+    note("LAB results pulled from the charm — copy them from the box " +
+         "above, or use the download link.", "ok");
+  } catch (e) {
+    labOut.textContent =
+      "Could not read LAB results: " +
+      (e && e.message ? e.message : e) +
+      "\n(The charm needs the v4.3 LAB build for this — older " +
+      "firmware has no results to serve.)";
+  }
+  labBtn.disabled = false;
 });
 </script>
 </body>
