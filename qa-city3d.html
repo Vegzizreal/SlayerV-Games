@@ -307,7 +307,32 @@ function sphere(b, m, r, ws, hs, rect, col){
 /* flat ground quad, axis aligned */
 function quadUp(b, cx, cz, w, d, y, rectName, repX, repZ, col){
   const rect = typeof rectName === 'string' ? uvOf(rectName) : rectName;
-  quad(b, null, [[cx-w/2,y,cz+d/2,0,0],[cx+w/2,y,cz+d/2,1,0],[cx+w/2,y,cz-d/2,1,1],[cx-w/2,y,cz-d/2,0,1]], [0,1,0], rect, col||[1,1,1], [repX||1, repZ||1]);
+  repX = repX || 1; repZ = repZ || 1; col = col || [1,1,1];
+  /* Repeats tile INSIDE the rect: subdivide at tile boundaries so no
+     triangle's uv ever leaves its region. The old single-quad sweep ran the
+     uv across the whole atlas, black unpainted gaps included — near the
+     camera that sliver of uv landed in a gap and the ground went black. */
+  const brk = (rep)=>{
+    if (rep <= 1) return [0, 1];
+    const p = [0];
+    for (let k = 1; k < rep; k++) p.push(k / rep);
+    p.push(1);
+    return p;
+  };
+  const BX = brk(repX), BZ = brk(repZ);
+  const ru = rect[2] - rect[0], rv = rect[3] - rect[1];
+  for (let i = 0; i < BX.length - 1; i++) for (let j = 0; j < BZ.length - 1; j++){
+    const fx0 = BX[i], fx1 = BX[i + 1], fz0 = BZ[j], fz1 = BZ[j + 1];
+    const x0 = cx - w / 2 + fx0 * w, x1 = cx - w / 2 + fx1 * w;
+    const z0 = cz + d / 2 - fz0 * d, z1 = cz + d / 2 - fz1 * d;
+    const au = fx0 * repX, av = fz0 * repZ;
+    const uu0 = rect[0] + (au - Math.floor(au)) * ru;
+    const uu1 = rect[0] + (fx1 * repX - Math.floor(au)) * ru;
+    const vv0 = rect[1] + (av - Math.floor(av)) * rv;
+    const vv1 = rect[1] + (fz1 * repZ - Math.floor(av)) * rv;
+    const cs = [[x0, z0, uu0, vv0], [x1, z0, uu1, vv0], [x1, z1, uu1, vv1], [x0, z1, uu0, vv1]];
+    for (const k of [0, 1, 2, 0, 2, 3]) pv(b, null, cs[k][0], y, cs[k][1], 0, 1, 0, cs[k][2], cs[k][3], col);
+  }
 }
 function makeGL(b){
   const mk = arr => { const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf);
@@ -407,13 +432,14 @@ function buildCity(){
     quadUp(b, 0, r-6.5, 196, 3, 0.035, 'walk', 32, 0.5);
     quadUp(b, 0, r+6.5, 196, 3, 0.035, 'walk', 32, 0.5);
   }
-  for (const ix of R) for (const iz of R) quadUp(b, ix, iz, 16.6, 16.6, 0.04, 'walk', 2.7, 2.7);
+  /* (crossing floor tiles removed: the road surface runs through the
+     crossing now; pale tiles read as plazas) */
   for (const r of R) for (let t=-93; t<=93; t+=6){
     if (R.some(c => Math.abs(t-c) < 10)) continue;
     quadUp(b, r, t, 0.35, 3, 0.045, 'white', 1, 1, [1.0,0.8,0.35]);
     quadUp(b, t, r, 3, 0.35, 0.045, 'white', 1, 1, [1.0,0.8,0.35]);
   }
-  crosswalk(b, 0, 0); crosswalk(b, 0, 60); crosswalk(b, 60, 0);
+  /* (old low crosswalk stripes removed: one stripe layer only, Part F) */
   /* park paths (NW block) */
   quadUp(b, -30, -30, 4, 44, 0.045, 'walk', 0.66, 7.3);
   quadUp(b, -30, -30, 44, 4, 0.045, 'walk', 7.3, 0.66);
@@ -875,8 +901,10 @@ function render(t){
   drawLit(cityGL, IDENT, atlasDay, atlasNight);
   drawLit(seedSignBox, mTRS(18, 5.95, -9.32, 0,0,0), atlasDay, atlasNight);
   drawLit(seedSignFace, mTRS(18, 5.95, -9.08, 0,0,0), signSeedD, signSeedN);
+  drawLit(seedSignFace, mTRS(18, 5.95, -9.56, 0,Math.PI,0), signSeedD, signSeedN);
   drawLit(liqSignBox, mTRS(45, 5.3, -10.32, 0,0,0), atlasDay, atlasNight);
   drawLit(liqSignFace, mTRS(45, 5.3, -10.1, 0,0,0), signLiqD, signLiqN);
+  drawLit(liqSignFace, mTRS(45, 5.3, -10.56, 0,Math.PI,0), signLiqD, signLiqN);
   for (const p of parked) drawLit(p.gl, mTRS(p.x, 0, p.z, 0, p.a, 0), atlasDay, atlasNight);
   for (const c of traffic) drawLit(c.gl, mTRS(c.x, 0, c.z, 0, c.a, 0), atlasDay, atlasNight);
   drawLit(playerCar.gl, mTRS(playerCar.x, 0, playerCar.z, 0, playerCar.a, 0), atlasDay, atlasNight);
@@ -1150,13 +1178,13 @@ function buildWorld(){
     quadUp(b, 0, r+6.5, 500, 3, 0.035, 'walk', 83, 0.5);
   }
   const ALLR = [-160, -80, -60, 0, 60, 80, 160];
-  for (const ix of ALLR) for (const iz of ALLR) quadUp(b, ix, iz, 16.6, 16.6, 0.04, 'walk', 2.7, 2.7);
+  /* (crossing floor tiles removed: road surface runs through) */
   for (const r of RO) for (let t=-240; t<=240; t+=8){
     if (ALLR.some(c => Math.abs(t-c) < 10)) continue;
     quadUp(b, r, t, 0.35, 3, 0.045, 'white', 1, 1, [1.0,0.8,0.35]);
     quadUp(b, t, r, 3, 0.35, 0.045, 'white', 1, 1, [1.0,0.8,0.35]);
   }
-  crosswalk(b, 80, -80); crosswalk(b, -80, 80); crosswalk(b, 80, 80);
+  /* (old low crosswalk stripes removed: one stripe layer only, Part F) */
 
   /* ---- DOWNTOWN ---- */
   tower(b, 40, -110, 18, 14, 26, 'facadeC'); tower(b, 66, -112, 16, 13, 32, 'facadeA');
@@ -2147,19 +2175,18 @@ function buildCrossings(){
   const b = Bucket();
   const ALLR = [-160, -80, -60, 0, 60, 80, 160];
   for (const ix of ALLR) for (const iz of ALLR){
-    quadUp(b, ix, iz, 17.4, 17.4, 0.052, 'road', 2.2, 2.2, [1.06,1.06,1.08]);
     crossCaps++;
-    const col = [1.55, 1.55, 1.55];
+    const col = [0.92, 0.92, 0.9];
     for (let s=-2;s<=2;s++){
       quadUp(b, ix + s*1.8, iz - 7.6, 1.05, 3.6, 0.064, 'white', 1, 1, col);
       quadUp(b, ix + s*1.8, iz + 7.6, 1.05, 3.6, 0.064, 'white', 1, 1, col);
       quadUp(b, ix - 7.6, iz + s*1.8, 3.6, 1.05, 0.064, 'white', 1, 1, col);
       quadUp(b, ix + 7.6, iz + s*1.8, 3.6, 1.05, 0.064, 'white', 1, 1, col);
     }
-    quadUp(b, ix, iz - 5.1, 9, 0.5, 0.064, 'white', 1, 1, [1.5,1.5,1.5]);
-    quadUp(b, ix, iz + 5.1, 9, 0.5, 0.064, 'white', 1, 1, [1.5,1.5,1.5]);
-    quadUp(b, ix - 5.1, iz, 0.5, 9, 0.064, 'white', 1, 1, [1.5,1.5,1.5]);
-    quadUp(b, ix + 5.1, iz, 0.5, 9, 0.064, 'white', 1, 1, [1.5,1.5,1.5]);
+    quadUp(b, ix, iz - 5.1, 9, 0.5, 0.064, 'white', 1, 1, [1.0,1.0,1.0]);
+    quadUp(b, ix, iz + 5.1, 9, 0.5, 0.064, 'white', 1, 1, [1.0,1.0,1.0]);
+    quadUp(b, ix - 5.1, iz, 0.5, 9, 0.064, 'white', 1, 1, [1.0,1.0,1.0]);
+    quadUp(b, ix + 5.1, iz, 0.5, 9, 0.064, 'white', 1, 1, [1.0,1.0,1.0]);
   }
   world3GL = makeGL(b);
 }
