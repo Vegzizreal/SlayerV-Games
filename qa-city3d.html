@@ -2323,6 +2323,18 @@ window.__audit = {
       }
     } catch(e){}
   }
+  if (q.has('deadb')){
+    try {
+      for (const pair of [[atlasDay, false], [atlasNight, true]]){
+        const src = paintAtlas(pair[1]);
+        const cv = document.createElement('canvas'); cv.width = 1024; cv.height = 1024;
+        const cx = cv.getContext('2d'); cx.fillStyle = '#ffff00'; cx.fillRect(0, 0, 1024, 1024); cx.drawImage(src, 0, 0);
+        gl.bindTexture(gl.TEXTURE_2D, pair[0]);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cv);
+        gl.generateMipmap(gl.TEXTURE_2D);
+      }
+    } catch(e){}
+  }
   if (q.has('redtex')){
     try {
       const cv = document.createElement('canvas'); cv.width = 4; cv.height = 4;
