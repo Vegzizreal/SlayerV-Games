@@ -332,10 +332,27 @@ gl.viewport(0, 0, W, H);
 gl.clearColor(0.74, 0.8, 0.88, 1);
 gl.enable(gl.DEPTH_TEST);
 gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-drawLit(cityG, IDENT, atlasDay, atlasNight);
+function drawDbg(p){
+  gl.useProgram(p.p);
+  if (p.u.uMVP) gl.uniformMatrix4fv(p.u.uMVP, false, mMul(VP, IDENT));
+  if (p.u.uModel) gl.uniformMatrix4fv(p.u.uModel, false, IDENT);
+  if (p.u.uNight !== undefined) gl.uniform1f(p.u.uNight, 0);
+  if (p.u.uTexD !== undefined){ gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, atlasDay); gl.uniform1i(p.u.uTexD, 0); }
+  if (p.u.uTexN !== undefined){ gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, atlasNight); gl.uniform1i(p.u.uTexN, 1); }
+  const bind = (loc, buf, sz)=>{ gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, sz, gl.FLOAT, false, 0, 0); };
+  bind(p.a.aPos, cityG.pos, 3); bind(p.a.aNorm, cityG.nor, 3); bind(p.a.aUV, cityG.uv, 2); bind(p.a.aCol, cityG.col, 3);
+  gl.drawArrays(gl.TRIANGLES, 0, cityG.n);
+}
+const VHDR = 'precision mediump float;\nvarying vec2 vUV; varying vec3 vCol; varying vec3 vNorm; varying float vFogZ;\n';
+if (Q.has('uvmode')) drawDbg(makeProg(VS_LIT, VHDR + 'void main(){ gl_FragColor = vec4(vUV, 0.0, 1.0); }'));
+else if (Q.has('colmode')) drawDbg(makeProg(VS_LIT, VHDR + 'void main(){ gl_FragColor = vec4(vCol, 1.0); }'));
+else if (Q.has('normode')) drawDbg(makeProg(VS_LIT, VHDR + 'void main(){ gl_FragColor = vec4(vNorm * 0.5 + 0.5, 1.0); }'));
+else if (Q.has('texmode')) drawDbg(makeProg(VS_LIT, VHDR + 'uniform sampler2D uTexD; uniform sampler2D uTexN; uniform float uNight;\nvoid main(){ gl_FragColor = vec4(mix(texture2D(uTexD, vUV).rgb, texture2D(uTexN, vUV).rgb, uNight), 1.0); }'));
+else drawLit(cityG, IDENT, atlasDay, atlasNight);
 const px = new Uint8Array(4);
 function rd(fx, fy){ gl.readPixels(Math.floor(fx*W), Math.floor((1-fy)*H), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); return Math.max(px[0], px[1], px[2]); }
-let out = 'REPRO ' + W + 'x' + H + ' tris=' + (b.n/3) + ' BC=' + rd(0.5, 0.85) + ' C=' + rd(0.5, 0.5) + ' TL=' + rd(0.25, 0.25) + ' TR=' + rd(0.75, 0.25) + '\n';
+function rgb(fx, fy){ gl.readPixels(Math.floor(fx*W), Math.floor((1-fy)*H), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, px); return px[0] + ',' + px[1] + ',' + px[2]; }
+let out = 'REPRO ' + W + 'x' + H + ' tris=' + (b.n/3) + ' BC=' + rd(0.5, 0.85) + ' C=' + rd(0.5, 0.5) + ' BCrgb=' + rgb(0.5, 0.85) + ' Crgb=' + rgb(0.5, 0.5) + '\n';
 for (let r = 0; r < 10; r++){ let line = ''; for (let c = 0; c < 30; c++){ const v = rd((c+0.5)/30, (r+0.5)/10); line += v < 25 ? '#' : v > 200 ? 'W' : v > 120 ? 'w' : v > 60 ? 'd' : '.'; } out += line + '\n'; }
 document.getElementById('out').textContent = out;
 </script></body></html>
