@@ -117,6 +117,7 @@ function paintAtlas(night){
   const c2 = document.createElement('canvas'); c2.width = c2.height = 1024;
   const c = c2.getContext('2d');
   c.fillStyle = '#000000'; c.fillRect(0,0,1024,1024);
+  if (Q.has('grid')) { for (let gy = 0; gy < 8; gy++) for (let gx = 0; gx < 8; gx++){ c.fillStyle = 'rgb(' + (gx*36) + ',' + (gy*36) + ',160)'; c.fillRect(gx*128, gy*128, 128, 128); } return c2; }
   const cols = { facadeA:'#ff00ff', facadeB:'#ff8800', facadeC:'#0088ff', house:'#00ffff', store:'#00ff88', ware:'#888888', roofD:'#ff0000', roofR:'#aa0000', roofG:'#555555', road:'#333333', door:'#884400', glass:'#aaddff', walk:'#eeeeee', grass:'#22cc22', gravel:'#cccccc', white:'#ffff00', bark:'#663300', foliage:'#006600', awning:'#00ff00' };
   for (const k in REG){ const r = REG[k]; c.fillStyle = cols[k] || '#ffffff'; c.fillRect(r[0], r[1], r[2], r[3]); }
   return c2;
