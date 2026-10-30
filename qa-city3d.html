@@ -2362,6 +2362,21 @@ window.__audit = {
       }
     } catch(e){}
   }
+  if (q.has('fixtex') || q.has('fixtex2')){
+    const mode2 = q.has('fixtex2') ? 2 : 1;
+    const prevRF = render;
+    render = function(t){
+      try {
+        const ax = gl.getExtension('EXT_texture_filter_anisotropic');
+        for (const tx of [atlasDay, atlasNight]){
+          gl.bindTexture(gl.TEXTURE_2D, tx);
+          if (mode2 === 1) gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+          if (ax) gl.texParameteri(gl.TEXTURE_2D, ax.TEXTURE_MAX_ANISOTROPY_EXT, 1);
+        }
+      } catch(e){}
+      prevRF(t);
+    };
+  }
   if (q.has('deadc')){
     const pre3 = document.createElement('pre');
     pre3.id = 'hookOut2';
