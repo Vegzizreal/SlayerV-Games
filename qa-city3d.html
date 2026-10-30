@@ -2335,6 +2335,25 @@ window.__audit = {
       }
     } catch(e){}
   }
+  if (q.has('deadc')){
+    const pre3 = document.createElement('pre');
+    pre3.id = 'hookOut2';
+    pre3.style.cssText = 'position:fixed;left:0;top:320px;z-index:99;background:#000;color:#0f0;font-size:12px;padding:4px;white-space:pre';
+    try {
+      const cols = { facadeA:'#ff00ff', facadeB:'#ff8800', facadeC:'#0088ff', house:'#00ffff', store:'#00ff88', ware:'#888888', roofD:'#ff0000', roofR:'#aa0000', roofG:'#555555', road:'#333333', door:'#884400', glass:'#aaddff', walk:'#eeeeee', grass:'#22cc22', gravel:'#cccccc', white:'#ffff00', bark:'#663300', foliage:'#006600', awning:'#00ff00' };
+      const cv = document.createElement('canvas'); cv.width = 1024; cv.height = 1024;
+      const c = cv.getContext('2d');
+      c.fillStyle = '#ffff00'; c.fillRect(0, 0, 1024, 1024);
+      for (const k in REG){ const r = REG[k]; c.fillStyle = cols[k] || '#ffffff'; c.fillRect(r[0], r[1], r[2], r[3]); }
+      for (const tx of [atlasDay, atlasNight]){
+        gl.bindTexture(gl.TEXTURE_2D, tx);
+        gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cv);
+        gl.generateMipmap(gl.TEXTURE_2D);
+      }
+      pre3.textContent = 'DEADC APPLIED OK';
+    } catch(e){ pre3.textContent = 'DEADC ERROR ' + e.message; }
+    document.body.appendChild(pre3);
+  }
   if (q.has('alltex')){
     const pre2 = document.createElement('pre');
     pre2.id = 'hookOut';
