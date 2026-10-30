@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VBALL — Update v4.4.4</title>
+<title>VBALL — Update v4.5</title>
 <style>
   body { font-family: system-ui, sans-serif; background:#0e0d12; color:#f2f0eb; margin:0; padding:32px 20px; }
   main { max-width:560px; margin:0 auto; }
@@ -41,29 +41,20 @@
 </head>
 <body>
 <main>
-  <h1>👻 VBALL — Update <span class="ver" id="verTitle">v4.4.4</span></h1>
+  <h1>👻 VBALL — Update <span class="ver" id="verTitle">v4.5</span></h1>
 
   <section class="door" id="doorA">
     <div class="doorHead" id="headA"><span>Bluetooth update (phone) <span class="ver" id="verA"></span></span><span class="chev">▾</span></div>
     <p class="hint" id="hintA"></p>
     <div class="doorBody" id="bodyA">
-      
-      
-      
-      
-      <button id="connectBtn">Connect</button>
-      <button id="sendBtn" disabled>Send update</button>
-      
+      <button id="updateBtn">Update</button>
       <button id="labBtn" disabled>Read LAB results</button>
       <pre id="labOut" hidden></pre>
       <p><a id="labDl" download="lab-results.txt">Download lab-results.txt</a></p>
       <div class="bar"><div id="fill"></div></div>
       <p class="big" id="status">Not connected.</p>
-      
       <p id="versions"></p>
       <p class="warn" id="note"></p>
-      
-      
     </div>
   </section>
 
@@ -71,14 +62,7 @@
     <div class="doorHead" id="headB"><span>Cable update (PC) <span class="ver" id="verB"></span></span><span class="chev">▾</span></div>
     <p class="hint" id="hintB"></p>
     <div class="doorBody" id="bodyB">
-      
-      
-      
-      
       <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
-      
-      
-      
     </div>
   </section>
 </main>
@@ -92,7 +76,7 @@ const hasBt = !!navigator.bluetooth;
 const hasSerial = "serial" in navigator;
 
 const doorA = document.getElementById("doorA"), doorB = document.getElementById("doorB");
-let bleDoorSeen = false;   /* declared here: the load path below calls bleDoorOpened() before the Door A section runs (TDZ fix, 2026-10-28) */
+let bleDoorSeen = false;   /* the load path below calls bleDoorOpened() before the Door A section runs (TDZ fix, 2026-10-28) */
 const hintA = document.getElementById("hintA"), hintB = document.getElementById("hintB");
 
 function setDoor(door, open) { door.classList.toggle("closed", !open); }
@@ -104,10 +88,8 @@ function toggleDoor(door) {
 document.getElementById("headA").addEventListener("click", () => toggleDoor(doorA));
 document.getElementById("headB").addEventListener("click", () => toggleDoor(doorB));
 
-hintA.textContent = hasBt ? "" :
-  "No Bluetooth here.";
-hintB.textContent = hasSerial ? "" :
-  "No USB serial here.";
+hintA.textContent = hasBt ? "" : "No Bluetooth here.";
+hintB.textContent = hasSerial ? "" : "No USB serial here.";
 
 if (hasBt) doorA.classList.add("lit");
 if (hasSerial) doorB.classList.add("lit");
@@ -115,15 +97,15 @@ setDoor(doorA, hasBt);
 setDoor(doorB, hasSerial && !hasBt);
 if (hasBt) bleDoorOpened();
 
-/* Offered version in the header, from the same ble.json Door A uses. */
+/* The update manifest Door A works from — fetched once at load
+ * (it also carries the header badges): version, the full image
+ * file, the target image's validation hash, and the patch
+ * table keyed by base-image validation hash (v4.5). */
+let bleMeta = null;
 fetch("ble.json").then(r => r.json()).then(meta => {
+  bleMeta = meta;
   if (meta && meta.version) {
-    /* Each door states the version IT serves (Tyler's rule, 2026-10-27):
-     * the badges are read from the same files the doors install from,
-     * so a label can never promise a version the door doesn't carry. */
     document.getElementById("verA").textContent = "— v" + meta.version;
-    /* The titles carry it too (Tyler, 2026-10-27): the page heading and
-     * the browser tab name the current update, from the same source. */
     document.getElementById("verTitle").textContent = "v" + meta.version;
     document.title = "VBALL — Update v" + meta.version;
   }
@@ -136,7 +118,17 @@ fetch("manifest.json").then(r => r.json()).then(mani => {
   }
 }).catch(() => { /* badge just stays blank */ });
 
-/* ==== Door A: Bluetooth update =======================================
+/* ==== Door A: Bluetooth update — ONE button (v4.5) ===================
+ * Tap Update and the whole flow runs: pick VBALL, connect (the
+ * phone asks for the 6-digit code on the face — unchanged),
+ * read the ball's version + running-image digest from INFO,
+ * then send either the PATCH ble.json's table keys to that
+ * digest or the full image, and confirm. If the connection
+ * drops mid-send the flow reconnects ONCE and starts the
+ * transfer over — the ball discards partial transfers on
+ * disconnect, so there is no resume; the status line says
+ * "starting over" when that happens.
+ *
  * GATT map — must match app/pet_ota.c / BLE-NOTES.md. */
 const SVC_UUID    = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c01";
 const INFO_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c02";
@@ -151,34 +143,35 @@ const TIME_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c06";
  * no filename and no other file reachable through it. Reading is
  * deliberately NOT version-gated. */
 const LABRES_UUID = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c07";
-const META_URL = "ble.json";   /* {"version":"1.7","file":"gengar-face-app-v8.bin"} */
-/* The app-bin filename is NOT hardcoded (v1.6+): ble.json names
- * it, so a future BLE release is just a new bin + a new ble.json
- * — this page never changes again. binUrl is set by loadPayload. */
-let binUrl = null;
+const META_URL = "ble.json";
+
+/* CTRL opcodes (pet_ota.c): 1 = START (full image), 2 = FINISH,
+ * 3 = ABORT, 4 = START_PATCH (v4.5: size = patch bytes, sha =
+ * the digest the PRODUCED image must carry). */
+const CTRL_START = 1, CTRL_FINISH = 2, CTRL_START_PATCH = 4;
 
 /* Adaptive DATA chunk sizes: start at the big one, step down on
  * error, remember what worked. 509 = MTU 512 minus ATT overhead. */
 const CHUNK_SIZES = [509, 244, 128, 20];
-const STATE_NAMES = ["idle", "receiving", "done", "failed"];
 
 const $ = id => document.getElementById(id);
 const statusEl = $("status"), noteEl = $("note"), fillEl = $("fill");
-const connectBtn = $("connectBtn"), sendBtn = $("sendBtn");
+const updateBtn = $("updateBtn");
 const labBtn = $("labBtn"), labOut = $("labOut"), labDl = $("labDl");
 
 let device = null, server = null, svcSvc = null;
 let chInfo = null, chCtrl = null, chData = null, chStatus = null;
-let binBuf = null, binSha = null, newVersion = null, curVersion = null;
-let chunkIdx = 0, sending = false, finishConfirmed = false;
+let curVersion = null, curDigest = null;   /* from INFO (proto 2) */
+let flowing = false, sending = false, finishConfirmed = false;
 
 function say(t, cls) { statusEl.textContent = t; statusEl.className = "big " + (cls || ""); }
 function note(t, cls) { noteEl.textContent = t; noteEl.className = cls || "warn"; }
-function progress(sent, total) {
+function progress(sent, total, label) {
   const pct = total ? Math.floor(sent * 100 / total) : 0;
   fillEl.style.width = pct + "%";
-  if (sending) say("Sending… " + pct + "% (" + sent + " / " + total + " bytes)");
+  say(label + " " + pct + "%");
 }
+const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 /* Version grammar mirrors the firmware's (pet_ble_proto.c):
  * MAJOR.MINOR[.PATCH], digits only. Returns null when unparseable. */
@@ -192,6 +185,18 @@ function verCmp(a, b) {
   for (let i = 0; i < 3; i++) { if (a[i] !== b[i]) return a[i] < b[i] ? -1 : 1; }
   return 0;
 }
+function bytesToHex(u8) {
+  let s = "";
+  for (const b of u8) s += b.toString(16).padStart(2, "0");
+  return s;
+}
+function hexToBytes(hex) {
+  const out = new Uint8Array(hex.length / 2);
+  for (let i = 0; i < out.length; i++) {
+    out[i] = parseInt(hex.substr(i * 2, 2), 16);
+  }
+  return out;
+}
 
 /* The no-Web-Bluetooth message belongs to Door A and only shows
  * when that door is actually opened on such a browser. */
@@ -203,23 +208,8 @@ function bleDoorOpened() {
     note("Use Chrome on an Android phone (or Chrome/Edge on a computer " +
          "with Bluetooth). Safari and Firefox phones can't do this — " +
          "the cable installer still works.");
-    connectBtn.disabled = true;
+    updateBtn.disabled = true;
   }
-}
-
-async function loadPayload() {
-  const meta = await (await fetch(META_URL)).json();
-  newVersion = meta.version;
-  binUrl = meta.file;
-  if (!binUrl) {
-    throw new Error("ble.json does not name an update file " +
-                    "(missing \"file\" field) — nothing can be sent");
-  }
-  const resp = await fetch(binUrl);
-  if (!resp.ok) throw new Error("could not fetch " + binUrl);
-  binBuf = await resp.arrayBuffer();
-  const digest = await crypto.subtle.digest("SHA-256", binBuf);
-  binSha = new Uint8Array(digest);
 }
 
 function onStatusNotify(ev) {
@@ -227,32 +217,35 @@ function onStatusNotify(ev) {
   const st = v.getUint8(0), err = v.getUint8(1), recv = v.getUint32(4, true);
   if (st === 2) { finishConfirmed = true; }
   if (st === 3 && sending) {
-    note("The charm refused the update (state: failed, error " + err +
-         ", received " + recv + "). It is still running its old version.");
+    note("The ball refused the update (error " + err +
+         ", received " + recv + " bytes). It is still running " +
+         "its old version.");
   }
 }
 
 function onDisconnected() {
   server = null;
-  if (sending && !finishConfirmed) {
-    say("Connection dropped mid-send.", "bad");
-    note("Nothing was changed on the charm. Tap Connect and send again — " +
-         "transfers always restart from the beginning.");
-  } else if (finishConfirmed) {
-    say("Done — the charm is restarting into the new version. Watch the face.", "ok");
+  svcSvc = null;
+  if (flowing) {
+    /* The flow's retry logic owns this drop — it reconnects
+     * once and starts the transfer over. */
+    return;
+  }
+  if (finishConfirmed) {
+    say("Done — ball is restarting", "ok");
   } else {
     say("Disconnected.");
   }
-  sending = false;
-  sendBtn.disabled = true;
   labBtn.disabled = true;
-  svcSvc = null;
-  connectBtn.disabled = false;
+  updateBtn.disabled = false;
 }
 
-connectBtn.addEventListener("click", async () => {
-  note("");
-  try {
+/* One connect: picker only when we hold no device yet — a
+ * reconnect reuses the BluetoothDevice (no second picker, no
+ * second gesture needed). Reads INFO (version + digest) and
+ * syncs the clock, as before. */
+async function connectOnce() {
+  if (!device) {
     say("Pick “VBALL” in the list…");
     device = await navigator.bluetooth.requestDevice({
       /* No filters: Chrome's filtered picker kept hiding VBALL even
@@ -265,129 +258,196 @@ connectBtn.addEventListener("click", async () => {
       acceptAllDevices: true,
       optionalServices: [SVC_UUID]
     });
-  } catch (e) {
-    say("No device picked.");
-    note("If VBALL wasn't listed: is the face showing an update code? " +
-         "Update mode lasts about 5 minutes from boot.");
-    return;
+    device.addEventListener("gattserverdisconnected", onDisconnected);
   }
-  device.addEventListener("gattserverdisconnected", onDisconnected);
+  say("Connecting… your phone may ask for the 6-digit code on the face.");
+  server = await device.gatt.connect();
+  const svc = await server.getPrimaryService(SVC_UUID);
+  svcSvc = svc;
+  chInfo = await svc.getCharacteristic(INFO_UUID);
+  chCtrl = await svc.getCharacteristic(CTRL_UUID);
+  chData = await svc.getCharacteristic(DATA_UUID);
+  chStatus = await svc.getCharacteristic(STATUS_UUID);
+  await chStatus.startNotifications();
+  chStatus.addEventListener("characteristicvaluechanged", onStatusNotify);
+
+  /* INFO: proto 1 = [0]=proto [1]=verlen [2..]=version, u16 LE
+   * max chunk. Proto 2 (v4.5) appends the running image's
+   * 32-byte validation hash after the chunk field — the key
+   * into ble.json's patch table. An all-zero digest (the ball
+   * could not compute it) means "no patch for me": full image. */
+  const info = await chInfo.readValue();
+  const vl = info.getUint8(1);
+  let ver = "";
+  for (let i = 0; i < vl; i++) ver += String.fromCharCode(info.getUint8(2 + i));
+  curVersion = ver;
+  curDigest = null;
+  if (info.getUint8(0) >= 2 && info.byteLength >= 4 + vl + 32) {
+    const dg = new Uint8Array(info.buffer, info.byteOffset + 4 + vl, 32);
+    if (dg.some(b => b !== 0)) curDigest = bytesToHex(dg);
+  }
+
+  /* Clock sync (v1.9+): the phone is the clock. Send the current
+   * UTC epoch + this phone's tz offset to the TIME characteristic;
+   * older firmware simply doesn't have it, so failure is silent. */
   try {
-    say("Connecting… your phone may ask for the 6-digit code on the face.");
-    server = await device.gatt.connect();
-    const svc = await server.getPrimaryService(SVC_UUID);
-    svcSvc = svc;
-    chInfo = await svc.getCharacteristic(INFO_UUID);
-    chCtrl = await svc.getCharacteristic(CTRL_UUID);
-    chData = await svc.getCharacteristic(DATA_UUID);
-    chStatus = await svc.getCharacteristic(STATUS_UUID);
-    await chStatus.startNotifications();
-    chStatus.addEventListener("characteristicvaluechanged", onStatusNotify);
+    const chTime = await svc.getCharacteristic(TIME_UUID);
+    const frame = new DataView(new ArrayBuffer(6));
+    frame.setUint32(0, Math.floor(Date.now() / 1000), true);
+    frame.setInt16(4, -new Date().getTimezoneOffset(), true);
+    await chTime.writeValueWithResponse(frame);
+  } catch (e) { /* no TIME characteristic on this firmware */ }
+}
 
-    /* INFO: [0]=proto [1]=verlen [2..]=version, then u16 LE max chunk. */
-    const info = await chInfo.readValue();
-    const vl = info.getUint8(1);
-    let ver = "";
-    for (let i = 0; i < vl; i++) ver += String.fromCharCode(info.getUint8(2 + i));
-    curVersion = ver;
-
-    /* Clock sync (v1.9+): the phone is the clock. Send the current
-     * UTC epoch + this phone's tz offset to the TIME characteristic;
-     * older firmware simply doesn't have it, so failure is silent. */
-    try {
-      const chTime = await svc.getCharacteristic(TIME_UUID);
-      const frame = new DataView(new ArrayBuffer(6));
-      frame.setUint32(0, Math.floor(Date.now() / 1000), true);
-      frame.setInt16(4, -new Date().getTimezoneOffset(), true);
-      await chTime.writeValueWithResponse(frame);
-    } catch (e) { /* no TIME characteristic on this firmware */ }
-
-    say("Loading the update file…");
-    await loadPayload();
-    $("versions").textContent =
-      "Charm is running " + curVersion + " · this page offers " + newVersion +
-      " (" + binBuf.byteLength + " bytes).";
-    /* LAB read-back is enabled on connect, BEFORE the version
-     * gate below: reading results is not an update and must work
-     * even when the charm is already on (or past) this version. */
-    labBtn.disabled = false;
-    const a = parseVer(newVersion), b = parseVer(curVersion);
-    if (!a || !b || verCmp(a, b) <= 0) {
-      say("Already up to date.", "ok");
-      note("The offered version is not newer than what's on the charm, " +
-           "so there's nothing to send (the charm enforces this too).");
-      connectBtn.disabled = false;
-      return;
+/* Pick what to send: the patch when ble.json's table keys the
+ * ball's exact running-image digest, the full image otherwise.
+ * Returns {bytes, sha, op, label} — for a patch, sha is the
+ * TARGET image's validation hash from the table (the digest
+ * the produced image must carry); for the full image it is
+ * the whole-file SHA-256, computed here as before. */
+async function pickPayload() {
+  if (!bleMeta) {
+    bleMeta = await (await fetch(META_URL)).json();
+  }
+  const entry = curDigest && bleMeta.patches
+    ? bleMeta.patches[curDigest] : null;
+  if (entry && entry.file && entry.sha256) {
+    const resp = await fetch(entry.file);
+    if (resp.ok) {
+      const buf = await resp.arrayBuffer();
+      return { bytes: new Uint8Array(buf),
+               sha: hexToBytes(entry.sha256),
+               op: CTRL_START_PATCH, label: "Sending patch…" };
     }
-    say("Connected. Ready to send.");
-    connectBtn.disabled = true;
-    sendBtn.disabled = false;
-  } catch (e) {
-    say("Connection failed.", "bad");
-    note(String(e && e.message ? e.message : e));
-    connectBtn.disabled = false;
+    /* A listed patch that will not load must never strand the
+     * update: fall through to the full image. */
   }
-});
+  const resp = await fetch(bleMeta.file);
+  if (!resp.ok) throw new Error("could not fetch " + bleMeta.file);
+  const buf = await resp.arrayBuffer();
+  const digest = await crypto.subtle.digest("SHA-256", buf);
+  return { bytes: new Uint8Array(buf),
+           sha: new Uint8Array(digest),
+           op: CTRL_START, label: "Sending update…" };
+}
 
-sendBtn.addEventListener("click", async () => {
-  if (!server || !binBuf || sending) return;
-  sending = true; finishConfirmed = false; chunkIdx = 0;
-  sendBtn.disabled = true;
-  note("");
+/* START → stream → FINISH → confirm, for one picked payload. */
+async function sendOnce(payload) {
+  sending = true; finishConfirmed = false;
+  let chunkIdx = 0;
+  const vb = new TextEncoder().encode(bleMeta.version);
+  const start = new Uint8Array(38 + vb.length);
+  start[0] = payload.op;
+  new DataView(start.buffer).setUint32(1, payload.bytes.length, true);
+  start.set(payload.sha, 5);
+  start[37] = vb.length;
+  start.set(vb, 38);
+  say(payload.op === CTRL_START_PATCH ? "Starting patch…" : "Starting…");
+  await chCtrl.writeValueWithResponse(start);
+
+  const bytes = payload.bytes;
+  let off = 0;
+  while (off < bytes.length) {
+    const n = Math.min(CHUNK_SIZES[chunkIdx], bytes.length - off);
+    try {
+      await chData.writeValueWithResponse(bytes.subarray(off, off + n));
+      off += n;
+      progress(off, bytes.length, payload.label);
+    } catch (e) {
+      if (chunkIdx < CHUNK_SIZES.length - 1 && server) {
+        chunkIdx++;   /* step down and retry the same bytes */
+        continue;
+      }
+      throw e;
+    }
+  }
+
+  say("Ball is checking it…");
+  await chCtrl.writeValueWithResponse(new Uint8Array([CTRL_FINISH]));
+  /* The ball confirms over STATUS (and then reboots itself). */
   try {
-    /* START: op=1, u32 size LE, 32-byte sha256, u8 verlen, version. */
-    const vb = new TextEncoder().encode(newVersion);
-    const start = new Uint8Array(38 + vb.length);
-    start[0] = 1;
-    new DataView(start.buffer).setUint32(1, binBuf.byteLength, true);
-    start.set(binSha, 5);
-    start[37] = vb.length;
-    start.set(vb, 38);
-    say("Starting…");
-    await chCtrl.writeValueWithResponse(start);
+    const st = await chStatus.readValue();
+    if (st.getUint8(0) === 2) finishConfirmed = true;
+    if (st.getUint8(0) === 3) throw new Error("ball reported failure");
+  } catch (e) {
+    if (finishConfirmed) { /* reboot disconnect raced the read */ }
+    else if (e && e.message === "ball reported failure") throw e;
+  }
+  sending = false;
+}
 
-    const bytes = new Uint8Array(binBuf);
-    let off = 0;
-    while (off < bytes.length) {
-      const n = Math.min(CHUNK_SIZES[chunkIdx], bytes.length - off);
+updateBtn.addEventListener("click", async () => {
+  if (flowing) return;
+  flowing = true;
+  updateBtn.disabled = true;
+  labBtn.disabled = true;
+  note("");
+  fillEl.style.width = "0%";
+  let connectedOnce = false;
+  try {
+    for (let attempt = 1; attempt <= 2; attempt++) {
       try {
-        await chData.writeValueWithResponse(bytes.subarray(off, off + n));
-        off += n;
-        progress(off, bytes.length);
+        await connectOnce();
+        connectedOnce = true;
+        if (!bleMeta) {
+          bleMeta = await (await fetch(META_URL)).json();
+        }
+        /* LAB read-back rides any live connection — enabled
+         * here, before the version gate, exactly as before:
+         * reading results is not an update. */
+        labBtn.disabled = false;
+        const a = parseVer(bleMeta.version), b = parseVer(curVersion);
+        if (!a || !b || verCmp(a, b) <= 0) {
+          say("Already up to date.", "ok");
+          $("versions").textContent =
+            "Ball is running " + curVersion + " · this page offers " +
+            bleMeta.version + ".";
+          flowing = false;
+          updateBtn.disabled = false;
+          return;
+        }
+        const payload = await pickPayload();
+        $("versions").textContent =
+          "Ball is running " + curVersion + " · updating to " +
+          bleMeta.version + (payload.op === CTRL_START_PATCH
+            ? " (patch, " + payload.bytes.length + " bytes)"
+            : " (full update, " + payload.bytes.length + " bytes)") + ".";
+        await sendOnce(payload);
+        say("Done — ball is restarting", "ok");
+        fillEl.style.width = "100%";
+        flowing = false;
+        return;
       } catch (e) {
-        if (chunkIdx < CHUNK_SIZES.length - 1) {
-          chunkIdx++;   /* step down and retry the same bytes */
-          note("Chunk too big for this link — stepping down to " +
-               CHUNK_SIZES[chunkIdx] + " bytes and continuing.");
+        if (attempt === 1 && connectedOnce) {
+          /* ONE automatic retry, from the beginning: the ball
+           * discards a partial transfer when the link drops,
+           * so the stream restarts — there is no resume. */
+          sending = false;
+          server = null; svcSvc = null;
+          say("Connection dropped — reconnecting…");
+          note("The transfer starts over from the beginning.");
+          await sleep(900);
           continue;
         }
         throw e;
       }
     }
-
-    say("Verifying on the charm…");
-    await chCtrl.writeValueWithResponse(new Uint8Array([2]));   /* FINISH */
-    /* The charm confirms over STATUS (and then reboots itself). */
-    try {
-      const st = await chStatus.readValue();
-      if (st.getUint8(0) === 2) finishConfirmed = true;
-      if (st.getUint8(0) === 3) throw new Error("charm reported failure");
-    } catch (e) {
-      if (finishConfirmed) { /* reboot disconnect raced the read */ }
-      else if (e && e.message === "charm reported failure") throw e;
-    }
-    sending = false;
-    say("Done — the charm is restarting into version " + newVersion +
-        ". Watch the face.", "ok");
-    fillEl.style.width = "100%";
   } catch (e) {
     sending = false;
-    if (server) { sendBtn.disabled = false; }
-    say("Send failed.", "bad");
-    note("The charm is unchanged and still on version " + curVersion +
-         ". You can tap Send update to try again from the start. (" +
-         (e && e.message ? e.message : e) + ")");
+    if (!connectedOnce && !device) {
+      say("No device picked.");
+      note("If VBALL wasn't listed: is the face showing an update code? " +
+           "Update mode lasts about 5 minutes from boot.");
+    } else {
+      say("Update failed.", "bad");
+      note("The ball is unchanged and still on its old version. " +
+           "Tap Update to try again. (" +
+           (e && e.message ? e.message : e) + ")");
+    }
   }
+  flowing = false;
+  updateBtn.disabled = false;
+  if (server) labBtn.disabled = false;
 });
 
 /* ==== LAB results read-back (v4.3) ===================================
