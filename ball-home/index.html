@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VBALL — Update v4.5.2</title>
+<title>VBALL — Update v4.5.3</title>
 <style>
   body { font-family: system-ui, sans-serif; background:#0e0d12; color:#f2f0eb; margin:0; padding:32px 20px; }
   main { max-width:560px; margin:0 auto; }
@@ -41,7 +41,7 @@
 </head>
 <body>
 <main>
-  <h1>👻 VBALL — Update <span class="ver" id="verTitle">v4.5.2</span></h1>
+  <h1>👻 VBALL — Update <span class="ver" id="verTitle">v4.5.3</span></h1>
 
   <section class="door" id="doorA">
     <div class="doorHead" id="headA"><span>Bluetooth update (phone) <span class="ver" id="verA"></span></span><span class="chev">▾</span></div>
@@ -129,6 +129,16 @@ fetch("manifest.json").then(r => r.json()).then(mani => {
  * disconnect, so there is no resume; the status line says
  * "starting over" when that happens.
  *
+ * v4.5.3 — the connect fix. The 4.5 rewrite had quietly
+ * removed the old page's failure manners: disconnects during
+ * the flow were swallowed whole and no awaited step had a
+ * timeout, so any transient (a window that closed before the
+ * connection landed, a pairing that never started) parked
+ * the page on "Connecting…" forever. Now: every awaited step
+ * is bounded and its timeout names the step and the remedy,
+ * disconnects are reported the moment they happen, and the
+ * one automatic retry covers the connect phase too.
+ *
  * GATT map — must match app/pet_ota.c / BLE-NOTES.md. */
 const SVC_UUID    = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c01";
 const INFO_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c02";
@@ -172,6 +182,38 @@ function progress(sent, total, label) {
   say(label + " " + pct + "%");
 }
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+/* Bounded steps (v4.5.3). Every await in the update flow races
+ * a clock; a step that outlives its budget fails as a
+ * StepTimeout whose remedy text tells Tyler exactly what to
+ * do. The device picker is the one exemption — it is
+ * user-driven and may sit open as long as he likes. */
+const T_CONNECT_MS = 15000;  /* gatt.connect: generous for a sleepy radio */
+const T_STEP_MS    = 10000;  /* discovery / setup / control writes */
+const T_INFO_MS    = 20000;  /* the encrypted INFO read: pairing lives here */
+const T_FETCH_MS   = 30000;  /* payload + manifest downloads */
+const WINDOW_GONE =
+  "Re-arm the ball (UPDATE tile → YES) and tap Update here right " +
+  "away — the ball's countdown on the face is the window you have.";
+const NET_GONE =
+  "Check this phone's internet connection and tap Update again. " +
+  "If the ball's face has gone back to the pet meanwhile, re-arm " +
+  "the window on the ball first.";
+class StepTimeout extends Error {
+  constructor(step, remedy) {
+    super(step + " timed out");
+    this.step = step;
+    this.remedy = remedy;
+  }
+}
+function bounded(promise, ms, step, remedy) {
+  let timer = null;
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => reject(new StepTimeout(step, remedy)), ms);
+  });
+  return Promise.race([promise, timeout])
+    .finally(() => clearTimeout(timer));
+}
 
 /* Version grammar mirrors the firmware's (pet_ble_proto.c):
  * MAJOR.MINOR[.PATCH], digits only. Returns null when unparseable. */
@@ -224,20 +266,34 @@ function onStatusNotify(ev) {
 }
 
 function onDisconnected() {
+  /* v4.5.3: a disconnect is NEWS again. The 4.5 version of
+   * this handler returned in silence while the flow was
+   * running, leaving "Connecting…" on screen over a dead
+   * link — the idle Tyler reported. The flow's retry still
+   * owns recovery, but the drop is said out loud the moment
+   * it happens; the flow prints the next word itself. */
+  const wasDone = finishConfirmed;
+  const wasSending = sending && !finishConfirmed;
   server = null;
   svcSvc = null;
-  if (flowing) {
-    /* The flow's retry logic owns this drop — it reconnects
-     * once and starts the transfer over. */
-    return;
-  }
-  if (finishConfirmed) {
+  chInfo = chCtrl = chData = chStatus = null;
+  sending = false;
+  if (wasDone) {
     say("Done — ball is restarting", "ok");
+  } else if (wasSending) {
+    say("Connection dropped mid-send.", "bad");
+    if (!flowing) {
+      note("Nothing was changed on the ball. Re-arm the window " +
+           "and tap Update to try again — transfers always " +
+           "restart from the beginning.");
+    }
   } else {
-    say("Disconnected.");
+    say("Connection dropped.", "bad");
   }
-  labBtn.disabled = true;
-  updateBtn.disabled = false;
+  if (!flowing) {
+    labBtn.disabled = true;
+    updateBtn.disabled = false;
+  }
 }
 
 /* One connect: picker only when we hold no device yet — a
@@ -261,22 +317,43 @@ async function connectOnce() {
     device.addEventListener("gattserverdisconnected", onDisconnected);
   }
   say("Connecting… your phone may ask for the 6-digit code on the face.");
-  server = await device.gatt.connect();
-  const svc = await server.getPrimaryService(SVC_UUID);
+  server = await bounded(device.gatt.connect(), T_CONNECT_MS,
+    "Connecting to the ball",
+    "The connection never landed — the ball's window may have " +
+    "closed before it. " + WINDOW_GONE);
+  const svc = await bounded(server.getPrimaryService(SVC_UUID),
+    T_STEP_MS, "Finding the update service",
+    "The ball answered but its update service didn't. " +
+    WINDOW_GONE);
   svcSvc = svc;
-  chInfo = await svc.getCharacteristic(INFO_UUID);
-  chCtrl = await svc.getCharacteristic(CTRL_UUID);
-  chData = await svc.getCharacteristic(DATA_UUID);
-  chStatus = await svc.getCharacteristic(STATUS_UUID);
-  await chStatus.startNotifications();
+  chInfo = await bounded(svc.getCharacteristic(INFO_UUID),
+    T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
+  chCtrl = await bounded(svc.getCharacteristic(CTRL_UUID),
+    T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
+  chData = await bounded(svc.getCharacteristic(DATA_UUID),
+    T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
+  chStatus = await bounded(svc.getCharacteristic(STATUS_UUID),
+    T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
+  await bounded(chStatus.startNotifications(),
+    T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
   chStatus.addEventListener("characteristicvaluechanged", onStatusNotify);
 
   /* INFO: proto 1 = [0]=proto [1]=verlen [2..]=version, u16 LE
    * max chunk. Proto 2 (v4.5) appends the running image's
    * 32-byte validation hash after the chunk field — the key
    * into ble.json's patch table. An all-zero digest (the ball
-   * could not compute it) means "no patch for me": full image. */
-  const info = await chInfo.readValue();
+   * could not compute it) means "no patch for me": full image.
+   * This read is the first encrypted access: pairing (the
+   * phone asking for the face code) happens inside it, so it
+   * gets the longest budget and its own status line. */
+  say("Pairing… if your phone asks, type the 6-digit code on the face.");
+  const info = await bounded(chInfo.readValue(), T_INFO_MS,
+    "Pairing with the ball",
+    "Pairing never completed. If this phone is holding an old " +
+    "pairing for VBALL, clear it (Bluetooth settings → VBALL → " +
+    "Forget), then re-arm the ball and tap Update right away. " +
+    "The ball forgets its side every window on purpose — the " +
+    "face code IS the pairing.");
   const vl = info.getUint8(1);
   let ver = "";
   for (let i = 0; i < vl; i++) ver += String.fromCharCode(info.getUint8(2 + i));
@@ -291,11 +368,13 @@ async function connectOnce() {
    * UTC epoch + this phone's tz offset to the TIME characteristic;
    * older firmware simply doesn't have it, so failure is silent. */
   try {
-    const chTime = await svc.getCharacteristic(TIME_UUID);
+    const chTime = await bounded(svc.getCharacteristic(TIME_UUID),
+                                 T_STEP_MS, "Clock sync", "");
     const frame = new DataView(new ArrayBuffer(6));
     frame.setUint32(0, Math.floor(Date.now() / 1000), true);
     frame.setInt16(4, -new Date().getTimezoneOffset(), true);
-    await chTime.writeValueWithResponse(frame);
+    await bounded(chTime.writeValueWithResponse(frame),
+                  T_STEP_MS, "Clock sync", "");
   } catch (e) { /* no TIME characteristic on this firmware */ }
 }
 
@@ -306,15 +385,23 @@ async function connectOnce() {
  * the produced image must carry); for the full image it is
  * the whole-file SHA-256, computed here as before. */
 async function pickPayload() {
+  /* v4.5.3: this download used to ride under the stale
+   * "Connecting…" text — a slow fetch looked exactly like a
+   * dead connection. It has its own status and its own clock. */
+  say("Getting the update…");
   if (!bleMeta) {
-    bleMeta = await (await fetch(META_URL)).json();
+    const metaResp = await bounded(fetch(META_URL), T_FETCH_MS,
+      "Loading the update list", NET_GONE);
+    bleMeta = await metaResp.json();
   }
   const entry = curDigest && bleMeta.patches
     ? bleMeta.patches[curDigest] : null;
   if (entry && entry.file && entry.sha256) {
-    const resp = await fetch(entry.file);
+    const resp = await bounded(fetch(entry.file), T_FETCH_MS,
+      "Getting the update file", NET_GONE);
     if (resp.ok) {
-      const buf = await resp.arrayBuffer();
+      const buf = await bounded(resp.arrayBuffer(), T_FETCH_MS,
+        "Getting the update file", NET_GONE);
       return { bytes: new Uint8Array(buf),
                sha: hexToBytes(entry.sha256),
                op: CTRL_START_PATCH, label: "Sending patch…" };
@@ -322,9 +409,11 @@ async function pickPayload() {
     /* A listed patch that will not load must never strand the
      * update: fall through to the full image. */
   }
-  const resp = await fetch(bleMeta.file);
+  const resp = await bounded(fetch(bleMeta.file), T_FETCH_MS,
+    "Getting the update file", NET_GONE);
   if (!resp.ok) throw new Error("could not fetch " + bleMeta.file);
-  const buf = await resp.arrayBuffer();
+  const buf = await bounded(resp.arrayBuffer(), T_FETCH_MS,
+    "Getting the update file", NET_GONE);
   const digest = await crypto.subtle.digest("SHA-256", buf);
   return { bytes: new Uint8Array(buf),
            sha: new Uint8Array(digest),
@@ -343,7 +432,9 @@ async function sendOnce(payload) {
   start[37] = vb.length;
   start.set(vb, 38);
   say(payload.op === CTRL_START_PATCH ? "Starting patch…" : "Starting…");
-  await chCtrl.writeValueWithResponse(start);
+  await bounded(chCtrl.writeValueWithResponse(start), T_STEP_MS,
+    "Starting the transfer",
+    "The ball didn't answer the start command. " + WINDOW_GONE);
 
   const bytes = payload.bytes;
   let off = 0;
@@ -363,10 +454,15 @@ async function sendOnce(payload) {
   }
 
   say("Ball is checking it…");
-  await chCtrl.writeValueWithResponse(new Uint8Array([CTRL_FINISH]));
+  await bounded(chCtrl.writeValueWithResponse(
+    new Uint8Array([CTRL_FINISH])), T_STEP_MS,
+    "Finishing the transfer",
+    "The ball didn't answer the finish command. It is unchanged " +
+    "if the check never ran — re-arm it and tap Update to retry.");
   /* The ball confirms over STATUS (and then reboots itself). */
   try {
-    const st = await chStatus.readValue();
+    const st = await bounded(chStatus.readValue(), T_STEP_MS,
+                             "Reading the result", "");
     if (st.getUint8(0) === 2) finishConfirmed = true;
     if (st.getUint8(0) === 3) throw new Error("ball reported failure");
   } catch (e) {
@@ -390,7 +486,9 @@ updateBtn.addEventListener("click", async () => {
         await connectOnce();
         connectedOnce = true;
         if (!bleMeta) {
-          bleMeta = await (await fetch(META_URL)).json();
+          const metaResp = await bounded(fetch(META_URL),
+            T_FETCH_MS, "Loading the update list", NET_GONE);
+          bleMeta = await metaResp.json();
         }
         /* LAB read-back rides any live connection — enabled
          * here, before the version gate, exactly as before:
@@ -418,14 +516,28 @@ updateBtn.addEventListener("click", async () => {
         flowing = false;
         return;
       } catch (e) {
-        if (attempt === 1 && connectedOnce) {
-          /* ONE automatic retry, from the beginning: the ball
-           * discards a partial transfer when the link drops,
-           * so the stream restarts — there is no resume. */
+        if (attempt === 1 && device) {
+          /* ONE automatic retry, from the beginning — v4.5.3:
+           * it now covers the CONNECT phase too. In 4.5 the
+           * retry required a completed connect first, so the
+           * exact failures Tyler hit (a connect that never
+           * landed, a pairing that never started) were the
+           * ones it could not help. The ball discards a partial
+           * transfer when the link drops, so the stream
+           * restarts — there is no resume. (No device yet =
+           * the picker was cancelled: that needs a fresh tap,
+           * not a retry — a picker cannot open without one.) */
           sending = false;
+          try {
+            if (device.gatt && device.gatt.connected) {
+              device.gatt.disconnect();
+            }
+          } catch (ignored) { /* already gone */ }
           server = null; svcSvc = null;
-          say("Connection dropped — reconnecting…");
-          note("The transfer starts over from the beginning.");
+          say("That didn't land — trying once more…");
+          note(e instanceof StepTimeout
+            ? e.step + " timed out; giving it one more try."
+            : "The transfer starts over from the beginning.");
           await sleep(900);
           continue;
         }
@@ -434,10 +546,14 @@ updateBtn.addEventListener("click", async () => {
     }
   } catch (e) {
     sending = false;
-    if (!connectedOnce && !device) {
+    if (e instanceof StepTimeout) {
+      say(e.step + " timed out.", "bad");
+      note(e.remedy);
+    } else if (!device) {
       say("No device picked.");
-      note("If VBALL wasn't listed: is the face showing an update code? " +
-           "Update mode lasts about 5 minutes from boot.");
+      note("If VBALL wasn't listed: is the face showing an update " +
+           "code and a countdown? Arm the window on the ball " +
+           "first, then tap Update right away.");
     } else {
       say("Update failed.", "bad");
       note("The ball is unchanged and still on its old version. " +
