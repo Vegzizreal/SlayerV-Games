@@ -294,11 +294,30 @@ function drawLit(g, model, texD, texN){
 
 
 /* ---- repro scene ---- */
-const b = mkB();
-quadUp(b, 0, -0.002, 0, 120, 120, 'grass', [1,1,1], 30, 30);
-if (Q.has('small')) box(b, -16, 1.5, 33, 5, 3, 4, 'facadeB', { roof: 'roofG' });
-else box(b, -16, 4.8, 33, 14, 9.6, 11, 'facadeB', { roof: 'roofG' });
-box(b, -15, 2, -30, 10, 4, 9, 'house', { roof: 'roofD' });
+const solids = [];
+function tower(b, cx, cz, w, d, h, rectName){
+  box(b, mTRS(cx, h/2, cz, 0,0,0), w, h, d, {rect: rectName, faces:{py:'roofG'}});
+  box(b, mTRS(cx, h+0.18, cz, 0,0,0), w+0.7, 0.36, d+0.7, {rect:'roofG', col:[0.85,0.85,0.85]});
+  box(b, mTRS(cx-w/4, h+0.75, cz-d/5, 0,0.3,0), 1.4, 0.8, 1.4, {rect:'roofG', col:[1.15,1.15,1.15]});
+  box(b, mTRS(cx+w/5, h+0.65, cz+d/4, 0,-0.2,0), 1.1, 0.6, 1.1, {rect:'roofG', col:[1.1,1.1,1.1]});
+  solid(cx, cz, w, d);
+}
+function house(b, cx, cz, ry, tint, roofName, opts){
+  opts = opts || {};
+  const w = opts.w || 8, d = opts.d || 7, h = 3.3;
+  const base = mTRS(cx, 0, cz, 0, ry, 0);
+  box(b, mMul(base, mTRS(0, h/2, 0, 0,0,0)), w, h, d, {rect:'house', col: tint});
+  prism(b, mMul(base, mTRS(0, h, 0, 0,0,0)), w+0.7, 1.9, d+0.7, roofName, 'house', tint);
+  box(b, mMul(base, mTRS(opts.doorX||0, 1.15, d/2+0.05, 0,0,0)), 1.15, 2.3, 0.1, {rect:'door'});
+  box(b, mMul(base, mTRS(opts.doorX||0, 0.12, d/2+0.55, 0,0,0)), 1.7, 0.24, 1.2, {rect:'walk'});
+  box(b, mMul(base, mTRS(w/4, h+1.5, 0, 0,0,0)), 0.55, 1.3, 0.55, {rect:'facadeA'});
+  if (Math.abs(Math.sin(ry)) > 0.5) solid(cx, cz, d, w); else solid(cx, cz, w, d);
+}function solid(cx, cz, w, d){ solids.push({x0:cx-w/2, x1:cx+w/2, z0:cz-d/2, z1:cz+d/2}); }
+const b = Bucket();
+quadUp(b, 0, 0, 120, 120, -0.002, 'grass', 30, 30);
+if (Q.has('small')) tower(b, -16, 33, 5, 4, 3, 'facadeB');
+else tower(b, -16, 33, 14, 11, 9.6, 'facadeB');
+house(b, -15, -30, 0, [1,1,1], 'roofD');
 const cityG = makeGL(b);
 try { const ax = gl.getExtension('EXT_texture_filter_anisotropic');
   if (ax && !Q.has('noaniso')) { const mx = Math.min(8, gl.getParameter(ax.MAX_TEXTURE_MAX_ANISOTROPY_EXT)); for (const t of [atlasDay, atlasNight]){ gl.bindTexture(gl.TEXTURE_2D, t); gl.texParameteri(gl.TEXTURE_2D, ax.TEXTURE_MAX_ANISOTROPY_EXT, mx); } } } catch(e){}
