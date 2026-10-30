@@ -153,7 +153,7 @@ const REG = {
   walk:[0,512,256,256], grass:[256,512,256,256], gravel:[512,512,128,128], white:[640,512,64,64],
   bark:[704,512,64,64], foliage:[768,512,128,128], awning:[896,512,128,64]
 };
-function uvOf(name){ const r = REG[name]; return [r[0]/1024, 1-(r[1]+r[3])/1024, (r[0]+r[2])/1024, 1-r[1]/1024]; }
+function uvOf(name){ const r = REG[name]; return [r[0]/1024, (r[1]+r[3])/1024, (r[0]+r[2])/1024, r[1]/1024]; }
 let seed = 7; function rnd(){ seed = (seed*16807) % 2147483647; return (seed-1)/2147483646; }
 function speckle(c, x, y, w, h, cols, n, s0, s1){
   for (let i=0;i<n;i++){ c.fillStyle = cols[(rnd()*cols.length)|0]; c.globalAlpha = 0.05 + rnd()*0.12;
