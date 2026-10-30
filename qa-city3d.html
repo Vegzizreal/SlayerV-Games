@@ -2335,6 +2335,22 @@ window.__audit = {
       }
     } catch(e){}
   }
+  if (q.has('alltex')){
+    const pre2 = document.createElement('pre');
+    pre2.id = 'hookOut';
+    pre2.style.cssText = 'position:fixed;left:0;top:320px;z-index:99;background:#000;color:#0f0;font-size:12px;padding:4px;white-space:pre';
+    try {
+      const mk = (color)=>{ const cv = document.createElement('canvas'); cv.width = 64; cv.height = 64; const cx = cv.getContext('2d'); cx.fillStyle = color; cx.fillRect(0, 0, 64, 64); return cv; };
+      gl.bindTexture(gl.TEXTURE_2D, atlasDay);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, mk('#ffff00'));
+      gl.generateMipmap(gl.TEXTURE_2D);
+      gl.bindTexture(gl.TEXTURE_2D, atlasNight);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, mk('#00ffff'));
+      gl.generateMipmap(gl.TEXTURE_2D);
+      pre2.textContent = 'ALLTEX APPLIED OK';
+    } catch(e){ pre2.textContent = 'ALLTEX ERROR ' + e.message; }
+    document.body.appendChild(pre2);
+  }
   if (q.has('redtex')){
     try {
       const cv = document.createElement('canvas'); cv.width = 4; cv.height = 4;
