@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VBALL — Update v4.6.1</title>
+<title>VBALL — Update v5.0</title>
 <style>
   body { font-family: system-ui, sans-serif; background:#0e0d12; color:#f2f0eb; margin:0; padding:32px 20px; }
   main { max-width:560px; margin:0 auto; }
@@ -36,12 +36,16 @@
         padding:12px; font-size:12.5px; line-height:1.45;
         white-space:pre-wrap; word-break:break-word; color:#cfccc4; }
   #labDl { display:none; color:#b7a6ff; font-size:16px; }
+  .recovery { background:#191721; border:1px solid #5a3a3a; border-radius:14px;
+              margin:20px 0; padding:16px 20px 20px; }
+  .recovery h2 { font-size:20px; margin:0 0 6px; color:#ffb454; }
+  #resetPairBtn { background:#b7791f; }
 </style>
 <script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
 </head>
 <body>
 <main>
-  <h1>👻 VBALL — Update <span class="ver" id="verTitle">v4.6.1</span></h1>
+  <h1>👻 VBALL — Update <span class="ver" id="verTitle">v5.0</span></h1>
 
   <section class="door" id="doorA">
     <div class="doorHead" id="headA"><span>Bluetooth update (phone) <span class="ver" id="verA"></span></span><span class="chev">▾</span></div>
@@ -55,7 +59,20 @@
       <p class="big" id="status">Not connected.</p>
       <p id="versions"></p>
       <p class="warn" id="note"></p>
+      <button id="resetPairBtn" hidden>Reset pairing &amp; retry</button>
     </div>
+  </section>
+
+  <section class="recovery" id="recovery">
+    <h2>Recovery</h2>
+    <p>Only for a ball stuck on a bad or half-sent version. This area is
+       never part of the normal update above and nothing here runs
+       automatically — each action asks for confirmation first, and
+       both need a live connection (tap Update above first).</p>
+    <button id="recoveryReinstallBtn" disabled>Reinstall this version</button>
+    <button id="recoveryRollbackBtn" disabled>Roll back to previous version</button>
+    <p id="recoveryInfo">Connect to the ball first (tap Update above) —
+       recovery options appear here once the ball reports its state.</p>
   </section>
 
   <section class="door" id="doorB">
@@ -124,10 +141,10 @@ fetch("manifest.json").then(r => r.json()).then(mani => {
  * read the ball's version + running-image digest from INFO,
  * then send either the PATCH ble.json's table keys to that
  * digest or the full image, and confirm. If the connection
- * drops mid-send the flow reconnects ONCE and starts the
- * transfer over — the ball discards partial transfers on
- * disconnect, so there is no resume; the status line says
- * "starting over" when that happens.
+ * drops mid-send the flow reconnects ONCE; against a proto-3
+ * ball the reconnect can RESUME a suspended transfer from the
+ * ball's checkpoint (see sendOnce), otherwise the transfer
+ * starts over and the status line says so.
  *
  * v4.5.3 — the connect fix. The 4.5 rewrite had quietly
  * removed the old page's failure manners: disconnects during
@@ -157,8 +174,12 @@ const META_URL = "ble.json";
 
 /* CTRL opcodes (pet_ota.c): 1 = START (full image), 2 = FINISH,
  * 3 = ABORT, 4 = START_PATCH (v4.5: size = patch bytes, sha =
- * the digest the PRODUCED image must carry). */
-const CTRL_START = 1, CTRL_FINISH = 2, CTRL_START_PATCH = 4;
+ * the digest the PRODUCED image must carry). Proto 3 adds
+ * 6 = START_RECOVERY (payload identical to START, full image
+ * only; the ball holds it pending until a face tap confirms)
+ * and 7 = ROLLBACK (switch back to the other slot's image). */
+const CTRL_START = 1, CTRL_FINISH = 2, CTRL_ABORT = 3,
+      CTRL_START_PATCH = 4, CTRL_START_RECOVERY = 6, CTRL_ROLLBACK = 7;
 
 /* Adaptive DATA chunk sizes: start at the big one, step down on
  * error, remember what worked. 509 = MTU 512 minus ATT overhead. */
@@ -168,11 +189,36 @@ const $ = id => document.getElementById(id);
 const statusEl = $("status"), noteEl = $("note"), fillEl = $("fill");
 const updateBtn = $("updateBtn");
 const labBtn = $("labBtn"), labOut = $("labOut"), labDl = $("labDl");
+const resetPairBtn = $("resetPairBtn");
+const recoveryReinstallBtn = $("recoveryReinstallBtn");
+const recoveryRollbackBtn = $("recoveryRollbackBtn");
+const recoveryInfoEl = $("recoveryInfo");
+resetPairBtn.hidden = true;
+recoveryReinstallBtn.disabled = true;
+recoveryRollbackBtn.disabled = true;
 
 let device = null, server = null, svcSvc = null;
 let chInfo = null, chCtrl = null, chData = null, chStatus = null;
 let curVersion = null, curDigest = null;   /* from INFO (proto 2) */
+/* INFO proto 3 tail (all defaulted when a proto-2 ball — or a
+ * short proto-3 read — does not carry them):
+ *   bond_state   u8   the ball's stored-bond state
+ *   resume_mode  u8   0 none / 1 full / 2 patch (suspended xfer)
+ *   resume_offset u32 LE bytes the ball already holds
+ *   resume_sha8  8B   prefix of that transfer's target digest
+ *   other_state  u8   1 = the other slot holds a usable image
+ *   other        str  the other slot's version (verlen-prefixed) */
+let curBondState = null, curResumeMode = 0, curResumeOffset = 0;
+let curResumeSha8 = null, curOtherState = 0, curOtherVersion = "";
 let flowing = false, sending = false, finishConfirmed = false;
+let recovering = false;
+/* Pairing-stall reset (below): set by the reset button, read by
+ * the update flow so a deliberate reset NEVER becomes an
+ * automatic retry loop. */
+let pairingResetRequested = false, pairingResetTrigger = null;
+class PairingReset extends Error {
+  constructor() { super("pairing reset requested"); }
+}
 
 function say(t, cls) { statusEl.textContent = t; statusEl.className = "big " + (cls || ""); }
 function note(t, cls) { noteEl.textContent = t; noteEl.className = cls || "warn"; }
@@ -191,6 +237,10 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const T_CONNECT_MS = 15000;  /* gatt.connect: generous for a sleepy radio */
 const T_STEP_MS    = 10000;  /* discovery / setup / control writes */
 const T_INFO_MS    = 20000;  /* the encrypted INFO read: pairing lives here */
+const T_PAIR_SOFT_MS = 8000; /* pairing-stall soft watchdog: at 8 s
+                              * unsettled the INFO step names the
+                              * likely cause + remedy and offers the
+                              * pairing reset (the 20 s bound stays) */
 const T_FETCH_MS   = 30000;  /* payload + manifest downloads */
 const WINDOW_GONE =
   "Re-arm the ball (UPDATE tile → YES) and tap Update here right " +
@@ -227,6 +277,54 @@ function verCmp(a, b) {
   for (let i = 0; i < 3; i++) { if (a[i] !== b[i]) return a[i] < b[i] ? -1 : 1; }
   return 0;
 }
+/* Recovery area state: both actions need a live connection;
+ * rollback additionally needs the ball to report a usable
+ * other slot (INFO proto 3, other_state == 1), whose version
+ * is then named here and on the button. */
+function updateRecoveryUI() {
+  const connected = !!(server && chCtrl);
+  recoveryReinstallBtn.disabled = !connected || recovering;
+  recoveryRollbackBtn.disabled =
+    !connected || recovering || curOtherState !== 1;
+  recoveryRollbackBtn.textContent = curOtherState === 1 && curOtherVersion
+    ? "Roll back to previous version (" + curOtherVersion + ")"
+    : "Roll back to previous version";
+  recoveryInfoEl.textContent = !connected
+    ? "Connect to the ball first (tap Update above) — recovery " +
+      "options appear here once the ball reports its state."
+    : curOtherState === 1
+      ? "Previous version on the ball: " + (curOtherVersion || "unknown") +
+        " — available to roll back to."
+      : "No previous version is available to roll back to.";
+}
+
+/* "Reset pairing & retry": shown by the pairing-stall watchdog.
+ * With device.forget() (Chrome) the stale phone-side pairing is
+ * dropped here, the link is closed cleanly, and the pending
+ * INFO step is aborted so the flow ends WITHOUT its automatic
+ * retry — Tyler re-taps Update himself. Without forget() the
+ * button just surfaces the exact Settings steps (and still ends
+ * the stalled attempt, so he can follow them and re-tap). */
+resetPairBtn.addEventListener("click", async () => {
+  resetPairBtn.hidden = true;
+  pairingResetRequested = true;
+  if (device && typeof device.forget === "function") {
+    try { await device.forget(); } catch (e) { /* already gone */ }
+    try {
+      if (device.gatt && device.gatt.connected) device.gatt.disconnect();
+    } catch (e) { /* already gone */ }
+    say("Pairing reset — tap Update again when you're ready.");
+    note("This phone's old VBALL pairing was forgotten. Re-arm the " +
+         "ball if its window closed, then tap Update and type the " +
+         "6-digit code on the face.");
+  } else {
+    say("Pairing reset — follow the steps, then tap Update again.");
+    note("No code box? Your phone may hold an old VBALL pairing — " +
+         "Settings → Bluetooth → VBALL → Forget, then tap Update again");
+  }
+  if (pairingResetTrigger) pairingResetTrigger();
+});
+
 function bytesToHex(u8) {
   let s = "";
   for (const b of u8) s += b.toString(16).padStart(2, "0");
@@ -293,6 +391,7 @@ function onDisconnected() {
   if (!flowing) {
     labBtn.disabled = true;
     updateBtn.disabled = false;
+    updateRecoveryUI();
   }
 }
 
@@ -347,13 +446,41 @@ async function connectOnce() {
    * phone asking for the face code) happens inside it, so it
    * gets the longest budget and its own status line. */
   say("Pairing… if your phone asks, type the 6-digit code on the face.");
-  const info = await bounded(chInfo.readValue(), T_INFO_MS,
-    "Pairing with the ball",
-    "Pairing never completed. If this phone is holding an old " +
-    "pairing for VBALL, clear it (Bluetooth settings → VBALL → " +
-    "Forget), then re-arm the ball and tap Update right away. " +
-    "The ball forgets its side every window on purpose — the " +
-    "face code IS the pairing.");
+  /* Pairing-stall detection: a SOFT watchdog rides alongside
+   * the existing 20 s bound. At 8 s unsettled it names the
+   * likely cause and the exact remedy on the status line and
+   * reveals the pairing-reset button; the read itself is still
+   * allowed its full bound, and the reset button can abort it
+   * early via pairingResetTrigger (a PairingReset, which the
+   * update flow treats as a deliberate stop — never a retry). */
+  resetPairBtn.hidden = true;
+  pairingResetRequested = false;
+  const resetPromise = new Promise((_, reject) => {
+    pairingResetTrigger = () => reject(new PairingReset());
+  });
+  const softTimer = setTimeout(() => {
+    say("Pairing is taking a long time. No code box? Your phone " +
+        "may hold an old VBALL pairing — Settings → Bluetooth → " +
+        "VBALL → Forget, then tap Update again", "warn");
+    resetPairBtn.hidden = false;
+  }, T_PAIR_SOFT_MS);
+  let info;
+  try {
+    info = await Promise.race([
+      bounded(chInfo.readValue(), T_INFO_MS,
+        "Pairing with the ball",
+        "Pairing never completed. If this phone is holding an old " +
+        "pairing for VBALL, clear it (Bluetooth settings → VBALL → " +
+        "Forget), then re-arm the ball and tap Update right away. " +
+        "The ball forgets its side every window on purpose — the " +
+        "face code IS the pairing."),
+      resetPromise,
+    ]);
+  } finally {
+    clearTimeout(softTimer);
+    pairingResetTrigger = null;
+    if (!pairingResetRequested) resetPairBtn.hidden = true;
+  }
   const vl = info.getUint8(1);
   let ver = "";
   for (let i = 0; i < vl; i++) ver += String.fromCharCode(info.getUint8(2 + i));
@@ -362,6 +489,30 @@ async function connectOnce() {
   if (info.getUint8(0) >= 2 && info.byteLength >= 4 + vl + 32) {
     const dg = new Uint8Array(info.buffer, info.byteOffset + 4 + vl, 32);
     if (dg.some(b => b !== 0)) curDigest = bytesToHex(dg);
+  }
+  /* Proto 3 tail, appended after the proto-2 digest (offset
+   * 4 + vl + 32): bond_state u8, resume_mode u8, resume_offset
+   * u32 LE, resume_sha8 8B, other_state u8, other_verlen u8 +
+   * other version. Absent/short tails keep the defaults set
+   * above, so proto-2 balls work exactly as before. */
+  curBondState = null; curResumeMode = 0; curResumeOffset = 0;
+  curResumeSha8 = null; curOtherState = 0; curOtherVersion = "";
+  if (info.getUint8(0) >= 3 && info.byteLength >= 4 + vl + 32 + 16) {
+    const base = 4 + vl + 32;
+    curBondState = info.getUint8(base);
+    curResumeMode = info.getUint8(base + 1);
+    curResumeOffset = info.getUint32(base + 2, true);
+    curResumeSha8 = new Uint8Array(
+      info.buffer, info.byteOffset + base + 6, 8);
+    curOtherState = info.getUint8(base + 14);
+    const ovl = info.getUint8(base + 15);
+    if (info.byteLength >= base + 16 + ovl) {
+      let ov = "";
+      for (let i = 0; i < ovl; i++) {
+        ov += String.fromCharCode(info.getUint8(base + 16 + i));
+      }
+      curOtherVersion = ov;
+    }
   }
 
   /* Clock sync (v1.9+): the phone is the clock. Send the current
@@ -409,6 +560,12 @@ async function pickPayload() {
     /* A listed patch that will not load must never strand the
      * update: fall through to the full image. */
   }
+  return fetchFullPayload();
+}
+
+/* The full image alone — also what Recovery's reinstall sends
+ * (START_RECOVERY accepts the full image only, never a patch). */
+async function fetchFullPayload() {
   const resp = await bounded(fetch(bleMeta.file), T_FETCH_MS,
     "Getting the update file", NET_GONE);
   if (!resp.ok) throw new Error("could not fetch " + bleMeta.file);
@@ -420,24 +577,28 @@ async function pickPayload() {
            op: CTRL_START, label: "Sending update…" };
 }
 
-/* START → stream → FINISH → confirm, for one picked payload. */
-async function sendOnce(payload) {
-  sending = true; finishConfirmed = false;
-  let chunkIdx = 0;
+/* The START frame: [op][u32 LE size][32B sha][u8 verlen][ver].
+ * Shared by START, START_PATCH and START_RECOVERY — the
+ * recovery payload is identical to START by contract. */
+async function writeStart(payload, op) {
   const vb = new TextEncoder().encode(bleMeta.version);
   const start = new Uint8Array(38 + vb.length);
-  start[0] = payload.op;
+  start[0] = op;
   new DataView(start.buffer).setUint32(1, payload.bytes.length, true);
   start.set(payload.sha, 5);
   start[37] = vb.length;
   start.set(vb, 38);
-  say(payload.op === CTRL_START_PATCH ? "Starting patch…" : "Starting…");
+  say(op === CTRL_START_PATCH ? "Starting patch…" : "Starting…");
   await bounded(chCtrl.writeValueWithResponse(start), T_STEP_MS,
     "Starting the transfer",
     "The ball didn't answer the start command. " + WINDOW_GONE);
+}
 
+/* Stream from `off` → FINISH → confirm, for one payload whose
+ * START frame has already been accepted. */
+async function streamAndFinish(payload, off) {
+  let chunkIdx = 0;
   const bytes = payload.bytes;
-  let off = 0;
   while (off < bytes.length) {
     const n = Math.min(CHUNK_SIZES[chunkIdx], bytes.length - off);
     try {
@@ -469,6 +630,59 @@ async function sendOnce(payload) {
     if (finishConfirmed) { /* reboot disconnect raced the read */ }
     else if (e && e.message === "ball reported failure") throw e;
   }
+}
+
+/* START → (resume check) → stream → FINISH → confirm.
+ *
+ * TRANSFER RESUME (proto 3): the INFO from THIS connection may
+ * offer a checkpoint — resume_mode matching this payload's
+ * kind (1 full / 2 patch), a non-zero offset inside the
+ * payload, and resume_sha8 equal to the first 8 bytes of the
+ * payload's target digest (payload.sha: the full image's
+ * SHA-256, or the patch's produced-image digest). The START
+ * above is sent as usual — the firmware contract is that a
+ * START whose mode/size/sha/version exactly match a suspended
+ * transfer continues it, and different params discard it.
+ * The page then reads STATUS and only streams from the
+ * checkpoint when its received count == resume_offset; any
+ * mismatch (or an unreadable STATUS) means ABORT + a fresh
+ * START and a full stream from byte 0. */
+async function sendOnce(payload) {
+  sending = true; finishConfirmed = false;
+  await writeStart(payload, payload.op);
+
+  let off = 0;
+  const wantMode = payload.op === CTRL_START_PATCH ? 2 : 1;
+  const offered = curResumeMode === wantMode &&
+    curResumeOffset > 0 && curResumeOffset < payload.bytes.length &&
+    curResumeSha8 && payload.sha && payload.sha.length >= 8 &&
+    bytesToHex(curResumeSha8) ===
+      bytesToHex(payload.sha.subarray(0, 8));
+  if (offered) {
+    let verified = false;
+    try {
+      const st = await bounded(chStatus.readValue(), T_STEP_MS,
+        "Checking the resume checkpoint", WINDOW_GONE);
+      verified = st.byteLength >= 8 &&
+        st.getUint32(4, true) === curResumeOffset;
+    } catch (e) { verified = false; }
+    if (verified) {
+      off = curResumeOffset;
+      const pct = Math.floor(off * 100 / payload.bytes.length);
+      fillEl.style.width = pct + "%";
+      say("Resumed at " + pct + "%");
+    } else {
+      note("The ball's resume checkpoint didn't match — starting " +
+           "the transfer over from the beginning.");
+      await bounded(chCtrl.writeValueWithResponse(
+        new Uint8Array([CTRL_ABORT])), T_STEP_MS,
+        "Restarting the transfer", WINDOW_GONE);
+      await writeStart(payload, payload.op);
+      off = 0;
+    }
+  }
+
+  await streamAndFinish(payload, off);
   sending = false;
 }
 
@@ -494,6 +708,7 @@ updateBtn.addEventListener("click", async () => {
          * here, before the version gate, exactly as before:
          * reading results is not an update. */
         labBtn.disabled = false;
+        updateRecoveryUI();
         const a = parseVer(bleMeta.version), b = parseVer(curVersion);
         if (!a || !b || verCmp(a, b) <= 0) {
           say("Already up to date.", "ok");
@@ -502,6 +717,7 @@ updateBtn.addEventListener("click", async () => {
             bleMeta.version + ".";
           flowing = false;
           updateBtn.disabled = false;
+          updateRecoveryUI();
           return;
         }
         const payload = await pickPayload();
@@ -516,15 +732,28 @@ updateBtn.addEventListener("click", async () => {
         flowing = false;
         return;
       } catch (e) {
+        if (pairingResetRequested || e instanceof PairingReset) {
+          /* A deliberate pairing reset is a STOP, not a failure
+           * to retry: the reset handler already put the remedy
+           * on screen. No automatic retry, no retry loop — the
+           * next attempt is Tyler's tap. */
+          flowing = false;
+          updateBtn.disabled = false;
+          if (server) labBtn.disabled = false;
+          updateRecoveryUI();
+          return;
+        }
         if (attempt === 1 && device) {
           /* ONE automatic retry, from the beginning — v4.5.3:
            * it now covers the CONNECT phase too. In 4.5 the
            * retry required a completed connect first, so the
            * exact failures Tyler hit (a connect that never
            * landed, a pairing that never started) were the
-           * ones it could not help. The ball discards a partial
-           * transfer when the link drops, so the stream
-           * restarts — there is no resume. (No device yet =
+           * ones it could not help. A proto-2 ball discards a
+           * partial transfer when the link drops, so the stream
+           * restarts; a proto-3 ball may offer a resume
+           * checkpoint on the reconnect, which sendOnce verifies
+           * against STATUS before trusting. (No device yet =
            * the picker was cancelled: that needs a fresh tap,
            * not a retry — a picker cannot open without one.) */
           sending = false;
@@ -564,6 +793,101 @@ updateBtn.addEventListener("click", async () => {
   flowing = false;
   updateBtn.disabled = false;
   if (server) labBtn.disabled = false;
+  updateRecoveryUI();
+});
+
+/* ==== Recovery (proto 3) =============================================
+ * Deliberately OUTSIDE the normal flow: nothing here runs unless
+ * Tyler taps a recovery button AND confirms the dialog. Both
+ * actions need the live connection a completed Update tap leaves
+ * behind (connect + INFO is what fills in the ball's state). */
+
+/* START_RECOVERY is held pending by the firmware until the face
+ * tap: poll STATUS until the transfer state leaves idle for
+ * RECEIVING (1). FAILED (3) is reported; anything else keeps
+ * waiting, bounded by the poll count — never an open-ended wait. */
+async function waitForFaceTap() {
+  say("Tap the ball's face to confirm the reinstall…");
+  note("The ball is holding the reinstall pending — nothing more " +
+       "is sent until you tap its face to confirm.");
+  for (let i = 0; i < 120; i++) {
+    const st = await bounded(chStatus.readValue(), T_STEP_MS,
+      "Waiting for the face tap", WINDOW_GONE);
+    const state = st.getUint8(0);
+    if (state === 1) return true;
+    if (state === 3) {
+      throw new Error("ball reported failure (error " +
+                      st.getUint8(1) + ") while held for the face tap");
+    }
+    await sleep(500);
+  }
+  say("The ball never confirmed — reinstall not started.", "bad");
+  note("Nothing was sent. Tap Update to reconnect, then try the " +
+       "reinstall again and tap the ball's face when asked.");
+  return false;
+}
+
+recoveryReinstallBtn.addEventListener("click", async () => {
+  if (recovering || flowing || sending || !server || !chCtrl) return;
+  if (!bleMeta) return;
+  if (!confirm("Reinstall version " + bleMeta.version + " on the ball? " +
+               "This re-sends the full update even though the ball " +
+               "already runs it. The ball will ask you to tap its " +
+               "face to confirm before anything is written.")) return;
+  recovering = true;
+  updateRecoveryUI();
+  try {
+    const payload = await fetchFullPayload();
+    sending = true; finishConfirmed = false;
+    await writeStart(payload, CTRL_START_RECOVERY);
+    if (await waitForFaceTap()) {
+      await streamAndFinish(payload, 0);
+      say("Done — ball is restarting", "ok");
+      fillEl.style.width = "100%";
+    }
+    sending = false;
+  } catch (e) {
+    sending = false;
+    say("Recovery reinstall failed.", "bad");
+    note("The ball is unchanged if the reinstall never started. " +
+         "(" + (e && e.message ? e.message : e) + ")");
+  }
+  recovering = false;
+  updateRecoveryUI();
+});
+
+recoveryRollbackBtn.addEventListener("click", async () => {
+  if (recovering || flowing || sending || !server || !chCtrl) return;
+  if (curOtherState !== 1) return;   /* button is disabled too */
+  if (!confirm("Roll back to the previous version (" +
+               (curOtherVersion || "unknown") + ")? The ball will " +
+               "switch back to the image in its other slot when " +
+               "you restart it.")) return;
+  recovering = true;
+  updateRecoveryUI();
+  try {
+    await bounded(chCtrl.writeValueWithResponse(
+      new Uint8Array([CTRL_ROLLBACK])), T_STEP_MS,
+      "Asking for the rollback", WINDOW_GONE);
+    let report = "";
+    try {
+      const st = await bounded(chStatus.readValue(), T_STEP_MS,
+        "Reading the result", "");
+      report = " The ball reported state " + st.getUint8(0) +
+               ", error " + st.getUint8(1) + ", received " +
+               st.getUint32(4, true) + " bytes.";
+    } catch (e) { report = " The ball did not answer a status read."; }
+    say("Rollback requested — restart the ball to switch to " +
+        (curOtherVersion || "the previous version") + ".", "ok");
+    note(report.replace(/^ /, "") +
+         " Restart the ball now to finish the rollback.");
+  } catch (e) {
+    say("Rollback request failed.", "bad");
+    note("The ball is unchanged. (" +
+         (e && e.message ? e.message : e) + ")");
+  }
+  recovering = false;
+  updateRecoveryUI();
 });
 
 /* ==== LAB results read-back (v4.3) ===================================
