@@ -1,8 +1,8 @@
 {
-  "version_code": 9,
-  "version_name": "9.0",
+  "version_code": 10,
+  "version_name": "10.0",
   "apk_url": "https://vegzizreal.github.io/SlayerV-Games/morning-build/app.apk",
-  "notes": "Reader flows like a book \u2014 pages turn, never scroll.",
-  "apk_sha256": "6e693411ae36a58830ccf43424145a5de4be6c1857f7474ae23a5195206c2f86",
-  "apk_size": 762481
+  "notes": "Picture-led front page, a Settings page with your own text size, tighter type.",
+  "apk_sha256": "6664f1ddba7d4085bccaa67014f6e0589eda66ef628ac9c94e062bd3c2f8ff1c",
+  "apk_size": 766577
 }
