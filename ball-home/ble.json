@@ -1,1 +1,23 @@
-{"file":"ball-home-app.bin","patches":{"150abd093f38dc77649be893910913e499201316f21e95108c09d4fc4f3b33b0":{"file":"patch-5.7-to-5.8.bin","sha256":"3198513861475249d78219d96e0e6f57c0f117f98171d20c87d1e649d9f3392a"},"47bb56ee0b3161a54c4bb0b49b64ff24dc7f7aaf37e407e99e6dab882754b75d":{"file":"patch-5.5-to-5.8.bin","sha256":"3198513861475249d78219d96e0e6f57c0f117f98171d20c87d1e649d9f3392a"},"8423b3e983b70052c8d5d27602954cff425fcd3099adcb8ca8b95003fa228220":{"file":"patch-5.6-to-5.8.bin","sha256":"3198513861475249d78219d96e0e6f57c0f117f98171d20c87d1e649d9f3392a"}},"sha256":"3198513861475249d78219d96e0e6f57c0f117f98171d20c87d1e649d9f3392a","version":"5.8"}
+{
+  "file": "ball-home-app.bin",
+  "patches": {
+    "150abd093f38dc77649be893910913e499201316f21e95108c09d4fc4f3b33b0": {
+      "file": "patch-5.7-to-5.9.bin",
+      "sha256": "954658dcf93e6deafe0bf1da62b0e388b3da8a5a9b54ce78644f56ca6d75cf63"
+    },
+    "3198513861475249d78219d96e0e6f57c0f117f98171d20c87d1e649d9f3392a": {
+      "file": "patch-5.8-to-5.9.bin",
+      "sha256": "954658dcf93e6deafe0bf1da62b0e388b3da8a5a9b54ce78644f56ca6d75cf63"
+    },
+    "47bb56ee0b3161a54c4bb0b49b64ff24dc7f7aaf37e407e99e6dab882754b75d": {
+      "file": "patch-5.5-to-5.9.bin",
+      "sha256": "954658dcf93e6deafe0bf1da62b0e388b3da8a5a9b54ce78644f56ca6d75cf63"
+    },
+    "8423b3e983b70052c8d5d27602954cff425fcd3099adcb8ca8b95003fa228220": {
+      "file": "patch-5.6-to-5.9.bin",
+      "sha256": "954658dcf93e6deafe0bf1da62b0e388b3da8a5a9b54ce78644f56ca6d75cf63"
+    }
+  },
+  "sha256": "954658dcf93e6deafe0bf1da62b0e388b3da8a5a9b54ce78644f56ca6d75cf63",
+  "version": "5.9"
+}

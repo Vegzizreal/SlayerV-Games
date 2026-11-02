@@ -1,1 +1,1 @@
-{"builds": [{"chipFamily": "ESP32-S3", "parts": [{"offset": 0, "path": "ball-home-merged.bin"}]}], "name": "Update v5.8", "new_install_prompt_erase": true, "version": "5.8"}
+{"builds": [{"chipFamily": "ESP32-S3", "parts": [{"offset": 0, "path": "ball-home-merged.bin"}]}], "name": "Update v5.9", "new_install_prompt_erase": true, "version": "5.9"}
