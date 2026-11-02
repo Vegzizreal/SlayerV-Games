@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>VBALL — Update v5.3</title>
+<title>VBALL — Update v5.10</title>
 <style>
   body { font-family: system-ui, sans-serif; background:#0e0d12; color:#f2f0eb; margin:0; padding:32px 20px; }
   main { max-width:560px; margin:0 auto; }
@@ -45,7 +45,7 @@
 </head>
 <body>
 <main>
-  <h1>👻 VBALL — Update <span class="ver" id="verTitle">v5.3</span></h1>
+  <h1>👻 VBALL — Update <span class="ver" id="verTitle">v5.10</span></h1>
 
   <section class="door" id="doorA">
     <div class="doorHead" id="headA"><span>Bluetooth update (phone) <span class="ver" id="verA"></span></span><span class="chev">▾</span></div>
@@ -163,6 +163,13 @@ const CTRL_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c03";
 const DATA_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c04";
 const STATUS_UUID = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c05";
 const TIME_UUID   = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c06";
+/* TZNAME (v5.5): the daylight-saving extension. A SEPARATE
+ * characteristic carrying this phone's IANA zone name as
+ * [0x01][name][NUL]. Balls before v5.5 have no such
+ * characteristic in their GATT table, so the lookup below
+ * fails on them and no write ever reaches their firmware —
+ * they simply keep the classic TIME sync, exactly as before. */
+const TZNAME_UUID = "a7e51c00-9b4d-4e8a-b3c2-1f0a9d8e7c09";
 /* LABRES (v4.3): read-back of the LAB results blob. Protocol:
  * write 5 bytes [0x01][u32 LE offset] to set a cursor, then read:
  * [u32 LE total][u32 LE offset][up to 200 data bytes]. Loop until
@@ -519,6 +526,26 @@ async function connectOnce() {
    * UTC epoch + this phone's tz offset to the TIME characteristic;
    * older firmware simply doesn't have it, so failure is silent. */
   try {
+    /* v5.5: the zone name goes FIRST, on its own TZNAME
+     * characteristic, so a v5.5 ball knows the zone when the
+     * classic frame lands and can normalise a daylight offset
+     * to standard. Its own try: a pre-v5.5 ball has no TZNAME
+     * characteristic, the lookup fails, and the classic sync
+     * below still runs — nothing about the old path changes. */
+    try {
+      const zoneName =
+        Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+      if (zoneName) {
+        const chZone = await bounded(svc.getCharacteristic(TZNAME_UUID),
+                                     T_STEP_MS, "Clock zone", "");
+        const zb = new TextEncoder().encode(zoneName);
+        const zframe = new Uint8Array(zb.length + 2);
+        zframe[0] = 1;
+        zframe.set(zb, 1);   /* trailing byte stays 0x00 (NUL) */
+        await bounded(chZone.writeValueWithResponse(zframe),
+                      T_STEP_MS, "Clock zone", "");
+      }
+    } catch (e) { /* no TZNAME characteristic on this firmware */ }
     const chTime = await bounded(svc.getCharacteristic(TIME_UUID),
                                  T_STEP_MS, "Clock sync", "");
     const frame = new DataView(new ArrayBuffer(6));
