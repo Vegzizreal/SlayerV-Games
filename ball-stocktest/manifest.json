@@ -1,0 +1,1 @@
+{"builds": [{"chipFamily": "ESP32-S3", "parts": [{"offset": 0, "path": "https://raw.githubusercontent.com/waveshareteam/ESP32-S3-Touch-AMOLED-1.75/main/firmware/ESP32-S3-Touch-AMOLED-1.75-FactoryOnly-260805.bin"}]}], "name": "Waveshare Factory Stock Test", "new_install_prompt_erase": true, "version": "stock-260805"}
