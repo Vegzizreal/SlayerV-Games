@@ -37,47 +37,6 @@ html{height:100dvh;overflow:hidden;}
 </head>
 <body>
 <script>
-/* Trap Tycoon -- Pages-only save shim (single local slot).
- * This file is included ONLY in the GitHub Pages build. The widget build
- * persists via the hatch bridge instead, and the widget validator rejects
- * localStorage outright. The game calls window.hatchWidget only when the
- * bridge is absent, so this never activates inside the widget. */
-(function(){
-"use strict";
-if(window.hatchWidget)return;
-var KEY="trap-tycoon.pages.save.v1";
-var OLDKEY="terpene-tycoon.pages.save.v1"; /* pre-rename key: one-time migration only */
-function ls(){try{return window.localStorage||null;}catch(e){return null;}}
-window.hatchWidget={
- getState:function(def){
-  var s=ls(),raw=null;
-  if(s){
-   try{raw=s.getItem(KEY);}catch(e){}
-   if(!raw){
-    /* one-time migration: copy the old-key save forward, then use the new key */
-    try{var _old=s.getItem(OLDKEY);if(_old){s.setItem(KEY,_old);raw=_old;}}catch(e){}
-   }
-  }
-  if(raw){
-   try{var o=JSON.parse(raw);if(o&&typeof o==="object"&&!Array.isArray(o))return o;}
-   catch(e){try{s.setItem(KEY+".corrupt",raw);}catch(_e){}}
-   /* raw existed but was corrupt: boot from default in memory WITHOUT
-      overwriting the key (corrupt copy preserved above for recovery). */
-   return JSON.parse(JSON.stringify(def));
-  }
-  var d=JSON.parse(JSON.stringify(def));
-  if(s){try{s.setItem(KEY,JSON.stringify(d));}catch(e){}}
-  return d;
- },
- setState:function(st){
-  var s=ls();if(!s)return;
-  try{s.setItem(KEY,JSON.stringify(st));}catch(e){/* quota/private mode: ignore */}
- }
-};
-})();
-</script>
-
-<script>
 if('serviceWorker' in navigator){
   window.addEventListener('load',function(){
     navigator.serviceWorker.register('sw.js').catch(function(){});
@@ -3157,7 +3116,7 @@ var WORKERS={
  squeak:{name:"Squeak",icon:"😰",price:25,dur:90,pyield:0.45,blurb:"🌱 45% → 70% · learns every 5 cooks",quote:"okay so that one finished!! i think it went good?? lmk!!"}
 };
 var SPEED_OPTS=[30,45,60,75,90,105,120];
-var GAME_VER="v204";
+var GAME_VER="v205";
 var GAME_MIN_SHELL=108;
 var ROACH_IMG="data:image/webp;base64,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";
 var CHANGELOG=[
@@ -10824,6 +10783,11 @@ function settingsHTML(){
   h+='<div class="sdesc" style="margin:0 2px 6px">Start in:</div>';
   h+='<div class="dchips"><button type="button" class="dchip center'+(_bm==="2d"?" on":"")+'" data-act="ttmerge-bootmode" data-v="2d"><span class="dc-name">2D Mode</span></button><button type="button" class="dchip center'+(_bm==="3d"?" on":"")+'" data-act="ttmerge-bootmode" data-v="3d"><span class="dc-name">3D City</span></button></div>';
   h+='<div class="sdesc" style="margin:8px 2px 0">Takes effect next time the game opens.</div>';
+  var _dl=(window.__ttMerge.settings.debugLog===true)?"1":"0";
+  h+='<div class="shopsec" style="margin-top:16px">DEBUG</div>';
+  h+='<div class="sdesc" style="margin:0 2px 6px">Debug log:</div>';
+  h+='<div class="dchips"><button type="button" class="dchip center'+(_dl==="0"?" on":"")+'" data-act="ttmerge-debuglog" data-v="0"><span class="dc-name">Off</span></button><button type="button" class="dchip center'+(_dl==="1"?" on":"")+'" data-act="ttmerge-debuglog" data-v="1"><span class="dc-name">On</span></button></div>';
+  h+='<div class="sdesc" style="margin:8px 2px 0">Shows the door diagnostic log in the corner of the screen.</div>';
  }
  return h;
 }
@@ -11333,6 +11297,7 @@ root.addEventListener("click",function(e){
  if(a==="settheme"){S._suppressNotif=true;var _th=b.dataset.theme;S.theme=(_th==="light")?"light":"dark";save();render();return;}
  if(a==="ttmerge-enter3d"){if(!ttMergeDoorEnter({terr:b.dataset.t||null,propKey:null})&&ttMergeActive()){S.msg="🏙 3D City could not be reached from here.";save();render();}return;}
  if(a==="ttmerge-bootmode"){var _bv=(b.dataset.v==="3d")?"3d":"2d";if(!window.__ttMerge)window.__ttMerge={};if(!window.__ttMerge.settings||typeof window.__ttMerge.settings!=="object")window.__ttMerge.settings={};window.__ttMerge.settings.bootMode=_bv;var _bmDone=false;try{var _hB=window.__ttHost;if(_hB&&typeof _hB.setSetting==="function"){_hB.setSetting("bootMode",_bv);_bmDone=true;}}catch(e){}if(!_bmDone){var _tgB=ttMergePushTarget();if(_tgB){try{_tgB.postMessage({type:"tt-merge-set-setting",key:"bootMode",value:_bv},"*");}catch(e){}}}render();return;}
+ if(a==="ttmerge-debuglog"){var _dv=(b.dataset.v==="1");if(!window.__ttMerge)window.__ttMerge={};if(!window.__ttMerge.settings||typeof window.__ttMerge.settings!=="object")window.__ttMerge.settings={};window.__ttMerge.settings.debugLog=_dv;var _dlDone=false;try{var _hD=window.__ttHost;if(_hD&&typeof _hD.setSetting==="function"){_hD.setSetting("debugLog",_dv);_dlDone=true;}}catch(e){}if(!_dlDone){var _tgD=ttMergePushTarget();if(_tgD){try{_tgD.postMessage({type:"tt-merge-set-setting",key:"debugLog",value:_dv},"*");}catch(e){}}}render();return;}
  if(a==="cars-buy"){var _k=b.dataset.k,_cs=window.__ttHost&&__ttHost.carsGet?__ttHost.carsGet():null;if(_cs&&!_cs.carsOwned[_k]&&_cs.catalog[_k]&&S.cash>=_cs.catalog[_k].price){S.cash-=_cs.catalog[_k].price;_cs.carsOwned[_k]=true;_cs.activeCar=_k;__ttHost.carsSet(_cs);save();render();}return;}
  if(a==="cars-switch"){var _k2=b.dataset.k,_cs2=window.__ttHost&&__ttHost.carsGet?__ttHost.carsGet():null;if(_cs2&&_cs2.canSwitch&&_cs2.carsOwned[_k2]){_cs2.activeCar=_k2;__ttHost.carsSet(_cs2);save();render();}return;}
  if(a==="cars-upgrade"){var _k3=b.dataset.k,_pr={trunk:[3000,6000,12000,24000,48000],engine:[5000,10000],tint:[4000]},_cs3=window.__ttHost&&__ttHost.carsGet?__ttHost.carsGet():null;if(_cs3&&_pr[_k3]){var _lv=_cs3.upgrades[_k3]||0,_p=_pr[_k3][_lv];if(_p!==undefined&&S.cash>=_p){S.cash-=_p;_cs3.upgrades[_k3]=_lv+1;__ttHost.carsSet(_cs3);save();render();}}return;}
@@ -12964,11 +12929,20 @@ var TTCITY_DOC = "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"u
 /* ================= v9 DIAGNOSTIC TRACER ================= */
 var TT_T0 = Date.now();
 var ttTraceEl = null, ttTraceErrSeen = false;
+/* v205: the tracer is a Settings toggle (Settings -> "Debug log",
+   blob.settings.debugLog, default OFF). Until the persisted setting
+   is read at blob load, ttTrace() buffers lines exactly as v204 did
+   (no DOM yet). Once decided: OFF drops the buffer, never creates the
+   overlay, and ttTrace() returns on one boolean test — no DOM, no
+   paint, no door-path cost. ON creates the overlay and from then on
+   behaves exactly as v204. */
+var ttTraceOn = false, ttTraceDecided = false;
 function ttTracePaint(){
   if (!ttTraceEl) return;
   try { ttTraceEl.textContent = window.__ttTraceLines.join('\n'); } catch(e) {}
 }
 function ttTrace(step, extra){
+  if (ttTraceDecided && !ttTraceOn) return;
   try {
     if (!window.__ttTraceLines) window.__ttTraceLines = [];
     var t = ((Date.now() - TT_T0) / 1000).toFixed(1);
@@ -12977,12 +12951,23 @@ function ttTrace(step, extra){
     ttTracePaint();
   } catch(e) {}
 }
-try {
-  ttTraceEl = document.createElement('pre');
-  ttTraceEl.id = 'tt-trace';
-  ttTraceEl.style.cssText = 'position:fixed;top:6px;left:6px;z-index:99999;font:10px/1.35 monospace;color:#d7ffe0;background:rgba(0,0,0,.85);margin:0;padding:5px 7px;border:1px solid rgba(255,255,255,.35);border-radius:6px;white-space:pre-wrap;word-break:break-word;max-width:52vw;max-height:60vh;overflow:hidden;pointer-events:none;';
-  (document.body || document.documentElement).appendChild(ttTraceEl);
-} catch(e) {}
+function ttTraceEnsureEl(){
+  if (ttTraceEl) return;
+  try {
+    ttTraceEl = document.createElement('pre');
+    ttTraceEl.id = 'tt-trace';
+    ttTraceEl.style.cssText = 'position:fixed;top:6px;left:6px;z-index:99999;font:10px/1.35 monospace;color:#d7ffe0;background:rgba(0,0,0,.85);margin:0;padding:5px 7px;border:1px solid rgba(255,255,255,.35);border-radius:6px;white-space:pre-wrap;word-break:break-word;max-width:52vw;max-height:60vh;overflow:hidden;pointer-events:none;';
+    (document.body || document.documentElement).appendChild(ttTraceEl);
+  } catch(e) {}
+}
+function ttTraceApply(on){
+  ttTraceOn = !!on; ttTraceDecided = true;
+  if (ttTraceOn){ ttTraceEnsureEl(); ttTracePaint(); }
+  else {
+    window.__ttTraceLines = [];
+    if (ttTraceEl){ try { ttTraceEl.remove(); } catch(e) {} ttTraceEl = null; }
+  }
+}
 window.__ttTrace = ttTrace;
 window.addEventListener('error', function(e){
   if (ttTraceErrSeen) return; ttTraceErrSeen = true;
@@ -12992,7 +12977,7 @@ window.addEventListener('unhandledrejection', function(e){
   if (ttTraceErrSeen) return; ttTraceErrSeen = true;
   ttTrace('HOST-REJECT', (e && e.reason && e.reason.message) || 'rejection');
 });
-ttTrace('glue alive', 'v11 tracer on');
+ttTrace('glue alive', 'v205 tracer on (Settings > Debug log)');
 /* v10: name the payload's health before anything else — if the copy
    being run lost the embedded city document (the doc=0B class), this
    line says so at 0.0s, before the first tap. */
@@ -13046,9 +13031,10 @@ function loadBlob(){
       b = null;
     }
   }
-  if (!b || typeof b !== 'object' || Array.isArray(b)) b = { s2d:null, city:null, loc:{terr:'home',propKey:null}, settings:{bootMode:'2d'} };
-  if (!b.settings || typeof b.settings !== 'object') b.settings = { bootMode:'2d' };
+  if (!b || typeof b !== 'object' || Array.isArray(b)) b = { s2d:null, city:null, loc:{terr:'home',propKey:null}, settings:{bootMode:'2d',debugLog:false} };
+  if (!b.settings || typeof b.settings !== 'object') b.settings = { bootMode:'2d', debugLog:false };
   if (b.settings.bootMode !== '3d') b.settings.bootMode = '2d';
+  b.settings.debugLog = (b.settings.debugLog === true);
   if (!b.loc || typeof b.loc !== 'object') b.loc = { terr:'home', propKey:null };
   if (TIDS.indexOf(b.loc.terr) < 0) b.loc.terr = 'home';
   if (typeof b.loc.propKey !== 'string') b.loc.propKey = null;
@@ -13060,6 +13046,7 @@ function loadBlob(){
   return b;
 }
 var blob = loadBlob();
+ttTraceApply(blob.settings.debugLog === true); /* v205: Debug log setting decides the tracer before any door path exists */
 var mode = '2d'; /* the host page always boots as the 2D game; bootMode '3d' enters the city after the boot extract (see boot()) */
 function persistBlob(){ try { localStorage.setItem(BLOB_KEY, JSON.stringify(blob)); } catch(e) {} }
 
@@ -13935,7 +13922,7 @@ function extractFrom2D(){
 function applyTo2D(s){
   var h = hook();
   if (!h || !s) return Promise.resolve(false);
-  try { h.settings = { bootMode: blob.settings.bootMode }; } catch(e) {}
+  try { h.settings = { bootMode: blob.settings.bootMode, debugLog: blob.settings.debugLog }; } catch(e) {}
   try { h.seizeLocale = seizeLocale; } catch(e) {}
   try { h.apply(deep(s)); return Promise.resolve(true); } catch(e) { return Promise.resolve(false); }
 }
@@ -14019,7 +14006,14 @@ window.addEventListener('message', function(e){
       blob.settings.bootMode = (e.data.value === '3d') ? '3d' : '2d';
       persistBlob(); /* takes effect on next load — no immediate switch */
       var h = hook();
-      if (h){ try { h.settings = { bootMode: blob.settings.bootMode }; } catch(e) {} }
+      if (h){ try { h.settings = { bootMode: blob.settings.bootMode, debugLog: blob.settings.debugLog }; } catch(e) {} }
+    }
+    else if (e.data.key === 'debugLog'){
+      blob.settings.debugLog = (e.data.value === true || e.data.value === 1 || e.data.value === '1');
+      persistBlob();
+      ttTraceApply(blob.settings.debugLog); /* the log shows/hides immediately */
+      var h = hook();
+      if (h){ try { h.settings = { bootMode: blob.settings.bootMode, debugLog: blob.settings.debugLog }; } catch(e) {} }
     }
   }
   else if (e.data.type === 'tt-merge-open-phone'){
@@ -14645,7 +14639,7 @@ async function boot(){
   var h = await hookReady(20000);
   if (h){
     try { h.seizeLocale = seizeLocale; } catch(e) {}
-    try { h.settings = { bootMode: blob.settings.bootMode }; } catch(e) {}
+    try { h.settings = { bootMode: blob.settings.bootMode, debugLog: blob.settings.debugLog }; } catch(e) {}
     if (blob.s2d){
       /* Blob is canonical; the 2D's native save is scratch. */
       if (blob.s2d.terr) blob.s2d.terr.active = blob.loc.terr || blob.s2d.terr.active;
@@ -14712,7 +14706,14 @@ window.__ttHost = {
       blob.settings.bootMode = (value === '3d') ? '3d' : '2d';
       persistBlob(); /* takes effect on next load — no immediate switch */
       var h = hook();
-      if (h){ try { h.settings = { bootMode: blob.settings.bootMode }; } catch(e) {} }
+      if (h){ try { h.settings = { bootMode: blob.settings.bootMode, debugLog: blob.settings.debugLog }; } catch(e) {} }
+    }
+    else if (key === 'debugLog'){
+      blob.settings.debugLog = (value === true || value === 1 || value === '1');
+      persistBlob();
+      ttTraceApply(blob.settings.debugLog); /* the log shows/hides immediately */
+      var h = hook();
+      if (h){ try { h.settings = { bootMode: blob.settings.bootMode, debugLog: blob.settings.debugLog }; } catch(e) {} }
     }
   },
   enterCity: function(loc){ if (loc && typeof loc.terr === 'string' && TIDS.indexOf(loc.terr) >= 0) pendingLoc = { terr: loc.terr, propKey: (typeof loc.propKey === 'string' ? loc.propKey : null) }; return enterCity(); }, enter2D: enter2D,
