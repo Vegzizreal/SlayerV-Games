@@ -1,6 +1,84 @@
 {
  "editions": [
   {
+   "date": "2026-11-03",
+   "dateline": "Tuesday, November 3, 2026",
+   "stories": [
+    {
+     "kicker": "WARDOGS",
+     "headline": "Wardogs Studio Bulkhead Is Taking All of December Off — and Telling Its Players to Go Play GTA 6",
+     "body": [
+      "After a runaway early-access launch, a flurry of balance patches and hotfixes, and a disappointing Season 2 launch, Bulkhead is taking the whole month of December off to rest and refresh for the road to Wardogs' 1.0 launch — and CEO Joe Brammer told Edge magazine the studio will say so plainly to its own players. “We're going to make sure players know they can f**k off in December,” he said. “Go play GTA 6, we need to detox.”",
+      "The timing is the decision. GTA 6 launches November 19 and is expected to be the biggest entertainment launch of all time; most publishers quietly rearrange their plans around it, while Bulkhead named it out loud. Brammer's case for the break is the launch itself: “Everyone has done something that's not in their job description. Everyone wears multiple hats, because they can see the path to success with the product.” The team that wore every hat gets a clean month, and the player dip gets announced before it happens."
+     ],
+     "takeaway": "A live game's calendar is a design decision: plan the dip instead of fighting it. When a giant launch will take your players anyway and your team is spent, a scheduled, publicly announced pause turns a visible decline into an off-season — and protects the people who have to build 1.0.",
+     "source_name": "IGN",
+     "source_url": "https://openweb-ign.cdn.zephr.com/articles/go-play-gta-6-says-wardogs-developer",
+     "image_url": "https://i.ytimg.com/vi/jb6jNGjYiws/hqdefault.jpg",
+     "image_credit": "Gameplay — RADPlayzGamez via YouTube",
+     "image_link": "https://www.youtube.com/embed/jb6jNGjYiws"
+    },
+    {
+     "kicker": "NAMMO",
+     "headline": "NAMMO's Devs Won a Design Prize for a Sonar System — Then Deleted It Because Playing Blind Wasn't Fun",
+     "body": [
+      "Guild Studio's NAMMO, a 2D Soulslike boss rush set in ancient Silla, just won first place and the Gamer's Pick at the 2026 Gyeonggi Game Audition. Its blind protagonist was originally built around sonar: black fog hid the screen and players read enemy movements from sound-wave patterns to parry, in the style of League of Legends' Rek'Sai. That concept won a Grand Prize in Game Design at GIGDC. Built, it failed the only test CEO Tae-yoon Kim ultimately trusts: “when we actually built it, it just wasn't fun.” He had the fog removed as an experiment, playing without it was vastly more fun, and after two months of work the team rebuilt almost everything around the replacement Spirit Eye system — which reveals the soul realm, boss weaknesses and true forms inside parry combat, at roughly double the art workload.",
+      "The same discipline runs through the rest of the design. Elaborate platforming and puzzles between bosses left players fatigued after fights, so transition areas were deliberately lightened — bosses are the attraction and downtime is part of the pacing. The team also guards against one especially fun boss becoming the template for the rest, works to give each of its ten-plus bosses its own combat identity, and settled on two difficulty levels after concluding no single setting can satisfy everyone. A demo is planned for February 2027."
+     ],
+     "takeaway": "A prize validates a concept on paper, not in the hands. Test your signature restriction by removing it: if the game gets better, the restriction was the problem, and the honest move is to pay the rebuild cost while the game is still small enough to survive it.",
+     "source_name": "Inven Global",
+     "source_url": "https://www.invenglobal.com/articles/28083/gyeonggi-game-audition-1st-place-nammo-we-will-do-our-best-for-fun"
+    },
+    {
+     "kicker": "THE LEGEND OF ZELDA: OCARINA OF TIME",
+     "headline": "Ocarina of Time's Remake Lets Link Jump Anywhere — One Button Change Forced a Whole Game Re-Audit",
+     "body": [
+      "In Part 3 of Nintendo's Ask the Developer interview, published today, the remake team details what modernising Link's actions actually cost. Auto-jump is gone: in the 1998 original Link jumped automatically at defined spots, but players raised on recent Zelda games would ask why he could jump there and not here — so now a button jumps anywhere. Director HokWai Ng and producer Eiji Aonuma are blunt about the bill: with jumping possible everywhere, the team had to anticipate all kinds of player behaviour and re-check the environment, and because Young and Adult Link jump slightly different distances, every gap had to be tuned for both bodies.",
+      "Where two generations disagreed, the team shipped both answers. The Jump Attack supports the original's single button press and Breath of the Wild's two-step jump-then-attack, because Aonuma couldn't get used to the new scheme and Hidemaro Fujibayashi preferred it — and neither blocks the other. Roll-spamming across Hyrule Field survives too, with hold-to-dash added alongside. Aonuma also settled his “overdue homework,” the Water Temple: item toggling is much easier, and some disorienting walls became lattice structures so players can see the rooms beyond and keep their bearings. A new Threads of Time feature unlocks illustrations and text that assemble into a tapestry — a picture-book story layer built as a conversation starter between parents who played the original and their children."
+     ],
+     "takeaway": "Modernising one input is never one change: free jumping re-opens every gap, ledge and sequence in the game. Budget the re-audit before you promise the feature — and when two audiences have opposite muscle memory, shipping both control schemes can be cheaper than picking a winner.",
+     "source_name": "Nintendo — Ask the Developer",
+     "source_url": "https://www.nintendo.com/us/whatsnew/ask-the-developer-vol-24-the-legend-of-zelda-ocarina-of-time-part-3/"
+    },
+    {
+     "kicker": "SOUTH OF MIDNIGHT",
+     "headline": "South of Midnight's Director Says He Probably Wouldn't Have Funded His Own Game",
+     "body": [
+      "Compulsion Games creative director David Sears told MinnMax's Ben Hanson that Xbox funded games like South of Midnight and Double Fine's Keeper knowing they would probably not make much money — and, in the event, they did not — buying prestige and cultural cornerstones instead. Sears says he warned people during development: “Somebody is going to say, one day, ‘The money tap, we're closing those floodgates.’ And that's going to have really traumatic results downstream.”",
+      "Asked whether he was thankful Microsoft supported the game but would not have funded it himself, Sears answered, “Yeah, probably,” and called the model unsustainable in hindsight. Other directors who asked whether they were living through a golden era got his standing reply: “For now.” He did credit today's Microsoft as more humane than the company he knew in the 1990s for letting studios spin off instead of shutting them down — Compulsion is now independent, holding its own IP and an unknown amount of financial runway."
+     ],
+     "takeaway": "Prestige funding is a loan against a future restructuring. If your studio's survival depends on a patron's generous era, spend that era building what survives its end: owned IP, a real runway, and a team scoped to money you could actually replace.",
+     "source_name": "Kotaku",
+     "source_url": "https://kotaku.com/creative-director-says-he-wanted-to-make-south-of-midnight-but-doesnt-think-xbox-should-have-funded-it-2000752408"
+    },
+    {
+     "kicker": "REMUDO-REMUDO",
+     "headline": "Remudo-Remudo Killed Its Timer — Playtesters Were Too Scared to Experiment",
+     "body": [
+      "Remudo-Remudo's third playtest was built to test item combinations in its Sort & Search phase, and the save files told the truth the feedback didn't: players repeated only the most obvious combinations and never discovered the rest. The team's diagnosis points at a leftover from the game's jam version — timed rounds. The clock once made sense thematically, casting the player as a pressured raccoon scavenging to pay off a debt, but under time pressure, experimenting risks defeat for a reward that looks minimal, so players optimise instead of exploring.",
+      "The fixes rebuild the pressure system rather than tune it. The timer is removed entirely; the number of items in the crate now limits the player's actions, so a run plays like a hand of cards to think through. Combinations were redesigned from a “knowledge-vania” logic of visual families and hidden relationships — two socks make a pair, a lighter and a spray can make a flamethrower — into colours and values combined under a scoring system. Bonuses now act on crates and their contents, handing players control over the rest of the run. The devlog's warning frames the whole change: “make it exist first, make it good later” can cloud judgement — sometimes iterating means stepping back and reassessing the entire system."
+     ],
+     "takeaway": "If playtesters won't explore, check what your pressure system charges for curiosity. A constraint inherited from a jam version can quietly tax the exact behaviour your core system needs — swap time pressure for a resource limit and the same players start thinking instead of hurrying.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1748259/-remudo-remudo-devlog-2-when-should-you-give-up-on-an-idea.amp"
+    },
+    {
+     "kicker": "ARCHEAGE CHRONICLES",
+     "headline": "ArcheAge Chronicles Bets the MMO on Meeting Strangers — Not on Instances and Endgame",
+     "body": [
+      "On the eve of ArcheAge Chronicles' early access launch, executive producer Yongjin Ham laid out the lessons XLGames carried from the original ArcheAge and a cooperation-focused project codenamed Project X4. The conclusions shaped the new game directly: a wider open world with more exploration, a deliberate emphasis on players meeting each other out in that world instead of being split across multiple instances, and a levelling path where the good content is not all saved for max level.",
+      "Ham admits the blend of action combat, open-world exploration and solo content felt at odds even to the team, and argues fidelity and nostalgia are not a direction: “Simply improving graphical fidelity, making games look more spectacular, or trying to recreate the nostalgia of the past isn't enough. Isn't it time we moved beyond those approaches?” Cadence is treated as part of the design — major changes such as removing gender locks and adding a third weapon for each class arrive roughly monthly, early access updates run faster still, and the public roadmap will only be published after launch, once player feedback is in."
+     ],
+     "takeaway": "An MMO's social life is an architecture choice made before launch: shared spaces where players collide beat instanced content for community, and front-loading your best content respects the players who never reach the cap. Publish the roadmap after you've heard the players, not before.",
+     "source_name": "Massively Overpowered",
+     "source_url": "https://massivelyop.com/2026/11/02/archeage-chronicles-talks-content-cadence-design-and-pushing-the-mmo-genre-forward/",
+     "image_url": "https://i.ytimg.com/vi/ET-VeN35ypY/hqdefault.jpg",
+     "image_credit": "Dev interview — XLGames via YouTube",
+     "image_link": "https://www.youtube.com/embed/ET-VeN35ypY?feature=oembed&enablejsapi=1"
+    }
+   ]
+  },
+  {
    "date": "2026-11-02",
    "dateline": "Monday, November 2, 2026",
    "stories": [
