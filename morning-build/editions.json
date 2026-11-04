@@ -1,6 +1,114 @@
 {
  "editions": [
   {
+   "date": "2026-11-04",
+   "dateline": "Wednesday, November 4, 2026",
+   "stories": [
+    {
+     "kicker": "AUSTRALIA DID IT",
+     "headline": "Australia Did It Checks Your Army Every 5 to 10 Minutes — So a Bad Early Build Can't Quietly Lose You the Game",
+     "body": [
+      "Rami Ismail's return to directing is a turn-based train-defense strategy game with no conventional base-building: players acquire units individually and merge them into stronger forms. To implement that system, the team built a \"progression checker\" — every 5 to 10 minutes the game asks, in effect, \"let's see how you're doing,\" and tells the player whether their merged units are up to speed for what is coming.",
+      "The checker exists because of two old wounds. In StarCraft, Ismail could review a replay and find he had lost at three and a half minutes by walking down the wrong tech tree. In 2003's Fire Emblem he leaned on Marcus, a paladin who starts overpowered, then hit a mission that forced him to sacrifice Marcus and finish with under-levelled units. Strategy games also broke Vlambeer's old rule — a game had to be fun within two weeks of prototyping. Australia Did It only clicked at four to five months, once enough content and balance existed to judge long-term thinking. Ismail also split his own hats: Sam Magnolia of Aesthetician Labs produced, because a creative director who also produces holds too much power in one voice, and the one-game team will shake hands and disband after launch."
+     ],
+     "takeaway": "If early choices can silently doom a run, build a scheduled in-game check that says so while there is still time to fix it. And in a slow genre, budget months — not a two-week prototype — before you expect the fun to be measurable.",
+     "source_name": "Game Developer",
+     "source_url": "https://www.gamedeveloper.com/design/what-rami-ismail-learned-with-his-return-to-game-development",
+     "image_url": "https://i.ytimg.com/vi/pBFlZ8MmbFA/hqdefault.jpg",
+     "image_credit": "Release trailer — Mystic Forge via YouTube",
+     "image_link": "https://www.youtube.com/watch?app=desktop&v=pBFlZ8MmbFA"
+    },
+    {
+     "kicker": "THE LEGEND OF ZELDA: OCARINA OF TIME",
+     "headline": "Ocarina of Time's Remake Scores Big Scenes With an Orchestra — and Deliberately Leaves Small Rooms Small",
+     "body": [
+      "Part 4 of Nintendo's Ask the Developer interview is all sound. Music lead Masato Ohashi's team analysed the 1998 original before arranging anything and found its background music conveyed the scale of each scene and shifts in pacing through the composition itself, rather than through changes in volume. So the remake's 150-plus pieces — all recorded with a live orchestra, including new music for new cutscenes built on motifs from the original areas — deliberately limit their instrumentation for simpler pieces: the inside of a house does not get the full-orchestra treatment, and Koji Kondo was consulted on how each piece should be interpreted.",
+      "The same restraint runs through the rest of the audio. Some pieces mix the live orchestra with sounds faithfully recreated from the N64 sound source, so Link's house music makes returning players do a double take. Cutscene voices were cast in blind auditions — names hidden, judged only on closeness to the original — and one winner turned out to be the same actor who voiced the character 28 years ago. Ambient sound is positional (Kokiri Forest's waterfall fades as you walk away, in 5.1 surround), a real ocarina was recorded breath and all, and Aonuma's late idea made it in: hum a learned song, or play a real ocarina, into the Switch 2 microphone and voice recognition has Link play it — no progression advantage, just closeness to the world."
+     ],
+     "takeaway": "Match production scale to the scene's intended scale, not to your budget. Limiting the orchestra in small rooms is what makes the grand themes read as grand — restraint is a mixing decision, and nostalgia is strongest when the old sound is recreated, not just replayed.",
+     "source_name": "Nintendo — Ask the Developer",
+     "source_url": "https://www.nintendo.com/us/whatsnew/ask-the-developer-vol-24-the-legend-of-zelda-ocarina-of-time-part-4/"
+    },
+    {
+     "kicker": "WORLD OF WARCRAFT FOREVER",
+     "headline": "WoW Forever Refuses Catch-Up Gear — Nobody Skips a Raid Tier, and the Economy Gets a Weekly Report",
+     "body": [
+      "Modern WoW hands late starters catch-up gear every mid-season patch. World of Warcraft Forever, Blizzard's Classic-style reimagining launching today, refuses: lead designer Tim Jones says the team is avoiding catch-up mechanics entirely. \"When you do that, you just run the risk of diminishing the accomplishments of the person who's put a lot of effort into doing that. We're not letting people skip the leveling process. So if we're not doing that, then why would we allow people to skip a raid tier?\" The level cap is not moving, and the intended safety net is social — a rich community of guilds at various paces, so a late starter finds a group progressing at their speed.",
+      "The economy gets the same protection. Jones says the team pays more attention to it than ever, with weekly economy reports on which creatures and vendored items generate the most gold, a much stronger stance on real-money gold selling, and hotfixes — even on a weekend — for unfair gold farms. Encounter design was calibrated the slow way: the team replayed almost all of Classic WoW's dungeons first, and lead encounter designer Mike Nuthals says QA playtests pulled his first boss drafts back when abilities did three things at once, because Classic fights earn their creativity from quirky mechanics with clear cause and effect. Every new zone, quest and dungeon is measured against one test: could it have always existed in Vanilla?"
+     ],
+     "takeaway": "Forced teamwork only stays healthy if progression cannot be bought or skipped. Protect the ladder, police the economy with real data, and keep boss mechanics readable — and groups will form at every rung instead of everyone clustering at a boosted cap.",
+     "source_name": "But Why Tho",
+     "source_url": "https://butwhytho.net/2026/11/wow-forever-interview/"
+    },
+    {
+     "kicker": "TRIBAND",
+     "headline": "Triband Playtests Comedy Like Stand-Up — and Measures It in Laughs Per Minute",
+     "body": [
+      "Copenhagen studio Triband — WHAT THE GOLF?, WHAT THE CAR?, WHAT THE BAT? — does not debate ideas in meetings. Development starts from a simple premise with lots of possible answers (\"what if everything was golf?\", \"what would you do if you had baseball bats for hands?\"), and co-founder Peter Bruun's rule is to build it as fast as possible, play it, and only then discuss the actual fun, \"rather than debating ideas that only exist in each other's heads.\" He compares it to growing trees: grow prototypes from a branch of ideas, cut off the bad ones, grow, cut, until you have a game.",
+      "Comedy gets measured. Playtesting follows a stand-up comic's ladder — teammates, then partner, then kids, then lawyer, then bus driver, then enemies, and finally players — and the studio tracks LPM: Laughs Per Minute. A joke can go stale for the team that has seen it a hundred times; a first-timer's reaction is gold, and a joke that still lands when the player knows it is coming is better still. Accessibility is the same discipline pointed at frustration: WHAT THE GOLF?'s pull-and-drag can be operated with your nose, harder layers are opt-in (fewer strokes, hidden collectible cards), and community feedback shipped as flipped controls, reduced screen shake and skippable levels in WHAT THE CAR?. In VR, where you cannot control where players look, the expectations of reality itself become the joke supply — hence the elephant in the room."
+     ],
+     "takeaway": "Give your core feeling a number and a fresh-eyes ladder. Prototypes settle arguments that meetings cannot, and a metric like Laughs Per Minute — tested on people who have never seen the joke — tells you whether the fun is real or just familiarity.",
+     "source_name": "Press Play Media",
+     "source_url": "https://pressplaynews.net/2026/11/04/developer-interview-triband/"
+    },
+    {
+     "kicker": "SORT THE COURT",
+     "headline": "Sort the Court Rebuilt Its Whole Interface Around Two Buttons as Huge and Easy to Reach as Possible",
+     "body": [
+      "Sort the Court began as a 72-hour Ludum Dare 34 entry built on the jam's two themes, \"growing\" and \"two buttons\" — and the constraint became the game: ruling a kingdom is answering petitioners yes or no. A decade and more than 100 million YouTube views later, developer Graeme Borland has rebuilt it in Unity for Poki and mobile browsers, and his summary of why it works is a design statement: \"Games are all about making decisions and seeing their consequences, and Sort the Court is an exercise in distilling that down to a very pure cause-and-effect cycle.\"",
+      "The rebuild's budget went to that one decision's geometry, not to new systems. With nearly half of Poki's players on mobile, the interface was rebuilt to support dynamic resizing — including swapping between landscape and portrait while the game is running — arranged, in Borland's words, so the two buttons are \"as huge and easy to reach as possible.\" Side quests, more languages and saves that follow the player across devices were layered around the unchanged core. Even the monetisation follows the loop's shape: Poki suggested placing the optional rewarded ad at the end of each in-game day, a natural pause, where watching one boosts a struggling kingdom's stat instead of interrupting a decision."
+     ],
+     "takeaway": "When your whole game is one decision, spend the rebuild on that decision's size, reach and feedback speed — and put interruptions only where the loop already breathes. A pure cause-and-effect cycle, kept pure, can carry a game for ten years.",
+     "source_name": "Poki",
+     "source_url": "https://poki.com/blog/developer-spotlight-graeme-borland"
+    },
+    {
+     "kicker": "BLIND SMOOTHIE",
+     "headline": "Blind Smoothie Treats the Audio Mix as Difficulty — Turn the Fruit Down and the Puzzle Becomes Unfair",
+     "body": [
+      "Blind Smoothie is a smoothie-shop puzzle built on an opaque blender: press LISTEN, hear a mix of fruit sounds — each fruit has its own instrument and pitch — and name what is inside. Developer Mia_0401's postmortem says the most successful decision was killing the original concept, a Halli Galli-style card game, after realising players could still rely mostly on their eyes. Hiding the answer inside the blender made sound the only clue, and a small early prototype proved players really could separate fruits inside one chord before the full game was built on that risk.",
+      "The postmortem's hard lesson is that in a sound-driven game, the mix is the difficulty. Blender noise, background music and joke ingredients like the rubber duck, onion and sock all started too loud and repeatedly had to be lowered so the fruit mix stood out — a mix that is only slightly wrong makes the puzzle unfair, because sound levels directly decide whether the player can solve it at all. Scaffolding respects the same channel: ONE BY ONE plays fruits separately so Easy players can learn the sounds, while Hard adds more fruits, allows fewer listens and removes that button entirely. The main button was renamed from BLEND to LISTEN, made larger, and moved directly above the fruit cards once listening was understood to be the core action, and a CLICK TO START screen handles browsers blocking audio before the first interaction."
+     ],
+     "takeaway": "Whatever channel carries your puzzle's information, its clarity budget is your difficulty design. Mix for fairness, scaffold inside the same channel, and name and place the core action like it is the game — because it is.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1751398/blind-smoothie-postmortem.amp"
+    },
+    {
+     "kicker": "KING'S GAMBEAT!!",
+     "headline": "King's GamBeat Moves Your Chess Piece Even When You Miss — So One Mistake Can't Make the Rest of the Song Impossible",
+     "body": [
+      "King's GamBeat!! is a rhythm game about catching notes by moving chess pieces, and its postmortem leads with a state-design fix. In the first prototype, a missed or wrong key left the piece where it was. The pieces got mixed up, and sometimes the next note in the chart was impossible to hit — one error corrupted everything after it. Developer Coldeggyuri's change: even if you miss, the piece still moves to the right square. The judgement still counts the miss, but the board always stays in the state the chart expects, so the whole song remains playable. Random notes were also scrapped for fixed charts, because playing one song again and again until you get better is the genre's core pleasure and randomness deletes it.",
+      "The rest of the postmortem is a catalogue of the developer's own blind spots, each closed by a tool or a tester. Bad at rhythm games himself, he could not test Normal and above, so he built an autoplay feature that plays perfectly and used it to check note timing and how hits feel. Testers found too many keys and hints that were off by default for a cleaner look — the key hints above the pawns are now on by default, with a second ring on the board to make timing readable. And the finished game initially used number-pad keys only, because the developer's keyboard has one; friends without numpads could not play at all, and key remapping was added as the final fix."
+     ],
+     "takeaway": "Separate judgement from state: punish the score, never let an error corrupt the board the rest of the level is built on. Then build the testing tool your own skill gap requires — autoplay for the levels you cannot clear — and let other people's hardware check your assumptions.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1748908/postmortem01.amp"
+    },
+    {
+     "kicker": "DREADSHIFT",
+     "headline": "Dreadshift's Best Weapons Can't Be Found — Only Taped Together, and the Parts Start Split Across Your Squad",
+     "body": [
+      "Dreadshift's 0.19.0 update, \"Tape it together,\" adds seven makeshift recipes: two finds combine into a better third — a baseball bat plus a nail board, a pistol plus a flashlight that frees a slot while lighting the way, a first aid kit plus an energy drink that heals and sprints in one item and, just by being carried, gets a friend back up in one second. Made items never turn up in a search; the only way to get one is to make it, which keeps crafting the game's top gear tier instead of a side system.",
+      "The combine itself is priced in time and noise, and the parts are social. In the field, combining takes two seconds standing still, makes noise, and is interrupted by moving, attacking or taking a wound — nothing is consumed until it completes. At a workbench it takes 0.8 seconds and is silent. If a teammate is carrying the other half, you hand your part over with one button and an AI teammate combines it on arrival and wields the result; the Makeshift book lists all seven recipes and who has the other part, a full pack can still combine with a part lying on the floor, and in camp everything can be untaped back into its parts for free — so the experiment is reversible exactly where it is safe, and committed exactly where it is dangerous."
+     ],
+     "takeaway": "Split a recipe's halves across players and give crafting a time-and-noise price, and one system produces cooperation, information-sharing and a real tactical choice. Making the best gear unfindable is what guarantees the system gets used.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1751518/0190-tape-it-together.amp"
+    },
+    {
+     "kicker": "SIDEENTRY",
+     "headline": "SideEntry Splits Fall Damage in Two — Short Drops Heal, Bad Landings Stay With You All Mission",
+     "body": [
+      "Heist game SideEntry now goes up and down as much as sideways, so developer jamosdev's first devlog gives falling explicit rules instead of a single damage number. Short drops cause temporary fall damage that recovers over time. Bad landings leave permanent damage that sticks for the rest of the mission. Two severities for two different mistakes: a sloppy hop costs you a breather, a real fall costs you the run's margin — and because the small version heals, players are not trained to avoid vertical routes altogether.",
+      "A fall also gets a save verb: if you are falling next to a wall, you can gouge into it to bleed off speed and halt the fall before it kills you, and dying from a fall now has its own death effect so the cause reads differently from being shot. The same devlog upgrades the character mesh by studying the classic blocky R6 and R15 rigs and prototyping limbs as single smooth tubes that bend in the vertex shader — clean, kink-free elbows and knees without skinning, keeping the chunky look. Two HUD layouts ship in the build, switchable with F9, with players asked to vote in the comments ahead of this weekend's AGDG Demo Day 71."
+     ],
+     "takeaway": "Price mistakes by severity inside the damage model itself — recoverable for small errors, permanent for big ones, with a save move in between — and players will attempt the risky route instead of learning to avoid your level's best feature.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1751420/devlog-1-falling-with-style.amp"
+    }
+   ]
+  },
+  {
    "date": "2026-11-03",
    "dateline": "Tuesday, November 3, 2026",
    "stories": [
