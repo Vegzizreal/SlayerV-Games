@@ -17,18 +17,21 @@
 <body>
 <main>
   <h1>ESP32-S3-Touch-AMOLED-1.75C — Factory Recovery</h1>
-  <p>This installer puts Waveshare's factory demo firmware back on a 1.75C board (32 MB). The installer script is hosted in this repo (ESP Web Tools 10.4.0, vendored). The firmware file loads from Waveshare's official GitHub, pinned to an exact commit so the file cannot change silently; its SHA-256 is printed below.</p>
+  <p>This installer puts Waveshare's factory demo firmware back on a 1.75C board (32 MB). The installer script and the firmware file are both hosted in this repo (ESP Web Tools 10.4.0, vendored) — nothing loads from anywhere else, and the firmware's SHA-256 is printed below.</p>
   <div class="card">
     <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
+    <p><strong>If the board is reboot-looping every few seconds, read this first:</strong></p>
     <ol>
-      <li>Plug the board into this PC with USB and use Chrome or Edge.</li>
-      <li>Click Connect above and pick the board's serial port.</li>
-      <li>If the board will not connect because it is reboot-looping: unplug it, hold BOOT, plug it back in while holding BOOT, then connect.</li>
-      <li>In the install dialog, tick <strong>Erase device</strong>, then Install. The erase is what removes the wrong firmware completely.</li>
+      <li>The board has a battery, so unplugging USB does not turn it off and does not stop the loop.</li>
+      <li>Before you click Connect: press and <strong>hold BOOT</strong>, and while still holding it, tap <strong>PWR</strong> once to restart the board. Keep holding BOOT.</li>
+      <li>Still holding BOOT, click Connect above and pick the board's serial port. The board is now waiting in download mode — the loop is stopped, and you can let go of BOOT. There is no race from this point on.</li>
+      <li>In the install dialog, tick <strong>Erase device</strong>, then Install. The erase is what removes the wrong firmware completely. Once install starts, the chip is held by the installer and cannot reboot away.</li>
+      <li>If the port never appears in the picker, the board was not holding BOOT at the moment it restarted — repeat step 2 and make sure BOOT is already down before the tap on PWR.</li>
       <li>When it finishes, the board reboots into the factory demo.</li>
     </ol>
+    <p>Board not looping? Just plug it in, click Connect, tick Erase device, and Install.</p>
   </div>
-  <p>File: ESP32-S3-Touch-AMOLED-1.75C_FactoryOnly_20260114.bin (33,488,896 bytes)<br>
+  <p>File: factory-1.75c.bin (33,488,896 bytes)<br>
   SHA-256: 46e65fb708f325f6830d6f14ecbba3d357dbdab6a939e13fdf2206e147c063d2</p>
 </main>
 </body>
