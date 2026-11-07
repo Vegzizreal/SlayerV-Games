@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My Devices — Pages Hub</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #14161a; color: #e8eaf0; margin: 0; padding: 24px; }
+  main { max-width: 620px; margin: 0 auto; }
+  h1 { font-size: 22px; margin-bottom: 4px; }
+  .sub { color: #9aa3b2; margin-top: 0; line-height: 1.5; }
+  .card { background: #1e2129; border-radius: 12px; padding: 20px; margin-top: 16px; }
+  .card h2 { font-size: 18px; margin: 0 0 2px; }
+  .what { color: #9aa3b2; margin: 0 0 12px; line-height: 1.5; }
+  .step { display: block; background: #262b36; border-radius: 10px; padding: 12px 14px; margin-top: 10px; color: #e8eaf0; text-decoration: none; }
+  .step:hover { background: #2e3543; }
+  .step b { color: #fff; }
+  .step .n { display: inline-block; background: #e3352c; color: #fff; border-radius: 999px; min-width: 22px; text-align: center; font-weight: 700; margin-right: 8px; padding: 1px 0; }
+  .step .d { display: block; color: #9aa3b2; margin-top: 4px; line-height: 1.45; }
+  .tag { display: inline-block; font-size: 12px; border: 1px solid #454e61; border-radius: 999px; padding: 0 8px; margin-left: 8px; color: #c6cdd9; vertical-align: 2px; }
+  .tag.rescue { border-color: #8a6d1f; color: #e8c96a; }
+  footer { color: #6d7686; font-size: 13px; margin-top: 20px; line-height: 1.5; }
+</style>
+</head>
+<body>
+<main>
+  <h1>My Devices</h1>
+  <p class="sub">Every page for both Waveshare boards, grouped by device and listed in the order you would use them. Start here — pick the device, then the step.</p>
+
+  <div class="card">
+    <h2>Waveshare ESP32-S3-Touch-AMOLED-1.75-G</h2>
+    <p class="what">The board inside the Gengar ball. Firmware versions are numbered 5.x.</p>
+    <a class="step" href="../ball-home/"><span class="n">1</span><b>Updater</b><span class="tag">every update</span><span class="d">The everyday page. Connects to the ball over Bluetooth and installs updates. Live now: v5.16 — v5.17 is being built.</span></a>
+    <a class="step" href="../ball-home-rollback53/"><span class="n">2</span><b>Rollback to 5.3</b><span class="tag rescue">rescue only</span><span class="d">Puts firmware 5.3 back on the ball. Only open this if an update went bad and you were told to roll back.</span></a>
+    <a class="step" href="../ball-home-rollback51/"><span class="n">3</span><b>Rollback to 5.1</b><span class="tag rescue">rescue only</span><span class="d">Same idea, older version: puts firmware 5.1 back on the ball.</span></a>
+  </div>
+
+  <div class="card">
+    <h2>Waveshare ESP32-S3-Touch-AMOLED-1.75C</h2>
+    <p class="what">The metal-cased round unit (32 MB). Firmware versions are numbered C1.x.</p>
+    <a class="step" href="../ball-home-175c/"><span class="n">1</span><b>Installer</b><span class="tag">first install</span><span class="d">Cable install page: one Connect button, tick Erase, Install. Use it for the first install or a full reinstall. Live now: C1.2.</span></a>
+    <a class="step" href="../ball-home-175c/update/"><span class="n">2</span><b>Update</b><span class="tag">every update</span><span class="d">Bluetooth updates after the first install — no cable. Only accepts the unit named VBALL-C.</span></a>
+    <a class="step" href="../ball-recovery-175c/"><span class="n">3</span><b>Factory Reset</b><span class="tag rescue">rescue only</span><span class="d">Wipes the unit back to Waveshare's factory demo. This is the rescue page for a unit stuck rebooting: hold BOOT, tap PWR, then Connect.</span></a>
+  </div>
+
+  <footer>Rule of thumb: normal days only ever need step 1 of each device. The rescue pages exist for bad days and can be ignored the rest of the time.</footer>
+</main>
+</body>
+</html>
