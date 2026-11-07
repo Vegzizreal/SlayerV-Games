@@ -12,12 +12,12 @@
   .card { background: #1e2129; border-radius: 12px; padding: 20px; margin-top: 16px; }
   esp-web-install-button { display: block; margin: 16px 0; }
 </style>
-<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+<script type="module" src="esp-web-tools/install-button.js"></script>
 </head>
 <body>
 <main>
   <h1>ESP32-S3-Touch-AMOLED-1.75C — Factory Recovery</h1>
-  <p>This installer puts Waveshare's factory demo firmware back on a 1.75C board (32 MB). The firmware file loads directly from Waveshare's official GitHub.</p>
+  <p>This installer puts Waveshare's factory demo firmware back on a 1.75C board (32 MB). The installer script is hosted in this repo (ESP Web Tools 10.4.0, vendored). The firmware file loads from Waveshare's official GitHub, pinned to an exact commit so the file cannot change silently; its SHA-256 is printed below.</p>
   <div class="card">
     <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
     <ol>

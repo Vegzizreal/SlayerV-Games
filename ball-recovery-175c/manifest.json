@@ -5,7 +5,10 @@
     {
       "chipFamily": "ESP32-S3",
       "parts": [
-        { "path": "https://raw.githubusercontent.com/waveshareteam/ESP32-S3-Touch-AMOLED-1.75C/main/firmware/ESP32-S3-Touch-AMOLED-1.75C_FactoryOnly_20260114.bin", "offset": 0 }
+        {
+          "path": "https://raw.githubusercontent.com/waveshareteam/ESP32-S3-Touch-AMOLED-1.75C/4bfdc80eedbf95031e384610796bed15e0240312/firmware/ESP32-S3-Touch-AMOLED-1.75C_FactoryOnly_20260114.bin",
+          "offset": 0
+        }
       ]
     }
   ]
