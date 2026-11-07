@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.75C Factory Recovery</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #14161a; color: #e8eaf0; margin: 0; padding: 24px; }
+  main { max-width: 560px; margin: 0 auto; }
+  h1 { font-size: 22px; }
+  p, li { line-height: 1.5; }
+  .card { background: #1e2129; border-radius: 12px; padding: 20px; margin-top: 16px; }
+  esp-web-install-button { display: block; margin: 16px 0; }
+</style>
+<script type="module" src="https://unpkg.com/esp-web-tools@10/dist/web/install-button.js?module"></script>
+</head>
+<body>
+<main>
+  <h1>ESP32-S3-Touch-AMOLED-1.75C — Factory Recovery</h1>
+  <p>This installer puts Waveshare's factory demo firmware back on a 1.75C board (32 MB). The firmware file loads directly from Waveshare's official GitHub.</p>
+  <div class="card">
+    <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
+    <ol>
+      <li>Plug the board into this PC with USB and use Chrome or Edge.</li>
+      <li>Click Connect above and pick the board's serial port.</li>
+      <li>If the board will not connect because it is reboot-looping: unplug it, hold BOOT, plug it back in while holding BOOT, then connect.</li>
+      <li>In the install dialog, tick <strong>Erase device</strong>, then Install. The erase is what removes the wrong firmware completely.</li>
+      <li>When it finishes, the board reboots into the factory demo.</li>
+    </ol>
+  </div>
+  <p>File: ESP32-S3-Touch-AMOLED-1.75C_FactoryOnly_20260114.bin (33,488,896 bytes)<br>
+  SHA-256: 46e65fb708f325f6830d6f14ecbba3d357dbdab6a939e13fdf2206e147c063d2</p>
+</main>
+</body>
+</html>

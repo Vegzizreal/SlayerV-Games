@@ -1,0 +1,12 @@
+{
+  "name": "ESP32-S3 1.75C Factory Recovery",
+  "version": "factory-20260114",
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        { "path": "https://raw.githubusercontent.com/waveshareteam/ESP32-S3-Touch-AMOLED-1.75C/main/firmware/ESP32-S3-Touch-AMOLED-1.75C_FactoryOnly_20260114.bin", "offset": 0 }
+      ]
+    }
+  ]
+}
