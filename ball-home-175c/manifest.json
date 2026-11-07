@@ -1,1 +1,15 @@
-{"builds":[{"chipFamily":"ESP32-S3","parts":[{"offset":0,"path":"c-home-merged-c1.0.bin"}]}],"name":"1.75C Home","version":"C1.0"}
+{
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "offset": 0,
+          "path": "c-home-merged-c1.1.bin"
+        }
+      ]
+    }
+  ],
+  "name": "1.75C Home",
+  "version": "C1.1"
+}
