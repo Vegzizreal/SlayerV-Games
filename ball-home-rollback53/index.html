@@ -231,7 +231,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 /* Bounded steps (v4.5.3). Every await in the update flow races
  * a clock; a step that outlives its budget fails as a
- * StepTimeout whose remedy text tells Tyler exactly what to
+ * StepTimeout whose remedy text tells the user exactly what to
  * do. The device picker is the one exemption — it is
  * user-driven and may sit open as long as he likes. */
 const T_CONNECT_MS = 15000;  /* gatt.connect: generous for a sleepy radio */
@@ -302,7 +302,7 @@ function updateRecoveryUI() {
  * With device.forget() (Chrome) the stale phone-side pairing is
  * dropped here, the link is closed cleanly, and the pending
  * INFO step is aborted so the flow ends WITHOUT its automatic
- * retry — Tyler re-taps Update himself. Without forget() the
+ * retry — the user re-taps Update himself. Without forget() the
  * button just surfaces the exact Settings steps (and still ends
  * the stalled attempt, so he can follow them and re-tap). */
 resetPairBtn.addEventListener("click", async () => {
@@ -367,7 +367,7 @@ function onDisconnected() {
   /* v4.5.3: a disconnect is NEWS again. The 4.5 version of
    * this handler returned in silence while the flow was
    * running, leaving "Connecting…" on screen over a dead
-   * link — the idle Tyler reported. The flow's retry still
+   * link — the idle the user reported. The flow's retry still
    * owns recovery, but the drop is said out loud the moment
    * it happens; the flow prints the next word itself. */
   const wasDone = finishConfirmed;
@@ -408,7 +408,7 @@ async function connectOnce() {
        * the bluetooth-internals page, 2026-10-28) — the service
        * UUID was not being surfaced to the filter after the old
        * pairing record was forgotten. acceptAllDevices lists every
-       * nearby BLE device; Tyler picks VBALL by name. The service
+       * nearby BLE device; the user picks VBALL by name. The service
        * is declared optional so GATT access is granted after. */
       acceptAllDevices: true,
       optionalServices: [SVC_UUID]
@@ -736,7 +736,7 @@ updateBtn.addEventListener("click", async () => {
           /* A deliberate pairing reset is a STOP, not a failure
            * to retry: the reset handler already put the remedy
            * on screen. No automatic retry, no retry loop — the
-           * next attempt is Tyler's tap. */
+           * next attempt is the user's tap. */
           flowing = false;
           updateBtn.disabled = false;
           if (server) labBtn.disabled = false;
@@ -747,7 +747,7 @@ updateBtn.addEventListener("click", async () => {
           /* ONE automatic retry, from the beginning — v4.5.3:
            * it now covers the CONNECT phase too. In 4.5 the
            * retry required a completed connect first, so the
-           * exact failures Tyler hit (a connect that never
+           * exact failures the user hit (a connect that never
            * landed, a pairing that never started) were the
            * ones it could not help. A proto-2 ball discards a
            * partial transfer when the link drops, so the stream
@@ -798,7 +798,7 @@ updateBtn.addEventListener("click", async () => {
 
 /* ==== Recovery (proto 3) =============================================
  * Deliberately OUTSIDE the normal flow: nothing here runs unless
- * Tyler taps a recovery button AND confirms the dialog. Both
+ * the user taps a recovery button AND confirms the dialog. Both
  * actions need the live connection a completed Update tap leaves
  * behind (connect + INFO is what fills in the ball's state). */
 
