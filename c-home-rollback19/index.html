@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>1.75C Home R - Installer</title>
+<style>
+  body { font-family: system-ui, sans-serif; background: #14161a; color: #e8eaf0; margin: 0; padding: 24px; }
+  main { max-width: 560px; margin: 0 auto; }
+  h1 { font-size: 22px; }
+  p, li { line-height: 1.5; }
+  .card { background: #1e2129; border-radius: 12px; padding: 20px; margin-top: 16px; }
+  esp-web-install-button { display: block; margin: 16px 0; }
+</style>
+<script type="module" src="esp-web-tools/install-button.js"></script>
+</head>
+<body>
+<main>
+  <h1>ESP32-S3-Touch-AMOLED-1.75C - Home R1.9</h1>
+  <p>The R line: a from-scratch firmware for the 1.75C board (32 MB) with the
+  same approved look - the face as the home screen, a swipe on the face opens
+  the rim-wheel app list. The installer script and the firmware file are both hosted
+  in this repo (ESP Web Tools 10.4.0, vendored) - nothing loads from anywhere
+  else. This firmware is only for the 1.75C; do not install it on the 1.75-G ball.</p>
+  <div class="card">
+    <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
+    <ol>
+      <li>Plug the board into this PC with USB and use Chrome or Edge.</li>
+      <li>Click Connect above and pick the board's serial port.</li>
+      <li>If the board will not connect because it is reboot-looping: unplug it, hold BOOT, plug it back in while holding BOOT, then connect.</li>
+      <li>In the install dialog, tick <strong>Erase device</strong>, then Install. The erase is required when coming from any other line; if in doubt, tick it.</li>
+      <li>When it finishes, the board reboots to the face. Swipe the face for the app wheel. Double-tap anywhere goes home, triple-tap turns the screen off; double-tap PWR or a two-finger 3-second hold also goes home from anywhere.</li>
+    </ol>
+  </div>
+  <p>File: c-home-merged-r1.9.bin (8,519,680 bytes)<br>
+  SHA-256: aea2eafc2fa4a858c89457c2217bafb95ca2b4d4102cf6f2573e2191b01890ac</p>
+  <div class="card">
+    <p><strong>Bluetooth updates (from R1.9 on):</strong> once this
+    version is on the unit, later R-line updates can arrive over
+    Bluetooth from the <a href="update/">update page</a> — arm the
+    window on the unit (wheel → UPDATE → OPEN UPDATE WINDOW), then
+    push from a phone. The first install of R1.9 itself is
+    cable-only: the Bluetooth door exists only from R1.9 up.</p>
+  </div>
+</main>
+</body>
+</html>
