@@ -5,11 +5,11 @@
       "parts": [
         {
           "offset": 0,
-          "path": "c-home-merged-r1.2.bin"
+          "path": "c-home-merged-r1.3.bin"
         }
       ]
     }
   ],
   "name": "1.75C Home R",
-  "version": "R1.2"
+  "version": "R1.3"
 }
