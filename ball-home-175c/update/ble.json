@@ -1,6 +1,11 @@
 {
-  "version": "C1.2",
+  "version": "C1.3",
   "file": "c-home-app.bin",
-  "sha256": "293d21781172b9bacef63f438e85d1b0d2c7b023ad34cb0e50a8364dd3e82fb0",
-  "patches": {}
+  "sha256": "35764179c6d686d9711459bd5731188467a2b25578ed9ea755588a4a8d09eda0",
+  "patches": {
+    "293d21781172b9bacef63f438e85d1b0d2c7b023ad34cb0e50a8364dd3e82fb0": {
+      "file": "patch-C1.2-to-C1.3.bin",
+      "sha256": "35764179c6d686d9711459bd5731188467a2b25578ed9ea755588a4a8d09eda0"
+    }
+  }
 }

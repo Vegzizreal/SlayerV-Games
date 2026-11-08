@@ -1,15 +1,19 @@
 {
-  "version": "5.16",
+  "version": "5.17",
   "file": "ball-home-app.bin",
-  "sha256": "25fa3d59940a6581b8f1e4ed6c368aedbfa843a72ec83ee9355422a0740c607c",
+  "sha256": "7c4f7723e5c287c4cc632ff060c5b49d868452e2262a826ad58ca97dc201c6a1",
   "patches": {
     "9595165518598ec31e92c4f709775f3e48318e2459189f9aa172282c963ffc28": {
-      "file": "patch-5.14-to-5.16.bin",
-      "sha256": "25fa3d59940a6581b8f1e4ed6c368aedbfa843a72ec83ee9355422a0740c607c"
+      "file": "patch-5.14-to-5.17.bin",
+      "sha256": "7c4f7723e5c287c4cc632ff060c5b49d868452e2262a826ad58ca97dc201c6a1"
     },
     "61f8dfbc2befe9b8f1a4b03d960b13799237cde32ece38f5de0ba2888eb8c7b9": {
-      "file": "patch-5.15-to-5.16.bin",
-      "sha256": "25fa3d59940a6581b8f1e4ed6c368aedbfa843a72ec83ee9355422a0740c607c"
+      "file": "patch-5.15-to-5.17.bin",
+      "sha256": "7c4f7723e5c287c4cc632ff060c5b49d868452e2262a826ad58ca97dc201c6a1"
+    },
+    "25fa3d59940a6581b8f1e4ed6c368aedbfa843a72ec83ee9355422a0740c607c": {
+      "file": "patch-5.16-to-5.17.bin",
+      "sha256": "7c4f7723e5c287c4cc632ff060c5b49d868452e2262a826ad58ca97dc201c6a1"
     }
   }
 }
