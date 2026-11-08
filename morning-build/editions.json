@@ -1,6 +1,341 @@
 {
  "editions": [
   {
+   "date": "2026-11-07",
+   "dateline": "Saturday, November 7, 2026",
+   "stories": [
+    {
+     "kicker": "DUNGEON MINER",
+     "headline": "Dungeon Miner Makes Carrying Ore With Both Arms Your Most Vulnerable State — and Horror a Tax on Greed",
+     "body": [
+      "Dungeon Miner, from three-person indie team hummmmmm (published by Leveritt Studio), launched on Steam on November 6 — and it has no abstract resource counters and no auto-collect. Every crystal is a physical object until you throw it into the ship's deposit chute, and large minerals must be carried with both arms. That forces your pickaxe into its holster: you cannot attack or mine, the ore is dead weight rather than a shield, and your only options are to run or throw the haul as bait for a predator. The team told Minimap it deliberately designed holding ore to be the player's most vulnerable state. When a teammate falls, everything they carried drops where they collapsed, and the survivors decide whether it is worth going back for.",
+      "Horror, the team says, is a direct tax on greed: the core moment is the hesitation — head back with what you have, or risk one more ore while something scuttles in the dark? There are no health bars and no damage numbers; one clean hit kills, so every lethal strike carries a clear tell — a sound, a lighting shift, a wind-up — and a creature's threat tier is measured by how hard that tell is to read. Moths latch onto faces and must be knocked off by an ally; mantises only register moving targets, so freezing still works. No roles are assigned, yet the slow handcart leaves its puller exposed, so crews self-organise into miners, haulers and guards. Pulling the Dungeon Core starts a three-minute collapse countdown the players choose to trigger — and the core itself is another two-handed carry, hauled by a helpless player the crew must protect."
+     ],
+     "takeaway": "Make transport itself the gameplay. A two-handed carry that disables your tools turns every haul into vulnerability, escort behaviour emerges without assigned roles, and greed becomes a priced decision instead of a free one.",
+     "source_name": "Minimap",
+     "source_url": "https://minimap.net/magazine/dev-interview-dungeon-miner-en"
+    },
+    {
+     "kicker": "UNMESS CO.",
+     "headline": "Unmess Co. Keeps Every Level in One Accountant's Document — Because a Wreck Is a Puzzle of Blocking Order",
+     "body": [
+      "In Unmess Co.: Rewind the Wreck, players guide a small robot that rewinds broken rooms back to whole. Husband-and-wife team Nikolay and Asya of Traveler Ant told Dev & Play Media that a restoration taking seconds on screen is heavily manual underneath: models are chosen to feel lived-in, each object is broken into believable fragments by hand, and fragments are placed so the mess looks natural while working as a puzzle — some objects block others from being restored, fragment paths must not pass through nearby objects or the robot, and each reassembly point is chosen from the player's viewpoint so the satisfying moment reads clearly. Every level lives in one document: every object, its dimensions and occupied space, which objects block which, and how each reassembles. The designer joked she felt like an accountant, but for a two-person team the document became a design tool, not a formality — and restoration order is the puzzle the player solves by reading the wreckage.",
+      "The same discipline governs what the player is shown. The photograph of the undamaged room is a deliberately partial clue: its angle is chosen for what it reveals and what it leaves out, so it orients without replacing exploration. Steam Next Fest demo feedback then exposed the team's own blindness — players found restoring with the E key unfamiliar, so rebinding is being added, and small objects lost in dark corners made blocking relationships too hard to spot, so small objects now sit nearer their homes or in noticeable groups. The team also walked away from a harder, puzzle-first version of the game entirely: the question, they say, was not how difficult a puzzle they could devise, but whether it belonged in a game about unwinding after work."
+     ],
+     "takeaway": "When objects relate to each other, the design document is the level. Track blocking relationships on paper, design the clue to be partial, and let outside players — not your own familiarity — judge whether a blockage is a puzzle or an inconvenience.",
+     "source_name": "Dev & Play Media",
+     "source_url": "https://devplaymedia.com/2026/11/07/the-work-behind-the-wreck-nikolay-and-asya-on-making-unmess-co/"
+    },
+    {
+     "kicker": "THE ELDER SCROLLS V: SKYRIM",
+     "headline": "Skyrim's Lead Designer Wants Working Ladders in Elder Scrolls VI — Because a Missing Climb Limited the Art Team for a Whole Game",
+     "body": [
+      "Bruce Nesmith — Bethesda veteran from 2004 to 2021 and lead designer on Skyrim — told Steven Lake of The Examined Game what he wants from The Elder Scrolls VI: Sentinel, and both answers are features earlier games missed, in his words, because the studio did not have the bandwidth. The first is mounts. In Skyrim you can ride a horse and that is all; Nesmith wants to fight on the horse, or have it fight alongside you, while admitting mounts are really tricky and full of hard decisions.",
+      "The second sounds trivial and is not: ladders. In Skyrim you never climb one — you click it and appear at the top, or you take the stairs — and Nesmith says that quietly limited the art team in how they could build multi-layer spaces. Ladders were not skipped from laziness, either: the programmers put a legitimate list of design questions in front of the team — answer these and we will tell you how much programming time it costs — and the unanswered questions are what killed the feature."
+     ],
+     "takeaway": "A missing traversal verb is a level-design budget cut that lasts the whole project. Price features like ladders early by answering the programmers' question list — every unanswered question is a quiet veto on your art team's vertical spaces.",
+     "source_name": "Insider Gaming",
+     "source_url": "https://insider-gaming.com/skyrim-lead-designer-reveals-two-biggest-changes-elder-scrolls-6-sentinel-needs/",
+     "image_url": "https://i.ytimg.com/vi/10mvuCMbc9Y/hqdefault.jpg",
+     "image_credit": "Dev interview — The Examined Game via YouTube",
+     "image_link": "https://www.youtube.com/watch?v=10mvuCMbc9Y"
+    },
+    {
+     "kicker": "KOJIMA PRODUCTIONS",
+     "headline": "Kojima: AI Can Have the Efficiency — the Fun Is in the Process, and 'Creativity' and 'Products' Are Different Things",
+     "body": [
+      "Hideo Kojima puts AI on the same continuum as Photoshop and word processors: digital tools that were incredibly convenient, boosted efficiency, and let projects finish faster — a trend he told Game*Spark he personally welcomes. His line is about where the fun lives. With drawing, the fun is not in the finished picture; it is in the process of finishing it — the way a model kit, a jigsaw puzzle or LEGO ends up looking the same whoever builds it, while the assembling is the point. Telling a computer \"make this,\" then \"that's not right, do it this way,\" he does not find particularly interesting as a form of creation.",
+      "So he separates the outputs. If you are just making a \"product,\" that workflow is fine — but creativity and products are two separate things, and the trial and error in between is what gets his adrenaline pumping; he does not want a future where that aspect is lost. He expects the next five to ten years to be fine, but says that if AI develops without controls, a future may arrive where it plays a vital role even in the creative field — a decision he wants to pass to the younger generation. The interview, held at the Beyond the Strand tenth-anniversary exhibition preview, also frames the studio's third phase: horror game OD - KNOCK, espionage action PHYSINT, and AR work with Niantic Spatial."
+     ],
+     "takeaway": "Draw your AI line at process, not output: automate the tedious parts that block making, and keep the trial-and-error loop — the part where taste is actually formed — in human hands.",
+     "source_name": "Game*Spark",
+     "source_url": "https://en.gamespark.jp/article/2026/11/01/1850.html"
+    },
+    {
+     "kicker": "AFTER MIDNIGHT",
+     "headline": "After Midnight Is Nearly Half Editor Tools — 47,000 of Its 105,000 Lines Exist Because Something Annoyed Its Maker",
+     "body": [
+      "Nortsith, a senior frontend engineer building After Midnight after midnight and on weekends, works by one rule: when something in the game annoyed him, he did not work around it — he built the tool he wished existed. About 47,000 of the game's 105,000 lines of C# are editor tools, almost all of that code written by AI while he decided what it should be. The Episode Board keeps a story as one text file built on Yarn Spinner, with the world as names in that text — so when the first story played as long drives and fetch work and he wiped it, throwing it away took a single commit and the world survived. An audit during an October panic found 138 commits and roughly 65,000 new lines of code in 11 days against 281 lines of story; he stopped rebuilding, and ruled that a big code pass now has to make the next episode cheaper.",
+      "Placeholder dialogue drafted by AI is tagged #todo and listed by beat — 56 tags on October 31, none by November 4 — because a bad draft makes a scene playable and gives him something specific to be angry at. His Director tool builds cutscenes from the script with no play mode, including camera moves that keep going longer than the shot itself, because in a game the player can just stand there. Underneath it all is one source of truth: every tool reads the same scenes and the same script, so the tools finish each other's sentences and typos get flagged — and his planned single-window module reads ten systems and only ever writes to two, the script and the story scene."
+     ],
+     "takeaway": "Budget tools as product, not overhead. Keep story in one text source every tool reads, cap what tools may write, and judge a code pass by whether the next episode got cheaper.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1756438/every-tool-in-this-game-started-with-me-getting-annoyed.amp"
+    },
+    {
+     "kicker": "PROTO ZERO",
+     "headline": "Proto Zero's Postmortem: Two Years, Zero Players Talking — 'There Wasn't a Demand for This Game'",
+     "body": [
+      "After more than two years from prototyping to shipment — mostly solo, with one friend helping on save data and UI — developer ExtraWildGames calls Proto Zero a commercial failure in a frank final-update post. The warning signs were there before launch, and they were not about quality: even with a full demo out, essentially the only footage of the game online was the developer's own. No random clips, no streamers, no discussion — in his words, it got no reception at all, and the only structured feedback came from a few critique jams, where two people responded. A month after release, Steam showed zero active players.",
+      "His conclusion is not that the game was misunderstood. It is that demand was never tested: there was not a demand for this game, and nobody genuinely wanted to play it. The design — 3D melee built around dodging quick and slow attacks and punishing whiffed enemy attacks, meant to be replayed toward a 1CC clear — he now thinks was too abstract, because most players could not read which enemies were about to attack or approach, and he concedes there could have been something there to make that clearer. The forward rule is explicit: next project, gauge interactions way earlier, before release — and if there are none, finish what exists and call it a day."
+     ],
+     "takeaway": "No reception is data, and it arrives before launch if you look. Set a demand checkpoint early — strangers playing, posting, talking unprompted — and treat silence as a stop signal, not a marketing problem to fix after two years of polish.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1750072/final-updates-and-future-of-the-game.amp"
+    },
+    {
+     "kicker": "DEAD STATIC",
+     "headline": "Dead Static Cut Four Systems for One Reason — Cognitive Overhead — and Replaced Hidden Triggers With Full Information",
+     "body": [
+      "Dead Static, a Lancer TTRPG module by Efail Tân y Ddraig, already layers one system on a dense one: on top of Lancer's mech combat, players perform for a crowd, chasing Captivation Triggers to hit a threshold before each boss fight. Deep into playtesting, the designer lists what failed. First, the hidden triggers themselves: originally the crowd's cheers and boos were the only feedback, and players had to deduce what they had done right. With the stakes high and many things moving, nobody had time for a checklist mystery — so the design moved to full information, with only some mega triggers hidden behind NPCs you have befriended.",
+      "The other cuts share one stated cause: cognitive overhead. A wrestling-inspired rigged-match system — notice your weapons doing minimal damage and choose to concede — died before its second trial, after playtesters brute-forced the fight and asked what extra reward winning earned; the designer had not planned one. Giving height a bigger tactical role was cut for the same reason. A personal grunt-army storyline was shelved because it needed yet another mechanic, though it may return in a later module driven by a written action list, like the automated opponents in board games such as Root or Gloomhaven. What survived — integrating story into combat so the two are no longer separate — was, the designer says, already more than enough."
+     ],
+     "takeaway": "Budget the player's thinking, not just your feature list. If a system needs deduction while another dense system is running, show the information outright — and cut the mechanic whose reward you cannot state when a playtester asks for it.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1753716/thing-that-got-cut.amp"
+    },
+    {
+     "kicker": "UNFORGETTABLE",
+     "headline": "Unforgettable Binds Its Music to Its Story — the Chord Only Changes When the Dialogue Does",
+     "body": [
+      "Unforgettable is a seven-week school project built for an Interactive Narrative class brief: make a game inspired by Alice in Wonderland. Developer HPotch, whose life had recently been touched by dementia, researched the condition and found the two worlds rhyme — both are created in someone's mind, both are unworldly, and confusion shapes both. The confusion was prototyped on paper first: a cooking task with a deliberately mixed-up recipe, which playtesters first read as spelling errors before laughing when nothing resolved, and a block puzzle with too many shapes for a head-shaped cutout, where every block had a name — so the player had to choose one to \"forget\".",
+      "The music carries the same idea into code. HPotch wrote the text after the music, because in the game the chords are bound to the text: the music advances to the next chord only when the player progresses the story, and loops until then. The first track's harmony therefore punctuates the dialogue exactly — \"You try to put your feelings into words\" over tension, \"It is no use, though\" over more tension, \"Come on, let's make today worthwhile!\" at the resolution. The final song, written without time to bind it to its dialogue, never reaches a good resolution — and neither does its conversation."
+     ],
+     "takeaway": "Bind adaptive music to narrative state, not to timers or zones — when the chord only moves when the story moves, harmony becomes punctuation the player can feel. And prototype the confusing part on paper first; a mixed-up recipe costs nothing to test.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1757506/postmortem-behind-the-scenes.amp"
+    },
+    {
+     "kicker": "AUTUMNTREE",
+     "headline": "Autumntree Drew All Its Leaves in One Pass — and Went From 25 FPS to Over 4,000",
+     "body": [
+      "Developer kiskami traced autumntree's low frame rate to a bottleneck in the number of triangles being rendered, and fixed it in two moves. First, the leaf-rendering logic was rewritten to use Raylib's low-level rlgl interface directly, so all the leaves are now drawn in a single pass. Second, Raylib data structures — vectors, colours — are no longer created in advance or used for calculations: the game's own Lisp-native data types do the maths, and a Raylib structure is only instantiated at the exact moment a Raylib routine is called.",
+      "The result was a jump from 25–30 FPS to over 4,000. The same short devlog fixes the mouse-click leaf-selection function and begins the core functions for managing leaf state, with the actual game-like mechanics planned for the following days — performance headroom bought before the mechanics arrive, rather than after."
+     ],
+     "takeaway": "Profile before you optimise, then fix at the boundary: batch the many small draws into one pass, and keep foreign engine structs out of your inner loop — allocate them only at the call site, in your own types until then.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1756920/ok-fps-again.amp"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-06",
+   "dateline": "Friday, November 6, 2026",
+   "stories": [
+    {
+     "kicker": "STATE OF DECAY 3",
+     "headline": "State of Decay 3 Makes Single-Player the Priority — Full Pause, Rebuilt Tactical Combat, and Weather That Reaches Everything",
+     "body": [
+      "Undead Labs is independent now. The studio split from Xbox in September 2026, owns the State of Decay IP outright, and has a new publisher to announce soon, studio head Philip Holt told the SabiansLastWatch channel in an interview reported by Insider Gaming. A console beta with crossplay is planned. The design headline is focus: multiplayer is in the game, but single-player is the priority — and single-player gets a full pause, a concession always-online design usually refuses solo players.",
+      "Under that focus, the systems all answer to one player's choices. Combat has been rebuilt from scratch toward more tactical fights. Settlements are larger, with multiple bases and 12 or more survivors. There is no face or body editor — customisation runs through hair, outfits and backpacks. Existing Freaks get major redesigns, with new Freak types planned for after launch. Weather is not scenery: it affects driving, zombie perception, crops and water supplies. And human enclave relationships change based on what the player actually does."
+     ],
+     "takeaway": "A co-op-capable survival game still has to be tuned for the solo player first — pause, tactical combat, and systems like weather and enclaves that react to one player's choices. Design the single-player truth of every system, then let co-op scale it.",
+     "source_name": "Insider Gaming",
+     "source_url": "https://insider-gaming.com/state-of-decay-3-interview-reveals-single-player-focus-new-publisher-details/",
+     "image_url": "https://i.ytimg.com/vi/-IZIr0Psvho/hqdefault.jpg",
+     "image_credit": "Dev interview — SabiansLastWatch via YouTube",
+     "image_link": "https://www.youtube.com/watch?v=-IZIr0Psvho"
+    },
+    {
+     "kicker": "VALOR MORTIS",
+     "headline": "Valor Mortis Learned Audio Cues Weren't Enough — Off-Screen Attacks Now Get an On-Screen Danger Indicator",
+     "body": [
+      "One More Level's first-person Soulslike Valor Mortis keeps learning the same lesson at different depths: a signal the player can't read is not a signal. An early playtest found the Eternal Guardsman extremely challenging — and, worse, many players never realised he was optional, so a side encounter became a quit point in the demo. Feedback toned him down, made his attacks more readable and improved the level's own readability, and he became one of many players' favourite encounters. Post-launch, the team also adjusted enemy hitboxes to match their animations, so attacks no longer hit when they visibly miss.",
+      "The first-person problem is structural. The studio's priorities are clear, readable wind-ups from the player's perspective and spacing that keeps enemies properly framed in the field of view — without that framing, even the best animation can't be read. For attacks from outside the view, enemies already had audio cues, but a playtest showed audio alone was not enough, so an on-screen danger indicator was added. The same discipline produced the studio's \"two-step rule\" for its alternate Napoleonic history: any new element must trace back to real history in two steps, the second being the influence of the supernatural Nephtoglobin. Valor Mortis launched with a single difficulty on purpose — a shared experience is part of what makes Soulslikes special — though an easier mode is now being considered for genre newcomers."
+     ],
+     "takeaway": "In first person, readability is a stack: wind-up, framing distance, hitbox honesty, then a UI warning for what the camera cannot show. And an optional boss the player cannot tell is optional is just a wall — signpost optionality in the level, not in a menu.",
+     "source_name": "GamingBolt",
+     "source_url": "https://gamingbolt.com/valor-mortis-interview-player-feedback-first-person-soulslike-combat-technical-issues-and-more"
+    },
+    {
+     "kicker": "THE LEGEND OF ZELDA: OCARINA OF TIME",
+     "headline": "Aonuma: Leave the Player an Information Gap — Too Much Information Kills the Satisfaction of the Jump",
+     "body": [
+      "IGN's hour-long interview with producers Eiji Aonuma and Hidemaro Fujibayashi is a different conversation from Nintendo's own Ask the Developer series: this one is about how knowledge moves between generations. The remake exists partly to pass the original down — much younger Nintendo developers first familiarise themselves with the 1998 game, then reinterpret it. Aonuma's \"lectures\" were really discussions: ask how the younger developers felt playing the original, and if they felt a need, invite them to propose the change. Sometimes they came back saying they did not want to change it. And when younger developers identified aspects as important that were never the original team's intent, Aonuma's rule was not to correct them — their feeling was the thing that mattered, and his job was to support where it led.",
+      "The design version of the same idea is the information gap. Balancing how much imagination and problem-solving to ask of the player, Aonuma says, is deeply affected by the gap you leave: do too much, provide too much information, and the player will not make the jump or feel the satisfaction of it. Fujibayashi reconfirmed the series' core as exploration and discovery in every era, and Aonuma closed with Miyamoto's late-night line — \"you know you can't really cut a wooden crate with a sword, right?\" — as the principle underneath: real-world predictability lets players intuitively predict consequences, like slicing a sign and watching the pieces float away in water, and then ask what else the world will let them do. That cycle — look, think, discover, look again — is the essence both producers keep naming."
+     ],
+     "takeaway": "Design the gap, not just the content: satisfaction lives in what you deliberately do not tell the player. And when a younger developer reads your game differently than you intended, their reading is data — support it instead of correcting it.",
+     "source_name": "IGN",
+     "source_url": "https://openweb-ign.cdn.zephr.com/articles/our-big-interview-with-ocarina-of-time-producers-eiji-aonuma-and-hidemaro-fujibayashi"
+    },
+    {
+     "kicker": "EFSUN GAMES",
+     "headline": "Efsun Games Kills Prototypes on Early Data — \"Don't Fall in Love With Your First Prototype. Fall in Love With Your Data\"",
+     "body": [
+      "Istanbul casual-mobile studio Efsun Games has built its process around making decisive calls early. Co-founder and CEO Mehmet Fatih Yıldız's rule: if a game doesn't feel right in the first few seconds or doesn't show promise in the data, it doesn't deserve months of emotional investment. Marketability tests happen early, long before a team gets attached — if early CPI is high and retention is weak, the studio iterates hard or kills the project entirely. \"Speed and adaptability are your biggest advantages,\" Yıldız says. \"This market doesn't reward hesitation.\" The studio is currently running user-acquisition tests for Car Wash Mania and Shelf Sort, with constant new prototypes as a deliberate hedge against betting on a single idea.",
+      "Monetisation gets the same unsentimental treatment. Ads are part of the game design, not a revenue layer bolted on: mostly opt-in, framed clearly as a value exchange, placed where they don't interrupt flow — and if ads raise short-term revenue but hurt long-term retention, Yıldız calls that a failure, not a win. Starting over, he would change the discipline, not the vision: stricter about killing ideas earlier, fast prototypes, clearer success criteria, earlier market validation — and simpler design, because overcomplexity was a hidden time sink that cleaner technical decisions would have saved months on. His north star is retention over CPI and ROAS: \"Great acquisition without retention isn't a business. It's just noise.\""
+     ],
+     "takeaway": "Set the kill criteria before you build the prototype, while you can still obey them. Emotional attachment is a production cost — and retention, not acquisition, is the metric that tells you whether players actually value the game.",
+     "source_name": "UndrAds",
+     "source_url": "https://www.undrads.com/blogs/stop-falling-in-love-with-prototypes-and-trust-the-data-said-mehmet-fatih-yildiz-efsun-games"
+    },
+    {
+     "kicker": "HAPPIESPROUT STUDIO",
+     "headline": "HappieSprout Engineers Calm — a Missed Timer Gets a Cute Animation, and a Week Away Never Wrecks Your World",
+     "body": [
+      "For Linh Nguyễn, founder of Vietnam mobile studio HappieSprout, coziness is not a mood board — it is \"deliberately engineered,\" with every mechanic and visual actively protecting the player's peace of mind. Her first principle is unhurried, forgiving friction: challenges and timers exist, but the game is never punishing. Miss a timer and a cute animation plays and you are gently invited to try again; disappear for a week and you return to a welcome, not a ruined world. The second principle is that aesthetics are the environment, not decoration — in a cozy game the art and sound carry the player, so one jarring UI noise or aggressive flashing pop-up can break the spell instantly. Micro-joys are not filler either: a character taking a nap, a tiny decorated corner — those small moments are the point.",
+      "The business side is run with the same discipline. HappieSprout's 90-day rule is the Vertical Slice: define exactly what a perfect 30 minutes of the game looks and feels like, and cut everything that doesn't serve the core loop. Monetisation is entirely optional — a player who never spends or watches an ad still gets the full game, just at a slower pace. The metrics match the design: Day 7 retention outweighs session length, and health looks like three to five short check-ins a day rather than four-hour grinds that burn players out. And because a cozy game's emotional response is inseparable from its visual warmth, grayboxes can't test it — so the team prototypes emotion first with highly polished \"fake screenshot\" mockups. If one static image makes someone smile and want to spend time in that world, the hook is proven before any code exists."
+     ],
+     "takeaway": "Calm is a systems spec, not an art style: write the forgiveness rules — the failed timer, the long absence — into the mechanics, measure habit (Day 7, check-in frequency) instead of session length, and test the emotion with a finished-looking still before building the game underneath it.",
+     "source_name": "UndrAds",
+     "source_url": "https://www.undrads.com/blogs/the-studio-that-builds-calm-linh-nguyen-on-crafting-cozy-experiences"
+    },
+    {
+     "kicker": "NIGHT SHIFT: ANOMALY WATCH",
+     "headline": "Night Shift: Anomaly Watch Refuses Static Spot-the-Difference — Every Anomaly Escalates in Three Stages",
+     "body": [
+      "Night Shift: Anomaly Watch puts you on the night shift at a QuickMart 24H, watching six CCTV feeds from a battered DVR deck: memorise how every room should look, spot what changed, and file the right report before 06:00. Developer baronxu_dev's launch devlog states the design rule the whole game is built on — an anomaly should never be a static spot-the-difference. Every anomaly in the game escalates through three stages instead.",
+      "Stage one is a whisper: a chair that was not there, a clock insisting it is 3:33. Ignore it, and stage two makes it obvious. Ignore it again, and stage three makes it dangerous — figures step closer to the camera, and whatever reaches the lens ends your shift. Catching things early is not just cleaner, it pays bonus points, and the dawn leak report names everything that almost got out. Night 1 is free in the browser with 19 anomalies and a star-rated settlement screen; Nights 2–5 are in development, expanding the roster to 24 anomalies with new rooms and achievements."
+     ],
+     "takeaway": "Give a detection game a clock built into the threat itself: a missed clue that visibly grows teeth turns passive scanning into escalating tension — and paying bonus points for early catches makes vigilance, not just survival, the skill being scored.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1756556/night-1-is-live-welcome-to-the-quickmart-night-shift.amp"
+    },
+    {
+     "kicker": "THE MEAT LEARNS",
+     "headline": "The Meat Learns Gives Every Human One Carrying Slot — So Every Supply Run Is a Bet the Alien Can Cash In",
+     "body": [
+      "Devlog 7 for Roll4d4's asymmetric multiplayer game The Meat Learns adds six workbench upgrades — overcharged and incendiary magazines, an impact brace, a trauma kit, a decontamination kit and an emergency injector. Each is crafted from two or three components gathered from different station rooms, and every ingredient makes its own trip to the workbench; a finished batch takes time and power, and a Craft / Carry panel shows recipes, ingredient locations and what to collect next. The binding constraint is the carry rule: humans carry one item at a time. Food, repair kits, components, trash and upgrades all compete for that single slot — the normal role weapon or tool is separate — and an upgrade blocks other pickups until it is dropped or used up.",
+      "That one slot is what makes the system social and dangerous at once. Attack a carrier and the supplies fall to the floor, where other crew can recover them or the alien can destroy them; breaking a workbench spills its stored ingredients and finished supplies. Small temporary groups now form around the logistics — security can cover a supply carrier while medics and janitors accompany a patrol — and the alien's counterplay is built in: a nearby crash can draw one member away and split the formation. Crew attacks were also differentiated in the same update — the janitor's broad sweep, the scientist's narrower reach and the mecha marine's surrounding slam each ask for a different response, aiming for simple enemies that become more interesting together."
+     ],
+     "takeaway": "One shared carrying slot turns crafting into teamwork and vulnerability at once: a recipe's real cost is measured in exposed trips, escorting emerges on its own because the carrier is defenceless by design, and the hunter's best target becomes the logistics, not the fighter.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1756582/devlog-7-the-crew-gear-up-you-break-through.amp"
+    },
+    {
+     "kicker": "REROLLVER",
+     "headline": "Rerollver 0.2 Changes No Rules — It Just Shows You the Next Exchange Before It Happens",
+     "body": [
+      "Flamingo's Update 0.2 for Rerollver is one long pass over the battle table, and the devlog says it plainly: \"The rules are the same; you just see much more of them.\" Your HP glass now shows in advance what the enemy turn will leave you with — 95→65, or a skull — and your target's glasses show its HP after your volley. Each enemy's counters stand right under its figure, and the main digits keep one size everywhere, so no number has to be hunted for or re-learned in a new place.",
+      "The rest is one-meaning discipline. Colours mean exactly one thing: red hits you, amber is HP, blue is block, green is only poison — and Block is called Block everywhere. A round shows what it does on its base, with a ring and an icon; junk is rusty with a red cross; the revolver drum's chambers are numbered; and the Marshal's rule sits on the gun itself, a small plate showing how many dead chambers are in play. The red button lights up only when a press would do something, a glint marks the start of your turn, and soft hints appear if you sit idle. Even the room got quieter — the hissing crowd noise under the saloon's sound is gone, and the dealer's face dims while you decide."
+     ],
+     "takeaway": "A readability update can be a full patch with zero rule changes: preview the outcome of the next exchange, give every colour exactly one meaning, put the rule on the object it governs, and light controls only when they are live — then the difficulty lives in the decision, not in parsing the screen.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1756441/devlog-update-02.amp"
+    },
+    {
+     "kicker": "FLAP BEATS",
+     "headline": "Flap Beats' Postmortem: If Sound Is the Foundation, Compose First and Build the Mechanics Around the Music",
+     "body": [
+      "Flap Beats is a school project built around sound-driven gameplay: Flappy Bird's mechanics combined with a rhythm-based scoring system, with the mechanics and visuals deliberately kept simple while the audio is the main attraction. Developer YAZ's postmortem says the biggest challenge was exactly that foundation — aligning the pipes, the scoring events and the background music required much more attention and many tiny adjustments than expected to keep everything on beat with the player. Attempts at composing an original soundtrack didn't succeed, and the developer settled on Marshmello's \"Alone\" for the electronic rhythm and consistency the gameplay needed.",
+      "The rest of the postmortem is scheduling. The biggest mistake was time management: a full week was available, but serious work only properly started days in, and a practically production-free day followed — leaving very little room to experiment with the music or polish the sound effects, and the pause menu, after causing headaches, was cut. The do-over is stated outright: start with the music production, and only later build the mechanics around it. Since sound is the entire foundation of the game, establishing the rhythm and testing the gameplay against it earlier would have saved a considerable amount of time."
+     ],
+     "takeaway": "Build order follows dependency: when one layer is the foundation every other system must sync to — here, the beat — produce that layer first and fit everything else to it. Scheduling the foundation last turns every mechanic built on it into rework.",
+     "source_name": "itch.io",
+     "source_url": "https://yazarts11.itch.io/flap-beats/devlog/1755921/flap-beats-postmortem"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-05",
+   "dateline": "Thursday, November 5, 2026",
+   "stories": [
+    {
+     "kicker": "QUIET, PLEASE!",
+     "headline": "Quiet, Please! Gives Every Sound One Job — a Low Knock and a High Scrape Point Opposite Ways",
+     "body": [
+      "Quiet, Please! is a sound-driven lockpicking game by Cabbage.pdf: get the door open before a guard catches you, with sound telling you both what to do with the lock and when it is safe to keep working. The postmortem says the hard part was not adding things to do — it was giving each sound a clear meaning once several things could happen at once. The first build was just holding Space to fill a bar while footsteps told you when to let go, and once the pattern was understood it felt like waiting. Three pins and a timed E press helped; five probe depths made it a puzzle. A low knock and a high scrape now give opposite directions, and a double click marks the moment to set a pin — each sound changes the next action the player takes.",
+      "The rest of the postmortem is attention budgeting. The continuous probing sound was removed because it competed with the cues players needed to hear, the progress bar lets players glance at how much work is left while trusting that set pins stay set, and the third pin's tight 0.62-second window was widened. Guard footsteps were edited so distant steps are muffled, quiet and spaced apart, becoming clearer, louder and faster as the guard closes in, with a pause by the door and a handle rattle matched to the animation. NOISE took several revisions: a meter reset players could not connect to their mistake became, on the third mistake, an immediate rush with faster steps and a hallway shake — a new lock input causes a break-in, while an already-held Space key gets a brief release window."
+     ],
+     "takeaway": "In a sound-driven game, each sound must change the next action — and danger must be readable early enough to act on. Test whether a player can explain what every sound means before you add another mechanic; confusion is not difficulty.",
+     "source_name": "itch.io",
+     "source_url": "https://cabbagepdf.itch.io/quiet-please/devlog/1753792/quiet-please-postmortem"
+    },
+    {
+     "kicker": "ARC RAIDERS",
+     "headline": "Embark Has No Design Documents — 'I Can't Read a Game. I've Got to Play It'",
+     "body": [
+      "Embark Studios, maker of ARC Raiders and THE FINALS, does not write traditional game design documents at all. CEO Patrick Söderlund told The Game Business: \"I've never seen a design document at Embark. They don't exist.\" Instead of spending time documenting how mechanics should work on paper, Embark's developers build playable systems so the team can experience an idea firsthand and judge how it feels. Söderlund's reasoning is blunt: \"I can't read a game. I've got to play it.\" He is careful to say design documents are not inherently wrong — they simply do not fit a philosophy built around understanding an interactive experience by playing it.",
+      "Other studios have noticed. Söderlund says representatives from other developers have approached Embark to learn how it builds ambitious games with comparatively smaller teams and budgets — and the answers are not always what they expect, because the method is not a few production shortcuts but a rethink of established workflows, tools and development practices. He also warns against copying it wholesale: the approach works because Embark was built around these principles from the beginning, and an established studio with existing pipelines would find the same change considerably more complicated."
+     ],
+     "takeaway": "A playable prototype is the only spec that can prove feel — paper can describe a system, but it cannot tell you whether it works in the hands. Just know a no-document culture has to be founded into a studio, not retrofitted onto one.",
+     "source_name": "GameRiv",
+     "source_url": "https://gameriv.com/arc-raiders-ceo-says-ive-never-seen-a-design-document-at-embark-they-dont-exist/"
+    },
+    {
+     "kicker": "RAYMAN LEGENDS RETOLD",
+     "headline": "Rayman Legends Retold Refuses Online Co-op — the Couch Is the Mechanic",
+     "body": [
+      "Rayman Legends Retold keeps the original's multiplayer at up to four players — and local couch co-op only, with no online route, in an era when most players' friends live far apart. Production director Alessandro Arndt Mucchi told UnGeek at Gamescom Asia x Thailand Game Show 2026 that the decision is the design: \"We believe that the core of the multiplayer experience in Rayman Legends was the fact that you are with friends or family on the couch in front of the TV, sharing that shoulder-to-shoulder fun.\" Parents who played the original and now want to play Legends with their daughters and sons are part of that core audience. The single exception is narrow and separate: the Kung Foot soccer minigame is playable online via GameShare on Switch 2.",
+      "The same decisiveness defines what else survives the remake's changes — more detailed environments and voiced cinematics for once-silent characters included. Mucchi named two constants every Rayman must keep. One is smiles: the objective in Milan and Montpellier is to leave players with a smile, and the team judges playtests by whether players are smiling and laughing. The other is character: the game needs to be joyful and bizarre — quirky, odd characters are the baseline every Rayman builds on. Retold releases December 3, 2026 for PlayStation 5, Nintendo Switch 2, Xbox Series X|S and PC."
+     ],
+     "takeaway": "If physical togetherness is the experience, online play is not a missing feature — it is a different game. Protect the core outright, carve only a small separate exception, and name the two feelings (smiles, joyful-and-bizarre) that no redesign is allowed to trade away.",
+     "source_name": "UnGeek",
+     "source_url": "https://www.ungeek.ph/2026/11/interview-rayman-production-director-says-that-the-team-believes-that-the-core-of-the-games-multiplayer-experience-was-the-couch-based-shoulder-to-shoulder-fun/"
+    },
+    {
+     "kicker": "LOFTIA",
+     "headline": "Loftia Builds an MMO Where Doing Nothing Together Is the Point",
+     "body": [
+      "Loftia began in 2022 as a hobby project Michael Su and Martina Qin documented on TikTok for themselves; the following grew into the hundreds of thousands, the pair left corporate jobs and invested their savings, a Kickstarter raised $1.3 million, and Qloud Games is now nearly 40 people. The game entered Early Access on November 3. Its inspirations are Club Penguin and MapleStory — not their systems, but the feeling of virtual spaces where socialising mattered as much as gameplay. Qin's favourite Club Penguin memory was visiting other players' igloos to see their decorations, and that feeling of simply existing alongside other players became a driving force in Loftia's design.",
+      "So Loftia is deliberately not an MMO about combat and becoming the strongest player in the world. Players can visit neighbours, admire their homes, play mini-games and make friends without being forced into group activities. \"We really want to kind of emulate that idea where sometimes you don't even have to do anything,\" Qin says. Clubs — Loftia's take on guilds — are being built as another way to find community, and the solarpunk world will keep adding districts. Su's success test has not moved since day one: \"my goal has been to create an experience that brings people together. Full stop.\""
+     ],
+     "takeaway": "Presence is a mechanic. Design spaces where being there is the activity and group content is an invitation rather than a requirement, and community forms at its own pace — an MMO's social life does not need a combat loop underneath it.",
+     "source_name": "TheGamer",
+     "source_url": "https://www.thegamer.com/loftia-founders-interview-tiktok-success/"
+    },
+    {
+     "kicker": "THE LEGEND OF ZELDA: OCARINA OF TIME",
+     "headline": "Ocarina of Time's Remake Built Fast Travel, Played It, Then Took It All Back Out",
+     "body": [
+      "The Switch 2 remake of Ocarina of Time nearly shipped with fast travel. Producer Eiji Aonuma told Nintendo's Ask the Developer series that he asked the team to add warp points that did not exist in the original — shortcuts in the style of Breath of the Wild's shrine travel — because in the 1998 game players got around faster by spamming forward roll, and he thought that needed addressing. The team did not just consider it: they added the warp points and played the game with them in.",
+      "Playing killed the feature. \"When we actually tried playing the game with those warp points, we realized that we were missing out on the moments of discovery that came from stopping along the way and wondering, 'Wait, what's this?'\" Aonuma said — so, although he had proposed them, he had the team take them all back out. The structural reason is scale: Breath of the Wild's huge open world needs warps to cross long, empty stretches, while Ocarina's Hyrule is compact and far more linear, travel on foot or on Epona is short, and discoveries sit almost everywhere between two points — exactly what warping skips."
+     ],
+     "takeaway": "Build the quality-of-life feature and play it before you judge it — some friction is load-bearing. And a healthy remake team lets the person who proposed a feature be the one to kill it when play proves it wrong.",
+     "source_name": "TheGamer",
+     "source_url": "https://www.thegamer.com/legend-of-zelda-ocarina-of-time-remake-fast-travel-warp-points/"
+    },
+    {
+     "kicker": "WORLD OF WARCRAFT FOREVER",
+     "headline": "WoW Forever Sorts Every Boss Into Strength, Dexterity or Intelligence — and Leans Into Gearing and Planning",
+     "body": [
+      "Making World of Warcraft Forever meant unlearning modern WoW first. Lead encounter designer Michael Nuthals, who came from the modern game, says the team had to understand Classic's DNA by putting it under their fingers: every Thursday morning the encounter team replays a Classic dungeon such as The Deadmines, then plays one of the new Forever dungeons like Ruins of Lordaeron, and asks whether the two could live hand in glove — whether the new one feels like it was made in 2004. Out of that process came the frame the team kept returning to: a \"strength, dexterity and intelligence\" triangle of encounter design. Strength encounters reward the gear you have accumulated and your skill with your class; dexterity encounters test movement and avoiding hazards; intelligence encounters test your understanding of a fight's mechanics and how much planning you have done.",
+      "Forever deliberately biases the triangle. \"What we're trying to do with raids and dungeons is move toward gearing and planning, because Classic players really love that,\" Nuthals says. \"'I overprepare, then I come in and crush the content.' That was the vibe we really wanted to hit.\" Horizontal progression supports it — the level cap stays at 60, so power does not jump with each content drop — and the world is seeded with items that might pay off in a future raid, so a player feels smart for having pocketed something that comes in handy later. Not all future dungeons and zones will be max level, either."
+     ],
+     "takeaway": "Name your encounter axes out loud, then bias them toward what your audience actually loves — for Classic players, preparation rewarded. And calibrate new content against the original with a weekly side-by-side ritual, not from memory: unlearning is a process, not a memo.",
+     "source_name": "Engadget",
+     "source_url": "https://www.engadget.com/2305373/world-of-warcraft-forever-blizzard-had-to-reconnect-with-what-made-wow-great-in-the-first-place/",
+     "image_url": "https://i.ytimg.com/vi/xXaXYxcbA6A/hqdefault.jpg",
+     "image_credit": "Cinematic trailer — World of Warcraft via YouTube",
+     "image_link": "https://www.youtube.com/watch?v=xXaXYxcbA6A"
+    },
+    {
+     "kicker": "VS STUDIO",
+     "headline": "Harada Left Tekken Because Five-Year Dev Cycles Mean One More Game — and Built a Team of Over-45 Veterans",
+     "body": [
+      "Katsuhiro Harada's move is arithmetic. \"We used to release one game a year, but now it can take five years to make a single game,\" the long-time Tekken director told GamesIndustry.biz. Approaching 50, with Japan's standard retirement age around 60, he started asking how to spend his remaining ten years — and concluded he might only have time to make one more game, so it should be something new. He left Bandai Namco after more than three decades, knowing the risk, and fielded offers that ranged well beyond games. SNK won him by talking about games, games and more games right up until the deal was finalised — and by offering VS Studio complete autonomy and decision-making authority.",
+      "The studio he built matches the bet. VS Studio started with a core group of 10 people, all over the age of 45; Tekken 8 director Kohei Ikeda joined as a game designer in August, and the ten recruited through their own networks — Harada says he barely had to do anything himself. His argument for the age profile is explicit: unlike soccer, where a team in its twenties beats a team in its fifties, in game development being in your fifties can be an advantage, because experience really matters. The first project is a new competitive game — his only hint is that it is not a puzzle game."
+     ],
+     "takeaway": "When cycle times stretch from one year to five, a career holds far fewer bets — spend the last one on creative control, not comfort. And staff it with veterans whose judgement compounds: in development, unlike sport, the experienced team is the fast team.",
+     "source_name": "EventHubs",
+     "source_url": "https://www.eventhubs.com/news/2026/nov/04/one-more-game-katsuhiro-harada/"
+    },
+    {
+     "kicker": "TOMB RAIDER: LEGACY OF ATLANTIS",
+     "headline": "Legacy of Atlantis Builds Its Lara From Three Eras at Once — 1996 Looks, LAU Attitude, Survivor Humanity",
+     "body": [
+      "Crystal Dynamics' new Lara Croft is a composite, built era by era. Experience director Jeff Adams told ScreenRant the team took inspiration from all the different eras of Lara: her visuals come from the 1996 original that cast the mold — the iconic tank top and shorts, the dual pistols, the Lara most people picture. The Legend/Anniversary/Underworld era supplies a bolder attitude at times. The Survivor era tempers that boldness with humanity, proof she is not just a force of nature. Voice actor Alix Wilton Regan's job is to combine those elements naturally and add something of her own on top.",
+      "The layer map also decides which new systems belong. Legacy of Atlantis gives Lara foraging and crafting — including food with specific buffs — and Adams justifies it through the Survivor layer: those were origin-story skills she learned in that phase, now bolstered with knowledge of local concoctions, which also explains how she maintains herself in places locked away from human presence for thousands of years. Underneath, Unreal Engine 5's Nanite supplies dense geometric complexity for crumbling cities and a customised Lumen chases a specific target look — romanticised, shot-on-film, summer blockbuster. Every decision, Adams says, is balanced against two audiences at once: longtime fans who hold the original in high regard, and new players expecting modern playability."
+     ],
+     "takeaway": "Reboot a long-running character as an explicit layer map — name which era supplies the look, which the attitude, which the heart — and let that same map judge new systems: a mechanic belongs if an established layer of the character already explains it.",
+     "source_name": "ScreenRant",
+     "source_url": "https://screenrant.com/tomb-raider-legacy-of-atlantis-interview-crafting-lara/"
+    },
+    {
+     "kicker": "REDLINE",
+     "headline": "REDLINE Now Drops You Back on the Last Deck You Stood On — Falling in the Sea Costs Nothing",
+     "body": [
+      "Silverbox Interactive's REDLINE 0.3.0 rebuilds the interface end to end, but its sharpest changes are about what mistakes should cost. On the pirate map, falling into the sea used to throw you back to the start of the level; now you return to the last deck you stood on, with no penalty — and if you end up swimming, you are pulled back to a deck after a few seconds. The ships themselves became solid hulls with wider walkways beside the quarterdeck, no side steps and no mid-level cabin, so the falls that remain are the player's fault rather than the geometry's. Enemies also no longer spawn inside Fog Town buildings and get stuck there.",
+      "The same thinking runs through the smaller systems. God Mode is a test mode for messing around — everything unlocked, unlimited ammo, hook, dash and slow-mo, and you cannot die — but nothing in it is saved, so experimentation can never contaminate a real run. The vending machine became a staffed wooden shop where you tap an item to select it and then press BUY, ending accidental purchases. Even reloading got quieter: the old RELOADING / SWITCH text is gone, and the ammo number simply fades while you reload."
+     ],
+     "takeaway": "Price a mistake by what it teaches: a navigation slip in a run-based game should cost seconds, not the run. And build safety into the structure — an unsaved test mode, a two-step purchase — instead of warning players to be careful.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1754420/redline-030-major-update-brand-new-interface-god-mode.amp"
+    },
+    {
+     "kicker": "KOREAN NOODLE HOUSE",
+     "headline": "Korean Noodle House Makes Grinding a Timing Game — and Its Crafting Stations Remember Your Ingredients in the Save",
+     "body": [
+      "Korean Noodle House's November update adds a whole second production line beside the noodle shop: herb alchemy. Pick flowers, grind them into powder, brew elixirs, then combine two elixirs with an empty flask to make one of eight potions — swiftness at +25% walking speed, cooking speed, cooking and flower XP, double chicken eggs, gacha luck that works with pity, hydration recovery and trash satisfaction — unlocked through a tiered potion skill tree paid for with gallery-picture points. Each step has its own station, and grinding is a minigame in itself: hit the glowing zone on a stone ring five times while the marker speeds up, with perfect hits in the bright centre giving +5% bonus powder each and a pestle smashing down on every hit. The grinder also turns 10 wheat into 1 flour.",
+      "The quieter decision is persistence. The grinder and crafting stations remember your ingredients — whatever you drop in stays there, even after you close the game — and stacks can be dragged back to your inventory or swapped between zones, with placeholders and needed amounts staying visible while you drag. Around the chain, hover cards now explain buffs, hydration, the satisfaction and XP bars, and a meal's hover card shows the XP and money you really earn including your skills, buffs and potions, so the alchemy's payoff is legible before you drink anything."
+     ],
+     "takeaway": "A crafting chain earns its depth when every step is its own small game and work-in-progress is never deleted by closing a menu. Persistent stations become places in the world, not screens — and showing the true, fully-buffed reward on hover is what makes brewing feel worth planning.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1754455/knh-changelog-november-2026.amp"
+    }
+   ]
+  },
+  {
    "date": "2026-11-04",
    "dateline": "Wednesday, November 4, 2026",
    "stories": [
@@ -1138,3 +1473,4 @@
   }
  ]
 }
+sig:MEQCIAr4DJp12gnSuFvMCL4w6jbCAz1MSnlb3wKVfo9sKrLPAiBexOwf+vfh2gc3tj2/aT2a2gr99ZfD2qIn6f4lV/PSpA==
