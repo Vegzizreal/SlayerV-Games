@@ -1,6 +1,6 @@
 {
-  "file": "charm_pet_c-r1.19-app.bin",
+  "file": "charm_pet_c-r1.20-app.bin",
   "patches": {},
-  "sha256": "1c0414aeb8a0219201213ac120f3d6d7c21459ec0f202c37ff4cb65b059ad2bb",
-  "version": "1.19"
+  "sha256": "78a01b3ec3d8e9c7714b6d41ccc3e51ed7120bb1ed9144cfca13d11a4f71515e",
+  "version": "1.20"
 }
