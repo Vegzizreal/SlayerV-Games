@@ -40,6 +40,7 @@ button:disabled{background:#3a3750;color:#9a97a8}
   <button id="updateBtn">Update</button>
   <div class="bar"><div id="fill"></div></div>
   <p class="big" id="status">Not connected.</p>
+  <p id="syncLine"></p>
   <p id="versions"></p>
   <p class="warn" id="note"></p>
   <button id="resetPairBtn" hidden>Reset pairing &amp; retry</button>
@@ -85,7 +86,7 @@ const META_URL = "ble.json";
 
 const CTRL_START = 1, CTRL_FINISH = 2, CTRL_ABORT = 3,
       CTRL_START_PATCH = 4, CTRL_START_RECOVERY = 6,
-      CTRL_ROLLBACK = 7;
+      CTRL_ROLLBACK = 7, CTRL_TIME_SYNC = 8;
 /* DATA write sizes, stepped down when a write fails: each
  * fits the negotiated ATT payload at the MTU it names
  * (512 / 247 / 131 / 23 minus the 3-byte ATT header). */
@@ -100,6 +101,38 @@ const recoveryRollbackBtn = $("recoveryRollbackBtn");
 const recoveryInfoEl = $("recoveryInfo");
 
 function say(t, cls) { statusEl.textContent = t; statusEl.className = "big " + (cls || ""); }
+
+/* Clock sync (R1.12): once the connected unit is known to
+ * be an R-line unit (the lineage gate has passed - a
+ * foreign unit gets nothing written to it at all), hand
+ * the unit this phone's local time
+ * (CTRL op 8: hour, minute, second). The unit accepts it
+ * only inside the armed window from the bonded peer and
+ * sets its clock from it - so every visit to this page,
+ * update or not, leaves the unit's clock true. Best
+ * effort by design: a unit on older firmware refuses the
+ * unknown op, and that must not block the update it came
+ * for - the refusal just means the sync starts landing
+ * with the next visit, once this update is in. The line
+ * under the status says what was sent, or that it did
+ * not land; the flow continues either way. */
+async function syncClock() {
+  const d = new Date();
+  const hh = d.getHours(), mm = d.getMinutes(), ss = d.getSeconds();
+  const pad = n => String(n).padStart(2, "0");
+  try {
+    await bounded(
+      chCtrl.writeValueWithResponse(
+        new Uint8Array([CTRL_TIME_SYNC, hh, mm, ss])),
+      T_STEP_MS, "Setting the unit's clock", WINDOW_GONE);
+    $("syncLine").textContent =
+      "Clock synced to " + pad(hh) + ":" + pad(mm) + ".";
+  } catch (e) {
+    $("syncLine").textContent =
+      "Clock sync didn't land — this unit needs the update " +
+      "first; it will sync on the next visit.";
+  }
+}
 function note(t, cls) { noteEl.textContent = t; noteEl.className = cls || "warn"; }
 function progress(sent, total, label) {
   const pct = total ? Math.floor(sent * 100 / total) : 0;
@@ -489,7 +522,9 @@ updateBtn.addEventListener("click", async () => {
         }
         updateRecoveryUI();
         /* lineage first: a foreign unit is refused before
-         * the version comparison means anything */
+         * the version comparison means anything - and
+         * before the clock sync below: a foreign unit
+         * gets NOTHING written to it, sync included */
         const refusal = lineageRefusal(curVersion, bleMeta.version);
         if (refusal) {
           say("Not an R-line unit.", "bad");
@@ -499,6 +534,10 @@ updateBtn.addEventListener("click", async () => {
           updateRecoveryUI();
           return;
         }
+        /* the clock sync rides every R-line window, before
+         * the version check - a visit that pushes no image
+         * still leaves the clock true (see syncClock) */
+        await syncClock();
         const a = parseVer(bleMeta.version), b = parseVer(curVersion);
         if (!a || !b || verCmp(a, b) <= 0) {
           say("Already up to date.", "ok");
