@@ -27,8 +27,10 @@ button:disabled{background:#3a3750;color:#9a97a8}
 <main>
   <h1>VBALL-C — Bluetooth update <span class="ver" id="verTitle"></span></h1>
   <p class="warn">For the R-line 1.75C units only (they advertise as
-  VBALL-C and show R-versions on their UPDATE screen). The other
-  product line advertises the same name — this page checks the
+  VBALL-C plus a 4-character unit suffix — VBALL-C-XXXX, different
+  on every unit — and show R-versions on their UPDATE screen;
+  older R firmware advertises the plain VBALL-C name). The other
+  product line advertises a similar name — this page checks the
   running version's lineage before it sends anything and refuses
   a unit that is not R-line.</p>
   <p>On the unit: open the wheel, tap <strong>UPDATE</strong>, then
@@ -254,13 +256,17 @@ resetPairBtn.addEventListener("click", async () => {
     try { await device.forget(); } catch (e) {}
     try { if (device.gatt && device.gatt.connected) device.gatt.disconnect(); } catch (e) {}
     say("Pairing reset — tap Update again when you're ready.");
-    note("This phone's old VBALL-C pairing was forgotten. Re-arm the " +
-         "unit if its window closed, then tap Update and type the " +
-         "6-digit code on its screen.");
+    note("This phone's old pairing for the unit was forgotten. Re-arm " +
+         "the unit if its window closed, then tap Update and type the " +
+         "6-digit code on its screen. (If pairing still won't start, " +
+         "the unit's own UPDATE screen has a pairing reset that gives " +
+         "it a fresh identity.)");
   } else {
     say("Pairing reset — follow the steps, then tap Update again.");
-    note("No code box? Your phone may hold an old VBALL-C pairing — " +
-         "Settings → Bluetooth → VBALL-C → Forget, then tap Update again");
+    note("No code box? Your phone may hold an old pairing for the " +
+         "unit — Settings → Bluetooth → the unit's VBALL-C name → " +
+         "Forget, then tap Update again. The unit's UPDATE screen " +
+         "also has a pairing reset that gives it a fresh identity.");
   }
   if (pairingResetTrigger) pairingResetTrigger();
 });
@@ -304,21 +310,34 @@ function onDisconnected() {
   if (!flowing) { updateBtn.disabled = false; updateRecoveryUI(); }
 }
 
+/* The unit-name gate (R1.15): each unit advertises its own
+ * name — "VBALL-C-" + a 4-hex-char suffix from its factory
+ * identity — so several units can be told apart in the pick
+ * list. The legacy exact name stays accepted forever: a unit
+ * on pre-R1.15 firmware advertises plain "VBALL-C" and must
+ * remain updatable. Mirrors pet_ble_name_accepted in the
+ * firmware's ble_proto.c; the page gate test pins both. */
+function unitNameAccepted(name) {
+  return name === "VBALL-C" || /^VBALL-C-[0-9A-F]{4}$/.test(name || "");
+}
+
 async function connectOnce() {
   if (!device) {
-    say("Pick \u201CVBALL-C\u201D in the list…");
+    say("Pick your unit in the list (VBALL-C or VBALL-C-XXXX)…");
     device = await navigator.bluetooth.requestDevice(
       { acceptAllDevices: true, optionalServices: [SVC_UUID] });
     device.addEventListener("gattserverdisconnected", onDisconnected);
-    if (device.name !== "VBALL-C") {
+    if (!unitNameAccepted(device.name)) {
       const picked = device.name || "an unnamed device";
       device = null;
       pickRefusal = "That was \u201C" + picked + "\u201D — this page updates " +
-        "only the R-line 1.75C units. Pick \u201CVBALL-C\u201D.";
+        "only the R-line 1.75C units. Pick \u201CVBALL-C\u201D or the " +
+        "unit's full \u201CVBALL-C-XXXX\u201D name.";
       throw new Error(pickRefusal);
     }
   }
-  say("Connecting… your phone may ask for the 6-digit code on the unit's screen.");
+  say("Connecting to " + device.name + "… your phone may ask for " +
+      "the 6-digit code on the unit's screen.");
   server = await bounded(device.gatt.connect(), T_CONNECT_MS,
     "Connecting to the unit",
     "The connection never landed — the unit's window may have " +
@@ -341,8 +360,10 @@ async function connectOnce() {
     { pairingResetTrigger = () => reject(new PairingReset()); });
   const softTimer = setTimeout(() => {
     say("Pairing is taking a long time. No code box? Your phone " +
-        "may hold an old VBALL-C pairing — Settings → Bluetooth → " +
-        "VBALL-C → Forget, then tap Update again", "warn");
+        "may hold an old pairing for " + device.name + " — Settings → " +
+        "Bluetooth → " + device.name + " → Forget, then tap Update " +
+        "again. The unit's UPDATE screen also has a pairing reset " +
+        "that gives it a fresh identity.", "warn");
     resetPairBtn.hidden = false;
   }, T_PAIR_SOFT_MS);
   let info;
@@ -350,8 +371,11 @@ async function connectOnce() {
     info = await Promise.race([
       bounded(chInfo.readValue(), T_INFO_MS, "Pairing with the unit",
         "Pairing never completed. If this phone is holding an old " +
-        "pairing for VBALL-C, clear it (Bluetooth settings → VBALL-C → " +
-        "Forget), then re-arm the unit and tap Update right away."),
+        "pairing for " + device.name + ", clear it (Bluetooth " +
+        "settings → " + device.name + " → Forget), then re-arm the " +
+        "unit and tap Update right away. Or use the pairing reset " +
+        "on the unit's UPDATE screen, which gives it a fresh " +
+        "identity the phone has never seen."),
       resetPromise,
     ]);
   } finally {
@@ -541,7 +565,8 @@ updateBtn.addEventListener("click", async () => {
         const a = parseVer(bleMeta.version), b = parseVer(curVersion);
         if (!a || !b || verCmp(a, b) <= 0) {
           say("Already up to date.", "ok");
-          $("versions").textContent = "Unit is running " + disp(curVersion) +
+          $("versions").textContent = "Unit " + device.name +
+            " is running " + disp(curVersion) +
             " · this page offers " + disp(bleMeta.version) + ".";
           flowing = false;
           updateBtn.disabled = false;
@@ -549,7 +574,8 @@ updateBtn.addEventListener("click", async () => {
           return;
         }
         const payload = await pickPayload();
-        $("versions").textContent = "Unit is running " + disp(curVersion) +
+        $("versions").textContent = "Unit " + device.name +
+          " is running " + disp(curVersion) +
           " · updating to " + disp(bleMeta.version) +
           (payload.op === CTRL_START_PATCH
             ? " (patch, " + payload.bytes.length + " bytes)"
