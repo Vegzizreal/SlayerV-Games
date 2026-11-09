@@ -1,6 +1,100 @@
 {
  "editions": [
   {
+   "date": "2026-11-09",
+   "dateline": "Monday, November 9, 2026",
+   "stories": [
+    {
+     "body": [
+      "The long-requested Death Summary ships with Path of Exile 2's 1.0 release on December 11, Grinding Gear Games co-founder Jonathan Rogers and game director Mark Roberts told Game8 in a group interview at ExileCon 2026 in Auckland. When a character dies, the screen breaks down the exact damage types, monster hits and active buffs before death, including how much damage was taken and how much was mitigated. Rogers admitted he had worried the feature would not be useful enough or accurate enough, and framed its real purpose as feedback quality: it will give players an avenue to complain about the correct things. Sometimes a monster simply has wrong balance values, and until now players got upset without knowing what killed them; now they can name the particular monster with the broken damage, and direct the studio to it.",
+      "The tool's limit is stated just as plainly: damage-over-time tracking can tell you that you took poison-type damage, but cannot yet identify where it came from — a technical limitation Rogers expects to fix eventually. The same interview explains why the Templar and Marauder classes miss the 1.0 roster. The Templar must truly merge melee attacks and spellcasting as a Spellsword; the earlier Druid attempt split into pure animal or pure caster builds because players were not incentivised to merge them, and Rogers says shipping a Templar that fails that merge would be a failure. The Marauder waits on a unique mechanical identity for axes — the one weapon type not yet added — rethought for the post-WASD game. Classes that had not solved their identity were held, not shipped."
+     ],
+     "headline": "Path of Exile 2's Death Summary Lets Players Complain About the Right Things",
+     "kicker": "PATH OF EXILE 2",
+     "source_name": "Game8",
+     "source_url": "https://game8.co/articles/featured/poe-2-exilecon-2026-from-the-new-shadow-class-to-poe-3-considerations",
+     "takeaway": "A death recap is a bug-reporting tool disguised as a QoL screen: name the damage, the mitigation and the culprit, state openly the one case it cannot trace — and hold any class whose core fantasy you cannot yet make players actually play."
+    },
+    {
+     "body": [
+      "Aha, the Aeon of Elation, becomes Honkai: Star Rail's first playable Aeon in update 4.7 on November 11 — and lead game designer Chengnan An told ScreenRant, in a group interview at a HoYoverse press event in Seoul, that the hard problem was balance without betrayal. HoYoverse did not want to simply drop an Aeon into the roster and overcome all the existing characters, and focusing purely on destructive strength would also fail to fit her personality as an Aeon of Elation. Aha was chosen as the first playable Aeon because she is the most human-like one, making her a less abstract concept for people in the game's world than other Aeons might be.",
+      "Her role was never in doubt: An established that the plan was always for Aha to be a support character, because Aha is closely connected to other characters, and the Path of Elation is about bringing happiness and all these emotions — so having her focus on dealing damage would not have fit. An offered no teases about which Aeons might follow, but did not rule them out either: when the team designs different Aeons, there would also be different ways to showcase them. Each god, in other words, gets a mechanical treatment built from what that god is, rather than one power template scaled up."
+     ],
+     "headline": "Honkai: Star Rail Makes Its First Playable God a Support — Because a Damage-Dealing Aeon Would Break Her Character",
+     "kicker": "HONKAI: STAR RAIL",
+     "source_name": "ScreenRant",
+     "source_url": "https://screenrant.com/honkai-star-rail-aha-playable-aeon-interview/",
+     "takeaway": "When lore says a character outclasses everyone, do not solve it with bigger numbers — solve it with role. Let the god amplify the party instead of replacing it, and start with the most human, most connected god so the fantasy stays readable."
+    },
+    {
+     "body": [
+      "Masahiro Sakurai has not used generative AI in any of his current projects, including Kirby Air Riders, and does not think the technology is ready even for brainstorming. Speaking at an event celebrating 40 years of Famitsu magazine, held alongside a new book collecting the columns he wrote for the magazine between 2003 and 2021, the Kirby and Super Smash Bros. creator argued that the problem is not taste but completeness: there is more to game development than simply coming up with an idea, because lots of different factors come into consideration — whether you have a fixed deadline, whether your team can do it, whether it fits into your budget. On that test, he believes developers can come up with better ideas by thinking about them for themselves.",
+      "The caution is not a ban, and Sakurai named the pressure himself. Work on Kirby Air Riders was ten times more demanding than on the GameCube original, Kirby Air Ride, and he noted there are games now unable to turn a profit even after selling millions of units. If you remain stuck on not using AI because it is not trustworthy enough, he warned, there is a risk of falling further and further behind — developers who use it without hesitation are likely to be able to create far more games. His position is a standing scepticism about today's tools, held alongside a clear-eyed account of the costs that may one day force the issue."
+     ],
+     "headline": "Sakurai: An Idea Is Not a Design Until It Survives the Deadline, the Team, and the Budget",
+     "kicker": "MASAHIRO SAKURAI",
+     "source_name": "Kotaku",
+     "source_url": "https://kotaku.com/super-smash-bros-creator-masahiro-sakurai-cautions-against-the-use-of-gen-ai-we-can-come-up-with-better-ideas-2000754922",
+     "takeaway": "Judge every idea — human or AI-generated — against deadline, team capability and budget before it counts as a design. A brainstorm that has never met a constraint is not a plan; but track the cost pressure honestly, because it does not disappear when you ignore it."
+    },
+    {
+     "body": [
+      "Meander, solo developer Vanshika's cosy crochet crafts sandbox, exists because learning real crochet kept giving her migraines — so she set out to make a crochet simulator instead, as Matchstick Studio, her one-person team. Yarn physics proved beyond a first project, so the game became 2D drawing with yarn, and then something better: researching stitches, she noticed complex ones are just combinations of smaller ones, so instead of drawing a hundred stitch types she let players design their own — cats, flowers, houses, anything can become a brush. Her working rule is speed as a filter: get an idea, build the smallest possible test version within hours, and if it does not break anything and fits the vibe, it stays.",
+      "The garden did not survive that filter. An earlier design displayed your art growing on trees, complete with trading, an economy and a mutation system — but after two weeks of failing to draw a single tree she liked, Vanshika dropped it, and the scrapbook that replaced it (collage, stickers, writing) took the market down with it, deliberately: she did not want to put numbers on people's art, and she had no way for the game to distinguish between a random squiggle and something you spent hours on. So: no judgement, pure sandbox — just make stuff. Her favourite bug from the build is smaller and universal: three hours hunting a random freeze, traced at last to a new close-pause-menu button that never unpaused the game. Meander launches December 15."
+     ],
+     "headline": "Meander Deleted Its Economy Because It Could Not Tell a Squiggle From Hours of Work — So It Scores Nothing at All",
+     "kicker": "MEANDER",
+     "source_name": "Rob's Games Hack",
+     "source_url": "https://robsgameshack.com/indie-games/interview-matchstick-studio-meander-weird-days/",
+     "takeaway": "If your scoring system cannot tell effort from noise, scoring is a lie — remove the numbers and protect the making instead. And when a container fights you for two weeks, replace the container rather than forcing the art: the scrapbook did the garden's job better."
+    },
+    {
+     "body": [
+      "Impending Storm, abhimonk's Pico-8 game, began as pictures. A handful of mockups — including one for a 3-color metroidvania — inspired the game, and the developer's post-release devlog credits mockup-driven development with changing how he prototypes: knowing he had a target aesthetic gave him the confidence to whitebox aggressively and try lots of different mechanics, instead of throwing prototypes away at the whitebox stage because no compelling art style had emerged, or polishing art in tandem with mechanics as he used to. The game itself is an act of compression: a year of Elden Ring Nightreign, whose 45-to-60-minute runs were his least favourite thing about it, set the goal of runs under 15 minutes that still capture learning a route, mastering a handful of mechanics and getting fun upgrades while running from a timer. An encroaching-storm system proved too complicated and became that timer — same pressure, simpler machine.",
+      "The devlog's sharpest section argues with Sid Meier's meaningful-choices framework. In Impending Storm some passives are just better than others, and there is an optimal route — so is picking a passive, or a route, really a meaningful choice once you can math out the strongest answer? His conclusion: choices become less meaningful the more mastery you build. A first run experiments; a mastered run bee-lines for the important rooms and the busted passives. So his design question changed — what choices can I present that will build and test the player's mastery, and what can I do to make the player realise they have built it? The Pico-8 character limit eventually forced the shrinko8 minifier onto the finished game, trading a readable codebase for the space to ship."
+     ],
+     "headline": "Impending Storm Was Built From Mockups First — and Its Designer Says Mastery Is What Kills Meaningful Choice",
+     "kicker": "IMPENDING STORM",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1762958/making-another-small-game-post-release-devlog.amp",
+     "takeaway": "Mockups are a prototype tool, not decoration: lock the look first and mechanics get cheaper and braver to test. And design past the first run — if mastery dissolves your choices, build choices whose real job is to teach mastery and make the player feel it arrive."
+    },
+    {
+     "body": [
+      "Spray 'n Away, SharkEater133's graffiti game — you draw your own tag in the Tag Studio and it appears on the walls in-game — rebuilt its stealth around split senses in its first alpha devlog. Cops now only see you at street level, in front of them, and from a limited distance. Up on a fire escape or a roof they cannot see you, but they hear you spraying: they walk under the noise and look up, so the correct play at height is to spray in short bursts. Predictability was the stated problem with the first cops, so two new types attack different habits. Radio cops, from level 2, stop and call for backup with a bar showing how far the call has got; hide, climb or break line of sight before it finishes and the call is cut off — let it through and a backup cop arrives from off-screen.",
+      "K9 dogs, from level 3, are almost blind but follow your trail on the ground and will sniff you out of a dumpster. They cannot climb, so they sit below and bark — and the barking brings cops over to look up, meaning the dog makes rooftops a noise problem rather than a safe zone. The prototype 2-player mode shares one screen, one set of lives and one progress track: two players spraying the same wall finish it twice as fast, a caught player returns after a few seconds next to their partner, and both players must reach the van to clear a level. Underneath, the soundtrack is generated live in the browser with no audio files — calm in menus, a quiet beat while sneaking, rising tension when a cop gets suspicious, and a full chase track when you are hunted."
+     ],
+     "headline": "Spray 'n Away's Cops Can't See You on a Rooftop — but They Can Hear You, So Height Buys Bursts, Not Safety",
+     "kicker": "SPRAY 'N AWAY",
+     "source_name": "itch.io",
+     "source_url": "https://sharkeater133.itch.io/spray-n-away/devlog/1764761/devlog-1",
+     "takeaway": "Split an enemy's senses and every position gains a price: height defeats sight but not sound, so counterplay becomes rhythm — short bursts — instead of a safe spot. Add one enemy per sense, a caller for visibility and a tracker for your trail, and co-op speed turns into shared risk."
+    },
+    {
+     "body": [
+      "Reactive, the block-programming action game from semati03 and Veridium Studio, spent its fourth devlog on one problem: a program the player cannot watch working is a program the player cannot debug or enjoy. The programming panel is now much taller, so a complete if / then / else fits on screen without scrolling; empty slots show a short hint about what goes there; and the block palette opens beside the program instead of covering it. Then execution itself became visible. Every time the program runs, the blocks that execute light up, the condition turns green or red depending on whether it was met, and the branch that was taken is highlighted. Below the panel, a countdown shows the next cycle, and a line explains the last decision in plain language — the devlog's example reads: health 25% < 50%: yes → then · heal().",
+      "The abilities were rebuilt so that choosing between them matters, because before, some were basically the same. fire() stays the strong projectile; ice_shard() deals little damage but slows the enemy it hits for a few seconds, tinting it light blue; flame_wave() damages every enemy around the player as an expanding ring of fire; and heal() now heals the most injured player nearby, so a Support can look after a teammate and not only themselves. A new condition, enemy < 4 m, lets players write programs like: if an enemy is close → flame_wave, else → fire. It is a small block, the devlog notes, but the first one that lets a program react to what is happening in the arena instead of only to the player's own health. A second enemy type rounds out the update: it approaches, stops, and paints a red line on the ground marking where it is about to jump, then lunges along it."
+     ],
+     "headline": "Reactive Makes Its Programs Visible While They Run — Blocks Light Up, Conditions Turn Green or Red",
+     "kicker": "REACTIVE",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1764311/devlog-4.amp",
+     "takeaway": "A programming game lives or dies on whether players can see their logic run: highlight the executed path, colour the condition's verdict, and narrate the last decision in one plain line. Then give conditions a world to react to — a program that only checks its own health is a thermostat, not a strategy."
+    },
+    {
+     "body": [
+      "Endangermon's alpha playtest produced, in Wesley_T's words, a ton of great feedback — and the team's development update is mostly a record of taking things away. The unnecessary Last item and Information buttons have been removed, and in a similar vein the bag has been reduced from six or so pockets to only one. The player is now set to run by default, because there is really no reason to walk slowly when faster traversal is possible; walking survives only as an options toggle. The indicator showing the player can advance dialogue has been replaced with a small C key prompt, making it obvious which button to press. Dialogue portraits have been added to human NPC interactions, and information from NPCs about the environment is now flagged more obviously.",
+      "The update's best data point is about attention, not inventory. Roughly 70 percent of playtesters attempted to interact with some combination of the chalkboard, the trees in the lab, or the big rock next to the panda — so, in what the devlog calls a demonstration of the power of democracy, flavour text has been added to all three. The remaining agenda is stated with unusual honesty: cut important text shorter, highlight or bold the important elements, remove backtracking in the introduction, clarify directions currently given as cardinal points (perhaps with an on-screen compass), indicate which NPCs and objects are interactable, and hold a group discussion about scope — including a rumour that the Mountain Highlands area might be cut to improve the scope and quality of the Beach."
+     ],
+     "headline": "Endangermon Cut Its Bag From Six Pockets to One — and Added Flavour Text to Whatever 70 Percent of Testers Tried to Touch",
+     "kicker": "ENDANGERMON",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1764360/development-update-8-nov-2026.amp",
+     "takeaway": "Playtesters vote with their hands: if 70 percent try to touch the same three objects, those objects are interactables whether you planned them or not — write the flavour text. And audit every container, button and default against actual use: six pockets became one, and the default speed became the speed everyone chose anyway."
+    }
+   ]
+  },
+  {
    "date": "2026-11-08",
    "dateline": "Sunday, November 8, 2026",
    "stories": [
@@ -1581,4 +1675,4 @@
   }
  ]
 }
-sig:MEUCIBfOxUN2BCGfk+onnCLs4bXEUuk/7aq9ESm+dr0I6arBAiEAvYC8/1ibeYx0PCUbufsoJbK7wjx8OVuY1ppXSjrWTnY=
+sig:MEYCIQDw9HFIXWAQPZN4kUYqIpBSy8IJU0w/rEfAdu8RHqtdwAIhAL1qKkhkM89VMQY2tJRCG3U20jtisRQkNMw/ijYfeVUd
