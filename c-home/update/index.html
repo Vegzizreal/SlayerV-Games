@@ -159,7 +159,7 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 /* Every step is bounded: a wedged await must become an
  * explained failure, never a silent hang. */
-const T_CONNECT_MS = 15000, T_STEP_MS = 10000, T_INFO_MS = 20000,
+const T_CONNECT_MS = 15000, T_STEP_MS = 10000, T_INFO_MS = 120000,
       T_PAIR_SOFT_MS = 8000, T_FETCH_MS = 30000;
 const WINDOW_GONE =
   "Re-arm the unit (wheel → UPDATE → OPEN UPDATE WINDOW) and tap " +
