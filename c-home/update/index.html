@@ -363,23 +363,6 @@ async function connectOnce() {
   say("Connecting to " + device.name + "… the first time, your " +
       "phone asks to pair — the unit shows a 6-digit code; " +
       "accept when the phone shows the same one.");
-  server = await bounded(device.gatt.connect(), T_CONNECT_MS,
-    "Connecting to the unit",
-    "The connection never landed — the unit's window may have " +
-    "closed before it. " + WINDOW_GONE);
-  const svc = await bounded(server.getPrimaryService(SVC_UUID), T_STEP_MS,
-    "Finding the update service",
-    "The unit answered but its update service didn't. " + WINDOW_GONE);
-  svcSvc = svc;
-  chInfo   = await bounded(svc.getCharacteristic(INFO_UUID),   T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
-  chCtrl   = await bounded(svc.getCharacteristic(CTRL_UUID),   T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
-  chData   = await bounded(svc.getCharacteristic(DATA_UUID),   T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
-  chStatus = await bounded(svc.getCharacteristic(STATUS_UUID), T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
-  await bounded(chStatus.startNotifications(), T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
-  chStatus.addEventListener("characteristicvaluechanged", onStatusNotify);
-
-  say("Pairing… if your phone asks to pair, compare its code " +
-      "with the 6-digit code on the unit's screen, then accept.");
   resetPairBtn.hidden = true;
   pairingResetRequested = false;
   const resetPromise = new Promise((_, reject) =>
@@ -395,18 +378,60 @@ async function connectOnce() {
         "warn");
     resetPairBtn.hidden = false;
   }, T_PAIR_SOFT_MS);
+  /* First pairing makes Android drop this page's connection
+   * mid-setup while the system pairing runs (the connect lands,
+   * then service discovery dies with "GATT Server is
+   * disconnected"). That drop is the pairing happening, not a
+   * failure: reconnect on fresh handles and the next pass runs
+   * on the stored bond. A remembered bond never drops, so
+   * repeat updates take the first pass straight through. */
   let info;
   try {
-    info = await Promise.race([
-      bounded(chInfo.readValue(), T_INFO_MS, "Pairing with the unit",
-        "Pairing never completed. If this phone is holding an old " +
-        "pairing for " + device.name + ", clear it (Bluetooth " +
-        "settings → " + device.name + " → Forget), then re-arm the " +
-        "unit and tap Update right away. Or use the pairing reset " +
-        "on the unit's UPDATE screen, which clears the pairings " +
-        "the unit saved."),
-      resetPromise,
-    ]);
+    for (let setupTry = 1; ; setupTry++) {
+      try {
+        server = await bounded(device.gatt.connect(), T_CONNECT_MS,
+          "Connecting to the unit",
+          "The connection never landed — the unit's window may have " +
+          "closed before it. " + WINDOW_GONE);
+        const svc = await bounded(server.getPrimaryService(SVC_UUID), T_STEP_MS,
+          "Finding the update service",
+          "The unit answered but its update service didn't. " + WINDOW_GONE);
+        svcSvc = svc;
+        chInfo   = await bounded(svc.getCharacteristic(INFO_UUID),   T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
+        chCtrl   = await bounded(svc.getCharacteristic(CTRL_UUID),   T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
+        chData   = await bounded(svc.getCharacteristic(DATA_UUID),   T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
+        chStatus = await bounded(svc.getCharacteristic(STATUS_UUID), T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
+        await bounded(chStatus.startNotifications(), T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
+        chStatus.addEventListener("characteristicvaluechanged", onStatusNotify);
+        say("Pairing… if your phone asks to pair, compare its code " +
+            "with the 6-digit code on the unit's screen, then accept.");
+        info = await Promise.race([
+          bounded(chInfo.readValue(), T_INFO_MS, "Pairing with the unit",
+            "Pairing never completed. If this phone is holding an old " +
+            "pairing for " + device.name + ", clear it (Bluetooth " +
+            "settings → " + device.name + " → Forget), then re-arm the " +
+            "unit and tap Update right away. Or use the pairing reset " +
+            "on the unit's UPDATE screen, which clears the pairings " +
+            "the unit saved."),
+          resetPromise,
+        ]);
+        break;
+      } catch (e) {
+        if (e instanceof PairingReset || pairingResetRequested) throw e;
+        const msg = (e && e.message) || "";
+        const dropped =
+          /disconnected|Cannot retrieve services|GATT/i.test(msg) ||
+          (e instanceof StepTimeout &&
+           /Connecting|update service|update channel|Pairing/.test(e.step));
+        if (!dropped || setupTry >= 5) throw e;
+        server = null; svcSvc = null;
+        chInfo = chCtrl = chData = chStatus = null;
+        say("Pairing is under way — the connection dropped while " +
+            "your phone pairs, which is normal the first time. " +
+            "Accept the pairing prompt on your phone; reconnecting…");
+        await Promise.race([sleep(2500), resetPromise]);
+      }
+    }
   } finally {
     clearTimeout(softTimer);
     pairingResetTrigger = null;
