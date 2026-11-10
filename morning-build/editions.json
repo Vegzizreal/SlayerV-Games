@@ -1,6 +1,117 @@
 {
  "editions": [
   {
+   "date": "2026-11-10",
+   "dateline": "Tuesday, November 10, 2026",
+   "stories": [
+    {
+     "body": [
+      "Paweł Sasko, Associate Game Director at CD Projekt Red, opened the Global Track at the Console Game Developers Conference 2026 in Seoul on November 9 with a definition: quest design is \"the act of stacking cards to reach the emotions that lie beyond the player's reason.\" The moment players start to feel emotion, he said, criticism stops — they stop logically scrutinising the story and seep into it. His first technique is narrative reframing of familiar mechanics. In The Witcher 3's Bloody Baron quest, the player escorts the Baron as he carries the Botchling to the manor threshold, soothing it with Signs and combat learned early in the game. The controls are ordinary; the context — the Baron's broken family, music swelling at the precise second a character speaks, dark clouds and rain rolling in — is what gives them weight. And the quest refuses the easy payoff: learning why the Baron became who he is does not oblige the player to like him, empathise with him, or forgive him. Understanding is enough.",
+      "The second technique makes the player's own action carry the theme. To lift the curse on the spoon-collector Wight in Blood and Wine — a metaphor for an eating disorder drawn from Sasko's own life — the player must sit at the table opposite the monster and share a meal; the curse-lifting action and the theme are the same act. Creativity at that scale is kept safe by guardrails: define the quest's genre and theme first — the talking-Roach quest was unequivocally comedy — and then everyone, including QA playtesters, can pitch ideas that self-judge against the frame. Scope is controlled the same way. At the Battle of Kaer Morhen, choice variables are prioritised rather than multiplied: if Roche and Ves are present, their conflict scene with the witchers plays; if not but Letho is, his plays; if neither, an atmospheric eve-of-battle scene plays — one tailored scene per spot, while anchor events like Vesemir's death never change. His closing six-step model: write intent before scenario; track actual truth and player belief separately; give every beat a purpose or cut it; map outcomes before multiplying branches; prototype the riskiest assumptions early; and give every discipline one shared emotional goal."
+     ],
+     "headline": "CD Projekt Red Stacks Every Card in the Deck to Make a Quest Unforgettable",
+     "kicker": "THE WITCHER 3 / CYBERPUNK 2077",
+     "source_name": "Inven Global",
+     "source_url": "https://www.invenglobal.com/articles/28381/cd-projekt-red-reveals-the-blueprint-for-masterpiece-quests",
+     "takeaway": "Emotion is engineered by stacking small aligned choices — controls, props, music timing, staging — toward one feeling. And scope survives when consequences are prioritised, not multiplied: one best scene per variable stack, with the beats that must land anchored by designer decision."
+    },
+    {
+     "body": [
+      "SAW: Genesis, from Broken Mirror Games and Anshar Studios with Bloober Team publishing, moves the franchise a century before Jigsaw, to the aftermath of World War I. Three Accused try to escape a labyrinth; the fourth player is the Judge, a vulnerable mastermind who orchestrates the trials from the shadows. Creative director Damian Kocurek told Press Play Media that the Judge's power is knowledge — the ins and outs of the environment, trap locations, and predicting where the Accused are headed — expanded by tools like the Accomplice, which lets the Judge act on the map without being exposed, and a Gas Device that causes hallucinations. The hard lesson came from their own builds: versions where the Judge stayed hidden and was never seen for an entire match were un-fun for both sides. So the toolkit also includes reasons to come close — a syringe for attacking unsuspecting Accused, and pressure, which makes the Accused err by sheer presence. Playing invincible as the Judge, Kocurek says, leads quickly to defeat; the team iterated countless times to find the point where game awareness is useful but not sufficient to win.",
+      "The Accused side is designed around silence. The team assumes the three matchmade players will not necessarily be talking, so coordination has to work without a headset: a ping system marks elements in the world for the whole team, proximity voice chat exists for players who do want to talk, and a player status display shows when a teammate is caught in a Rehabilitation Trap or downed in Catatonia — no callout required. A communication wheel is still coming. Permanent injury is bounded by the Body Damage System. You cannot lose both eyes or both hands — there is always a floor — and the team refuses to express damage as frustration: no half-covered screen, no blurred vision for losing an eye. Instead damage is specific rather than generic. Each Rehabilitation Trap injures in a particular way — one might make you pull out your fingers, another require your own eye — and each type limits different abilities, so the cost is real, legible, and still playable for the rest of the round."
+     ],
+     "headline": "SAW: Genesis Makes Its Killer Physically Weak — Knowledge Is the Weapon, and Permanent Limb Loss Has a Floor",
+     "kicker": "SAW: GENESIS",
+     "source_name": "Press Play Media",
+     "source_url": "https://pressplaynews.net/2026/11/10/developer-interview-saw-genesis/",
+     "takeaway": "Balance a knowledge-based role by forcing it into danger — a mastermind nobody ever sees is un-fun for everyone. Design co-op communication for silence first, and cap permanent damage with a hard floor and specific consequences instead of generic debuffs and screen effects.",
+     "image_url": "https://i.ytimg.com/vi/RJL94pQWrmA/hqdefault.jpg",
+     "image_credit": "Gameplay overview — Bloober Team via YouTube",
+     "image_link": "https://www.youtube.com/watch?v=RJL94pQWrmA"
+    },
+    {
+     "body": [
+      "Monster Hunter Wilds: Ascendance takes the series to the sky — a new high-altitude locale chosen, producer Ryozo Tsujimoto told Sportskeeda at Gamescom Asia 2026, so that its colour theme, difference in elevation and sense of depth tell players from the first glance that this is somewhere new, with more dynamic gameplay to match. The expansion also answers the base game's feedback directly: Tsujimoto said the voices of players shaped the title updates, and the most obvious improvement target in Ascendance is the UI — not headline features, but small, not-super-obvious improvements that let players connect a little better with the game. Elder Dragons, largely absent from the base game apart from the later addition of Gogmazios, return in force and shape the expansion's story and structure.",
+      "The central design problem was the Boost Bracer. Tsujimoto is blunt that Wilds' combat was already pretty complete at base-game level — the wound system, and 14 weapons each with their own set of actions and individuality — so the Bracer exists to increase the choice of actions a little for players who have grown used to that system, and to capitalise further on what each weapon already does. It is a temporary buff effect, and the team did a lot of test plays to hold two lines at once: a player who tries to run the entire game through the Bracer should find the experience flat, and a player who ignores it entirely must still be able to clear quests the traditional way. The identity risk is named in the interview itself — a speed buff makes heavy weapons like the Great Sword and Hammer move faster, which could dissolve the reason 14 weapons exist — so the Bracer is designed as a temporary extension of each weapon's own characteristics, with those identities kept pristine."
+     ],
+     "headline": "Monster Hunter Wilds: Ascendance Adds One System to a 'Pretty Complete' Combat System — and Calls It Seasoning, Not the Meal",
+     "kicker": "MONSTER HUNTER WILDS: ASCENDANCE",
+     "source_name": "Sportskeeda",
+     "source_url": "https://www.sportskeeda.com/esports/news-in-conversation-ryozo-tsujimoto-monster-hunter-wilds-ascendance-sportskeeda-exclusive",
+     "takeaway": "When a combat system is already complete, expand it with an optional, temporary layer that amplifies each existing identity — then playtest the two failure modes: the new layer becoming the only way to play, and the new layer erasing the differences it was meant to extend."
+    },
+    {
+     "body": [
+      "HoYoverse's Petit Planet, launching December 4, is a life sim, not a management sim — and its social system is built to remove pressure rather than add engagement. Lead game designer Murphy and lead artist Yinli Huang told Pocket Gamer at a Seoul media-tour roundtable about the Epistolarian's Desk: a formal desk where writing a letter is a ritual, replies happen only with permission, and there is no guarantee of an answer at all. It is, the team said, a kind of asynchronous design on purpose, because that kind of system will not bring players — especially introverts — too much pressure. They designed the exchange deliberately after finding that the constant need to interact, and the energy and time needed to sustain an online friendship, weigh on players, and they want to avoid that in Petit Planet. Solo remains a full option: multiplayer can be turned off, the core gameplay is largely the same either way, and when visiting opens up through the Galactic Bazaar, planet owners can choose to allow or ban visitors from taking their resources.",
+      "The same philosophy removes progression from rest. Fishing in Petit Planet has no skill levels and no growth curve: whether you are a new player or a veteran, the fish you get is the same — random, varying with season and weather — so logging in offers a little surprise rather than a deficit to catch up on. There is no main plot either; the narrative is fragmented into item descriptions and the comprehensive backstories of each Neighbor. Even movement is deliberately less automatic. The world of mini-planets began as a flat space before rendering work made it spherical — including work to stop players feeling motion sickness — and the team debated degrees of freedom for actions like climbing before refusing the convenient option: if players could jump multiple layers at once, the creatures living at different levels, and the joy of exploring and surprise, would be skipped. You go around and find the door, on purpose."
+     ],
+     "headline": "Petit Planet Designs Multiplayer for Introverts — Letters You May Never Get a Reply To, and Fishing With No Growth Curve",
+     "kicker": "PETIT PLANET",
+     "source_name": "Pocket Gamer",
+     "source_url": "https://www.pocketgamer.com/interviews/petit-planet/",
+     "takeaway": "Social pressure is a design variable, not a fact of multiplayer: make contact asynchronous, permission-based and optional, strip progression out of the relaxing activities so nobody falls behind by resting, and protect exploration by refusing movement that skips the world.",
+     "image_url": "https://i.ytimg.com/vi/CTQeBMLVY1M/hqdefault.jpg",
+     "image_credit": "Pre-launch program — Petit Planet via YouTube",
+     "image_link": "https://www.youtube.com/watch?v=CTQeBMLVY1M"
+    },
+    {
+     "body": [
+      "The Hero Party Was Wiped Out, the dungeon-crawling RPG from the three-person Death Syndicate (Death Union) published by Flashlight Games and released November 10, is built around a frustration its systems lead, Suzuromono, kept meeting in deck-building roguelikes: once you find a strong deck, you can keep winning by using it over and over — satisfying, then empty. His answer was to make the strategy expire. Items have a limited number of uses, so no loadout lasts forever; and, inspired by Roadlight Face, a 2014 entry in the Udicon free-game contest, destroying an item yourself at any time — regardless of how many uses remain — brings advantages. A mechanic that normally only produces stress was redesigned so the stress itself pays out. Item destruction, looting items from enemies and the Break Gauge grew together into one strategic loop, and it is also the story in mechanical form: breaking weapons mirrors the protagonist's struggle against fate, because the team insists every system carry a narrative justification.",
+      "The second decision is about a gate that was excluding players. The game's timing-based combat — one of two systems, alongside a chance-based one — drew blunt feedback in earlier versions: the timing is way too hard. The team had added the timing element deliberately, so player and protagonist share the tension that failure leads to death, but when the difficulty started producing screams instead of tension, they added a free-control mode — and designed it to offer its own unique ways to enjoy the game, not merely the same game with the hard part removed, because it would be a shame if precise timing alone stopped people playing. The balance target runs both ways: players who strategise well should be able to clear the game in a single attempt, while players who struggle clear it naturally over repeated attempts, strengthening their party and weapons by clearing curses when they die. The interview closes with the scope bill, stated plainly: the game's four routes, branching completely from the very beginning across more than 400,000 characters of text, turned out to be the equivalent of four full games — a fact the team only realised later."
+     ],
+     "headline": "The Hero Party Was Wiped Out Lets You Destroy Any Weapon at Any Time — Turning the Stress of Limited Uses Into the Reward",
+     "kicker": "THE HERO PARTY WAS WIPED OUT",
+     "source_name": "Game*Spark",
+     "source_url": "https://en.gamespark.jp/article/2026/11/10/2154.html",
+     "takeaway": "If a resource limit only creates stress, pay the player to spend the resource early — destruction as a benefit turns hoarding into strategy. And when a skill gate excludes your audience, build a parallel mode with its own pleasures instead of only turning a number down."
+    },
+    {
+     "body": [
+      "CalcRix Studio's Lights of Europe, a strategy game about keeping a continent's lights on, exists in two completely different versions — and the devlog is the record of choosing between them. Version A was the \"real dispatcher\" one. The grid ran at 50 Hz, a needle wobbled, wind, sun and demand changed every few seconds, and when things went wrong you were frantically starting gas peakers, asking factories to pause and buying emergency imports. Pretty realistic, the team says — and pretty exhausting. Playing it, they kept asking themselves two questions: where do I even start, and why build anything if I can just mash the emergency buttons? The realistic version had quietly deleted its own core loop: if emergencies can always be bought off in real time, long-term building is decoration.",
+      "Version B is much calmer, and it is the one they chose for the prototype. Every morning, time stops. You check the weather, tap a country, see what is there in simple 2 GW blocks, and build — a battery, a power line, a wind farm or a gas plant — then hit \"Start the day\" and hope the lights stay on at 18:00. The same underlying simulation, cut into a planning phase and a resolution phase, becomes a game about decisions instead of reactions. Version A is not dead, though: the team says it might come back one day as an Expert mode, where its frantic real-time dispatching would be a chosen challenge for players who have already mastered the calm game rather than the first thing a new player meets. The prototype is free to play in the browser, on phones too."
+     ],
+     "headline": "Lights of Europe Built the Realistic Power Grid First — Then Chose the Calm One, Because Emergency Buttons Ate the Building Game",
+     "kicker": "LIGHTS OF EUROPE",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1767112/realistic-or-fun-we-picked-one-we-think.amp",
+     "takeaway": "A simulation's time structure is its difficulty: real-time turns planning into panic, while a frozen planning phase turns the same systems into decisions. Audit your emergency tools hardest — if they can solve every problem, they delete the building game underneath them. Park the realistic version as an expert mode instead of making it the default."
+    },
+    {
+     "body": [
+      "Anxious Asparagus Games' Night Shift devlog is a three-version autopsy of one inventory system. Version 1 was bare-bones: the player carries one item at a time, while small things like a key or a box cutter are \"Tools\" that do not count — simple bool values, checked with a hardcoded Inventory.HasKey. It worked, and it felt better once large items were physically carried on the player, though the one-item limit turned a simple stock job into a six-step dance of fetching the key, returning it, fetching the box, and fetching the key again. Version 2 made everything an item, using scriptable objects as item types so a shelf could accept ten cans of soup and reject a bag of trash — then broadened the same treatment to tools, built a real inventory, and made inventory the single point of contact for what is held. Inventory and carrying became messily coupled: remove from inventory meant remove from carrier, and vice versa.",
+      "Version 3 was the pursuit of decoupling, and it is where, in the developer's words, he completely lost sight of the big picture and got caught up making perfect code instead of a playable game. Every change fixed one thing and broke two more. His verdict on the whole detour is unsparing: in hindsight, version 1 was fine — he was too focused on scalability for future tools and on clean, uniform item checks, and threw away something that worked, wasted countless hours, and ended with something less functional than he started with. The root cause he names is not technical. There was no solid gameplay loop and no settled plan, so he kept trying to pre-empt issues that might occur — building a system that could handle what he might need instead of just what he does need, and iterating a single system instead of iterating the overall design. The correction is procedural: return to version 1, focus on what the gameplay experience should be, get a core loop going before iterating, and wait to see whether people even have an issue before trying to fix it."
+     ],
+     "headline": "Night Shift Threw Away Two Inventory Systems and Went Back to Version 1 — the Bools Were Fine",
+     "kicker": "NIGHT SHIFT",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1766990/trying-to-design-while-coding.amp",
+     "takeaway": "Scalability work before a core loop exists is waste with good manners. Ship the hardcoded version that plays — a bool that works beats a decoupled architecture that doesn't — and let real play, not imagined future items, earn the abstraction."
+    },
+    {
+     "body": [
+      "Montore began with a casual question. Its maker, aikata-dev, is a gamer in Japan with zero programming knowledge, no design document and no plan, who asked an AI assistant whether a game app could even be made. The answer was yes — and about 46 minutes after that first question, a first prototype was running: pick an egg, name the monster that hatches from it, train it, evolve it, take it into a dungeon. That was about a week ago. The game now holds 32 monster species with more than 300 original designs, evolution that branches into four paths (plus a rare fifth) depending on how you raise the monster, a proper 8-entrant bracket tournament called the Deep Green Cup, friend battles, and an egg generator that works by scanning a barcode. There are no microtransactions by design; everything is earned by playing. The version number of the updates passed 300 a while ago.",
+      "The devlog is explicit that the AI did not make the game by itself, and it spells out the division of labor. The planning, the decisions and the player's perspective come from the human; the AI implements the whole thing as a web app under that direction; and quality is a human gate — he plays everything on a real phone, and if it is not up to about 95 points for him, he sends it back, which he has done more than 300 times. He names three AI weaknesses honestly. Image boundaries: cutting out illustrations and juggling many assets at once are hard for the AI, which handles things one by one better than it holds the whole picture. Sound: from an AI's explanations alone he could not confirm audio would actually play in the final app, so he cross-checked results from multiple AI tools himself, bit by bit. And ideas: asked vaguely to come up with a fun feature, the AI returns generic answers, so the tournament structure, its connection to training and rewards, and what makes it worth replaying came from his own experience as a player — while the one AI idea he kept, the barcode egg generator, earned its place by being genuinely fun."
+     ],
+     "headline": "Montore's Maker Can't Code — So He Designs, Directs and Playtests, Sends Back Anything Under 95 Points, and Has Done It 300 Times",
+     "kicker": "MONTORE",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1766933/i-cant-code-im-building-a-monster-raising-game-with-ai-anyway-300-original-monsters-and-counting.amp",
+     "takeaway": "AI-directed building is a job split, not a prompt: the human owns taste, decisions and the on-device test, the AI owns implementation, and a hard personal quality bar applied hundreds of times is what turns generated output into a game. Disclose who — or what — made which part; the honesty is part of the method."
+    },
+    {
+     "body": [
+      "The Unlit's difficulty choice used to break its own promise. Feedback from Improve My Game Jam 47 — credited to player zack-10 — showed that the start card at the beginning of a shift faded after a few steps, so a player who simply started walking without picking a level silently lost the choice altogether. The fix keeps the promise in view: if you start walking without choosing, the three difficulty buttons move to the top-right corner and stay there while you play. They leave on their own only at the end of the 3-minute newcomer protection, or when you close them with the × yourself. Nothing about the choice is hidden, rushed, or made for you.",
+      "Each button now also explains itself in exactly one line. Easy: gentler, and it does not unlock Ascension. Normal: more Unlit, and they hear farther — in a game where noise is how the Unlit find you, and how you lure them away. Hard: they hit harder as well. Changing your mind carries a stated, fair price: picking another level restarts the same shift from the beginning, while picking the level you already have just closes the corner. And the devlog discloses one default openly — if the browser looks automated, like a test tool or a bot, the game starts on Easy and now says so on the card, and your own choice always wins over it. The new lines were translated into all 12 of the game's languages and checked on a 390×844 phone, a landscape phone and a 1920×1080 screen."
+     ],
+     "headline": "The Unlit's Difficulty Choice No Longer Disappears — It Moves to the Corner and Waits Out the Newcomer Protection",
+     "kicker": "THE UNLIT",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1766890/difficulty-choice-that-stays-put.amp",
+     "takeaway": "A choice the UI takes away is a choice the player never made. Persist it in a corner until its window honestly ends, explain each option in one line, price a change fairly with a restart — and when your game makes a default decision on the player's behalf, say so on the card."
+    }
+   ]
+  },
+  {
    "date": "2026-11-09",
    "dateline": "Monday, November 9, 2026",
    "stories": [
@@ -1675,4 +1786,4 @@
   }
  ]
 }
-sig:MEYCIQDw9HFIXWAQPZN4kUYqIpBSy8IJU0w/rEfAdu8RHqtdwAIhAL1qKkhkM89VMQY2tJRCG3U20jtisRQkNMw/ijYfeVUd
+sig:MEUCIFTUEP0IKQeX0mQn3LCujUxOEyZWX84RqTzheb99i4mRAiEAlF8E3UUrNyxhxJZ1SFW9JUXFeSKa9k9Pl44Jh/xJ0kI=
