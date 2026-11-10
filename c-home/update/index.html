@@ -35,10 +35,12 @@ button:disabled{background:#3a3750;color:#9a97a8}
   running version's lineage before it sends anything and refuses
   a unit that is not R-line.</p>
   <p>On the unit: open the wheel, tap <strong>UPDATE</strong>, then
-  <strong>OPEN UPDATE WINDOW</strong>. The unit shows a 6-digit
-  code and a countdown — tap Update here right away, and type the
-  code when the phone asks. The window holds while a transfer is
-  running; it closes after about 30 idle seconds.</p>
+  <strong>OPEN UPDATE WINDOW</strong>. The unit shows a countdown
+  — tap Update here right away. The first time, the phone asks
+  to pair: accept it — there is no code to type. After that first
+  pairing the phone is remembered and connects on its own. The
+  window holds while a transfer is running; it closes after
+  about 30 idle seconds.</p>
 
   <button id="updateBtn">Update</button>
   <div class="bar"><div id="fill"></div></div>
@@ -63,7 +65,7 @@ button:disabled{background:#3a3750;color:#9a97a8}
   </section>
 
   <p>There is no signature on update images. What protects an
-  update: it travels only over the encrypted, passkey-paired
+  update: it travels only over the encrypted, bonded
   Bluetooth link, the unit checks the image's SHA-256 hash
   against the declared hash before it commits, and a fresh
   image must prove itself for about a minute after booting or
@@ -258,16 +260,16 @@ resetPairBtn.addEventListener("click", async () => {
     try { if (device.gatt && device.gatt.connected) device.gatt.disconnect(); } catch (e) {}
     say("Pairing reset — tap Update again when you're ready.");
     note("This phone's old pairing for the unit was forgotten. Re-arm " +
-         "the unit if its window closed, then tap Update and type the " +
-         "6-digit code on its screen. (If pairing still won't start, " +
-         "the unit's own UPDATE screen has a pairing reset that gives " +
-         "it a fresh identity.)");
+         "the unit if its window closed, then tap Update and accept " +
+         "the pairing when the phone asks — there is no code. (If " +
+         "pairing still won't start, the unit's own UPDATE screen " +
+         "has a pairing reset that clears its saved pairings.)");
   } else {
     say("Pairing reset — follow the steps, then tap Update again.");
     note("No code box? Your phone may hold an old pairing for the " +
          "unit — Settings → Bluetooth → the unit's VBALL-C name → " +
          "Forget, then tap Update again. The unit's UPDATE screen " +
-         "also has a pairing reset that gives it a fresh identity.");
+         "also has a pairing reset that clears its saved pairings.");
   }
   if (pairingResetTrigger) pairingResetTrigger();
 });
@@ -346,8 +348,8 @@ async function connectOnce() {
       throw new Error(pickRefusal);
     }
   }
-  say("Connecting to " + device.name + "… your phone may ask for " +
-      "the 6-digit code on the unit's screen.");
+  say("Connecting to " + device.name + "… the first time, your " +
+      "phone asks to pair — accept it; there is no code.");
   server = await bounded(device.gatt.connect(), T_CONNECT_MS,
     "Connecting to the unit",
     "The connection never landed — the unit's window may have " +
@@ -363,7 +365,7 @@ async function connectOnce() {
   await bounded(chStatus.startNotifications(), T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
   chStatus.addEventListener("characteristicvaluechanged", onStatusNotify);
 
-  say("Pairing… if your phone asks, type the 6-digit code on the unit's screen.");
+  say("Pairing… if your phone asks to pair, accept — there is no code to type.");
   resetPairBtn.hidden = true;
   pairingResetRequested = false;
   const resetPromise = new Promise((_, reject) =>
@@ -373,7 +375,7 @@ async function connectOnce() {
         "may hold an old pairing for " + device.name + " — Settings → " +
         "Bluetooth → " + device.name + " → Forget, then tap Update " +
         "again. The unit's UPDATE screen also has a pairing reset " +
-        "that gives it a fresh identity.", "warn");
+        "that clears its saved pairings.", "warn");
     resetPairBtn.hidden = false;
   }, T_PAIR_SOFT_MS);
   let info;
