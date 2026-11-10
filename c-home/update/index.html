@@ -37,10 +37,21 @@ button:disabled{background:#3a3750;color:#9a97a8}
   <p>On the unit: open the wheel, tap <strong>UPDATE</strong>, then
   <strong>OPEN UPDATE WINDOW</strong>. The unit shows a countdown
   — tap Update here right away. The first time, the phone asks
-  to pair: accept it — there is no code to type. After that first
-  pairing the phone is remembered and connects on its own. The
-  window holds while a transfer is running; it closes after
-  about 30 idle seconds.</p>
+  to pair: the unit shows a 6-digit code on its screen — check
+  your phone shows the same code, then accept. That pairing is
+  saved: after the first time the phone is remembered and
+  connects on its own, no code again. The window holds while a
+  transfer is running; it closes after about 30 idle seconds.</p>
+
+  <p class="warn"><strong>Pair the mouse first.</strong> If this
+  phone has never used the unit as a mouse, pair it as a mouse
+  before updating: on the unit open the pointer screen, then on
+  the phone use Settings → Bluetooth and pair the unit there.
+  A pairing made only through this page leaves the phone's
+  mouse connection unattached — the mouse then won't connect
+  until that pairing is deleted and the unit is paired as a
+  mouse. Paired as a mouse first, updates simply ride that same
+  connection.</p>
 
   <button id="updateBtn">Update</button>
   <div class="bar"><div id="fill"></div></div>
@@ -261,7 +272,8 @@ resetPairBtn.addEventListener("click", async () => {
     say("Pairing reset — tap Update again when you're ready.");
     note("This phone's old pairing for the unit was forgotten. Re-arm " +
          "the unit if its window closed, then tap Update and accept " +
-         "the pairing when the phone asks — there is no code. (If " +
+         "the pairing when the phone asks — the unit shows a 6-digit " +
+         "code; accept when the phone shows the same one. (If " +
          "pairing still won't start, the unit's own UPDATE screen " +
          "has a pairing reset that clears its saved pairings.)");
   } else {
@@ -349,7 +361,8 @@ async function connectOnce() {
     }
   }
   say("Connecting to " + device.name + "… the first time, your " +
-      "phone asks to pair — accept it; there is no code.");
+      "phone asks to pair — the unit shows a 6-digit code; " +
+      "accept when the phone shows the same one.");
   server = await bounded(device.gatt.connect(), T_CONNECT_MS,
     "Connecting to the unit",
     "The connection never landed — the unit's window may have " +
@@ -365,17 +378,21 @@ async function connectOnce() {
   await bounded(chStatus.startNotifications(), T_STEP_MS, "Setting up the update channel", WINDOW_GONE);
   chStatus.addEventListener("characteristicvaluechanged", onStatusNotify);
 
-  say("Pairing… if your phone asks to pair, accept — there is no code to type.");
+  say("Pairing… if your phone asks to pair, compare its code " +
+      "with the 6-digit code on the unit's screen, then accept.");
   resetPairBtn.hidden = true;
   pairingResetRequested = false;
   const resetPromise = new Promise((_, reject) =>
     { pairingResetTrigger = () => reject(new PairingReset()); });
   const softTimer = setTimeout(() => {
-    say("Pairing is taking a long time. No code box? Your phone " +
-        "may hold an old pairing for " + device.name + " — Settings → " +
-        "Bluetooth → " + device.name + " → Forget, then tap Update " +
-        "again. The unit's UPDATE screen also has a pairing reset " +
-        "that clears its saved pairings.", "warn");
+    say("Pairing is taking a long time. If no code prompt appeared, " +
+        "your phone may hold an old pairing for " + device.name +
+        " — Settings → Bluetooth → " + device.name + " → Forget, " +
+        "then tap Update again. The unit's UPDATE screen also has " +
+        "a pairing reset that clears its saved pairings. And if " +
+        "this phone has never used the unit as a mouse, pair it as " +
+        "a mouse first (see the note at the top of this page).",
+        "warn");
     resetPairBtn.hidden = false;
   }, T_PAIR_SOFT_MS);
   let info;
@@ -386,8 +403,8 @@ async function connectOnce() {
         "pairing for " + device.name + ", clear it (Bluetooth " +
         "settings → " + device.name + " → Forget), then re-arm the " +
         "unit and tap Update right away. Or use the pairing reset " +
-        "on the unit's UPDATE screen, which gives it a fresh " +
-        "identity the phone has never seen."),
+        "on the unit's UPDATE screen, which clears the pairings " +
+        "the unit saved."),
       resetPromise,
     ]);
   } finally {
