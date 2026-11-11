@@ -26,32 +26,7 @@ button:disabled{background:#3a3750;color:#9a97a8}
 <body>
 <main>
   <h1>VBALL-C — Bluetooth update <span class="ver" id="verTitle"></span></h1>
-  <p class="warn">For the R-line 1.75C units only (they advertise as
-  VBALL-C plus a unit suffix — VBALL-C-XXXX, different on every
-  unit, or a name set on the unit itself in Settings — and show
-  R-versions on their UPDATE screen;
-  older R firmware advertises the plain VBALL-C name). The other
-  product line advertises a similar name — this page checks the
-  running version's lineage before it sends anything and refuses
-  a unit that is not R-line.</p>
-  <p>On the unit: open the wheel, tap <strong>UPDATE</strong>, then
-  <strong>OPEN UPDATE WINDOW</strong>. The unit shows a countdown
-  — tap Update here right away. The first time, the phone asks
-  to pair: the unit shows a 6-digit code on its screen — check
-  your phone shows the same code, then accept. That pairing is
-  saved: after the first time the phone is remembered and
-  connects on its own, no code again. The window holds while a
-  transfer is running; it closes after about 30 idle seconds.</p>
-
-  <p class="warn"><strong>Pair the mouse first.</strong> If this
-  phone has never used the unit as a mouse, pair it as a mouse
-  before updating: on the unit open the pointer screen, then on
-  the phone use Settings → Bluetooth and pair the unit there.
-  A pairing made only through this page leaves the phone's
-  mouse connection unattached — the mouse then won't connect
-  until that pairing is deleted and the unit is paired as a
-  mouse. Paired as a mouse first, updates simply ride that same
-  connection.</p>
+  <p>On the unit: wheel → UPDATE → OPEN UPDATE WINDOW, then tap Update here. First time only: match the 6-digit code on the unit and accept.</p>
 
   <button id="updateBtn">Update</button>
   <div class="bar"><div id="fill"></div></div>
@@ -63,24 +38,11 @@ button:disabled{background:#3a3750;color:#9a97a8}
 
   <section class="recovery" id="recovery">
     <h2>Recovery</h2>
-    <p>Only for a unit stuck on a bad or half-sent version. Nothing
-       here runs automatically — each action asks first, and a
-       reinstall also needs a confirm on the unit itself
-       (UPDATE → CONFIRM RECOVERY) before anything is written.
-       Both actions need a live connection (tap Update above
-       first).</p>
+    <p>Only for a unit stuck on a bad version. Needs a live connection and a confirm on the unit.</p>
     <button id="recoveryReinstallBtn" disabled>Reinstall this version</button>
     <button id="recoveryRollbackBtn" disabled>Roll back to previous version</button>
-    <p id="recoveryInfo">Connect to the unit first (tap Update above) —
-       recovery options appear here once the unit reports its state.</p>
+    <p id="recoveryInfo"></p>
   </section>
-
-  <p>There is no signature on update images. What protects an
-  update: it travels only over the encrypted, bonded
-  Bluetooth link, the unit checks the image's SHA-256 hash
-  against the declared hash before it commits, and a fresh
-  image must prove itself for about a minute after booting or
-  the unit rolls back to the previous one on its own.</p>
 </main>
 
 <script>

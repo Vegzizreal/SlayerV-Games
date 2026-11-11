@@ -17,31 +17,13 @@
 <body>
 <main>
   <h1>ESP32-S3-Touch-AMOLED-1.75C - Home R1.35</h1>
-  <p>The R line: a from-scratch firmware for the 1.75C board (32 MB) with the
-  same approved look - the face as the home screen, a swipe on the face opens
-  the rim-wheel app list. The installer script and the firmware file are both hosted
-  in this repo (ESP Web Tools 10.4.0, vendored) - nothing loads from anywhere
-  else. This firmware is only for the 1.75C; do not install it on the 1.75-G ball.</p>
   <div class="card">
     <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
-    <ol>
-      <li>Plug the board into this PC with USB and use Chrome or Edge.</li>
-      <li>Click Connect above and pick the board's serial port.</li>
-      <li>If the board will not connect because it is reboot-looping: unplug it, hold BOOT, plug it back in while holding BOOT, then connect.</li>
-      <li>In the install dialog, tick <strong>Erase device</strong>, then Install. The erase is required when coming from any other line; if in doubt, tick it.</li>
-      <li>When it finishes, the board reboots to the face. Swipe the face for the app wheel. Double-tap anywhere goes home, triple-tap turns the screen off; double-tap PWR or a two-finger 3-second hold also goes home from anywhere.</li>
-    </ol>
+    <p>Tick <strong>Erase device</strong> when coming from another firmware line.</p>
   </div>
   <p>File: c-home-merged-r1.35.bin (8,519,680 bytes)<br>
   SHA-256: b09adac14988c4155591ed5fb56ce9ac6181f3c9eebf086356e69a35cea80fb2</p>
-  <div class="card">
-    <p><strong>Bluetooth updates (from R1.35 on):</strong> once this
-    version is on the unit, later R-line updates can arrive over
-    Bluetooth from the <a href="update/">update page</a> — arm the
-    window on the unit (wheel → UPDATE → OPEN UPDATE WINDOW), then
-    push from a phone. The first install of R1.35 itself is
-    cable-only: the Bluetooth door exists only from R1.35 up.</p>
-  </div>
+  <p>Later updates can arrive over Bluetooth: <a href="update/">update page</a>.</p>
 </main>
 </body>
 </html>
