@@ -1,6 +1,111 @@
 {
  "editions": [
   {
+   "date": "2026-11-11",
+   "dateline": "Wednesday, November 11, 2026",
+   "stories": [
+    {
+     "kicker": "GEARS OF WAR: E-DAY",
+     "headline": "Gears of War: E-Day Cut Its First Jump Because It Turned Into a Platformer",
+     "body": [
+      "Campaign Design Director Raul Figueroa told Player 2 that The Coalition started with the core — cover and shooting feeling right from the get-go — then layered on sprint replacing the roadie run, slide into cover, jump and climb, iterating back whenever anyone on the team said it no longer felt like Gears. The first jump is his example of going too far: it leaned toward a platformer, and level design built for it stopped feeling like Gears, so jump was pulled back to reaching higher locations and opening options, not jumping puzzles. The same moves went to the Locust, with far more aggressive AI, so staying behind cover is no longer safe — the player has to move and react, which is how a prequel makes enemies veterans have killed thousands of times feel threatening again.",
+      "Lead Story Producer Vee Nyarko described lore the same way: material to stage, not a cage. The chainsaw scene happens in the book Jacinto's Remnant about a year after E-Day, but it is not a Gears without a Lancer, so the team moved it into the game and used it to bring Tai in. New character Mags — a veteran who had a happy life before enlisting and knows firsthand how the COG treats people — lets Marcus show a side of loss that Dom, already distant after Carlos's death, cannot draw out, and gives Rustlung a face instead of a line of dialogue."
+     ],
+     "takeaway": "Evolve a prequel by protecting the core feel first, giving every new player move to the enemy as well so it creates pressure instead of just freedom, and bending lore timelines for the iconic moments while adding the character who can carry the theme the leads cannot.",
+     "source_name": "Player 2",
+     "source_url": "https://www.player2.net.au/2026/11/respecting-established-mechanics-lore-while-driving-the-game-forward-with-gears-of-war-e-day-leadership/"
+    },
+    {
+     "kicker": "BLOODY HELL HOTEL",
+     "headline": "Bloody Hell Hotel Banned Corridor Turns So Its Procedural Dungeons Would Not Need a Minimap",
+     "body": [
+      "Wlad Marhulets told 80 Level the dungeon generator was shaped by a refusal: the team did not want to add a minimap just to stop players getting disoriented, and that made even a simple 90-degree corridor turn a no-go — there are literally zero corridor turns. Every turn leads through an antechamber with memorable props and elevation differences between the connecting corridors. Underneath is controlled randomization at different levels — layout type and size depending on depth, the floor layout, how rooms and corridors connect, down to enemies, resources, props and lighting — tuned for enough branching to explore without forced backtracking, and meant to feel handcrafted rather than generated.",
+      "The studio is shaped the same deliberate way. Bloody Hell Hotel has used over 150 contractors and no full-time staff, with about 15 to 30 active at a time, because priorities shift between interconnected systems — furniture assets need different skills than modular dungeon assets, animation or VFX. Instead of crunch, the team expands whichever department is loaded and asks when work can be done; detailed documentation and in-person travel hold one vision together. The sandbox follows the same logic: almost everything is optional, blood is separate from HP and can simply be bought, so a pacifist vampire is a viable way to play."
+     ],
+     "takeaway": "A navigation constraint — no minimap — should reshape the generator itself, not be patched with UI. And match team shape to system shape: staff for the phase you are in, expand a department instead of crunching it, and hold the vision with documentation.",
+     "source_name": "80 Level",
+     "source_url": "https://80.lv/articles/bloody-hell-hotel-developer-on-making-a-vampire-management-sandbox"
+    },
+    {
+     "kicker": "NINTENDO",
+     "headline": "Nintendo's Playtest Rule Is to Watch the Face, Never the Screen — Then Ask 'Why Is It Not Fun?'",
+     "body": [
+      "Former Nintendo of America president Doug Bowser, speaking on the Game Legends panel at GamesBeat Next 2026, recalled sitting in on strategy sessions with producer Shinya Takahashi. Takahashi wanted enough testers in the room that you could see their faces and eyes, and no more than that. He never watched what their hands were doing on a controller and never watched what was happening on the screen — he watched eyes and facial expression. In the feedback that followed he wanted one thing established: are you having fun? If he did not see it, he asked the tester directly: 'Why is it not fun?'",
+      "Bowser framed the method under Nintendo's objective — 'We make smiles' — and said the smile-first approach still matters, with a generational warning attached. Pointing to Fortnite, Roblox and Minecraft, he argued younger players do want fun, and want it easy to get to, but increasingly want self-expression — and that Nintendo has to keep an eye on those cohorts as it builds its next games."
+     ],
+     "takeaway": "Input logs and telemetry tell you what a player did, not whether it landed. Put a human face in the review, ask the blunt question in the room, and treat time-to-fun and self-expression as measured requirements, not vibes.",
+     "source_name": "Nintendo Life",
+     "source_url": "https://www.nintendolife.com/news/2026/11/why-is-it-not-fun-doug-bowser-gives-a-peek-into-nintendos-strategy-sessions"
+    },
+    {
+     "kicker": "TOO KYO GAMES",
+     "headline": "Too Kyo Games Sometimes Submits a Master Build 'No One Should Ever Play' — Because Physical Editions Demand It Months Early",
+     "body": [
+      "At a Console Game Developers Conference 2026 panel in South Korea, reported by AUTOMATON, Danganronpa and The Hundred Line director Kazutaka Kodaka explained why physical editions remain central to Too Kyo Games: Japan accounts for roughly one-third of its revenue, boxed copies perform well there, and character-driven games are sold with store-exclusive bonuses. The cost sits in the calendar. Collector's editions in North America and Europe require master builds submitted well in advance for manufacturing and packaging, creating what he called absurdly early deadlines.",
+      "Kodaka joked — his own 'risky confession,' delivered self-deprecatingly — that because of this the team sometimes submits builds where they think, 'No one should ever play it in this state': builds that barely meet platform requirements, with patches treated as the means of finalizing the master and trust placed in the fact that no one plays without an internet connection these days. Moderator Shuhei Yoshida joked that it comes down to praying players install the Day 1 patch, and Kodaka agreed."
+     ],
+     "takeaway": "Your distribution format is a schedule decision. If physical revenue funds the studio, the manufacturing deadline — not the design deadline — sets the real ship date, and the patch becomes part of the product whether you planned it that way or not. Name that cost before choosing the format.",
+     "source_name": "AUTOMATON",
+     "source_url": "https://automaton-media.com/en/news/kazutaka-kodaka-jokes-that-his-studio-sometimes-submits-builds-no-one-should-ever-play-in-order-to-meet-absurd-deadlines-prays-players-will-install-patches/"
+    },
+    {
+     "kicker": "CRAZY DRIVING TEST",
+     "headline": "Crazy Driving Test Was a Complete Game of Gray Boxes Before It Had Any Art",
+     "body": [
+      "Cromware's devlog walks through a rule borrowed from artist Art Wod — make it exist first, make it pretty later — applied across all three of the game's tests. Step one: make it exist. The whole game was built in gray boxes first, because a gray box moves in seconds, and that is the cheap place to find the fun. Step two is the one most grayboxing skips: size the boxes like the art. Each stand-in carries the footprint of the art that will replace it, so when the art arrives it cannot change how the game plays.",
+      "Step three: make it pretty in layers — what you touch first, then what you see, and the light last. The devlog is a video of a little under seven minutes following the rule through the three tests, and it closes by inviting other developers to post their own gray boxes in the comments."
+     ],
+     "takeaway": "Grayboxing only protects gameplay if the stand-ins carry the final art's dimensions. Footprint-accurate placeholders decouple the fun question from the look question, so art becomes a skin swap — never a stealth rebalance.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1768307/make-it-exist-first-make-it-pretty-later.amp"
+    },
+    {
+     "kicker": "RGB BODYWORKS",
+     "headline": "RGB Bodyworks Mixes Light Instead of Paint So the Answer Has a Code Anyone Can Read",
+     "body": [
+      "Office-canard's color-mixing game started as paint: mix to match a sample, in a body shop — a setting the solo dev took from a video of an old painter mixing paint by eye until it was perfect, then spraying it. The switch to light came from universal design. People differ in how well they can tell colors apart, and the dev wanted as many people as possible to accept the game without breaking the color puzzle. RGB hex codes were the answer that presented itself.",
+      "If colors mix as light, using the three primaries, and every color gets a code, the game can show a path to the answer no matter how you see color — and it doubles as study material for young people who want to become designers, in a phone game that was never real paint to begin with. Failure stays visible and playful: answer with the wrong color and it still gets sprayed onto the real car, so cars with doors that don't match line up and honk their horns."
+     ],
+     "takeaway": "Accessibility did not add a mode here — it changed the core representation. When perception varies across players, give the puzzle a second, symbolic channel that carries the same information, and the game becomes more inclusive and more teachable at once.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1769312/mixing-light-instead-of-paint.amp"
+    },
+    {
+     "kicker": "SPIRIT BINDER",
+     "headline": "Spirit Binder Has No Random Battles and No Shop — Every Fight Is a Choice, and Randomness Can Never End a Run Alone",
+     "body": [
+      "Raigh's loop devlog describes four loops nested inside each other: a room, a 10-to-15-minute dungeon, a one-to-two-hour run of six dungeons in shuffled order, and what carries across runs. Wild spirits wander visibly inside their rooms — there are no random battles, a fight starts only when you choose it or a spirit steps on you, and the second decision defines the game: fight, or bind, earning a spirit's trust, with every element wanting something different. The campfire always sits in the room right before the guardian, and gained a 'Later' option after players stepped onto it early on the way back from a side room and lost the rest. Guardians telegraph their next attack a turn ahead, break into a minigame at half health, and are purified, not killed. There is no money and no shop.",
+      "The fairness system is called Determination, the run's lifeline, built on a lesson the dev credits to For The King: randomness decides what happens, your choices decide how it goes. Drains stop at 1 Determination instead of 0, a lost fight lets you retry at full health, and minigames cost health, not the run — a run should end because of a string of choices you can look back on, not one bad roll. Across runs the team does not carry over; knowledge does, in the journal. Achievements each unlock a small permanent upgrade and are bot-tested over hundreds of runs so none unlocks by accident in more than about one run in eight."
+     ],
+     "takeaway": "Fairness is engineered with floors, not feelings: cap every drain above zero, make every encounter opt-in and telegraphed, and let only knowledge carry between runs — then a lost run reads as the player's own string of choices.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1767423/devlog-2-the-gameplay-loop.amp"
+    },
+    {
+     "kicker": "CORRIDOR 3: NIGHT SHIFT",
+     "headline": "Corridor 3: Night Shift Doubled Its Clock, Added a Pause, and Now Shows What Every Decision Costs Before You Make It",
+     "body": [
+      "The feedback on the first build was consistent, lukather writes: it was too fast to read. An hour lasted 0.9 seconds and the log scrolled past before you could take it in. An hour now lasts 2 seconds, so a run is about twelve minutes instead of five, and you can pause with Space or the Pause button — swapping shift and the vending machine still work while paused. The end of the day is no longer a score table but a planning screen: what happened (tokens, XP, hearts lost, audit losses, loose change found), tomorrow's shift chosen for free, and vending machine purchases before going home.",
+      "The interface was rebuilt around one idea: you should see what a decision costs before you make it. A strip shows the 12 hours of the day, with the hours a swap would burn hatched; the vending machine is always visible; at night a chip warns how many tokens the auditor could take. The log grew from about 18 lines to about 40, with no line repeating within four events, and promotions now show a banner instead of happening silently. Balance was deliberately left unchanged, with the dev's bot-test numbers stated openly."
+     ],
+     "takeaway": "Readability is a speed setting, not a writing problem: slow the clock, let the player pause and still plan, and price every decision on screen before it is taken — then leave the balance alone until real players, not your own bot, judge it.",
+     "source_name": "itch.io",
+     "source_url": "https://lukather.itch.io/corridor-3-night-shift/devlog/1769390/devlog-2-slower-pausable-and-a-proper-end-of-day"
+    },
+    {
+     "kicker": "NOTALONE",
+     "headline": "NOTALONE Makes You Carry the Trash Bag With Both Hands — So the Flashlight Stays Off",
+     "body": [
+      "Lucardu's second devlog gives the night shift's routine work a real chain and a real price. Collecting trash used to mean interacting with individual objects; now you grab a bag from the security booth, collect the trash, and carry it to the dumpster. There is one small complication, stated plainly in the devlog: while carrying the bag, you can't use your flashlight. In a horror game set in a parking lot at night, the most ordinary job on the shift becomes the most exposed walk you take.",
+      "The other half of the update is performance work that protects the look instead of flattening it. Using Unreal Engine's Light Complexity view — which reveals overlapping lights across the environment — the dev has been redistributing lights to reduce rendering cost while preserving the contrasts and dark corners that define the game's atmosphere, with some textures optimized as well. The stated goal for the whole pass: make the parking lot feel like a real workplace, with a routine you are expected to follow."
+     ],
+     "takeaway": "A carried object that disables your one safety tool turns a chore into a decision — when to be useful and when to be able to see. And optimize by instrument, not by dimming everything: measure the overlap, move the lights, keep the darkness you designed.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1768754/notalone-devlog-2-optimization-and-changes.amp"
+    }
+   ]
+  },
+  {
    "date": "2026-11-10",
    "dateline": "Tuesday, November 10, 2026",
    "stories": [
@@ -1786,4 +1891,4 @@
   }
  ]
 }
-sig:MEUCIFTUEP0IKQeX0mQn3LCujUxOEyZWX84RqTzheb99i4mRAiEAlF8E3UUrNyxhxJZ1SFW9JUXFeSKa9k9Pl44Jh/xJ0kI=
+sig:MEYCIQDNIc/TkghgZnzEf31JYq4BDOHfyEI3QVbNTOI8s6iSlQIhAIUdEYtZJ9RV47qYqQSDcmL1+/p7m+cwR2LsZtRjuXnH
