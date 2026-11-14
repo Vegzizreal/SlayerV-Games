@@ -1,6 +1,122 @@
 {
  "editions": [
   {
+   "date": "2026-11-14",
+   "dateline": "Saturday, November 14, 2026",
+   "stories": [
+    {
+     "body": [
+      "MachineGames came to Indiana Jones and the Great Circle from Wolfenstein, and design director Jens Andersson told the FRVR Podcast, in an interview reported November 13, that the melee-first design was the feature the team was most afraid of. The constraint was non-negotiable: the studio's people love guns, its fans come from Quake and Wolfenstein, and gunplay could not be made to feel bad — a headshot still had to kill, and ammo is not scarce. So shooting was penalised around the edges instead. Reloading is slow; at one point the team designed a GTA-style star system where shooting brings reinforcements. The calculation they were fighting was simple: a high-skill player picks up a dropped gun and clears the whole area with it, and the game stops being Indiana Jones.",
+      "The thing that actually fixed it arrived very late: breakable weapons. Every environment is filled with makeshift weapons — cast-iron pans, wrenches, mandolins, a violin, a fly swatter — and even your own gun becomes a club when you flip it around, which is faster than reloading. The weapons crack and break as you use them, which Andersson says produced opportunistic, chaotic combat that feels like Indy: slapsticky, but not slapstick. His verdict is that players now choose melee over guns even when guns would be more effective, because melee is interesting, fun and easy to get into. The breakables were controversial inside the studio precisely because they came late and were not part of the original design intent — they were kept because, once tested, they solved the problem nothing else had."
+     ],
+     "headline": "Indiana Jones Penalised Shooting — and a Late Breakable-Weapons System Made Melee the Game Players Chose",
+     "kicker": "INDIANA JONES AND THE GREAT CIRCLE",
+     "source_name": "FRVR",
+     "source_url": "https://frvr.com/blog/news/indiana-jones-and-the-great-circle-lead-says-devs-were-so-afraid-of-gamers-response-its-slapstick-melee-combat-as-the-woflenstein-studio-penalised-shooting/",
+     "takeaway": "Do not nerf the behaviour you want to discourage until it feels bad — make the behaviour you want so immediate, varied and fun that players pick it themselves. A late system is worth shipping when it is the one that directly serves the fantasy."
+    },
+    {
+     "body": [
+      "FlorianFlorian, the 26-year-old solo developer behind False Hero (released on PC on September 22), told Game*Spark in an interview published November 14 that the game exists to recreate the feeling of playing the original Dark Souls for the first time — and its central mechanic is stealing. The protagonist is the empty shell of a scholar from the Kingdom of Masks, and any cool move an enemy uses can be taken: a scholar throwing books, a giant eyeball firing lasers. The idea came from Dark Souls III's Combat Arts and the weapons that let players recreate boss attacks — Gael's Greatsword for Slave Knight Gael's aerial moves, Friede's Scythe for her high-speed combos. Florian wanted that for every boss and enemy in the game, chained together into the player's own combos, rather than locked to a few signature weapons.",
+      "The exploration half borrows from the other series he names, the 3D Zeldas: vast interconnected temples where an ability learned inside the dungeon — extending vines to operate distant levers or grow bridges, growing wings — opens new routes, in the Ocarina of Time and Twilight Princess pattern. He is candid that the early development had no clear answer for what the game should be and was years of engine learning and trial and error; the best phase came once the core systems were complete and work became adding bosses, stealable attacks and stages. Post-launch, player feedback showed difficulty was too high — multi-enemy fights in the late game and scarce healing in particular — so patches adjusted late-game bosses, added a healing-item enhancement feature and toned down group battles that felt unfair."
+     ],
+     "headline": "False Hero Lets You Steal Every Enemy's Attacks — Its Solo Dev Built the Whole Combat System Around Chaining Stolen Moves",
+     "kicker": "FALSE HERO",
+     "source_name": "Game*Spark",
+     "source_url": "https://en.gamespark.jp/article/2026/11/14/2310.html",
+     "takeaway": "One generous verb can be both the combat system and the reward for fighting everything: if players can steal and chain what enemies do, every new enemy is new player content. Design the feeling first, then borrow each influence's best piece to serve it."
+    },
+    {
+     "body": [
+      "Kyle Thompson, who designs and illustrates Well Dweller (his brother Eric composes), told GameCritics in an interview published November 13 that the biggest threat playtesting poses is a blurred vision. His filter is explicit: separate feedback that names an objective flaw, or a clash with the tastes of your target audience, from feedback that is really a player wishing the game were more like games they already like. Designing for every type of player makes a game that is a perfect fit for no one; in a crowded metroidvania field, a game a small group really loves beats a game everyone thinks is kind of good. Difficulty follows the same discipline — his games are meant to feel chill and relaxed, so he designs to a medium difficulty rather than joining the genre's punishing, Souls-inspired trend.",
+      "The genre's core construction problem is direction. A linear platformer level, played backwards, mostly would not work — but a metroidvania has to be traversable in any direction, with every connection and every access gate tracked as the world grows. For Well Dweller, his largest world yet, he started from a list of all abilities and major collectibles and aimed for a similar number of biomes, so each area would hold some sort of major progress. The payoff he designs for is the return trip: backtracking through an early area stronger and better equipped, cleaning up missed collectables, and feeling the contrast between how hard the area was and how easy it has become."
+     ],
+     "headline": "Well Dweller's Maker Designs for One Audience on Purpose — and Builds Every Room to Work in Both Directions",
+     "kicker": "WELL DWELLER",
+     "source_name": "GameCritics",
+     "source_url": "https://gamecritics.com/ben-schwartz/interview-the-thompson-bros-on-well-dweller/",
+     "takeaway": "Name your one audience and filter every playtest note against it. And in an interconnected world, design every space for the return trip, not just the first pass — the contrast on the way back is the genre's core pleasure."
+    },
+    {
+     "body": [
+      "Manjuu Games is jumping from the 2D Azur Lane to a full 3D world with Azur Promilia, and lead producer Weiwei Xiao told Insider Gaming, in an interview published November 13, that a region is built backwards from nature. Using the Fleece region as the example: before any concept design, and before deciding who would inhabit it, the team established the natural setting — the local climate, the weather patterns, the elevation. Only once land and climate were fixed did they ask what kinds of creatures should exist in that environment. Geography, climate, creatures and cultures are designed to mesh, rather than a large map being filled with things.",
+      "The companion creatures, the Kibo, follow from that order. Habitat shapes their subspecies, and how they react to being approached, how they rest, the sounds they make and how they behave in the open world are built from individual personality — Xiao's stated aim is creatures that stay with players as vivid, lively presences, not tools for battle or labour assigned to a home system. In testing, players spent far more time than the team expected interacting with favourites, gathering, photographing and sharing moments. Live-operations lead Hailiang Yin added the studio's service rule: when players like something there is always an underlying need behind it, and the developer's job is to find that need rather than copy the surface feature — with the roadmap planned on a ten-year horizon of steady, sustainable growth over chasing short-term trends."
+     ],
+     "headline": "Azur Promilia Designs Its Creatures From the Climate Up — Land and Weather First, Inhabitants Second",
+     "kicker": "AZUR PROMILIA",
+     "source_name": "Insider Gaming",
+     "source_url": "https://insider-gaming.com/interview-azur-promilia-goes-beyond-ambitions-azur-lane/",
+     "takeaway": "Derive creatures and cultures from climate and geography and the world coheres on its own. Invent the map first and jam things into it, and every creature is decoration with a habitat label pasted on."
+    },
+    {
+     "body": [
+      "The European Commission's proposed Digital Fairness Act, reported by GameDeveloper.com on November 13, is 71 pages aimed squarely at game UX and monetisation design across all EU member states. The concrete requirements: games must display the real-money value corresponding to virtual currencies; for anything targeting a minor, virtual currencies are disabled by default and can only be activated with a parent or guardian's signed-in approval; loot boxes cannot be sold to minors at all, and adults must be shown item types and probabilities before buying; and purchases that are 'necessary' for progress — the proposal's pay-to-win line — are forbidden for minors. Addictive or compulsive design gets its own clause: consumers must be able to disable features such as push notifications not triggered by user activity and engagement streaks that incentivise constantly returning, and the Commission can add new circumvention techniques to that list later.",
+      "The industry response shows where the design pain lands. The European Game Developer Federation, representing 2,500 studios, and Video Games Europe issued a joint statement calling the proposal 'game over for the European games industry,' arguing the protections duplicate existing rules — and pointing out that the Act effectively treats any game rated below PEGI 18 as targeting children, which would sweep most of the industry into the strictest tier and could push developers to chase higher age ratings to escape it. GameDeveloper.com also names the unresolved competitive problem: in a mixed-age game where adults and minors compete, if only adults may buy advantage items, the regulation itself unbalances matches. Making separate European versions is possible, but running and balancing multiple versions is major work — which is why EU rules tend to end up shaping the worldwide build. The proposal now goes to the European Parliament and Council, where it can be amended before a vote."
+     ],
+     "headline": "Europe's Proposed Digital Fairness Act Would Make Streaks and Push Notifications Switch-Offable — and Show Real-Money Prices on Virtual Currency",
+     "kicker": "EU DIGITAL FAIRNESS ACT",
+     "source_name": "GameDeveloper.com",
+     "source_url": "https://www.gamedeveloper.com/business/european-union-proposes-digital-fairness-act-which-could-have-major-effects-on-game-development",
+     "takeaway": "Design monetisation and retention as if each system needs a visible real-money price, published odds and an off switch — in Europe it soon may. Build those in from the start and a regulation is a settings pass; bolt them on later and it is a second product."
+    },
+    {
+     "body": [
+      "Songs of the Past, the newly announced expansion to the 11-year-old Witcher 3, puts new lines directly beside thousands of lines Jacek Rozenek recorded as the Polish voice of Geralt well over a decade ago. Since then Rozenek has had a stroke; he has returned to acting, but the work drains him physically and his voice is gruffer and lower than it was — a difference that would be immediately noticeable inside the same game, as GameDeveloper.com reported on November 13 from Game File's reporting. CD Projekt Red's solution was negotiated, not assumed: Rozenek was brought in, hired and paid to record the new performance, and agreed to let the studio use Respeecher — the AI voice tool CDPR previously used for a late actor's voice in Cyberpunk 2077's Phantom Liberty — trained on his own earlier Witcher recordings, to make the new lines sound like they used to.",
+      "The boundary is stated as plainly as the technique. Localization producer Mikołaj Szwed calls it one of the ways AI can be used ethically — with consent, and to do something good — and stresses this is not a common occurrence: the exception was made only because of Rozenek's health. The piece also draws the line at the sequel: whether Rozenek returns for The Witcher 4 is unknown, and a different, deeper voice for Geralt might simply make sense in a new game rather than an expansion to an old one — in which case no bridge is needed at all."
+     ],
+     "headline": "Geralt's Polish Voice Returns for The Witcher 3's New Expansion — With the Actor's Consent, AI Bridges the Voice His Stroke Changed",
+     "kicker": "THE WITCHER 3",
+     "source_name": "GameDeveloper.com",
+     "source_url": "https://www.gamedeveloper.com/production/polish-voice-actor-for-geralt-returns-for-the-witcher-3-with-ai",
+     "takeaway": "The defensible pattern for AI voice work is narrow and said out loud: the living actor performs and is paid, consent is specific to the case, the model trains on that actor's own recordings, and the studio names why this is an exception instead of quietly making it the pipeline."
+    },
+    {
+     "body": [
+      "Overwritten, a MegaJam entry by solo developer BeerTechStudios, was built by about a dozen AI agents under one human's direction, and its November 14 devlog — written from the shared agent log and check queue — is a full account of the org chart. One controlling Unreal agent owned integration, the editor, full builds and the combat and town code; local agents each owned one folder — UI, dungeon, flow, town, inventory, audio hooks, the character pipeline; an art director and a QA judge only reviewed and reported; two later 'directors' owned combat feel and visible world consequences. Agents claimed work in the shared log before starting and logged what they could not verify. The human's direction arrives as one-line play verdicts — 'combat feels ok,' 'that feels good,' 'it still feels like a generic or bad AI generated game but we are moving in the right direction' — and the answers were identity work: an ink gauntlet on the hero that changes with the world, gear as earned rewards, and a dialogue style guide. Reversals are logged as openly as decisions: a second dungeon cut in a late-morning scope freeze was restored that night, and a 'Cutting Room' built by taking the jam's theme text literally was shelved when the dev said not to take it so literal — stay ambitious, cut as little as possible, ship polished.",
+      "The failure list is why the log is worth reading. The controlling agent recorded that the Hunter's animation clips played; they did not, because the skeleton asset was never saved — the human's report of a town full of T-poses exposed it. A map script logged 'saved' when it had not saved. The first kit meshes imported with no collision, so the dev fell through the floor; the recorded lesson is to check with a trace, not with bounds. A gauntlet re-imported through the wrong setting shipped at 1/100 size, and the first log entry blamed the Blender agent's export until that agent compared the files field by field and the controlling agent corrected itself. A duplicate-helper build break hid because the editor compiles modified files separately and only showed on clean builds. Even the overnight stop was misdiagnosed as a 01:50 crash until the system log showed a Windows Update restart at about 02:30."
+     ],
+     "headline": "Overwritten's Solo Dev Directed a Dozen Agents for a Day — the Log Records Every Reversal, and the False Claims His Own Playtest Caught",
+     "kicker": "OVERWRITTEN",
+     "source_name": "itch.io",
+     "source_url": "https://beertechstudios.itch.io/overwritten/devlog/1776652/how-one-person-directed-the-agents-decisions-reversals-mistakes",
+     "takeaway": "With agents building, the human's playtest is the only ground truth: make every agent log what it could not verify, keep a check queue and a decision log with reversals in it, and treat any agent's success claim as a hypothesis until a real run through the real path proves it."
+    },
+    {
+     "body": [
+      "HIT YOUR MARK, solo dev TrySac's MegaJam entry on the theme 'Director's Cut,' is built on one rule stated before any concept work: think as if we had a month — a core that can score full marks on every judging criterion, plus modules that can be cut without breaking anything, so ambition never bets the submission. Research came before ideas: panel rearranging (Framed, Storyteller), FMV clip searching (Her Story, Immortality), live TV switching and rewind games were mapped as well-trodden, while combining several played stunt takes into one final cut, with continuity as the puzzle, was almost untouched. Three concepts were scored in a table — Take & Cut chosen, Deleted Scenes strong but close to meta clichés, Action! more strategy than fun in four days — and the design lived as 22 text documents that became the agents' specification.",
+      "Then the spec was attacked before it was built. Independent agents, with fresh context and no stake in the design, audited it three times and found three real flaws. First, the continuity check demanded a 150 cm tolerance while the player was sprinting — a rule written on paper and never simulated at sprint speed; the fix, marks on the floor like real film sets, became the title mechanic itself. Second, one perfect take scored five stars, which made the editing — the game's whole point — optional; the fix designs a trap into each scene, where the best stunts live on different lanes, and an insert shot saves the cut. Third, stacked lanes meant a failed jump from the roof landed on the lower path instead of the safety mattress; the lanes were offset in depth so a fall lands in the mattress pit behind. The method then did what it promised: on November 13, Scene 3 was cut, and the game ships with the Screen Test, Scene 1 and Scene 2."
+     ],
+     "headline": "HIT YOUR MARK Was Designed as a Scorable Core Plus Cuttable Modules — Then Independent Audits Broke Its Design Three Ways Before Any Code",
+     "kicker": "HIT YOUR MARK",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1773977/directors-commentary-2-reading-the-script-directors-cut.amp",
+     "takeaway": "Audit the paper design with a fresh, adversarial reader before code exists, and simulate rules at real speeds — a tolerance that only works at walking pace is a broken mechanic. Structure scope as a protected core plus modules you have already agreed you can lose."
+    },
+    {
+     "body": [
+      "Solo dev Brinn Heseltine's Devlog 11 for Fall of Castle Ellive, published November 13, tells a short story with a long shadow. Three things the main path depends on — the painted eye that breaks the first loop, the Lamplighter's six lamps, and a test ledge — were placed from the edge of their rooms. The walls stand almost a metre inside that edge, so all three sat inside the stone. A crossbow bolt stops at the first thing it hits; nothing could reach the eye, and the looping corridor therefore never ended. The castle could not be finished — and until that Friday morning, every build since the cloister went in had failed the basic test of finishing the main path from cold open to an ending without a console command.",
+      "The worse part is that the automated playthrough knew about all three targets. It had a check for each of them, and each one passed — because the checks told the target it had been hit. None of them fired a bolt. The devlog states the lesson as a law: a test that skips the step the player takes proves the mechanism works, not that the player can use it. The fix is now a standing rule — every target the main path depends on gets a second check that fires a real shot from where a player would stand, and fails unless the shot arrives; the bosses' targets and the sword's sweep against the bosses' real bodies are being added the same way. The same morning's first proper human playtest supplied the paired evidence: a ceiling light burning to pure white in the fog (every captured frame is now checked for clipped white — 14 of 94 frames from the tested build failed before the fix) and bosses unable to hit a knight standing more than about 1.6 metres above the floor, which made two raised platforms in the last arena safe spots."
+     ],
+     "headline": "Fall of Castle Ellive's Tests Passed Targets Inside Walls — Now Every Critical Target Needs a Second Check That Fires a Real Shot From Where a Player Stands",
+     "kicker": "FALL OF CASTLE ELLIVE",
+     "source_name": "itch.io",
+     "source_url": "https://thatoastiest.itch.io/the-fall-of-castle-ellive/devlog/1775324/devlog-11-friday-so-far",
+     "takeaway": "Test through the player's actual input path and geometry, never by telling the target the hit happened. A green check on a shortcut test is worse than no test at all, because it certifies a broken game as finished."
+    },
+    {
+     "body": [
+      "Project N²'s Day 2 devlog for Tomorrow's Yesterday, published November 14 and covering Friday November 13, names its favourite architectural decision in the project: the team did not build sixteen fossil systems. Every specimen runs through the same underlying excavation, washing, scanning, examination, classification and save architecture; a specimen contributes only its own model, artwork, metadata and scientific observations. Because Day 1 was spent on that machinery, Day 2 could be spent on content — the dev made the specimens (Tripo Studio became the main modelling tool, after Meshy and Hyper3D/Rodin trials showed what each could and could not do; one insect-in-amber specimen defeated several tools before yielding) while integration rode the existing systems, and by evening all sixteen real fossil models and their finished corkboard cards were in the game, ending the day in a packaged 'All16-Fossils' build.",
+      "The second decision came from the dev's own noon playtest, which found a design hole rather than a bug: a dirty specimen could be taken straight to the other analysis stations, skipping the cleaning that is supposed to be part of the investigation. The fix is a shared clean-state gate — dirty or partially washed specimens can no longer be scanned, examined or placed on the classification board, and the game says so: 'This fossil needs cleaning first!' Partial washing persists if you leave and return, and the visible scrub grid was removed while the game keeps tracking cleaning regions internally. Human playtesting the same day also found rocks the character could walk through and furniture without useful collision, off the scripted route's path; the log closes by preserving the project's standing distinction — the dev has not personally completed the final build end to end, so the automated results are evidence the systems function, not a substitute for the human run still owed."
+     ],
+     "headline": "Tomorrow's Yesterday Put All Sixteen Fossils Through One System — Then Gated the Lab So a Dirty Specimen Cannot Be Scanned",
+     "kicker": "TOMORROW'S YESTERDAY",
+     "source_name": "itch.io",
+     "source_url": "https://project-n2.itch.io/tomorrows-yesterday/devlog/1776654/day-2-summary-sixteen-fossils-later",
+     "takeaway": "Build one data-driven pipeline and let content be data — sixteen specimens became a day of making, not sixteen integrations. And when a playtest shows players can skip a step your design depends on, gate it in shared state that every station obeys, not with a tutorial note."
+    }
+   ]
+  },
+  {
    "date": "2026-11-13",
    "dateline": "Friday, November 13, 2026",
    "stories": [
@@ -2118,4 +2234,4 @@
   }
  ]
 }
-sig:MEQCIDmUcdd43SjftkSa0x2WuP6YANVV7H+lOFx0C2UMaDFsAiA/6KCNb/WE5wr5ghI+i3p5qsstaAqu/rQjutaK9/MLWQ==
+sig:MEYCIQDLxyf0RFNYzsMolzjSGaMsjXiUrakR+8/BUwoRO0tNewIhAPovz1INy3I+85SZW3hd86AY+WmN4hQAss+qS6QzudIJ
