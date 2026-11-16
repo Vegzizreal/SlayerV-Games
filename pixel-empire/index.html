@@ -1,0 +1,279 @@
+<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Pixel Empire - NY Video Game Store Sim</title></head><body style="margin:0;background:#111827"><style>
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+#pe{font-family:system-ui,sans-serif;color:var(--hatch-widget-text);max-width:520px;margin:0 auto;user-select:none;touch-action:none}
+#peHud{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:6px}
+.pePill{background:var(--hatch-widget-surface);border:1px solid var(--hatch-widget-border);border-radius:999px;padding:4px 10px;font-size:13px;font-weight:700}
+.pePill span{color:var(--hatch-widget-muted);font-weight:600}
+#peObj{background:#111827;color:#fde68a;border-radius:10px;padding:7px 10px;font-size:13px;font-weight:700;margin-bottom:6px;text-align:center}
+#peCvWrap{position:relative;border-radius:14px;overflow:hidden;border:1px solid var(--hatch-widget-border)}
+#peCv{display:block;width:100%;height:520px;background:#0b1020}
+#peJoy{position:absolute;left:14px;bottom:14px;width:104px;height:104px;border-radius:50%;background:rgba(255,255,255,.14);border:2px solid rgba(255,255,255,.35)}
+#peKnob{position:absolute;left:32px;top:32px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.85)}
+#peTabs{display:flex;gap:6px;margin-top:8px}
+#peTabs button{flex:1;padding:11px 4px;border-radius:10px;border:1px solid var(--hatch-widget-border);background:var(--hatch-widget-surface);color:var(--hatch-widget-text);font-weight:800;font-size:13px}
+#pePanel{display:none;margin-top:8px;max-height:300px;overflow:auto;border:1px solid var(--hatch-widget-border);border-radius:12px;padding:8px;background:var(--hatch-widget-surface)}
+.peRow{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px;border-bottom:1px solid var(--hatch-widget-border)}
+.peRow b{font-size:13px}.peRow small{display:block;color:var(--hatch-widget-muted);font-size:11px;max-width:270px}
+.peBuy{border:0;border-radius:9px;padding:9px 10px;font-weight:900;background:#22c55e;color:#052e12;white-space:nowrap}
+.peBuy:disabled{background:#6b7280;color:#e5e7eb}
+.peBuy.max{background:#374151;color:#9ca3af}
+#peToast{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.82);color:#fff;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:800;display:none;white-space:nowrap}
+#peHint{font-size:11px;color:var(--hatch-widget-muted);text-align:center;margin-top:6px}
+</style>
+<div id="pe">
+  <div id="peHud">
+    <div class="pePill">$ <span id="hCash">0</span></div>
+    <div class="pePill">Lv <span id="hLvl">1</span></div>
+    <div class="pePill">XP <span id="hXp">0</span></div>
+    <div class="pePill">Rep <span id="hRep">0</span></div>
+    <div class="pePill">Carrying <span id="hCarry">0/3</span></div>
+    <div class="pePill">Served <span id="hServed">0</span></div>
+  </div>
+  <div id="peObj">Go to DELIVERY and stand in the circle to grab games</div>
+  <div id="peCvWrap">
+    <canvas id="peCv" width="520" height="520"></canvas>
+    <div id="peToast"></div>
+    <div id="peJoy"><div id="peKnob"></div></div>
+  </div>
+  <div id="peTabs">
+    <button id="tabUp">UPGRADES</button>
+    <button id="tabBuild">BUILD / EXPAND</button>
+    <button id="tabQuest">QUESTS</button>
+  </div>
+  <div id="pePanel"></div>
+  <div id="peHint">Drag the joystick (bottom-left) OR tap the floor to walk there. Stand in a glowing circle to work. WASD / arrows work too.</div>
+</div>
+<script>
+(function(){
+"use strict";
+var cv=document.getElementById('peCv'),ctx=cv.getContext('2d');
+var W=520,H=520;
+var DEF={cash:40,xp:0,level:1,rep:0,served:0,earned:0,stocked:0,cleaned:0,
+ up:{speed:0,carry:0,hands:0,register:0,marketing:0},
+ staff:{stocker:0,cashier:0,cleaner:0},
+ built:{retro:false,arcade:false,pclab:false,trade:false,studio:false,arena:false,rooftop:false,neon:false},
+ questIdx:0,qProg:0};
+var S=JSON.parse(JSON.stringify(DEF));
+try{ if(window.hatchWidget&&window.hatchWidget.getState){ var g=window.hatchWidget.getState(DEF); if(g&&typeof g.cash==='number'){ S=Object.assign(JSON.parse(JSON.stringify(DEF)),g); S.up=Object.assign({},DEF.up,g.up||{}); S.staff=Object.assign({},DEF.staff,g.staff||{}); S.built=Object.assign({},DEF.built,g.built||{});} } }catch(e){}
+function save(){ try{ if(window.hatchWidget&&window.hatchWidget.setState) window.hatchWidget.setState(JSON.parse(JSON.stringify(S))); }catch(e){} }
+setInterval(save,3000);
+function clamp(v,a,b){return v<a?a:v>b?b:v}
+function dist(a,b){var dx=a.x-b.x,dy=a.y-b.y;return Math.sqrt(dx*dx+dy*dy)}
+function $(id){return document.getElementById(id)}
+function toast(t){var el=$('peToast');el.textContent=t;el.style.display='block';clearTimeout(toast._t);toast._t=setTimeout(function(){el.style.display='none'},1800)}
+function addXP(n){S.xp+=n; while(S.xp>=100){S.xp-=100;S.level++;S.rep+=2;toast('LEVEL UP! Lv '+S.level+' - new prices unlocked');} }
+function shelf(id,name,x,y,col,need){return {kind:'shelf',id:id,name:name,x:x,y:y,w:15,h:7,col:col,need:need||null,stock:0,cap:12}}
+var ZONES=[
+ {kind:'delivery',id:'delivery',name:'DELIVERY',x:8,y:64,w:17,h:10,col:'#f59e0b'},
+ {kind:'register',id:'register',name:'REGISTER',x:82,y:38,w:14,h:9,col:'#eab308'},
+ shelf('ps','PLAYSTATION',6,8,'#2563eb'),
+ shelf('xb','XBOX',24,8,'#16a34a'),
+ shelf('nin','NINTENDO',42,8,'#dc2626'),
+ shelf('retro','RETRO VAULT',60,8,'#9333ea','retro'),
+ shelf('pc','PC LAB',78,8,'#0891b2','pclab'),
+ shelf('arc','ARCADE',6,27,'#ea580c','arcade'),
+ shelf('trade','TRADE-IN',42,27,'#0d9488','trade'),
+ shelf('studio','STREAM / ARENA',66,27,'#db2777','studio')
+];
+function zoneOn(z){return !z.need||S.built[z.need]}
+var BUILDPADS=[
+ {id:'retro',name:'Retro Vault',x:62,y:20,cost:150},
+ {id:'arcade',name:'Arcade Zone',x:8,y:40,cost:300},
+ {id:'pclab',name:'PC Gaming Lab',x:80,y:20,cost:600},
+ {id:'trade',name:'Trade-In Counter',x:44,y:40,cost:900},
+ {id:'studio',name:'Streaming Studio',x:68,y:40,cost:1400},
+ {id:'arena',name:'Esports Arena',x:24,y:52,cost:2200},
+ {id:'rooftop',name:'Rooftop Expansion',x:44,y:64,cost:3500},
+ {id:'neon',name:'Times Sq Neon Sign',x:84,y:64,cost:5000}
+];
+var player={x:16,y:56,carry:0,face:1,walk:0};
+var target=null, keys={}, joy={on:false,dx:0,dy:0};
+var customers=[], bots=[], trash=[], floaters=[];
+var spawnT=1, trashT=8, eventT=55, event=null, eventLeft=0, day=1, dayT=120;
+var interact={zone:null,t:0};
+function price(){return Math.round((10+S.level*2)*(1+S.up.marketing*0.15)*(S.built.neon?1.25:1)*(event==='launch'?2:1))}
+function carryCap(){return 3+S.up.carry*2}
+function workRate(){return 1+S.up.hands*0.35}
+function moveSpeed(){return 26+S.up.speed*3.5}
+function spawnCustomer(){
+ var open=ZONES.filter(function(z){return z.kind==='shelf'&&zoneOn(z)&&z.stock>0});
+ if(!open.length||customers.length>=10+(S.built.rooftop?4:0))return;
+ var z=open[Math.floor(Math.random()*open.length)];
+ customers.push({x:50,y:77,tx:z.x+z.w/2,ty:z.y+11,zone:z,state:'toShelf',wait:0,col:['#f472b6','#60a5fa','#a78bfa','#34d399','#fbbf24'][Math.floor(Math.random()*5)],t:0});
+}
+function spawnBot(role){
+ bots.push({role:role,x:16,y:56,carry:0,state:'idle',tx:16,ty:56,t:0,col:role==='stocker'?'#38bdf8':role==='cashier'?'#facc15':'#4ade80'});
+}
+for(var r in S.staff) for(var i=0;i<S.staff[r];i++) spawnBot(r);
+var QUESTS=[
+ {name:'Stock 20 games',goal:20,key:'stocked',reward:80},
+ {name:'Serve 12 customers',goal:12,key:'served',reward:120},
+ {name:'Earn $300 total',goal:300,key:'earned',reward:100},
+ {name:'Clean 6 messes',goal:6,key:'cleaned',reward:90},
+ {name:'Stock 50 games',goal:50,key:'stocked',reward:250},
+ {name:'Serve 30 customers',goal:30,key:'served',reward:350}];
+function quest(){return QUESTS[S.questIdx%QUESTS.length]}
+function questBase(){return {stocked:0,served:0,earned:0,cleaned:0}._q||0}
+var qStart={stocked:S.stocked,served:S.served,earned:S.earned,cleaned:S.cleaned};
+function qProgress(){var q=quest();return Math.min(q.goal,(S[q.key]||0)-(qStart[q.key]||0))}
+function checkQuest(){var q=quest(); if(qProgress()>=q.goal){S.cash+=q.reward;addXP(25);toast('QUEST DONE +$'+q.reward);S.questIdx++;qStart={stocked:S.stocked,served:S.served,earned:S.earned,cleaned:S.cleaned};save();}}
+var UPS=[
+ {id:'speed',name:'Subway Sprint Shoes',desc:'Move faster through the store',base:50},
+ {id:'carry',name:'Big NYC Backpack',desc:'Carry +2 games at a time',base:60},
+ {id:'hands',name:'Fast Hands',desc:'Stock, load and clean 35% faster per level',base:70},
+ {id:'register',name:'Register Pro',desc:'Checkout faster, bigger tips',base:80},
+ {id:'marketing',name:'Times Square Ads',desc:'More customers, +15% prices per level',base:100}];
+var STAFF=[
+ {id:'stocker',name:'Hire Stocker',desc:'Auto runs boxes from delivery to shelves',cost:200},
+ {id:'cashier',name:'Hire Cashier',desc:'Auto works the register',cost:250},
+ {id:'cleaner',name:'Hire Cleaner',desc:'Auto cleans messes and repairs',cost:180}];
+var BUILDS=BUILDPADS.map(function(p){return {id:p.id,name:p.name,cost:p.cost,desc:'Unlocks a new zone in the store - stand on its BUILD pad or buy here'}});
+function px(wx){return 10+wx*5} function py(wy){return 26+wy*5.9}
+function toWorld(sx,sy){return {x:(sx-10)/5,y:(sy-26)/5.9}}
+var joyEl=$('peJoy'),knob=$('peKnob'),wrap=$('peCvWrap');
+function joyMove(e){var r=joyEl.getBoundingClientRect();var cx=r.left+r.width/2,cy=r.top+r.height/2;var t=e.touches?e.touches[0]:e;var dx=t.clientX-cx,dy=t.clientY-cy;var m=Math.sqrt(dx*dx+dy*dy),max=34;if(m>max){dx*=max/m;dy*=max/m}knob.style.left=(32+dx)+'px';knob.style.top=(32+dy)+'px';joy.dx=dx/max;joy.dy=dy/max;if(Math.abs(joy.dx)<0.12)joy.dx=0;if(Math.abs(joy.dy)<0.12)joy.dy=0}
+joyEl.addEventListener('touchstart',function(e){joy.on=true;joyMove(e);e.preventDefault()},{passive:false});
+joyEl.addEventListener('touchmove',function(e){if(joy.on)joyMove(e);e.preventDefault()},{passive:false});
+joyEl.addEventListener('touchend',function(){joy.on=false;joy.dx=0;joy.dy=0;knob.style.left='32px';knob.style.top='32px'});
+joyEl.addEventListener('mousedown',function(e){joy.on=true;joyMove(e)});
+window.addEventListener('mousemove',function(e){if(joy.on&&e.buttons)joyMove(e)});
+window.addEventListener('mouseup',function(){joy.on=false;joy.dx=0;joy.dy=0;knob.style.left='32px';knob.style.top='32px'});
+cv.addEventListener('touchstart',function(e){var r=cv.getBoundingClientRect();var t=e.touches[0];var w=toWorld((t.clientX-r.left)*(520/r.width),(t.clientY-r.top)*(520/r.height));target={x:clamp(w.x,3,97),y:clamp(w.y,3,75)};e.preventDefault()},{passive:false});
+cv.addEventListener('mousedown',function(e){var r=cv.getBoundingClientRect();var w=toWorld((e.clientX-r.left)*(520/r.width),(e.clientY-r.top)*(520/r.height));target={x:clamp(w.x,3,97),y:clamp(w.y,3,75)}});
+window.addEventListener('keydown',function(e){keys[e.key.toLowerCase()]=true});
+window.addEventListener('keyup',function(e){keys[e.key.toLowerCase()]=false});
+var panel=$('pePanel'),panelMode=null;
+function openPanel(mode){panelMode=panelMode===mode?null:mode;panel.style.display=panelMode?'block':'none';if(panelMode)renderPanel()}
+function renderPanel(){
+ if(!panelMode)return; var h='';
+ if(panelMode==='up'){
+  h+='<div class="peRow"><div><b>YOUR CREW & GEAR</b><small>Levels stack forever. Staff work on their own.</small></div></div>';
+  UPS.forEach(function(u){var lv=S.up[u.id],cost=Math.round(u.base*Math.pow(1.6,lv));h+='<div class="peRow"><div><b>'+u.name+' - Lv '+lv+'</b><small>'+u.desc+'</small></div><button class="peBuy" data-up="'+u.id+'" '+(S.cash<cost?'disabled':'')+'>$'+cost+'</button></div>'});
+  STAFF.forEach(function(st){h+='<div class="peRow"><div><b>'+st.name+' x'+S.staff[st.id]+'</b><small>'+st.desc+'</small></div><button class="peBuy" data-staff="'+st.id+'" '+(S.cash<st.cost?'disabled':'')+'>$'+st.cost+'</button></div>'});
+ }
+ if(panelMode==='build'){
+  BUILDS.forEach(function(b){var done=S.built[b.id];h+='<div class="peRow"><div><b>'+b.name+(done?' - BUILT':'')+'</b><small>'+b.desc+'</small></div>'+(done?'<button class="peBuy max" disabled>DONE</button>':'<button class="peBuy" data-build="'+b.id+'" '+(S.cash<b.cost?'disabled':'')+'>$'+b.cost+'</button>')+'</div>'});
+  h+='<div class="peRow"><div><b>Boroughs Roadmap</b><small>Manhattan shop now. Brooklyn (2nd store), Queens Arcade Mall and Bronx Esports unlock as future expansions in this same save.</small></div></div>';
+ }
+ if(panelMode==='quest'){var q=quest();h+='<div class="peRow"><div><b>QUEST: '+q.name+'</b><small>Progress '+qProgress()+' / '+q.goal+' - Reward $'+q.reward+' + 25 XP</small></div></div>';
+  h+='<div class="peRow"><div><b>How to get rich</b><small>Delivery -> stock shelves -> customers buy -> you run the register. Keep every shelf full, clean messes, and save for zones: more zones = more customers spending more.</small></div></div>';
+  h+='<div class="peRow"><div><b>Events</b><small>Watch for RUSH HOUR (crowd surge), MIDNIGHT LAUNCH (2x prices) and PIGEON ATTACK (extra messes, tips if cleaned fast).</small></div></div>';
+  h+='<div class="peRow"><div><b>Reset save</b><small>Start a brand new store</small></div><button class="peBuy" id="peReset">RESET</button></div>';
+ }
+ panel.innerHTML=h;
+ panel.querySelectorAll('[data-up]').forEach(function(b){b.onclick=function(){var u=UPS.filter(function(x){return x.id===b.getAttribute('data-up')})[0];var cost=Math.round(u.base*Math.pow(1.6,S.up[u.id]));if(S.cash>=cost){S.cash-=cost;S.up[u.id]++;toast(u.name+' Lv '+S.up[u.id]);save();renderPanel();updateHud()}}});
+ panel.querySelectorAll('[data-staff]').forEach(function(b){b.onclick=function(){var st=STAFF.filter(function(x){return x.id===b.getAttribute('data-staff')})[0];if(S.cash>=st.cost){S.cash-=st.cost;S.staff[st.id]++;spawnBot(st.id);toast(st.name+' hired');save();renderPanel();updateHud()}}});
+ panel.querySelectorAll('[data-build]').forEach(function(b){b.onclick=function(){buyBuild(b.getAttribute('data-build'))}});
+ var rs=$('peReset'); if(rs)rs.onclick=function(){if(confirm('Reset your store and start over?')){S=JSON.parse(JSON.stringify(DEF));qStart={stocked:0,served:0,earned:0,cleaned:0};customers=[];bots=[];ZONES.forEach(function(z){z.stock=0});save();renderPanel();updateHud();toast('New store, fresh start')}};
+}
+function buyBuild(id){var b=BUILDS.filter(function(x){return x.id===id})[0];if(!b||S.built[id]||S.cash<b.cost)return;S.cash-=b.cost;S.built[id]=true;addXP(30);toast(b.name+' BUILT! New zone open');save();renderPanel();updateHud()}
+$('tabUp').onclick=function(){openPanel('up')};
+$('tabBuild').onclick=function(){openPanel('build')};
+$('tabQuest').onclick=function(){openPanel('quest')};
+function inZone(e,z){return e.x>z.x-2&&e.x<z.x+z.w+2&&e.y>z.y-2&&e.y<z.y+z.h+3}
+function floater(x,y,txt,col){floaters.push({x:x,y:y,txt:txt,col:col||'#4ade80',t:0})}
+function moveEntity(e,tx,ty,sp,dt){var dx=tx-e.x,dy=ty-e.y,d=Math.sqrt(dx*dx+dy*dy);if(d<0.6)return true;e.x+=dx/d*sp*dt;e.y+=dy/d*sp*dt;e.walk=(e.walk||0)+dt*10;if(dx)e.face=dx>0?1:-1;return false}
+function playerWork(dt){
+ var doing=null;
+ var del=ZONES[0];
+ if(inZone(player,del)&&player.carry<carryCap()){doing=del;interact.t+=dt*workRate();if(interact.t>=0.55){interact.t=0;player.carry++;floater(player.x,player.y-4,'+1 game','#fbbf24')}}
+ ZONES.forEach(function(z){if(z.kind==='shelf'&&zoneOn(z)&&inZone(player,z)&&player.carry>0&&z.stock<z.cap){doing=z;interact.t+=dt*workRate();if(interact.t>=0.32){interact.t=0;player.carry--;z.stock++;S.stocked++;checkQuest()}}});
+ var reg=ZONES[1];
+ var qc=customers.filter(function(c){return c.state==='queue'})[0];
+ if(inZone(player,reg)&&qc){doing=reg;interact.t+=dt*(1+S.up.register*0.3);if(interact.t>=0.9){interact.t=0;checkout(qc,player)}}
+ for(var i=trash.length-1;i>=0;i--){var tr=trash[i];if(dist(player,tr)<4){doing=tr;interact.t+=dt*workRate();if(interact.t>=0.7){interact.t=0;trash.splice(i,1);S.cash+=5;S.cleaned++;floater(tr.x,tr.y,'+$5 clean','#4ade80');checkQuest()}}}
+ BUILDPADS.forEach(function(p){if(!S.built[p.id]&&Math.abs(player.x-(p.x))<4&&Math.abs(player.y-p.y)<4){doing=p;if(S.cash>=p.cost){interact.t+=dt;if(interact.t>=1.2){interact.t=0;buyBuild(p.id)}}}});
+ if(!doing)interact.t=0; interact.zone=doing;
+}
+function checkout(c,who){var pay=price()+Math.floor(Math.random()*5)+(S.up.register*2);S.cash+=pay;S.earned+=pay;S.served++;S.rep+=1;addXP(8);floater(c.x,c.y-5,'+$'+pay);c.state='leave';checkQuest();updateHud()}
+function botWork(b,dt){
+ var sp=22;
+ if(b.role==='cashier'){var reg=ZONES[1];var qc=customers.filter(function(c){return c.state==='queue'})[0];if(qc){if(moveEntity(b,reg.x+reg.w/2,reg.y+reg.h+2,sp,dt)) {b.t+=dt;if(b.t>1){b.t=0;checkout(qc,b)}}}else moveEntity(b,reg.x+reg.w/2,reg.y+reg.h+2,sp,dt);return}
+ if(b.role==='cleaner'){if(trash.length){var tr=trash[0];if(moveEntity(b,tr.x,tr.y,sp,dt)){b.t+=dt*workRate();if(b.t>0.7){b.t=0;trash.splice(0,1);S.cash+=5;S.cleaned++;checkQuest()}}}else moveEntity(b,30,50,sp,dt);return}
+ if(b.carry<=0){var del=ZONES[0];if(moveEntity(b,del.x+8,del.y+5,sp,dt)){b.t+=dt;if(b.t>0.6){b.t=0;b.carry=carryCap()}}}
+ else{var low=null;ZONES.forEach(function(z){if(z.kind==='shelf'&&zoneOn(z)&&(!low||z.stock<low.stock))low=z});if(low&&low.stock<low.cap){if(moveEntity(b,low.x+low.w/2,low.y+10,sp,dt)){b.t+=dt;if(b.t>0.35){b.t=0;b.carry--;low.stock++;S.stocked++;checkQuest()}}}else b.carry=0}
+}
+function update(dt){
+ var mx=joy.dx,my=joy.dy;
+ if(keys['w']||keys['arrowup'])my=-1; if(keys['s']||keys['arrowdown'])my=1; if(keys['a']||keys['arrowleft'])mx=-1; if(keys['d']||keys['arrowright'])mx=1;
+ if(mx||my){target=null;var m=Math.sqrt(mx*mx+my*my);player.x=clamp(player.x+mx/m*moveSpeed()*dt,3,97);player.y=clamp(player.y+my/m*moveSpeed()*dt,4,76);player.walk+=dt*11;player.face=mx>0?1:mx<0?-1:player.face}
+ else if(target){if(moveEntity(player,target.x,target.y,moveSpeed(),dt))target=null}
+ playerWork(dt);
+ bots.forEach(function(b){botWork(b,dt)});
+ spawnT-=dt*(1+S.up.marketing*0.12)*(event==='rush'?2.2:1);
+ if(spawnT<=0){spawnT=2.6;spawnCustomer()}
+ customers.forEach(function(c){
+  if(c.state==='toShelf'){if(moveEntity(c,c.tx,c.ty,17,dt)){c.state='browse';c.t=0}}
+  else if(c.state==='browse'){c.t+=dt;if(c.t>0.9){if(c.zone.stock>0){c.zone.stock--;c.state='toReg'}else c.state='leave'}}
+  else if(c.state==='toReg'){var q=customers.filter(function(x){return x.state==='queue'}).length;if(moveEntity(c,86,50+q*4,17,dt))c.state='queue'}
+  else if(c.state==='leave'){moveEntity(c,50,80,20,dt)}
+ });
+ customers=customers.filter(function(c){return !(c.state==='leave'&&c.y>78)});
+ trashT-=dt; if(trashT<=0){trashT=event==='pigeon'?5:11;if(trash.length<6)trash.push({x:8+Math.random()*84,y:16+Math.random()*55,kind:'trash',name:'MESS'})}
+ eventT-=dt; if(eventT<=0&&!event){var evs=['rush','launch','pigeon'];event=evs[Math.floor(Math.random()*evs.length)];eventLeft=25;eventT=70;toast(event==='rush'?'RUSH HOUR! Crowd surge':event==='launch'?'MIDNIGHT LAUNCH! 2x prices':'PIGEON ATTACK! Messes everywhere')}
+ if(event){eventLeft-=dt;if(eventLeft<=0){event=null;toast('Event over')}}
+ dayT-=dt; if(dayT<=0){dayT=120;day++;S.cash+=20+S.level*5;toast('Day '+day+' in NYC! Rent paid, +$'+(20+S.level*5)+' regulars bonus')}
+ floaters.forEach(function(f){f.t+=dt;f.y-=dt*4}); floaters=floaters.filter(function(f){return f.t<1.1});
+ updateHud();
+}
+function objective(){
+ if(event==='launch')return 'MIDNIGHT LAUNCH - prices doubled! Keep shelves full and run the register';
+ if(player.carry>0){var empty=ZONES.filter(function(z){return z.kind==='shelf'&&zoneOn(z)&&z.stock<z.cap}).sort(function(a,b){return a.stock-b.stock})[0];if(empty)return 'Stock the '+empty.name+' shelf ('+empty.stock+'/12) - stand in its circle';}
+ if(customers.some(function(c){return c.state==='queue'}))return 'Customer waiting! Stand at the REGISTER to check them out';
+ if(ZONES.some(function(z){return z.kind==='shelf'&&zoneOn(z)&&z.stock>0}))return 'Customers are shopping. Grab more games at DELIVERY';
+ if(player.carry<carryCap())return 'Go to DELIVERY (bottom-left) and stand in the circle to grab games';
+ var q=quest();return 'Quest: '+q.name+' - '+qProgress()+'/'+q.goal+' for $'+q.reward;
+}
+function updateHud(){$('hCash').textContent=S.cash;$('hLvl').textContent=S.level;$('hXp').textContent=S.xp+'/100';$('hRep').textContent=S.rep;$('hCarry').textContent=player.carry+'/'+carryCap();$('hServed').textContent=S.served;$('peObj').textContent=objective()+(event?'  |  EVENT: '+event.toUpperCase()+' '+Math.ceil(eventLeft)+'s':'  |  Day '+day)}
+function box(x,y,w,d,h,cTop,cFront,cSide){
+ var X=px(x),Y=py(y),Wdt=w*5,D=d*5.9,Hgt=h;
+ ctx.fillStyle=cSide;ctx.fillRect(X+Wdt,Y-Hgt,D*0.35,Hgt+D*0.2);
+ ctx.fillStyle=cTop;ctx.beginPath();ctx.moveTo(X,Y-Hgt);ctx.lineTo(X+Wdt,Y-Hgt);ctx.lineTo(X+Wdt+D*0.35,Y-Hgt-D*0.2);ctx.lineTo(X+D*0.35,Y-Hgt-D*0.2);ctx.closePath();ctx.fill();
+ ctx.fillStyle=cFront;ctx.fillRect(X,Y-Hgt,Wdt,Hgt);
+}
+function circleZone(x,y,w,h,col,active,label){
+ var X=px(x),Y=py(y),W=w*5,Hh=h*5.9;
+ ctx.strokeStyle=col;ctx.lineWidth=active?4:2;ctx.globalAlpha=active?0.95:0.55;
+ ctx.beginPath();ctx.ellipse(X+W/2,Y+Hh/2,W/2,Hh/2,0,0,Math.PI*2);ctx.stroke();ctx.globalAlpha=1;
+ if(label){ctx.fillStyle=col;ctx.font='bold 10px system-ui';ctx.textAlign='center';ctx.fillText(label,X+W/2,Y+Hh/2+3)}
+}
+function person(e,col,shirt,isPlayer){
+ var X=px(e.x),Y=py(e.y),bob=Math.sin(e.walk||0)*2;
+ ctx.fillStyle='rgba(0,0,0,.3)';ctx.beginPath();ctx.ellipse(X,Y+4,10,4,0,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle=shirt;ctx.fillRect(X-8,Y-18+bob,16,15);
+ ctx.fillStyle=col;ctx.beginPath();ctx.arc(X,Y-24+bob,8,0,Math.PI*2);ctx.fill();
+ ctx.fillStyle='#111';ctx.fillRect(X-8,Y-32+bob,16,5);
+ if(isPlayer){ctx.fillStyle='#f59e0b';ctx.fillRect(X+(e.face>0?7:-13),Y-16+bob,6,11);ctx.fillStyle='#fff';ctx.font='bold 9px system-ui';ctx.textAlign='center';ctx.fillText(e.carry,X+(e.face>0?10:-10),Y-7+bob)}
+}
+function draw(){
+ ctx.clearRect(0,0,W,H);
+ ctx.fillStyle='#0f172a';ctx.fillRect(0,0,W,26);
+ ctx.fillStyle='#facc15';for(var i=0;i<14;i++)ctx.fillRect(8+i*38,6+(i%3)*4,14,12);
+ ctx.fillStyle='#f8fafc';ctx.font='bold 12px system-ui';ctx.textAlign='center';ctx.fillText('PIXEL EMPIRE - NEW YORK',W/2,17);
+ for(var gx=0;gx<20;gx++)for(var gy=0;gy<13;gy++){ctx.fillStyle=(gx+gy)%2?'#1e293b':'#243044';ctx.fillRect(px(gx*5),py(gy*6),25,35)}
+ ctx.strokeStyle='#334155';ctx.strokeRect(px(0),py(0),500,78*5.9);
+ BUILDPADS.forEach(function(p){if(!S.built[p.id]){circleZone(p.x-3,p.y-3,6,5,'#f472b6',interact.zone===p,'BUILD');ctx.fillStyle='#fff';ctx.font='bold 9px system-ui';ctx.textAlign='center';ctx.fillText(p.name+' $'+p.cost,px(p.x),py(p.y)-16)}});
+ ZONES.forEach(function(z){
+  if(!zoneOn(z)){ctx.fillStyle='rgba(255,255,255,.06)';ctx.fillRect(px(z.x),py(z.y),z.w*5,z.h*5.9);ctx.fillStyle='#64748b';ctx.font='bold 10px system-ui';ctx.textAlign='center';ctx.fillText('LOCKED',px(z.x+z.w/2),py(z.y+z.h/2));return}
+  circleZone(z.x,z.y,z.w,z.h,z.col,interact.zone===z,z.kind==='delivery'?'LOAD':z.kind==='register'?'PAY':'');
+  if(z.kind==='delivery'){for(var i=0;i<4;i++)box(z.x+1+(i%2)*7,z.y+1+Math.floor(i/2)*4,5,3,12,'#fbbf24','#b45309','#92400e')}
+  else if(z.kind==='register'){box(z.x,z.y,14,6,16,'#fde68a','#a16207','#854d0e');ctx.fillStyle='#111';ctx.fillRect(px(z.x)+8,py(z.y)-26,44,14)}
+  else{box(z.x,z.y,z.w,5,22,z.col,z.col,'#111827');ctx.fillStyle='#fff';ctx.font='bold 8px system-ui';ctx.textAlign='center';ctx.fillText(z.name,px(z.x+z.w/2),py(z.y)-8);
+   for(var s=0;s<z.cap;s++){ctx.fillStyle=s<z.stock?'#4ade80':'rgba(255,255,255,.25)';ctx.fillRect(px(z.x)+4+s*5.6,py(z.y)+2,4,7)}}
+ });
+ trash.forEach(function(t){ctx.fillStyle='#84cc16';ctx.beginPath();ctx.arc(px(t.x),py(t.y),7,0,Math.PI*2);ctx.fill();ctx.fillStyle='#365314';ctx.font='bold 8px system-ui';ctx.textAlign='center';ctx.fillText('MESS',px(t.x),py(t.y)+3);if(interact.zone===t)circleZone(t.x-3,t.y-2,6,4,'#84cc16',true,'')});
+ ctx.fillStyle='#38bdf8';ctx.fillRect(px(44),py(76),60,10);ctx.fillStyle='#082f49';ctx.font='bold 10px system-ui';ctx.textAlign='center';ctx.fillText('ENTRANCE - 5TH AVE',px(47),py(77)+7);
+ var actors=[];customers.forEach(function(c){actors.push({e:c,f:function(){person(c,c.col,'#334155',false);if(c.state==='queue'){ctx.fillStyle='#fff';ctx.font='bold 10px system-ui';ctx.textAlign='center';ctx.fillText('$',px(c.x),py(c.y)-40)}}})});
+ bots.forEach(function(b){actors.push({e:b,f:function(){person(b,'#fde68a',b.col,false)}})});
+ actors.push({e:player,f:function(){person(player,'#ffdbac','#2563eb',true)}});
+ actors.sort(function(a,b){return a.e.y-b.e.y});actors.forEach(function(a){a.f()});
+ if(interact.zone){ctx.strokeStyle='#4ade80';ctx.lineWidth=4;ctx.beginPath();ctx.arc(px(player.x),py(player.y)-44,11,-Math.PI/2,-Math.PI/2+Math.PI*2*Math.min(1,interact.t));ctx.stroke()}
+ floaters.forEach(function(f){ctx.globalAlpha=1-f.t/1.1;ctx.fillStyle=f.col;ctx.font='bold 12px system-ui';ctx.textAlign='center';ctx.fillText(f.txt,px(f.x),py(f.y));ctx.globalAlpha=1});
+ if(event){ctx.fillStyle=event==='launch'?'rgba(219,39,119,.12)':event==='rush'?'rgba(250,204,21,.10)':'rgba(132,204,22,.10)';ctx.fillRect(0,26,W,H-26)}
+}
+var last=0;
+function loop(ts){var dt=Math.min(0.05,(ts-last)/1000||0.016);last=ts;update(dt);draw();requestAnimationFrame(loop)}
+updateHud();requestAnimationFrame(loop);
+})();
+</script>
+</body></html>
