@@ -512,6 +512,7 @@ function update(dt){
  if(fixCtx){needlePos+=needleDir*dt*1.1;if(needlePos>1){needlePos=1;needleDir=-1}if(needlePos<0){needlePos=0;needleDir=1}}else needlePos=0;
  thiefT-=dt;if(thiefT<=0){thiefT=80+Math.random()*40;spawnThief()}
  for(var sid in STORES){var sst=STORES[sid];sst.delT-=dt;if(sst.delT<=0){sst.delT=5;AUD.delivered=true;if(sid===cur&&Math.random()<0.6)sfx('pallet_thunk',0.5);
+  if(sid===cur&&Math.random()<0.5)sfx('crate_slide',0.4);
   if(sst.dockGames<=15)sst.dockGames+=3;
   else if(S.built.storage&&sst.storageGames<=117)sst.storageGames+=3;
   else if(sst.dockGames<18)sst.dockGames=18}}
