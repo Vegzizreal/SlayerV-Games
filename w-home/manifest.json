@@ -5,11 +5,11 @@
       "parts": [
         {
           "offset": 0,
-          "path": "w-home-merged-1.1.bin"
+          "path": "w-home-merged-1.2.bin"
         }
       ]
     }
   ],
   "name": "Watch W",
-  "version": "1.1"
+  "version": "1.2"
 }
