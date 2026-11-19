@@ -64,7 +64,7 @@ const META_URL = "ble.json";
 
 const CTRL_START = 1, CTRL_FINISH = 2, CTRL_ABORT = 3,
       CTRL_START_PATCH = 4, CTRL_START_RECOVERY = 6,
-      CTRL_ROLLBACK = 7, CTRL_TIME_SYNC = 8;
+      CTRL_ROLLBACK = 7, CTRL_TIME_SYNC = 8, CTRL_DATE_SYNC = 9;
 /* DATA write sizes, stepped down when a write fails: each
  * fits the negotiated ATT payload at the MTU it names
  * (512 / 247 / 131 / 23 minus the 3-byte ATT header). */
@@ -97,6 +97,23 @@ function say(t, cls) { statusEl.textContent = t; statusEl.className = "big " + (
 async function syncClock() {
   const d = new Date();
   const hh = d.getHours(), mm = d.getMinutes(), ss = d.getSeconds();
+  /* Date sync (W1.14): the calendar date rides right
+   * behind the time (CTRL op 9: year u16 LE, month,
+   * day). The unit accepts it under the same gates and
+   * only then renders a date on its clock reveals.
+   * Best effort exactly like the time sync: firmware
+   * older than W1.14 refuses the unknown op, and the
+   * refusal must not block anything - the catch below
+   * covers both writes. */
+  try {
+    await bounded(
+      chCtrl.writeValueWithResponse(
+        new Uint8Array([CTRL_DATE_SYNC,
+                        d.getFullYear() & 0xFF,
+                        (d.getFullYear() >> 8) & 0xFF,
+                        d.getMonth() + 1, d.getDate()])),
+      T_STEP_MS, "Setting the unit's date", WINDOW_GONE);
+  } catch (e) { /* pre-W1.14 unit: lands with a later visit */ }
   const pad = n => String(n).padStart(2, "0");
   try {
     await bounded(
