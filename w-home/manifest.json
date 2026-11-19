@@ -5,11 +5,23 @@
       "parts": [
         {
           "offset": 0,
-          "path": "w-home-merged-1.6.bin"
+          "path": "bootloader.bin"
+        },
+        {
+          "offset": 32768,
+          "path": "partition-table.bin"
+        },
+        {
+          "offset": 65536,
+          "path": "otadata.bin"
+        },
+        {
+          "offset": 131072,
+          "path": "charm_pet_w-1.7.bin"
         }
       ]
     }
   ],
   "name": "Watch W",
-  "version": "1.6"
+  "version": "1.7"
 }

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Watch W1.6 - Installer</title>
+<title>Watch W1.7 - Installer</title>
 <style>
   body { font-family: system-ui, sans-serif; background: #14161a; color: #e8eaf0; margin: 0; padding: 24px; }
   main { max-width: 560px; margin: 0 auto; }
@@ -16,13 +16,16 @@
 </head>
 <body>
 <main>
-  <h1>ESP32-S3-Touch-AMOLED-2.06 - Watch W1.6</h1>
+  <h1>ESP32-S3-Touch-AMOLED-2.06 - Watch W1.7</h1>
   <div class="card">
     <esp-web-install-button manifest="manifest.json"></esp-web-install-button>
-    <p>Tick <strong>Erase device</strong> when coming from another firmware line.</p>
+    <p>This install writes separate parts and
+    <strong>preserves Bluetooth pairings and settings</strong> -
+    the NVS span is not touched. Do <strong>NOT</strong> tick
+    "Erase device".</p>
   </div>
-  <p>File: w-home-merged-1.6.bin (8,519,680 bytes)<br>
-  SHA-256: ce7be670140ce3a719d8f81e2c5d07ed1410d993f49925cd80df11b56994d147</p>
+  <p>App file: charm_pet_w-1.7.bin (1,279,120 bytes)<br>
+  SHA-256: 252d6fda247fe5ebe1864871046418923cbae5961c51ac0e0ac57cd22ce8e483</p>
   <p>Later updates can arrive over Bluetooth: <a href="update/">update page</a>.</p>
 </main>
 </body>
