@@ -1,0 +1,27 @@
+{
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "offset": 0,
+          "path": "bootloader.bin"
+        },
+        {
+          "offset": 32768,
+          "path": "partition-table.bin"
+        },
+        {
+          "offset": 65536,
+          "path": "otadata.bin"
+        },
+        {
+          "offset": 131072,
+          "path": "tp1-app.bin"
+        }
+      ]
+    }
+  ],
+  "name": "Watch TP1",
+  "version": "TP1"
+}
