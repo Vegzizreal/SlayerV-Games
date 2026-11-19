@@ -17,11 +17,11 @@
         },
         {
           "offset": 131072,
-          "path": "charm_pet_w-1.8.bin"
+          "path": "charm_pet_w-1.9.bin"
         }
       ]
     }
   ],
   "name": "Watch W",
-  "version": "1.8"
+  "version": "1.9"
 }
