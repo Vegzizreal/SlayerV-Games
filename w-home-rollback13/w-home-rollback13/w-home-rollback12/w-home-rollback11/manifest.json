@@ -1,0 +1,15 @@
+{
+  "builds": [
+    {
+      "chipFamily": "ESP32-S3",
+      "parts": [
+        {
+          "offset": 0,
+          "path": "w-home-merged-1.1.bin"
+        }
+      ]
+    }
+  ],
+  "name": "Watch W",
+  "version": "1.1"
+}
