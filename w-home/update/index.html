@@ -26,7 +26,7 @@ button:disabled{background:#3a3750;color:#9a97a8}
 <body>
 <main>
   <h1>Watch — Bluetooth update <span class="ver" id="verTitle"></span></h1>
-  <p>On the unit: wheel → UPDATE → OPEN UPDATE WINDOW, then tap Update here. First time only: match the 6-digit code on the unit and accept.</p>
+  <p>Tap Update here first — this page connects to the unit and holds its update channel open. Then, on the unit: wheel → UPDATE → OPEN UPDATE WINDOW. The transfer runs on the connection already open, and the unit never drops it to make room — your phone's media or pointer connection to the unit is left as it is. First time only: match the 6-digit code on the unit and accept.</p>
 
   <button id="updateBtn">Update</button>
   <div class="bar"><div id="fill"></div></div>
@@ -522,10 +522,22 @@ async function streamAndFinish(payload, off) {
   }
 }
 
+/* Set by sendOnce when the failure was the START
+ * write itself being refused - the signature of a
+ * window that is not armed yet (the shared-session
+ * order below waits on exactly this). */
+let sendFailedAtStart = false;
+
 async function sendOnce(payload) {
   sending = true;
   finishConfirmed = false;
-  await writeStart(payload, payload.op);
+  sendFailedAtStart = false;
+  try {
+    await writeStart(payload, payload.op);
+  } catch (e) {
+    sendFailedAtStart = true;
+    throw e;
+  }
   let off = 0;
   /* Resume offer: the INFO checkpoint (mode + offset +
    * digest prefix) must match this payload, and a STATUS
@@ -553,12 +565,55 @@ async function sendOnce(payload) {
            "the transfer over from the beginning.");
       await bounded(chCtrl.writeValueWithResponse(new Uint8Array([CTRL_ABORT])),
         T_STEP_MS, "Restarting the transfer", WINDOW_GONE);
-      await writeStart(payload, payload.op);
+      try {
+        await writeStart(payload, payload.op);
+      } catch (e) {
+        sendFailedAtStart = true;
+        throw e;
+      }
       off = 0;
     }
   }
   await streamAndFinish(payload, off);
   sending = false;
+}
+
+/* The shared-session order: this page connected and
+ * subscribed the update channel before the window was
+ * armed. An OTA-subscribed link is an update session -
+ * the unit never pre-empts it, and the armed window's
+ * slot reservation keeps the phone's own HID reconnect
+ * from taking the slot in the meantime. So when the
+ * START is refused because the window is not armed
+ * yet, the flow WAITS on this same connection for the
+ * window to open instead of dropping the link and
+ * racing the phone's reconnect for it. Any other
+ * failure keeps the old behaviour (propagate to the
+ * bounded top-level retry). */
+async function sendWithArmWait(payload) {
+  const deadline = Date.now() + 90000;
+  for (;;) {
+    try {
+      await sendOnce(payload);
+      return;
+    } catch (e) {
+      sending = false;
+      if (!sendFailedAtStart || Date.now() > deadline) throw e;
+      say("Connected — this page is holding the update channel. " +
+          "Now open the window on the unit: wheel → UPDATE → " +
+          "OPEN UPDATE WINDOW. The transfer continues here by " +
+          "itself.", "warn");
+      await sleep(3000);
+      if (device && (!device.gatt || !device.gatt.connected)) {
+        /* The link fell while waiting (the phone's own
+         * stack can still drop it): reconnect to the
+         * same unit and re-subscribe; still no window
+         * needed for that half. */
+        server = null; svcSvc = null;
+        await connectOnce();
+      }
+    }
+  }
 }
 
 updateBtn.addEventListener("click", async () => {
@@ -612,7 +667,7 @@ updateBtn.addEventListener("click", async () => {
           (payload.op === CTRL_START_PATCH
             ? " (patch, " + payload.bytes.length + " bytes)"
             : " (full update, " + payload.bytes.length + " bytes)") + ".";
-        await sendOnce(payload);
+        await sendWithArmWait(payload);
         say("Done — unit is restarting", "ok");
         fillEl.style.width = "100%";
         flowing = false;
@@ -626,8 +681,19 @@ updateBtn.addEventListener("click", async () => {
         }
         if (attempt === 1 && device) {
           sending = false;
-          try { if (device.gatt && device.gatt.connected) device.gatt.disconnect(); } catch (ignored) {}
-          server = null; svcSvc = null;
+          /* A retry must not tear down a link this page
+           * may be sharing with the phone's own session
+           * on the unit: on a shared radio link, a
+           * disconnect here drops the phone's media /
+           * pointer connection too. If the update
+           * channel was opened (subscribed), the link
+           * is kept and the retry runs on it; only a
+           * setup that never landed gets a clean
+           * disconnect and a fresh connect. */
+          if (!svcSvc) {
+            try { if (device.gatt && device.gatt.connected) device.gatt.disconnect(); } catch (ignored) {}
+            server = null; svcSvc = null;
+          }
           say("That didn't land — trying once more…");
           note(e instanceof StepTimeout
             ? e.step + " timed out; giving it one more try."
