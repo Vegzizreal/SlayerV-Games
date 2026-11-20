@@ -1,6 +1,399 @@
 {
  "editions": [
   {
+   "date": "2026-11-19",
+   "dateline": "Thursday, November 19, 2026",
+   "stories": [
+    {
+     "kicker": "NIOH / WO LONG",
+     "headline": "Team NINJA's fairness test for hard bosses: a first hit should cost about 80% of your health, not 100% — difficult means learnable, unfair means you never got to test a counter",
+     "body": [
+      "At G-CON 2026 on November 19, Team NINJA producers Kohei Shibata and Masakazu Hirayama of Koei Tecmo Games laid out why Nioh and Wo Long feel different despite both being punishing: Nioh is samurai action built on stillness — stand grounded, read the enemy, strike in the split-second opening — while Wo Long is aggressive Chinese martial arts action, where the Spirit and Deflect systems are designed so defense flows directly into the next attack instead of breaking the exchange.",
+      "Their shared line between difficult and unfair is reaction opportunity. Shibata said that if an enemy lands an immensely powerful attack, the player must have an action available to counter it, and must be able to learn the attack first: a boss hit that kills on first contact teaches nothing, while one that takes roughly 80% of the player's health signals real danger and still leaves them alive to observe the next attack and test a counter. Underneath that sits control responsiveness — staff still tune character movement frame by frame, by 1 or 2 frames — and AI is confined to QA and verification tasks, with the fun of action gameplay kept as human judgment."
+     ],
+     "takeaway": "Builder lesson: tune a hard hit for information, not just damage. If the first encounter with an attack ends the attempt, the player learned nothing and will call it unfair; if it nearly kills them and lets them watch the follow-up, the same attack becomes a lesson. Audit every boss move with one question — can the player learn it, react to it, and test a counter before it kills them?",
+     "source_name": "Inven Global",
+     "source_url": "https://www.invenglobal.com/articles/28848/team-ninja-a-difficult-game-and-an-unfair-game-are-different"
+    },
+    {
+     "kicker": "STEEL MAIDEN",
+     "headline": "Steel Maiden deletes movement entirely: a 30-year veteran art director turned solo dev kept only left and right attack buttons — and deleted the wind-up animation so a press already looks like a slash",
+     "body": [
+      "Steel Maiden, shown at G-STAR 2026 and covered by Inven Global on November 19, is a high-speed action roguelite built single-handedly by Cho Ki-chul of VeryPositive, a 30-year veteran art director (Civilization Online, My Little Puppy) who went solo in 2026. His starting constraint was deliberate: deconstruct action games and movement plus attack are what remain — Vampire Survivors removed attack controls and created a genre, so Steel Maiden does the inverse, keeping attack and removing manual movement. Pressing left or right lunges and attacks in that direction; he considered adding up and down buttons and refused, holding the two-button constraint to the end.",
+      "The feel comes from contrast, not complexity. The character normally moves fluidly, but the wind-up before an attack is deleted entirely so the blade snaps the instant a button is pressed; when a parry lands, time slows for a single beat, and pressing again in that window detonates a counter before speed returns. Depth is pushed into the run layer instead — weapon evolutions and relics (a lightning rod that electrocutes nearby enemies evolving into a Tesla Coil field that paralyzes and heals) change where you set up and which side you strike first, so the same two buttons play differently per build. His solo pipeline matched the constraint: attack logic implemented with AI coding assistance, animation built from AI-generated in-betweens between hand-set start and end poses, then re-trimmed in Unity whenever a movement that looked smooth in video felt slow on a button press."
+     ],
+     "takeaway": "Builder lesson: a hard input constraint is only fun if the feedback is instant and the depth lives somewhere else. If you strip controls down, delete anticipation frames that delay the payoff, use one clear rhythm break (the parry slow-down) to make the counter readable, and move build variety into evolutions and relics — then playtest the timing in-engine, because smooth-looking animation can still feel slow under a finger.",
+     "source_name": "Inven Global",
+     "source_url": "https://www.invenglobal.com/articles/28835/steel-maiden-two-button-action-thrills-crafted-by-a-30-year-veteran-art-director"
+    },
+    {
+     "kicker": "I BECAME THE TYRANT OF A DEFENSE GAME: LAST STAGE",
+     "headline": "Webzen Crevix cut the novel's famous invasion countdown from the main story — playtested as a schedule-management game, it fought the 'command' fantasy, so the tension moves to separate content instead",
+     "body": [
+      "Webzen Crevix's I Became the Tyrant of a Defense Game: LAST STAGE adapts a web novel (800+ chapters) whose hero survives a brutally hard defense game using knowledge only he has — a problem lead designer Ryu Kwang-yeol named directly in Inven Global's November 19 G-STAR interview: first-time players have no such knowledge, so the team defined the genre as a 'command strategy RPG' where the core fun is being given choices at key moments in every content pillar — exploration, territory management, defense battles — and then being proved right or wrong by the outcome. The same fidelity rule shaped character death: companions who die or retire in the novel are not made permanently unusable (that would halt progression); instead they get a distinct portrait indicator in the UI and different speech-bubble dialogue, with a settings toggle for players who prefer not to see those lines.",
+      "The clearest cut was the countdown. In the novel, invasions arrive on a fixed D-30, D-29 schedule; the early game design included it, and the team concluded it turned the whole game into schedule management that did not align with their direction — so the main story now has no time constraints, and that desperation is being rebuilt as a separate content format. The demo's tame difficulty was the same kind of deliberate trade: CEO Kim Dong-hyun said spiking difficulty to sell desperation at a show floor demo would only frustrate first-time players, so the G-STAR build demonstrated adaptation fidelity instead, with hardcore content held for later. Visually, diorama pixel art on 3D battlefields hits a scale ceiling, which they solve with film-style camera work and 3D effects rather than bigger sprites, plus 2D portraits inside speech bubbles because pixel heads cannot carry a frown."
+     ],
+     "takeaway": "Builder lesson: when adapting a beloved source, test each signature mechanic against the fantasy you actually promised. A countdown that creates tension on the page can quietly re-genre your game into schedule management in play — cut it from the core loop and rehouse it where it belongs, rather than shipping it out of loyalty. Same test for permanent character death: keep the emotional mark, remove the progression wall.",
+     "source_name": "Inven Global",
+     "source_url": "https://www.invenglobal.com/articles/28841/webzens-tyrant-of-a-defense-game-commanding-is-the-core-philosophy-permeating-the-entire-game"
+    },
+    {
+     "kicker": "TRIPO AI",
+     "headline": "Tripo AI split its 3D generation into two models on purpose: an ultra-precise H-series for printing, and P2.0 — under 50,000 polygons, generated in under 5 seconds — because game devs need models they can import and edit, not maximum detail",
+     "body": [
+      "In Inven Global's November 19 G-STAR interview, Tripo AI head of product Jack Fan explained why the company maintains two model lines instead of one flagship. The H-series (including the ultra-high-precision H3.1) serves users, heavily 3D printing, who already know exactly what they want reproduced and treat polygon count as secondary. The P-series, including the new P2.0, is built the opposite way for game developers: lightweight geometry under 50,000 polygons generated in under 5 seconds, because a model only becomes useful once it can be edited easily and imported directly into an engine at a game's own system specifications — pushing hyper-realistic detail to the limit would make it less versatile, not more.",
+      "The same fit-the-pipeline logic runs through the rest of the product. Canvas breaks generation into step-by-step stages configured as one reusable production workflow, so a creator can extract and reuse only the parts of a character they liked — a direct response, Fan said, to game creators wanting interim results they can inspect firsthand. The service layer updates multiple times a week from user feedback while foundational models ship every few months, and a Team Plan with a shared team asset database was built specifically because Korean studios repeatedly asked to collect and share generated assets across a team."
+     ],
+     "takeaway": "Builder lesson: for any generative tool in a game pipeline, 'best output' is the wrong target — 'output that survives import' is. Cap the budget that matters downstream (here, under 50k polygons and under 5 seconds), give creators staged checkpoints they can inspect and reuse instead of one opaque generation, and let the sharing/database layer come from what teams actually ask for, not from the model roadmap.",
+     "source_name": "Inven Global",
+     "source_url": "https://www.invenglobal.com/articles/28886/making-3d-modeling-easy-for-everyone-tripo-ai-expands-reach-to-b2c"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-18",
+   "dateline": "Wednesday, November 18, 2026",
+   "stories": [
+    {
+     "kicker": "MONOPOLY GO!",
+     "headline": "Scopely's new Paths mini-game builds co-op around a single choice: a two-ring spinner where the top ring advances your own path (Keep) and the bottom ring advances a teammate's (Send) — selfish and selfless progress on every spin.",
+     "body": [
+      "Paths puts four teammates in a shared vehicle building one complete path together, but each spin splits the reward. Lead Product Manager Verity Davis and Senior Game Design Director Tugrul Atak told GameRant on Nov 18 that Scopely tested several concepts before landing on the two-ring spinner because it was 'the clearest and most intuitive experience' — one ring for you, one ring for the team, readable at a glance. The tuning target was deliberate ambiguity: internal playtests produced pure Keepers and pure Senders, and the team 'tuned progression and rewards so that neither strategy becomes the obvious answer in every situation.' Send is not mathematically stronger than Keep; its value depends on whether a teammate is stuck on a milestone right now.",
+      "The system is also built to absorb failure instead of punishing it. A teammate who goes inactive cannot be replaced, but Send points let active players carry them. When you finish your own section, your top ring is removed entirely and every later spin becomes Send-only, so early finishers convert into full-time helpers instead of dead weight. Matchmaking uses eligibility and activity signals to pair solo players with likely-active teammates, and outcomes are independent per spin — the rings are not adjusted to a player's or team's situation."
+     ],
+     "takeaway": "Builder lesson: make generosity a mechanic, not a message. Paths works because Keep and Send sit on the same input, cost the same spin, and neither dominates — and because finishing early removes your selfish ring instead of removing you. If you want co-op empathy, design the moment where helping is the only move left, and tune until neither kindness nor greed is the solved strategy.",
+     "source_name": "GameRant",
+     "source_url": "https://gamerant.com/monopoly-go-paths-interview/"
+    },
+    {
+     "kicker": "GRAND THEFT AUTO 6",
+     "headline": "Rockstar North co-studio head Rob Nelson says GTA 6 — double the RDR 2 team, spread across studios and time zones — came together in eight-week sprints: pull work together, evaluate, note, iterate, and trust each layer's owners to hold up their end.",
+     "body": [
+      "In IGN's Nov 18 interview, published the day before launch, Nelson is blunt that no single person knows how the game cohered: 'I only know my part of it… They just do it and we sort of build it up in layers.' The operating rhythm was eight-week sprints ending in a pulled-together build that the team evaluated and annotated before iterating again. The payoff of that trust shows in details nobody ordered: a unique animation for climbing out of a car when the door cannot open fully in a skinny gap. 'I never asked for it,' Nelson says. 'The animation directors decided that they wanted to do it' — and he first met it in a build, playing like anyone else.",
+      "The same interview pins down the frame-rate decision as a systems trade, not a marketing one. Asked what targeting 60fps would have changed, Nelson answered: 'Too much, too much. It wouldn't have been acceptable to anybody.' IGN reports the sheer amount of visual fidelity, simulation complexity and interacting systems would not fit current hardware — PS5 Pro included — at the higher rate, and the team is not ruling out something different on future hardware."
+     ],
+     "takeaway": "Builder lesson: at this scale the build is the meeting. Fixed-length sprints that end in a playable, evaluated build let autonomous teams add unrequested polish (the skinny-gap car exit) without losing the whole — but autonomy needs the contract Nelson names: checks on 'where we push, how far we push… because everything is time and resource spent.' And name your hard trade early: 30fps was the price of the simulation, decided by what would have to be removed.",
+     "source_name": "IGN",
+     "source_url": "https://openweb-ign.cdn.zephr.com/articles/how-gta-6-came-together-at-rockstar-north"
+    },
+    {
+     "kicker": "ESCAPE FROM TARKOV",
+     "headline": "Battlestate's update 1.3.5.0 moves Escape from Tarkov to Unity 6 — and the first wins are architectural: server connection now runs in parallel with location loading instead of after it, and exiting a raid frees RAM more efficiently.",
+     "body": [
+      "Battlestate Games' Nov 18 developer diary on Steam News frames the Unity 6 transition as 'the first step in a large-scale revamp of the game's technical base,' with the stated first goal a smooth, stable port rather than new visuals. The improvements bundled alongside the port are all load-path work: resource loading 'reworked at the architectural level,' connection parallelised with location loading, leaner server resource use aimed at hit registration and packet loss, and a fast-reconnect system that returns a disconnected player straight to the raid with a prompt — no main menu, no second load.",
+      "The diary is equally explicit about what the engine move only unlocks later: a full DirectX 12 renderer to remove CPU/GPU load-distribution bottlenecks, native DLSS Frame Generation (x2 and x4) paired with NVIDIA Reflex to offset its input latency, and FSR 4 planned before year-end. The vegetation rework announced in August was postponed because, Battlestate says, it needs DirectX 12's full capabilities and its base form 'does not meet our requirements.'"
+     ],
+     "takeaway": "Builder lesson: ship the engine migration as a foundation pass and say so. Battlestate sequenced it honestly — parallelise the load and fix reconnect now, renderer and frame generation when the new base can actually carry them, and a named postponement (vegetation) with a technical reason instead of a silent slip. Players forgive a 'boring' technical update when every item in it removes a daily friction they already feel.",
+     "source_name": "Steam News (Battlestate Games)",
+     "source_url": "https://store.steampowered.com/news/app/3932890/view/719048067771269206"
+    },
+    {
+     "kicker": "ADDLEMOTH",
+     "headline": "Addlemoth's Nov 18 dev update rewrites the renderer of the pixel-art turn-based puzzler: hardware Z-buffer sorting ends constant clipping, water becomes a shader instead of hand animation, and a simple dynamic lighting system replaces manual work.",
+     "body": [
+      "Developer mauve explains the rewrite was forced by an early decision made for a different skill level: starting out 'really, genuinely bad at pixel art,' the original code hand-drew and hand-animated everything to build skill — and as sprites grew larger and more complex, clipping issues appeared 'more or less constantly.' The rewrite delivers dynamic lighting, Z-buffer sorting, shader water, and upscaling that keeps pixel art looking pixel-sharp off-scale instead of 'like a weird oil painting.' It was, mauve says, one of the last big coding items; everything after it is gameplay and UI.",
+      "The same update applies the lesson on the design side. Stage-select tilesets were redone from 8x8 to 12x12 because the old ones were 'too noisy and generally just kind of unwelcoming,' the story was reshuffled after realising the player faced roughly six hours of outdoor tilesets in a row, and earlier puzzles are being revisited to cut a bad habit: when a puzzle's core Conduct would not come, mauve would 'jam a secondary, unrelated puzzle at the tail end of it' — those are now being removed so stages stay consistent about their core concept."
+     ],
+     "takeaway": "Builder lesson: early pipelines encode your early skill — plan the rewrite instead of suffering it. Hand-animating water and hand-sorting sprites were right for learning and wrong for shipping; moving both to systems (shader, Z-buffer) freed the rest of development for gameplay. Same rule in level design: one puzzle, one core concept — a bolted-on second puzzle is scope wearing a disguise.",
+     "source_name": "itch.io (mauve)",
+     "source_url": "https://itch.io/devlog/1782995/addlemoth-dev-update-november-2026.amp"
+    },
+    {
+     "kicker": "CRIMSON DRAFT",
+     "headline": "Crimson Draft, a Bachelor's-thesis survival-horror MVP, rebuilt its first Beeper puzzle so the clue lives in a poem hidden in the environment — and gave important interactions dedicated camera shots instead of leaving players to parse them from gameplay view.",
+     "body": [
+      "Phase One Works' Nov 18 devlog for build 0.6.0 — the team's last evaluation build before their final exam — is a playtest-driven change list for a shipboard game of exploration, puzzles and combat. The ship itself became a mechanic: the Marinera now rolls with the tide and can be hit by a wave, with the warning 'Careful not to fall onto an enemy!' Readability got systematic treatment too: item sparkle to surface pickups, a new shortcut from kitchen to Garbage Room to cut backtracking, and dedicated camera shots for important interactions alongside new angles in some rooms.",
+      "The fixes underneath are the unglamorous kind that decide whether an MVP reads as broken: players could interact with objects through walls, healing was lost when entering combat, the freezer door could appear open without being unlocked, and joystick navigation produced UI selection errors. The build also added metrics collection on player progress — instrumentation added at MVP stage, not after launch — plus control-scheme work on both Classic (quick turn, better stick rotation) and Modern (movement across camera changes) schemes."
+     ],
+     "takeaway": "Builder lesson: hide clues in the world, not in a menu — moving the Beeper answer into an environmental poem makes finding it exploration instead of UI reading. And steal the student team's sequencing: sparkle, shortcuts and dedicated interaction cameras are cheap readability systems, and adding progress metrics while the game is still an MVP means the next playtest produces evidence, not impressions.",
+     "source_name": "itch.io (Phase One Works)",
+     "source_url": "https://itch.io/devlog/1788040/devlog-2-last-stop-before-sail.amp"
+    },
+    {
+     "kicker": "FIGMENT",
+     "headline": "Bedtime Digital Games told its own players 'do NOT buy' Figment 1 + Figment 2 on Switch 2 at launch — because the promised 80% owner discount ($39.99 down to $7.99) was stuck in Nintendo store processing until Nov 21 in the Americas and Nov 28 elsewhere.",
+     "body": [
+      "CBR reported on Nov 18, the eve of the Nov 19 Switch 2 release, that Bedtime Digital Games posted to Reddit warning returning owners not to pay full price for the enhanced bundle. The upgrade discount for owners of the Switch version was intended to be live at launch, but processing times pushed it to Nov 21 in the Americas and Nov 28 in Europe, Australia and New Zealand. The studio's message was direct: 'We want you to have the discount, and we're super grateful for the support you've shown our indie studio over the years.' Commenters responded by threatening to buy at full price anyway to support the studio.",
+      "There was also a cheaper route hiding in the timing: the original Switch bundle was on sale until Dec 2 at 94% off ($2.27), so a new buyer could pick that up and then take the owner upgrade when it cleared — saving almost $30 against the Switch 2 full price. All of it landed on the hardest launch day on the calendar: the bundle released the same day as Grand Theft Auto 6."
+     ],
+     "takeaway": "Builder lesson: a discount is a launch feature with its own lead time. Store processing does not run on your release date, so submit pricing and owner-upgrade offers early enough to be live on day one — and if they slip, say so before launch, in plain words, even when the honest message is 'don't buy our game yet.' Bedtime traded a week of full-price sales for trust, and the replies show the trade paid.",
+     "source_name": "CBR",
+     "source_url": "https://www.cbr.com/nintendo-switch-2-version-discount-delayed-figment/"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-17",
+   "dateline": "Tuesday, November 17, 2026",
+   "stories": [
+    {
+     "kicker": "FIGHTO ROBOTO",
+     "headline": "Fighto Roboto's postmortem: 'button mash fest' was four measured faults, not a feeling — a block that didn't reduce damage, every hit dealing 15, a jab that chained into itself, and nothing punishable",
+     "body": [
+      "In the Nov 17 postmortem for Fighto Roboto, developer Rhiannon-code says the wins started with structure: modular robots, part stats and set bonuses survived from pitch to ship, limb loss was sharpened rather than cut — moved to knockouts only after a written decision log showed why the old version failed, because a detached arm kept its hitbox and kept dealing damage. PvAI and AIvAI also run on one shared BaseCharacter backend, so when the AI was rebuilt, nothing in combat had to change.",
+      "The feel problems were diagnosed before they were fixed. Fight feel traced to those four measured causes; animation choppiness traced to root motion baked into clips, blend-outs that outlasted their clips, and a Run clip that was never reached — not frame rate. What went wrong was the opposite habit: networking scope crept in with a WebSocket match-setup path that never ran end to end, and changes piled up untested, in the author's words 'not run, not seen, not heard.'"
+     ],
+     "takeaway": "Diagnose before you tune, and write the decision down when you make it. A small frame-data table at the start would have caught most of Fighto Roboto's three feel passes, and a compiled build only proves code builds — not that the game works. Untested changes stack risk silently.",
+     "source_name": "itch.io — Rhiannon-code devlog",
+     "source_url": "https://rhiannon-code.itch.io/fighto-roboto/devlog/1785266/post-mortem-thoughts"
+    },
+    {
+     "kicker": "BRASSWORK",
+     "headline": "Brasswork, by Shelfware in four days for the Epic AI MegaJam: scenery is not decoration — Splice lets you cut, carry and paste working geometry, and Limelight makes only what a steerable spotlight lights solid",
+     "body": [
+      "Brasswork is a third-person puzzle-platformer set in a clockwork theatre, built by three-person team Shelfware in Unreal Engine 5.9. You play Wick, a stagehand with brass shears. With Splice you cut a painted bridge, staircase or crate off the set, carry it, and paste it elsewhere as working geometry with collision that follows it, rotated a quarter-turn at a time. With Limelight, what the spotlight lights is solid and what it leaves dark is a ghost you fall through — the same rule for everything, which the team says is what makes it fair, and turns the light into a tool against the theatre's guards.",
+      "Both mechanics were built first in plain grey test labs and only moved into the theatre once a human director had played them and signed off. Early Splice had a fixed socket for every piece; play pushed it toward real choice — several ordinary pieces, any of which might help, with no labels naming the answer. The postmortem's failures all came from skipping the surrounding discipline: stale copies overwriting work in a shared repository, agents approving their own tiny or wrong-shaped screenshots, and a Sunday packaging failure where Wick appeared in bind pose because animations loaded by name were never cooked."
+     ],
+     "takeaway": "Prototype the mechanic in a grey lab and get a human sign-off before dressing it. Fixed full-size visual checks, a shared written handoff record, and an audit of every asset loaded by name are what made agent-built speed trustworthy — every failure traced to skipping one of those.",
+     "source_name": "itch.io — Shelfware / Quorra devlog",
+     "source_url": "https://quorra.itch.io/brasswork/devlog/1784642/postmortem-building-brasswork-in-four-days-with-a-company-of-ai-agents"
+    },
+    {
+     "kicker": "THE LAST FRAME IS HOME",
+     "headline": "The Last Frame Is Home, by Yuncrest: water that passed every behaviour check was still rejected on visual review — and arrival was rebuilt as an action chain, not a trigger volume",
+     "body": [
+      "Yuncrest's two-person Epic AI MegaJam postmortem for The Last Frame Is Home, a three-chapter maritime rescue adventure in Unreal Engine, separates task completion from game acceptance. A water candidate combining directional displacement, matched CPU sampling and compression-based foam built successfully and passed its scoped interaction checks — and was still not promoted, because the large wave read as a separate mound, whitecaps formed unconvincing patterns, and the frozen edge showed artifacts. The team learned to judge broad wave shape, surface detail, foam, optics and readability as separate layers, using the Sea of Thieves technical-art presentation as reference instead of inventing disconnected fixes.",
+      "The same discipline shaped the ending. Docking does not silently trigger homecoming: the final chain is slow down and secure the boat, release the interaction key, press it again to disembark, walk to the delivery point, hand over the supplies, then begin the reunion — with the on-screen prompt changing after docking to match. A negative test confirmed that docking and approaching without the final interaction produced no delivery and no automatic ending. The empty valley chapter was likewise fixed not by enlarging it, but by organising it around recognisable destinations: the landing, a waterside route, a medicine camp, a separate lamp-oil location, and the return to the boat."
+     ],
+     "takeaway": "Keep separate acceptance gates for functional behaviour, player readability, and visual quality from the outset. A passing build log or state transition is evidence about behaviour only — it is not permission to call the art, or the moment, finished.",
+     "source_name": "itch.io — KevinMeng / Yuncrest devlog",
+     "source_url": "https://kevinmeng.itch.io/the-last-frame-is-home/devlog/1782264/directing-the-agents-building-the-last-frame-is-home"
+    },
+    {
+     "kicker": "THE POC THAT OUTGREW ITS STACK",
+     "headline": "260,000 lines, then an empty repository: a solo developer restarts after picking a language, architecture and save plan sized for a proof of concept that quietly became a full game",
+     "body": [
+      "In this Nov 17 postmortem, a solo developer describes two months building a game with AI coding agents: design locked in two days, every feature run spec to review to plan to code to tests, about 1,900 commits and roughly 260,000 lines — half of it tests. The idea was not the problem. Three early choices were: a dynamically typed language picked for fast solo iteration with a faster language left as an escape hatch triggered by runtime speed, when the problem that arrived was size; architecture deliberately left on the back burner; and save/load deliberately planned late, even though it cross-cuts everything.",
+      "At scale those choices failed in specific ways. Every map sat on one base file of about 5,000 lines changed in about 160 commits, the AI-opponent file reached about 4,400 lines, parallel agents sent into supposedly non-overlapping work converged on the same four files, a startup check passed while a source file had failed to load because of a stale cache, and when save/load finally arrived it could not save the combat state. The restart chose a statically typed language, core logic that runs without the engine plus thin engine wiring, tests from the first commit, a decision log pinned by tests, and one large block of work at a time with a playtest after each."
+     ],
+     "takeaway": "Pick the stack for the size the project will reach, not the size of the proof of concept, and make 'POC to product' a dated checkpoint where the stack is chosen again — not a drift. Decide early what is expensive to undo: language, the state and save model, and the boundary between core logic and engine.",
+     "source_name": "Learn with me Digest — Yevhen Prodan",
+     "source_url": "https://yevhenprodan.com/2026/11/17/the-poc-that-outgrew-its-stack.html"
+    },
+    {
+     "kicker": "HOUNDED",
+     "headline": "Hounded, by Imprnt Studios: a Border Collie protagonist built on a handcrafted Motion Matching system in Unreal — and communication through ears, muzzle and whiskers, not dialogue",
+     "body": [
+      "PlayStation LifeStyle's Nov 17 report on Imprnt Studios' first Hounded developer diary details how the team built Duke, a Border Collie searching for his missing master in Anglodia, a fictional late-18th-century Britain. The developers built a handcrafted Motion Matching system in Unreal Engine using real-world references: the system selects suitable animations based on Duke's movements, aiming for the speed and energy of a real Border Collie rather than a humanoid reskin. Duke has been in development for just over two years.",
+      "Because Duke cannot speak, he communicates through body language — ear movements, muzzle twitches and changes in his whiskers — with the animation team studying real dogs to capture those details. That non-verbal read has to carry alongside his supernatural Tide abilities: Power Bark to smash through obstacles, Power Howl to charge mysterious technology with electricity, and Imprints, ghostly memories that reveal events before his arrival."
+     ],
+     "takeaway": "For a non-human protagonist, the animation system is the character. Motion Matching driven by real animal reference, plus a deliberate body-language vocabulary, does the storytelling work dialogue would otherwise do — budget the study and the system, not just the model.",
+     "source_name": "PlayStation LifeStyle",
+     "source_url": "https://www.playstationlifestyle.net/2026/11/17/hounded-ps5-adventure-game-release-window-2027"
+    },
+    {
+     "kicker": "MAGIC: THE GATHERING",
+     "headline": "Magic's Darkhold Destiny: instead of picking famous Marvel moments for cards, Wizards of the Coast got Marvel's total buy-in to write an original story designed with the game's mechanics in mind",
+     "body": [
+      "Polygon reported Nov 17 from MagicCon Atlanta that Wizards of the Coast's third Marvel Universes Beyond set, Darkhold Destiny (2027), reverses the licensed-set method. Vice president of design Aaron Forsythe said the first two Marvel sets, Marvel's Spider-Man (2025) and Marvel Super Heroes (2026), were 'not driven by any real narrative' — with 60 years of comics and no movies to anchor on, the team was 'just picking moments in time, characters, and different sagas,' which as a whole did not feel like it was telling a story. That problem had not hit Lord of the Rings or Final Fantasy, which brought linear stories players already knew.",
+      "The fix, inspired by the Guardians of the Galaxy game being allowed to invent a story that fit its medium, is an entirely new storyline created with Marvel, including an original character, Fraxi, Scion of Yggdrasil, appearing in the set and a tie-in comic alongside Thor and Doctor Strange. Forsythe said Marvel gave 'total buy-in' right away, crediting trust built over the first two sets and Secret Lair — and noted Universes Beyond sets take four years to develop, versus three for in-universe sets, because of licensing-partner feedback."
+     ],
+     "takeaway": "A licensed set needs a story shaped for its own medium, not a scrapbook of famous moments. If the source has no single linear narrative players share, write an original one designed around the mechanics — and expect the trust and the extra development year that permission costs.",
+     "source_name": "Polygon",
+     "source_url": "https://www.polygon.com/mtg-marvels-darkhold-destiny-story-interview/"
+    },
+    {
+     "kicker": "XSOLLA QUEST BUILDER",
+     "headline": "Xsolla Quest Builder and Backpack, launched Nov 17: a no-code quest-to-item tool where a gifted item can only be received into a Backpack — so every gift is also an invitation into the game",
+     "body": [
+      "Xsolla announced Nov 17, via Games Press, Quest Builder, a no-code tool that rewards players with digital items for reaching goals tracked through game events, alongside Backpack, a persistent inventory on Android, iOS and Windows via the web. Items are designed to remain in Backpack even if the game that issued them shuts down, and players can gift them to other players, with a network fee on transfers. Items a game manages on its own backend remain unchanged and cannot be transferred, and items, badges and loyalty points have no cash value.",
+      "The retention mechanics are explicit in the design. Gifting only works into a recipient's Backpack, turning a gift into recruitment. A free item included with a purchase lands in Backpack and starts a collection, giving the player a reason to come back. Limited-edition event items, collections, and per-game loyalty points that are visible in Backpack but usable only in the issuing game complete the loop — in Xsolla president Chris Hewish's framing, an item's value no longer has to end with the initial sale or giveaway."
+     ],
+     "takeaway": "Persistence changes what a reward is for. If an item survives outside one game's backend and can be gifted, checkout becomes the start of the next loop — collection, return visits and player-to-player recruitment — instead of a dead end. Weigh that against the dependency: transferable items live on the vendor's system, not yours.",
+     "source_name": "Games Press — Xsolla",
+     "source_url": "https://www.gamespress.com/en-GB/XSOLLA-LAUNCHES-QUEST-BUILDER-AND-BACKPACK-ENABLING-VIDEO-GAME-DEVELOP"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-16",
+   "dateline": "Monday, November 16, 2026",
+   "stories": [
+    {
+     "kicker": "THE ARCHIVE",
+     "headline": "The Archive, shelved since 2016, was rebuilt in four days for the Epic AI MegaJam — and its best mechanic is healing rooms, not clearing them: kills leave ink, ink fills the Archivist's Seal, and holding F at a tear stamps the room from violet danger back to warm orange safety",
+     "body": [
+      "Solo developer Akashic Code designed The Archive in 2016 — a library of everything ever written, with generated floors of corrupted rooms — then shelved it as years of work for one person. For the Epic AI MegaJam 2026 (theme: 'Director's Cut'), they rebuilt it in Unreal Engine 5.8 in four days, directing up to five AI agent sessions at once: a 57-piece modular Blender kit, 695 pieces placed in the opening hall on night one, and roughly 50,000 lines of C++ across 309 commits.",
+      "The design pivot that made it theirs came after a pretty flooded-atrium level, The Descent, playtested as 'very very easy' four times in two hours and was parked. The replacement, the Torn Wing, reframes room-clearing as room-healing: everything you kill leaves ink, ink fills the Archivist's Seal, and stamping a tear shut relights the room. A strict colour rule carries the readability — violet is danger, orange is safe, teal is loot, gold is ancient — and everything in the game follows it."
+     ],
+     "takeaway": "Builder lesson: 'a level you can reach the end of is not a level that's fun' — the team killed a finished, beautiful level on playtest evidence alone. And when 40 features went in overnight tested only by scripts, the fix was a new rule: 'a person plays, scripts confirm, features wait.' Their screenshot-audit tool (photographing every room for fresh eyes) caught a hidden ×60 glow multiplier that every automated check had passed. Pictures beat logs.",
+     "source_name": "itch.io — The Archive devlog",
+     "source_url": "https://itch.io/devlog/1781702/the-archive-four-days-one-person-and-a-game-i-shelved-in-2016.amp"
+    },
+    {
+     "kicker": "CINEMATOGRAPHER SIMULATOR",
+     "headline": "Cinematographer Simulator's postmortem names its filter: the 'one-second rule' — if a player can't grasp the goal almost immediately, the prototype dies, which is why camera rails were cut and 'watch the reference cut, then recreate it' became the whole game",
+     "body": [
+      "In Cinematographer Simulator (Epic AI MegaJam 2026, by lny612 and team), you play the camera operator on a romantic scene: watch the director's reference cut, place your cameras, then switch between them live, adjusting framing and zoom as the action unfolds. Early prototypes let players film freely against a clock, or build camera rails to travel between sets.",
+      "The team judged every prototype against the one-second rule — could a player grasp the basic goal almost immediately, which matters most in a jam game where players give you very little time. Rails failed it: they asked players to learn route-building and filming at once. The reference cut passed it — 'can you recreate this?' is understood at a glance — and playtests showed the constraint helped rather than hurt: players ignored options they couldn't see a reason to use, so giving camera placement, zoom and switching a visible target made a small control set feel like real decisions."
+     ],
+     "takeaway": "Builder lesson: more options do not automatically make choices interesting — a clear goal does. A reference target turned three simple verbs (place, zoom, switch) into judgement calls. The team also kept a shared game design document that its AI tools were instructed to read before working, which cut conflicting assumptions between parallel chats — the document, not the chat history, was the source of truth.",
+     "source_name": "itch.io — Cinematographer Simulator devlog",
+     "source_url": "https://itch.io/devlog/1781982/cinematographer-simulator-postmortem.amp"
+    },
+    {
+     "kicker": "RESIN",
+     "headline": "Resin builds its whole world around one verb — apply a trait: HEAVY drops roots and shortens your jump, WOOD makes the Blob float and bob, WET puts out fire — and its tutorial teaches each property with an obstacle, never an explanation",
+     "body": [
+      "Resin (Epic AI MegaJam 2026, TomMathee's team) reinterprets 'Director's Cut' as a wound cut into the Director, an ancient tree; from the wound comes a resin Blob who heals the tree's roots. The central mechanic is traits — properties the Blob applies to itself or to things in the world — and the first tutorial is a sequence of discoveries: escape a pit using a fallen root, cross water, reach a burning root, each obstacle teaching one property through the world rather than a long explanation.",
+      "The rules stayed negotiable as the game took shape. WOOD originally protected the Blob from fire; the team reversed that so WET remained the one answer to the tutorial fire, keeping each trait's job distinct. They also tested trait stacking, allowed GLOW + SMALL as a one-self-trait exception, then removed the exception the next day — and kept both decisions in the devlog instead of pretending the final rule was known from the start."
+     ],
+     "takeaway": "Builder lesson: one mechanic, many readable jobs. Traits work because each property has a single clear responsibility, and when two traits competed for the same obstacle the team cut the overlap instead of adding tutorial text. Their other hard number: reactive foliage that animated every plant at all times dropped the game from roughly 70 fps to 13–40 fps — making a world react also means knowing when not to run the reaction, so plants now animate only near the Blob.",
+     "source_name": "itch.io — Resin devlog",
+     "source_url": "https://itch.io/devlog/1782387/resin-devlog.amp"
+    },
+    {
+     "kicker": "KEEP ROLLING",
+     "headline": "Keep Rolling runs on one rule — 'if the camera didn't see it, it didn't happen' — and its solo dev's fix for a too-easy wide shot was red stunts you must NOT film: on camera Dash gets hit, off camera he's 'saved by the edit'",
+     "body": [
+      "Keep Rolling (Epic AI MegaJam 2026, solo team Desolate Cow) is a live film-directing game: stunt cat Dash Daring runs a rigged set on a clock, you never control him — you cut between three or four cameras and cue his stunts. A hazard only counts if its box projects into the live camera's 2.39:1 frame; on camera a timed SPACE press lands the stunt, off camera it fizzles. The day-one infrastructure was an autotest: a command-line autopilot that plays a scene perfectly, recklessly, or not at all, logs every event and takes screenshots — 'that is how an agent sees a game.'",
+      "The first playtest broke the core rule: the wide shot saw everything, so filming everything won three stars on the first try. The fix was red, unsafe stunts that cannot be dodged, paired 0.3 seconds from normal stunts so you must find the camera that frames one and not the other — the all-seeing wide shot became the trap. A reckless autopilot that films everything now gets the production shut down at 28 seconds; the careful one scores 79–94%."
+     ],
+     "takeaway": "Builder lesson: when your safest strategy ignores your core mechanic, don't nerf the strategy — add a hazard that punishes it specifically, so the mechanic becomes the defence. And note the testing split the dev landed on after eight playtest rounds: 'an autopilot that plays perfectly cannot judge difficulty or fun. One human sentence found each problem. The autopilot was then the right tool to prove the fix was fair.'",
+     "source_name": "itch.io — Keep Rolling devlog",
+     "source_url": "https://itch.io/devlog/1782127/keep-rolling-one-developer-one-ai-coding-agent-four-days.amp"
+    },
+    {
+     "kicker": "ELDRITCH KEEP",
+     "headline": "Eldritch Keep's Duois Studios scrapped its static floor-collapse sweeper and rebuilt it as a stalking Eye: clear a floor and a 50-turn grace counter starts, and the anomaly that wakes crawls one tile every two turns — but is designed to never seal off your route to the stairs",
+     "body": [
+      "Duois Studios' November 16 Eldritch Keep devlog details 'The Call of the Void,' a complete rebuild of the roguelike's floor-sweeper mechanic. The old floor collapse and static tentacles are gone. Clearing all threats on a floor now starts a 50-turn counter (a warning tolls at turn 40); linger past 50 and the camera sweeps to the farthest dead-end room to reveal the awakening Eye, veins spreading through the stone. The anomaly then pathfinds toward you at one tile every two turns, leaving a corrupted trail that chips your Corruption meter, and strikes with a telegraphed 3×3 zone that gives you two turns to dive clear.",
+      "Two fairness rules are built into the horror: the Crawl never seals off the level — your route to the stairs always remains passable — and the Eye pauses after striking, so you can never be caught in an inescapable hit loop. The same update removed stat-inflated 'Elite' enemy spawns entirely; when the dungeon raises pressure it now throws the deadliest natural denizens, or pairs of local foes, instead of bigger health pools."
+     ],
+     "takeaway": "Builder lesson: a pressure timer creates dread only if the player trusts it is escapable. The 50-turn grace period, the turn-40 warning, the guaranteed open stair route and the post-strike pause are what let the Eye be relentless everywhere else. Pressure mechanics and fairness guarantees are one design, not two — and 'elite = same enemy, more HP' was recognised as fake difficulty and replaced with composition (deadlier locals, in pairs) instead.",
+     "source_name": "itch.io — Eldritch Keep devlog (Duois Studios)",
+     "source_url": "https://itch.io/devlog/1782627/added-the-rest-of-the-ui-design.amp"
+    },
+    {
+     "kicker": "GOOP'S",
+     "headline": "Goop's, a solo soft-body platformer from BloccAG, makes its blob's three stances carry the rules before any hint text: yellow rubber, green gummy, blue jelly — colour and silhouette first, because a stance 'needed to communicate something before the player read a hint'",
+     "body": [
+      "Goop's (AI MegaJam 2026, solo entry by BloccAG) was built to finally use two pre-jam tools — a soft-body system and EasyMorph shape-changing — in one playable character that can squash, dent, ripple, stick, squeeze through bars and grow limbs. The first playable body was a round blob with rubber, gummy and jelly stances plus a grapple; the design work was making each stance readable at a glance, with colour and silhouette carrying the rules, and eyes added to show facing after the first playtest found aiming unclear.",
+      "The devlog is unusually honest about its verification limits. Scripted probes — perform an action, measure the result, save evidence — checked whether the blob could climb the tower or a throw stopped at a wall, but the developer notes playback checks 'could prove that sounds started, not that they sounded good,' and scripted boss answers exercised phases 'without establishing fair difficulty.' Late checks caught real traps anyway: a replacement mesh that looked fine on its branch rendered see-through after integration because its triangles faced inward — a two-sided material had hidden the mistake until a one-sided material exposed it, and the generator gained a winding check."
+     ],
+     "takeaway": "Builder lesson: readability is a system, not a tutorial — if the body doesn't explain the move (tendrils grip, the body separates through the gaps, then reunites, all at unchanged movement timing), text won't save it. Second lesson: name what each of your tests cannot prove. Goop's probes were useful precisely because the devlog records where scripted evidence stopped and human play had to take over.",
+     "source_name": "itch.io — Goop's devlog (BloccAG)",
+     "source_url": "https://itch.io/devlog/1782526/dev-log-glass-box.amp"
+    },
+    {
+     "kicker": "WRONG GENRE",
+     "headline": "Wrong Genre's genre switch is one shared state that recasts an entire village — Romance restores the bridge and gathers a crowd that blocks the market, Horror breaks the bridge and turns that same crowd into patrols that open the route — and failure is a director shouting 'CUT!' and rewinding you along your own path",
+     "body": [
+      "Wrong Genre (MegaJam development diary, November 13–16, by C2Wolf, Katherina-M and Aster L.) asks what happens if changing a film's genre changed the rules of the world inside it. One shared genre state drives everything: materials, lighting and fog transition, selected geometry appears or disappears, and villagers get two identities — wandering and responsive in Romance, patrolling, spotting and chasing in Horror. A collision safety rule stops newly appearing geometry trapping the character, and switching is forbidden in places like on the bridge itself.",
+      "The three puzzles each explore a different consequence of the same switch. The bridge teaches the physical rules (whole in Romance, broken in Horror — a rule the team reversed from the first prototype because the finished meaning read more clearly). The flower market makes safety itself the obstacle: Romance crowds block the narrow route, Horror disperses them into patrols that open it. And failure is diegetic — caught, and the director calls 'CUT!', the picture takes on a worn recording effect, and Ivy visibly rewinds along her recent path to the checkpoint while the genre and world state restore to their saved values."
+     ],
+     "takeaway": "Builder lesson: one switch, taught three ways — physics, safety, story — beats three separate mechanics. The team also kept the implementation focused (a simple C++ state machine instead of the proposed StateTree; Ivy rewinds visibly while NPCs simply reset at the end), and when a monster kept tracking Ivy after losing sight of her, they fixed the fiction, not just the bug: it now searches the last place it actually saw her.",
+     "source_name": "itch.io — Wrong Genre devlog",
+     "source_url": "https://c2wolf.itch.io/wrong-genre/devlog/1783087/wrong-genre-from-the-first-idea-to-the-final-retake"
+    },
+    {
+     "kicker": "UNITY FELLOWSHIP",
+     "headline": "Unity's new Fellowship, announced November 16, puts its money on the part of development studios actually die in: ten indie teams roughly a year from launch get $50,000 with no equity or repayment, a dedicated Unity contact, expert network, event presence and PR support",
+     "body": [
+      "Announced at Unite Tokyo and reported by Game Developer on November 16, the Unity Fellowship selects ten independent teams whose games are 'roughly a year from launch' and funds the last leg: $50,000 to spend at their leisure — Unity demands no equity and no repayment — plus a dedicated point of contact, access to a network of industry experts, guaranteed presence at Unity events, and PR and marketing support. Selection is not by platform (mobile, console or PC all qualify) but, per Unity SVP of product Adam Smith, by the strength of the creative vision.",
+      "Smith framed the bottleneck precisely: Unity has made it easy to explore a vision, but success now stalls at go-to-market — 'discoverability, the ability to stand out, to market your game correctly' — in what he called 'that last one percent that's actually the last 20 percent of game development.' The $50,000 is deliberately unrestricted: suggested uses include testing hardware to launch on more devices, or a targeted marketing campaign in the launch window when interest peaks."
+     ],
+     "takeaway": "Builder lesson for any team about a year out: budget the last 20% as its own project. The Fellowship's design admits the modern indie failure mode is rarely 'couldn't build it' — it's shipping untested on real hardware with no marketing window. If you're applying that lens to your own launch, the unrestricted-cash detail matters: the support is aimed at whatever your specific bottleneck is, not a fixed service package.",
+     "source_name": "Game Developer",
+     "source_url": "https://www.gamedeveloper.com/business/unity-to-support-indies-with-cash-and-dedicated-support-through-new-fellowship-program"
+    },
+    {
+     "kicker": "DENSHATTACK",
+     "headline": "Polygon's makers' roundtable sets three direction philosophies against each other: Kasurinen argues 'do things nobody else is doing,' Berger says originality is beside the point — and Denshattack began as one question: what if you could play Tony Hawk with a train?",
+     "body": [
+      "Published November 16, Polygon's 'How 2026's Best Video Games Were Made' assembles the creative leads behind Resident Evil Requiem, Queen's Domain, Control: Resonant, Denshattack, 007: First Light and more to argue about what great game direction actually is. The answers genuinely conflict: Remedy's Mikael Kasurinen starts from distinctiveness — do things nobody else is doing — while Queen's Domain creative lead Eric Berger, building a strange interconnected world with a two-person team, says he doesn't want to spend time figuring out how to make it special and different, just to make every aspect as good as the team can figure out how to make it.",
+      "Denshattack director David Jaumandreu represents a third route: the entire creative vision began with a question so ridiculous it carried its own design brief — what would happen if you could play Tony Hawk with a train? Polygon notes the same tension runs through the whole conversation, from Capcom inventing an entirely new gameplay language for Pragmata to the creators of Cairn explaining how to make players feel the physical and emotional weight of climbing a mountain: how a vision stays unmistakably yours while somebody actually has to enjoy playing it."
+     ],
+     "takeaway": "Builder lesson: 'distinctive' and 'polished' are both viable direction strategies, but they spend your limited hours in opposite places — Kasurinen's route risks novelty that doesn't play, Berger's risks a well-made game nobody can describe. The Denshattack question is the cheap test that serves both: if your game can't be pitched as one absurd, concrete sentence ('Tony Hawk, but a train'), you may not yet know which strategy you're actually running.",
+     "source_name": "Polygon",
+     "source_url": "https://www.polygon.com/2026-games-of-the-year-how-were-made/"
+    }
+   ]
+  },
+  {
+   "date": "2026-11-15",
+   "dateline": "Sunday, November 15, 2026",
+   "stories": [
+    {
+     "kicker": "GRAND THEFT AUTO VI",
+     "headline": "Rockstar's first empathy mechanisms: GTA VI lets robbery prep replace threats, tracks a Criminal Profile that only shifts when you go beyond what a job needs, and makes Jason and Lucia's relationship a system you can nurture or lose",
+     "body": [
+      "In a feature published November 15, 2026, Rockstar North co-studio head Rob Nelson detailed how Grand Theft Auto VI (Rockstar Games) rewards preparation over escalation. Before a robbery, players can disable security cameras or steal their footage, find back doors and locate safe codes, making it possible to get in without threatening anyone — while careless play escalates fast into police, helicopters and a chase. Jason and Lucia also start small: early on they can only hotwire low-end vehicles and pick basic locks, with tools such as a key cloner or slim jim unlocking higher-value cars and jobs later.",
+      "Two systems carry the behaviour. The Criminal Profile tracks what kind of criminal the player is — separate from Red Dead Redemption 2's honor system and from the couple's relationship — and it shifts only when players consistently go beyond what a situation needs; following mission demands or fighting back does not count against them. Police work from what they can see: crimes register only when a witness sees them or an alarm sounds, officers remember the player's outfit, and changing clothes, cars or splitting the pair up sheds heat. On top of that sit the series' first explicit empathy mechanisms — Nelson confirmed Rockstar has 'for the first time in a GTA' provided mechanisms that encourage empathy for players who want them, down to asking a dog's owner for permission to pet it — and a managed relationship system summed up as: 'The relationship is yours to nurture or yours to lose.'"
+     ],
+     "takeaway": "Builder lesson: don't punish the loud playstyle — price it. Rockstar gates power behind story-earned tools, makes consequences witness-based and readable (outfit, car, partner), and lets a behaviour profile react only to excess, so restraint becomes a viable strategy with its own rewards instead of a moral lecture.",
+     "source_name": "KeenGamer",
+     "source_url": "https://www.keengamer.com/articles/news/rockstar-reveals-new-grand-theft-auto-vi-gameplay-details-days-before-launch/"
+    },
+    {
+     "kicker": "PROJECT HELIX",
+     "headline": "Xbox defines Project Helix as 'a console that can play PC games, not a PC that can play console games' — and bets the generation on neural rendering instead of 8K and 240 Hz",
+     "body": [
+      "Xbox used its 25th-anniversary magazine, published digitally on November 15, 2026, to define Project Helix. Jason Ronald, Xbox vice president of Next Generation, drew the line explicitly: the default experience should get games running without operating-system updates, driver updates or manual configuration, while power users can still adjust settings and performance. Players are promised four generations of Xbox games plus their progression, with an interface that stays recognisably Xbox while adapting to a TV, a streamed handheld screen, or a PC's denser mouse-and-keyboard layout — Ronald's example is resuming an 80-hour RPG at hour 25 on a different device, immediately.",
+      "The magazine feature also explains the prototyping path and the silicon bet. Microsoft used the ROG Xbox Ally to test multi-storefront libraries and a unified console/PC presentation, and player feedback changed how those ideas will appear in Helix — the handheld is a precursor, not a template. Ronald rejected 8K and 240 Hz as the generation's defining measures and presented neural rendering — generating a frame without requiring more compute or memory — as the efficient route to fidelity amid rising component costs, with the emphasis shifted to gameplay innovation. Helix is built on a custom AMD system-on-chip co-designed for next-generation DirectX and FSR, with alpha hardware planned for developers from 2027."
+     ],
+     "takeaway": "Builder lesson: name the identity constraint first, then prototype it cheaply. 'Console first' decided every Helix trade-off — instant play over configurability, library continuity over raw specs — and the Ally handheld served as a live testbed whose feedback reshaped the flagship before any alpha hardware shipped.",
+     "source_name": "Gaming.net",
+     "source_url": "https://www.gaming.net/xbox-details-project-helixs-console-first-design-and-pc-game-support/"
+    },
+    {
+     "kicker": "MEEPLE INCREMENTAL",
+     "headline": "Meeple Incremental's hardest localisation problem wasn't translation — it was finding a pixel font that supported Japanese characters and still performed, while a real-time 3D pixel-art shader rescued a bland art direction",
+     "body": [
+      "In a Game*Spark developer interview published November 15, 2026, Ed Gilmour, sole developer of Meeple Incremental and founder of Simply Artizan, explained the game's core twist: it earns resources like a board game, not a clicker. Players roll dice to move meeples around a board and collect money, skill points and capsule tickets from the spaces they land on, then spend those on auto-rollers, a skill tree and collectibles. Gilmour said there was no single inspiration title — he researched other incremental games on Steam extensively to refine the pacing and core balance around the board-game loop.",
+      "Two production decisions stand out. The early visuals felt bland, so after trial and error he introduced real-time 3D pixel art using the ProPixelizer shader asset, which became the game's distinctive look. And although a freelance translator made the Japanese localisation itself smooth, the biggest implementation challenge was finding a pixel-art font that correctly supported Japanese characters while maintaining good performance in-game. Post-launch feedback was equally concrete: 'opening collectibles takes too long' produced a patch to open 25 at once, and a November 9 update added buy-5-at-once upgrades, a ball-trajectory arrow and a skill-tree visibility toggle."
+     ],
+     "takeaway": "Builder lesson: localisation is a rendering problem, not just a text problem — a stylised font that can't render the target script at speed will sink the style. And treat the sharpest player complaint as a spec: one sentence about slow collectible-opening became a 25-at-once feature.",
+     "source_name": "Game*Spark",
+     "source_url": "https://en.gamespark.jp/article/2026/11/15/2327.html"
+    },
+    {
+     "kicker": "GOBLIN GOLF",
+     "headline": "Goblin Golf postmortem: 'The editor isn't the game' — missing cages, tyres and skin in the packaged build, and an audio pile-up fixed with one shared voice channel",
+     "body": [
+      "Tuatara_NZ's Goblin Golf postmortem, posted November 15, 2026 after a four-day Epic MegaJam build in Unreal Engine 5.8, describes a directing loop as the working method: describe what you want, the AI builds a version, you play it, and you say precisely what is wrong — 'the smoke looks like cotton wool, make it diesel,' 'make the camera nervous, like a goblin is holding it.' Loops taking minutes instead of hours let the developer chase ideas normally cut, like the music snapping from an oom-pah march to metal the moment the goblin launches. The Director's Cut theme became the whole frame: holes are scenes, strokes are takes, and a bad shot can be cut and reshot for a penalty.",
+      "The failures are the transferable part. Things that looked perfect in the editor broke in the packaged build — the goblin's cage and the trebuchet tyres went missing and the goblin rendered without his skin because of a texture streaming setting — hence the rule stated in the postmortem: package early and test the build, not the editor. Audio piled up into a wall of overlapping grunts and impact taps; the fix was one shared voice channel, far fewer impact sounds, and a music bed to hold it together."
+     ],
+     "takeaway": "Builder lesson: the skill that mattered was not prompting but diagnosis — knowing what you want and being able to say precisely why something isn't right yet. Pair that with two hard rules from the failures: test the packaged build, not the editor, and give overlapping character audio one shared channel before it becomes a wall of noise.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1781995/goblin-golf-postmortem-directing-not-replacing.amp"
+    },
+    {
+     "kicker": "BOX OF TALES",
+     "headline": "Box of Tales threw out its flat street on Saturday night and rebuilt the level around a 7-beat pacing curve — with the whole level rebuilt from one script, so moving a fight is a one-line change",
+     "body": [
+      "Team Horus's Box of Tales postmortem, posted November 15, 2026, documents a two-person team directing AI agents through Unreal for the Epic MegaJam. Every set piece ran the same pipeline: GPT Image concept in the cardboard style, Tripo to a textured 3D model, a scripted Blender pass fixing orientation, real-world size and pivot, then an Unreal editor script importing and placing it. Because the whole level is rebuilt from one script, moving a gate or a fight is a one-line change and a re-run rather than an afternoon of dragging actors.",
+      "The design turn came mid-jam: the first version was a straight film-set street that felt like a corridor, so the team threw it out and redesigned around a 7-beat pacing curve — arrival, market warm-up, discovery climb, story courtyard, portal fight, ritual escalation, finale — where each beat introduces one idea before testing it. The hard parts are specific: after a respawn, Unreal's overlap list could be stale so fights never re-armed, fixed by switching every trigger to checking the player's position directly; hit-stop and the CUT! time-freeze fought each other, so during CUT! hit-stop steps aside; and a thin line trace kept missing chain posts, so the whip got a thicker trace plus aim assist toward glowing chains."
+     ],
+     "takeaway": "Builder lesson: script the level build, not just the assets — a one-command rebuild turns a late 'throw out the corridor' redesign from a disaster into an overnight decision. And when two time-bending systems collide, don't blend them: give one explicit priority, as CUT! does over hit-stop.",
+     "source_name": "itch.io",
+     "source_url": "https://itch.io/devlog/1781882/directing-the-agents-how-two-people-and-an-ai-crew-shot-box-of-tales.amp"
+    },
+    {
+     "kicker": "CHAIN OF COMMAND",
+     "headline": "Chain of Command's one-order robot puzzles were solved before they were built: a Python breadth-first solver checked every level's solution and minimum cable cuts, and rejected boards with too many easy solutions",
+     "body": [
+      "Chain of Command, released November 15, 2026 for the Epic AI MegaJam by indie developer Imad (imadCh), turns the Director's Cut theme into a rule: every connected robot hears the same order, but a robot whose cable is cut keeps repeating the last direction it heard. Choosing when to disconnect each robot is the central challenge across ten levels that use walls and signposts to separate paths, with crossed wires and charging docks added later, plus move previews, undo and hints in a 15–20 minute run.",
+      "The workflow reported in the November 15 development report is the story: Claude and Codex helped build the Unreal Engine 5.9 Blueprint project through Unreal MCP, but a Python breadth-first rules solver checked each planned solution and its minimum cable cuts before levels were implemented, and a separate generator explored boards and rejected puzzles with too many easy solutions. Agents captured editor screenshots while the developer played packaged builds and requested corrections."
+     ],
+     "takeaway": "Builder lesson: keep a reference model of your rules outside the engine. Solve first, build second — an external solver proves a puzzle is solvable at the intended difficulty before anyone spends time dressing it in the engine, and the packaged build still gets human-verified afterwards.",
+     "source_name": "GameSlash",
+     "source_url": "https://gameslash.app/en/item/chain-of-command-robot-cable-puzzles-ai-solver-2026"
+    },
+    {
+     "kicker": "BUILD A DEATHRUN",
+     "headline": "Build a Deathrun's quickswap wheel failed because a held-state check raced the press event — making press/release the authoritative lifecycle fixed it, and hand-authored LODs saved a 24-spike trap that simplification kept disarming",
+     "body": [
+      "NastyCracked's November 15, 2026 MegaJam devlog for Build a Deathrun records a day of native-feel problems. The quickswap wheel's deeper failure was an immediate held-state check rejecting a real press: the press event arrived while IsHeld still reported false. Making press and release events the authoritative lifecycle restored hold-to-open and release-to-select while moving. Attempts to also stop mouse selection moving the camera were rolled back after they reintroduced clicking or blocked keyboard movement, and independent mouse capture was explicitly deferred in favour of view-relative selection.",
+      "The trap work carries the second lesson. Side-by-side comparison exposed repeated socket patterns, blunt spikes, missing needles and a safe gap at the middle of a wall — because low-quality LOD simplification had removed thin cones. Authored 16-, 12- and 8-sided LODs now preserve all 24 spikes, a continuous face-wide strike envelope closed the unintended per-needle safe gaps, and triggering was separated from damage: only the outward strike can damage, the return phase is safe after a successful dodge, and intervening builds block damage. After repeated too-fast and too-slow comparisons, the accepted timing was 0.20 seconds out and 0.20 seconds back, with no pause at full extension."
+     ],
+     "takeaway": "Builder lesson: poll state and you race the event that sets it — for press-and-hold UI, let the press/release events own the lifecycle. And never trust automatic LOD simplification on thin, gameplay-critical geometry: if a spike's silhouette is the fairness contract, author the LODs by hand and compare side by side.",
+     "source_name": "itch.io",
+     "source_url": "https://nastycracked.itch.io/uefn-megajam-2026/devlog/1782013/november-15-quickswap-repairs-dodgeable-traps-and-eight-rooms"
+    }
+   ]
+  },
+  {
    "date": "2026-11-14",
    "dateline": "Saturday, November 14, 2026",
    "stories": [
@@ -2234,4 +2627,4 @@
   }
  ]
 }
-sig:MEYCIQDLxyf0RFNYzsMolzjSGaMsjXiUrakR+8/BUwoRO0tNewIhAPovz1INy3I+85SZW3hd86AY+WmN4hQAss+qS6QzudIJ
+sig:MEQCIGpvuqKOaU9wvTOxPDGqauPSxyPZvKnW5eTv3r0+L3ZLAiAMz9XcC2zzWZUQGjrrHTDhtrWBx9K1Zuf2e4r2T25+ug==
