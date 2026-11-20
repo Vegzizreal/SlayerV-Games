@@ -1,6 +1,78 @@
 {
  "editions": [
   {
+   "date": "2026-11-20",
+   "dateline": "Friday, November 20, 2026",
+   "stories": [
+    {
+     "kicker": "SHADOWSTONE",
+     "headline": "Shadowstone's Corruption makes every extra turn a trade, not a tax — a rough fight follows you into the next room, and co-op works because nobody owns someone else's turn",
+     "body": [
+      "Secret Door's tactics roguelite Shadowstone, from game director Shane Dabiri and designer Kara Centell-Dunk, is built around failure that has to feel deserved. The demo data is stark — more than 12,000 hours in Steam Next Fest, over 60,000 rooms cleared, and the Oathless ending roughly one in three attempts — but the team's stated problem is fairness, not the loss rate. Its central system is Corruption: every additional round spent in combat raises it, and its effects (Shame, Guilt, Paranoia — the last makes a hero damage adjacent allies) persist for the rest of the run.",
+      "Dabiri draws the line against the studio's earlier Sunderfolk directly: a rough fight there ended when the room ended, while in Shadowstone it follows you. The design rule is that an extra turn should always feel like a trade, never a tax — another round might secure a chest or prevent later damage, and the run itself changes what the risk is worth. Co-op protects agency the same way: each player fully owns their hero, powerful combos are allowed when they require elaborate multi-kit setups, and solo play — now treated as the front door — drops friction like End Turn between heroes without dropping tactical decisions."
+     ],
+     "takeaway": "Builder lesson: make a cost create a debatable choice whose value changes per run, not a flat punishment. Let broken combos exist when the setup is elaborate, and let an expert create an opening without taking another player's turn.",
+     "source_name": "Save Point Gaming",
+     "source_url": "https://savepointgaming.co/feature/shadowstone-interview-secret-door/"
+    },
+    {
+     "kicker": "GHOST OF YOTEI",
+     "headline": "Ghost of Yotei bans climbing on torii gates: Sucker Punch put cultural respect above player freedom — and turned the same research into its villains' masks",
+     "body": [
+      "At G-CON 2026 on November 20, Sucker Punch senior writer Ariadna Martinez and art director Joanna Wang explained how cultural consultation shaped Ghost of Yotei from the start, with Sony Japan's consultants involved from Ghost of Tsushima onward and field trips — including foraging with a consultant's grandmother in an Ainu village — feeding directly into mechanics like the foraging minigame. The clearest decision: torii gates serve as landmarks that guide players to shrines, but climbing or destroying them is prohibited because they are sacred religious structures.",
+      "The same research produced content instead of only limits. Masks meant to ward off evil spirits were inverted for the Oni bandits, so a symbol of protection worn by people who harm others sharpens their menace, while the mask merchant Saburo teaches players the original meaning. A consultant's account of a Japanese garden — an attempt to tame nature that teaches you cannot control it — became the garden space carrying protagonist Atsu's loss and recovery, and the yellow ginkgo was held to a 60:30:10 color rule so it reads as her visual language throughout."
+     ],
+     "takeaway": "Builder lesson: decide in advance what must be respected and what can be reinterpreted. A hard, consistent limit — no climbing the torii — is clearer design than unlimited freedom, and the research behind it can generate characters and spaces, not just restrictions.",
+     "source_name": "Inven Global",
+     "source_url": "https://www.invenglobal.com/articles/28889/why-cant-you-climb-on-torii-cultural-respect-embedded-in-ghost-of-y%C5%8Dtei"
+    },
+    {
+     "kicker": "MIKAMI / KIM ON AI",
+     "headline": "Mikami wishes AI could vanish, Kim says development without it is no longer feasible — at G-CON both landed on the same line: AI for quality, not for efficient slop",
+     "body": [
+      "Resident Evil creator Shinji Mikami and Stellar Blade director Hyung-Tae Kim of Shift Up shared a G-CON 2026 panel on November 19-20, reported by AUTOMATON West from Inven Global's coverage. Kim argued that development without AI is no longer feasible because AI already runs through programming workflows, QA, code review and debugging — yet he also said Shift Up does not use it to mass-produce games, warned that players do not enjoy a work just because it was efficiently made, and argued that over-reliance homogenizes output until games look made by the same person.",
+      "Mikami sits at the other pole: he sometimes wishes AI could vanish entirely, uses it mainly to streamline production and lift quality without significantly bloating budgets, keeps the core of development at his studio Unbound human-driven, and worries developers could lose jobs to it within five to ten years. Kim's own cautionary data point was commercial: the backlash to Shift Up's AI-generated Stellar Blade: Blood Rain promotional video taught him how strongly the human touch shapes user reaction."
+     ],
+     "takeaway": "Builder lesson: draw the AI line by task, not by slogan — workflow, QA and debugging leverage on one side, human-led creative decisions on the other — and judge any AI use by whether it raises quality, not by how much output it produces.",
+     "source_name": "AUTOMATON West",
+     "source_url": "https://automaton-media.com/en/news/from-i-wish-ai-could-vanish-entirely-to-development-is-no-longer-feasible-without-it-shinji-mikami-and-hyung-tae-kim-share-views-on-ai/"
+    },
+    {
+     "kicker": "CRIMSON DESERT",
+     "headline": "Crimson Desert's rule is the most readable forest, not the most realistic one — landmarks work at 1km as silhouettes and at 10m as story details",
+     "body": [
+      "Pearl Abyss art level director Geuntae Ahn and graphics director Jinhu Yoon used their G-CON session at G-STAR 2026 to explain the Pywel continent's design philosophy: the environment is the first narrator, and the team's persistent question was what story the land tells without a single line of dialogue. Early lush, realistic forests failed playtests — blocked sightlines hid landmarks and the story with them — so the team designed density and negative space instead of tree counts: travel paths open views, discovery areas block then reopen them, combat zones get breathing room, and deliberate quiet stretches make dense scenes land as events.",
+      "Exploration runs as a loop Ahn phrased as: discovery is the question, movement is the deduction, arrival is the answer — and that answer breeds the next question. Landmarks carry distance roles, simple silhouettes at 1km and specific narrative detail at 10m, under a trust rule that anything visible must be reachable. At continental scale, the team hand-built small sample areas, extracted their rules, and scaled them with sample-based procedural generation in the Blackspace Engine, reinvesting the saved hours into better samples rather than more area."
+     ],
+     "takeaway": "Builder lesson: build from the walking player's eye level, not the screenshot view — screenshot-praised areas failed in play. Treat automation as a quality amplifier: make one scene worth cloning, extract its rules, then scale those.",
+     "source_name": "Gamemeca",
+     "source_url": "https://meca-test.gamemeca.com/en/view.php?gid=1783846"
+    },
+    {
+     "kicker": "GLAGSTONE",
+     "headline": "GlagStone kept its Playdate black-and-white limit on PC — a 1-bit city builder where the lighthouse beam has to make the same town readable twice",
+     "body": [
+      "GlagStone creator and lead developer Valerii Krasnoselskii told 80 Level on November 19 how the four-person team's island city builder grew from a Playdate game into a PC release — and kept the handheld's constraint on purpose. On PC any colors were available, but the team wanted to see how far two shades would go. The hard case is moving light: a still drawing reads once, while the lighthouse beam must let players recognize the same row of buildings as the light reaches it and again as it moves on, solved with dithering breakdowns for water, lamplight pools and weather.",
+      "The production tool matches the game's decision-driven story. Working in LOVE and Lua, the team built its own editor where writers and artists handle dialogue, items and illustrations together and can connect a decision to a later consequence — a captain's declaration, the governor's reply, a dock report arriving after a ship unloads — then reorder events and play through to the moment someone on the island has to deal with it. Their beginner advice is sequencing discipline: finish one choice and let someone play it before writing ten more, because every new character needs dialogue and a portrait and every decision needs consequences that still work beside the old ones."
+     ],
+     "takeaway": "Builder lesson: a kept constraint is both a style and a readability test — if the beam sweep still reads, the art works. And build the consequence chain into the editor itself, so cause and delayed effect stay linked when the order changes.",
+     "source_name": "80 Level",
+     "source_url": "https://80.lv/articles/making-a-1980s-macintosh-style-1-bit-city-builder-set-on-a-stormy-northern-island"
+    },
+    {
+     "kicker": "STEAM TO ELECTRIC",
+     "headline": "Steam to Electric makes real locomotive quirks the mechanics: a cheap gyro monorail no other train can share, and a management train that carries nothing but boosts stations",
+     "body": [
+      "Galaxy Grove, the Dutch studio behind Station to Station and Town to City, told Press Play Media on November 20 that its move into deeper railway management came from player demand for more simulation depth — and that the mechanics come straight from real locomotive research across books, blogs and community suggestions. The gyro monorail is the cleanest example: it runs only on single rails, which are much cheaper to lay, but the locomotive is weak and no other train can use its rails, making it right for cheap long-distance connections and wrong for heavy freight.",
+      "Late-game complexity follows the same principle. De Kameel, historically a Dutch railway management train used for meetings while travelling, carries no goods or passengers in the game; instead, every station it visits receives a temporary income boost, so the player's problem becomes routing an expensive train through as many stations as possible without blocking the rest of the network. Progression across the steam-to-electric arc expands the option set rather than replacing older trains with strictly stronger ones, and cities grow from whatever mix of resources and passenger service the player chooses to supply."
+     ],
+     "takeaway": "Builder lesson: research is a mechanics library. When a real object's odd property already creates a route, cost or compatibility decision, the design work is translating it faithfully — not inventing a power-up.",
+     "source_name": "Press Play Media",
+     "source_url": "https://pressplaynews.net/2026/11/20/developer-interview-steam-to-electric/"
+    }
+   ]
+  },
+  {
    "date": "2026-11-19",
    "dateline": "Thursday, November 19, 2026",
    "stories": [
@@ -2627,4 +2699,4 @@
   }
  ]
 }
-sig:MEQCIGpvuqKOaU9wvTOxPDGqauPSxyPZvKnW5eTv3r0+L3ZLAiAMz9XcC2zzWZUQGjrrHTDhtrWBx9K1Zuf2e4r2T25+ug==
+sig:MEYCIQCBnTMdGB+ndU8CoVq4a1JzSAearyM4BBCjCFnZg9bE5wIhAOevgBh2AMTdtVfbnUJDfgvgnCUfT1v8eaP5WAV6B37w
