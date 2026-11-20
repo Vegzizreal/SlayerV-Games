@@ -1,6 +1,6 @@
 {
-  "file": "charm_pet_w-1.21-app.bin",
+  "file": "charm_pet_w-1.22-app.bin",
   "patches": {},
-  "sha256": "8cff78fee2d240aab93fe81c980159ed64a9f72ce82c18c48cb565ca7cf1473f",
-  "version": "1.21"
+  "sha256": "81c722dd2fba503d894284483c668fe80818b31e2e166fc764c62f2b505afeb9",
+  "version": "1.22"
 }

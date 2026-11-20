@@ -35,6 +35,7 @@ button:disabled{background:#3a3750;color:#9a97a8}
   <p id="versions"></p>
   <p class="warn" id="note"></p>
   <button id="resetPairBtn" hidden>Reset pairing &amp; retry</button>
+  <p class="warn" id="resetPairWarn" hidden>Warning: resetting erases this phone's pairing for the unit — the same pairing its media and pointer controls use. After a reset, media/pointer stay silent until the unit is paired again (here, or in Bluetooth settings).</p>
 
   <section class="recovery" id="recovery">
     <h2>Recovery</h2>
@@ -244,6 +245,7 @@ updateRecoveryUI();
 
 resetPairBtn.addEventListener("click", async () => {
   resetPairBtn.hidden = true;
+  $("resetPairWarn").hidden = true;
   pairingResetRequested = true;
   if (device && typeof device.forget === "function") {
     try { await device.forget(); } catch (e) {}
@@ -254,7 +256,10 @@ resetPairBtn.addEventListener("click", async () => {
          "the pairing when the phone asks — the unit shows a 6-digit " +
          "code; accept when the phone shows the same one. (If " +
          "pairing still won't start, the unit's own UPDATE screen " +
-         "has a pairing reset that clears its saved pairings.)");
+         "has a pairing reset that clears its saved pairings.) " +
+         "Until the unit is paired again, this phone's media and " +
+         "pointer controls for it stay silent — that pairing is the " +
+         "one they use.");
   } else {
     say("Pairing reset — follow the steps, then tap Update again.");
     note("No code box? Your phone may hold an old pairing for the " +
@@ -291,6 +296,10 @@ function onDisconnected() {
   sending = false;
   if (wasDone) {
     say("Done — unit is restarting", "ok");
+    note("After the restart, media/pointer may not reconnect on " +
+         "their own: if the unit's MEDIA screen says the host is " +
+         "saved, tap the unit in this phone's Bluetooth settings " +
+         "to reconnect it — the pairing itself is kept.");
   } else if (wasSending) {
     say("Connection dropped mid-send.", "bad");
     if (!flowing) {
@@ -342,6 +351,7 @@ async function connectOnce() {
       "phone asks to pair — the unit shows a 6-digit code; " +
       "accept when the phone shows the same one.");
   resetPairBtn.hidden = true;
+  $("resetPairWarn").hidden = true;
   pairingResetRequested = false;
   const resetPromise = new Promise((_, reject) =>
     { pairingResetTrigger = () => reject(new PairingReset()); });
@@ -355,6 +365,7 @@ async function connectOnce() {
         "a mouse first (see the note at the top of this page).",
         "warn");
     resetPairBtn.hidden = false;
+    $("resetPairWarn").hidden = false;
   }, T_PAIR_SOFT_MS);
   /* First pairing makes Android drop this page's connection
    * mid-setup while the system pairing runs (the connect lands,
@@ -413,7 +424,10 @@ async function connectOnce() {
   } finally {
     clearTimeout(softTimer);
     pairingResetTrigger = null;
-    if (!pairingResetRequested) resetPairBtn.hidden = true;
+    if (!pairingResetRequested) {
+      resetPairBtn.hidden = true;
+      $("resetPairWarn").hidden = true;
+    }
   }
 
   /* INFO, protocol 3 layout (mirrors ota_info.h, which the
@@ -669,6 +683,11 @@ updateBtn.addEventListener("click", async () => {
             : " (full update, " + payload.bytes.length + " bytes)") + ".";
         await sendWithArmWait(payload);
         say("Done — unit is restarting", "ok");
+        note("After the restart, media/pointer may not reconnect " +
+             "on their own: if the unit's MEDIA screen says the " +
+             "host is saved, tap the unit in this phone's " +
+             "Bluetooth settings to reconnect it — the pairing " +
+             "itself is kept.");
         fillEl.style.width = "100%";
         flowing = false;
         return;
@@ -771,6 +790,10 @@ recoveryReinstallBtn.addEventListener("click", async () => {
     if (await waitForUnitConfirm()) {
       await streamAndFinish(payload, 0);
       say("Done — unit is restarting", "ok");
+      note("After the restart, media/pointer may not reconnect on " +
+           "their own: if the unit's MEDIA screen says the host is " +
+           "saved, tap the unit in this phone's Bluetooth settings " +
+           "to reconnect it — the pairing itself is kept.");
       fillEl.style.width = "100%";
     }
     sending = false;
