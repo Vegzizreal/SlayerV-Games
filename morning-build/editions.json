@@ -1,6 +1,67 @@
 {
  "editions": [
   {
+   "date": "2026-11-21",
+   "dateline": "Saturday, November 21, 2026",
+   "stories": [
+    {
+     "kicker": "GOD OF WAR / WOLVERINE / CONTROL RESONANT",
+     "headline": "Kratos never steps back and Wolverine never dodges: at G-CON, three art directors said character is written in movement rules, not dialogue",
+     "body": [
+      "At the G-CON 2026 session 'How Game Art Completes a World' on November 20, Santa Monica Studio game director Bruno Velazquez said character animation starts with who the character is, not polish: over nearly 20 years the studio built more than 20 rules for Kratos. He always moves forward — even blocking, he steps in rather than retreating — and unless he dies his back never fully touches the ground; knocked down, he rolls off his shoulder back up. Atreus is the contrast in the same system: he tries to punch a chest open imitating his father, hurts his hand, and afterwards opens chests with his bow.",
+      "Insomniac senior art director Gavin Goulden gave Wolverine the opposite rule set: the vivid yellow suit is functional, not decorative — a character with a healing factor who draws attacks toward himself instead of evading them, who can pull swords lodged in his own body and use them as weapons, and whose claw destruction makes him read as a living weapon. Remedy art director Elmeri Raitanen supplied the world rule: Control avoids 'stacking weirdness on top of weirdness' — a mundane water-cooler install defeated by a shifting building makes the supernatural read — and in Control Resonant, rain falling in one constant direction lets players orient themselves in inverted Manhattan. The panel's closing test: quality is what you can subtract while the experience still functions."
+     ],
+     "takeaway": "Builder lesson: write a short would / would-never movement list for your character before animating — players absorb personality through repetition. Keep one normal anchor in a weird world, and let one atmospheric effect, like rain direction, double as navigation information.",
+     "source_name": "Inven Global",
+     "source_url": "https://www.invenglobal.com/articles/28890/from-god-of-war-to-wolverine-world-class-art-directors-share-their-perspectives-on-game-art"
+    },
+    {
+     "kicker": "FINAL FANTASY VII",
+     "headline": "'Half of it belongs to the fans': Kitase wanted bolder FF7 remake changes than the younger director who preserved it — and the remake cuts exposition because faces can now carry it",
+     "body": [
+      "At G-CON 2026 on November 20, Final Fantasy VII's original director and remake producer Yoshinori Kitase named the remake project's hardest problem: deciding what to change and what to keep. 'As a creator, I thought I could change anything. But once a work is out in the world, half of it belongs to the fans.' The dynamic ran against expectation — Kitase, who made the original, wanted changes bold enough to disregard it in places, while director Naoki Hamaguchi, from the generation that played it, argued to preserve its strengths. In practice the Mako Reactor's early remake concept diverged sharply from the original, but the team kept the original silhouette and modernised the details, and the Lifestream cycle and the overarching theme 'Life' were treated as unalterable, under per-game themes of Reunion, Bonds and Resolve.",
+      "Technology changed the acting, and the acting changed the script. The 1997 characters, at roughly 400 polygons with no voice acting, needed exaggerated full-body movement to convey emotion; the remake can use facial expression, eye movement and voice tone, so explicit explanation was reduced. Barret's anguish after the Sector 7 plate collapse keeps the broad actions but shifts focus to his bowed head and face, and Rebirth deliberately leaves Aerith's fate open to interpretation — disbelief and refusal to accept, rather than a clearly stated loss. The new Revelation quest shown at G-CON makes the same point in gameplay: searching for the white chocobo Cocona becomes a vegetable-gathering resolution with Red XIII, and an encouragement-then-combat resolution with Cid."
+     ],
+     "takeaway": "Builder lesson: for a remake or sequel, name the unalterable core — theme and the silhouettes fans carry — before debating changes. And re-audit exposition whenever your expressive tools improve: lines written for 400-polygon faces become redundant once eyes can do the work.",
+     "source_name": "Inven Global",
+     "source_url": "https://www.invenglobal.com/articles/28891/once-a-game-is-out-in-the-world-half-of-it-belongs-to-the-fans-yoshinori-kitase-on-ff7"
+    },
+    {
+     "kicker": "NO MISTAKES, STILL LOST",
+     "headline": "33 tests passed, a stranger broke it in 10 minutes: both bugs lived in the seam between what the code knows and what the screen says",
+     "body": [
+      "Developer cielamarlowe shipped 'no mistakes, still lost' — a five-minute, phone-sized game about closing a corner shop, with three endings — after running thirty-three tests, all passing. A day later a stranger, tomokoworlds, scripted all three endings in a row and found two bugs in ten minutes. First: an ending printed a tag that was only true on another ending, because a flag was set and never cleared when endings overlapped. Every test had checked a state transition on the intended path; not one asked what the screen said after the last tap.",
+      "Second: a feature looked missing because a row sat inside the click target of the element around it — tapping the row fired the parent's handler, and the row's own line never appeared. The test asserted the row existed; it did, it just never got to speak. Both fixes were one line: the tag now prints from the same field the ending reads, so the two cannot disagree, and a row tap now returns the row's line instead of its parent's."
+     ],
+     "takeaway": "Builder lesson: tests prove the path you thought of and stay silent about the sentence on the screen. Assert final visible output and real tap targets, not internal state and element existence — and run sequences back-to-back, because flags leak between endings. The dev's cheap check: run the ending that shouldn't happen and read every word on it.",
+     "source_name": "itch.io (cielamarlowe)",
+     "source_url": "https://itch.io/devlog/1795240/a-stranger-broke-it-in-ten-minutes-and-my-thirty-three-tests-said-fine.amp"
+    },
+    {
+     "kicker": "TOCK: LOST UNITS",
+     "headline": "TOCK's storm is a system, not a skybox: weather drifts, marquees warn you, loops replay it exactly — and the background drones were deleted because the dev kept mistaking them for enemies",
+     "body": [
+      "Zemond's TOCK: Lost Units update 0.3.12, posted November 21, rebuilds the street's weather as a drifting system: clear skies cloud over, drizzle builds to rain, and rain can become a full storm in about fifteen seconds, while fog rolls in slowly and lifts slowly. Every change sets the sky, fog, rain intensity and wind direction together, and the street's marquees warn the player in-world — 'STORM WARNING · STAY OFF THE ROOFTOPS'. Because the weather is tied to game time, when the player Loops, the storm they just lived through rolls back in exactly as it did. Rain is now anchored in the world (it used to slide when the camera moved, and sometimes fell upwards), catches lamp and neon light, and thunder arrives a beat after the flash, delayed by distance.",
+      "The same update makes a clean readability cut: the little background drones are gone, because the developer kept mistaking them for enemies — 'so you would too'. The new Die-Lock Bridge puzzle room applies the timing-first approach: a heavy hydraulic press cycles up and down a shaft, and hitting the floor contact locks it mid-stroke for a few seconds — just long enough to cross on it, if the Lap is timed right."
+     ],
+     "takeaway": "Builder lesson: tie ambient systems to the same clock as gameplay so they replay deterministically instead of decorating randomly, and deliver warnings through the world (marquees) rather than a UI banner. Delete any background element you yourself misread as a threat — your confusion is the playtest.",
+     "source_name": "itch.io (Zemond)",
+     "source_url": "https://itch.io/devlog/1795098/0312-storms-roll-in-the-city-gets-a-radio-and-the-street-finally-looks-like-the-concept-art.amp"
+    },
+    {
+     "kicker": "SAND DRAW",
+     "headline": "Sand Draw helps a pour find a pocket smaller than a fingertip — but only when there is exactly one opening it could belong to; with two, the player still has to choose",
+     "body": [
+      "In Ekky Ekky Games' Archive 20 retrospective, posted November 20, developer Nicklaus describes a touch problem at the end of an illustrated Sand Draw page: a player could see a narrow pocket of bare paper, but putting a finger over it hid it, and a touch aimed a little too far to one side started the pour on the ink instead. The September fix added help for enclosed pockets that hold only one to twenty grains: if a pour starts on nearby ink, the game looks for a single opening it could reasonably belong to, and gives those grains a way in.",
+      "The limits are the design. With two plausible pockets beside the same line, the game does not guess — the player has to choose. The printed wall between the two sides stays intact, and the colour and the amount still come entirely from the player's pour. The assist changes only the destination of grains aimed at an opening that was easier to see than to touch."
+     ],
+     "takeaway": "Builder lesson: good touch assist is bounded, not generous. Help only where the intended target is unambiguous — one candidate, tiny size — refuse to guess between two, and never let the assist alter what the player supplied (colour, amount) or break a barrier the player can see.",
+     "source_name": "itch.io (Ekky Ekky Games)",
+     "source_url": "https://itch.io/devlog/1794795/archive-20-helping-a-pour-find-a-space-smaller-than-a-fingertip-september-13-2026.amp"
+    }
+   ]
+  },
+  {
    "date": "2026-11-20",
    "dateline": "Friday, November 20, 2026",
    "stories": [
@@ -2699,4 +2760,4 @@
   }
  ]
 }
-sig:MEYCIQCBnTMdGB+ndU8CoVq4a1JzSAearyM4BBCjCFnZg9bE5wIhAOevgBh2AMTdtVfbnUJDfgvgnCUfT1v8eaP5WAV6B37w
+sig:MEQCIFK6r0oV/8sZwJAMwQTxRh0vGb7Klcgy7ZP3kaGPmLhxAiBOU71PJJn+Dmiav8T/GavcNMiFI3iXo4KAZ0awFUeiFg==
