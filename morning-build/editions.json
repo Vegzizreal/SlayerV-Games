@@ -1,6 +1,78 @@
 {
  "editions": [
   {
+   "date": "2026-11-22",
+   "dateline": "Sunday, November 22, 2026",
+   "stories": [
+    {
+     "kicker": "NIOH 3 / WO LONG 2",
+     "headline": "Team NINJA teaches the boss fight before the boss: minor enemies rehearse the strategy, broken wings hint the weakness, and Nioh 3 locks two stances away so newcomers learn one at a time",
+     "body": [
+      "In a new Game*Spark interview at G-STAR 2026, published November 22, Nioh 3 producer Gohei Shibata and Wo Long 2 producer Masakazu Hirayama widened their definition of unfair: it is not only an attack too fast to react to. Hirayama counts an unclear decision context as unfair too — visual effects that hide an attack, or a boss that can be knocked off its perch when nothing in its animation, visuals or the game's rules suggests it. The fixes are teaching tools: bake the hint into the boss itself (a movement that reads as knock-off-able, broken wings that invite a stomp) and place minor enemies on the road to the boss that require the same strategy, so the player rehearses it on cheap fights first. Visual credibility gets the same audit — a slender enemy in super armor must visibly brace or show reinforcement, or players read the fight as wrong.",
+      "The sequel and history rules are just as concrete. For a sequel, build on strengths first: fixing flaws only brings negatives to zero, while a strengthened element can dissolve a weakness with it. In Nioh 3 the team kept all the traditional systems but locked two of the three samurai stances at the start, unlocking them as skills — veterans refresh gradually, newcomers learn the basics without explicit instructions, and unlocking something yourself makes you want to try it. For the historical settings, recorded outcomes never change — who distinguished themselves, who died — and the fantasy (yokai, demons, divine beasts) lives in the undocumented behind-the-scenes gaps; antagonists are never purely evil, because from their own perspective their actions could be seen as just."
+     ],
+     "takeaway": "Builder lesson: teach the boss mechanic on minor enemies and in the boss's own silhouette before the fight, and audit hard encounters for decision clarity, not just dodge windows. Onboard by locking and unlocking your existing systems, and in a sequel grow a strength that also dissolves a weakness.",
+     "source_name": "Game*Spark",
+     "source_url": "https://en.gamespark.jp/article/2026/11/22/2566.html"
+    },
+    {
+     "kicker": "TARAE: THE UNBOUND",
+     "headline": "TARAE rejected attack-range indicators because they bury the HUD — instead the character auto-steps to the target, and the campaign uses preset skill trees so newcomers never hit a build wall",
+     "body": [
+      "Boundary CEO In-young Koo, art director Byung-ho Park and creative director Myung-sang Yoo told Inven Global at G-Star 2026 what changed since Gamescom. The clearest feedback was unintuitive UX — players could not tell when health or resources depleted — so the new build adds floating gauges, toggleable in settings, readable at a glance. Attack ranges went the other way: still deliberately not shown, because with both mouse and controller support, range overlays obscure the HUD and other UI. Instead the current build automatically moves the character to the target's position to attack, and on controller, pressing attack automatically targets and attacks nearby enemies. The team will keep hunting pain points through the G-Star playtests.",
+      "Progression is split by phase on purpose. During the campaign, characters follow pre-set skill trees designed by the developers, specifically to prevent hack-and-slash newcomers from hitting difficulty walls; in endgame the focus shifts to build diversity through trait customization and Yin-Yang Traits, with seasonal refreshes planned against the genre's stale-build problem. The narrative does not branch by class — the story follows six seekers travelling together, so one character's run delivers all six heroes' full story and endgame players need not replay the campaign. The world itself avoids real names like Joseon, Japan or China in favour of newly coined terms, borrowing cultural elements without sparking real-history friction, and character designs calculate age, cultural background and occupation: designing everyone as attractive young men and women was never on the table."
+     ],
+     "takeaway": "Builder lesson: solve a readability problem with movement, not overlays, when the overlay becomes the clutter. Sequence freedom — preset builds while players learn, open builds when they can judge them — and remove replay taxes that exist only because the story was fragmented across classes.",
+     "source_name": "Inven Global",
+     "source_url": "https://www.invenglobal.com/articles/28918/homework-from-gamescom-how-tarae-the-unbound-brought-answers-to-g-star"
+    },
+    {
+     "kicker": "JUNKSHIP CREW",
+     "headline": "JUNKSHIP CREW scrapped its procedural open world: players landed and had nowhere to go, so terrain is now generated from a gameplay plan — terraces, routes and loot heights decided before the generator runs",
+     "body": [
+      "In syper_olao's October–November devlog (November 20), the team reports what a September 23 playtest exposed: most players were not sure what to do after landing. They could generate a large procedurally built world; the hard part was filling it with interesting choices — where to go, how to get there, whether a spotted thing was worth a detour. So they switched to enclosed areas: small mazes of mountain terraces that are easier to design and test, and easier to read — a gentle slope running along a cliff suggests it might lead up, while what waits at the top stays undiscovered. The workflow inverted: before generating terrain, the team now writes a gameplay plan fixing playable areas, points of interest, each terrace's height and where routes connect (an outpost needs flat ground; a climb needs room between tiers), and the generator shapes the surface to that plan, with or without a designated landing start. Loot depends on terrace elevation, so the climb pays.",
+      "The supporting systems follow the same logic. The jetpack was reworked with its own upgrade progression, like the character's, so the team can estimate which upgrade makes a particular ledge reachable and when — a first visit works up slope by slope, a return visit flies over the ledge that blocked it. Caves reuse the structure underground: chambers, tunnels and junctions separate and guide like cliffs and terraces, and a cave can be a destination or a route out the other side of a ridge. The ocean was rebuilt so a single wave field drives both the visible surface and its physical interactions — wave height at a point sets how much of an object is submerged, how the character swims and when the camera goes under — and buoyancy is now computed from the submerged volume and the centre of that volume, so objects tilt as a wave passes and right themselves if their shape and weight allow."
+     ],
+     "takeaway": "Builder lesson: generation is not design — plan the choices, heights and connections first and let the generator execute the plan. Gate vertical obstacles with a predictable upgrade curve so revisits change, and drive visuals and physics from one field so what players see is exactly what the water does.",
+     "source_name": "itch.io (syper_olao)",
+     "source_url": "https://syperolao.itch.io/junkship-crew/devlog/1794676/octobernovember-devlog-terrain-caves-and-ocean"
+    },
+    {
+     "kicker": "MHZ",
+     "headline": "MHz postmortem: the lock-on brackets worked in two hours, then ate the budget — 75% of that code was scrapped, and the packaged build broke for a BeginPlay ordering reason the editor never showed",
+     "body": [
+      "Pattern-blue's MHz, posted November 21, is a cyberpunk arcade game — lock onto submarines, type each one's arrow-code frequency to hack it — built solo in about 30 hours as a practice jam cycle: idea, prototype, polish, packaging, release, to learn where the time actually goes. The idea survived by shrinking twice: a slow workstation puzzle with dials, screens and binoculars became Helldivers-style code entry and ramming hacked subs into each other, then simply blowing them up. The postmortem's sharpest number is about the lock-on brackets: they worked after a couple of hours, then minimum/maximum sizing and sticking to the screen edge to point at subs behind the player turned into hours of screen-space maths for a feature most players will never notice — and 75% of the lock-on drawing logic was scrapped in the end. The dev's own summary: 'I should have just shown an icon on the sub, and if it's off screen, so be it.'",
+      "The packaged build taught the second lesson. Input stopped working after loading the level from the main menu and the HUD combo arrows never updated in the Shipping build, though both worked in the editor. Same cause: references to the player controller and HUD were saved in other actors' BeginPlay, and Unreal does not guarantee BeginPlay order — the packaged build ran it differently, leaving the references empty forever. The fix was getter functions that fetch the reference when needed and cache it once it exists. Around that sat the smaller traps: a template plugin made a Blueprint-only project package as a code project (and fail on an old compiler), editing a Blueprint while cooking broke a build, the huge sea plane casting shadows on itself caused horizon lines and stutter, and a 4x-scaled submarine exposed a hitbox that had been slightly off-centre on every sub all along."
+     ],
+     "takeaway": "Builder lesson: budget polish by player visibility, not by how interesting the maths is — a working indicator plus an icon beats hours of edge-case brackets. Never cache cross-actor references in BeginPlay; fetch lazily. And run the full cycle including packaging early: the packaged build is a different game from the editor until proven otherwise.",
+     "source_name": "itch.io (pattern-blue)",
+     "source_url": "https://pattern-blue.itch.io/megahurtz/devlog/1795794/mhz-postmortem"
+    },
+    {
+     "kicker": "TIDES OF FORTUNE",
+     "headline": "Tides of Fortune reworked its core loop around information: dice now roll as they are dealt, so every number is known before it is played — and 'insight' became ink you spend to reroll, redraw, or change an enemy's mind",
+     "body": [
+      "TuEgg's v0.2.1 'Major rework' (November 21) rebuilds Tides of Fortune's combat around known numbers. Dice now roll as they are dealt, so you see every number before you play it; slots show their total as you fill them, a die clicked in a slot can be taken back, slots empty every turn and End Turn discards the hand. Generic dice cannot start a slot but power up any slot with an action, and when an elite or boss falls, the rest of its crew flees. The abstract resource Insight was renamed Ink to fit the game's new logbook look, and it is spent through the fiction: click the inkwell to open the log, then use the quill to reroll a die, redraw a die, see an enemy's exact numbers, or make an enemy choose a different move — with unspent ink carrying over to the next turn.",
+      "The map and the teaching were rebuilt to match. Every page you draft now comes with a sea stop after its island, each with one legible job — calm water heals (now the only way to heal between fights), the Shipwright's buoy is the workbench, the wreck holds a core, Whetstone reef raises a die's minimum roll, flotsam pays gold, a squall removes a die — and taking a page burns one of the others while the last is yours; a harbour before each boss offers rest or refit, across chapters of three spreads then the boss. A guided first fight teaches the loop, enemy intents now say what they do and to whom, hovering a die in a slot shows how its total adds up, and the workbench previews what each tool will make. Balance moved with the information: you start with 60 health, enemy attacks hit about 20% harder while normal enemies have about 20% less health, and sparing an enemy pays a third of its bounty."
+     ],
+     "takeaway": "Builder lesson: moving randomness earlier — roll on deal, not on play — converts luck into planning without removing the dice. Retheme a resource into the game's fiction and its spends become verbs in that fiction, and give every map stop one legible job so a route choice is a real decision.",
+     "source_name": "itch.io (tuEgg)",
+     "source_url": "https://itch.io/devlog/1795688/v021-major-rework.amp"
+    },
+    {
+     "kicker": "DELVERIUM",
+     "headline": "Delverium was built so different skill levels can play together: Sagestone cut tedious survival chores, supports split-screen and online for up to eight — and rebuilt localization as a spreadsheet pipeline after Japan found the game first",
+     "body": [
+      "Sagestone Games lead developer Scott Lowther told Game*Spark (November 22) that Delverium grew from family sessions hooked on Terraria and Stardew Valley: he wanted a game blending his favourite elements of both that people with different playstyles and skill levels could enjoy together. That target shaped the survival design — intuitive controls, comfort features and low-stress survival, with a stated core rule of minimizing tedious, repetitive tasks so players can fully enjoy the core gameplay. The 2D exploration survival game (exploration, farming, crafting, base building, dungeon crawling in a procedurally generated world) supports both split-screen and online co-op, for up to eight players, and launched in Early Access on September 22 after several years of development.",
+      "The memorable production story became a pipeline. The team published the Steam store page quietly, ahead of the official announcement, and Japanese media — Game*Spark first — discovered it; thousands of Japanese wishlists followed, and Japanese localization immediately became the top priority. The implementation is built to absorb that kind of surprise: professional translators for all languages (Natsumi Kajii for Japanese), translation work done in Google Sheets and imported into the game as needed, and an internal text system that allows seamless language switching while playing and dynamically updates text fields, making new strings easy to add. Lowther names the remaining weak point honestly: text must be prepared in advance to leave translators enough time, but it is hard to know in advance which strings will be needed — some were realised only after a batch was sent. The next major update follows the most common feedback instead: a new NPC system with new behavior patterns and quests, plus an expanded player guide, with official mod support in progress."
+     ],
+     "takeaway": "Builder lesson: mixed-skill co-op is a systems decision, not a difficulty slider — remove chores and stress so the gap between players stops mattering. And treat localization as an importable, live-switchable data pipeline from the start, because you cannot predict which audience will find you first.",
+     "source_name": "Game*Spark",
+     "source_url": "https://en.gamespark.jp/article/2026/11/22/2564.html"
+    }
+   ]
+  },
+  {
    "date": "2026-11-21",
    "dateline": "Saturday, November 21, 2026",
    "stories": [
@@ -2760,4 +2832,4 @@
   }
  ]
 }
-sig:MEQCIFK6r0oV/8sZwJAMwQTxRh0vGb7Klcgy7ZP3kaGPmLhxAiBOU71PJJn+Dmiav8T/GavcNMiFI3iXo4KAZ0awFUeiFg==
+sig:MEUCIQC4g3nBgiAsqfGkyDjw2egkTPtuT/yTrHohJ6MhRxL9zAIgJyleXUHGUDFB3uOjnUN9YBqx1KY5esxbkS8SprZgVAc=
